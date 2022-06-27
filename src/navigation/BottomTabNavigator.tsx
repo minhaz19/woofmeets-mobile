@@ -2,7 +2,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, useColorScheme} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {HomeIcon, Social, Services, Orders, Finder, Setting, Pets} from '../assets/SVG_LOGOS';
+import {Social, Finder, Setting, Pets} from '../assets/SVG_LOGOS';
 import Colors from '../constants/Colors';
 
 import {SCREEN_WIDTH} from '../constants/WindowSize';
@@ -21,7 +21,7 @@ function BottomTabNavigator() {
         tabBarStyle: {
           backgroundColor: isDarkMode
             ? Colors.dark.background
-            : Colors.light.background,
+            : Colors.background,
           height: SCREEN_WIDTH <= 380 ? 60 : 65,
 
           position: 'absolute',
@@ -29,9 +29,7 @@ function BottomTabNavigator() {
           elevation: 9,
           shadowOpacity: 0.9,
           shadowOffset: {width: 2, height: 8},
-          shadowColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.light.background,
+          shadowColor: isDarkMode ? Colors.dark.background : Colors.background,
         },
       }}>
       <Tab.Screen

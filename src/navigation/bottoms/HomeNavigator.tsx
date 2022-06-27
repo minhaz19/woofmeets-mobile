@@ -15,7 +15,7 @@ const HomeNavigator = () => {
           headerStyle: {
             backgroundColor: Colors.background,
             borderWidth: 0,
-            borderColor: Colors.background,
+            borderColor: Colors.primary,
           },
           headerTintColor: '#fff',
           headerTitleStyle: {

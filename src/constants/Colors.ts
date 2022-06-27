@@ -2,20 +2,8 @@ const tintColorLight: String = '#0C6157';
 const tintColorDark: String = '#fff';
 
 export default {
-  light: {
-    text: 'white',
-    lighttext: '#BCBEC0',
-    mediumtext: '#404040',
-    background: 'white',
-    textBackground: '#d8d8d8',
-    backgroundColor: '#ffffff',
-    borderColor: '#d7dae2',
-    tint: tintColorLight,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorLight,
-  },
   dark: {
-    text: 'black',
+    text: 'white',
     background: 'black',
     tint: tintColorDark,
     tabIconDefault: '#ccc',
@@ -26,7 +14,9 @@ export default {
     grey: '#ebebeb',
   },
   primary: '#FFA557',
-  secondary: '#21409A',
+  secondary: '#fcebdc',
+  background: 'white',
+  text: '#231F20',
   headerText: '#231F20',
   subText: '#9E9E9E',
   border: '#D9D9D9',

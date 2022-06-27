@@ -3,7 +3,7 @@ import {SCREEN_WIDTH} from './WindowSize';
 
 export const descriptionLightText = {
   fontSize: SCREEN_WIDTH <= 380 ? 13 : SCREEN_WIDTH <= 600 ? 16 : 18,
-  fontColor: Colors.light.text,
+  fontColor: Colors.text,
 };
 
 export const descriptionDarkText = {

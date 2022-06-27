@@ -46,7 +46,7 @@ const CustomDrawerContent = (
             {
               backgroundColor: isDarkMode
                 ? Colors.dark.background
-                : Colors.light.background,
+                : Colors.background,
             },
           ]}
         />
@@ -64,7 +64,7 @@ const CustomDrawerContent = (
               <Text
                 style={[
                   styles.userText,
-                  {color: isDarkMode ? Colors.light.text : Colors.dark.text},
+                  {color: isDarkMode ? Colors.text : Colors.dark.text},
                 ]}>
                 User Name
               </Text>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   versionText: {
-    color: Colors.light.text,
+    color: Colors.text,
     fontSize: SCREEN_WIDTH <= 380 ? 9 : 13,
     opacity: 0.7,
   },

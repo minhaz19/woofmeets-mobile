@@ -3,7 +3,7 @@ import React from 'react';
 import Text_Size from '../../constants/textScaling';
 import Colors from '../../constants/Colors';
 
-const Home = () => {
+const AuthHome = () => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View
@@ -22,7 +22,7 @@ const Home = () => {
             color: isDarkMode ? Colors.dark.text : Colors.text,
           },
         ]}>
-        This is a header
+        This is a auth header
       </Text>
       <Text
         style={[
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default AuthHome;
