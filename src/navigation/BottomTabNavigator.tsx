@@ -2,7 +2,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, useColorScheme} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {HomeIcon, Social, Services, Orders} from '../assets/SVG_LOGOS';
+import {HomeIcon, Social, Services, Orders, Finder, Setting, Pets} from '../assets/SVG_LOGOS';
 import Colors from '../constants/Colors';
 
 import {SCREEN_WIDTH} from '../constants/WindowSize';
@@ -22,9 +22,8 @@ function BottomTabNavigator() {
           backgroundColor: isDarkMode
             ? Colors.dark.background
             : Colors.light.background,
-          height: SCREEN_WIDTH <= 380 ? 60 : 75,
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
+          height: SCREEN_WIDTH <= 380 ? 60 : 65,
+
           position: 'absolute',
           bottom: 0,
           elevation: 9,
@@ -39,13 +38,13 @@ function BottomTabNavigator() {
         name="HomeScreen"
         component={HomeNavigator}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Services',
           tabBarShowLabel: false,
           headerShown: false,
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
-              <HomeIcon
-                fill={focused ? Colors.primary : '#424244'}
+              <Finder
+                fill={focused ? Colors.primary : Colors.subText}
                 height={SCREEN_WIDTH <= 380 ? 24 : 28}
                 width={SCREEN_WIDTH <= 380 ? 26 : 33}
               />
@@ -54,7 +53,7 @@ function BottomTabNavigator() {
                   focused ? {color: Colors.primary} : {color: '#424244'},
                   styles.textStyle,
                 ]}>
-                Home
+                Services
               </Text>
             </View>
           ),
@@ -68,7 +67,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
               <Social
-                fill={focused ? Colors.primary : '#424244'}
+                fill={focused ? Colors.primary : Colors.subText}
                 height={SCREEN_WIDTH <= 380 ? 24 : 28}
                 width={SCREEN_WIDTH <= 380 ? 26 : 33}
               />
@@ -77,7 +76,7 @@ function BottomTabNavigator() {
                   focused ? {color: Colors.primary} : {color: '#424244'},
                   styles.textStyle,
                 ]}>
-                Social
+                Inbox
               </Text>
             </View>
           ),
@@ -90,8 +89,8 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
-              <Services
-                fill={focused ? Colors.primary : '#424244'}
+              <Pets
+                fill={focused ? Colors.primary : Colors.subText}
                 height={SCREEN_WIDTH <= 380 ? 24 : 28}
                 width={SCREEN_WIDTH <= 380 ? 26 : 33}
               />
@@ -100,7 +99,7 @@ function BottomTabNavigator() {
                   focused ? {color: Colors.primary} : {color: '#424244'},
                   styles.textStyle,
                 ]}>
-                Services
+                My Pets
               </Text>
             </View>
           ),
@@ -114,8 +113,8 @@ function BottomTabNavigator() {
           // tabBarBadge: 3,
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
-              <Orders
-                fill={focused ? Colors.primary : '#424244'}
+              <Setting
+                fill={focused ? Colors.primary : Colors.subText}
                 height={SCREEN_WIDTH <= 380 ? 24 : 28}
                 width={SCREEN_WIDTH <= 380 ? 26 : 33}
               />
@@ -124,7 +123,7 @@ function BottomTabNavigator() {
                   focused ? {color: Colors.primary} : {color: '#424244'},
                   styles.textStyle,
                 ]}>
-                Orders
+                Setting
               </Text>
             </View>
           ),
