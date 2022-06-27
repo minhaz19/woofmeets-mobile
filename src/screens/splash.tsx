@@ -1,7 +1,9 @@
+/* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Text_Size from '../constants/textScaling';
 import MainNavigationContainer from '../navigation/MainNavigationContainer';
+import FirstScreen from './FirstScreen';
 
 const Splash = () => {
   const [isPreviousUser] = useState(false);
@@ -41,7 +43,7 @@ const Splash = () => {
   const RenderIcon = () => {
     return (
       <View style={styles.logoContainer}>
-        <Text>Logo</Text>
+        <FirstScreen/>
       </View>
     );
   };
