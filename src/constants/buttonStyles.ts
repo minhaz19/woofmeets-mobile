@@ -6,10 +6,14 @@ export const btnStyles = StyleSheet.create({
   //card button
   titleStyle: {
     color: 'white',
+    textAlign: 'center',
+    justifyContent: 'center',
     fontSize: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.022 : 20,
+    flex: 1,
   },
   textAlignment: {
     justifyContent: 'center',
+    alignItems: 'center',
   },
   containerStyle: {
     height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.05 : 40,
@@ -21,9 +25,9 @@ export const btnStyles = StyleSheet.create({
   containerStyleFullWidth: {
     height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.05 : 40,
     // width: '95%',
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.primary,
     marginTop: '1%',
-    borderRadius: 4,
+    borderRadius: 50,
     marginLeft: 0,
     marginRight: 0,
   },

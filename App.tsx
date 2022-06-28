@@ -35,9 +35,9 @@ const App = () => {
   // Geocoder.init(GOOGLE_MAP_KEY);
   return (
     <Provider store={store}>
-      <SafeAreaView style={GlobalStyles.droidSafeArea}>
-        <Splash state={state} setState={setState} />
-      </SafeAreaView>
+      {/* <SafeAreaView style={GlobalStyles.droidSafeArea}> */}
+      <Splash state={state} setState={setState} />
+      {/* </SafeAreaView> */}
     </Provider>
   );
 };
