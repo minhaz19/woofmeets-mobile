@@ -16,6 +16,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Splash from './src/screens/splash';
 import store from './src/store/store';
+import VerifyAccount from './src/screens/VerifyAccount';
 
 Icon.loadFont();
 Fst.loadFont();
@@ -35,9 +36,10 @@ const App = () => {
   // Geocoder.init(GOOGLE_MAP_KEY);
   return (
     <Provider store={store}>
-      {/* <SafeAreaView style={GlobalStyles.droidSafeArea}> */}
-      <Splash state={state} setState={setState} />
-      {/* </SafeAreaView> */}
+      <SafeAreaView style={GlobalStyles.droidSafeArea}>
+        {/* <Splash state={state} setState={setState} /> */}
+        <VerifyAccount />
+      </SafeAreaView>
     </Provider>
   );
 };
