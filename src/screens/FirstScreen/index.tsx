@@ -1,9 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import React from 'react';
 import Colors from '../../constants/Colors';
-import PetSvg from '../../assets/splash/svg_icon';
 import FirstScreenSvg from '../../components/common/FirstScreenSvg';
 
 const FirstScreen = () => {
@@ -46,9 +45,11 @@ const FirstScreen = () => {
         <FirstScreenSvg />
       </View>
       <View style={styles.logoContainer}>
-        <View style={styles.roundContainer}>
-          <PetSvg height={'50%'} width={'50%'} fill={'#FF8B3D'} />
-        </View>
+        <Image
+          style={styles.roundContainer}
+          resizeMode="contain"
+          source={require('../../assets/image/login/logo.png')}
+        />
       </View>
     </View>
   );
@@ -65,10 +66,10 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: 100,
     height: 100,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: 'white',
+    // borderColor: 'white',
   },
   logoContainer: {
     flex: 1,
