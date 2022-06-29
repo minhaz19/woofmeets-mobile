@@ -6,41 +6,7 @@ import Login from '../Login';
 
 const AuthHome = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <Login />
-    // <View
-    //   style={[
-    //     styles.logoContainer,
-    //     {
-    //       backgroundColor: isDarkMode
-    //         ? Colors.dark.background
-    //         : Colors.background,
-    //     },
-    //   ]}>
-    //   <Text
-    //     style={[
-    //       styles.headerText,
-    //       {
-    //         color: isDarkMode ? Colors.dark.text : Colors.text,
-    //       },
-    //     ]}>
-    //     This is a auth header
-    //   </Text>
-    //   <Text
-    //     style={[
-    //       styles.text,
-    //       {
-    //         color: isDarkMode ? Colors.dark.text : Colors.text,
-    //       },
-    //     ]}>
-    //     One unified app for Meetings, Phone and Chat together on any device.
-    //     Bundle Zoom Phone, Meetings and Chat together and save. Move from a chat
-    //     or a phone call to a meeting with a single click Enjoy industry leading
-    //     usability with top-rated video and audio quality Apps are available for
-    //     Windows, MacOS and Linux as well as for iOS and Android OS
-    //   </Text>
-    // </View>
-  );
+  return <Login />;
 };
 
 const styles = StyleSheet.create({

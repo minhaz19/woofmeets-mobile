@@ -70,6 +70,7 @@ class AppIntroSlider extends React.Component {
             onPress={() => {
               clearTimeout(this.timer1);
               clearTimeout(this.timer2);
+              clearTimeout(this.timer3);
               this.props.onDone();
             }}
             style={styles.skipContainerView}>
@@ -146,6 +147,7 @@ class AppIntroSlider extends React.Component {
         () => {
           clearTimeout(this.timer1);
           clearTimeout(this.timer2);
+          clearTimeout(this.timer3);
           this.props.onDone();
         },
         this.props.renderSkipButton,
