@@ -1,8 +1,10 @@
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
+  TouchableWithoutFeedback,
   useColorScheme,
   View,
 } from 'react-native';
@@ -25,25 +27,27 @@ const Login = () => {
             : Colors.secondary,
         },
       ]}>
-      <ScrollView
-        // contentContainerStyle={{flexGrow: 1}}
-        showsVerticalScrollIndicator={false}
-        style={[
-          styles.infoContainer,
-          {
-            backgroundColor: isDarkMode
-              ? Colors.dark.lightDark
-              : Colors.background,
-          },
-        ]}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <LoginHeader />
-          <LoginInput />
-          <LoginFooter />
-          <View style={styles.view} />
-        </KeyboardAvoidingView>
-      </ScrollView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={50}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={[
+              styles.infoContainer,
+              {
+                backgroundColor: isDarkMode
+                  ? Colors.dark.lightDark
+                  : Colors.background,
+              },
+            ]}>
+            <LoginHeader />
+            <LoginInput />
+            <LoginFooter />
+            <View style={styles.view} />
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </Screen>
   );
 };
