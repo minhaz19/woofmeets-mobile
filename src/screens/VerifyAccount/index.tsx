@@ -3,11 +3,12 @@ import React from 'react';
 import VerifyAccountHeader from '../../components/ScreenComponent/VerifyAccount/VerifyAccountHeader';
 import VerifyAccountInput from '../../components/ScreenComponent/VerifyAccount/VerifyAccountInput';
 import Colors from '../../constants/Colors';
+import Screen from '../../components/common/Screen';
 
 const VerifyAccount = () => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
-    <View
+    <Screen
       style={[
         styles.container,
         {
@@ -28,7 +29,7 @@ const VerifyAccount = () => {
         <VerifyAccountHeader />
         <VerifyAccountInput />
       </View>
-    </View>
+    </Screen>
   );
 };
 

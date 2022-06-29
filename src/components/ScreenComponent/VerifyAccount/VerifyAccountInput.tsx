@@ -37,7 +37,7 @@ const VerifyAccountInput = () => {
         }}>
         <Text
           style={[
-            {color: 'gray', fontSize: Text_Size.Text_2},
+            {color: 'gray', fontSize: Text_Size.Text_1},
             {
               color: isDarkMode ? Colors.dark.text : Colors.headerText,
             },
@@ -47,7 +47,7 @@ const VerifyAccountInput = () => {
         <TouchableOpacity>
           <Text
             style={[
-              {fontSize: Text_Size.Text_2},
+              {fontSize: Text_Size.Text_1},
               {
                 color: isDarkMode ? Colors.primary : Colors.primary,
               },
@@ -84,32 +84,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-  otpView: {
-    width: '80%',
-    height: 100,
-    marginVertical: 10,
-  },
-
   borderStyleBase: {
     width: 30,
     height: 45,
   },
-
   borderStyleHighLighted: {
     borderColor: Colors.primary,
   },
-
   underlineStyleBase: {
     width: 45,
     height: 45,
     borderRadius: 5,
     backgroundColor: 'white',
   },
-
   underlineStyleHighLighted: {
     borderColor: Colors.primary,
   },
+  otpView: {
+    width: '80%',
+    height: 100,
+    marginVertical: 10,
+  },
+
   buttonStyle: {
     // backgroundColor: Colors.primary,
     paddingHorizontal: 20,
