@@ -3,9 +3,8 @@ import React from 'react';
 import AppForm from '../../common/Form/AppForm';
 import AppFormField from '../../common/Form/AppFormField';
 import * as Yup from 'yup';
-import SubmitButton from '../../common/Form/SubmitButton';
 import ButtonCom from '../../UI/ButtonCom';
-import { btnStyles } from '../../../constants/buttonStyles';
+import {btnStyles} from '../../../constants/buttonStyles';
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
   password: Yup.string().required().min(8).label('Password'),

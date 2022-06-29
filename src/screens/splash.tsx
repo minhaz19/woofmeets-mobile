@@ -41,7 +41,7 @@ const Splash = ({}) => {
       key: 4,
       title: 'Best Services',
       text: 'Give your pet the best care possible',
-      image: require('../assets/splash/sp-3.png'),
+      image: require('../assets/splash/sp-4.png'),
       backgroundColor: '#22bcb5',
     },
   ];
