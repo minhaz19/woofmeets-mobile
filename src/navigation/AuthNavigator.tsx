@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import AuthHome from '../screens/auth/AuthHome';
+import Login from '../screens/Login';
 
 const Stack = createStackNavigator();
 
@@ -9,7 +9,7 @@ function AuthNavigator() {
     <Stack.Navigator initialRouteName="AuthHomeScreen">
       <Stack.Screen
         name="AuthHomeScreen"
-        component={AuthHome}
+        component={Login}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

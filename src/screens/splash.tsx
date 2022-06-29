@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, Text, useColorScheme, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,7 +7,7 @@ import Text_Size from '../constants/textScaling';
 import MainNavigationContainer from '../navigation/MainNavigationContainer';
 import FirstScreen from './FirstScreen';
 
-const Splash = () => {
+const Splash = ({}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [isPreviousUser] = useState(false);
 
@@ -47,7 +46,7 @@ const Splash = () => {
     },
   ];
 
-  const _renderItem = ({item}): JSX.Element => {
+  const _renderItem = ({item}: any): JSX.Element => {
     return (
       <View
         style={[
@@ -142,7 +141,7 @@ const Splash = () => {
   const RenderIcon = () => {
     return (
       <View style={styles.logoContainer}>
-        <FirstScreen/>
+        <FirstScreen />
       </View>
     );
   };

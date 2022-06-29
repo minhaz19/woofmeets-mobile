@@ -9,7 +9,7 @@ import {
 import React from 'react';
 type Props = {
   children: React.ReactNode;
-  style?: ViewStyle;
+  style?: ViewStyle | any;
 };
 const Screen = ({children, style}: Props) => {
   return (

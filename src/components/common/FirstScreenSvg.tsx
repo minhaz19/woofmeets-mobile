@@ -4,7 +4,7 @@ import PetSvg from '../../assets/splash/svg_icon';
 
 const FirstScreenSvg = () => {
   return (
-    <View style={{paddingRight: 150}}>
+    <View style={styles.petSvg}>
       <PetSvg height={30} width={30} fill={'#FF8B3D'} />
     </View>
   );
@@ -12,4 +12,6 @@ const FirstScreenSvg = () => {
 
 export default FirstScreenSvg;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  petSvg: {paddingRight: 150},
+});

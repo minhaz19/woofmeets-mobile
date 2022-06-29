@@ -1,9 +1,6 @@
-import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native';
+import React from 'react';
 import {Provider} from 'react-redux';
 import 'react-native-gesture-handler';
-
-import GlobalStyles from './GlobalStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Fst from 'react-native-vector-icons/Fontisto';
 import Mci from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,7 +13,6 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Splash from './src/screens/splash';
 import store from './src/store/store';
-import VerifyAccount from './src/screens/VerifyAccount';
 
 Icon.loadFont();
 Fst.loadFont();
@@ -30,16 +26,12 @@ Fe.loadFont();
 Foundation.loadFont();
 
 const App = () => {
-  const [state, setState] = useState({
-    showRealApp: false,
-  });
   // Geocoder.init(GOOGLE_MAP_KEY);
   return (
     <Provider store={store}>
-      <SafeAreaView style={GlobalStyles.droidSafeArea}>
-        {/* <Splash state={state} setState={setState} /> */}
-        <VerifyAccount />
-      </SafeAreaView>
+      {/* <SafeAreaView style={GlobalStyles.droidSafeArea}> */}
+      <Splash />
+      {/* </SafeAreaView> */}
     </Provider>
   );
 };

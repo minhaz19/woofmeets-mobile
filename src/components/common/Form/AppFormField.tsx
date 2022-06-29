@@ -1,7 +1,6 @@
-/* eslint-disable react/jsx-no-comment-textnodes */
 import React from 'react';
 import ErrorMessage from './ErrorMessage';
-import {useFormikContext} from 'formik';
+import {FormikValues, useFormikContext} from 'formik';
 import AppInput from './AppInput';
 import {StyleSheet, Text} from 'react-native';
 import Text_Size from '../../../constants/textScaling';
@@ -28,7 +27,8 @@ const AppFormField = ({
   label,
 }: Props) => {
   const {setFieldTouched, touched, errors, values, setFieldValue} =
-    useFormikContext();
+    useFormikContext<FormikValues>();
+
   return (
     <>
       <Text style={styles.label}>{label}</Text>
@@ -59,11 +59,13 @@ export default AppFormField;
 const styles = StyleSheet.create({
   label: {
     fontSize: Text_Size.Text_1,
+    fontWeight: '600',
   },
   forgotPassword: {
     fontSize: Text_Size.Text_0,
     textAlign: 'right',
     marginBottom: 10,
     marginRight: 5,
+    fontWeight: '500',
   },
 });
