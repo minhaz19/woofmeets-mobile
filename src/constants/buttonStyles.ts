@@ -30,6 +30,7 @@ export const btnStyles = StyleSheet.create({
     borderRadius: 50,
     marginLeft: 0,
     marginRight: 0,
+    justifyContent: 'center',
   },
   textAlignmentNoPadding: {
     justifyContent: 'center',

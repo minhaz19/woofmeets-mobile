@@ -1,15 +1,19 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 import Ant from 'react-native-vector-icons/AntDesign';
 interface Props {
-  name: string;
+  name?: string;
+  image?: any;
 }
-const Icon = ({name}: Props) => {
+const Icon = ({name, image}: Props) => {
   return (
-    <View style={styles.container}>
-      <Ant size={20} name={name} color={'black'} />
-    </View>
+    <TouchableOpacity style={styles.container}>
+      {name && <Ant size={20} name={name} color={'black'} />}
+      {image && (
+        <Image source={image} style={styles.image} resizeMode="contain" />
+      )}
+    </TouchableOpacity>
   );
 };
 
@@ -24,4 +28,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f4f4',
     borderRadius: 50,
   },
+  image: {width: 30, height: 30},
 });

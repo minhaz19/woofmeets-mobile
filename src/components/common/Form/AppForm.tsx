@@ -3,7 +3,7 @@ import React from 'react';
 interface Props {
   children: React.ReactNode;
   initialValues: {};
-  onSubmit: () => void;
+  onSubmit: (v: {}) => void;
   validationSchema: {};
 }
 const AppForm = ({
