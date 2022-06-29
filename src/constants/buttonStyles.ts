@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import Colors from './Colors';
+import Text_Size from './textScaling';
 import {SCREEN_HEIGHT} from './WindowSize';
 
 export const btnStyles = StyleSheet.create({
@@ -8,7 +8,7 @@ export const btnStyles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.022 : 20,
+    fontSize: Text_Size.Text_1,
     flex: 1,
   },
   textAlignment: {
@@ -16,16 +16,13 @@ export const btnStyles = StyleSheet.create({
     alignItems: 'center',
   },
   containerStyle: {
-    height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.05 : 40,
+    height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.06 : 55,
     width: '90%',
-    backgroundColor: Colors.secondary,
     marginTop: '1%',
     borderRadius: 4,
   },
   containerStyleFullWidth: {
-    height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.05 : 40,
-    // width: '95%',
-    backgroundColor: Colors.primary,
+    height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.06 : 55,
     marginTop: '1%',
     borderRadius: 50,
     marginLeft: 0,

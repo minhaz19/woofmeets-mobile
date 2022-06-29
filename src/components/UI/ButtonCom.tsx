@@ -7,6 +7,7 @@ import {
   GestureResponderEvent,
   ViewStyle,
   TextStyle,
+  useColorScheme,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
@@ -14,21 +15,31 @@ import Card from './Card';
 
 const ButtonCom = (props: {
   containerStyle: any;
-  progressStyle: ViewStyle | undefined;
+  progressStyle?: ViewStyle | undefined;
   onSelect: ((event: GestureResponderEvent) => void) | undefined;
   textAlignment: ViewStyle | undefined;
-  isLeftIcon: any;
+  isLeftIcon?: any;
   titleStyle: TextStyle | undefined;
   title: String | undefined;
-  icon: any;
+  icon?: any;
 }) => {
+  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <Card style={{...styles.cardlist, ...props.containerStyle}}>
+    <Card
+      style={{
+        ...styles.cardlist,
+        ...props.containerStyle,
+        backgroundColor: isDarkMode ? Colors.button.grey : Colors.primary,
+      }}>
       <View style={{...styles.progressContainer, ...props.progressStyle}} />
       <View style={{...styles.touchable}}>
         <TouchableOpacity onPress={props.onSelect}>
           <View style={{...styles.card, ...props.textAlignment}}>
-            <Text style={{...styles.title, ...props.titleStyle}}>
+            <Text
+              style={{
+                ...styles.title,
+                ...props.titleStyle,
+              }}>
               {props.title}
             </Text>
             {props.icon && (

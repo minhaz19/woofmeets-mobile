@@ -24,7 +24,7 @@ export default {
   },
   button: {
     blue: '#81a7ff',
-    grey: '#ebebeb',
+    grey: 'grey',
   },
   primary: '#FFA558',
   secondary: '#FEF1E8',
