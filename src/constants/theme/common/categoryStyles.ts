@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import Colors from './Colors';
-import {SCREEN_WIDTH} from './WindowSize';
+import Colors from '../../Colors';
+import {SCREEN_WIDTH} from '../../WindowSize';
 
 export const categoryStyles = StyleSheet.create({
   container: {
@@ -25,7 +25,7 @@ export const categoryStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.background,
-    borderColor: Colors.categoryBorderInactive,
+    // borderColor: Colors.categoryBorderInactive,
   },
   serviceIcon: {
     width: SCREEN_WIDTH < 700 ? SCREEN_WIDTH * 0.14 : 69,

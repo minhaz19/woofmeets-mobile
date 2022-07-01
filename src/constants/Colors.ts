@@ -3,12 +3,10 @@ const tintColorDark: String = '#fff';
 
 export default {
   light: {
-    text: 'white',
-    lighttext: '#a0a0a0',
-    mediumtext: '#404040',
-    background: 'white',
-    textBackground: '#d8d8d8',
-    backgroundColor: '#ffffff',
+    text: 'black',
+    headerText: '#231F20',
+    subText: '#9E9E9E',
+    background: '#ffffff',
     borderColor: '#d7dae2',
     tint: tintColorLight,
     tabIconDefault: '#ccc',
@@ -28,8 +26,6 @@ export default {
   },
   primary: '#FFA558',
   secondary: '#FEF1E8',
-  // primary: '#FFA557',
-  // secondary: '#fcebdc',
   background: 'white',
   text: '#231F20',
   headerText: '#231F20',

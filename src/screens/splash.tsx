@@ -4,6 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppIntroSlider from '../components/splash/react-native-app-intro-slider/dist';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
+import { textStyle } from '../constants/theme/common/textStyle';
 import MainNavigationContainer from '../navigation/MainNavigationContainer';
 import FirstScreen from './FirstScreen';
 
@@ -204,13 +205,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   description: {
-    color: Colors.subText,
     paddingTop: 15,
-    fontSize: Text_Size.Text_1,
     marginBottom: 15,
     fontWeight: '500',
     textAlign: 'center',
     marginHorizontal: '10%',
+    ...textStyle.descriptionText,
   },
   image: {
     flex: 1,

@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {btnStyles} from '../../constants/buttonStyles';
+import {btnStyles} from '../../constants/theme/common/buttonStyles';
 import Text_Size from '../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 interface Props {

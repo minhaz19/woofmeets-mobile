@@ -1,11 +1,11 @@
 import {Dimensions, StyleSheet} from 'react-native';
-import Colors from './Colors';
+import Colors from '../../Colors';
 import {
   descriptionDarkText,
   descriptionLightText,
   descriptionPrimaryText,
   useArialNormal,
-} from './FontDetails';
+} from '../../FontDetails';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -16,7 +16,7 @@ export const inputStyles = StyleSheet.create({
     height: SCREEN_HEIGHT <= 700 ? SCREEN_HEIGHT * 0.04 : SCREEN_HEIGHT * 0.05,
     borderRadius: 4,
     borderBottomWidth: 1,
-    borderColor: Colors.light.lighttext,
+    borderColor: Colors.light.borderColor,
   },
   inputDes: {
     height: 'auto',
@@ -34,7 +34,7 @@ export const inputStyles = StyleSheet.create({
     padding: 10,
     margin: 12,
     color: 'black',
-    borderColor: Colors.light.lighttext,
+    borderColor: Colors.light.borderColor,
   },
   containerStyle: {
     paddingLeft: '5%',
@@ -45,7 +45,7 @@ export const inputStyles = StyleSheet.create({
     height: SCREEN_HEIGHT <= 700 ? SCREEN_HEIGHT * 0.058 : SCREEN_HEIGHT * 0.07,
     borderRadius: 4,
     borderBottomWidth: 1,
-    borderColor: Colors.light.lighttext,
+    borderColor: Colors.light.borderColor,
   },
   containerStylePet: {
     paddingLeft: '5%',
@@ -79,7 +79,7 @@ export const inputStyles = StyleSheet.create({
     height: SCREEN_HEIGHT <= 700 ? SCREEN_HEIGHT * 0.04 : SCREEN_HEIGHT * 0.05,
     borderRadius: 4,
     borderBottomWidth: 1,
-    borderColor: Colors.light.lighttext,
+    borderColor: Colors.light.borderColor,
   },
   inputStyleBook: {
     color: 'black',
