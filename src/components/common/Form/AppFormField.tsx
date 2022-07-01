@@ -14,6 +14,7 @@ interface Props {
   placeholder?: string;
   textContentType?: string;
   secureTextEntry?: boolean;
+  forgotPassword?: boolean;
 }
 const AppFormField = ({
   name,
@@ -25,9 +26,16 @@ const AppFormField = ({
   textContentType,
   secureTextEntry,
   label,
+  forgotPassword,
 }: Props) => {
-  const {setFieldTouched, touched, errors, values, setFieldValue} =
-    useFormikContext<FormikValues>();
+  const {
+    setFieldTouched,
+
+    touched,
+    errors,
+    values,
+    setFieldValue,
+  } = useFormikContext<FormikValues>();
 
   return (
     <>
@@ -47,7 +55,7 @@ const AppFormField = ({
       />
 
       <ErrorMessage error={errors[name]} visible={touched[name]} />
-      {secureTextEntry && (
+      {forgotPassword && (
         <Text style={styles.forgotPassword}>Forgot Password ?</Text>
       )}
     </>

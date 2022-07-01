@@ -22,7 +22,12 @@ export const btnStyles = StyleSheet.create({
     borderRadius: 4,
   },
   containerStyleFullWidth: {
-    height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.06 : 55,
+    height:
+      SCREEN_HEIGHT > 400 && SCREEN_HEIGHT <= 800
+        ? SCREEN_HEIGHT * 0.06
+        : SCREEN_HEIGHT <= 400
+        ? SCREEN_HEIGHT * 0.04
+        : 45,
     marginTop: '1%',
     borderRadius: 50,
     marginLeft: 0,

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, Text, useColorScheme, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';

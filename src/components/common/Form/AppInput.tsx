@@ -2,7 +2,7 @@ import {StyleSheet, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {EyeClose, EyeOpen} from '../../../assets/SVG_LOGOS';
 const screen = SCREEN_WIDTH;
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
@@ -17,19 +17,9 @@ const AppInput = ({...otherProps}) => {
       />
       {otherProps.secureTextEntry &&
         (show ? (
-          <MIcon
-            name="eye-off"
-            size={20}
-            color={'gray'}
-            onPress={() => setShow(!show)}
-          />
+          <EyeOpen size={20} onPress={() => setShow(!show)} />
         ) : (
-          <MIcon
-            name="eye"
-            size={20}
-            color={'gray'}
-            onPress={() => setShow(!show)}
-          />
+          <EyeClose size={20} onPress={() => setShow(!show)} />
         ))}
     </View>
   );
@@ -43,7 +33,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: 'row',
     width: '100%',
-    paddingVertical: screen > 390 ? -10 : 10,
+    height: 40,
+    paddingVertical: screen > 390 ? -10 : 0,
     paddingHorizontal: 15,
     marginVertical: 10,
     justifyContent: 'space-between',

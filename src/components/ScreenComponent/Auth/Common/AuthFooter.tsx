@@ -1,22 +1,17 @@
 import {StyleSheet, Text, useColorScheme, View} from 'react-native';
 import React from 'react';
 import {Divider} from '@rneui/themed';
-import Icon from '../../common/Icon';
-import Colors from '../../../constants/Colors';
-import Text_Size from '../../../constants/textScaling';
+import Colors from '../../../../constants/Colors';
+import Icon from '../../../common/Icon';
+import Text_Size from '../../../../constants/textScaling';
 
-const icons = [
-  {
-    image: require('../../../assets/image/login/google.png'),
-  },
-  {
-    image: require('../../../assets/image/login/facebook.png'),
-  },
-  {
-    image: require('../../../assets/image/login/apple.png'),
-  },
-];
-const LoginFooter = () => {
+interface Props {
+  icons: {image: any}[];
+  title: string;
+  accountType: string;
+  authType: string;
+}
+const AuthFooter = ({icons, title, accountType, authType}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.container}>
@@ -32,7 +27,7 @@ const LoginFooter = () => {
                   : Colors.background,
               },
             ]}>
-            Or login with
+            {title}
           </Text>
         </View>
       </View>
@@ -43,15 +38,15 @@ const LoginFooter = () => {
       </View>
       <View>
         <Text style={styles.haveAccount}>
-          Do you have any account?{' '}
-          <Text style={{color: Colors.primary}}>Sign In</Text>
+          {accountType}
+          <Text style={{color: Colors.primary}}>{authType}</Text>
         </Text>
       </View>
     </View>
   );
 };
 
-export default LoginFooter;
+export default AuthFooter;
 
 const styles = StyleSheet.create({
   container: {
