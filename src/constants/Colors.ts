@@ -14,7 +14,7 @@ export default {
   },
   dark: {
     text: 'white',
-    background: 'black',
+    background: '#000000',
     lightDark: '#1D1E20',
     tint: tintColorDark,
     tabIconDefault: '#ccc',
