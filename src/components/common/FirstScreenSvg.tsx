@@ -1,11 +1,14 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import React from 'react';
-import PetSvg from '../../assets/splash/svg_icon';
 
 const FirstScreenSvg = () => {
   return (
-    <View style={styles.petSvg}>
-      <PetSvg height={30} width={30} fill={'#FF8B3D'} />
+    <View style={styles.roundContainer}>
+      <Image
+        style={styles.image}
+        resizeMode="contain"
+        source={require('../../assets/splash/ionic-md-paw.png')}
+      />
     </View>
   );
 };
@@ -13,5 +16,11 @@ const FirstScreenSvg = () => {
 export default FirstScreenSvg;
 
 const styles = StyleSheet.create({
-  petSvg: {paddingRight: 150},
+  roundContainer: {
+    paddingRight: 150,
+  },
+  image: {
+    width: 30,
+    height: 30,
+  },
 });

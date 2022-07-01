@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View, Image} from 'react-native';
 import React from 'react';
 import Colors from '../../constants/Colors';
@@ -60,6 +59,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
+    opacity: 0.9,
   },
   roundContainer: {
     borderRadius: 100,
