@@ -24,7 +24,7 @@ export default {
     blue: '#81a7ff',
     grey: 'grey',
   },
-  primary: '#FFA558',
+  primary: '#FFA557',
   secondary: '#FEF1E8',
   background: 'white',
   text: '#231F20',
