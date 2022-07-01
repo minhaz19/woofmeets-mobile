@@ -1,26 +1,25 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import Text_Size from '../../../constants/textScaling';
+import Text_Size from '../../../../constants/textScaling';
 
-const LoginHeader = () => {
+interface Props {
+  title: string;
+  subTitle: string;
+  image: any;
+}
+const AuthHeader = ({image, title, subTitle}: Props) => {
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        resizeMode="contain"
-        source={require('../../../assets/image/login/logo.png')}
-      />
+      <Image style={styles.image} resizeMode="contain" source={image} />
       <View>
-        <Text style={styles.title}>Login</Text>
-        <Text style={styles.subTitle}>
-          Discover your socal and try to login
-        </Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.subTitle}>{subTitle}</Text>
       </View>
     </View>
   );
 };
 
-export default LoginHeader;
+export default AuthHeader;
 
 const styles = StyleSheet.create({
   container: {

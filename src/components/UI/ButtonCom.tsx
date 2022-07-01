@@ -24,6 +24,7 @@ const ButtonCom = (props: {
   icon?: any;
 }) => {
   const isDarkMode = useColorScheme() === 'dark';
+
   return (
     <Card
       style={{

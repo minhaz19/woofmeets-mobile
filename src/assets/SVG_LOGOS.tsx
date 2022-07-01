@@ -466,12 +466,13 @@ export function BackButton(props) {
   );
 }
 
-export function EyeClose(props) {
+export function EyeClose(props: {size: number; onPress: () => void}) {
   return (
     <Svg
+      // onPress={props.onPress}
       xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={18}
+      width={props.size ? props.size : 24}
+      height={props.size ? props.size : 18}
       viewBox="0 0 24 18"
       {...props}>
       <Path
@@ -482,12 +483,13 @@ export function EyeClose(props) {
   );
 }
 
-export function EyeOpen(props) {
+export function EyeOpen(props: {size: number; onPress: () => void}) {
   return (
     <Svg
+      // onPress={props.onPress}
       xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
+      width={props.size ? props.size : 24}
+      height={props.size ? props.size : 24}
       viewBox="0 0 24 24"
       {...props}>
       <Path d="M0 0h24v24H0z" fill="none" />

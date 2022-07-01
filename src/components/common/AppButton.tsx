@@ -3,9 +3,10 @@ import React from 'react';
 import {btnStyles} from '../../constants/theme/common/buttonStyles';
 import Text_Size from '../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
+import Colors from '../../constants/Colors';
 interface Props {
   title: string;
-  onPress: () => void;
+  onPress?: () => void;
 }
 const width = SCREEN_WIDTH;
 const AppButton = ({title, onPress}: Props) => {
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'center',
-    color: 'white',
+    fontWeight: '600',
+    color: Colors.primary,
   },
 });

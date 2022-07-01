@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import baseUrl from '../../helpers/httpRequest';
+import baseUrl from '../../utils/helpers/httpRequest';
 
 export const getDetails = createAsyncThunk('auth/getDetails', async () => {
   const response = await fetch(`${baseUrl}/user/`, {
