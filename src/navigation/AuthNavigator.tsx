@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 function AuthNavigator() {
   return (
     <Stack.Navigator initialRouteName="AfterIntroScreen">
-      <Stack.Screen
+      {/* <Stack.Screen
         name="AfterIntroScreen"
         component={AfterIntroScreen}
         options={{headerShown: false}}
@@ -42,7 +42,7 @@ function AuthNavigator() {
         name="ForgotPasswordOtp"
         component={ForgotPasswordOtp}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen
         name="SetNewPassword"
         component={SetNewPassword}
