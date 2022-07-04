@@ -29,6 +29,9 @@ const forgotPasswordOtpValidationSchema = Yup.object().shape({
 const verifyAccountValidationSchema = Yup.object().shape({
   code: Yup.string().required().min(4).max(4).label('Opt'),
 });
+const addPetValidationSchema = Yup.object().shape({
+  email: Yup.string().required().min(4).max(4).label('Opt'),
+});
 
 export {
   loginValidationSchema,
@@ -37,4 +40,5 @@ export {
   forgotPasswordValidationSchema,
   forgotPasswordOtpValidationSchema,
   verifyAccountValidationSchema,
+  addPetValidationSchema,
 };

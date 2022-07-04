@@ -5,6 +5,7 @@ import {
   SetPasswordType,
   SignUpType,
   verifyAccountType,
+  addPetType,
 } from './types';
 
 const loginValue: LoginType = {email: '', password: ''};
@@ -17,6 +18,7 @@ const setPasswordValue: SetPasswordType = {
 const forgotPasswordValue: forgotPasswordType = {email: ''};
 const forgotPasswordOtpValue: forgotPasswordOtpType = {code: ''};
 const verifyAccountValue: verifyAccountType = {code: ''};
+const addPetValue: addPetType = {email: ''};
 
 export {
   loginValue,
@@ -25,4 +27,5 @@ export {
   forgotPasswordValue,
   forgotPasswordOtpValue,
   verifyAccountValue,
+  addPetValue,
 };

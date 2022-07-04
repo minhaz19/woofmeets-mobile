@@ -17,6 +17,8 @@ interface Props {
   textContentType?: string;
   secureTextEntry?: boolean;
   forgotPassword?: boolean;
+  numberOfLines?: number;
+  multiline?: boolean;
 }
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;
@@ -34,6 +36,8 @@ const AppFormField = ({
   secureTextEntry,
   label,
   forgotPassword,
+  numberOfLines,
+  multiline,
 }: Props) => {
   const {setFieldTouched, touched, errors, values, setFieldValue} =
     useFormikContext<FormikValues>();
@@ -55,6 +59,8 @@ const AppFormField = ({
         secureTextEntry={secureTextEntry}
         error={errors[name]}
         touch={touched[name]}
+        numberOfLines={numberOfLines ? numberOfLines : 0}
+        multiline={multiline ? true : false}
       />
 
       <ErrorMessage error={errors[name]} visible={touched[name]} />

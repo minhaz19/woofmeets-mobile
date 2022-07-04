@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import Svg, {
   Defs,
@@ -640,6 +641,68 @@ export const EventsHeader = (props: SvgProps) => (
       fill="#21409A"
       stroke="#21409A"
       strokeWidth={0.5}
+    />
+  </Svg>
+);
+
+export const SquareCheck = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20">
+    <Path
+      id="Icon_ionic-ios-checkbox"
+      data-name="Icon ionic-ios-checkbox"
+      d="M22.833,4.5H6.167A1.665,1.665,0,0,0,4.5,6.167V22.833A1.665,1.665,0,0,0,6.167,24.5H22.833A1.665,1.665,0,0,0,24.5,22.833V6.167A1.665,1.665,0,0,0,22.833,4.5ZM20.1,11.505,13.135,18.5H13.13a.941.941,0,0,1-.6.286.912.912,0,0,1-.609-.3L9,15.573a.208.208,0,0,1,0-.3l.927-.927a.2.2,0,0,1,.292,0l2.313,2.312,6.354-6.4a.206.206,0,0,1,.146-.062h0a.189.189,0,0,1,.146.063l.911.943A.205.205,0,0,1,20.1,11.505Z"
+      transform="translate(-4.5 -4.5)"
+      fill="#ffa557"
+    />
+  </Svg>
+);
+
+export const Square = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20">
+    <Path
+      id="Icon_material-check-box-outline-blank"
+      data-name="Icon material-check-box-outline-blank"
+      d="M22.278,6.722V22.278H6.722V6.722H22.278m0-2.222H6.722A2.229,2.229,0,0,0,4.5,6.722V22.278A2.229,2.229,0,0,0,6.722,24.5H22.278A2.229,2.229,0,0,0,24.5,22.278V6.722A2.229,2.229,0,0,0,22.278,4.5Z"
+      transform="translate(-4.5 -4.5)"
+      fill="#9e9e9e"
+    />
+  </Svg>
+);
+export const Circle = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20.482"
+    height="20.482"
+    viewBox="0 0 20.482 20.482">
+    <Path
+      id="Icon_material-radio-button-unchecked"
+      data-name="Icon material-radio-button-unchecked"
+      d="M13.241,3A10.241,10.241,0,1,0,23.482,13.241,10.245,10.245,0,0,0,13.241,3Zm0,18.434a8.193,8.193,0,1,1,8.193-8.193A8.191,8.191,0,0,1,13.241,21.434Z"
+      transform="translate(-3 -3)"
+      fill="#9e9e9e"
+    />
+  </Svg>
+);
+export const CircleCheck = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20.482"
+    height="20.482"
+    viewBox="0 0 20.482 20.482">
+    <Path
+      id="Icon_material-radio-button-checked"
+      data-name="Icon material-radio-button-checked"
+      d="M13.241,8.121a5.121,5.121,0,1,0,5.121,5.121A5.122,5.122,0,0,0,13.241,8.121Zm0-5.121A10.241,10.241,0,1,0,23.482,13.241,10.245,10.245,0,0,0,13.241,3Zm0,18.434a8.193,8.193,0,1,1,8.193-8.193A8.191,8.191,0,0,1,13.241,21.434Z"
+      transform="translate(-3 -3)"
+      fill="#ffa557"
     />
   </Svg>
 );
