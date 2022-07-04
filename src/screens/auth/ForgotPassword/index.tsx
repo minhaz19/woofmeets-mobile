@@ -8,23 +8,21 @@ import {
 } from 'react-native';
 import React from 'react';
 import Colors from '../../../constants/Colors';
-import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHeader';
 import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
-import AuthFooter from '../../../components/ScreenComponent/Auth/Common/AuthFooter';
-import {signupValue} from '../../../utils/config/initalValues';
-import {signUpValidationSchema} from '../../../utils/config/validationSchema';
-import {
-  othersAuthIcons,
-  signUpInitalState,
-} from '../../../utils/config/Data/signUpDatas';
-
+import {forgotPasswordValue} from '../../../utils/config/initalValues';
+import {forgotPasswordValidationSchema} from '../../../utils/config/validationSchema';
+import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
+const forgotPassData = {
+  image: require('../../../assets/image/forgotPassword/password.png'),
+  title: 'Forgot Password?',
+};
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
-const SignUp = ({navigation}: Props) => {
+const ForgotPassword = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const handleSubmit = () => {
-    navigation.navigate('VerifyAccount');
+    navigation.navigate('ForgotPasswordOtp');
   };
   return (
     <ScrollView
@@ -48,46 +46,35 @@ const SignUp = ({navigation}: Props) => {
         ]}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <AuthHeader
-            title={signUpInitalState.title}
-            subTitle={signUpInitalState.subTitle}
-            image={signUpInitalState.image}
+          <ImageAndTitle
+            image={forgotPassData.image}
+            title={forgotPassData.title}
           />
           <AuthForm
-            initialValues={signupValue}
-            validationSchema={signUpValidationSchema}
+            initialValues={forgotPasswordValue}
+            validationSchema={forgotPasswordValidationSchema}
             handleSubmit={handleSubmit}
-            btnTitle="SIGN UP"
-            termsAndCond
-          />
-          <AuthFooter
-            icons={othersAuthIcons}
-            accountType="Already have an account? "
-            authType="LOGIN"
-            title="or login with"
-            navigateScreen="LogIn"
+            btnTitle="Continue"
+            forgotPassword
           />
         </KeyboardAvoidingView>
-        <View style={styles.view} />
       </View>
     </ScrollView>
   );
 };
 
-export default SignUp;
+export default ForgotPassword;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   infoContainer: {
-    flexGrow: 1,
-    marginTop: 120,
+    height: '100%',
+    marginTop: 150,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
-  },
-  view: {
-    height: 80,
+    bottom: 0,
   },
 });

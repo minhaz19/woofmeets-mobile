@@ -17,15 +17,19 @@ import {
   othersAuthIcons,
 } from '../../../utils/config/Data/loginDatas';
 import {loginValidationSchema} from '../../../utils/config/validationSchema';
-
-const Login = () => {
+interface Props {
+  navigation: {navigate: (arg0: string) => void};
+}
+const Login = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    navigation.navigate('VerifyAccount');
+  };
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.container}
       style={[
-        styles.container,
         {
           backgroundColor: isDarkMode
             ? Colors.dark.background
@@ -59,9 +63,10 @@ const Login = () => {
             accountType="Don't have any account? "
             authType="Sign Up"
             title="or login with"
+            navigateScreen="SignUp"
           />
         </KeyboardAvoidingView>
-        <View style={styles.view} />
+        {/* <View style={styles.view} /> */}
       </View>
     </ScrollView>
   );
@@ -72,6 +77,7 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'flex-end',
   },
   infoContainer: {
     flexGrow: 1,
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     padding: 20,
   },
-  view: {
-    height: 80,
-  },
+  // view: {
+  //   height: 80,
+  // },
 });
