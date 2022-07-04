@@ -5,6 +5,9 @@ import AppForm from '../../../common/Form/AppForm';
 import AppFormField from '../../../common/Form/AppFormField';
 import AppButton from '../../../common/AppButton';
 import SubmitButton from '../../../common/Form/SubmitButton';
+import AuthOTP from './AuthOTP';
+import ResendCode from '../VerifyAccount/ResendCode';
+import AppSwitch from '../../../common/AppSwitch';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -12,6 +15,12 @@ interface Props {
   validationSchema: any;
   btnTitle: string;
   setNewPassword?: boolean;
+  forgotPassword?: boolean;
+  forgotPasswordOpt?: boolean;
+  verifyAccount?: boolean;
+  termsAndCond?: boolean;
+  btn2Title?: string;
+  onPress?: () => void;
 }
 const AuthForm = ({
   handleSubmit,
@@ -19,6 +28,12 @@ const AuthForm = ({
   validationSchema,
   btnTitle,
   setNewPassword,
+  forgotPassword,
+  forgotPasswordOpt,
+  btn2Title,
+  verifyAccount,
+  termsAndCond,
+  onPress,
 }: Props) => {
   return (
     <View style={styles.container}>
@@ -26,33 +41,41 @@ const AuthForm = ({
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>
-        <AppFormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon={'email'}
-          keyboardType={'email-address'}
-          placeholder={
-            setNewPassword ? 'Enter old password' : 'Enter your email'
-          }
-          textContentType={setNewPassword ? 'password' : 'emailAddress'}
-          name={setNewPassword ? 'oldPass' : 'email'}
-          label={setNewPassword ? 'Old Password' : 'Email/Phone Number'}
-          secureTextEntry={setNewPassword ? true : false}
-        />
+        {!forgotPasswordOpt && !verifyAccount && (
+          <>
+            <View>
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                icon={'email'}
+                keyboardType={'email-address'}
+                placeholder={
+                  setNewPassword ? 'Enter old password' : 'Enter your email'
+                }
+                textContentType={setNewPassword ? 'password' : 'emailAddress'}
+                name={setNewPassword ? 'oldPass' : 'email'}
+                label={setNewPassword ? 'Old Password' : 'Email/Phone Number'}
+                secureTextEntry={setNewPassword ? true : false}
+              />
+            </View>
 
-        <AppFormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon={'lock'}
-          secureTextEntry
-          placeholder={
-            setNewPassword ? 'Enter new password' : 'Enter your password'
-          }
-          name={setNewPassword ? 'newPass' : 'password'}
-          label={setNewPassword ? 'New Password' : 'Password'}
-          forgotPassword={setNewPassword ? false : true}
-          textContentType={setNewPassword ? 'newPassword' : 'password'}
-        />
+            {!forgotPassword && (
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                icon={'lock'}
+                secureTextEntry
+                placeholder={
+                  setNewPassword ? 'Enter new password' : 'Enter your password'
+                }
+                name={setNewPassword ? 'newPass' : 'password'}
+                label={setNewPassword ? 'New Password' : 'Password'}
+                forgotPassword={setNewPassword || termsAndCond ? false : true}
+                textContentType={setNewPassword ? 'newPassword' : 'password'}
+              />
+            )}
+          </>
+        )}
         {setNewPassword && (
           <AppFormField
             autoCapitalize="none"
@@ -65,9 +88,27 @@ const AuthForm = ({
             label="Confirm Password"
           />
         )}
+        {(forgotPasswordOpt || verifyAccount) && (
+          <View style={styles.otpContainer}>
+            <AuthOTP name="code" />
+          </View>
+        )}
+        {verifyAccount && (
+          <View style={styles.resendBtn}>
+            <ResendCode />
+          </View>
+        )}
+        <View style={styles.switchContainer}>
+          {termsAndCond && <AppSwitch name="terms" terms />}
+        </View>
         <View style={{marginTop: setNewPassword ? 20 : 0}}>
           <SubmitButton title={btnTitle} />
-          {setNewPassword && <AppButton title="Cancel" />}
+          {(setNewPassword || forgotPassword || forgotPasswordOpt) && (
+            <AppButton
+              title={btn2Title ? btn2Title : 'Cancel'}
+              onPress={onPress}
+            />
+          )}
         </View>
       </AppForm>
     </View>
@@ -78,7 +119,15 @@ export default AuthForm;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: ,
     marginTop: '5%',
+  },
+  otpContainer: {
+    marginTop: 20,
+  },
+  resendBtn: {
+    marginTop: 30,
+  },
+  switchContainer: {
+    marginVertical: 20,
   },
 });

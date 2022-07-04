@@ -8,27 +8,29 @@ import {
 } from 'react-native';
 import React from 'react';
 import Colors from '../../../constants/Colors';
-import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHeader';
 import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
-import AuthFooter from '../../../components/ScreenComponent/Auth/Common/AuthFooter';
-import {loginValue} from '../../../utils/config/initalValues';
-import {
-  loginInitalState,
-  othersAuthIcons,
-} from '../../../utils/config/Data/loginDatas';
-import {loginValidationSchema} from '../../../utils/config/validationSchema';
+import {forgotPasswordValue} from '../../../utils/config/initalValues';
+import {forgotPasswordValidationSchema} from '../../../utils/config/validationSchema';
+import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
+const forgotPassData = {
+  image: require('../../../assets/image/forgotPassword/password.png'),
+  title: 'Forgot Password?',
+};
 interface Props {
-  navigation: {navigate: (arg0: string) => void};
+  navigation: {
+    navigate: (arg0: string) => void;
+    goBack: () => void;
+  };
 }
-const Login = ({navigation}: Props) => {
+const ForgotPassword = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const handleSubmit = () => {
-    navigation.navigate('VerifyAccount');
+    navigation.navigate('ForgotPasswordOtp');
   };
   return (
     <ScrollView
-      showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
       style={[
         {
           backgroundColor: isDarkMode
@@ -47,23 +49,17 @@ const Login = ({navigation}: Props) => {
         ]}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <AuthHeader
-            title={loginInitalState.title}
-            subTitle={loginInitalState.subTitle}
-            image={loginInitalState.image}
+          <ImageAndTitle
+            image={forgotPassData.image}
+            title={forgotPassData.title}
           />
           <AuthForm
-            initialValues={loginValue}
-            validationSchema={loginValidationSchema}
+            initialValues={forgotPasswordValue}
+            validationSchema={forgotPasswordValidationSchema}
             handleSubmit={handleSubmit}
-            btnTitle="LOGIN"
-          />
-          <AuthFooter
-            icons={othersAuthIcons}
-            accountType="Don't have any account? "
-            authType="Sign Up"
-            title="or login with"
-            navigateScreen="SignUp"
+            btnTitle="Continue"
+            forgotPassword
+            onPress={() => navigation.goBack()}
           />
         </KeyboardAvoidingView>
         <View style={styles.view} />
@@ -72,21 +68,18 @@ const Login = ({navigation}: Props) => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // justifyContent: 'flex-end',
+    flex: 1,
+    justifyContent: 'flex-end',
   },
   infoContainer: {
-    flexGrow: 1,
-    marginTop: 120,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
+    bottom: 0,
   },
-  view: {
-    height: 40,
-  },
+  view: {height: 20},
 });

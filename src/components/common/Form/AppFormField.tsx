@@ -2,8 +2,10 @@ import React from 'react';
 import ErrorMessage from './ErrorMessage';
 import {FormikValues, useFormikContext} from 'formik';
 import AppInput from './AppInput';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Text_Size from '../../../constants/textScaling';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 interface Props {
   name: string;
   label: string;
@@ -16,6 +18,11 @@ interface Props {
   secureTextEntry?: boolean;
   forgotPassword?: boolean;
 }
+type StackParamList = {
+  ForgotPassword: {foo: string; onBar: () => void} | undefined;
+};
+
+type NavigationProps = StackNavigationProp<StackParamList>;
 const AppFormField = ({
   name,
   autoCapitalize,
@@ -28,15 +35,9 @@ const AppFormField = ({
   label,
   forgotPassword,
 }: Props) => {
-  const {
-    setFieldTouched,
-
-    touched,
-    errors,
-    values,
-    setFieldValue,
-  } = useFormikContext<FormikValues>();
-
+  const {setFieldTouched, touched, errors, values, setFieldValue} =
+    useFormikContext<FormikValues>();
+  const navigation = useNavigation<NavigationProps>();
   return (
     <>
       <Text style={styles.label}>{label}</Text>
@@ -52,11 +53,15 @@ const AppFormField = ({
         //@ts-ignore
         value={values[name]}
         secureTextEntry={secureTextEntry}
+        error={errors[name]}
+        touch={touched[name]}
       />
 
       <ErrorMessage error={errors[name]} visible={touched[name]} />
       {forgotPassword && (
-        <Text style={styles.forgotPassword}>Forgot Password ?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+          <Text style={styles.forgotPassword}>Forgot Password ?</Text>
+        </TouchableOpacity>
       )}
     </>
   );

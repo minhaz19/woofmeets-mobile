@@ -1,18 +1,34 @@
-import {StyleSheet, Text, useColorScheme, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from 'react-native';
 import React from 'react';
 import {Divider} from '@rneui/themed';
 import Colors from '../../../../constants/Colors';
 import Icon from '../../../common/Icon';
 import Text_Size from '../../../../constants/textScaling';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props {
   icons: {image: any}[];
   title: string;
   accountType: string;
   authType: string;
+  navigateScreen?: string;
 }
-const AuthFooter = ({icons, title, accountType, authType}: Props) => {
+
+const AuthFooter = ({
+  icons,
+  title,
+  accountType,
+  authType,
+  navigateScreen,
+}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
+  const navigation = useNavigation<any>();
   return (
     <View style={styles.container}>
       <View style={styles.dividerContainer}>
@@ -25,6 +41,7 @@ const AuthFooter = ({icons, title, accountType, authType}: Props) => {
                 backgroundColor: isDarkMode
                   ? Colors.dark.lightDark
                   : Colors.background,
+                color: isDarkMode ? Colors.background : Colors.light.text,
               },
             ]}>
             {title}
@@ -36,11 +53,11 @@ const AuthFooter = ({icons, title, accountType, authType}: Props) => {
           <Icon key={index} image={icon.image} />
         ))}
       </View>
-      <View>
-        <Text style={styles.haveAccount}>
-          {accountType}
-          <Text style={{color: Colors.primary}}>{authType}</Text>
-        </Text>
+      <View style={styles.textContainer}>
+        <Text style={styles.haveAccount}>{accountType}</Text>
+        <TouchableOpacity onPress={() => navigation.navigate(navigateScreen)}>
+          <Text style={styles.screenRoute}>{authType}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -58,7 +75,6 @@ const styles = StyleSheet.create({
     top: -10,
     textAlign: 'center',
     width: '40%',
-    color: Colors.light.lighttext,
     fontSize: Text_Size.Text_0,
   },
   iconContainer: {
@@ -70,7 +86,18 @@ const styles = StyleSheet.create({
   },
   haveAccount: {
     textAlign: 'center',
-    marginTop: '10%',
     fontSize: Text_Size.Text_0,
+  },
+  textContainer: {
+    marginTop: '10%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  screenRoute: {
+    fontSize: Text_Size.Text_0,
+    color: Colors.primary,
+    marginRight: 5,
+    textTransform: 'uppercase',
   },
 });

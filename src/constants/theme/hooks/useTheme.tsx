@@ -6,5 +6,6 @@ export const useTheme = () => {
   const colors = isDarkMode ? themedColors.dark : themedColors.light;
   return {
     colors,
+    isDarkMode,
   };
 };
