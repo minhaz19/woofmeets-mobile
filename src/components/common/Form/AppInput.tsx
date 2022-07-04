@@ -2,11 +2,12 @@ import {StyleSheet, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import {EyeClose, EyeOpen} from '../../../assets/SVG_LOGOS';
+import {Check, EyeClose, EyeOpen} from '../../../assets/SVG_LOGOS';
 const screen = SCREEN_WIDTH;
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
 
+  console.log('errro', otherProps.touch, otherProps.error);
   return (
     <View style={styles.container}>
       <TextInput
@@ -15,6 +16,11 @@ const AppInput = ({...otherProps}) => {
         {...otherProps}
         secureTextEntry={otherProps.secureTextEntry ? show : false}
       />
+      {!otherProps.secureTextEntry &&
+      otherProps.error === undefined &&
+      otherProps.touch ? (
+        <Check size={20} />
+      ) : null}
       {otherProps.secureTextEntry &&
         (show ? (
           <EyeOpen size={20} onPress={() => setShow(!show)} />

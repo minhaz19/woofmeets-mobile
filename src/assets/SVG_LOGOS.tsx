@@ -486,7 +486,6 @@ export function EyeClose(props: {size: number; onPress: () => void}) {
 export function EyeOpen(props: {size: number; onPress: () => void}) {
   return (
     <Svg
-      // onPress={props.onPress}
       xmlns="http://www.w3.org/2000/svg"
       width={props.size ? props.size : 24}
       height={props.size ? props.size : 24}
@@ -497,6 +496,39 @@ export function EyeOpen(props: {size: number; onPress: () => void}) {
         d="M12 4.5A11.827 11.827 0 001 12a11.817 11.817 0 0022 0 11.827 11.827 0 00-11-7.5zM12 17a5 5 0 115-5 5 5 0 01-5 5zm0-8a3 3 0 103 3 3 3 0 00-3-3z"
         fill="rgba(66,66,68,.47)"
       />
+    </Svg>
+  );
+}
+export function Check(props: {size: number; onPress?: () => void}) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={props.size ? props.size : 19}
+      height={props.size ? props.size : 19}
+      viewBox="0 0 19 19">
+      <G
+        id="Group_18076"
+        data-name="Group 18076"
+        transform="translate(-5082 -1924)">
+        <Path
+          id="Rectangle_9"
+          data-name="Rectangle 9"
+          d="M5,0h9a5,5,0,0,1,5,5v9a5,5,0,0,1-5,5H5a5,5,0,0,1-5-5V5A5,5,0,0,1,5,0Z"
+          transform="translate(5082 1924)"
+          fill="#1fd85f"
+        />
+        <Path
+          id="Path_5"
+          data-name="Path 5"
+          d="M0,2.549,1.651,4.2,5.851,0"
+          transform="translate(5088.5 1931.5)"
+          fill="none"
+          stroke="#fff"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+      </G>
     </Svg>
   );
 }
@@ -516,7 +548,7 @@ export function BgUp(props) {
     </Svg>
   );
 }
-export function BgUpPets(props) {
+export function BgUpPets(props: SvgProps) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
