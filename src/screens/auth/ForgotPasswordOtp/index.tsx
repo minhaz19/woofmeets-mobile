@@ -25,9 +25,9 @@ const ForgotPasswordOtp = () => {
   };
   return (
     <ScrollView
+      contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
       style={[
-        styles.container,
         {
           backgroundColor: isDarkMode
             ? Colors.dark.background
@@ -69,10 +69,9 @@ export default ForgotPasswordOtp;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'flex-end',
   },
   infoContainer: {
-    height: '100%',
-    marginTop: 150,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,

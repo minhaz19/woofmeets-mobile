@@ -66,7 +66,7 @@ const Login = ({navigation}: Props) => {
             navigateScreen="SignUp"
           />
         </KeyboardAvoidingView>
-        {/* <View style={styles.view} /> */}
+        <View style={styles.view} />
       </View>
     </ScrollView>
   );
@@ -76,8 +76,8 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'flex-end',
+    // flex: 1,
+    // justifyContent: 'flex-end',
   },
   infoContainer: {
     flexGrow: 1,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     padding: 20,
   },
-  // view: {
-  //   height: 80,
-  // },
+  view: {
+    height: 40,
+  },
 });
