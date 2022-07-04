@@ -7,7 +7,6 @@ const screen = SCREEN_WIDTH;
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
 
-  console.log('errro', otherProps.touch, otherProps.error);
   return (
     <View style={styles.container}>
       <TextInput
