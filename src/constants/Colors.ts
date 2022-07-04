@@ -25,6 +25,7 @@ export default {
     grey: 'grey',
   },
   primary: '#FFA557',
+  primaryLight: '#FFF2E9',
   secondary: '#FEF1E8',
   background: 'white',
   text: '#231F20',
