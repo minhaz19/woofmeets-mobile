@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   KeyboardAvoidingView,
   Platform,
@@ -14,14 +15,27 @@ import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import {setPasswordValidationSchema} from '../../../utils/config/validationSchema';
 import {setPasswordInfo} from '../../../utils/config/Data/setNewPasswordDatas';
 import {setPasswordValue} from '../../../utils/config/initalValues';
+import {SCREEN_HEIGHT} from '../../../constants/WindowSize';
 
-const SetNewPassword = () => {
+interface Props {
+  navigation: {
+    goBack: () => void;
+  };
+}
+const SetNewPassword = ({navigation}: Props) => {
+  const height = SCREEN_HEIGHT;
   const isDarkMode = useColorScheme() === 'dark';
   const handleSubmit = (values: any) => {
     console.log('values', values);
   };
+  console.log('getting height', height);
   return (
     <ScrollView
+      contentContainerStyle={{
+        // height: '100%',
+        flex: height > 800 ? 1 : 0,
+        justifyContent: height > 800 ? 'flex-end' : 'flex-start',
+      }}
       showsVerticalScrollIndicator={false}
       style={[
         styles.container,
@@ -52,6 +66,7 @@ const SetNewPassword = () => {
             validationSchema={setPasswordValidationSchema}
             handleSubmit={handleSubmit}
             btnTitle="Confirm"
+            onPress={() => navigation.goBack()}
             setNewPassword
           />
         </KeyboardAvoidingView>
@@ -65,7 +80,7 @@ export default SetNewPassword;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
   },
   infoContainer: {
     flexGrow: 1,
@@ -75,6 +90,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   view: {
-    height: 80,
+    height: 20,
   },
 });

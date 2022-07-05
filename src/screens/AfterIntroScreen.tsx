@@ -64,7 +64,7 @@ const AfterIntroScreen = (props: {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={styles.titleStyle}
-            onSelect={() => props.navigation.navigate('SignUpScreen')}
+            onSelect={() => props.navigation.navigate('SignUp')}
           />
         </View>
       </ScrollView>
