@@ -4,21 +4,20 @@ import React, {useState} from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {Check, EyeClose, EyeOpen} from '../../../assets/SVG_LOGOS';
+import Colors from '../../../constants/Colors';
 const screen = SCREEN_WIDTH;
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
   const {numberOfLines} = otherProps;
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <TextInput
         placeholderTextColor={'gray'}
         style={[
           styles.text,
           {
-            alignItems: numberOfLines >= 10 ? 'flex-start' : 'center',
+            alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
             height: numberOfLines >= 10 ? 120 : 40,
-            borderWidth: 2,
-            borderColor: 'black',
             flex: 1,
           },
         ]}
@@ -47,11 +46,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f4f4',
     borderRadius: 5,
     flexDirection: 'row',
-    width: '100%',
     paddingVertical: screen > 390 ? -10 : 0,
     paddingHorizontal: 15,
     marginVertical: 10,
     justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: Colors.border,
+    flexWrap: 'wrap',
   },
   icon: {
     marginRight: 10,
