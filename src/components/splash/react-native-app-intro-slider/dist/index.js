@@ -21,10 +21,17 @@ var __importDefault =
   function (mod) {
     return mod && mod.__esModule ? mod : {default: mod};
   };
-import {Dimensions, Text, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  Text,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+} from 'react-native';
 import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
+
 Object.defineProperty(exports, '__esModule', {value: true});
 const React = __importStar(require('react'));
 const react_native_1 = require('react-native');
@@ -137,7 +144,18 @@ class AppIntroSlider extends React.Component {
         () => this.goToSlide(this.state.activeIndex - 1, true),
         this.props.renderPrevButton,
       );
-    this._renderDoneButton = () => {};
+    this._renderDoneButton = () =>
+      this._renderButton(
+        'Done',
+        this.props.skipLabel,
+        () => {
+          clearTimeout(this.timer1);
+          clearTimeout(this.timer2);
+          clearTimeout(this.timer3);
+          this.props.onDone();
+        },
+        this.props.renderSkipButton,
+      );
     this._renderSkipButton = () =>
       // scrollToEnd does not work in RTL so use goToSlide instead
       this.props.showSkipButton &&
@@ -154,44 +172,52 @@ class AppIntroSlider extends React.Component {
       );
     this._renderPagination = () => {
       const isLastSlide = this.state.activeIndex === this.props.data.length - 1;
-      // const secondaryButton = this._renderSkipButton();
+      const secondaryButton = this._renderSkipButton();
       const primaryButton = isLastSlide
         ? this._renderDoneButton()
         : this._renderNextButton();
       return (
-        <react_native_1.View style={styles.dotContainerView}>
-          <react_native_1.SafeAreaView>
-            <react_native_1.View style={styles.paginationDots}>
-              {this.props.data.length > 1 &&
-                this.props.data.map((_, i) =>
-                  this.props.dotClickEnabled ? (
-                    <react_native_1.TouchableOpacity
-                      key={i}
-                      style={[
-                        styles.dot,
-                        this._rtlSafeIndex(i) === this.state.activeIndex
-                          ? this.props.activeDotStyle
-                          : this.props.dotStyle,
-                      ]}
-                      onPress={() => this.goToSlide(i, true)}
-                    />
-                  ) : (
-                    <react_native_1.View
-                      key={i}
-                      style={[
-                        styles.dot,
-                        this._rtlSafeIndex(i) === this.state.activeIndex
-                          ? this.props.activeDotStyle
-                          : this.props.dotStyle,
-                      ]}
-                    />
-                  ),
-                )}
-            </react_native_1.View>
-            {primaryButton}
-            {/* {secondaryButton} */}
-          </react_native_1.SafeAreaView>
-        </react_native_1.View>
+        <View>
+          <SafeAreaView>
+            <View>
+              {
+                <View style={styles.dotContainerView}>
+                  <View>
+                    <react_native_1.View style={styles.paginationDots}>
+                      {this.props.data.length > 1 &&
+                        this.props.data.map((_, i) =>
+                          this.props.dotClickEnabled ? (
+                            <react_native_1.TouchableOpacity
+                              key={i}
+                              style={[
+                                styles.dot,
+                                this._rtlSafeIndex(i) === this.state.activeIndex
+                                  ? this.props.activeDotStyle
+                                  : this.props.dotStyle,
+                              ]}
+                              onPress={() => this.goToSlide(i, true)}
+                            />
+                          ) : (
+                            <react_native_1.View
+                              key={i}
+                              style={[
+                                styles.dot,
+                                this._rtlSafeIndex(i) === this.state.activeIndex
+                                  ? this.props.activeDotStyle
+                                  : this.props.dotStyle,
+                              ]}
+                            />
+                          ),
+                        )}
+                    </react_native_1.View>
+                  </View>
+                </View>
+              }
+              {primaryButton}
+              {secondaryButton}
+            </View>
+          </SafeAreaView>
+        </View>
       );
     };
     this._onMomentumScrollEnd = e => {
@@ -320,6 +346,7 @@ const styles = react_native_1.StyleSheet.create({
   },
   paginationContainer: {
     justifyContent: 'center',
+    backgroundColor: 'green',
   },
   paginationDots: {
     flexDirection: isAndroidRTL ? 'row-reverse' : 'row',
@@ -379,5 +406,16 @@ const styles = react_native_1.StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: Text_Size.Text_1,
+  },
+  containerStyleFullWidth: {
+    height:
+      SCREEN_HEIGHT > 400 && SCREEN_HEIGHT <= 800
+        ? SCREEN_HEIGHT * 0.06
+        : SCREEN_HEIGHT <= 400
+        ? SCREEN_HEIGHT * 0.04
+        : 45,
+    marginTop: '1%',
+    marginRight: '5%',
+    borderRadius: 50,
   },
 });

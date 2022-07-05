@@ -4,6 +4,7 @@ import Login from '../screens/auth/Login';
 import SetNewPassword from '../screens/auth/SetNewPassword';
 import SignUp from '../screens/auth/SignUp';
 import AfterIntroScreen from '../screens/AfterIntroScreen';
+import PetCareZipSearch from '../screens/PetCareZipSearch';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,11 @@ function AuthNavigator() {
       <Stack.Screen
         name="AfterIntroScreen"
         component={AfterIntroScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PetCareZipSearch"
+        component={PetCareZipSearch}
         options={{headerShown: false}}
       />
       <Stack.Screen
