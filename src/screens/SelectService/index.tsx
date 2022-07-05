@@ -43,7 +43,6 @@ interface Props {
 }
 
 const SelectService = () => {
-  //   const id = useId();
   const {colors} = useTheme();
   const renderItem: FC<Props> = ({item}) => (
     <ReusableSelectService data={item} />
