@@ -24,7 +24,7 @@ interface Props {
 const SignUp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const handleSubmit = () => {
-    navigation.navigate('VerifyAccount');
+    navigation.navigate('AfterIntroScreen');
   };
   return (
     <ScrollView
@@ -78,7 +78,7 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
   },
   infoContainer: {
     flexGrow: 1,
@@ -88,6 +88,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   view: {
-    height: 80,
+    height: 40,
   },
 });

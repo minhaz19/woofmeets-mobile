@@ -53,6 +53,8 @@ const AppFormField = ({
         //@ts-ignore
         value={values[name]}
         secureTextEntry={secureTextEntry}
+        error={errors[name]}
+        touch={touched[name]}
       />
 
       <ErrorMessage error={errors[name]} visible={touched[name]} />

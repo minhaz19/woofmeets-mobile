@@ -20,6 +20,7 @@ interface Props {
   verifyAccount?: boolean;
   termsAndCond?: boolean;
   btn2Title?: string;
+  onPress?: () => void;
 }
 const AuthForm = ({
   handleSubmit,
@@ -32,6 +33,7 @@ const AuthForm = ({
   btn2Title,
   verifyAccount,
   termsAndCond,
+  onPress,
 }: Props) => {
   return (
     <View style={styles.container}>
@@ -41,7 +43,7 @@ const AuthForm = ({
         onSubmit={handleSubmit}>
         {!forgotPasswordOpt && !verifyAccount && (
           <>
-            <View style={{marginVertical: forgotPassword ? 20 : 0}}>
+            <View>
               <AppFormField
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -68,7 +70,7 @@ const AuthForm = ({
                 }
                 name={setNewPassword ? 'newPass' : 'password'}
                 label={setNewPassword ? 'New Password' : 'Password'}
-                forgotPassword={setNewPassword ? false : true}
+                forgotPassword={setNewPassword || termsAndCond ? false : true}
                 textContentType={setNewPassword ? 'newPassword' : 'password'}
               />
             )}
@@ -99,11 +101,13 @@ const AuthForm = ({
         <View style={styles.switchContainer}>
           {termsAndCond && <AppSwitch name="terms" terms />}
         </View>
-        <View
-          style={{marginTop: setNewPassword ? 20 : forgotPassword ? 25 : 0}}>
+        <View style={{marginTop: setNewPassword ? 20 : 0}}>
           <SubmitButton title={btnTitle} />
           {(setNewPassword || forgotPassword || forgotPasswordOpt) && (
-            <AppButton title={btn2Title ? btn2Title : 'Cancel'} />
+            <AppButton
+              title={btn2Title ? btn2Title : 'Cancel'}
+              onPress={onPress}
+            />
           )}
         </View>
       </AppForm>
@@ -119,10 +123,9 @@ const styles = StyleSheet.create({
   },
   otpContainer: {
     marginTop: 20,
-    marginBottom: 40,
   },
   resendBtn: {
-    marginBottom: 25,
+    marginTop: 30,
   },
   switchContainer: {
     marginVertical: 20,

@@ -10,9 +10,9 @@ import {
 const loginValue: LoginType = {email: '', password: ''};
 const signupValue: SignUpType = {email: '', password: '', terms: false};
 const setPasswordValue: SetPasswordType = {
-  oldPass: 'a',
-  newPass: 'c',
-  confirmPass: 'c',
+  oldPass: '',
+  newPass: '',
+  confirmPass: '',
 };
 const forgotPasswordValue: forgotPasswordType = {email: ''};
 const forgotPasswordOtpValue: forgotPasswordOtpType = {code: ''};

@@ -17,7 +17,10 @@ const forgotPassData = {
   title: 'Forgot Password?',
 };
 interface Props {
-  navigation: {navigate: (arg0: string) => void};
+  navigation: {
+    navigate: (arg0: string) => void;
+    goBack: () => void;
+  };
 }
 const ForgotPassword = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -26,9 +29,9 @@ const ForgotPassword = ({navigation}: Props) => {
   };
   return (
     <ScrollView
+      contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
       style={[
-        styles.container,
         {
           backgroundColor: isDarkMode
             ? Colors.dark.background
@@ -56,8 +59,10 @@ const ForgotPassword = ({navigation}: Props) => {
             handleSubmit={handleSubmit}
             btnTitle="Continue"
             forgotPassword
+            onPress={() => navigation.goBack()}
           />
         </KeyboardAvoidingView>
+        <View style={styles.view} />
       </View>
     </ScrollView>
   );
@@ -68,13 +73,13 @@ export default ForgotPassword;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'flex-end',
   },
   infoContainer: {
-    height: '100%',
-    marginTop: 150,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
     bottom: 0,
   },
+  view: {height: 20},
 });
