@@ -21,6 +21,9 @@ export interface forgotPasswordOtpType {
 export interface verifyAccountType {
   code: string;
 }
+<<<<<<< HEAD
 export interface addPetType {
   email: string;
 }
+=======
+>>>>>>> 85b22dd81be7edcaa4129bde96fb28a6afb18e53

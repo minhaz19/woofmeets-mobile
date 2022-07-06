@@ -8,6 +8,7 @@ import Colors from '../constants/Colors';
 import {SCREEN_WIDTH} from '../constants/WindowSize';
 import HomeNavigator from './bottoms/HomeNavigator';
 import Text_Size from '../constants/textScaling';
+import SettingNavigator from './bottoms/SettingNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ function BottomTabNavigator() {
           backgroundColor: isDarkMode
             ? Colors.dark.background
             : Colors.background,
-          height: SCREEN_WIDTH <= 380 ? 60 : 65,
+          height: SCREEN_WIDTH <= 380 ? 70 : 95,
 
           position: 'absolute',
           bottom: 0,
@@ -104,8 +105,8 @@ function BottomTabNavigator() {
         })}
       />
       <Tab.Screen
-        name="OrderNavi"
-        component={HomeNavigator}
+        name="SettingNavigator"
+        component={SettingNavigator}
         options={{
           headerShown: false,
           // tabBarBadge: 3,

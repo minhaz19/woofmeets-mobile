@@ -7,6 +7,7 @@ import Text_Size from '../../../../constants/textScaling';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import {addPetInputs} from '../../../../utils/config/Data/AddPetData';
 import AddPetImage from './AddPetImage';
+import AppSelect from '../../../common/Form/AppSelect';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -16,19 +17,19 @@ interface Props {
 }
 
 const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
-  const [active0, setActive0] = useState({});
-  const [active1, setActive1] = useState({});
-  const [active2, setActive2] = useState({});
-  const [active3, setActive3] = useState({});
-  const [active4, setActive4] = useState({});
-  const [active5, setActive5] = useState({});
-  const [active6, setActive6] = useState({});
-  const [active7, setActive7] = useState({});
-  const [active8, setActive8] = useState({});
-  const [active9, setActive9] = useState({});
-  const [active10, setActive10] = useState({});
-  const [active11, setActive11] = useState({});
-  const [active12, setActive12] = useState({});
+  const [active0, setActive0] = useState<any | {}>({});
+  const [active1, setActive1] = useState<any | {}>({});
+  const [active2, setActive2] = useState<any | {}>({});
+  const [active3, setActive3] = useState<any | {}>({});
+  const [active4, setActive4] = useState<any | {}>({});
+  const [active5, setActive5] = useState<any | {}>({});
+  const [active6, setActive6] = useState<any | {}>({});
+  const [active7, setActive7] = useState<any | {}>({});
+  const [active8, setActive8] = useState<any | {}>({});
+  const [active9, setActive9] = useState<any | {}>({});
+  const [active10, setActive10] = useState<any | {}>({});
+  const [active11, setActive11] = useState<any | {}>({});
+  const [active12, setActive12] = useState<any | {}>({});
 
   const handleActiveCheck = (parentId: number, key: number) => {
     parentId === 100 && setActive0({[key]: true});
@@ -57,7 +58,6 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
           <AddPetImage />
         </View>
         <View style={styles.inputContainer}>
-          {/* Pet Type */}
           <View>
             <Text>{addPetInputs[0].title}</Text>
             <View style={styles.petType}>
@@ -81,18 +81,29 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
               columnWrapperStyle={styles.flatList}
               data={addPetInputs[1].inputs}
               horizontal={false}
-              renderItem={({item}) => (
-                <AppFormField
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType={'default'}
-                  placeholder={item.placeholder}
-                  textContentType={'none'}
-                  name={item.name}
-                  label={item.title}
-                  flex={item.flex}
-                />
-              )}
+              renderItem={({item}) => {
+                return (
+                  <>
+                    {!item.select && (
+                      <AppFormField
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        keyboardType={'default'}
+                        placeholder={item.placeholder}
+                        textContentType={'none'}
+                        name={item.name}
+                        label={item.title}
+                        flex={item.flex}
+                      />
+                    )}
+                    {item.select && (
+                      <View style={styles.selectContainer}>
+                        <AppSelect label={item.title} name={item.name} />
+                      </View>
+                    )}
+                  </>
+                );
+              }}
               numColumns={2}
               keyExtractor={(item, index) => index.toString()}
             />
@@ -118,8 +129,7 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
                           (item.id === 106 && active6[type.id]) ||
                           (item.id === 107 && active7[type.id])
                         }
-                        // active={key === fitleredIndex2 ? true : false}
-                        onPress={() => handleActiveCheck(item.id, type.id, key)}
+                        onPress={() => handleActiveCheck(item.id, type.id)}
                       />
                     </View>
                   ))}
@@ -261,4 +271,5 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_0,
     marginVertical: 10,
   },
+  selectContainer: {width: '100%'},
 });
