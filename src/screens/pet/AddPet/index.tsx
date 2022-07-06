@@ -1,10 +1,12 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import {ScrollView, StyleSheet} from 'react-native';
 import React from 'react';
 import Screen from '../../../components/common/Screen';
 import AddPetBody from '../../../components/ScreenComponent/Pet/AddPet/AddPetBody';
 import {addPetValue} from '../../../utils/config/initalValues';
 import {addPetValidationSchema} from '../../../utils/config/validationSchema';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import Colors from '../../../constants/Colors';
 
 const AddPet = () => {
   const handleSubmit = () => {};
@@ -13,7 +15,11 @@ const AddPet = () => {
     <Screen
       style={[
         styles.container,
-        {backgroundColor: isDarkMode ? 'black' : 'white'},
+        {
+          backgroundColor: isDarkMode
+            ? Colors.dark.background
+            : Colors.background,
+        },
       ]}>
       <ScrollView style={{flex: 1}}>
         <AddPetBody

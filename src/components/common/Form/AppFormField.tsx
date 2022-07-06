@@ -21,6 +21,7 @@ interface Props {
   numberOfLines?: number;
   multiline?: boolean;
   flex?: number;
+  subTitle?: string;
 }
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;
@@ -41,6 +42,7 @@ const AppFormField = ({
   numberOfLines,
   multiline,
   flex,
+  subTitle,
 }: Props) => {
   const {setFieldTouched, touched, errors, values, setFieldValue} =
     useFormikContext<FormikValues>();
@@ -49,6 +51,7 @@ const AppFormField = ({
     <>
       <View style={{width: flex ? '48%' : '100%'}}>
         <Text style={styles.label}>{label}</Text>
+        <Text style={styles.subTitle}>{subTitle}</Text>
         <AppInput
           autoCapitalize={autoCapitalize}
           autoCorrect={autoCorrect}
@@ -85,6 +88,9 @@ const styles = StyleSheet.create({
   label: {
     fontSize: Text_Size.Text_1,
     fontWeight: '600',
+  },
+  subTitle: {
+    fontSize: Text_Size.Text_0,
   },
   forgotPassword: {
     fontSize: Text_Size.Text_0,

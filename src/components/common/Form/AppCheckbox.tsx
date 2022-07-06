@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Circle,
   CircleCheck,
@@ -11,14 +11,15 @@ interface Props {
   radio?: boolean;
   square?: boolean;
   title?: string;
+  active?: boolean;
+  onPress?: () => void;
 }
-const AppCheckbox = ({radio, square, title}: Props) => {
-  const [checkSq, setCheckSq] = useState(false);
+const AppCheckbox = ({radio, square, title, active, onPress}: Props) => {
   return (
-    <TouchableOpacity activeOpacity={1} onPress={() => setCheckSq(!checkSq)}>
+    <TouchableOpacity activeOpacity={1} onPress={onPress}>
       <View style={styles.checkInfoContainer}>
-        {square && (!checkSq ? <Square /> : <SquareCheck />)}
-        {radio && (!checkSq ? <Circle /> : <CircleCheck />)}
+        {square && (!active ? <Square /> : <SquareCheck />)}
+        {radio && (!active ? <Circle /> : <CircleCheck />)}
         <Text style={styles.title}>{title}</Text>
       </View>
     </TouchableOpacity>
