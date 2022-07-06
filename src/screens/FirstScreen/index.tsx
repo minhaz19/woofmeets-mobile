@@ -10,7 +10,7 @@ const FirstScreen = () => {
         style={[
           styles.backgroundCover,
           {
-            transform: [{rotate: '-30deg'}],
+            transform: [{rotate: '-25deg'}],
             marginTop: 50,
           },
         ]}>
@@ -22,7 +22,7 @@ const FirstScreen = () => {
         style={[
           styles.backgroundCover,
           {
-            transform: [{rotate: '-30deg'}],
+            transform: [{rotate: '-25deg'}],
             marginTop: 300,
           },
         ]}>
@@ -34,8 +34,20 @@ const FirstScreen = () => {
         style={[
           styles.backgroundCover,
           {
-            transform: [{rotate: '-30deg'}],
+            transform: [{rotate: '-25deg'}],
             marginTop: 550,
+          },
+        ]}>
+        <FirstScreenSvg />
+        <FirstScreenSvg />
+        <FirstScreenSvg />
+      </View>
+      <View
+        style={[
+          styles.backgroundCover,
+          {
+            transform: [{rotate: '-25deg'}],
+            marginTop: 800,
           },
         ]}>
         <FirstScreenSvg />
