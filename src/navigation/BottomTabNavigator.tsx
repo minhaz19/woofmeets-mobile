@@ -1,14 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, Text, StyleSheet, useColorScheme} from 'react-native';
+import {View, Text, StyleSheet, useColorScheme, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Social, Finder, Setting, Pets} from '../assets/SVG_LOGOS';
+import {Finder, Setting, Pets, InboxIcon} from '../assets/SVG_LOGOS';
 import Colors from '../constants/Colors';
 
 import {SCREEN_WIDTH} from '../constants/WindowSize';
 import HomeNavigator from './bottoms/HomeNavigator';
 import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
+import ServiceNavigator from './bottoms/ServiceNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,14 +17,21 @@ function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Tab.Navigator
-      initialRouteName="HomeScreen"
+      initialRouteName="ServiceNavigator"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: isDarkMode
             ? Colors.dark.background
             : Colors.background,
-          height: SCREEN_WIDTH <= 380 ? 70 : 95,
+          height:
+            SCREEN_WIDTH <= 380
+              ? Platform.OS === 'ios'
+                ? 70
+                : 60
+              : Platform.OS === 'ios'
+              ? 95
+              : 75,
 
           position: 'absolute',
           bottom: 0,
@@ -34,8 +42,8 @@ function BottomTabNavigator() {
         },
       }}>
       <Tab.Screen
-        name="HomeScreen"
-        component={HomeNavigator}
+        name="ServiceNavigator"
+        component={ServiceNavigator}
         options={{
           tabBarLabel: 'Services',
           tabBarShowLabel: false,
@@ -43,13 +51,15 @@ function BottomTabNavigator() {
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
               <Finder
-                fill={focused ? Colors.primary : Colors.subText}
+                fill={focused ? Colors.primary : Colors.light.lightText}
                 height={SCREEN_WIDTH <= 380 ? 24 : 28}
                 width={SCREEN_WIDTH <= 380 ? 26 : 33}
               />
               <Text
                 style={[
-                  focused ? {color: Colors.primary} : {color: '#424244'},
+                  focused
+                    ? {color: Colors.primary}
+                    : {color: Colors.light.lightText},
                   styles.textStyle,
                 ]}>
                 Services
@@ -65,8 +75,8 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
-              <Social
-                fill={focused ? Colors.primary : Colors.subText}
+              <InboxIcon
+                stroke={focused ? Colors.primary : Colors.subText}
                 height={SCREEN_WIDTH <= 380 ? 24 : 28}
                 width={SCREEN_WIDTH <= 380 ? 26 : 33}
               />
@@ -89,7 +99,13 @@ function BottomTabNavigator() {
           tabBarIcon: ({focused}) => (
             <View style={styles.bottomContainer}>
               <Pets
-                fill={focused ? Colors.primary : Colors.subText}
+                fill={
+                  focused
+                    ? Colors.primary
+                    : isDarkMode
+                    ? Colors.light.placeholderTextColor
+                    : Colors.subText
+                }
                 height={SCREEN_WIDTH <= 380 ? 24 : 28}
                 width={SCREEN_WIDTH <= 380 ? 26 : 33}
               />

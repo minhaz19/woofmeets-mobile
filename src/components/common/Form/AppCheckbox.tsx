@@ -1,7 +1,7 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {
-  Circle,
+  Circle_,
   CircleCheck,
   Square,
   SquareCheck,
@@ -27,7 +27,7 @@ const AppCheckbox = ({
     <TouchableOpacity activeOpacity={1} onPress={onPress} onBlur={onBlur}>
       <View style={styles.checkInfoContainer}>
         {square && (!active ? <Square /> : <SquareCheck />)}
-        {radio && (!active ? <Circle /> : <CircleCheck />)}
+        {radio && (!active ? <Circle_ /> : <CircleCheck />)}
         <Text style={styles.title}>{title}</Text>
       </View>
     </TouchableOpacity>

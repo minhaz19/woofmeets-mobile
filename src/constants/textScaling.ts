@@ -4,7 +4,7 @@ const Text_Size_Type = {
   Scale: {
     Text_0:
       SCREEN_WIDTH <= 380
-        ? 9
+        ? 7
         : SCREEN_WIDTH <= 600
         ? SCREEN_WIDTH * 0.03 <= 14
           ? SCREEN_WIDTH * 0.03
@@ -39,8 +39,22 @@ const Text_Size_Type = {
         : 38,
     Text_6: SCREEN_WIDTH * 0.07,
     Text_7: SCREEN_WIDTH * 0.075,
-    Text_8: SCREEN_WIDTH * 0.08,
-    Text_9: SCREEN_WIDTH * 0.085,
+    Text_8:
+      SCREEN_WIDTH <= 380
+        ? 7
+        : SCREEN_WIDTH <= 600
+        ? SCREEN_WIDTH * 0.024 <= 12
+          ? SCREEN_WIDTH * 0.024
+          : 12
+        : 14,
+    Text_9:
+      SCREEN_WIDTH <= 380
+        ? 9
+        : SCREEN_WIDTH <= 600
+        ? SCREEN_WIDTH * 0.033 <= 14
+          ? SCREEN_WIDTH * 0.033
+          : 16
+        : 16,
   },
 };
 

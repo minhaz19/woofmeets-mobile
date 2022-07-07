@@ -13,6 +13,7 @@ import {btnStyles} from '../constants/theme/common/buttonStyles';
 import IOSButton from '../components/UI/IOSButton';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
+import {SCREEN_WIDTH} from '../constants/WindowSize';
 
 const AfterIntroScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 1,
-    marginTop: 120,
+    marginTop: SCREEN_WIDTH <= 380 ? 80 : 120,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
   roundContainer: {
     borderRadius: 100,
     width: '60%',
-    height: 260,
+    height: SCREEN_WIDTH <= 380 ? 160 : 260,
     alignItems: 'center',
     justifyContent: 'center',
   },
