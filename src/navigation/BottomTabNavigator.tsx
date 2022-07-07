@@ -9,6 +9,7 @@ import {SCREEN_WIDTH} from '../constants/WindowSize';
 import HomeNavigator from './bottoms/HomeNavigator';
 import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
+import ServiceNavigator from './bottoms/ServiceNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +17,7 @@ function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Tab.Navigator
-      initialRouteName="HomeScreen"
+      initialRouteName="ServiceNavigator"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
@@ -41,8 +42,8 @@ function BottomTabNavigator() {
         },
       }}>
       <Tab.Screen
-        name="HomeScreen"
-        component={HomeNavigator}
+        name="ServiceNavigator"
+        component={ServiceNavigator}
         options={{
           tabBarLabel: 'Services',
           tabBarShowLabel: false,
