@@ -56,6 +56,7 @@ const AuthForm = ({
                 name={setNewPassword ? 'oldPass' : 'email'}
                 label={setNewPassword ? 'Old Password' : 'Email/Phone Number'}
                 secureTextEntry={setNewPassword ? true : false}
+                email={setNewPassword ? false : true}
               />
             </View>
 
