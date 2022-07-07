@@ -28,6 +28,7 @@ const ImageUploadModal = (props: {
   setPetImage: (arg0: any) => void;
   uploadImage: (arg0: FormData) => void;
   isModalVisible: boolean | undefined;
+  onBlur?: () => void;
 }) => {
   //Camera Options
   const openImagePickerAsync = async () => {
@@ -117,7 +118,9 @@ const ImageUploadModal = (props: {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => props.setIsModalVisible(false)}>
+    <TouchableWithoutFeedback
+      onBlur={props.onBlur}
+      onPress={() => props.setIsModalVisible(false)}>
       <Modal
         animationType="slide"
         transparent={true}

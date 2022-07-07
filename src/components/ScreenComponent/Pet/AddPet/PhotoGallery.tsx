@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
 import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
+import {FormikValues, useFormikContext} from 'formik';
 
 interface Props {
   label: string;
@@ -13,9 +14,10 @@ const PhotoGallery = ({label, subTitle}: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [petImage, setPetImage] = useState();
-  const uploadImage = (e: any) => {
-    console.log('upload', e);
-  };
+  const {setFieldValue, values} = useFormikContext<FormikValues>();
+  function uploadImage(e: any) {
+    setFieldValue('photoGallery', e);
+  }
   return (
     <>
       <View style={styles.galleryContainer}>

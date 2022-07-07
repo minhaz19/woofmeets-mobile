@@ -11,6 +11,7 @@ import Colors from '../../../constants/Colors';
 const AddPet = () => {
   const handleSubmit = (e: any) => {
     console.log('values', e);
+    console.log('hitting');
   };
   const {isDarkMode} = useTheme();
   return (

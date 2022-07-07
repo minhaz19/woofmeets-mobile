@@ -31,14 +31,14 @@ const verifyAccountValidationSchema = Yup.object().shape({
   code: Yup.string().required().min(4).max(4).label('Opt'),
 });
 const addPetValidationSchema = Yup.object().shape({
-  petImage: Yup.string().required(),
+  petImage: Yup.object().required('Image is required'),
   petType: Yup.string().required('Pet type is required'),
   petName: Yup.string().required('Pet name is required'),
   weight: Yup.string().required('Pet weight is required'),
   ageYr: Yup.string().required('Year required'),
-  ageMo: Yup.string().required('Month required'),
+  // ageMo: Yup.string().required('Month required'),
   gender: Yup.string().required('Please select a gender').oneOf(genders),
-  breeds: Yup.string().required(),
+  breeds: Yup.string().required('require'),
   microchipped: Yup.string(),
   houseTrained: Yup.string(),
   spayedNeutered: Yup.string(),
