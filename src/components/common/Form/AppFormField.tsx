@@ -22,6 +22,7 @@ interface Props {
   multiline?: boolean;
   flex?: number;
   subTitle?: string;
+  email?: boolean;
 }
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;
@@ -43,6 +44,7 @@ const AppFormField = ({
   multiline,
   flex,
   subTitle,
+  email,
 }: Props) => {
   const {setFieldTouched, touched, errors, values, setFieldValue} =
     useFormikContext<FormikValues>();
@@ -69,6 +71,7 @@ const AppFormField = ({
           numberOfLines={numberOfLines ? numberOfLines : 0}
           multiline={multiline ? true : false}
           flex={flex}
+          email={email}
         />
 
         <ErrorMessage error={errors[name]} visible={touched[name]} />

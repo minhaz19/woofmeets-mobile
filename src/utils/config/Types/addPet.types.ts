@@ -34,6 +34,7 @@ export interface AdditionalDetail {
   id: number;
   title: string;
   radio: Radio[];
+  name: string;
 }
 
 export interface Radio {
@@ -45,6 +46,7 @@ export interface CareInfo {
   title: string;
   id: number;
   radio: Radio2[];
+  name: string;
 }
 
 export interface Radio2 {
@@ -56,31 +58,3 @@ export interface Image {
   title: string;
   subTitle: string;
 }
-
-// export type addPetTypes = {
-//   title: string;
-//   placeholder: string;
-//   name: string;
-//   numberOfLines: number;
-//   pet: {type: string}[];
-//   inputs: {
-//     title: string;
-//     placeholder: string;
-//     select?: boolean;
-//     name: string;
-//   }[];
-//   additionalDetails: {
-//     title: string;
-//     radio: {type: string}[];
-//   }[];
-//   header: string;
-//   subTitle: string;
-//   careInfo: {
-//     title: string;
-//     radio: {type: string}[];
-//   }[];
-//   image: {
-//     title: string;
-//     subTitle: string;
-//   };
-// };

@@ -9,7 +9,9 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
 
 const AddPet = () => {
-  const handleSubmit = () => {};
+  const handleSubmit = (e: any) => {
+    console.log('values', e);
+  };
   const {isDarkMode} = useTheme();
   return (
     <Screen

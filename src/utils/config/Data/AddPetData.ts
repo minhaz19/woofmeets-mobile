@@ -1,9 +1,13 @@
 import {addPetTypes} from '../Types/addPet.types';
 
+export const genders = ['Male', 'Female', 'Others'];
 export const addPetInputs: addPetTypes = [
   {
     id: 100,
+    header: 'Pet Details',
     title: 'What is pet your pet?',
+    subTitle: 'Provider your sitter with a description of your pet',
+    name: 'petType',
     pet: [
       {
         id: 1,
@@ -15,7 +19,7 @@ export const addPetInputs: addPetTypes = [
   },
   {
     inputs: [
-      {title: 'Name', placeholder: 'Enter Pet Name', name: 'name'},
+      {title: 'Name', placeholder: 'Enter Pet Name', name: 'petName'},
       {title: 'Weight (Ibs)', placeholder: 'Enter Weight', name: 'weight'},
       {
         title: 'Age (Yr)',
@@ -41,6 +45,7 @@ export const addPetInputs: addPetTypes = [
     additionalDetails: [
       {
         title: 'Microchipped?',
+        name: 'microchipped',
         id: 101,
         radio: [
           {id: 7, type: 'Yes'},
@@ -49,6 +54,7 @@ export const addPetInputs: addPetTypes = [
       },
       {
         title: 'Spayed/Neutered?',
+        name: 'spayedNeutered',
         id: 102,
         radio: [
           {id: 9, type: 'Yes'},
@@ -57,6 +63,7 @@ export const addPetInputs: addPetTypes = [
       },
       {
         title: 'House Trained?',
+        name: 'houseTrained',
         id: 103,
         radio: [
           {id: 11, type: 'Yes'},
@@ -66,16 +73,7 @@ export const addPetInputs: addPetTypes = [
       },
       {
         title: 'Friendly With Children?',
-        id: 104,
-        radio: [
-          {id: 14, type: 'Yes'},
-          {id: 15, type: 'No'},
-          {id: 16, type: 'Unsure'},
-          {id: 17, type: 'Depends'},
-        ],
-      },
-      {
-        title: 'Friendly With Children?',
+        name: 'friendlyChildren',
         id: 105,
         radio: [
           {id: 18, type: 'Yes'},
@@ -87,6 +85,7 @@ export const addPetInputs: addPetTypes = [
       {
         title: 'Friendly With Dogs?',
         id: 106,
+        name: 'friendlyDogs',
         radio: [
           {id: 22, type: 'Yes'},
           {id: 23, type: 'No'},
@@ -96,6 +95,7 @@ export const addPetInputs: addPetTypes = [
       },
       {
         title: 'Friendly With Cats?',
+        name: 'friendlyCats',
         id: 107,
         radio: [
           {id: 26, type: 'Yes'},
@@ -120,32 +120,19 @@ export const addPetInputs: addPetTypes = [
       {
         title: 'Potty break schedule?',
         id: 108,
+        name: 'pottyBreak',
         radio: [
-          {
-            type: 'Every Hour',
-            id: 30,
-          },
-          {
-            type: '2 Hours',
-            id: 31,
-          },
-          {
-            type: '4 Hours',
-            id: 32,
-          },
-          {
-            type: '8 Hours',
-            id: 33,
-          },
-          {
-            type: 'Custom',
-            id: 34,
-          },
+          {type: 'Every Hour', id: 30},
+          {type: '2 Hours', id: 31},
+          {type: '4 Hours', id: 32},
+          {type: '8 Hours', id: 33},
+          {type: 'Custom', id: 34},
         ],
       },
       {
         title: 'Feeding schedule?',
         id: 109,
+        name: 'feedingSchedule',
         radio: [
           {id: 35, type: 'Morning'},
           {id: 36, type: 'Twice a day'},
@@ -158,6 +145,7 @@ export const addPetInputs: addPetTypes = [
       {
         title: 'Energy Level?',
         id: 110,
+        name: 'energyLevel',
         radio: [
           {id: 38, type: 'High'},
           {id: 39, type: 'Moderate'},
@@ -167,6 +155,7 @@ export const addPetInputs: addPetTypes = [
       {
         title: 'Can be left alone??',
         id: 111,
+        name: 'leftAlone',
         radio: [
           {id: 41, type: '< 1 hour'},
           {id: 42, type: '4-8 hours'},
@@ -183,6 +172,7 @@ export const addPetInputs: addPetTypes = [
   },
   {
     title: 'Medicaition (select all that apply)',
+    name: 'medication',
     id: 112,
     pet: [
       {id: 4, type: 'Pill'},
@@ -211,7 +201,7 @@ export const addPetInputs: addPetTypes = [
       {
         title: 'Name of injection medication',
         placeholder: 'Enter injection medication',
-        name: 'topicalMedication',
+        name: 'injectionMedication',
       },
 
       {
@@ -228,11 +218,5 @@ export const addPetInputs: addPetTypes = [
         numberOfLines: 20,
       },
     ],
-  },
-  {
-    image: {
-      title: 'Photo Gallery',
-      subTitle: 'show off your pets through picuture',
-    },
   },
 ];

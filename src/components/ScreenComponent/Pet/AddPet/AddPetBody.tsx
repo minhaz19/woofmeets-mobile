@@ -1,13 +1,15 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import AppForm from '../../../common/Form/AppForm';
 import AppFormField from '../../../common/Form/AppFormField';
-import AppCheckbox from '../../../common/Form/AppCheckbox';
 import Text_Size from '../../../../constants/textScaling';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import {addPetInputs} from '../../../../utils/config/Data/AddPetData';
 import AddPetImage from './AddPetImage';
 import AppSelect from '../../../common/Form/AppSelect';
+import PhotoGallery from './PhotoGallery';
+import AppCheckboxField from '../../../common/Form/AppCheckboxField';
+import useHandleCheck from '../../../../utils/helpers/usehandleActiveCheck';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -17,35 +19,22 @@ interface Props {
 }
 
 const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
-  const [active0, setActive0] = useState<any | {}>({});
-  const [active1, setActive1] = useState<any | {}>({});
-  const [active2, setActive2] = useState<any | {}>({});
-  const [active3, setActive3] = useState<any | {}>({});
-  const [active4, setActive4] = useState<any | {}>({});
-  const [active5, setActive5] = useState<any | {}>({});
-  const [active6, setActive6] = useState<any | {}>({});
-  const [active7, setActive7] = useState<any | {}>({});
-  const [active8, setActive8] = useState<any | {}>({});
-  const [active9, setActive9] = useState<any | {}>({});
-  const [active10, setActive10] = useState<any | {}>({});
-  const [active11, setActive11] = useState<any | {}>({});
-  const [active12, setActive12] = useState<any | {}>({});
-
-  const handleActiveCheck = (parentId: number, key: number) => {
-    parentId === 100 && setActive0({[key]: true});
-    parentId === 101 && setActive1({[key]: true});
-    parentId === 102 && setActive2({[key]: true});
-    parentId === 103 && setActive3({[key]: true});
-    parentId === 104 && setActive4({[key]: true});
-    parentId === 105 && setActive5({[key]: true});
-    parentId === 106 && setActive6({[key]: true});
-    parentId === 107 && setActive7({[key]: true});
-    parentId === 108 && setActive8({[key]: true});
-    parentId === 109 && setActive9({[key]: true});
-    parentId === 110 && setActive10({[key]: true});
-    parentId === 111 && setActive11({[key]: true});
-    parentId === 112 && setActive12({[key]: true});
-  };
+  const {
+    handleActiveCheck,
+    active0,
+    active1,
+    active2,
+    active3,
+    active4,
+    active5,
+    active6,
+    active7,
+    active8,
+    active9,
+    active10,
+    active11,
+    active12,
+  } = useHandleCheck();
 
   return (
     <View style={styles.container}>
@@ -59,21 +48,27 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
         </View>
         <View style={styles.inputContainer}>
           <View>
-            <Text>{addPetInputs[0].title}</Text>
+            <Text style={styles.header}>{addPetInputs[0].header}</Text>
+            <Text style={styles.topSubTitle}>{addPetInputs[0].subTitle}</Text>
+            <Text style={styles.title}>{addPetInputs[0].title}</Text>
             <View style={styles.petType}>
               {addPetInputs[0].pet!.map((item, index) => (
-                <AppCheckbox
-                  title={item.type}
-                  key={index}
-                  square
-                  // @ts-ignore
-                  // active={index === fitleredIndex ? true : false}
-                  active={active0[item.id]}
-                  onPress={() =>
-                    handleActiveCheck(addPetInputs[0].id!, item.id)
-                  }
-                />
+                <>
+                  <AppCheckboxField
+                    title={item.type}
+                    key={index}
+                    typeKey={item.id}
+                    square
+                    active={active0[item.id]}
+                    // onBlur={() => setFieldTouched(addPetInputs[0].name!)}
+                    onPress={() =>
+                      handleActiveCheck(addPetInputs[0].id!, item.id)
+                    }
+                    name={addPetInputs[0].name!}
+                  />
+                </>
               ))}
+              {/* <ErrorMessage error={['petType']} visible={['petType']} /> */}
             </View>
           </View>
           <View>
@@ -111,15 +106,18 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
           <View>
             {addPetInputs[2].additionalDetails!.map((item, index) => (
               <View style={styles.radioContainer}>
-                <Text key={index}>{item.title}</Text>
+                <Text style={styles.title} key={index}>
+                  {item.title}
+                </Text>
 
                 <View style={styles.additionalTypeContainer}>
                   {item.radio.map((type, key) => (
                     <View key={key} style={styles.additionalType}>
-                      <AppCheckbox
+                      <AppCheckboxField
                         title={type.type}
                         radio
-                        // @ts-ignore
+                        key={index}
+                        typeKey={type.id}
                         active={
                           (item.id === 101 && active1[type.id]) ||
                           (item.id === 102 && active2[type.id]) ||
@@ -130,6 +128,7 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
                           (item.id === 107 && active7[type.id])
                         }
                         onPress={() => handleActiveCheck(item.id, type.id)}
+                        name={item.name}
                       />
                     </View>
                   ))}
@@ -157,22 +156,24 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
             </View>
             {addPetInputs[4].careInfo?.map((item, index) => (
               <View key={index} style={styles.radioContainer}>
-                <Text>{item.title}</Text>
+                <Text style={styles.title}>{item.title}</Text>
 
                 <View style={styles.additionalTypeContainer}>
                   {item.radio.map((type, key) => (
                     <View key={key} style={styles.additionalType}>
-                      <AppCheckbox
+                      <AppCheckboxField
                         title={type.type}
                         radio
+                        key={index}
+                        typeKey={type.id}
                         active={
                           (item.id === 108 && active8[type.id]) ||
                           (item.id === 109 && active9[type.id]) ||
                           (item.id === 110 && active10[type.id]) ||
                           (item.id === 111 && active11[type.id])
                         }
-                        // active={key === fitleredIndex2 ? true : false}
                         onPress={() => handleActiveCheck(item.id, type.id)}
+                        name={item.name}
                       />
                     </View>
                   ))}
@@ -194,16 +195,17 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
             />
           </View>
           <View>
-            <Text>{addPetInputs[6].title}</Text>
+            <Text style={styles.title}>{addPetInputs[6].title}</Text>
             <View style={styles.petType}>
               {addPetInputs[6].pet!.map((item, index) => (
-                <AppCheckbox
+                <AppCheckboxField
                   title={item.type}
                   key={index}
                   square
+                  typeKey={item.id}
                   active={addPetInputs[6].id === 112 && active12[item.id]}
-                  // active={key === fitleredIndex2 ? true : false}
                   onPress={() => handleActiveCheck(112, item.id)}
+                  name={addPetInputs[6].name!}
                 />
               ))}
             </View>
@@ -226,6 +228,12 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
             ))}
           </View>
           <View>
+            <PhotoGallery
+              label="Photo Gallery"
+              subTitle="Show off your pet through image gallery"
+            />
+          </View>
+          <View>
             <SubmitButton title="Add Pet" />
           </View>
         </View>
@@ -239,6 +247,19 @@ export default AddPetBody;
 const styles = StyleSheet.create({
   container: {
     marginTop: '5%',
+  },
+  topHeader: {
+    fontSize: Text_Size.Text_1,
+    fontWeight: 'bold',
+  },
+  title: {
+    fontSize: Text_Size.Text_1,
+    fontWeight: '600',
+  },
+  topSubTitle: {
+    fontSize: 10,
+    marginTop: 4,
+    marginBottom: 14,
   },
   inputContainer: {marginHorizontal: 20},
   petType: {

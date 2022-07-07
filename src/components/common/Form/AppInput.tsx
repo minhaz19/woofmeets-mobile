@@ -26,9 +26,9 @@ const AppInput = ({...otherProps}) => {
       />
       {!otherProps.secureTextEntry &&
       otherProps.error === undefined &&
-      otherProps.touch ? (
-        <Check size={20} />
-      ) : null}
+      otherProps.touch
+        ? otherProps.email && <Check size={20} />
+        : null}
       {otherProps.secureTextEntry &&
         (show ? (
           <EyeOpen size={20} onPress={() => setShow(!show)} />

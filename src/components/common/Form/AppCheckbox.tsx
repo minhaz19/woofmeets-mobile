@@ -13,10 +13,18 @@ interface Props {
   title?: string;
   active?: boolean;
   onPress?: () => void;
+  onBlur?: () => void;
 }
-const AppCheckbox = ({radio, square, title, active, onPress}: Props) => {
+const AppCheckbox = ({
+  radio,
+  square,
+  title,
+  active,
+  onPress,
+  onBlur,
+}: Props) => {
   return (
-    <TouchableOpacity activeOpacity={1} onPress={onPress}>
+    <TouchableOpacity activeOpacity={1} onPress={onPress} onBlur={onBlur}>
       <View style={styles.checkInfoContainer}>
         {square && (!active ? <Square /> : <SquareCheck />)}
         {radio && (!active ? <Circle /> : <CircleCheck />)}
