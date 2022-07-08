@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   View,
   Text,
@@ -11,7 +12,16 @@ import React from 'react';
 import * as ImagePicker from 'react-native-image-picker';
 import mime from 'mime';
 import Text_Size from '../../../constants/textScaling';
-
+interface OptionType {
+  maxWidth: number;
+  maxHeight: number;
+  title: string;
+  storageOptions: {
+    skipBackup: boolean;
+    path: string;
+  };
+  quality: number;
+}
 const ImageUploadModal = (props: {
   setIsImageLoading: (arg0: boolean) => void;
   setIsModalVisible: (arg0: boolean) => void;
@@ -28,7 +38,7 @@ const ImageUploadModal = (props: {
     props.setIsImageLoading(true);
     // setImageError(null);
     props.setIsModalVisible(false);
-    let options = {
+    let options: OptionType = {
       maxWidth: 1080,
       maxHeight: 720,
       quality: 0.4,
@@ -38,17 +48,21 @@ const ImageUploadModal = (props: {
         path: 'images',
       },
     };
+    //@ts-ignore
     await ImagePicker.launchImageLibrary(options, response => {
       if (response.didCancel) {
         props.setIsImageLoading(false);
+        // @ts-ignore
       } else if (response?.error) {
         // setImageError(response.error);
       } else {
+        // @ts-ignore
         const response1 = response?.assets[0];
         let formData = new FormData();
         props?.setPetImage(response1.uri);
         formData.append('file', {
           uri: response1.uri,
+          // @ts-ignore
           type: mime.getType(response1.uri),
           name: response1.fileName,
         });
@@ -60,7 +74,7 @@ const ImageUploadModal = (props: {
   const handleCaptureImage = async () => {
     props.setIsImageLoading(true);
     props.setIsModalVisible(false);
-    let options = {
+    let options: OptionType = {
       maxWidth: 1080,
       maxHeight: 720,
       title: 'Select Photo',
@@ -71,6 +85,7 @@ const ImageUploadModal = (props: {
       quality: 0.4,
     };
     ImagePicker.launchCamera(
+      // @ts-ignore
       options,
       (response: {
         didCancel: any;

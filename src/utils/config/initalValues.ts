@@ -5,6 +5,7 @@ import {
   SetPasswordType,
   SignUpType,
   verifyAccountType,
+  addPetType,
 } from './types';
 
 const loginValue: LoginType = {email: '', password: ''};
@@ -17,6 +18,35 @@ const setPasswordValue: SetPasswordType = {
 const forgotPasswordValue: forgotPasswordType = {email: ''};
 const forgotPasswordOtpValue: forgotPasswordOtpType = {code: ''};
 const verifyAccountValue: verifyAccountType = {code: ''};
+const addPetValue: addPetType = {
+  petImage: '',
+  petType: '',
+  petName: '',
+  weight: '',
+  ageYr: '',
+  ageMo: '',
+  gender: '',
+  breeds: '',
+  microchipped: '',
+  houseTrained: '',
+  spayedNeutered: '',
+  friendlyChildren: '',
+  friendlyDogs: '',
+  friendlyCats: '',
+  petDescription: '',
+  pottyBreak: '',
+  feedingSchedule: '',
+  energyLevel: '',
+  leftAlone: '',
+  additionalDescription: '',
+  medication: '',
+  pillMedicaion: '',
+  topicalMedication: '',
+  injectionMedication: '',
+  additionalInfo: '',
+  petInfo: '',
+  photoGallery: '',
+};
 
 export {
   loginValue,
@@ -25,4 +55,5 @@ export {
   forgotPasswordValue,
   forgotPasswordOtpValue,
   verifyAccountValue,
+  addPetValue,
 };
