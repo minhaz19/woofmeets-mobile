@@ -29,9 +29,8 @@ const ServiceLocation: FC<Props> = ({hText, dText}) => {
             {backgroundColor: colors.colors.backgroundColor},
           ]}>
           <TextInput
-            style={[styles.text]}
+            style={[styles.text, {color: colors.colors.placeholderTextColor}]}
             placeholder="Select your location"
-            placeholderTextColor={'gray'}
           />
           <Ion
             name="chevron-forward-outline"
@@ -52,7 +51,7 @@ export default ServiceLocation;
 
 const styles = StyleSheet.create({
   headerText: {
-    fontSize: 18,
+    fontSize: Text_Size.Text_1,
     fontWeight: 'bold',
   },
   container: {
