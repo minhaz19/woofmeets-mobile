@@ -1,10 +1,7 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {FormikErrors, FormikTouched} from 'formik';
-import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 interface Props {
   error:
@@ -16,16 +13,12 @@ interface Props {
   visible: boolean | FormikTouched<any> | FormikTouched<any>[] | undefined;
 }
 const ErrorMessage = ({error, visible}: Props) => {
+  const {colors} = useTheme();
   if (!visible || !error) {
     return null;
   }
-  const {isDarkMode} = useTheme();
   return (
-    <View
-      style={[
-        styles.container,
-        {backgroundColor: isDarkMode ? Colors.dark.lightDark : 'white'},
-      ]}>
+    <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <Text style={styles.error}>{error}</Text>
     </View>
   );

@@ -1,31 +1,43 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
 import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
+import {FormikValues, useFormikContext} from 'formik';
 
 interface Props {
   label: string;
   subTitle: string;
+  imageUrl?: [];
 }
-const PhotoGallery = ({label, subTitle}: Props) => {
+const PhotoGallery = ({label, subTitle, imageUrl}: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [petImage, setPetImage] = useState();
-  const uploadImage = (e: any) => {
-    console.log('upload', e);
-  };
+  const {setFieldValue, values} = useFormikContext<FormikValues>();
+  function uploadImage(e: any) {}
+  useEffect(() => {
+    setFieldValue('photoGallery', petImage);
+  }, [petImage, setFieldValue]);
   return (
     <>
       <View style={styles.galleryContainer}>
-        <Text style={styles.label}>{label}</Text>
-        <Text style={styles.subTitle}>{subTitle}</Text>
-        <TouchableOpacity
-          style={styles.imageContainer}
-          onPress={() => setIsModalVisible(!isModalVisible)}>
-          <Text style={styles.innerText}>Add Photo</Text>
-        </TouchableOpacity>
+        {imageUrl ? (
+          <>
+            <Image source={{uri: petImage}} style={styles.image} />
+          </>
+        ) : (
+          <>
+            <Text style={styles.label}>{label}</Text>
+            <Text style={styles.subTitle}>{subTitle}</Text>
+            <TouchableOpacity
+              style={styles.imageContainer}
+              onPress={() => setIsModalVisible(!isModalVisible)}>
+              <Text style={styles.innerText}>Add Photo</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
       <ImageUploadModal
         isModalVisible={isModalVisible}
@@ -58,10 +70,11 @@ const styles = StyleSheet.create({
     height: 120,
     borderWidth: 1,
     borderStyle: 'dashed',
-    borderColor: Colors.dark.lightDark,
     marginTop: 20,
     borderRadius: 10,
+    borderColor: 'gray',
   },
+  image: {width: 100, height: 100},
   innerText: {
     fontSize: Text_Size.Text_0,
     color: 'gray',
