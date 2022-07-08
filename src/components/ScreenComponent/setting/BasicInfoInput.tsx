@@ -136,7 +136,6 @@ const BasicInfoInput = ({
                       textContentType={'none'}
                       name={item.name}
                       label={item.title}
-                      flex={item.flex}
                     />
                   </>
                 );
@@ -145,8 +144,20 @@ const BasicInfoInput = ({
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
-          <View>
-            <SubmitButton title="Add Pet" />
+          <View style={styles.nameContainer}>
+            <HeaderText text="Change Password" textStyle={styles.textStyle} />
+          </View>
+          <AppFormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType={'default'}
+            placeholder={'Enter Password'}
+            textContentType={'none'}
+            name={'password'}
+            label={'Password'}
+          />
+          <View style={styles.footerContainer}>
+            <SubmitButton title="Save" />
           </View>
         </View>
       </AppForm>
@@ -205,6 +216,17 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   selectContainer: {width: '100%'},
-  textInputStyle: {
-  }
+  textInputStyle: {},
+  nameContainer: {
+    paddingVertical: '5%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textStyle: {
+    fontSize: Text_Size.Text_2,
+    fontWeight: 'bold',
+  },
+  footerContainer: {
+    paddingVertical: '15%',
+  },
 });

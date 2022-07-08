@@ -6,12 +6,9 @@ import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Text_Size from '../../constants/textScaling';
-import InputText from '../../components/common/input/InputText';
 import BottomSpacing from '../../components/UI/BottomSpacing';
-import ButtonCom from '../../components/UI/ButtonCom';
-import {btnStyles} from '../../constants/theme/common/buttonStyles';
-import { basicInfoValue } from '../../utils/config/initalValues';
-import { basicInfoValidationSchema } from '../../utils/config/validationSchema';
+import {basicInfoValue} from '../../utils/config/initalValues';
+import {basicInfoValidationSchema} from '../../utils/config/validationSchema';
 import BasicInfoInput from '../../components/ScreenComponent/setting/BasicInfoInput';
 
 const BasicInfo = () => {
@@ -60,85 +57,7 @@ const BasicInfo = () => {
         validationSchema={basicInfoValidationSchema}
         handleSubmit={handleSubmit}
       />
-      {/* <View style={styles.nameContainer}>
-        <HeaderText text="Location Information" textStyle={styles.textStyle} />
-      </View>
-      <View style={styles.textInfoContainer}>
-        <InputText
-          title="Address Line 1"
-          placeholder="Enter Address Line 1"
-          value={undefined}
-          setValue={() => {}}
-        />
-        <InputText
-          title="Address Line 2"
-          placeholder="Enter Address Line 2"
-          value={undefined}
-          setValue={() => {}}
-        />
-        <InputText
-          title="City"
-          placeholder="Enter City"
-          value={undefined}
-          setValue={() => {}}
-        />
-        <InputText
-          title="State or Province"
-          placeholder="Enter State or Province"
-          value={undefined}
-          setValue={() => {}}
-        />
-        <InputText
-          title="ZIP/ Postal/ PostCode"
-          placeholder="Enter ZIP/ Postal/ PostCode"
-          value={undefined}
-          setValue={() => {}}
-        />
-      </View>
-      <View style={styles.nameContainer}>
-        <HeaderText text="Basic Information" textStyle={styles.textStyle} />
-      </View>
-      <View style={styles.textInfoContainer}>
-        <InputText
-          title="Name"
-          placeholder="Enter Name"
-          value={undefined}
-          setValue={() => {}}
-        />
-        <InputText
-          title="Email"
-          placeholder="Enter Email"
-          value={undefined}
-          setValue={() => {}}
-        />
-        <InputText
-          title="Date of Birth"
-          placeholder="Enter Date of Birth"
-          value={undefined}
-          setValue={() => {}}
-        />
-      </View>
-      <View style={styles.nameContainer}>
-        <HeaderText text="Change Password" textStyle={styles.textStyle} />
-      </View>
-      <View style={styles.textInfoContainer}>
-        <InputText
-          title="Password"
-          placeholder="Enter Password"
-          value={undefined}
-          setValue={() => {}}
-        />
-      </View> */}
-      <View style={styles.footerContainer}>
-        <ButtonCom
-          title={'Save'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={() => {}}
-        />
-        <BottomSpacing />
-      </View>
+      <BottomSpacing />
     </ScrollView>
   );
 };
