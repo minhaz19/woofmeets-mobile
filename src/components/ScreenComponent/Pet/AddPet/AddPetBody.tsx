@@ -102,27 +102,6 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
               numColumns={2}
               keyExtractor={(item, index) => index.toString()}
             />
-            {/* {addPetInputs[1].inputs!.map((item, index) => (
-              <View key={index}>
-                {!item.select && (
-                  <AppFormField
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType={'default'}
-                    placeholder={item.placeholder}
-                    textContentType={'none'}
-                    name={item.name}
-                    label={item.title}
-                    flex={item.flex}
-                  />
-                )}
-                {item.select && (
-                  <View style={styles.selectContainer}>
-                    <AppSelect label={item.title} name={item.name} />
-                  </View>
-                )}
-              </View>
-            ))} */}
           </View>
           <View>
             {addPetInputs[2].additionalDetails!.map((item, index) => (

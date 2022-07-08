@@ -5,12 +5,20 @@ import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {Check, EyeClose, EyeOpen} from '../../../assets/SVG_LOGOS';
 import Colors from '../../../constants/Colors';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const screen = SCREEN_WIDTH;
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
+  const {colors, isDarkMode} = useTheme();
   const {numberOfLines} = otherProps;
+  // isDarkMode ? colors.lightBackgroundColor :
+
   return (
-    <View style={[styles.container]}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: isDarkMode ? colors.lightBackgroundColor : '#f8f4f4'},
+      ]}>
       <TextInput
         placeholderTextColor={'gray'}
         style={[
@@ -18,7 +26,9 @@ const AppInput = ({...otherProps}) => {
           {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
             height: numberOfLines >= 10 ? 120 : 40,
+
             flex: 1,
+            color: isDarkMode ? 'gray' : 'black',
           },
         ]}
         {...otherProps}
@@ -27,7 +37,11 @@ const AppInput = ({...otherProps}) => {
       {!otherProps.secureTextEntry &&
       otherProps.error === undefined &&
       otherProps.touch
-        ? otherProps.email && <Check size={20} />
+        ? otherProps.email && (
+            <View style={styles.check}>
+              <Check size={20} />
+            </View>
+          )
         : null}
       {otherProps.secureTextEntry &&
         (show ? (
@@ -43,7 +57,6 @@ export default AppInput;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f8f4f4',
     borderRadius: 5,
     flexDirection: 'row',
     paddingVertical: screen > 390 ? -10 : 0,
@@ -61,6 +74,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: Text_Size.Text_0,
     flex: 0,
-    color: 'black',
   },
+  check: {height: '100%', alignSelf: 'center'},
 });
