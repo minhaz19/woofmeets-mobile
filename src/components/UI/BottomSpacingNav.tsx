@@ -2,21 +2,21 @@ import {View, Platform} from 'react-native';
 import React from 'react';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 
-const BottomSpacing = () => {
+const BottomSpacingNav = () => {
   return (
     <View
       style={{
         height:
           SCREEN_WIDTH <= 380
             ? Platform.OS === 'ios'
-              ? 100
-              : 90
+              ? 200
+              : 180
             : Platform.OS === 'ios'
-            ? 125
-            : 135,
+            ? 250
+            : 270,
       }}
     />
   );
 };
 
-export default BottomSpacing;
+export default BottomSpacingNav;

@@ -1,66 +1,30 @@
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import React from 'react';
-import HeaderText from '../../components/common/text/HeaderText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
-import ButtonCom from '../../components/UI/ButtonCom';
-import {btnStyles} from '../../constants/theme/common/buttonStyles';
-import InputText from '../../components/common/input/InputText';
+import ContactInput from '../../components/ScreenComponent/setting/ContactInput';
+import {contactValues} from '../../utils/config/setting/initalValues';
+import {contactValidationSchema} from '../../utils/config/setting/validationSchema';
+import BottomSpacing from '../../components/UI/BottomSpacing';
 
 const ContactScreen = () => {
   const {colors} = useTheme();
   return (
-    <View
+    <ScrollView
       style={[
         styles.rootContainer,
         {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <View style={styles.nameContainer}>
-        <HeaderText text="Add your phone number" textStyle={styles.textStyle} />
-      </View>
-      <View style={styles.textInfoContainer}>
-        <InputText
-          title="Phone number"
-          placeholder="Enter Phone number"
-          value={undefined}
-          setValue={() => {}}
-        />
-      </View>
-      <View style={styles.nameContainer}>
-        <HeaderText text="Add Emergency Contact" textStyle={styles.textStyle} />
-      </View>
-      <View style={styles.textInfoContainer}>
-        <InputText
-          title="Emergency Contact Name"
-          placeholder="Enter Emergency Contact Name"
-          value={undefined}
-          setValue={() => {}}
-        />
-        <InputText
-          title="Email"
-          placeholder="Enter Email"
-          value={undefined}
-          setValue={() => {}}
-        />
-        <InputText
-          title="Phone number"
-          placeholder="Enter Phone number"
-          value={undefined}
-          setValue={() => {}}
-        />
-      </View>
+      <ContactInput
+        initialValues={contactValues}
+        validationSchema={contactValidationSchema}
+        handleSubmit={() => {}}
+      />
       <View style={styles.footerContainer}>
-        <ButtonCom
-          title={'Save'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={() => {}}
-        />
         <View style={styles.termsContainer}>
           <Text style={[styles.details, {color: colors.lightText}]}>
             By adding your phone number, you're saying it's okay for us to send
@@ -89,7 +53,8 @@ const ContactScreen = () => {
           </Text>
         </View>
       </View>
-    </View>
+      <BottomSpacing />
+    </ScrollView>
   );
 };
 
@@ -104,7 +69,6 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
   },
   footerContainer: {
-    paddingTop: '6%',
     paddingHorizontal: '5%',
   },
   imageContainer: {

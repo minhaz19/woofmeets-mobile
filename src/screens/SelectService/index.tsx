@@ -1,9 +1,16 @@
-import {StyleSheet, Text, View, FlatList, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  SafeAreaView,
+  Platform,
+} from 'react-native';
 import React, {FC} from 'react';
 import Screen from '../../components/common/Screen';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import ReusableSelectService from '../../components/ScreenComponent/SelectService/ReusableSelectService';
-import Colors from '../../constants/Colors';
+import Text_Size from '../../constants/textScaling';
 
 const selectData = [
   {
@@ -57,7 +64,9 @@ const SelectService = () => {
       ]}>
       <SafeAreaView>
         <View style={styles.header}>
-          <Text style={styles.textDesign}>Select a Service</Text>
+          <Text style={[styles.textDesign, {color: colors.headerText}]}>
+            Select a Service
+          </Text>
           <FlatList
             data={selectData}
             renderItem={renderItem}
@@ -77,11 +86,11 @@ const styles = StyleSheet.create({
   },
   header: {
     marginHorizontal: 20,
+    paddingTop: Platform.OS === 'ios' ? 30 : 20,
   },
   textDesign: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Colors.headerText,
+    fontSize: Text_Size.Text_2,
+    fontWeight: '500',
     marginBottom: 10,
   },
 });

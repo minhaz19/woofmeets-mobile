@@ -9,12 +9,11 @@ import {
 import React, {useState} from 'react';
 import GlobalStyles from '../../GlobalStyles';
 import {ZipSearch} from '../assets/SVG_LOGOS';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../constants/WindowSize';
+import {SCREEN_WIDTH} from '../constants/WindowSize';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
-import ButtonCom from '../components/UI/ButtonCom';
-import {btnStyles} from '../constants/theme/common/buttonStyles';
 import {useTheme} from '../constants/theme/hooks/useTheme';
+import BottomButton from '../components/ScreenComponent/SelectService/BottomButton';
 
 const PetCareZipSearch = (props: {
   navigation: {goBack: () => void; navigate: (arg0: string) => void};
@@ -61,15 +60,10 @@ const PetCareZipSearch = (props: {
             />
           </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <ButtonCom
-            title={'Continue'}
-            textAlignment={btnStyles.textAlignment}
-            containerStyle={btnStyles.containerStyleFullWidth}
-            titleStyle={btnStyles.titleStyle}
-            onSelect={() => props.navigation.navigate('BottomTabNavigator')}
-          />
-        </View>
+        <BottomButton
+          title="Continue"
+          onSelect={() => props.navigation.navigate('ServiceMain')}
+        />
       </SafeAreaView>
     </View>
   );
@@ -86,12 +80,6 @@ const styles = StyleSheet.create({
     paddingTop: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '8%' : '10%',
   },
   boxContainer: {paddingHorizontal: '10%'},
-  buttonContainer: {
-    width: '90%',
-    paddingLeft: '10%',
-    position: 'absolute',
-    top: SCREEN_HEIGHT - 120,
-  },
   _input: {
     width: '100%',
     height: '31%',

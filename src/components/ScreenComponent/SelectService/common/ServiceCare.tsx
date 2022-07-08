@@ -32,22 +32,23 @@ const ServiceCare = ({
       <View style={styles.boxContainer}>
         <View
           style={{
-            width: '50%',
+            width: '47.5%',
             marginHorizontal: 5,
           }}>
           <TouchableOpacity activeOpacity={1} onPress={() => setServiceType(1)}>
             <View
               style={[
                 styles.box,
+                serviceType === 1 && styles.activeCard,
                 {
                   backgroundColor:
                     serviceType === 1
                       ? colors.colors.lightBackgroundColor
                       : colors.colors.backgroundColor,
-                  borderColor:
-                    serviceType === 1
-                      ? Colors.primary
-                      : colors.colors.lightText,
+                      borderColor:
+                      serviceType === 1
+                        ? colors.colors.headerText
+                        : colors.colors.descriptionText,
                 },
               ]}>
               <HomeSvg height={60} width={60} fill={colors.colors.headerText} />
@@ -62,17 +63,22 @@ const ServiceCare = ({
                     serviceType === 1
                       ? Colors.primary
                       : colors.colors.descriptionText,
+                  fontWeight:
+                      serviceType === 1
+                        ? '600'
+                        : '300',
                 },
               ]}>
               One Time
             </Text>
           </View>
         </View>
-        <View style={{width: '50%', marginHorizontal: 5}}>
+        <View style={{width: '47.5%', marginHorizontal: 5}}>
           <TouchableOpacity activeOpacity={1} onPress={() => setServiceType(2)}>
             <View
               style={[
                 styles.box,
+                serviceType === 2 && styles.activeCard,
                 {
                   backgroundColor:
                     serviceType === 2
@@ -80,8 +86,8 @@ const ServiceCare = ({
                       : colors.colors.backgroundColor,
                   borderColor:
                     serviceType === 2
-                      ? Colors.primary
-                      : colors.colors.lightText,
+                      ? colors.colors.headerText
+                      : colors.colors.descriptionText,
                 },
               ]}>
               <RepeatSvg
@@ -100,6 +106,10 @@ const ServiceCare = ({
                     serviceType === 2
                       ? Colors.primary
                       : colors.colors.descriptionText,
+                      fontWeight:
+                    serviceType === 2
+                        ? '600'
+                        : '300',
                 },
               ]}>
               Repeat Weekly
@@ -119,6 +129,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 10,
+  },
+  activeCard: {
+    shadowColor: 'grey',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 2, height: 2},
+    shadowRadius: 8,
+    elevation: 5,
+    borderRadius: 10,
   },
   box: {
     width: '100%',

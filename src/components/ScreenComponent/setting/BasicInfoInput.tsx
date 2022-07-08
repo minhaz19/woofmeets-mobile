@@ -6,6 +6,8 @@ import SubmitButton from '../../common/Form/SubmitButton';
 import AppForm from '../../common/Form/AppForm';
 import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../../common/text/HeaderText';
+import ProfileHeader from '../profile/ProfileHeader';
+import BottomSpacing from '../../UI/BottomSpacing';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -69,65 +71,88 @@ const BasicInfoInput = ({
       name: 'dob',
     },
   ];
+
+  const renderHeader = () => {
+    return (
+      <View style={styles.inputContainer}>
+        <ProfileHeader />
+        <View style={styles.nameContainer}>
+          <HeaderText
+            text="Location Information"
+            textStyle={styles.textStyle}
+          />
+        </View>
+      </View>
+    );
+  };
+
+  const renderFooter = () => {
+    return (
+      <View style={styles.inputContainer}>
+        <View>
+          <View style={styles.nameContainer}>
+            <HeaderText text="Basic Information" textStyle={styles.textStyle} />
+          </View>
+          <FlatList
+            columnWrapperStyle={styles.flatList}
+            data={basicInfoInput}
+            horizontal={false}
+            renderItem={({item}) => {
+              return (
+                <>
+                  <AppFormField
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType={'default'}
+                    placeholder={item.placeholder}
+                    textContentType={'none'}
+                    name={item.name}
+                    label={item.title}
+                  />
+                </>
+              );
+            }}
+            numColumns={2}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+        <View style={styles.nameContainer}>
+          <HeaderText text="Change Password" textStyle={styles.textStyle} />
+        </View>
+        <AppFormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType={'default'}
+          icon={'lock'}
+          secureTextEntry
+          placeholder={'Enter Password'}
+          textContentType={'none'}
+          name={'password'}
+          label={'Password'}
+        />
+        <View style={styles.footerContainer}>
+          <SubmitButton title="Save" />
+        </View>
+        <BottomSpacing />
+      </View>
+    );
+  };
   return (
     <View style={styles.container}>
       <AppForm
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>
-        <View style={styles.inputContainer}>
-          <View>
-            <View style={styles.nameContainer}>
-              <HeaderText
-                text="Location Information"
-                textStyle={styles.textStyle}
-              />
-            </View>
-            <FlatList
-              columnWrapperStyle={styles.flatList}
-              data={locationInput}
-              horizontal={false}
-              renderItem={({item}) => {
-                return (
-                  <>
-                    {!item.select && (
-                      <AppFormField
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        keyboardType={'default'}
-                        placeholder={item.placeholder}
-                        textContentType={'none'}
-                        name={item.name}
-                        label={item.title}
-                        textInputStyle={styles.textInputStyle}
-                      />
-                    )}
-                    {item.select && (
-                      <View style={styles.selectContainer}>
-                        <AppSelect label={item.title} name={item.name} />
-                      </View>
-                    )}
-                  </>
-                );
-              }}
-              numColumns={2}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          </View>
-          <View>
-            <View style={styles.nameContainer}>
-              <HeaderText
-                text="Basic Information"
-                textStyle={styles.textStyle}
-              />
-            </View>
-            <FlatList
-              columnWrapperStyle={styles.flatList}
-              data={basicInfoInput}
-              horizontal={false}
-              renderItem={({item}) => {
-                return (
-                  <>
+        <FlatList
+          columnWrapperStyle={styles.flatList}
+          data={locationInput}
+          horizontal={false}
+          // showsVerticalScrollIndicator={false}
+          renderItem={({item}) => {
+            return (
+              <>
+                {!item.select && (
+                  <View style={styles.inputContainer}>
                     <AppFormField
                       autoCapitalize="none"
                       autoCorrect={false}
@@ -136,30 +161,23 @@ const BasicInfoInput = ({
                       textContentType={'none'}
                       name={item.name}
                       label={item.title}
+                      textInputStyle={styles.textInputStyle}
                     />
-                  </>
-                );
-              }}
-              numColumns={2}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          </View>
-          <View style={styles.nameContainer}>
-            <HeaderText text="Change Password" textStyle={styles.textStyle} />
-          </View>
-          <AppFormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType={'default'}
-            placeholder={'Enter Password'}
-            textContentType={'none'}
-            name={'password'}
-            label={'Password'}
-          />
-          <View style={styles.footerContainer}>
-            <SubmitButton title="Save" />
-          </View>
-        </View>
+                  </View>
+                )}
+                {item.select && (
+                  <View style={styles.selectContainer}>
+                    <AppSelect label={item.title} name={item.name} />
+                  </View>
+                )}
+              </>
+            );
+          }}
+          numColumns={2}
+          keyExtractor={(item, index) => index.toString()}
+          ListHeaderComponent={renderHeader}
+          ListFooterComponent={renderFooter}
+        />
       </AppForm>
     </View>
   );
@@ -171,51 +189,14 @@ const styles = StyleSheet.create({
   container: {
     marginTop: '5%',
   },
-  topHeader: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: 'bold',
-  },
-  title: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: '600',
-  },
-  topSubTitle: {
-    fontSize: 10,
-    marginTop: 4,
-    marginBottom: 14,
-  },
-  inputContainer: {marginHorizontal: 20},
-  petType: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 10,
-  },
+  inputContainer: {marginHorizontal: '5%', width: '90%'},
   flatList: {
     flexWrap: 'wrap',
     flex: 1,
     marginTop: 5,
     justifyContent: 'space-between',
   },
-  additionalTypeContainer: {
-    flexDirection: 'row',
-    marginVertical: 15,
-    justifyContent: 'flex-start',
-  },
-  additionalType: {
-    marginRight: 20,
-  },
-  radioContainer: {
-    marginRight: 10,
-  },
-  header: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: 'bold',
-  },
-  subTitle: {
-    fontSize: Text_Size.Text_0,
-    marginVertical: 10,
-  },
-  selectContainer: {width: '100%'},
+  selectContainer: {width: '90%', marginHorizontal: '5%'},
   textInputStyle: {},
   nameContainer: {
     paddingVertical: '5%',

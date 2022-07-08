@@ -365,7 +365,11 @@ export function BackButton(props: SvgProps) {
   );
 }
 
-export function EyeClose(props: {size: number; onPress: () => void}) {
+export function EyeClose(props: {
+  size: number;
+  onPress: () => void;
+  fill: string;
+}) {
   return (
     <Svg
       // onPress={props.onPress}
@@ -376,13 +380,17 @@ export function EyeClose(props: {size: number; onPress: () => void}) {
       {...props}>
       <Path
         d="M12 14.062a5.249 5.249 0 01-5.359-4.68L2.708 6.533a11.683 11.683 0 00-1.377 1.954 1.074 1.074 0 000 1.026A12.126 12.126 0 0012 15.75a12.379 12.379 0 002.921-.368l-1.946-1.412a5.753 5.753 0 01-.975.092zM23.768 16.1l-4.146-3a11.807 11.807 0 003.047-3.588 1.074 1.074 0 000-1.026A12.225 12.225 0 006.475 3.575L1.7.118a.627.627 0 00-.842.1l-.736.888a.539.539 0 00.105.789L22.3 17.881a.627.627 0 00.842-.1l.736-.888a.539.539 0 00-.106-.789zm-6.889-4.992L15.4 10.045A3.145 3.145 0 0015.6 9a3.261 3.261 0 00-1.4-2.7 3.745 3.745 0 00-3.146-.546 1.607 1.607 0 01.349.992 1.545 1.545 0 01-.058.352l-2.76-2a5.634 5.634 0 017.237.318A4.9 4.9 0 0117.4 9a4.69 4.69 0 01-.521 2.113z"
-        fill="rgba(66,66,68,.47)"
+        fill={props.fill}
       />
     </Svg>
   );
 }
 
-export function EyeOpen(props: {size: number; onPress: () => void}) {
+export function EyeOpen(props: {
+  size: number;
+  onPress: () => void;
+  fill: string;
+}) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -393,7 +401,7 @@ export function EyeOpen(props: {size: number; onPress: () => void}) {
       <Path d="M0 0h24v24H0z" fill="none" />
       <Path
         d="M12 4.5A11.827 11.827 0 001 12a11.817 11.817 0 0022 0 11.827 11.827 0 00-11-7.5zM12 17a5 5 0 115-5 5 5 0 01-5 5zm0-8a3 3 0 103 3 3 3 0 00-3-3z"
-        fill="rgba(66,66,68,.47)"
+        fill={props.fill}
       />
     </Svg>
   );

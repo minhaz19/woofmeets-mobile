@@ -2,24 +2,26 @@
 import {StyleSheet, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import Text_Size from '../../../constants/textScaling';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {Check, EyeClose, EyeOpen} from '../../../assets/SVG_LOGOS';
 import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-const screen = SCREEN_WIDTH;
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
+  const {colors} = useTheme();
   const {numberOfLines} = otherProps;
+
   return (
-    <View style={[styles.container, {...otherProps.textInputStyle}]}>
+    <View style={[styles.container]}>
       <TextInput
         placeholderTextColor={'gray'}
         style={[
           styles.text,
           {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
-            height: numberOfLines >= 10 ? 120 : 40,
+            height: numberOfLines >= 10 ? 120 : 44,
+
             flex: 1,
+            color: colors.headerText,
           },
         ]}
         {...otherProps}
@@ -28,13 +30,25 @@ const AppInput = ({...otherProps}) => {
       {!otherProps.secureTextEntry &&
       otherProps.error === undefined &&
       otherProps.touch
-        ? otherProps.email && <Check size={20} />
+        ? otherProps.email && (
+            <View style={styles.check}>
+              <Check size={20} />
+            </View>
+          )
         : null}
       {otherProps.secureTextEntry &&
         (show ? (
-          <EyeOpen size={20} onPress={() => setShow(!show)} />
+          <EyeClose
+            size={20}
+            onPress={() => setShow(!show)}
+            fill={colors.descriptionText}
+          />
         ) : (
-          <EyeClose size={20} onPress={() => setShow(!show)} />
+          <EyeOpen
+            size={20}
+            onPress={() => setShow(!show)}
+            fill={colors.descriptionText}
+          />
         ))}
     </View>
   );
@@ -44,24 +58,24 @@ export default AppInput;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f8f4f4',
     borderRadius: 5,
     flexDirection: 'row',
-    paddingVertical: screen > 390 ? -10 : 0,
     paddingHorizontal: 15,
-    marginVertical: 10,
+    marginBottom: 15,
     justifyContent: 'space-between',
     borderWidth: 1,
     borderColor: Colors.border,
     flexWrap: 'wrap',
+    alignItems: 'center',
   },
   icon: {
     marginRight: 10,
     justifyContent: 'center',
   },
   text: {
-    fontSize: Text_Size.Text_0,
+    width: '90%',
+    fontSize: Text_Size.Text_1,
     flex: 0,
-    color: 'black',
   },
+  check: {height: '100%', alignSelf: 'center'},
 });

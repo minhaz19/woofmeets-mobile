@@ -1,23 +1,24 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import ServiceHeader from '../common/ServiceHeader';
 import ServiceDates from '../common/ServiceDates';
 import ServiceLocation from '../common/ServiceLocation';
-import ButtonCom from '../../../UI/ButtonCom';
-import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import {petType} from '../utils/petType';
 import ServicePetType from '../common/ServicePetType';
 import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import BottomSpacingNav from '../../../UI/BottomSpacingNav';
+import BottomButton from '../BottomButton';
 
 const Boarding = () => {
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const {colors} = useTheme();
- 
+
   return (
     <View style={styles.container}>
+      <ScrollView style={styles.scrollContainer}>
       <ServiceHeader hText={'Boarding'} dText={'When do you need sitter?'} />
       <ServiceDates
         hText={'Dates'}
@@ -38,15 +39,9 @@ const Boarding = () => {
           return <ServicePetType key={index} title={item.type} radio />;
         })}
       </View>
-      <View style={styles.buttonContainer}>
-        <ButtonCom
-          title={'Search'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={() => {}}
-        />
-      </View>
+      <BottomSpacingNav />
+      </ScrollView>
+      <BottomButton title="Next" onSelect={() => {}} />
     </View>
   );
 };
@@ -56,12 +51,9 @@ export default Boarding;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
   },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    bottom: '10%',
+  scrollContainer: {
+    paddingHorizontal: '5%',
   },
   petTypeContainer: {
     flexDirection: 'row',
