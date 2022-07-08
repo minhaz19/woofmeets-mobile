@@ -44,7 +44,7 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
         onSubmit={handleSubmit}>
         {/* Image Picker */}
         <View>
-          <AddPetImage />
+          <AddPetImage name="petImage" />
         </View>
         <View style={styles.inputContainer}>
           <View>
@@ -53,29 +53,29 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
             <Text style={styles.title}>{addPetInputs[0].title}</Text>
             <View style={styles.petType}>
               {addPetInputs[0].pet!.map((item, index) => (
-                <>
-                  <AppCheckboxField
-                    title={item.type}
-                    key={index}
-                    typeKey={item.id}
-                    square
-                    active={active0[item.id]}
-                    // onBlur={() => setFieldTouched(addPetInputs[0].name!)}
-                    onPress={() =>
-                      handleActiveCheck(addPetInputs[0].id!, item.id)
-                    }
-                    name={addPetInputs[0].name!}
-                  />
-                </>
+                // <>
+                <AppCheckboxField
+                  title={item.type}
+                  key={index}
+                  typeKey={item.id}
+                  square
+                  active={active0[item.id]}
+                  // onBlur={() => setFieldTouched(addPetInputs[0].name!)}
+                  onPress={() =>
+                    handleActiveCheck(addPetInputs[0].id!, item.id)
+                  }
+                  name={addPetInputs[0].name!}
+                />
+                // </>
               ))}
               {/* <ErrorMessage error={['petType']} visible={['petType']} /> */}
             </View>
           </View>
-          <View>
+          <View style={styles.flatList}>
             <FlatList
               columnWrapperStyle={styles.flatList}
               data={addPetInputs[1].inputs}
-              horizontal={false}
+              scrollEnabled={false}
               renderItem={({item}) => {
                 return (
                   <>
@@ -102,13 +102,32 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
               numColumns={2}
               keyExtractor={(item, index) => index.toString()}
             />
+            {/* {addPetInputs[1].inputs!.map((item, index) => (
+              <View key={index}>
+                {!item.select && (
+                  <AppFormField
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType={'default'}
+                    placeholder={item.placeholder}
+                    textContentType={'none'}
+                    name={item.name}
+                    label={item.title}
+                    flex={item.flex}
+                  />
+                )}
+                {item.select && (
+                  <View style={styles.selectContainer}>
+                    <AppSelect label={item.title} name={item.name} />
+                  </View>
+                )}
+              </View>
+            ))} */}
           </View>
           <View>
             {addPetInputs[2].additionalDetails!.map((item, index) => (
-              <View style={styles.radioContainer}>
-                <Text style={styles.title} key={index}>
-                  {item.title}
-                </Text>
+              <View key={index} style={styles.radioContainer}>
+                <Text style={styles.title}>{item.title}</Text>
 
                 <View style={styles.additionalTypeContainer}>
                   {item.radio.map((type, key) => (

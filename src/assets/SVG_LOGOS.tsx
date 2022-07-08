@@ -687,8 +687,8 @@ export const RepeatSvg = (props: SvgProps) => (
     <G
       data-name="Icon feather-repeat"
       opacity={0.73}
-      fill="none"
-      stroke="#000"
+      fill={props.fill}
+      stroke={'none'}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}>
@@ -696,6 +696,49 @@ export const RepeatSvg = (props: SvgProps) => (
       <Path data-name="Path 6115" d="M1 16.414v-3a6 6 0 0 1 6-6h21" />
       <Path data-name="Path 6116" d="m7 34.414-6-6 6-6" />
       <Path data-name="Path 6117" d="M28 19.414v3a6 6 0 0 1-6 6H1" />
+    </G>
+  </Svg>
+);
+export const Plus = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 32 32">
+    <G
+      id="Icon_feather-plus-circle"
+      data-name="Icon feather-plus-circle"
+      transform="translate(-2 -2)">
+      <Path
+        id="Path_6080"
+        data-name="Path 6080"
+        d="M33,18A15,15,0,1,1,18,3,15,15,0,0,1,33,18Z"
+        fill="none"
+        stroke="#9e9e9e"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      />
+      <Path
+        id="Path_6081"
+        data-name="Path 6081"
+        d="M18,12V24"
+        fill="none"
+        stroke="#9e9e9e"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      />
+      <Path
+        id="Path_6082"
+        data-name="Path 6082"
+        d="M12,18H24"
+        fill="none"
+        stroke="#9e9e9e"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      />
     </G>
   </Svg>
 );

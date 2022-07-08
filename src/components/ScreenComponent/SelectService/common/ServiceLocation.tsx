@@ -29,18 +29,18 @@ const ServiceLocation: FC<Props> = ({hText, dText}) => {
             {backgroundColor: colors.colors.backgroundColor},
           ]}>
           <TextInput
-            style={[styles.text, {color: colors.colors.placeholderTextColor}]}
+            style={[styles.text, {color: colors.colors.descriptionText}]}
             placeholder="Select your location"
+            placeholderTextColor={colors.colors.descriptionText}
           />
           <Ion
             name="chevron-forward-outline"
             size={24}
-            style={{paddingRight: 10}}
-            color={colors.colors.headerText}
+            color={colors.colors.lightText}
           />
         </View>
       </Pressable>
-      <Text style={[styles.text, {color: colors.colors.descriptionText}]}>
+      <Text style={[styles.text, {color: colors.colors.placeholderTextColor}]}>
         {dText}
       </Text>
     </>
@@ -70,6 +70,5 @@ const styles = StyleSheet.create({
   text: {
     fontSize: Text_Size.Text_0,
     flex: 0,
-    color: 'black',
   },
 });
