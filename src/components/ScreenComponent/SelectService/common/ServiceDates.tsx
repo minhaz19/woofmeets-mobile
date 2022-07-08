@@ -19,9 +19,19 @@ import Ion from 'react-native-vector-icons/Ionicons';
 
 interface Props {
   hText: string;
+  onDateSelected: (_event: DateTimePickerEvent, value?: any) => void;
+  showDatePicker: () => void;
+  datePicker: boolean;
+  date: Date;
 }
 const screen = SCREEN_WIDTH;
-const ServiceDates: FC<Props> = ({hText}) => {
+const ServiceDates: FC<Props> = ({
+  hText,
+  // onDateSelected,
+  // showDatePicker,
+  // datePicker,
+  // date,
+}) => {
   const colors = useTheme();
   const [datePicker, setDatePicker] = useState(false);
 
@@ -49,9 +59,9 @@ const ServiceDates: FC<Props> = ({hText}) => {
             {backgroundColor: colors.colors.backgroundColor},
           ]}>
           <TextInput
-            style={[styles.text]}
+            style={[styles.text, {color: colors.colors.placeholderTextColor}]}
             value={date.toDateString()}
-            placeholder="Enter your location"
+            placeholder="Enter your Dates"
           />
           <Ion
             name="chevron-forward-outline"
@@ -79,7 +89,7 @@ export default ServiceDates;
 
 const styles = StyleSheet.create({
   header: {
-    fontSize: 18,
+    fontSize: Text_Size.Text_1,
     fontWeight: 'bold',
   },
   input: {
@@ -101,7 +111,6 @@ const styles = StyleSheet.create({
     color: 'black',
   },
 
-  // Style for iOS ONLY...
   datePicker: {
     justifyContent: 'center',
     alignItems: 'flex-start',
