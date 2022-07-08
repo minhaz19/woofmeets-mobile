@@ -10,6 +10,7 @@ import HomeNavigator from './bottoms/HomeNavigator';
 import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
+import PetNavigator from './bottoms/PetNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +18,7 @@ function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Tab.Navigator
-      initialRouteName="ServiceNavigator"
+      initialRouteName="PetNavigator"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
@@ -41,6 +42,33 @@ function BottomTabNavigator() {
           shadowColor: isDarkMode ? Colors.dark.background : Colors.background,
         },
       }}>
+      <Tab.Screen
+        name="PetNavigator"
+        component={PetNavigator}
+        options={{
+          tabBarLabel: 'Services',
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <View style={styles.bottomContainer}>
+              <Finder
+                fill={focused ? Colors.primary : Colors.light.lightText}
+                height={SCREEN_WIDTH <= 380 ? 24 : 28}
+                width={SCREEN_WIDTH <= 380 ? 26 : 33}
+              />
+              <Text
+                style={[
+                  focused
+                    ? {color: Colors.primary}
+                    : {color: Colors.light.lightText},
+                  styles.textStyle,
+                ]}>
+                My Pet
+              </Text>
+            </View>
+          ),
+        }}
+      />
       <Tab.Screen
         name="ServiceNavigator"
         component={ServiceNavigator}

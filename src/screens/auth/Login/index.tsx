@@ -23,7 +23,7 @@ interface Props {
 const Login = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const handleSubmit = () => {
-    navigation.navigate('VerifyAccount');
+    navigation.navigate('MyPet');
   };
   return (
     <ScrollView

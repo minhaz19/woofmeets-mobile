@@ -1,16 +1,26 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
-
-const MyPet = () => {
+import MyPetHome from '../../../components/ScreenComponent/Pet/MyPet/MyPetHome';
+import Screen from '../../../components/common/Screen';
+import HeaderWithBack from '../../../components/common/header/HeaderWithBack';
+interface Props {
+  navigation: {
+    goBack: () => void;
+  };
+}
+const MyPet = ({navigation}: Props) => {
   return (
-    <View style={styles.container}>
-      <Text>MyPet</Text>
-    </View>
+    <Screen style={styles.container}>
+      <HeaderWithBack title="Add Pet" navigation={navigation} />
+      <MyPetHome />
+    </Screen>
   );
 };
 
 export default MyPet;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
 });
