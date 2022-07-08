@@ -10,7 +10,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName={
-          props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
+          !props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
         }>
         <Stack.Screen
           name="BottomTabNavigator"

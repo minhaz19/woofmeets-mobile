@@ -10,6 +10,7 @@ import HomeNavigator from './bottoms/HomeNavigator';
 import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
+import PetNavigator from './bottoms/PetNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -93,7 +94,7 @@ function BottomTabNavigator() {
       />
       <Tab.Screen
         name="Services"
-        component={HomeNavigator}
+        component={PetNavigator}
         options={() => ({
           headerShown: false,
           tabBarIcon: ({focused}) => (
