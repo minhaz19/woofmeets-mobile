@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 type StackParamList = {
-  addPet: {foo: string; onBar: () => void} | undefined;
+  AddPet: {foo: string; onBar: () => void} | undefined;
 };
 
 type NavigationProps = StackNavigationProp<StackParamList>;
@@ -16,11 +16,12 @@ const MyPetHome = () => {
       <Image
         style={styles.imageContainer}
         source={require('../../../../../assets/image/pet/home.png')}
+        resizeMode="contain"
       />
       <View style={styles.btnStyle}>
         <AppButton
           title="Add Pet"
-          onPress={() => navigation.navigate('addPet')}
+          onPress={() => navigation.navigate('AddPet')}
         />
       </View>
     </View>
@@ -33,7 +34,6 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
   },
   imageContainer: {
     width: 300,

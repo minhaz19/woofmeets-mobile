@@ -22,7 +22,7 @@ const HeaderWithBack = (props: {
 }) => {
   const {colors} = useTheme();
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.leftContainer}
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'center',
     width: '100%',
+    backgroundColor: 'white',
   },
   iconStyle: {paddingRight: 10},
   headerContainer: {

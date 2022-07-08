@@ -16,7 +16,6 @@ interface Props {
   visible: boolean | FormikTouched<any> | FormikTouched<any>[] | undefined;
 }
 const ErrorMessage = ({error, visible}: Props) => {
-  console.log('vis', error, visible);
   if (!visible || !error) {
     return null;
   }

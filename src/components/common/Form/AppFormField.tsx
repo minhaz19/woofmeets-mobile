@@ -27,7 +27,7 @@ interface Props {
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;
 };
-
+// width: flex ? '48%' : '100%';
 type NavigationProps = StackNavigationProp<StackParamList>;
 const AppFormField = ({
   name,

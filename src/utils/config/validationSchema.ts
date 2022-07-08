@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as Yup from 'yup';
 import {genders} from './Data/AddPetData';
 
@@ -31,13 +32,13 @@ const verifyAccountValidationSchema = Yup.object().shape({
   code: Yup.string().required().min(4).max(4).label('Opt'),
 });
 const addPetValidationSchema = Yup.object().shape({
-  petImage: Yup.object().required('Image is required'),
+  petImage: Yup.string().required('Image is required'),
   petType: Yup.string().required('Pet type is required'),
   petName: Yup.string().required('Pet name is required'),
   weight: Yup.string().required('Pet weight is required'),
   ageYr: Yup.string().required('Year required'),
   // ageMo: Yup.string().required('Month required'),
-  gender: Yup.string().required('Please select a gender').oneOf(genders),
+  // gender: Yup.string().required('Please select a gender').oneOf(genders),
   breeds: Yup.string().required('require'),
   microchipped: Yup.string(),
   houseTrained: Yup.string(),

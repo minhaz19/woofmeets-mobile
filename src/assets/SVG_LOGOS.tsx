@@ -699,6 +699,49 @@ export const RepeatSvg = (props: SvgProps) => (
     </G>
   </Svg>
 );
+export const Plus = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 32 32">
+    <G
+      id="Icon_feather-plus-circle"
+      data-name="Icon feather-plus-circle"
+      transform="translate(-2 -2)">
+      <Path
+        id="Path_6080"
+        data-name="Path 6080"
+        d="M33,18A15,15,0,1,1,18,3,15,15,0,0,1,33,18Z"
+        fill="none"
+        stroke="#9e9e9e"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      />
+      <Path
+        id="Path_6081"
+        data-name="Path 6081"
+        d="M18,12V24"
+        fill="none"
+        stroke="#9e9e9e"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      />
+      <Path
+        id="Path_6082"
+        data-name="Path 6082"
+        d="M12,18H24"
+        fill="none"
+        stroke="#9e9e9e"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      />
+    </G>
+  </Svg>
+);
 
 export const HomeSvg = (props: SvgProps) => (
   <Svg
