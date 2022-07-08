@@ -10,7 +10,6 @@ import ServiceDays from '../common/ServiceDays';
 import {dayOfWeek, time} from '../utils/petType';
 import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 
 const DoggyDayCare = () => {
   const [serviceType, setServiceType] = useState(1);
@@ -18,17 +17,6 @@ const DoggyDayCare = () => {
   const [date, setDate] = useState(new Date());
 
   const {colors} = useTheme();
-  function showDatePicker() {
-    setDatePicker(true);
-
-    console.log('showDatePickerClicked');
-  }
-
-  function onDateSelected(_event: DateTimePickerEvent, value?: any) {
-    setDate(value);
-    setDatePicker(false);
-    console.log('onDateSelectedClicked', _event, value);
-  }
 
   return (
     <View style={[styles.container]}>
@@ -40,13 +28,13 @@ const DoggyDayCare = () => {
       />
       <ServiceDates
         hText={'Dates'}
-        showDatePicker={showDatePicker}
-        onDateSelected={onDateSelected}
+        setDatePicker={setDatePicker}
+        setDate={setDate}
         datePicker={datePicker}
         date={date}
       />
       <ServiceLocation
-        hText={'Location'}
+        hText={'Your location'}
         dText={'Enter a date to find someone faster'}
       />
       <Text style={[styles.text, {color: colors.headerText}]}>Time</Text>
@@ -89,7 +77,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   buttonContainer: {
-    top: '10%',
+    flex: 1,
+    justifyContent: 'flex-end',
+    bottom: '10%',
   },
   timeContainer: {
     flexDirection: 'row',
