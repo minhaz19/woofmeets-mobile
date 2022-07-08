@@ -4,6 +4,7 @@ import React from 'react';
 import MyPetHome from '../../../components/ScreenComponent/Pet/MyPet/MyPetHome';
 import Screen from '../../../components/common/Screen';
 import MyPetList from '../../../components/ScreenComponent/Pet/MyPet/MyPetList';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 interface Props {
   navigation: {
     navigate: (arg0: string) => void;
@@ -14,8 +15,10 @@ const MyPet = ({navigation}: Props) => {
   const onPress = () => {
     navigation.navigate('AddPet');
   };
+  const {colors} = useTheme();
   return (
-    <Screen style={styles.container}>
+    <Screen
+      style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <View>
         <FlatList
           data={[]}
@@ -44,7 +47,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'white',
   },
   columnWrapper: {
     justifyContent: 'space-between',

@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: 200,
-    marginTop: -20,
+
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
@@ -83,6 +83,11 @@ const styles = StyleSheet.create({
   uploadInfo: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 50,
   },
   title: {
     fontSize: Text_Size.Text_0,

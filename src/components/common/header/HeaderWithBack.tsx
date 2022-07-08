@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {
   View,
@@ -22,7 +21,8 @@ const HeaderWithBack = (props: {
 }) => {
   const {colors} = useTheme();
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.leftContainer}
@@ -60,12 +60,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 10,
+    // paddingBottom: 10,
     paddingTop: Platform.OS === 'ios' ? 0 : 10,
     position: 'relative',
     justifyContent: 'center',
     width: '100%',
-    backgroundColor: 'white',
   },
   iconStyle: {paddingRight: 10},
   headerContainer: {

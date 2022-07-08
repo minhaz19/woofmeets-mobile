@@ -3,6 +3,7 @@ import React from 'react';
 import AppButton from '../../../../common/AppButton';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 type StackParamList = {
   AddPet: {foo: string; onBar: () => void} | undefined;
@@ -12,7 +13,7 @@ type NavigationProps = StackNavigationProp<StackParamList>;
 const MyPetHome = () => {
   const navigation = useNavigation<NavigationProps>();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <Image
         style={styles.imageContainer}
         source={require('../../../../../assets/image/pet/home.png')}
