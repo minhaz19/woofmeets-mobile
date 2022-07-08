@@ -9,10 +9,16 @@ import Text_Size from '../../constants/textScaling';
 import InputText from '../../components/common/input/InputText';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import ButtonCom from '../../components/UI/ButtonCom';
-import { btnStyles } from '../../constants/theme/common/buttonStyles';
+import {btnStyles} from '../../constants/theme/common/buttonStyles';
+import { basicInfoValue } from '../../utils/config/initalValues';
+import { basicInfoValidationSchema } from '../../utils/config/validationSchema';
+import BasicInfoInput from '../../components/ScreenComponent/setting/BasicInfoInput';
 
 const BasicInfo = () => {
   const {colors} = useTheme();
+  const handleSubmit = (e: any) => {
+    console.log('values', e);
+  };
   return (
     <ScrollView
       style={[
@@ -49,7 +55,12 @@ const BasicInfo = () => {
           <HeaderText text="John Askelad" />
         </View>
       </View>
-      <View style={styles.nameContainer}>
+      <BasicInfoInput
+        initialValues={basicInfoValue}
+        validationSchema={basicInfoValidationSchema}
+        handleSubmit={handleSubmit}
+      />
+      {/* <View style={styles.nameContainer}>
         <HeaderText text="Location Information" textStyle={styles.textStyle} />
       </View>
       <View style={styles.textInfoContainer}>
@@ -102,7 +113,7 @@ const BasicInfo = () => {
         />
         <InputText
           title="Date of Birth"
-          placeholder="Enter Name"
+          placeholder="Enter Date of Birth"
           value={undefined}
           setValue={() => {}}
         />
@@ -117,7 +128,7 @@ const BasicInfo = () => {
           value={undefined}
           setValue={() => {}}
         />
-      </View>
+      </View> */}
       <View style={styles.footerContainer}>
         <ButtonCom
           title={'Save'}

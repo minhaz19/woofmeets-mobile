@@ -60,6 +60,19 @@ const addPetValidationSchema = Yup.object().shape({
   imageGallery: Yup.string(),
 });
 
+const basicInfoValidationSchema = Yup.object().shape({
+  addressLineOne: Yup.string().required(),
+  addressLineTwo: Yup.string(),
+  city: Yup.string().required(),
+  state: Yup.string().required(),
+  postalCode: Yup.string().required(),
+  country: Yup.string().required(),
+  name: Yup.string().required(),
+  emailAddress: Yup.string().required().email().label('Email'),
+  dob: Yup.string().required(),
+  newPassword: Yup.string().required().min(8).label('Password'),
+});
+
 export {
   loginValidationSchema,
   signUpValidationSchema,
@@ -68,4 +81,5 @@ export {
   forgotPasswordOtpValidationSchema,
   verifyAccountValidationSchema,
   addPetValidationSchema,
+  basicInfoValidationSchema,
 };

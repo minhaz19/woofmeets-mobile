@@ -40,11 +40,11 @@ const PetCareZipSearch = (props: {
             Cancel
           </Text>
         </TouchableOpacity>
-        {/* <View style={styles.container}>
+        <View style={styles.container}>
           <View>
             <ZipSearch width={SCREEN_WIDTH / 1.6} />
           </View>
-        </View> */}
+        </View>
         <View style={styles.boxContainer}>
           <Text style={[styles.textHeader, {color: colors.headerText}]}>
             Where are you looking for pet care?

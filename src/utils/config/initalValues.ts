@@ -6,6 +6,7 @@ import {
   SignUpType,
   verifyAccountType,
   addPetType,
+  basicInfoType,
 } from './types';
 
 const loginValue: LoginType = {email: '', password: ''};
@@ -48,6 +49,19 @@ const addPetValue: addPetType = {
   photoGallery: '',
 };
 
+const basicInfoValue: basicInfoType = {
+  addressLineOne: '',
+  addressLineTwo: '',
+  city: '',
+  state: '',
+  postalCode: '',
+  country: '',
+  name: '',
+  emailAddress: '',
+  dob: '',
+  newPassword: '',
+};
+
 export {
   loginValue,
   signupValue,
@@ -56,4 +70,5 @@ export {
   forgotPasswordOtpValue,
   verifyAccountValue,
   addPetValue,
+  basicInfoValue,
 };

@@ -5,12 +5,13 @@ import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {Check, EyeClose, EyeOpen} from '../../../assets/SVG_LOGOS';
 import Colors from '../../../constants/Colors';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const screen = SCREEN_WIDTH;
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
   const {numberOfLines} = otherProps;
   return (
-    <View style={[styles.container]}>
+    <View style={[styles.container, {...otherProps.textInputStyle}]}>
       <TextInput
         placeholderTextColor={'gray'}
         style={[

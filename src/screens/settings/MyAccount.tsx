@@ -1,6 +1,5 @@
 import {View, SafeAreaView, StyleSheet, ScrollView, Image} from 'react-native';
 import React from 'react';
-import SettingItem from '../../components/ScreenComponent/Auth/setting/SettingItem';
 import {
   CallIcon,
   Payment2Icon,
@@ -13,6 +12,7 @@ import Colors from '../../constants/Colors';
 import ShortText from '../../components/common/text/ShortText';
 import Text_Size from '../../constants/textScaling';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
+import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
 
 const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();

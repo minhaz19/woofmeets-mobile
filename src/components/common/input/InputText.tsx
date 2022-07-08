@@ -23,10 +23,9 @@ const InputText = (props: {
         {props.title}
       </Text>
       <TextInput
-        placeholder={props.placeholder}
-        value={props.value}
         onChangeText={pCode => props.setValue(pCode)}
         style={[styles._input, {color: colors.headerText}]}
+        {...props}
       />
     </View>
   );

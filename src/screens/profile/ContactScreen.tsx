@@ -7,6 +7,7 @@ import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
 import ButtonCom from '../../components/UI/ButtonCom';
 import {btnStyles} from '../../constants/theme/common/buttonStyles';
+import InputText from '../../components/common/input/InputText';
 
 const ContactScreen = () => {
   const {colors} = useTheme();
@@ -20,6 +21,37 @@ const ContactScreen = () => {
       ]}>
       <View style={styles.nameContainer}>
         <HeaderText text="Add your phone number" textStyle={styles.textStyle} />
+      </View>
+      <View style={styles.textInfoContainer}>
+        <InputText
+          title="Phone number"
+          placeholder="Enter Phone number"
+          value={undefined}
+          setValue={() => {}}
+        />
+      </View>
+      <View style={styles.nameContainer}>
+        <HeaderText text="Add Emergency Contact" textStyle={styles.textStyle} />
+      </View>
+      <View style={styles.textInfoContainer}>
+        <InputText
+          title="Emergency Contact Name"
+          placeholder="Enter Emergency Contact Name"
+          value={undefined}
+          setValue={() => {}}
+        />
+        <InputText
+          title="Email"
+          placeholder="Enter Email"
+          value={undefined}
+          setValue={() => {}}
+        />
+        <InputText
+          title="Phone number"
+          placeholder="Enter Phone number"
+          value={undefined}
+          setValue={() => {}}
+        />
       </View>
       <View style={styles.footerContainer}>
         <ButtonCom
@@ -111,6 +143,10 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_8,
     fontWeight: '400',
     letterSpacing: 0.6,
+  },
+  textInfoContainer: {
+    width: '95%',
+    paddingLeft: '5%',
   },
 });
 

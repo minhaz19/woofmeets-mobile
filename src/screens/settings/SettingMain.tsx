@@ -1,6 +1,5 @@
 import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
-import SettingItem from '../../components/ScreenComponent/Auth/setting/SettingItem';
 import {
   CallIcon,
   CardsIcon,
@@ -19,6 +18,7 @@ import Colors from '../../constants/Colors';
 import ShortText from '../../components/common/text/ShortText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../components/UI/BottomSpacing';
+import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
 
 const SettingMain = (props: {
   navigation: {navigate: (arg0: string) => any};

@@ -17,15 +17,15 @@ const Text_Size_Type = {
         ? SCREEN_WIDTH * 0.035 <= 16
           ? SCREEN_WIDTH * 0.035
           : 18
-        : 18,
+        : 20,
     Text_2:
       SCREEN_WIDTH <= 380
         ? 14
         : SCREEN_WIDTH <= 600
         ? SCREEN_WIDTH * 0.045 <= 16
           ? SCREEN_WIDTH * 0.045
-          : 18
-        : 20,
+          : 20
+        : 22,
     Text_3: SCREEN_WIDTH * 0.055,
     Text_4:
       SCREEN_WIDTH <= 380
