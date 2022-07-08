@@ -1,12 +1,6 @@
-import {
-  View,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Platform,
-} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
-import SettingItem from '../../components/setting/SettingItem';
+import SettingItem from '../../components/ScreenComponent/Auth/setting/SettingItem';
 import {
   CallIcon,
   CardsIcon,
@@ -24,6 +18,7 @@ import TitleText from '../../components/common/text/TitleText';
 import Colors from '../../constants/Colors';
 import ShortText from '../../components/common/text/ShortText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
+import BottomSpacing from '../../components/UI/BottomSpacing';
 
 const SettingMain = (props: {
   navigation: {navigate: (arg0: string) => any};
@@ -164,18 +159,7 @@ const SettingMain = (props: {
         {supportData?.map(item => (
           <SettingItem data={item} key={item.id} />
         ))}
-        <View
-          style={{
-            height:
-              SCREEN_WIDTH <= 380
-                ? Platform.OS === 'ios'
-                  ? 70
-                  : 60
-                : Platform.OS === 'ios'
-                ? 95
-                : 75,
-          }}
-        />
+        <BottomSpacing />
       </SafeAreaView>
     </ScrollView>
   );
