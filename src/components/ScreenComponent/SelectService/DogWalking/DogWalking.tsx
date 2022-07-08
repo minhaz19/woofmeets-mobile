@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import ServiceCare from '../common/ServiceCare';
 import ServiceDates from '../common/ServiceDates';
@@ -13,6 +13,8 @@ import ServiceDays from '../common/ServiceDays';
 
 const DogWalking = () => {
   const [serviceType, setServiceType] = useState(1);
+  const [datePicker, setDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
   const {colors} = useTheme();
   return (
     <View style={[styles.container]}>
@@ -22,9 +24,15 @@ const DogWalking = () => {
         setServiceType={setServiceType}
         serviceType={serviceType}
       />
-      <ServiceDates hText={'Dates'} />
+      <ServiceDates
+        hText={'Dates'}
+        datePicker={datePicker}
+        date={date}
+        setDatePicker={setDatePicker}
+        setDate={setDate}
+      />
       <ServiceLocation
-        hText={'Location'}
+        hText={'Your location'}
         dText={'Enter a date to find someone faster'}
       />
       <Text style={[styles.text, {color: colors.headerText}]}>Time</Text>
@@ -67,7 +75,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   buttonContainer: {
-    top: '10%',
+    flex: 1,
+    justifyContent: 'flex-end',
+    bottom: '10%',
   },
   timeContainer: {
     flexDirection: 'row',

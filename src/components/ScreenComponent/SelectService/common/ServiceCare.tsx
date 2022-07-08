@@ -42,12 +42,12 @@ const ServiceCare = ({
                 {
                   backgroundColor:
                     serviceType === 1
-                      ? colors.colors.backgroundColor
-                      : colors.colors.lightBackgroundColor,
+                      ? colors.colors.lightBackgroundColor
+                      : colors.colors.backgroundColor,
                   borderColor:
                     serviceType === 1
-                      ? colors.colors.headerText
-                      : colors.colors.descriptionText,
+                      ? Colors.primary
+                      : colors.colors.lightText,
                 },
               ]}>
               <HomeSvg height={60} width={60} fill={colors.colors.headerText} />
@@ -76,11 +76,11 @@ const ServiceCare = ({
                 {
                   backgroundColor:
                     serviceType === 2
-                      ? colors.colors.backgroundColor
-                      : colors.colors.lightBackgroundColor,
+                      ? colors.colors.lightBackgroundColor
+                      : colors.colors.backgroundColor,
                   borderColor:
                     serviceType === 2
-                      ? colors.colors.headerText
+                      ? Colors.primary
                       : colors.colors.lightText,
                 },
               ]}>
@@ -122,12 +122,13 @@ const styles = StyleSheet.create({
   },
   box: {
     width: '100%',
-    height: 94,
+    // height: 94,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
     marginVertical: 10,
     borderRadius: 10,
+    paddingVertical: 30,
   },
   hText: {
     fontSize: Text_Size.Text_1,

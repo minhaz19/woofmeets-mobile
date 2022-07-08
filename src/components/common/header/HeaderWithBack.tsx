@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
@@ -18,10 +17,12 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const HeaderWithBack = (props: {
   navigation: {goBack: () => void};
   title: string | undefined;
+  icon?: boolean;
 }) => {
   const {colors} = useTheme();
   return (
-    <SafeAreaView style={{backgroundColor: colors.backgroundColor}}>
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.leftContainer}
@@ -38,14 +39,18 @@ const HeaderWithBack = (props: {
         <View style={styles.titleBox}>
           <HeaderText text={props.title} />
         </View>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity style={styles.bellContainer} onPress={() => {}}>
-            <BellIcon
-              height={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
-            />
-            <View style={styles.bellView} />
-          </TouchableOpacity>
-        </View>
+        {props.icon && (
+          <View style={styles.headerContainer}>
+            <TouchableOpacity style={styles.bellContainer} onPress={() => {}}>
+              <BellIcon
+                height={
+                  SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
+                }
+              />
+              <View style={styles.bellView} />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -55,7 +60,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 10,
+    // paddingBottom: 10,
     paddingTop: Platform.OS === 'ios' ? 0 : 10,
     position: 'relative',
     justifyContent: 'center',

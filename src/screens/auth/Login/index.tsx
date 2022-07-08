@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   KeyboardAvoidingView,
   Platform,
@@ -17,13 +18,16 @@ import {
   othersAuthIcons,
 } from '../../../utils/config/Data/loginDatas';
 import {loginValidationSchema} from '../../../utils/config/validationSchema';
+import {useDispatch} from 'react-redux';
+import {setUserLoggedIn} from '../../../store/slices/userLogin';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
 const Login = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
+  const dispatch = useDispatch();
   const handleSubmit = () => {
-    navigation.navigate('VerifyAccount');
+    dispatch(setUserLoggedIn());
   };
   return (
     <ScrollView
