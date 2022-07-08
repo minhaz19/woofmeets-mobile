@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import ServiceHeader from '../common/ServiceHeader';
 import ServiceDates from '../common/ServiceDates';
 import ServiceLocation from '../common/ServiceLocation';
@@ -11,6 +11,8 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../constants/textScaling';
 
 const HouseSitting = () => {
+  const [datePicker, setDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
   const {colors} = useTheme();
   return (
     <View style={styles.container}>
@@ -18,13 +20,19 @@ const HouseSitting = () => {
         hText={'House Sitting'}
         dText={'When do you need sitter?'}
       />
-      <ServiceDates hText={'Dates'} />
+      <ServiceDates
+        hText={'Dates'}
+        datePicker={datePicker}
+        date={date}
+        setDatePicker={setDatePicker}
+        setDate={setDate}
+      />
       <ServiceLocation
-        hText={'Location'}
+        hText={'Your location'}
         dText={'Enter a date to find someone faster'}
       />
       <Text style={[styles.text, {color: colors.headerText}]}>
-        Pet Type (S)
+        Pet Type (s)
       </Text>
       <View style={styles.petTypeContainer}>
         {petType.map((item, index) => {
@@ -52,7 +60,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   buttonContainer: {
-    top: '40%',
+    flex: 1,
+    justifyContent: 'flex-end',
+    bottom: '10%',
   },
   petTypeContainer: {
     flexDirection: 'row',

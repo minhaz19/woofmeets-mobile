@@ -687,8 +687,8 @@ export const RepeatSvg = (props: SvgProps) => (
     <G
       data-name="Icon feather-repeat"
       opacity={0.73}
-      fill="none"
-      stroke="#000"
+      fill={props.fill}
+      stroke={'none'}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}>

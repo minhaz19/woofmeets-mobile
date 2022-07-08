@@ -7,7 +7,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import DateTimePicker, {
   DateTimePickerEvent,
@@ -16,34 +16,32 @@ import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';
 import Ion from 'react-native-vector-icons/Ionicons';
+// import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 interface Props {
   hText: string;
-  onDateSelected: (_event: DateTimePickerEvent, value?: any) => void;
-  showDatePicker: () => void;
   datePicker: boolean;
   date: Date;
+  setDatePicker: (datePicker: boolean) => void;
+  setDate: (date: Date) => void;
 }
 const screen = SCREEN_WIDTH;
 const ServiceDates: FC<Props> = ({
   hText,
-  // onDateSelected,
-  // showDatePicker,
-  // datePicker,
-  // date,
+  datePicker,
+  date,
+  setDatePicker,
+  setDate,
 }) => {
   const colors = useTheme();
-  const [datePicker, setDatePicker] = useState(false);
-
-  const [date, setDate] = useState(new Date());
 
   function showDatePicker() {
     setDatePicker(true);
   }
 
   function onDateSelected(event: DateTimePickerEvent, value?: any) {
-    setDate(value);
     setDatePicker(false);
+    setDate(value);
   }
 
   return (
@@ -66,8 +64,7 @@ const ServiceDates: FC<Props> = ({
           <Ion
             name="chevron-forward-outline"
             size={24}
-            style={{paddingRight: 10}}
-            color={colors.colors.headerText}
+            color={colors.colors.lightText}
           />
         </View>
       </Pressable>
@@ -81,6 +78,25 @@ const ServiceDates: FC<Props> = ({
           style={styles.datePicker}
         />
       )}
+      {/* {datePicker && (
+        <CalendarList
+          // horizontal={true}
+          // pagingEnabled={true}
+          calendarWidth={320}
+          initialDate={'2012-03-01'}
+          minDate={'2012-05-10'}
+          onDayPress={day => {
+            console.log('selected day', day);
+          }}
+          onMonthChange={month => {
+            console.log('month changed', month);
+          }}
+          monthFormat={'yyyy MM'}
+          onPressArrowLeft={subtractMonth => subtractMonth()}
+          onPressArrowRight={addMonth => addMonth()}
+          enableSwipeMonths={true}
+        />
+      )} */}
     </View>
   );
 };
