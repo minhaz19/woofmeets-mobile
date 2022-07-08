@@ -40,8 +40,13 @@ const ReusableSelectService: FC<Props> = data => {
             />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.text_1}>{data.data.name}</Text>
-            <Text style={styles.text_2}>{data.data.description}</Text>
+            <Text style={[styles.text_1, {color: colors.colors.headerText}]}>
+              {data.data.name}
+            </Text>
+            <Text
+              style={[styles.text_2, {color: colors.colors.descriptionText}]}>
+              {data.data.description}
+            </Text>
           </View>
         </View>
       </View>
