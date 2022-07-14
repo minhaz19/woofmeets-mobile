@@ -3,12 +3,18 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Colors from '../../constants/Colors';
 import ServiceMain from '../../screens/SelectService';
 import ServiceDetails from '../../components/ScreenComponent/SelectService/ServiceDetails';
+import PetCareZipSearch from '../../screens/PetCareZipSearch';
 
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
   return (
-    <Stack1.Navigator initialRouteName="ServiceMain">
+    <Stack1.Navigator initialRouteName="PetCareZipSearch">
+      <Stack1.Screen
+        name="PetCareZipSearch"
+        component={PetCareZipSearch}
+        options={{headerShown: false}}
+      />
       <Stack1.Screen
         name="ServiceMain"
         component={ServiceMain}

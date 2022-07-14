@@ -15,7 +15,7 @@ const AppSelect = ({label, name}: Props) => {
   const {isDarkMode, colors} = useTheme();
   return (
     <View>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, {color: colors.headerText}]}>{label}</Text>
       <SelectDropdown
         buttonStyle={{
           height: 40,

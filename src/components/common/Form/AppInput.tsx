@@ -2,11 +2,9 @@
 import {StyleSheet, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import Text_Size from '../../../constants/textScaling';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {Check, EyeClose, EyeOpen} from '../../../assets/SVG_LOGOS';
 import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-const screen = SCREEN_WIDTH;
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
   const {colors, isDarkMode} = useTheme();
@@ -45,9 +43,17 @@ const AppInput = ({...otherProps}) => {
         : null}
       {otherProps.secureTextEntry &&
         (show ? (
-          <EyeOpen size={20} onPress={() => setShow(!show)} />
+          <EyeClose
+            size={20}
+            onPress={() => setShow(!show)}
+            fill={colors.descriptionText}
+          />
         ) : (
-          <EyeClose size={20} onPress={() => setShow(!show)} />
+          <EyeOpen
+            size={20}
+            onPress={() => setShow(!show)}
+            fill={colors.descriptionText}
+          />
         ))}
     </View>
   );
@@ -59,20 +65,21 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 5,
     flexDirection: 'row',
-    paddingVertical: screen > 390 ? -10 : 0,
     paddingHorizontal: 15,
-    marginVertical: 10,
+    marginBottom: 15,
     justifyContent: 'space-between',
     borderWidth: 1,
     borderColor: Colors.border,
     flexWrap: 'wrap',
+    alignItems: 'center',
   },
   icon: {
     marginRight: 10,
     justifyContent: 'center',
   },
   text: {
-    fontSize: Text_Size.Text_0,
+    width: '90%',
+    fontSize: Text_Size.Text_1,
     flex: 0,
   },
   check: {height: '100%', alignSelf: 'center'},

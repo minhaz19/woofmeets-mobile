@@ -4,6 +4,8 @@ import Colors from '../../constants/Colors';
 import SettingMain from '../../screens/settings/SettingMain';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import MyAccount from '../../screens/settings/MyAccount';
+import BasicInfo from '../../screens/profile/BasicInfo';
+import ContactScreen from '../../screens/profile/ContactScreen';
 
 const Stack1 = createStackNavigator();
 
@@ -28,6 +30,28 @@ const SettingNavigator = () => {
           title: '',
           header: () => (
             <HeaderWithBack navigation={navigation} title="Profile" />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="BasicInfo"
+        component={BasicInfo}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack navigation={navigation} title="Basic Info" />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="ContactScreen"
+        component={ContactScreen}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack navigation={navigation} title="Contact" />
           ),
           backgroundColor: Colors.primary,
         })}

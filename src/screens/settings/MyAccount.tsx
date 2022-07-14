@@ -1,13 +1,5 @@
-import {
-  View,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ScrollView, Image} from 'react-native';
 import React from 'react';
-import SettingItem from '../../components/setting/SettingItem';
 import {
   CallIcon,
   Payment2Icon,
@@ -20,6 +12,7 @@ import Colors from '../../constants/Colors';
 import ShortText from '../../components/common/text/ShortText';
 import Text_Size from '../../constants/textScaling';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
+import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
 
 const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();
@@ -28,7 +21,7 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 1,
       title: 'Basic Info',
       icon: Profile2Icon,
-      screenName: () => {},
+      screenName: () => props.navigation.navigate('BasicInfo'),
       details: 'Name, Gender, Age, Photo, Password',
       opacity: 1,
     },
@@ -36,7 +29,7 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 2,
       title: 'Contact',
       icon: CallIcon,
-      screenName: () => {},
+      screenName: () => props.navigation.navigate('ContactScreen'),
       details: 'Number, Email, Location',
       opacity: 1,
     },
@@ -83,12 +76,9 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
           <View style={styles.nameContainer}>
             <View>
               <HeaderText text="John Askelad" />
-              <TouchableOpacity
-                onPress={() => {
-                  props.navigation.navigate('ProfileNav');
-                }}>
+              <View>
                 <ShortText text="Hey there! I am ………." />
-              </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
