@@ -15,7 +15,7 @@ interface Props {
   auth?: boolean;
 }
 const ErrorMessage = ({error, visible, auth}: Props) => {
-  const {colors} = useTheme();
+  const {isDarkMode, colors} = useTheme();
   if (!visible || !error) {
     return null;
   }
@@ -24,9 +24,8 @@ const ErrorMessage = ({error, visible, auth}: Props) => {
       style={[
         styles.container,
         {
-          backgroundColor: auth
-            ? Colors.dark.lightDark
-            : colors.backgroundColor,
+          backgroundColor:
+            auth && isDarkMode ? Colors.dark.lightDark : colors.backgroundColor,
         },
       ]}>
       <Text style={styles.error}>{error}</Text>
