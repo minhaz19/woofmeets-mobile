@@ -20,7 +20,6 @@ const Splash = ({}) => {
   const [state, setState] = useState({
     showRealApp: false,
   });
-  console.log('loggedin', isPreviousUser);
 
   const slides = [
     {
@@ -159,9 +158,9 @@ const Splash = ({}) => {
     return (
       <>
         {isPreviousUser ? (
-          <MainNavigationContainer previousLoggedIn />
-        ) : state.showRealApp ? (
           <MainNavigationContainer previousLoggedIn={false} />
+        ) : state.showRealApp ? (
+          <MainNavigationContainer previousLoggedIn />
         ) : (
           <AppIntroSlider
             activeDotStyle={styles.activeDotStyle}

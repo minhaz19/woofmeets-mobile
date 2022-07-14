@@ -2,15 +2,15 @@ import {StyleSheet, View, Image} from 'react-native';
 import React from 'react';
 import Colors from '../../constants/Colors';
 import FirstScreenSvg from '../../components/common/FirstScreenSvg';
+import {SCREEN_WIDTH} from '../../constants/WindowSize';
 
 const FirstScreen = () => {
   return (
-    <View style={[styles.container, {backgroundColor: Colors.primary}]}>
+    <View style={styles.container}>
       <View
         style={[
           styles.backgroundCover,
           {
-            transform: [{rotate: '-25deg'}],
             marginTop: 50,
           },
         ]}>
@@ -22,7 +22,6 @@ const FirstScreen = () => {
         style={[
           styles.backgroundCover,
           {
-            transform: [{rotate: '-25deg'}],
             marginTop: 300,
           },
         ]}>
@@ -34,7 +33,6 @@ const FirstScreen = () => {
         style={[
           styles.backgroundCover,
           {
-            transform: [{rotate: '-25deg'}],
             marginTop: 550,
           },
         ]}>
@@ -46,7 +44,6 @@ const FirstScreen = () => {
         style={[
           styles.backgroundCover,
           {
-            transform: [{rotate: '-25deg'}],
             marginTop: 800,
           },
         ]}>
@@ -71,12 +68,13 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    opacity: 0.9,
+    opacity: 1,
+    backgroundColor: Colors.primary,
   },
   roundContainer: {
     borderRadius: 100,
-    width: 100,
-    height: 100,
+    width: SCREEN_WIDTH <= 380 ? 80 : SCREEN_WIDTH <= 600 ? 140 : 150,
+    height: SCREEN_WIDTH <= 380 ? 80 : SCREEN_WIDTH <= 600 ? 140 : 150,
     // backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
@@ -94,5 +92,6 @@ const styles = StyleSheet.create({
     // marginRight: 50,
     // marginLeft: 50,
     position: 'absolute',
+    transform: [{rotate: '-20deg'}],
   },
 });

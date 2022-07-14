@@ -1,14 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import ServiceHeader from '../common/ServiceHeader';
 import ServiceDates from '../common/ServiceDates';
 import ServiceLocation from '../common/ServiceLocation';
-import ButtonCom from '../../../UI/ButtonCom';
-import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import ServicePetType from '../common/ServicePetType';
 import {petType} from '../utils/petType';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../constants/textScaling';
+import BottomButton from '../BottomButton';
 
 const HouseSitting = () => {
   const [datePicker, setDatePicker] = useState(false);
@@ -16,38 +15,32 @@ const HouseSitting = () => {
   const {colors} = useTheme();
   return (
     <View style={styles.container}>
-      <ServiceHeader
-        hText={'House Sitting'}
-        dText={'When do you need sitter?'}
-      />
-      <ServiceDates
-        hText={'Dates'}
-        datePicker={datePicker}
-        date={date}
-        setDatePicker={setDatePicker}
-        setDate={setDate}
-      />
-      <ServiceLocation
-        hText={'Your location'}
-        dText={'Enter a date to find someone faster'}
-      />
-      <Text style={[styles.text, {color: colors.headerText}]}>
-        Pet Type (s)
-      </Text>
-      <View style={styles.petTypeContainer}>
-        {petType.map((item, index) => {
-          return <ServicePetType key={index} title={item.type} radio />;
-        })}
-      </View>
-      <View style={styles.buttonContainer}>
-        <ButtonCom
-          title={'Search'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={() => {}}
+      <ScrollView style={styles.scrollContainer}>
+        <ServiceHeader
+          hText={'House Sitting'}
+          dText={'When do you need sitter?'}
         />
-      </View>
+        <ServiceDates
+          hText={'Dates'}
+          datePicker={datePicker}
+          date={date}
+          setDatePicker={setDatePicker}
+          setDate={setDate}
+        />
+        <ServiceLocation
+          hText={'Your location'}
+          dText={'Enter a date to find someone faster'}
+        />
+        <Text style={[styles.text, {color: colors.headerText}]}>
+          Pet Type (s)
+        </Text>
+        <View style={styles.petTypeContainer}>
+          {petType.map((item, index) => {
+            return <ServicePetType key={index} title={item.type} radio />;
+          })}
+        </View>
+      </ScrollView>
+      <BottomButton title="Next" onSelect={() => {}} />
     </View>
   );
 };
@@ -57,7 +50,9 @@ export default HouseSitting;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+  },
+  scrollContainer: {
+    paddingHorizontal: '5%',
   },
   buttonContainer: {
     flex: 1,
