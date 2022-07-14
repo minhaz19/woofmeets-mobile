@@ -1,39 +1,53 @@
-import {StyleSheet, Text, View, FlatList, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  SafeAreaView,
+  Platform,
+} from 'react-native';
 import React, {FC} from 'react';
 import Screen from '../../components/common/Screen';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import ReusableSelectService from '../../components/ScreenComponent/SelectService/ReusableSelectService';
-import Colors from '../../constants/Colors';
+import Text_Size from '../../constants/textScaling';
+import {
+  BriefCaseSvg,
+  LocationSvg,
+  HomeSvgICon,
+  WeatherSvg,
+  PetFootSvg,
+} from '../../assets/SVG_LOGOS';
 
 const selectData = [
   {
     id: 1,
     name: 'Boarding',
-    image: require('../../assets/image/selectServiceImage/database.png'),
+    image: <BriefCaseSvg />,
     description: "in the sitter's home",
   },
   {
     id: 2,
     name: 'Dog Waking',
-    image: require('../../assets//image/selectServiceImage/foot.png'),
+    image: <PetFootSvg fill={'#FFA557'} />,
     description: 'in your neighborhood',
   },
   {
     id: 3,
     name: 'Doggy Day Care',
-    image: require('../../assets//image/selectServiceImage/light.png'),
+    image: <WeatherSvg />,
     description: "in the sitter's home",
   },
   {
     id: 4,
     name: 'Drop-in Visits',
-    image: require('../../assets//image/selectServiceImage/dip-in.png'),
+    image: <LocationSvg />,
     description: 'visits in your home',
   },
   {
     id: 5,
     name: 'House Sitting',
-    image: require('../../assets//image/selectServiceImage/home_1.png'),
+    image: <HomeSvgICon />,
     description: 'in your home',
   },
 ];
@@ -57,7 +71,9 @@ const SelectService = () => {
       ]}>
       <SafeAreaView>
         <View style={styles.header}>
-          <Text style={styles.textDesign}>Select a Service</Text>
+          <Text style={[styles.textDesign, {color: colors.headerText}]}>
+            Select a Service
+          </Text>
           <FlatList
             data={selectData}
             renderItem={renderItem}
@@ -77,11 +93,11 @@ const styles = StyleSheet.create({
   },
   header: {
     marginHorizontal: 20,
+    paddingTop: Platform.OS === 'ios' ? 30 : 20,
   },
   textDesign: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Colors.headerText,
+    fontSize: Text_Size.Text_2,
+    fontWeight: '500',
     marginBottom: 10,
   },
 });

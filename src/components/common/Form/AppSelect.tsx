@@ -12,15 +12,15 @@ interface Props {
 }
 const AppSelect = ({label, name}: Props) => {
   const genders = ['Male', 'Female', 'Others'];
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   return (
     <View>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, {color: colors.headerText}]}>{label}</Text>
       <SelectDropdown
         buttonStyle={{
           height: 40,
           width: '100%',
-          backgroundColor: isDarkMode ? colors.lightBackgroundColor : '#f8f4f4',
+          backgroundColor: colors.backgroundColor,
           borderRadius: 5,
           marginVertical: 10,
           justifyContent: 'space-between',

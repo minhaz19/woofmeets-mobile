@@ -6,12 +6,12 @@ import {
   TextStyle,
 } from 'react-native';
 import React from 'react';
-import Colors from '../../constants/Colors';
+import Colors from '../../../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Text_Size from '../../constants/textScaling';
-import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import HeaderText from '../common/text/HeaderText';
-import DescriptionText from '../common/text/DescriptionText';
+import Text_Size from '../../../constants/textScaling';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import HeaderText from '../../common/text/HeaderText';
+import DescriptionText from '../../common/text/DescriptionText';
 import {NumberProp} from 'react-native-svg';
 
 const SettingItem = (props: {

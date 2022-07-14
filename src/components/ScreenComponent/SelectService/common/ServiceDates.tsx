@@ -16,6 +16,7 @@ import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';
 import Ion from 'react-native-vector-icons/Ionicons';
+import HeaderText from '../../../common/text/HeaderText';
 // import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 interface Props {
@@ -46,9 +47,7 @@ const ServiceDates: FC<Props> = ({
 
   return (
     <View style={{paddingTop: 10}}>
-      <Text style={[styles.header, {color: colors.colors.headerText}]}>
-        {hText}
-      </Text>
+      <HeaderText text={hText} />
       <Pressable onPress={showDatePicker}>
         <View
           pointerEvents="none"
@@ -64,7 +63,7 @@ const ServiceDates: FC<Props> = ({
           <Ion
             name="chevron-forward-outline"
             size={24}
-            color={colors.colors.lightText}
+            color={colors.colors.descriptionText}
           />
         </View>
       </Pressable>
@@ -104,10 +103,6 @@ const ServiceDates: FC<Props> = ({
 export default ServiceDates;
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: 'bold',
-  },
   input: {
     borderRadius: 5,
     borderWidth: 1,

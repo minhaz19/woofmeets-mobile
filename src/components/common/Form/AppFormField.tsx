@@ -3,10 +3,17 @@ import React from 'react';
 import ErrorMessage from './ErrorMessage';
 import {FormikValues, useFormikContext} from 'formik';
 import AppInput from './AppInput';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Text_Size from '../../../constants/textScaling';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 interface Props {
   name: string;
   label: string;
@@ -23,6 +30,7 @@ interface Props {
   flex?: number;
   subTitle?: string;
   email?: boolean;
+  textInputStyle?: ViewStyle;
 }
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;
@@ -45,15 +53,19 @@ const AppFormField = ({
   flex,
   subTitle,
   email,
+  textInputStyle,
 }: Props) => {
   const {setFieldTouched, touched, errors, values, setFieldValue} =
     useFormikContext<FormikValues>();
   const navigation = useNavigation<NavigationProps>();
+  const {colors} = useTheme();
   return (
     <>
       <View style={{width: flex ? '48%' : '100%'}}>
-        <Text style={styles.label}>{label}</Text>
-        <Text style={styles.subTitle}>{subTitle}</Text>
+        <Text style={[styles.label, {color: colors.headerText}]}>{label}</Text>
+        <Text style={[styles.subTitle, {color: colors.headerText}]}>
+          {subTitle}
+        </Text>
         <AppInput
           autoCapitalize={autoCapitalize}
           autoCorrect={autoCorrect}
@@ -72,6 +84,7 @@ const AppFormField = ({
           multiline={multiline ? true : false}
           flex={flex}
           email={email}
+          textInputStyle={textInputStyle}
         />
 
         <ErrorMessage error={errors[name]} visible={touched[name]} />

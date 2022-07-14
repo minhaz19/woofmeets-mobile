@@ -36,7 +36,7 @@ const ServiceLocation: FC<Props> = ({hText, dText}) => {
           <Ion
             name="chevron-forward-outline"
             size={24}
-            color={colors.colors.lightText}
+            color={colors.colors.descriptionText}
           />
         </View>
       </Pressable>
