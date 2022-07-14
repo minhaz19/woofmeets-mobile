@@ -1,28 +1,49 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+/* eslint-disable prettier/prettier */
+import {StyleSheet, Text, TextInput, View, Pressable} from 'react-native';
 import React, {FC, useState} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import Text_Size from '../../../../constants/textScaling';
+import Ion from 'react-native-vector-icons/Ionicons';
+import Colors from '../../../../constants/Colors';
 
 interface Props {
   hText: string;
   dText: string;
 }
-
+const screen = SCREEN_WIDTH;
 const ServiceLocation: FC<Props> = ({hText, dText}) => {
+  const [show, setShow] = useState(true);
   const colors = useTheme();
-  const [text, setText] = useState('');
-  const onChangeText = () => setText(text);
+
   return (
-    <View>
+    <>
       <Text style={[styles.headerText, {color: colors.colors.headerText}]}>
         {hText}
       </Text>
-      <TextInput
-        style={[styles.input, {backgroundColor: colors.colors.backgroundColor}]}
-        onChangeText={onChangeText}
-        value={text}
-        placeholder="Enter your location"
-      />
-    </View>
+      <Pressable onPress={() => setShow(!show)}>
+        <View
+          pointerEvents="none"
+          style={[
+            styles.container,
+            {backgroundColor: colors.colors.backgroundColor},
+          ]}>
+          <TextInput
+            style={[styles.text, {color: colors.colors.descriptionText}]}
+            placeholder="Select your location"
+            placeholderTextColor={colors.colors.descriptionText}
+          />
+          <Ion
+            name="chevron-forward-outline"
+            size={24}
+            color={colors.colors.lightText}
+          />
+        </View>
+      </Pressable>
+      <Text style={[styles.text, {color: colors.colors.placeholderTextColor}]}>
+        {dText}
+      </Text>
+    </>
   );
 };
 
@@ -30,14 +51,24 @@ export default ServiceLocation;
 
 const styles = StyleSheet.create({
   headerText: {
-    fontSize: 18,
+    fontSize: Text_Size.Text_1,
     fontWeight: 'bold',
   },
-  input: {
-    borderColor: 'gray',
-    borderWidth: 1,
-    padding: 10,
-    margin: 10,
+  container: {
     borderRadius: 5,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    flexDirection: 'row',
+    width: '100%',
+    height: 40,
+    paddingVertical: screen > 390 ? -10 : 0,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: Text_Size.Text_0,
+    flex: 0,
   },
 });

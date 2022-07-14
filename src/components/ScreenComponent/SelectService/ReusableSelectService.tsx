@@ -9,7 +9,7 @@ interface Props {
   data: any;
 }
 type StackParamList = {
-  details: {foo: string; onBar: () => void} | undefined;
+  ServiceDetails: {itemId: any} | undefined;
 };
 
 type NavigationProps = StackNavigationProp<StackParamList>;
@@ -20,8 +20,7 @@ const ReusableSelectService: FC<Props> = data => {
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate('details', {
-          // @ts-ignore
+        navigation.navigate('ServiceDetails', {
           itemId: data.data.id,
         })
       }>
@@ -41,8 +40,13 @@ const ReusableSelectService: FC<Props> = data => {
             />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.text_1}>{data.data.name}</Text>
-            <Text style={styles.text_2}>{data.data.description}</Text>
+            <Text style={[styles.text_1, {color: colors.colors.headerText}]}>
+              {data.data.name}
+            </Text>
+            <Text
+              style={[styles.text_2, {color: colors.colors.descriptionText}]}>
+              {data.data.description}
+            </Text>
           </View>
         </View>
       </View>

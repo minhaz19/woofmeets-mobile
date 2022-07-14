@@ -2,6 +2,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {FC} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import Text_Size from '../../../../constants/textScaling';
 
 interface Props {
   hText: string;
@@ -27,10 +28,11 @@ export default ServiceHeader;
 const styles = StyleSheet.create({
   headerContainer: {},
   headerText: {
-    fontSize: 18,
+    fontSize: Text_Size.Text_1,
     fontWeight: 'bold',
   },
   desText: {
-    fontSize: 14,
+    fontSize: Text_Size.Text_0,
+    marginTop: 5,
   },
 });

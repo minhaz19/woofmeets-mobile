@@ -1,37 +1,37 @@
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, SafeAreaView} from 'react-native';
 import React, {FC} from 'react';
 import Screen from '../../components/common/Screen';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
-import {color} from 'react-native-elements/dist/helpers';
 import ReusableSelectService from '../../components/ScreenComponent/SelectService/ReusableSelectService';
+import Colors from '../../constants/Colors';
 
 const selectData = [
   {
-    id: Math.random() + 1,
+    id: 1,
     name: 'Boarding',
     image: require('../../assets/image/selectServiceImage/database.png'),
     description: "in the sitter's home",
   },
   {
-    id: Math.random() + 2,
+    id: 2,
     name: 'Dog Waking',
     image: require('../../assets//image/selectServiceImage/foot.png'),
     description: 'in your neighborhood',
   },
   {
-    id: Math.random() + 3,
+    id: 3,
     name: 'Doggy Day Care',
     image: require('../../assets//image/selectServiceImage/light.png'),
     description: "in the sitter's home",
   },
   {
-    id: Math.random() + 4,
+    id: 4,
     name: 'Drop-in Visits',
     image: require('../../assets//image/selectServiceImage/dip-in.png'),
     description: 'visits in your home',
   },
   {
-    id: Math.random() + 5,
+    id: 5,
     name: 'House Sitting',
     image: require('../../assets//image/selectServiceImage/home_1.png'),
     description: 'in your home',
@@ -55,14 +55,16 @@ const SelectService = () => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <View style={styles.header}>
-        <Text style={styles.textDesign}>Select a Service</Text>
-        <FlatList
-          data={selectData}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-        />
-      </View>
+      <SafeAreaView>
+        <View style={styles.header}>
+          <Text style={styles.textDesign}>Select a Service</Text>
+          <FlatList
+            data={selectData}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+          />
+        </View>
+      </SafeAreaView>
     </Screen>
   );
 };
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
   textDesign: {
     fontSize: 18,
     fontWeight: '600',
-    color: color.headerText,
+    color: Colors.headerText,
     marginBottom: 10,
   },
 });

@@ -1,21 +1,26 @@
-/* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, Text, useColorScheme, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+// import {useSelector} from 'react-redux';
 import AppIntroSlider from '../components/splash/react-native-app-intro-slider/dist';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
-import { textStyle } from '../constants/theme/common/textStyle';
+import {textStyle} from '../constants/theme/common/textStyle';
 import MainNavigationContainer from '../navigation/MainNavigationContainer';
 import FirstScreen from './FirstScreen';
 
 const Splash = ({}) => {
   const isDarkMode = useColorScheme() === 'dark';
+  // const loggedIn = useSelector(state => state.login);
   const [isPreviousUser] = useState(false);
 
+  // useEffect(() => {
+  //   setIsPreviousUser(loggedIn.isPreviousUser);
+  // }, [loggedIn]);
   const [state, setState] = useState({
     showRealApp: false,
   });
+  console.log('loggedin', isPreviousUser);
 
   const slides = [
     {
@@ -28,14 +33,14 @@ const Splash = ({}) => {
     {
       key: 2,
       title: 'Loving Pet Care In Your',
-      text: 'Welcome to the world\'s largest network of 5-star pet sitters and dog walkers.',
+      text: "Welcome to the world's largest network of 5-star pet sitters and dog walkers.",
       image: require('../assets/splash/sp-2.png'),
       backgroundColor: '#febe29',
     },
     {
       key: 3,
       title: 'Keep Connected',
-      text: 'Chat with your sitter or walker and receive photo updates for any service you book. You\'ll even receive GPS maps for walks.',
+      text: "Chat with your sitter or walker and receive photo updates for any service you book. You'll even receive GPS maps for walks.",
       image: require('../assets/splash/sp-3.png'),
       backgroundColor: '#22bcb5',
     },

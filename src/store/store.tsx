@@ -5,11 +5,15 @@ import {
   configureStore,
   getDefaultMiddleware,
 } from '@reduxjs/toolkit';
+import addPetReducer from './slices/addPet';
 
 import authReducer from './slices/auth';
+import userLogin from './slices/userLogin';
 
 const appReducer = combineReducers({
   auth: authReducer,
+  addPet: addPetReducer,
+  login: userLogin,
 });
 
 const RootReducer = (
@@ -30,7 +34,7 @@ const RootReducer = (
   if (action.type === 'auth/logout') {
     state = undefined;
   }
-
+  // @ts-ignore
   return appReducer(state, action);
 };
 

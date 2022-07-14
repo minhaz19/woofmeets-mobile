@@ -1,8 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import ErrorMessage from './ErrorMessage';
 import {FormikValues, useFormikContext} from 'formik';
 import AppInput from './AppInput';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Text_Size from '../../../constants/textScaling';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -17,11 +18,16 @@ interface Props {
   textContentType?: string;
   secureTextEntry?: boolean;
   forgotPassword?: boolean;
+  numberOfLines?: number;
+  multiline?: boolean;
+  flex?: number;
+  subTitle?: string;
+  email?: boolean;
 }
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;
 };
-
+// width: flex ? '48%' : '100%';
 type NavigationProps = StackNavigationProp<StackParamList>;
 const AppFormField = ({
   name,
@@ -34,30 +40,42 @@ const AppFormField = ({
   secureTextEntry,
   label,
   forgotPassword,
+  numberOfLines,
+  multiline,
+  flex,
+  subTitle,
+  email,
 }: Props) => {
   const {setFieldTouched, touched, errors, values, setFieldValue} =
     useFormikContext<FormikValues>();
   const navigation = useNavigation<NavigationProps>();
   return (
     <>
-      <Text style={styles.label}>{label}</Text>
-      <AppInput
-        autoCapitalize={autoCapitalize}
-        autoCorrect={autoCorrect}
-        icon={icon}
-        keyboardType={keyboardType}
-        placeholder={placeholder}
-        textContentType={textContentType}
-        onChangeText={(text: string) => setFieldValue(name, text)}
-        onBlur={() => setFieldTouched(name)}
-        //@ts-ignore
-        value={values[name]}
-        secureTextEntry={secureTextEntry}
-        error={errors[name]}
-        touch={touched[name]}
-      />
+      <View style={{width: flex ? '48%' : '100%'}}>
+        <Text style={styles.label}>{label}</Text>
+        <Text style={styles.subTitle}>{subTitle}</Text>
+        <AppInput
+          autoCapitalize={autoCapitalize}
+          autoCorrect={autoCorrect}
+          icon={icon}
+          keyboardType={keyboardType}
+          placeholder={placeholder}
+          textContentType={textContentType}
+          onChangeText={(text: string) => setFieldValue(name, text)}
+          onBlur={() => setFieldTouched(name)}
+          //@ts-ignore
+          value={values[name]}
+          secureTextEntry={secureTextEntry}
+          error={errors[name]}
+          touch={touched[name]}
+          numberOfLines={numberOfLines && numberOfLines}
+          multiline={multiline ? true : false}
+          flex={flex}
+          email={email}
+        />
 
-      <ErrorMessage error={errors[name]} visible={touched[name]} />
+        <ErrorMessage error={errors[name]} visible={touched[name]} />
+      </View>
       {forgotPassword && (
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
           <Text style={styles.forgotPassword}>Forgot Password ?</Text>
@@ -73,6 +91,9 @@ const styles = StyleSheet.create({
   label: {
     fontSize: Text_Size.Text_1,
     fontWeight: '600',
+  },
+  subTitle: {
+    fontSize: Text_Size.Text_0,
   },
   forgotPassword: {
     fontSize: Text_Size.Text_0,

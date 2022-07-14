@@ -13,7 +13,6 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Splash from './src/screens/splash';
 import store from './src/store/store';
-import ServiceHeader from './src/components/ScreenComponent/SelectService/common/ServiceHeader';
 // import {SafeAreaView} from 'react-native';
 // import GlobalStyles from './GlobalStyles';
 
@@ -33,8 +32,7 @@ const App = () => {
   return (
     <Provider store={store}>
       {/* <SafeAreaView style={GlobalStyles.droidSafeArea}> */}
-      {/* <Splash /> */}
-      <ServiceHeader hText="Service Type" dText="Select your service type" />
+      <Splash />
       {/* </SafeAreaView> */}
     </Provider>
   );

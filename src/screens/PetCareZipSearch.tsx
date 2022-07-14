@@ -9,31 +9,43 @@ import {
 import React, {useState} from 'react';
 import GlobalStyles from '../../GlobalStyles';
 import {ZipSearch} from '../assets/SVG_LOGOS';
-import {SCREEN_WIDTH} from '../constants/WindowSize';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../constants/WindowSize';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
 import ButtonCom from '../components/UI/ButtonCom';
 import {btnStyles} from '../constants/theme/common/buttonStyles';
-import {colors} from '../constants/theme/textTheme';
+import {useTheme} from '../constants/theme/hooks/useTheme';
 
 const PetCareZipSearch = (props: {
-  navigation: {navigate: (arg0: string) => void};
+  navigation: {goBack: () => void; navigate: (arg0: string) => void};
 }) => {
-  const [postCode, setPostCode] = useState();
+  const [postCode, setPostCode] = useState<string>();
+  const {colors} = useTheme();
   return (
     <View style={GlobalStyles.droidSafeArea}>
-      <SafeAreaView>
-        <TouchableOpacity style={styles.cancelContainer}>
+      <SafeAreaView
+        style={[
+          styles.rootContainer,
+          {
+            backgroundColor: colors.backgroundColor,
+          },
+        ]}>
+        <TouchableOpacity
+          style={[
+            styles.cancelContainer,
+            {backgroundColor: colors.backgroundColor},
+          ]}
+          onPress={() => props.navigation.goBack()}>
           <Text style={[styles.textHeader, {color: colors.headerText}]}>
             Cancel
           </Text>
         </TouchableOpacity>
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
           <View>
             <ZipSearch width={SCREEN_WIDTH / 1.6} />
           </View>
-        </View>
-        <View style={{paddingHorizontal: '10%'}}>
+        </View> */}
+        <View style={styles.boxContainer}>
           <Text style={[styles.textHeader, {color: colors.headerText}]}>
             Where are you looking for pet care?
           </Text>
@@ -45,10 +57,11 @@ const PetCareZipSearch = (props: {
               placeholder="Enter zip code"
               value={postCode}
               onChangeText={pCode => setPostCode(pCode)}
-              placeholderTextColor="rgba(66, 66, 68, 0.47)"
-              style={styles._input}
+              style={[styles._input, {color: colors.headerText}]}
             />
           </View>
+        </View>
+        <View style={styles.buttonContainer}>
           <ButtonCom
             title={'Continue'}
             textAlignment={btnStyles.textAlignment}
@@ -63,14 +76,26 @@ const PetCareZipSearch = (props: {
 };
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+  },
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: '5%',
+    paddingTop: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '8%' : '10%',
+  },
+  boxContainer: {paddingHorizontal: '10%'},
+  buttonContainer: {
+    width: '90%',
+    paddingLeft: '10%',
+    position: 'absolute',
+    top: SCREEN_HEIGHT - 120,
   },
   _input: {
     width: '100%',
+    height: '31%',
     fontSize: Text_Size.Text_1,
-    color: Colors.headerText,
     borderWidth: 1,
     borderColor: Colors.border,
     padding: 8,
