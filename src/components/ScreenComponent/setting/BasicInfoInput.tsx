@@ -1,4 +1,11 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  Keyboard,
+  KeyboardAvoidingView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import React from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import AppSelect from '../../common/Form/AppSelect';
@@ -138,48 +145,50 @@ const BasicInfoInput = ({
     );
   };
   return (
-    <View style={styles.container}>
-      <AppForm
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}>
-        <FlatList
-          columnWrapperStyle={styles.flatList}
-          data={locationInput}
-          horizontal={false}
-          // showsVerticalScrollIndicator={false}
-          renderItem={({item}) => {
-            return (
-              <>
-                {!item.select && (
-                  <View style={styles.inputContainer}>
-                    <AppFormField
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      keyboardType={'default'}
-                      placeholder={item.placeholder}
-                      textContentType={'none'}
-                      name={item.name}
-                      label={item.title}
-                      textInputStyle={styles.textInputStyle}
-                    />
-                  </View>
-                )}
-                {item.select && (
-                  <View style={styles.selectContainer}>
-                    <AppSelect label={item.title} name={item.name} />
-                  </View>
-                )}
-              </>
-            );
-          }}
-          numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
-          ListHeaderComponent={renderHeader}
-          ListFooterComponent={renderFooter}
-        />
-      </AppForm>
-    </View>
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <AppForm
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}>
+          <FlatList
+            columnWrapperStyle={styles.flatList}
+            data={locationInput}
+            horizontal={false}
+            // showsVerticalScrollIndicator={false}
+            renderItem={({item}) => {
+              return (
+                <>
+                  {!item.select && (
+                    <View style={styles.inputContainer}>
+                      <AppFormField
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        keyboardType={'default'}
+                        placeholder={item.placeholder}
+                        textContentType={'none'}
+                        name={item.name}
+                        label={item.title}
+                        textInputStyle={styles.textInputStyle}
+                      />
+                    </View>
+                  )}
+                  {item.select && (
+                    <View style={styles.selectContainer}>
+                      <AppSelect label={item.title} name={item.name} />
+                    </View>
+                  )}
+                </>
+              );
+            }}
+            numColumns={2}
+            keyExtractor={(item, index) => index.toString()}
+            ListHeaderComponent={renderHeader}
+            ListFooterComponent={renderFooter}
+          />
+        </AppForm>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

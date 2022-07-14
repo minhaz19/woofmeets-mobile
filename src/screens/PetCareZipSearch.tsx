@@ -41,7 +41,7 @@ const PetCareZipSearch = (props: {
         </TouchableOpacity>
         <View style={styles.container}>
           <View>
-            <ZipSearch width={SCREEN_WIDTH / 1.6} />
+            <ZipSearch width={SCREEN_WIDTH / 1.4} />
           </View>
         </View>
         <View style={styles.boxContainer}>

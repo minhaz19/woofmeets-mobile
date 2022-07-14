@@ -654,7 +654,7 @@ export const PetFoot = (props: SvgProps) => (
     {...props}>
     <G
       data-name="Icon ionic-md-paw"
-      opacity={0.45}
+      opacity={0.55}
       style={{
         mixBlendMode: 'multiply',
         isolation: 'isolate',
@@ -803,6 +803,7 @@ export const ZipSearch = (
     xmlns="http://www.w3.org/2000/svg"
     width={291.554}
     height={264.653}
+    viewBox="0 0 291 264"
     {...props}>
     <Defs>
       <ClipPath id="a">

@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     color: 'black',
-    fontSize: 16,
   },
   card: {
     justifyContent: 'space-between',
