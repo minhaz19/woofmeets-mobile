@@ -2,6 +2,7 @@ import {View} from 'react-native';
 import React from 'react';
 import AppCheckbox from './AppCheckbox';
 import {FormikValues, useFormikContext} from 'formik';
+import ErrorMessage from './ErrorMessage';
 interface Props {
   onPress?: (() => void | undefined) | undefined;
   title: string;
@@ -20,11 +21,12 @@ const AppCheckboxField = ({
   name,
   radio,
 }: Props) => {
-  const {setFieldValue} = useFormikContext<FormikValues>();
+  const {setFieldValue, errors, touched, setFieldTouched} =
+    useFormikContext<FormikValues>();
   const handleValues = () => {
     setFieldValue(name, typeKey);
+    console.log('first', typeKey);
   };
-
   return (
     <View>
       <AppCheckbox
@@ -33,13 +35,16 @@ const AppCheckboxField = ({
         square={square}
         radio={radio}
         active={active}
-        // onBlur={() => setFieldTouched(addPetInputs[0].name!)}
+        onBlur={() => setFieldTouched(name)}
         onPress={() => {
           handleValues();
           // @ts-ignore
           onPress();
         }}
       />
+      {typeKey === 1 && (
+        <ErrorMessage error={errors[name]} visible={touched[name]} />
+      )}
     </View>
   );
 };

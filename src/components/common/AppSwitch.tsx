@@ -8,8 +8,9 @@ import SwitchView from './switch/SwitchView';
 interface Props {
   name: string;
   terms?: boolean;
+  auth?: boolean;
 }
-const AppSwitch = ({name, terms}: Props) => {
+const AppSwitch = ({name, terms, auth}: Props) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const {touched, values, errors, setFieldValue} =
     useFormikContext<FormikValues>();
@@ -35,7 +36,11 @@ const AppSwitch = ({name, terms}: Props) => {
         />
       </View>
       <View>
-        <ErrorMessage error={errors[name]} visible={touched[name]} />
+        <ErrorMessage
+          auth={auth}
+          error={errors[name]}
+          visible={touched[name]}
+        />
       </View>
     </>
   );

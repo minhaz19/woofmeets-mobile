@@ -3,6 +3,7 @@ import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {FormikErrors, FormikTouched} from 'formik';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import Colors from '../../../constants/Colors';
 interface Props {
   error:
     | string
@@ -11,14 +12,23 @@ interface Props {
     | FormikErrors<any>[]
     | undefined;
   visible: boolean | FormikTouched<any> | FormikTouched<any>[] | undefined;
+  auth?: boolean;
 }
-const ErrorMessage = ({error, visible}: Props) => {
+const ErrorMessage = ({error, visible, auth}: Props) => {
   const {colors} = useTheme();
   if (!visible || !error) {
     return null;
   }
   return (
-    <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: auth
+            ? Colors.dark.lightDark
+            : colors.backgroundColor,
+        },
+      ]}>
       <Text style={styles.error}>{error}</Text>
     </View>
   );
@@ -32,6 +42,6 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: Text_Size.Text_0,
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 5,
   },
 });

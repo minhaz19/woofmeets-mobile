@@ -53,22 +53,18 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
             <Text style={styles.title}>{addPetInputs[0].title}</Text>
             <View style={styles.petType}>
               {addPetInputs[0].pet!.map((item, index) => (
-                // <>
                 <AppCheckboxField
                   title={item.type}
                   key={index}
                   typeKey={item.id}
                   square
                   active={active0[item.id]}
-                  // onBlur={() => setFieldTouched(addPetInputs[0].name!)}
                   onPress={() =>
                     handleActiveCheck(addPetInputs[0].id!, item.id)
                   }
                   name={addPetInputs[0].name!}
                 />
-                // </>
               ))}
-              {/* <ErrorMessage error={['petType']} visible={['petType']} /> */}
             </View>
           </View>
           <View style={styles.flatList}>

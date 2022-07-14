@@ -6,13 +6,17 @@ import SelectDropdown from 'react-native-select-dropdown';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {FormikValues, useFormikContext} from 'formik';
+import ErrorMessage from './ErrorMessage';
+import {genders} from '../../../utils/config/Data/AddPetData';
 interface Props {
-  name?: string;
+  name: string;
   label: string;
 }
 const AppSelect = ({label, name}: Props) => {
-  const genders = ['Male', 'Female', 'Others'];
   const {isDarkMode, colors} = useTheme();
+  const {setFieldValue, errors, touched, setFieldTouched} =
+    useFormikContext<FormikValues>();
   return (
     <View>
       <Text style={[styles.label, {color: colors.headerText}]}>{label}</Text>
@@ -32,6 +36,7 @@ const AppSelect = ({label, name}: Props) => {
         data={genders}
         onSelect={(selectedItem, index) => {
           console.log(selectedItem, index);
+          setFieldValue('gender', selectedItem);
         }}
         buttonTextAfterSelection={selectedItem => {
           return selectedItem;
@@ -40,6 +45,7 @@ const AppSelect = ({label, name}: Props) => {
           return item;
         }}
       />
+      <ErrorMessage error={errors[name]} visible={touched[name]} />
     </View>
   );
 };

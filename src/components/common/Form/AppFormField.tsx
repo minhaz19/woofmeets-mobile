@@ -31,6 +31,7 @@ interface Props {
   subTitle?: string;
   email?: boolean;
   textInputStyle?: ViewStyle;
+  auth?: boolean;
 }
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;
@@ -54,6 +55,7 @@ const AppFormField = ({
   subTitle,
   email,
   textInputStyle,
+  auth,
 }: Props) => {
   const {setFieldTouched, touched, errors, values, setFieldValue} =
     useFormikContext<FormikValues>();
@@ -87,7 +89,11 @@ const AppFormField = ({
           textInputStyle={textInputStyle}
         />
 
-        <ErrorMessage error={errors[name]} visible={touched[name]} />
+        <ErrorMessage
+          error={errors[name]}
+          visible={touched[name]}
+          auth={auth}
+        />
       </View>
       {forgotPassword && (
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>

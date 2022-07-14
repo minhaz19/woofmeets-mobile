@@ -12,6 +12,7 @@ const AuthHeader = ({image, title, subTitle}: Props) => {
     <View style={styles.container}>
       <Image style={styles.image} resizeMode="contain" source={image} />
       <View>
+        {/* <TitleText textStyle={styles.title} text={title} /> */}
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subTitle}>{subTitle}</Text>
       </View>

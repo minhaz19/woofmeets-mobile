@@ -35,11 +35,7 @@ const AppInput = ({...otherProps}) => {
       {!otherProps.secureTextEntry &&
       otherProps.error === undefined &&
       otherProps.touch
-        ? otherProps.email && (
-            <View style={styles.check}>
-              <Check size={20} />
-            </View>
-          )
+        ? otherProps.email && <Check size={20} />
         : null}
       {otherProps.secureTextEntry &&
         (show ? (
