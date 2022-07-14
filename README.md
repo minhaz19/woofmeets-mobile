@@ -46,16 +46,71 @@ This template follows a very simple project structure:
   - `navigation`: Folder to store the navigators.
   - `screens`: Folder that contains all your application screens/features.
     - `Screen`: Each screen should be stored inside its folder and inside it a file for its code and a separate one for the styles and tests.
-      - `Screen.js`
-      - `Screen.styles.js`
-      - `Screen.test.js`
+      - `Screen.tsx`
+      - `Screen.styles.tsx` or in the same `Screen.tsx` as styles
   - `storage`: Folder that contains the application storage logic.
   - `store`: Folder to put all redux middlewares and the store.
   - `test-utils`: Folder to store tests-related utilities and components.
   - `App.js`: Main component that starts your whole app.
   - `index.js`: Entry point of your application as per React-Native standards.
+  - `utils`: Folder that contains the application utility like configuration and data types and dummy data
 
-  Deployment Debug version 0.0.1
+
+#### Android
+
+A map associating builds with env files is already defined in `app/build.gradle` you can modify or add environments if needed.
+
+For multiple enviroments to work you would need to change `-keep class woofmeets.BuildConfig { *; }` on `proguard-rules.pro` file.
+
+#### iOS
+
+The basic idea in iOS is to have one scheme per environment file, so you can easily alternate between them.
+
+To create a new scheme:
+
+- In the Xcode menu, go to Product > Scheme > Edit Scheme
+- Click Duplicate Scheme on the bottom
+- Give it a proper name on the top left. For instance: "qa"
+- Then edit the newly created scheme to make it use a different env file. From the same "manage scheme" window:
+
+  Expand the "Build" tab on the left menu
+  - Click "Pre-actions", and under the plus sign select "New Run Script Action"
+  - Where it says "Type a script or drag a script file", type: `echo ".env.qa" > /tmp/envfile` replacing `.env.qa` with your file.
+- Also, you will need to select the executable for the new schema:
+
+  Expand the "Run" tab on the left menu
+  - Under the "Executable" dropdown select the ".app" you would like to use for that schema
+
+
+## Generate production version
+
+These are the steps to generate `.apk` and `.ipa` files
+
+### Android
+
+1. Generate an upload key
+2. Setting up gradle variables
+3. Go to the android folder
+4. Execute `./gradlew assemble[Env][BuildType]`
+
+Note: You have three options to execute the project
+`assemble:` Generates an apk that you can share with others.
+`install:` When you want to test a release build on a connected device.
+`bundle:` When you are uploading the app to the Play Store.
+
+For more info please go to https://reactnative.dev/docs/signed-apk-android
+
+### iOS
+
+1. Go to the Xcode
+2. Select the schema
+3. Select 'Any iOS device' as target
+4. Product -> Archive
+
+For more info please go to https://reactnative.dev/docs/publishing-to-app-store
+
+
+Deployment Debug version 0.0.1
 
 APK install link: https://portal.testapp.io/apps/install/DNm9PabPGy8mz
 
