@@ -58,7 +58,7 @@ const ServiceCare = ({
                   color:
                     serviceType === 1
                       ? Colors.primary
-                      : colors.colors.descriptionText,
+                      : colors.colors.lightText,
                   fontWeight: serviceType === 1 ? '600' : '300',
                 },
               ]}>
@@ -98,7 +98,7 @@ const ServiceCare = ({
                   color:
                     serviceType === 2
                       ? Colors.primary
-                      : colors.colors.descriptionText,
+                      : colors.colors.lightText,
                   fontWeight: serviceType === 2 ? '600' : '300',
                 },
               ]}>

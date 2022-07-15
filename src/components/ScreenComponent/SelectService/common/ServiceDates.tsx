@@ -1,13 +1,7 @@
 /* eslint-disable prettier/prettier */
-import {
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import React, {FC} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import {Platform, Pressable, StyleSheet, TextInput, View} from 'react-native';
+import React, {FC, useState} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import DateTimePicker, {
   DateTimePickerEvent,
@@ -17,7 +11,6 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';
 import Ion from 'react-native-vector-icons/Ionicons';
 import HeaderText from '../../../common/text/HeaderText';
-// import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 interface Props {
   hText: string;
@@ -34,8 +27,8 @@ const ServiceDates: FC<Props> = ({
   setDatePicker,
   setDate,
 }) => {
+  const [temp, setTemp] = useState(true);
   const colors = useTheme();
-
   function showDatePicker() {
     setDatePicker(true);
   }
@@ -43,6 +36,7 @@ const ServiceDates: FC<Props> = ({
   function onDateSelected(event: DateTimePickerEvent, value?: any) {
     setDatePicker(false);
     setDate(value);
+    setTemp(false);
   }
 
   return (
@@ -57,12 +51,13 @@ const ServiceDates: FC<Props> = ({
           ]}>
           <TextInput
             style={[styles.text, {color: colors.colors.placeholderTextColor}]}
-            value={date.toDateString()}
-            placeholder="Enter your Dates"
+            placeholderTextColor={colors.colors.placeholderTextColor}
+            value={temp ? '' : date.toDateString()}
+            placeholder="Select your Dates"
           />
           <Ion
             name="chevron-forward-outline"
-            size={24}
+            size={18}
             color={colors.colors.descriptionText}
           />
         </View>
@@ -75,27 +70,9 @@ const ServiceDates: FC<Props> = ({
           is24Hour={true}
           onChange={onDateSelected}
           style={styles.datePicker}
+          minimumDate={new Date()}
         />
       )}
-      {/* {datePicker && (
-        <CalendarList
-          // horizontal={true}
-          // pagingEnabled={true}
-          calendarWidth={320}
-          initialDate={'2012-03-01'}
-          minDate={'2012-05-10'}
-          onDayPress={day => {
-            console.log('selected day', day);
-          }}
-          onMonthChange={month => {
-            console.log('month changed', month);
-          }}
-          monthFormat={'yyyy MM'}
-          onPressArrowLeft={subtractMonth => subtractMonth()}
-          onPressArrowRight={addMonth => addMonth()}
-          enableSwipeMonths={true}
-        />
-      )} */}
     </View>
   );
 };
@@ -118,8 +95,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: Text_Size.Text_0,
-    flex: 0,
-    color: 'black',
   },
 
   datePicker: {
