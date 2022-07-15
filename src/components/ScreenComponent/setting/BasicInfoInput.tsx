@@ -145,7 +145,7 @@ const BasicInfoInput = ({
     );
   };
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <AppForm
           initialValues={initialValues}
@@ -196,7 +196,7 @@ export default BasicInfoInput;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '5%',
+    marginTop: '1%',
   },
   inputContainer: {marginHorizontal: '5%', width: '90%'},
   flatList: {
