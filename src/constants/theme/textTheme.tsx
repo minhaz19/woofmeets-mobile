@@ -23,5 +23,6 @@ export const themedColors = {
     backgroundColor: Colors.dark.background,
     lightBackgroundColor: Colors.dark.lightDark,
     placeholderTextColor: Colors.dark.text,
+    lightBorderColor: Colors.dark.borderColor,
   },
 };
