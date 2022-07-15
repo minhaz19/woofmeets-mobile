@@ -13,6 +13,7 @@ export default {
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
+    inputBg: '#f8f4f4',
   },
   dark: {
     text: 'white',
@@ -26,6 +27,7 @@ export default {
     blue: '#81a7ff',
     grey: 'grey',
   },
+  gray: 'gray',
   primary: '#FFA557',
   primaryLight: '#FFF2E9',
   secondary: '#FEF1E8',
@@ -37,6 +39,6 @@ export default {
   alter: '#D5226C',
   placeholder: '#BCBEC0',
   failed: '#e46969',
-  alert: '#d84040',
+  alert: 'red',
   success: '#69e4a6',
 };

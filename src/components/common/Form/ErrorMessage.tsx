@@ -28,7 +28,7 @@ const ErrorMessage = ({error, visible, auth}: Props) => {
             auth && isDarkMode ? Colors.dark.lightDark : colors.backgroundColor,
         },
       ]}>
-      <Text style={styles.error}>{error}</Text>
+      <Text style={[styles.error, {color: colors.alert}]}>{error}</Text>
     </View>
   );
 };
@@ -38,7 +38,6 @@ export default ErrorMessage;
 const styles = StyleSheet.create({
   container: {},
   error: {
-    color: 'red',
     fontSize: Text_Size.Text_0,
     marginBottom: 10,
     marginTop: 5,

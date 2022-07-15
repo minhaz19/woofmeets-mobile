@@ -7,6 +7,8 @@ export const colors = {
   placeholderTextColor: Colors.light.placeholderTextColor,
   backgroundColor: Colors.light.background,
   lightBackgroundColor: Colors.light.background,
+  inputLightBg: Colors.light.inputBg,
+  alert: Colors.alert,
 };
 
 export const themedColors = {

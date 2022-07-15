@@ -1,10 +1,11 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
 import ErrorMessage from './Form/ErrorMessage';
 import {FormikValues, useFormikContext} from 'formik';
 import SwitchView from './switch/SwitchView';
+import ShortText from './text/ShortText';
 interface Props {
   name: string;
   terms?: boolean;
@@ -19,9 +20,9 @@ const AppSwitch = ({name, terms, auth}: Props) => {
       <View style={styles.container}>
         {terms && (
           <View style={styles.textContainer}>
-            <Text style={styles.text}>Agree to </Text>
+            <ShortText textStyle={styles.text} text="Agree to" />
             <TouchableOpacity>
-              <Text style={styles.link}>Terms and Conditions</Text>
+              <ShortText textStyle={styles.link} text="Terms and Conditions" />
             </TouchableOpacity>
           </View>
         )}
@@ -35,7 +36,7 @@ const AppSwitch = ({name, terms, auth}: Props) => {
           }}
         />
       </View>
-      <View>
+      <View style={styles.errorCont}>
         <ErrorMessage
           auth={auth}
           error={errors[name]}
@@ -64,4 +65,5 @@ const styles = StyleSheet.create({
   text: {
     fontSize: Text_Size.Text_0,
   },
+  errorCont: {marginTop: 8},
 });

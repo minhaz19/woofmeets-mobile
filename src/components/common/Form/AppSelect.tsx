@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -15,8 +14,7 @@ interface Props {
 }
 const AppSelect = ({label, name}: Props) => {
   const {isDarkMode, colors} = useTheme();
-  const {setFieldValue, errors, touched, setFieldTouched} =
-    useFormikContext<FormikValues>();
+  const {setFieldValue, errors, touched} = useFormikContext<FormikValues>();
   return (
     <View>
       <Text style={[styles.label, {color: colors.headerText}]}>{label}</Text>
@@ -24,7 +22,9 @@ const AppSelect = ({label, name}: Props) => {
         buttonStyle={{
           height: 40,
           width: '100%',
-          backgroundColor: isDarkMode ? colors.lightBackgroundColor : '#f8f4f4',
+          backgroundColor: isDarkMode
+            ? colors.lightBackgroundColor
+            : colors.inputLightBg,
           borderRadius: 5,
           marginVertical: 10,
           justifyContent: 'space-between',
@@ -34,10 +34,7 @@ const AppSelect = ({label, name}: Props) => {
         selectedRowTextStyle={styles.text}
         buttonTextStyle={styles.buttonText}
         data={genders}
-        onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-          setFieldValue('gender', selectedItem);
-        }}
+        onSelect={selectedItem => setFieldValue('gender', selectedItem)}
         buttonTextAfterSelection={selectedItem => {
           return selectedItem;
         }}

@@ -22,8 +22,6 @@ const AuthOTP = ({name, auth}: Props) => {
         autofillFromClipboard={false}
         onBlur={() => setFieldTouched(name)}
         placeholder={'-'}
-        //@ts-ignore
-        // value={values[name]}
         style={[
           styles.inputContainer,
           {backgroundColor: isDarkMode ? Colors.dark.lightDark : 'white'},

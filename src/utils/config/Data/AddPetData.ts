@@ -23,11 +23,11 @@ export const addPetInputs: addPetTypes = [
       {title: 'Weight (Ibs)', placeholder: 'Enter Weight', name: 'weight'},
       {
         title: 'Age (Yr)',
-        placeholder: 'Enter Age in year',
+        placeholder: 'Enter year',
         flex: 0.5,
         name: 'ageYr',
       },
-      {title: 'Age (Mo)', placeholder: 'Enter ', name: 'ageMo', flex: 0.5},
+      {title: 'Age (Mo)', placeholder: 'Month', name: 'ageMo', flex: 0.5},
       {
         title: 'Select Gender',
         placeholder: 'Enter Pet Name',

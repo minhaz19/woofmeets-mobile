@@ -15,7 +15,12 @@ const AppInput = ({...otherProps}) => {
     <View
       style={[
         styles.container,
-        {backgroundColor: isDarkMode ? colors.lightBackgroundColor : '#f8f4f4'},
+        {
+          backgroundColor: isDarkMode
+            ? colors.lightBackgroundColor
+            : colors.inputLightBg,
+          borderColor: isDarkMode ? Colors.gray : Colors.border,
+        },
       ]}>
       <TextInput
         placeholderTextColor={'gray'}
@@ -24,7 +29,6 @@ const AppInput = ({...otherProps}) => {
           {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
             height: numberOfLines >= 10 ? 120 : 40,
-
             flex: 1,
             color: isDarkMode ? 'gray' : 'black',
           },
@@ -62,10 +66,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: 'row',
     paddingHorizontal: 15,
-    marginBottom: 15,
+    marginBottom: 10,
     justifyContent: 'space-between',
     borderWidth: 1,
-    borderColor: Colors.border,
+
     flexWrap: 'wrap',
     alignItems: 'center',
   },
