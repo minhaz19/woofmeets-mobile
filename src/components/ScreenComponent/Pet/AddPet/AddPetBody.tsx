@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React from 'react';
 import AppForm from '../../../common/Form/AppForm';
 import AppFormField from '../../../common/Form/AppFormField';
@@ -10,6 +10,9 @@ import AppSelect from '../../../common/Form/AppSelect';
 import PhotoGallery from './PhotoGallery';
 import AppCheckboxField from '../../../common/Form/AppCheckboxField';
 import useHandleCheck from '../../../../utils/helpers/usehandleActiveCheck';
+import TitleText from '../../../common/text/TitleText';
+import DescriptionText from '../../../common/text/DescriptionText';
+import HeaderText from '../../../common/text/HeaderText';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -48,9 +51,15 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
         </View>
         <View style={styles.inputContainer}>
           <View>
-            <Text style={styles.header}>{addPetInputs[0].header}</Text>
-            <Text style={styles.topSubTitle}>{addPetInputs[0].subTitle}</Text>
-            <Text style={styles.title}>{addPetInputs[0].title}</Text>
+            <HeaderText
+              textStyle={styles.header}
+              text={addPetInputs[0].header!}
+            />
+            <DescriptionText
+              textStyle={styles.topSubTitle}
+              text={addPetInputs[0].subTitle!}
+            />
+            <TitleText textStyle={styles.title} text={addPetInputs[0].title!} />
             <View style={styles.petType}>
               {addPetInputs[0].pet!.map((item, index) => (
                 <AppCheckboxField
@@ -102,7 +111,7 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
           <View>
             {addPetInputs[2].additionalDetails!.map((item, index) => (
               <View key={index} style={styles.radioContainer}>
-                <Text style={styles.title}>{item.title}</Text>
+                <TitleText textStyle={styles.title} text={item.title} />
 
                 <View style={styles.additionalTypeContainer}>
                   {item.radio.map((type, key) => (
@@ -145,12 +154,18 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
           </View>
           <View>
             <View>
-              <Text style={styles.header}>{addPetInputs[4].header}</Text>
-              <Text style={styles.subTitle}>{addPetInputs[4].subTitle}</Text>
+              <TitleText
+                textStyle={styles.header}
+                text={addPetInputs[4].header!}
+              />
+              <TitleText
+                textStyle={styles.subTitle}
+                text={addPetInputs[4].subTitle!}
+              />
             </View>
             {addPetInputs[4].careInfo?.map((item, index) => (
               <View key={index} style={styles.radioContainer}>
-                <Text style={styles.title}>{item.title}</Text>
+                <TitleText textStyle={styles.title} text={item.title} />
 
                 <View style={styles.additionalTypeContainer}>
                   {item.radio.map((type, key) => (
@@ -189,7 +204,7 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
             />
           </View>
           <View>
-            <Text style={styles.title}>{addPetInputs[6].title}</Text>
+            <TitleText textStyle={styles.title} text={addPetInputs[6].title!} />
             <View style={styles.petType}>
               {addPetInputs[6].pet!.map((item, index) => (
                 <AppCheckboxField
@@ -259,7 +274,7 @@ const styles = StyleSheet.create({
   petType: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 10,
+    marginTop: 10,
   },
   flatList: {
     flexWrap: 'wrap',

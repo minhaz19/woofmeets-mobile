@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import AppCheckbox from './AppCheckbox';
 import {FormikValues, useFormikContext} from 'formik';
@@ -25,7 +25,6 @@ const AppCheckboxField = ({
     useFormikContext<FormikValues>();
   const handleValues = () => {
     setFieldValue(name, typeKey);
-    console.log('first', typeKey);
   };
   return (
     <View>
@@ -43,10 +42,15 @@ const AppCheckboxField = ({
         }}
       />
       {typeKey === 1 && (
-        <ErrorMessage error={errors[name]} visible={touched[name]} />
+        <View style={styles.errorContainer}>
+          <ErrorMessage error={errors[name]} visible={touched[name]} />
+        </View>
       )}
     </View>
   );
 };
 
 export default AppCheckboxField;
+const styles = StyleSheet.create({
+  errorContainer: {marginTop: 10},
+});
