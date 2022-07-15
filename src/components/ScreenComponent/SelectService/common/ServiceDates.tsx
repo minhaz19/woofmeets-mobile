@@ -47,7 +47,7 @@ const ServiceDates: FC<Props> = ({
 
   return (
     <View style={{paddingTop: 10}}>
-      <HeaderText text={hText} />
+      <HeaderText textStyle={styles.headerText} text={hText} />
       <Pressable onPress={showDatePicker}>
         <View
           pointerEvents="none"
@@ -128,5 +128,8 @@ const styles = StyleSheet.create({
     width: 320,
     height: 260,
     display: 'flex',
+  },
+  headerText: {
+    fontSize: Text_Size.Text_9,
   },
 });

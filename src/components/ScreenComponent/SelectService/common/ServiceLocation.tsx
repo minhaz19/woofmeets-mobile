@@ -6,6 +6,7 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';
 import Ion from 'react-native-vector-icons/Ionicons';
 import Colors from '../../../../constants/Colors';
+import HeaderText from '../../../common/text/HeaderText';
 
 interface Props {
   hText: string;
@@ -18,9 +19,10 @@ const ServiceLocation: FC<Props> = ({hText, dText}) => {
 
   return (
     <>
-      <Text style={[styles.headerText, {color: colors.colors.headerText}]}>
+      {/* <Text style={[styles.headerText, {color: colors.colors.headerText}]}>
         {hText}
-      </Text>
+      </Text> */}
+      <HeaderText textStyle={styles.headerText} text={hText} />
       <Pressable onPress={() => setShow(!show)}>
         <View
           pointerEvents="none"
@@ -51,8 +53,7 @@ export default ServiceLocation;
 
 const styles = StyleSheet.create({
   headerText: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: 'bold',
+    fontSize: Text_Size.Text_9,
   },
   container: {
     borderRadius: 5,

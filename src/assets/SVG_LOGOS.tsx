@@ -1775,7 +1775,12 @@ export const ZipSearch = (
 );
 
 export const LocationSvg = (props: SvgProps) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} {...props}>
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    {...props}>
     <Defs>
       <ClipPath id="a">
         <Path
@@ -1792,8 +1797,7 @@ export const LocationSvg = (props: SvgProps) => (
       <G
         data-name="Mask Group 219"
         clipPath="url(#a)"
-        transform="translate(-61 -298)"
-      >
+        transform="translate(-61 -298)">
         <G data-name="Group 17859">
           <G data-name="Group 17858">
             <Path
@@ -1836,7 +1840,12 @@ export const LocationSvg = (props: SvgProps) => (
 );
 
 export const HomeSvgICon = (props: SvgProps) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} {...props}>
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    {...props}>
     <G data-name="Group 5587">
       <Path
         data-name="Icon awesome-home"
@@ -1845,21 +1854,30 @@ export const HomeSvgICon = (props: SvgProps) => (
       />
     </G>
   </Svg>
-)
+);
 
 export const WeatherSvg = (props: SvgProps) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} {...props}>
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    {...props}>
     <Path
       data-name="Icon weather-day-sunny-overcast"
       d="M0 11.444a.82.82 0 0 0 .262.627.934.934 0 0 0 .674.243h1.581a.9.9 0 0 0 .646-.253.823.823 0 0 0 .271-.618.874.874 0 0 0-.262-.664.913.913 0 0 0-.646-.262H.936a.91.91 0 0 0-.674.262.847.847 0 0 0-.262.665Zm1.656 5.783a3.219 3.219 0 0 0 .992 2.358 3.2 3.2 0 0 0 2.349.992h6.419a3.154 3.154 0 0 0 2.33-.983 3.25 3.25 0 0 0 .973-2.367 3.02 3.02 0 0 0-.2-1.151 5.368 5.368 0 0 0 1.843-1.984 5.513 5.513 0 0 0 .234-4.838 5.552 5.552 0 0 0-2.985-2.985 5.4 5.4 0 0 0-2.171-.449 5.49 5.49 0 0 0-2.826.758 5.611 5.611 0 0 0-2.04 2.04 5.532 5.532 0 0 0-.739 2.817v.318a3.838 3.838 0 0 0-1.853 2.33 3.254 3.254 0 0 0-1.69 1.188 3.22 3.22 0 0 0-.636 1.956Zm1.46-13.25a.831.831 0 0 0 .243.627l1.507 1.581a.988.988 0 0 0 1.319 0 .882.882 0 0 0 .262-.655.911.911 0 0 0-.262-.655L4.641 3.331a.971.971 0 0 0-.655-.271.813.813 0 0 0-.636.262.938.938 0 0 0-.234.655Zm.393 13.25a1.455 1.455 0 0 1 .374-1.011 1.426 1.426 0 0 1 .954-.477l.58-.075c.122 0 .187-.075.187-.215l.084-.524a2.09 2.09 0 0 1 .683-1.347 1.959 1.959 0 0 1 1.385-.543 2.01 2.01 0 0 1 1.413.543 2.114 2.114 0 0 1 .7 1.347l.075.608c.056.14.131.215.225.215h1.235a1.459 1.459 0 0 1 1.048.44 1.393 1.393 0 0 1 .44 1.048 1.491 1.491 0 0 1-.44 1.076 1.416 1.416 0 0 1-1.048.449H4.992a1.393 1.393 0 0 1-1.057-.449 1.5 1.5 0 0 1-.426-1.085Zm4.136-5.979A3.8 3.8 0 0 1 8.833 8.66a3.655 3.655 0 0 1 2.611-1.048 3.6 3.6 0 0 1 2.657 1.114 3.714 3.714 0 0 1 1.095 2.7 3.639 3.639 0 0 1-.477 1.825 3.818 3.818 0 0 1-1.291 1.357 2.89 2.89 0 0 0-1.9-.683 3.8 3.8 0 0 0-1.436-1.948 3.909 3.909 0 0 0-2.321-.73h-.122Zm2.891-8.188a.9.9 0 0 0 .271.655.922.922 0 0 0 1.573-.655V.87a.823.823 0 0 0-.271-.618.963.963 0 0 0-1.3 0 .823.823 0 0 0-.271.618Zm5.914 14.251a.943.943 0 0 0 .253.655l1.535 1.516a.884.884 0 0 0 1.319 0 .819.819 0 0 0 .243-.636.876.876 0 0 0-.243-.627l-1.582-1.559a.892.892 0 0 0-.636-.234.853.853 0 0 0-.636.253.868.868 0 0 0-.253.632Zm0-11.8a.972.972 0 0 0 .253.674.928.928 0 0 0 1.273 0l1.581-1.581a.811.811 0 0 0 .243-.627.854.854 0 0 0-.271-.646.919.919 0 0 0-.655-.262.878.878 0 0 0-.636.271l-1.535 1.526a.874.874 0 0 0-.253.645Zm2.414 5.932a.82.82 0 0 0 .262.627.934.934 0 0 0 .674.243h1.581a.9.9 0 0 0 .646-.253.823.823 0 0 0 .271-.618.874.874 0 0 0-.262-.664.913.913 0 0 0-.646-.262h-1.581a.91.91 0 0 0-.674.262.853.853 0 0 0-.271.666Z"
       fill="#ffa557"
     />
   </Svg>
-)
+);
 
 export const PetFootSvg = (props: SvgProps) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24"
-  {...props}>
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    {...props}>
     <G data-name="Group 5587">
       <Path
         data-name="Icon awesome-paw"
@@ -1868,10 +1886,15 @@ export const PetFootSvg = (props: SvgProps) => (
       />
     </G>
   </Svg>
-)
+);
 
 export const BriefCaseSvg = (props: SvgProps) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} {...props}>
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    {...props}>
     <G data-name="Group 5587">
       <Path
         data-name="Icon awesome-briefcase"
@@ -1880,8 +1903,4 @@ export const BriefCaseSvg = (props: SvgProps) => (
       />
     </G>
   </Svg>
-)
-
-
-
-
+);
