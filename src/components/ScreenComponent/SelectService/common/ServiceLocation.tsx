@@ -6,6 +6,8 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';
 import Ion from 'react-native-vector-icons/Ionicons';
 import Colors from '../../../../constants/Colors';
+import HeaderText from '../../../common/text/HeaderText';
+import DescriptionText from '../../../common/text/DescriptionText';
 
 interface Props {
   hText: string;
@@ -18,9 +20,7 @@ const ServiceLocation: FC<Props> = ({hText, dText}) => {
 
   return (
     <>
-      <Text style={[styles.headerText, {color: colors.colors.headerText}]}>
-        {hText}
-      </Text>
+      <HeaderText textStyle={styles.headerText} text={hText} />
       <Pressable onPress={() => setShow(!show)}>
         <View
           pointerEvents="none"
@@ -29,20 +29,18 @@ const ServiceLocation: FC<Props> = ({hText, dText}) => {
             {backgroundColor: colors.colors.backgroundColor},
           ]}>
           <TextInput
-            style={[styles.text, {color: colors.colors.descriptionText}]}
+            style={[styles.text, {color: colors.colors.placeholderTextColor}]}
             placeholder="Select your location"
-            placeholderTextColor={colors.colors.descriptionText}
+            placeholderTextColor={colors.colors.placeholderTextColor}
           />
           <Ion
             name="chevron-forward-outline"
-            size={24}
-            color={colors.colors.lightText}
+            size={18}
+            color={colors.colors.descriptionText}
           />
         </View>
       </Pressable>
-      <Text style={[styles.text, {color: colors.colors.placeholderTextColor}]}>
-        {dText}
-      </Text>
+      <DescriptionText text={dText} />
     </>
   );
 };
@@ -51,8 +49,7 @@ export default ServiceLocation;
 
 const styles = StyleSheet.create({
   headerText: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: 'bold',
+    fontSize: Text_Size.Text_9,
   },
   container: {
     borderRadius: 5,
@@ -69,6 +66,5 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: Text_Size.Text_0,
-    flex: 0,
   },
 });
