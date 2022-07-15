@@ -21,6 +21,7 @@ export default {
     tint: tintColorDark,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
+    borderColor: '#585858',
   },
   button: {
     blue: '#81a7ff',

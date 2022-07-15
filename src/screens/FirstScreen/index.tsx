@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import {StyleSheet, View, Image} from 'react-native';
 import React from 'react';
 import Colors from '../../constants/Colors';
@@ -92,6 +95,6 @@ const styles = StyleSheet.create({
     // marginRight: 50,
     // marginLeft: 50,
     position: 'absolute',
-    transform: [{rotate: '-20deg'}],
+    transform: [{rotate: '-25deg'}],
   },
 });

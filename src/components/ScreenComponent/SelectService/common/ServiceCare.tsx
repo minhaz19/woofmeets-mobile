@@ -6,6 +6,7 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {HomeSvg, RepeatSvg} from '../../../../assets/SVG_LOGOS';
 import Text_Size from '../../../../constants/textScaling';
 import Colors from '../../../../constants/Colors';
+import ServiceHeader from './ServiceHeader';
 
 interface props {
   hText: string;
@@ -23,12 +24,7 @@ const ServiceCare = ({
   const colors = useTheme();
   return (
     <View>
-      <Text style={[styles.hText, {color: colors.colors.headerText}]}>
-        {hText}
-      </Text>
-      <Text style={[styles.dText, {color: colors.colors.descriptionText}]}>
-        {dText}
-      </Text>
+      <ServiceHeader hText={hText} dText={dText} />
       <View style={styles.boxContainer}>
         <View
           style={{
@@ -45,10 +41,10 @@ const ServiceCare = ({
                     serviceType === 1
                       ? colors.colors.lightBackgroundColor
                       : colors.colors.backgroundColor,
-                      borderColor:
-                      serviceType === 1
-                        ? colors.colors.headerText
-                        : colors.colors.descriptionText,
+                  borderColor:
+                    serviceType === 1
+                      ? colors.colors.headerText
+                      : colors.colors.lightBorderColor,
                 },
               ]}>
               <HomeSvg height={60} width={60} fill={colors.colors.headerText} />
@@ -62,11 +58,8 @@ const ServiceCare = ({
                   color:
                     serviceType === 1
                       ? Colors.primary
-                      : colors.colors.descriptionText,
-                  fontWeight:
-                      serviceType === 1
-                        ? '600'
-                        : '300',
+                      : colors.colors.lightText,
+                  fontWeight: serviceType === 1 ? '600' : '300',
                 },
               ]}>
               One Time
@@ -87,7 +80,7 @@ const ServiceCare = ({
                   borderColor:
                     serviceType === 2
                       ? colors.colors.headerText
-                      : colors.colors.descriptionText,
+                      : colors.colors.lightBorderColor,
                 },
               ]}>
               <RepeatSvg
@@ -105,11 +98,8 @@ const ServiceCare = ({
                   color:
                     serviceType === 2
                       ? Colors.primary
-                      : colors.colors.descriptionText,
-                      fontWeight:
-                    serviceType === 2
-                        ? '600'
-                        : '300',
+                      : colors.colors.lightText,
+                  fontWeight: serviceType === 2 ? '600' : '300',
                 },
               ]}>
               Repeat Weekly

@@ -7,6 +7,7 @@ export const colors = {
   placeholderTextColor: Colors.light.placeholderTextColor,
   backgroundColor: Colors.light.background,
   lightBackgroundColor: Colors.light.background,
+  lightBorderColor: Colors.light.lightText,
 };
 
 export const themedColors = {
@@ -21,5 +22,6 @@ export const themedColors = {
     backgroundColor: Colors.dark.background,
     lightBackgroundColor: Colors.dark.lightDark,
     placeholderTextColor: Colors.dark.text,
+    lightBorderColor: Colors.dark.borderColor,
   },
 };
