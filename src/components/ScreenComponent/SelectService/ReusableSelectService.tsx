@@ -33,11 +33,12 @@ const ReusableSelectService: FC<Props> = data => {
         ]}>
         <View style={styles.boxContainer}>
           <View style={styles.imageContainer}>
-            <Image
+            {/* <Image
               source={data.data.image}
               resizeMode="contain"
               style={styles.image}
-            />
+            /> */}
+            {data.data.image}
           </View>
           <View style={styles.textContainer}>
             <Text style={[styles.text_1, {color: colors.headerText}]}>
@@ -68,8 +69,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageContainer: {
-    width: 24,
-    height: 24,
     marginRight: 10,
   },
   image: {
