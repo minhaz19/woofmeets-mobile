@@ -3,7 +3,6 @@ import React from 'react';
 import AppButton from '../../../../common/AppButton';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 type StackParamList = {
   AddPet: {foo: string; onBar: () => void} | undefined;

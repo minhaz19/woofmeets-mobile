@@ -1,6 +1,13 @@
+/* eslint-disable dot-notation */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
 import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
 import Colors from '../../../../constants/Colors';
 import {UploadIcon} from '../../../../assets/SVG_LOGOS';
@@ -19,17 +26,21 @@ const AddPetImage = ({name}: Props) => {
   const [petImage, setPetImage] = useState();
   const {setFieldValue, touched, setFieldTouched, values, errors} =
     useFormikContext<FormikValues>();
-  function uploadImage(e: any) {}
-  useEffect(() => {
-    setFieldValue(name, petImage);
-  }, [petImage, name, setFieldValue]);
+  function uploadImage(e: any) {
+    // console.log('e', e._parts[0][1]['uri'], petImage);
+    setFieldValue(name, e._parts[0][1]['uri']);
+  }
 
   return (
     <View>
       {!petImage && (
-        <TouchableOpacity
-          onPress={() => setIsModalVisible(!isModalVisible)}
-          onBlur={() => setFieldTouched(name)}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setIsModalVisible(!isModalVisible);
+            values[name] === undefined &&
+              errors[name] !== '' &&
+              setFieldTouched(name);
+          }}>
           <View
             style={[
               styles.container,
@@ -44,7 +55,7 @@ const AddPetImage = ({name}: Props) => {
               <Text style={styles.title}>Upload Pet Photo</Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
       )}
       {petImage && (
         <View style={styles.container}>
@@ -55,14 +66,15 @@ const AddPetImage = ({name}: Props) => {
           />
         </View>
       )}
-      <ErrorMessage error={errors[name]} visible={touched[name]} />
+      <View style={styles.errorContainer}>
+        <ErrorMessage error={errors[name]} visible={touched[name]} />
+      </View>
       <ImageUploadModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
         setIsImageLoading={setIsImageLoading}
         uploadImage={uploadImage}
         setPetImage={setPetImage}
-        onBlur={() => setFieldTouched(name)}
       />
     </View>
   );
@@ -94,4 +106,5 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_0,
     marginLeft: 10,
   },
+  errorContainer: {paddingHorizontal: 20},
 });

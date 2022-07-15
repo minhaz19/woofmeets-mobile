@@ -1,6 +1,8 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../../constants/textScaling';
+import TitleText from '../../../common/text/TitleText';
+import DescriptionText from '../../../common/text/DescriptionText';
 
 interface Props {
   title: string;
@@ -12,8 +14,8 @@ const AuthHeader = ({image, title, subTitle}: Props) => {
     <View style={styles.container}>
       <Image style={styles.image} resizeMode="contain" source={image} />
       <View>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subTitle}>{subTitle}</Text>
+        <TitleText textStyle={styles.title} text={title} />
+        <DescriptionText textStyle={styles.subTitle} text={subTitle} />
       </View>
     </View>
   );
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
     marginTop: '3%',
   },
   subTitle: {
-    marginTop: '2%',
+    marginTop: '3%',
     fontSize: Text_Size.Text_0,
   },
 });

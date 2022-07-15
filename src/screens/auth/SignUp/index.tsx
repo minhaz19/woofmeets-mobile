@@ -24,7 +24,7 @@ interface Props {
 const SignUp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const handleSubmit = () => {
-    navigation.navigate('AfterIntroScreen');
+    navigation.navigate('VerifyAccount');
   };
   return (
     <ScrollView

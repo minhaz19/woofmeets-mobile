@@ -57,6 +57,7 @@ const AuthForm = ({
                 label={setNewPassword ? 'Old Password' : 'Email/Phone Number'}
                 secureTextEntry={setNewPassword ? true : false}
                 email={setNewPassword ? false : true}
+                auth
               />
             </View>
 
@@ -73,6 +74,7 @@ const AuthForm = ({
                 label={setNewPassword ? 'New Password' : 'Password'}
                 forgotPassword={setNewPassword || termsAndCond ? false : true}
                 textContentType={setNewPassword ? 'newPassword' : 'password'}
+                auth
               />
             )}
           </>
@@ -87,11 +89,12 @@ const AuthForm = ({
             textContentType="password"
             name="confirmPass"
             label="Confirm Password"
+            auth
           />
         )}
         {(forgotPasswordOpt || verifyAccount) && (
           <View style={styles.otpContainer}>
-            <AuthOTP name="code" />
+            <AuthOTP name="code" auth />
           </View>
         )}
         {verifyAccount && (
@@ -100,7 +103,7 @@ const AuthForm = ({
           </View>
         )}
         <View style={styles.switchContainer}>
-          {termsAndCond && <AppSwitch name="terms" terms />}
+          {termsAndCond && <AppSwitch name="terms" terms auth />}
         </View>
         <View style={{marginTop: setNewPassword ? 20 : 0}}>
           <SubmitButton title={btnTitle} />

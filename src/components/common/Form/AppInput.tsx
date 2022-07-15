@@ -7,21 +7,30 @@ import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
-  const {colors} = useTheme();
+  const {colors, isDarkMode} = useTheme();
   const {numberOfLines} = otherProps;
+  // isDarkMode ? colors.lightBackgroundColor :
 
   return (
-    <View style={[styles.container]}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkMode
+            ? colors.lightBackgroundColor
+            : colors.inputLightBg,
+          borderColor: isDarkMode ? Colors.gray : Colors.border,
+        },
+      ]}>
       <TextInput
         placeholderTextColor={'gray'}
         style={[
           styles.text,
           {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
-            height: numberOfLines >= 10 ? 120 : 44,
-
+            height: numberOfLines >= 10 ? 120 : 40,
             flex: 1,
-            color: colors.headerText,
+            color: isDarkMode ? 'gray' : 'black',
           },
         ]}
         {...otherProps}
@@ -30,11 +39,7 @@ const AppInput = ({...otherProps}) => {
       {!otherProps.secureTextEntry &&
       otherProps.error === undefined &&
       otherProps.touch
-        ? otherProps.email && (
-            <View style={styles.check}>
-              <Check size={20} />
-            </View>
-          )
+        ? otherProps.email && <Check size={20} />
         : null}
       {otherProps.secureTextEntry &&
         (show ? (
@@ -61,10 +66,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: 'row',
     paddingHorizontal: 15,
-    marginBottom: 15,
+    marginBottom: 10,
     justifyContent: 'space-between',
     borderWidth: 1,
-    borderColor: Colors.border,
+
     flexWrap: 'wrap',
     alignItems: 'center',
   },

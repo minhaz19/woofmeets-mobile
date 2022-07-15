@@ -20,6 +20,7 @@ import {SCREEN_HEIGHT} from '../../../constants/WindowSize';
 interface Props {
   navigation: {
     goBack: () => void;
+    navigate: (arg0: string) => void;
   };
 }
 const SetNewPassword = ({navigation}: Props) => {
@@ -27,6 +28,7 @@ const SetNewPassword = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const handleSubmit = (values: any) => {
     console.log('values', values);
+    navigation.navigate('AfterIntroScreen');
   };
   console.log('getting height', height);
   return (
