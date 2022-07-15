@@ -8,8 +8,9 @@ import {FormikValues, useFormikContext} from 'formik';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
 interface Props {
   name: string;
+  auth?: boolean;
 }
-const AuthOTP = ({name}: Props) => {
+const AuthOTP = ({name, auth}: Props) => {
   const {isDarkMode} = useTheme();
   const {setFieldTouched, touched, errors, setFieldValue} =
     useFormikContext<FormikValues>();
@@ -21,8 +22,6 @@ const AuthOTP = ({name}: Props) => {
         autofillFromClipboard={false}
         onBlur={() => setFieldTouched(name)}
         placeholder={'-'}
-        //@ts-ignore
-        // value={values[name]}
         style={[
           styles.inputContainer,
           {backgroundColor: isDarkMode ? Colors.dark.lightDark : 'white'},
@@ -30,7 +29,11 @@ const AuthOTP = ({name}: Props) => {
         inputStyles={[styles.input]}
       />
       <View>
-        <ErrorMessage error={errors[name]} visible={touched[name]} />
+        <ErrorMessage
+          error={errors[name]}
+          visible={touched[name]}
+          auth={auth}
+        />
       </View>
     </View>
   );
