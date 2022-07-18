@@ -1,9 +1,11 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {FC} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import Text_Size from '../../../constants/textScaling';
+import HeaderText from '../../common/text/HeaderText';
+import DescriptionText from '../../common/text/DescriptionText';
 
 interface Props {
   data: any;
@@ -32,21 +34,10 @@ const ReusableSelectService: FC<Props> = data => {
           },
         ]}>
         <View style={styles.boxContainer}>
-          <View style={styles.imageContainer}>
-            {/* <Image
-              source={data.data.image}
-              resizeMode="contain"
-              style={styles.image}
-            /> */}
-            {data.data.image}
-          </View>
+          <View style={styles.imageContainer}>{data.data.image}</View>
           <View style={styles.textContainer}>
-            <Text style={[styles.text_1, {color: colors.headerText}]}>
-              {data.data.name}
-            </Text>
-            <Text style={[styles.text_2, {color: colors.lightText}]}>
-              {data.data.description}
-            </Text>
+            <HeaderText text={data.data.name} />
+            <DescriptionText text={data.data.description} />
           </View>
         </View>
       </View>
@@ -74,13 +65,6 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-  },
-  text_1: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: '600',
-  },
-  text_2: {
-    fontSize: Text_Size.Text_0,
   },
   textContainer: {},
 });
