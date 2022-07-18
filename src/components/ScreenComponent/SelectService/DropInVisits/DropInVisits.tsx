@@ -1,14 +1,84 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import ServiceCare from '../common/ServiceCare';
+import ServiceDates from '../common/ServiceDates';
+import ServiceLocation from '../common/ServiceLocation';
+import HeaderText from '../../../common/text/HeaderText';
+import ServicePetType from '../common/ServicePetType';
+import {dayOfWeek, time} from '../utils/petType';
+import ServiceDays from '../common/ServiceDays';
+import BottomSpacingNav from '../../../UI/BottomSpacingNav';
+import BottomButton from '../BottomButton';
+import Text_Size from '../../../../constants/textScaling';
 
 const DropInVisits = () => {
+  const [serviceType, setServiceType] = useState(1);
+  const [datePicker, setDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
   return (
-    <View>
-      <Text>DropInVisits</Text>
+    <View style={[styles.container]}>
+      <ScrollView style={styles.scrollContainer}>
+        <ServiceCare
+          hText={'Drop-in-Visits'}
+          dText={'When do you need a walker?'}
+          setServiceType={setServiceType}
+          serviceType={serviceType}
+        />
+        <ServiceDates
+          hText={'Dates'}
+          datePicker={datePicker}
+          date={date}
+          setDatePicker={setDatePicker}
+          setDate={setDate}
+        />
+        <ServiceLocation
+          hText={'Your location'}
+          dText={'Enter a date to find someone faster'}
+        />
+        <HeaderText textStyle={styles.text} text={'Time'} />
+        <View style={styles.timeContainer}>
+          {time.map((item, index) => {
+            return <ServicePetType key={index} title={item.time} radio />;
+          })}
+        </View>
+        {serviceType === 2 && (
+          <>
+            <HeaderText textStyle={styles.text} text={'Days of the week'} />
+            <View style={styles.dayBoxContainer}>
+              {dayOfWeek.map((item, index) => {
+                return <ServiceDays key={index} title={item.day} />;
+              })}
+            </View>
+          </>
+        )}
+        <BottomSpacingNav />
+      </ScrollView>
+      <BottomButton title="Next" onSelect={() => {}} />
     </View>
   );
 };
 
 export default DropInVisits;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollContainer: {
+    paddingHorizontal: '5%',
+  },
+  timeContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+    flexWrap: 'wrap',
+  },
+  text: {
+    fontSize: Text_Size.Text_9,
+    marginTop: 20,
+  },
+  dayBoxContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 10,
+  },
+});
