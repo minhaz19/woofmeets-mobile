@@ -9,7 +9,7 @@ const Stack1 = createStackNavigator();
 
 const PetNavigator = () => {
   return (
-    <Stack1.Navigator initialRouteName="SettingMain">
+    <Stack1.Navigator initialRouteName="MyPet">
       <Stack1.Screen
         name="MyPet"
         component={MyPet}

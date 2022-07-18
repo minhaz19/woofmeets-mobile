@@ -22,9 +22,9 @@ const addPetValue: addPetType = {
   petImage: '',
   petType: '',
   petName: '',
-  weight: 0,
-  ageYr: 0,
-  ageMo: 0,
+  weight: null,
+  ageYr: null,
+  ageMo: null,
   gender: '',
   breeds: '',
   microchipped: '',
@@ -45,7 +45,7 @@ const addPetValue: addPetType = {
   injectionMedication: '',
   additionalInfo: '',
   petInfo: '',
-  photoGallery: '',
+  photoGallery: [],
 };
 
 export {

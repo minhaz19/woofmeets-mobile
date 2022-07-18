@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, Text, useColorScheme, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import {useSelector} from 'react-redux';
 import AppIntroSlider from '../components/splash/react-native-app-intro-slider/dist';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
@@ -188,7 +187,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: Text_Size.Text_5,
-    fontFamily: 'Arial',
+    fontWeight: 'bold',
     marginHorizontal: '10%',
     textAlign: 'center',
   },
