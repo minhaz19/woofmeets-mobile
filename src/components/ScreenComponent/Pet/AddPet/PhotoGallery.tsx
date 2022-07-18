@@ -3,7 +3,6 @@ import {Alert, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import Text_Size from '../../../../constants/textScaling';
 import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
-import {FormikValues, useFormikContext} from 'formik';
 
 interface Props {
   imageUri?: string;
@@ -39,6 +38,7 @@ const PhotoGallery = ({imageUri, onChangeImage}: Props) => {
         {imageUri ? (
           <Image source={{uri: imageUri}} style={styles.image} />
         ) : (
+          // </View>
           <>
             <TouchableOpacity
               style={styles.imageContainer}

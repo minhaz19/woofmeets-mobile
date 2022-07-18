@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity, FlatList} from 'react-native';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
@@ -7,8 +7,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import TitleText from '../../components/common/text/TitleText';
 import DescriptionText from '../../components/common/text/DescriptionText';
 import HeaderText from '../../components/common/text/HeaderText';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
+import MiddleModal from '../../components/UI/modal/MiddleModal';
 
 const Notifications = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const {colors} = useTheme();
   const notifi = [
     {
       id: 1,
@@ -50,9 +54,26 @@ const Notifications = () => {
     );
   }
 
+  const onPress = () => {
+    setIsModalVisible(true);
+  };
+
   return (
-    <>
-      <View style={{height: 4, backgroundColor: '#FFF0F6'}} />
+    <View
+      style={[
+        styles.rootContainer,
+        // eslint-disable-next-line react-native/no-inline-styles
+        {
+          backgroundColor: colors.backgroundColor,
+          opacity: isModalVisible ? 0.4 : 1,
+        },
+      ]}>
+      <MiddleModal
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+        onBlur={undefined}>
+        <TitleText text="Hello this is a new notification" />
+      </MiddleModal>
       {notifi?.length > 0 && (
         <FlatList
           data={notifi}
@@ -60,7 +81,7 @@ const Notifications = () => {
             <View
               style={{...styles.touchable}}
               key={item.id + Math.floor(Math.random() * 100)}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={onPress}>
                 <Card
                   style={styles.headerContainer}
                   containerStyle={styles.contentStyle}>
@@ -85,18 +106,20 @@ const Notifications = () => {
         />
       )}
       <View style={{height: 40}} />
-    </>
+    </View>
   );
 };
 
 export default Notifications;
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+  },
   headerContainer: {
     width: '100%',
     flexDirection: 'row',
     borderRadius: 0,
-    backgroundColor: Colors.light.background,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 12,
@@ -122,7 +145,6 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 0,
     borderRadius: 0,
-    backgroundColor: 'white',
     borderBottomWidth: 5,
     borderBottomColor: '#FFF0F6',
   },
