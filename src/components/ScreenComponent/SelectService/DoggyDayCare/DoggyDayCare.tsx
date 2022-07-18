@@ -1,7 +1,6 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import ServiceCare from '../common/ServiceCare';
-import ServiceDates from '../common/ServiceDates';
 import ServiceLocation from '../common/ServiceLocation';
 import ServicePetType from '../common/ServicePetType';
 import ServiceDays from '../common/ServiceDays';
@@ -10,11 +9,10 @@ import Text_Size from '../../../../constants/textScaling';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import BottomButton from '../BottomButton';
 import HeaderText from '../../../common/text/HeaderText';
+import ServiceDate from '../common/ServiceDate';
 
 const DoggyDayCare = () => {
   const [serviceType, setServiceType] = useState(1);
-  const [datePicker, setDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
 
   return (
     <View style={styles.container}>
@@ -25,13 +23,7 @@ const DoggyDayCare = () => {
           setServiceType={setServiceType}
           serviceType={serviceType}
         />
-        <ServiceDates
-          hText={'Dates'}
-          setDatePicker={setDatePicker}
-          setDate={setDate}
-          datePicker={datePicker}
-          date={date}
-        />
+        <ServiceDate hText="Dates" />
         <ServiceLocation
           hText={'Your location'}
           dText={'Enter a date to find someone faster'}
