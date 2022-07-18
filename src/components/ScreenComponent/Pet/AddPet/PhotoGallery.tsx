@@ -50,7 +50,7 @@ const PhotoGallery = ({label, subTitle, imageUri, onChangeImage}: Props) => {
       <TouchableOpacity onPress={handlePress} style={styles.galleryContainer}>
         {imageUri ? (
           // <View style={styles.imageContainer}>
-          <Image source={{uri: imageUri}} style={styles.imageContainer} />
+          <Image source={{uri: imageUri}} style={styles.image} />
         ) : (
           // </View>
           <>
@@ -80,7 +80,14 @@ const styles = StyleSheet.create({
   galleryContainer: {
     marginVertical: 20,
   },
-
+  image: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 120,
+    height: 120,
+    marginTop: 20,
+    borderRadius: 10,
+  },
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -92,7 +99,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: 'gray',
   },
-  image: {width: 100, height: 100},
   innerText: {
     fontSize: Text_Size.Text_0,
     color: 'gray',
