@@ -16,6 +16,7 @@ import {useTheme} from '../constants/theme/hooks/useTheme';
 import ButtonCom from '../components/UI/ButtonCom';
 import {btnStyles} from '../constants/theme/common/buttonStyles';
 import BottomSpacing from '../components/UI/BottomSpacing';
+import BottomButton from '../components/ScreenComponent/SelectService/BottomButton';
 
 const PetCareZipSearch = (props: {
   navigation: {goBack: () => void; navigate: (arg0: string) => void};
@@ -73,17 +74,10 @@ const PetCareZipSearch = (props: {
               />
             </View>
             <View style={{height: 20}} />
-            <ButtonCom
-              title="Continue"
-              textAlignment={btnStyles.textAlignment}
-              containerStyle={btnStyles.containerStyleFullWidth}
-              titleStyle={btnStyles.titleStyle}
-              onSelect={() => props.navigation.navigate('ServiceMain')}
-            />
-            <BottomSpacing />
           </View>
         </SafeAreaView>
       </ScrollView>
+      <BottomButton title="Next" onSelect={() => {}} />
     </View>
   );
 };
