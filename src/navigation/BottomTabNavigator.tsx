@@ -94,7 +94,7 @@ function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Services"
+        name="PetNavigator"
         component={PetNavigator}
         options={() => ({
           headerShown: false,

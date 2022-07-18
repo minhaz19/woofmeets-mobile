@@ -24,7 +24,6 @@ export default AppButton;
 const styles = StyleSheet.create({
   title: {
     fontSize: width > 390 ? Text_Size.Text_1 : Text_Size.Text_0,
-
     textAlign: 'center',
     flexDirection: 'row',
     alignSelf: 'center',
