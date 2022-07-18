@@ -7,12 +7,12 @@ import SubmitButton from '../../../common/Form/SubmitButton';
 import {addPetInputs} from '../../../../utils/config/Data/AddPetData';
 import AddPetImage from './AddPetImage';
 import AppSelect from '../../../common/Form/AppSelect';
-import PhotoGallery from './PhotoGallery';
 import AppCheckboxField from '../../../common/Form/AppCheckboxField';
 import useHandleCheck from '../../../../utils/helpers/usehandleActiveCheck';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import HeaderText from '../../../common/text/HeaderText';
+import AppImagePicker from '../../../common/ImagePicker/AppImagePicker';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -237,9 +237,10 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
             ))}
           </View>
           <View>
-            <PhotoGallery
+            <AppImagePicker
               label="Photo Gallery"
               subTitle="Show off your pet through image gallery"
+              name="photoGallery"
             />
           </View>
           <View>
@@ -256,6 +257,7 @@ export default AddPetBody;
 const styles = StyleSheet.create({
   container: {
     marginTop: '5%',
+    flex: 1,
   },
   topHeader: {
     fontSize: Text_Size.Text_1,
@@ -273,7 +275,7 @@ const styles = StyleSheet.create({
   inputContainer: {marginHorizontal: 20},
   petType: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     marginTop: 10,
   },
   flatList: {
@@ -285,6 +287,7 @@ const styles = StyleSheet.create({
   additionalTypeContainer: {
     flexDirection: 'row',
     marginVertical: 15,
+    flexWrap: 'wrap',
     justifyContent: 'flex-start',
   },
   additionalType: {
