@@ -25,9 +25,9 @@ export interface addPetType {
   petImage: string;
   petType: string;
   petName: string;
-  weight: number;
-  ageYr: number;
-  ageMo: number;
+  weight: number | null;
+  ageYr: number | null;
+  ageMo: number | null;
   gender: string;
   breeds: string;
   microchipped: string;
@@ -48,5 +48,5 @@ export interface addPetType {
   injectionMedication: string;
   additionalInfo: string;
   petInfo: string;
-  photoGallery: string;
+  photoGallery: [];
 }
