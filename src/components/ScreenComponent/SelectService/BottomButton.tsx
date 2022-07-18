@@ -1,5 +1,13 @@
-import {View, Platform, StyleSheet, GestureResponderEvent} from 'react-native';
-import React from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import {
+  View,
+  Platform,
+  StyleSheet,
+  GestureResponderEvent,
+  Keyboard,
+  ViewStyle,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import ButtonCom from '../../UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -7,9 +15,48 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 const BottomButton = (props: {
   title: String | undefined;
   onSelect: ((event: GestureResponderEvent) => void) | undefined;
+  widthStyle?: ViewStyle;
 }) => {
+  const [keyboardShow, setKeyboardShow] = useState<boolean>();
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardShow(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardShow(false);
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
-    <View style={styles.buttonContainer}>
+    <View
+      style={[
+        styles.buttonContainer,
+        {
+          bottom: keyboardShow
+            ? 0
+            : SCREEN_WIDTH <= 380
+            ? Platform.OS === 'ios'
+              ? 90
+              : 65
+            : Platform.OS === 'ios'
+            ? 105
+            : 125,
+        },
+        {
+          ...props?.widthStyle,
+        },
+      ]}>
       <ButtonCom
         title={props.title}
         textAlignment={btnStyles.textAlignment}
