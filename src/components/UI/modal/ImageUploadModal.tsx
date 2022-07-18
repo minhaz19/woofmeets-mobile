@@ -27,6 +27,7 @@ const ImageUploadModal = (props: {
   setIsModalVisible: (arg0: boolean) => void;
   setPetImage: (arg0: any) => void;
   uploadImage: (arg0: FormData) => void;
+  uploadImageUri?: (arg0: string) => void;
   isModalVisible: boolean | undefined;
   onBlur?: () => void;
 }) => {
@@ -61,6 +62,7 @@ const ImageUploadModal = (props: {
         const response1 = response?.assets[0];
         let formData = new FormData();
         props?.setPetImage(response1.uri);
+        props.uploadImageUri!(response1.uri!);
         formData.append('file', {
           uri: response1.uri,
           // @ts-ignore

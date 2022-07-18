@@ -19,6 +19,7 @@ const ErrorMessage = ({error, visible, auth}: Props) => {
   if (!visible || !error) {
     return null;
   }
+
   return (
     <View
       style={[

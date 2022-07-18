@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
   checkInfoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 10,
+    marginRight: 20,
   },
   title: {
     marginLeft: 10,
