@@ -49,10 +49,8 @@ const PhotoGallery = ({label, subTitle, imageUri, onChangeImage}: Props) => {
     <>
       <TouchableOpacity onPress={handlePress} style={styles.galleryContainer}>
         {imageUri ? (
-          // <View style={styles.imageContainer}>
           <Image source={{uri: imageUri}} style={styles.image} />
         ) : (
-          // </View>
           <>
             <TouchableOpacity
               style={styles.imageContainer}
