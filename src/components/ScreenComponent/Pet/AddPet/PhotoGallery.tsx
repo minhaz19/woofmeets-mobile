@@ -1,36 +1,59 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
 import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
 import {FormikValues, useFormikContext} from 'formik';
+import {ScrollView} from 'react-native-gesture-handler';
 
 interface Props {
   label: string;
   subTitle: string;
-  imageUrl?: [];
+  imageUri?: string;
+  onChangeImage: any;
 }
-const PhotoGallery = ({label, subTitle, imageUrl}: Props) => {
+const PhotoGallery = ({label, subTitle, imageUri, onChangeImage}: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [petImage, setPetImage] = useState();
   const {setFieldValue, values} = useFormikContext<FormikValues>();
+
+  const handlePress = () => {
+    if (imageUri) {
+      Alert.alert('Delete', 'Are you sure you want to delete this image', [
+        {
+          text: 'Yes',
+          onPress: () => {
+            onChangeImage(null);
+          },
+        },
+        {
+          text: 'No',
+        },
+      ]);
+    }
+  };
   function uploadImage(e: any) {}
-  useEffect(() => {
-    setFieldValue('photoGallery', petImage);
-  }, [petImage, setFieldValue]);
+  const uploadImageUri = (uri: string) => {
+    onChangeImage(uri);
+  };
   return (
     <>
-      <View style={styles.galleryContainer}>
-        {imageUrl ? (
-          <>
-            <Image source={{uri: petImage}} style={styles.image} />
-          </>
+      <TouchableOpacity onPress={handlePress} style={styles.galleryContainer}>
+        {imageUri ? (
+          // <View style={styles.imageContainer}>
+          <Image source={{uri: imageUri}} style={styles.imageContainer} />
         ) : (
+          // </View>
           <>
-            <Text style={styles.label}>{label}</Text>
-            <Text style={styles.subTitle}>{subTitle}</Text>
             <TouchableOpacity
               style={styles.imageContainer}
               onPress={() => setIsModalVisible(!isModalVisible)}>
@@ -38,12 +61,13 @@ const PhotoGallery = ({label, subTitle, imageUrl}: Props) => {
             </TouchableOpacity>
           </>
         )}
-      </View>
+      </TouchableOpacity>
       <ImageUploadModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
         setIsImageLoading={setIsImageLoading}
         uploadImage={uploadImage}
+        uploadImageUri={uploadImageUri}
         setPetImage={setPetImage}
       />
     </>
@@ -56,13 +80,7 @@ const styles = StyleSheet.create({
   galleryContainer: {
     marginVertical: 20,
   },
-  label: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: '600',
-  },
-  subTitle: {
-    fontSize: Text_Size.Text_0,
-  },
+
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',

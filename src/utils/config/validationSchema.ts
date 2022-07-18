@@ -34,9 +34,18 @@ const addPetValidationSchema = Yup.object().shape({
   petImage: Yup.string().required('Image is required'),
   petType: Yup.string().required('Pet type is required'),
   petName: Yup.string().required('Pet name is required'),
-  weight: Yup.number().required('Pet weight is required'),
-  ageYr: Yup.number().required('Year required'),
-  ageMo: Yup.number().required('Month required'),
+  weight: Yup.number()
+    .nullable(true)
+    .required('Pet weight is required')
+    .typeError('A Number is Required'),
+  ageYr: Yup.number()
+    .nullable(true)
+    .required('Year Required')
+    .typeError('A Number is Required'),
+  ageMo: Yup.number()
+    .nullable(true)
+    .required('Month Required')
+    .typeError('A Number is Required'),
   gender: Yup.string().required('Please select a gender').oneOf(genders),
   breeds: Yup.string().required('Breed is required'),
   microchipped: Yup.string(),
@@ -57,7 +66,9 @@ const addPetValidationSchema = Yup.object().shape({
   injectionMedication: Yup.string(),
   additionalInfo: Yup.string(),
   petInfo: Yup.string(),
-  imageGallery: Yup.string(),
+  imageGallery: Yup.array()
+    .required('This is required')
+    .min(1, 'Please select at least one image'),
 });
 
 export {
