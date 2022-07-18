@@ -1,14 +1,15 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
+import TitleText from '../../../common/text/TitleText';
 
 const ResendCode = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Wait for 00:23 sec </Text>
+      <TitleText textStyle={styles.text} text="Wait for 00:23 sec " />
       <TouchableOpacity>
-        <Text style={styles.textBtn}> Resend Code</Text>
+        <TitleText textStyle={styles.textBtn} text="Resend Code" />
       </TouchableOpacity>
     </View>
   );

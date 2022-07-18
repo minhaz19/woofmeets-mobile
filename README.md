@@ -2,7 +2,7 @@
 
 - [Node.js > 12](https://nodejs.org) and npm (Recommended: Use [nvm](https://github.com/nvm-sh/nvm))
 - [Watchman](https://facebook.github.io/watchman)
-- [Xcode 12](https://developer.apple.com/xcode)
+- [Xcode > 12](https://developer.apple.com/xcode)
 - [Cocoapods 1.10.1](https://cocoapods.org)
 - [JDK > 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 - [Android Studio and Android SDK](https://developer.android.com/studio)
@@ -111,6 +111,21 @@ For more info please go to https://reactnative.dev/docs/publishing-to-app-store
 
 
 ### Deployment Debug version 0.0.1
+
+## Features
+
+# UI Implementation
+
+1. Authentication Module with Validation
+2. Services Menu and Corresponding Services Listing for Provider Listing
+3. My Pets and Add, Modify Pets UI with Validation
+4. Main Navigation Bottom Panel
+5. Drawer Menu Navigation and Thier Items
+6. Setting Navigation and Profile Navigation
+7. Profile, Contact Information for Customer Add with Validation
+
+
+## APK Install
 
 APK install link: https://portal.testapp.io/apps/install/DNm9PabPGy8mz
 

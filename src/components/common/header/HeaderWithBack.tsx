@@ -15,7 +15,7 @@ import HeaderText from '../text/HeaderText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 
 const HeaderWithBack = (props: {
-  navigation: {goBack: () => void};
+  navigation: {goBack: () => void; navigate: (arg0: string) => void};
   title: string | undefined;
   icon?: boolean;
 }) => {
@@ -41,7 +41,9 @@ const HeaderWithBack = (props: {
         </View>
         {props.icon && (
           <View style={styles.headerContainer}>
-            <TouchableOpacity style={styles.bellContainer} onPress={() => {}}>
+            <TouchableOpacity
+              style={styles.bellContainer}
+              onPress={() => props.navigation.navigate('Notifications')}>
               <BellIcon
                 height={
                   SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28

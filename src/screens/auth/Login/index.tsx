@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   KeyboardAvoidingView,
   Platform,
@@ -28,6 +27,7 @@ const Login = ({navigation}: Props) => {
   const dispatch = useDispatch();
   const handleSubmit = () => {
     dispatch(setUserLoggedIn());
+    navigation.navigate('SetNewPassword');
   };
   return (
     <ScrollView

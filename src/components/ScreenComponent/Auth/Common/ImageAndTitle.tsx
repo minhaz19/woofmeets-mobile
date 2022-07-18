@@ -1,6 +1,8 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../../constants/textScaling';
+import TitleText from '../../../common/text/TitleText';
+import DescriptionText from '../../../common/text/DescriptionText';
 
 interface Props {
   image: any;
@@ -14,8 +16,10 @@ const ImageAndTitle = ({image, title, subTitle}: Props) => {
         <Image style={styles.image} resizeMode="contain" source={image} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        {subTitle && <Text style={styles.subTitle}>{subTitle}</Text>}
+        <TitleText textStyle={styles.title} text={title} />
+        {subTitle && (
+          <DescriptionText textStyle={styles.subTitle} text={subTitle} />
+        )}
       </View>
     </View>
   );

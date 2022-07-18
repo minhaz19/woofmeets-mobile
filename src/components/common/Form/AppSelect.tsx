@@ -1,18 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {FormikValues, useFormikContext} from 'formik';
+import ErrorMessage from './ErrorMessage';
+import {genders} from '../../../utils/config/Data/AddPetData';
 interface Props {
-  name?: string;
+  name: string;
   label: string;
 }
 const AppSelect = ({label, name}: Props) => {
-  const genders = ['Male', 'Female', 'Others'];
-  const {colors} = useTheme();
+  const {isDarkMode, colors} = useTheme();
+  const {setFieldValue, errors, touched} = useFormikContext<FormikValues>();
   return (
     <View>
       <Text style={[styles.label, {color: colors.headerText}]}>{label}</Text>
@@ -20,7 +22,9 @@ const AppSelect = ({label, name}: Props) => {
         buttonStyle={{
           height: 40,
           width: '100%',
-          backgroundColor: colors.backgroundColor,
+          backgroundColor: isDarkMode
+            ? colors.lightBackgroundColor
+            : colors.inputLightBg,
           borderRadius: 5,
           marginVertical: 10,
           justifyContent: 'space-between',
@@ -30,9 +34,7 @@ const AppSelect = ({label, name}: Props) => {
         selectedRowTextStyle={styles.text}
         buttonTextStyle={styles.buttonText}
         data={genders}
-        onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-        }}
+        onSelect={selectedItem => setFieldValue('gender', selectedItem)}
         buttonTextAfterSelection={selectedItem => {
           return selectedItem;
         }}
@@ -40,6 +42,7 @@ const AppSelect = ({label, name}: Props) => {
           return item;
         }}
       />
+      <ErrorMessage error={errors[name]} visible={touched[name]} />
     </View>
   );
 };

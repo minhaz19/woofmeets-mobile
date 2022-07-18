@@ -21,6 +21,7 @@ function BottomTabNavigator() {
       initialRouteName="ServiceNavigator"
       screenOptions={{
         tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
         tabBarStyle: {
           backgroundColor: isDarkMode
             ? Colors.dark.background

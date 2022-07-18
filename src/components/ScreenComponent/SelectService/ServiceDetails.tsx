@@ -1,8 +1,6 @@
-/* eslint-disable prettier/prettier */
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {FC} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import Screen from '../../common/Screen';
 import Boarding from './Boarding/Boarding';
 import DogWalking from './DogWalking/DogWalking';
 import DoggyDayCare from './DoggyDayCare/DoggyDayCare';
@@ -40,6 +38,7 @@ const ServiceDetails: FC<Props> = props => {
             ? 'Drop in Visits'
             : 'House Sitting'
         }
+        icon
       />
       {itemId === 1 && <Boarding />}
       {itemId === 2 && <DogWalking />}

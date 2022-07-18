@@ -18,10 +18,15 @@ const forgotPassData = {
   subTitle:
     'We have sent an OTP (One Time Password) to your [Email]. Please enter the 4 digit code below to continue.',
 };
-const VerifyAccount = () => {
+interface Props {
+  navigation: {navigate: (arg0: string) => void};
+}
+const VerifyAccount = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
+
   const handleSubmit = (value: {}) => {
     console.log('value veri', value);
+    navigation.navigate('AfterIntroScreen');
   };
   return (
     <ScrollView
