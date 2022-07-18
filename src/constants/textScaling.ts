@@ -59,10 +59,10 @@ const Text_Size_Type = {
       SCREEN_WIDTH <= 380
         ? 9
         : SCREEN_WIDTH <= 600
-        ? SCREEN_WIDTH * 0.033 <= 14
+        ? SCREEN_WIDTH * 0.033 <= 15
           ? SCREEN_WIDTH * 0.033
-          : 16
-        : 16,
+          : 15
+        : 17,
   },
 };
 
