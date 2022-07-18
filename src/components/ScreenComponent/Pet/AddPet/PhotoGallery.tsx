@@ -1,30 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  Alert,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import Colors from '../../../../constants/Colors';
+import {Alert, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
 import Text_Size from '../../../../constants/textScaling';
 import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
 import {FormikValues, useFormikContext} from 'formik';
-import {ScrollView} from 'react-native-gesture-handler';
 
 interface Props {
-  label: string;
-  subTitle: string;
   imageUri?: string;
   onChangeImage: any;
 }
-const PhotoGallery = ({label, subTitle, imageUri, onChangeImage}: Props) => {
+const PhotoGallery = ({imageUri, onChangeImage}: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [petImage, setPetImage] = useState();
-  const {setFieldValue, values} = useFormikContext<FormikValues>();
 
   const handlePress = () => {
     if (imageUri) {
