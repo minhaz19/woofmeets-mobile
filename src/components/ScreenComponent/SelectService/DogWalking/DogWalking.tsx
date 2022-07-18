@@ -1,7 +1,8 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import ServiceCare from '../common/ServiceCare';
-import ServiceDates from '../common/ServiceDates';
 import ServiceLocation from '../common/ServiceLocation';
 import ServicePetType from '../common/ServicePetType';
 import {dayOfWeek, time} from '../utils/petType';
@@ -10,11 +11,10 @@ import ServiceDays from '../common/ServiceDays';
 import BottomButton from '../BottomButton';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import HeaderText from '../../../common/text/HeaderText';
+import ServiceDate from '../common/ServiceDate';
 
 const DogWalking = () => {
   const [serviceType, setServiceType] = useState(1);
-  const [datePicker, setDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
   return (
     <View style={[styles.container]}>
       <ScrollView style={styles.scrollContainer}>
@@ -24,13 +24,7 @@ const DogWalking = () => {
           setServiceType={setServiceType}
           serviceType={serviceType}
         />
-        <ServiceDates
-          hText={'Dates'}
-          datePicker={datePicker}
-          date={date}
-          setDatePicker={setDatePicker}
-          setDate={setDate}
-        />
+        <ServiceDate hText="Dates" />
         <ServiceLocation
           hText={'Your location'}
           dText={'Enter a date to find someone faster'}
