@@ -5,7 +5,6 @@ import ServiceDates from '../common/ServiceDates';
 import ServiceLocation from '../common/ServiceLocation';
 import ServicePetType from '../common/ServicePetType';
 import {dayOfWeek, time} from '../utils/petType';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../constants/textScaling';
 import ServiceDays from '../common/ServiceDays';
 import BottomButton from '../BottomButton';
@@ -16,7 +15,6 @@ const DogWalking = () => {
   const [serviceType, setServiceType] = useState(1);
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
-  const {colors} = useTheme();
   return (
     <View style={[styles.container]}>
       <ScrollView style={styles.scrollContainer}>
