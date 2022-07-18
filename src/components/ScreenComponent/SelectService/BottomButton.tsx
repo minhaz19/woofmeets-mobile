@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
       SCREEN_WIDTH <= 380
         ? Platform.OS === 'ios'
           ? 90
-          : 80
+          : 65
         : Platform.OS === 'ios'
         ? 105
         : 125,

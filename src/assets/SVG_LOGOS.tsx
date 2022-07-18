@@ -802,6 +802,7 @@ export const ZipSearch = (
     xmlns="http://www.w3.org/2000/svg"
     width={291.554}
     height={264.653}
+    viewBox="0 0 291 264"
     {...props}>
     <Defs>
       <ClipPath id="a">

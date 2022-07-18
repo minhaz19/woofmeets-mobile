@@ -18,7 +18,7 @@ const SettingNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="Settings" />
+            <HeaderWithBack navigation={navigation} title="Settings" icon />
           ),
           backgroundColor: Colors.primary,
         })}
@@ -29,7 +29,7 @@ const SettingNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="Profile" />
+            <HeaderWithBack navigation={navigation} title="Profile" icon />
           ),
           backgroundColor: Colors.primary,
         })}
@@ -40,7 +40,7 @@ const SettingNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="Basic Info" />
+            <HeaderWithBack navigation={navigation} title="Basic Info" icon />
           ),
           backgroundColor: Colors.primary,
         })}
@@ -51,7 +51,7 @@ const SettingNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="Contact" />
+            <HeaderWithBack navigation={navigation} title="Contact" icon />
           ),
           backgroundColor: Colors.primary,
         })}
