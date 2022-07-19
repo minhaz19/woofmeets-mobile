@@ -245,6 +245,7 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
             <FlatList
               columnWrapperStyle={styles.flatList}
               data={addPetInputs[1].inputs}
+              showsVerticalScrollIndicator={false}
               renderItem={({item}) => {
                 return (
                   <>

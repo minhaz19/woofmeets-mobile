@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import AppCheckbox from './AppCheckbox';
@@ -27,20 +28,22 @@ const AppCheckboxField = ({
     setFieldValue(name, typeKey);
   };
   return (
-    <View>
-      <AppCheckbox
-        title={title}
-        key={typeKey}
-        square={square}
-        radio={radio}
-        active={active}
-        onBlur={() => setFieldTouched(name)}
-        onPress={() => {
-          handleValues();
-          // @ts-ignore
-          onPress();
-        }}
-      />
+    <View style={styles.container}>
+      <View style={{marginBottom: errors[name] ? 25 : 0}}>
+        <AppCheckbox
+          title={title}
+          key={typeKey}
+          square={square}
+          radio={radio}
+          active={active}
+          onBlur={() => setFieldTouched(name)}
+          onPress={() => {
+            handleValues();
+            // @ts-ignore
+            onPress();
+          }}
+        />
+      </View>
       {typeKey === 1 && (
         <View style={styles.errorContainer}>
           <ErrorMessage error={errors[name]} visible={touched[name]} />
@@ -52,5 +55,14 @@ const AppCheckboxField = ({
 
 export default AppCheckboxField;
 const styles = StyleSheet.create({
-  errorContainer: {marginTop: 10},
+  container: {position: 'relative'},
+  errorContainer: {
+    marginVertical: 20,
+    position: 'absolute',
+    flex: 0,
+    width: 200,
+
+    left: 0,
+    top: 15,
+  },
 });
