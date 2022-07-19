@@ -28,7 +28,7 @@ const PhotoGallery = ({imageUri, onChangeImage}: Props) => {
       ]);
     }
   };
-  function uploadImage(e: any) {}
+  const uploadImage = (e: any) => {};
   const uploadImageUri = (uri: string) => {
     onChangeImage(uri);
   };

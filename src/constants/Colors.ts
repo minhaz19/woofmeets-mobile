@@ -42,4 +42,5 @@ export default {
   failed: '#e46969',
   alert: 'red',
   success: '#69e4a6',
+  shadow: '#0000000A',
 };
