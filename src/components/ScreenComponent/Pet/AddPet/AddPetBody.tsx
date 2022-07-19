@@ -240,12 +240,12 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>
-        {/* Image Picker */}
         <View style={styles.inputContainer}>
           <View style={styles.flatList}>
             <FlatList
               columnWrapperStyle={styles.flatList}
               data={addPetInputs[1].inputs}
+              showsVerticalScrollIndicator={false}
               renderItem={({item}) => {
                 return (
                   <>

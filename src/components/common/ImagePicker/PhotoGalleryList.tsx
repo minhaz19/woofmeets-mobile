@@ -35,18 +35,12 @@ const PhotoGalleryList = ({
           {imageUris?.map(uri => (
             <View key={uri} style={styles.image}>
               <PhotoGallery
-                label={label}
-                subTitle={subTitle}
                 imageUri={uri}
                 onChangeImage={() => onRemoveImage(uri)}
               />
             </View>
           ))}
-          <PhotoGallery
-            label={label}
-            subTitle={subTitle}
-            onChangeImage={onAddImage}
-          />
+          <PhotoGallery onChangeImage={onAddImage} />
         </View>
       </ScrollView>
     </View>

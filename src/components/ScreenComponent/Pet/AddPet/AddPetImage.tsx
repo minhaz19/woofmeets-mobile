@@ -106,5 +106,5 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_0,
     marginLeft: 10,
   },
-  errorContainer: {paddingHorizontal: 20},
+  errorContainer: {},
 });
