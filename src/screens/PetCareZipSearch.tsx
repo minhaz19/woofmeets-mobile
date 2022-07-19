@@ -6,6 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import {ZipSearch} from '../assets/SVG_LOGOS';
@@ -13,9 +15,8 @@ import {SCREEN_WIDTH} from '../constants/WindowSize';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
 import {useTheme} from '../constants/theme/hooks/useTheme';
-import ButtonCom from '../components/UI/ButtonCom';
-import {btnStyles} from '../constants/theme/common/buttonStyles';
 import BottomSpacing from '../components/UI/BottomSpacing';
+import BottomButton from '../components/ScreenComponent/SelectService/BottomButton';
 
 const PetCareZipSearch = (props: {
   navigation: {goBack: () => void; navigate: (arg0: string) => void};
@@ -23,7 +24,8 @@ const PetCareZipSearch = (props: {
   const [postCode, setPostCode] = useState<string>();
   const {colors} = useTheme();
   return (
-    <View
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[
         styles.rootContainer,
         {
@@ -72,19 +74,16 @@ const PetCareZipSearch = (props: {
                 style={[styles._input, {color: colors.headerText}]}
               />
             </View>
-            <View style={{height: 20}} />
-            <ButtonCom
-              title="Continue"
-              textAlignment={btnStyles.textAlignment}
-              containerStyle={btnStyles.containerStyleFullWidth}
-              titleStyle={btnStyles.titleStyle}
-              onSelect={() => props.navigation.navigate('ServiceMain')}
-            />
-            <BottomSpacing />
           </View>
         </SafeAreaView>
+        <BottomSpacing />
       </ScrollView>
-    </View>
+      <BottomButton
+        title="Next"
+        onSelect={() => props.navigation.navigate('ServiceMain')}
+        widthStyle={styles.boxContainer}
+      />
+    </KeyboardAvoidingView>
   );
 };
 

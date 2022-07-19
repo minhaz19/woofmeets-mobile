@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     borderWidth: 1,
-    borderColor: Colors.shadow,
+    borderColor: Colors.border,
   },
 
   image: {

@@ -14,8 +14,8 @@ const Text_Size_Type = {
       SCREEN_WIDTH <= 380
         ? 9
         : SCREEN_WIDTH <= 600
-        ? SCREEN_WIDTH * 0.035 <= 16
-          ? SCREEN_WIDTH * 0.035
+        ? SCREEN_WIDTH * 0.038 <= 18
+          ? SCREEN_WIDTH * 0.038
           : 18
         : 20,
     Text_2:
@@ -23,9 +23,9 @@ const Text_Size_Type = {
         ? 14
         : SCREEN_WIDTH <= 600
         ? SCREEN_WIDTH * 0.045 <= 16
-          ? SCREEN_WIDTH * 0.045
+          ? SCREEN_WIDTH * 0.044
           : SCREEN_WIDTH * 0.05 <= 20
-          ? SCREEN_WIDTH * 0.045
+          ? SCREEN_WIDTH * 0.044
           : 22
         : 22,
     Text_3: SCREEN_WIDTH * 0.055,
@@ -59,10 +59,10 @@ const Text_Size_Type = {
       SCREEN_WIDTH <= 380
         ? 9
         : SCREEN_WIDTH <= 600
-        ? SCREEN_WIDTH * 0.033 <= 14
+        ? SCREEN_WIDTH * 0.033 <= 15
           ? SCREEN_WIDTH * 0.033
-          : 16
-        : 16,
+          : 15
+        : 17,
   },
 };
 
