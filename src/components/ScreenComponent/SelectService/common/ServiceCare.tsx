@@ -44,7 +44,7 @@ const ServiceCare = ({
                   borderColor:
                     serviceType === 1
                       ? colors.colors.headerText
-                      : colors.colors.lightBorderColor,
+                      : colors.colors.inputLightBg,
                 },
               ]}>
               <HomeSvg height={60} width={60} fill={colors.colors.headerText} />
@@ -80,7 +80,7 @@ const ServiceCare = ({
                   borderColor:
                     serviceType === 2
                       ? colors.colors.headerText
-                      : colors.colors.lightBorderColor,
+                      : colors.colors.inputLightBg,
                 },
               ]}>
               <RepeatSvg
