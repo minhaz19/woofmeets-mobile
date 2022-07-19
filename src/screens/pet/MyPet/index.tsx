@@ -21,7 +21,7 @@ const MyPet = ({navigation}: Props) => {
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <View>
         <FlatList
-          data={[]}
+          data={[{id: 1}]}
           columnWrapperStyle={styles.columnWrapper}
           keyExtractor={(_, i) => i.toString()}
           numColumns={2}
