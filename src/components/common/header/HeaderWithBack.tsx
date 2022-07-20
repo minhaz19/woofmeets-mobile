@@ -39,7 +39,7 @@ const HeaderWithBack = (props: {
           <View style={styles.iconContainer}>
             <TouchableOpacity
               style={styles.filterContainer}
-              onPress={() => props.navigation.navigate('FilterProvider')}>
+              onPress={() => props.navigation.navigate('Notifications')}>
               <props.Icon
                 height={
                   SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
