@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     height: 1,
     opacity: 0.3,
     marginVertical:
-      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '5%',
+      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '2%',
   },
   titleContainer: {
     marginHorizontal:
@@ -132,11 +132,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 20,
+    paddingLeft: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
   },
   imageContainer: {
     height: SCREEN_WIDTH <= 380 ? 44 : SCREEN_WIDTH <= 600 ? 60 : 68,
     width: SCREEN_WIDTH <= 380 ? 44 : SCREEN_WIDTH <= 600 ? 60 : 68,
-    borderRadius: 30,
+    borderRadius: 50,
     borderWidth: 1,
   },
   nameContainer: {

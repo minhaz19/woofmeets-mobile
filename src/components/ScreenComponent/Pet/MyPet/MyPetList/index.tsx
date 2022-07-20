@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Image,
   StyleSheet,
@@ -6,11 +5,12 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Text_Size from '../../../../../constants/textScaling';
 import {Plus} from '../../../../../assets/SVG_LOGOS';
-import ImageUploadModal from '../../../../UI/modal/ImageUploadModal';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+import Colors from '../../../../../constants/Colors';
 
 const width = SCREEN_WIDTH;
 const height = SCREEN_HEIGHT;
@@ -23,10 +23,18 @@ interface Props {
   onPress?: () => void;
 }
 const MyPetList = ({dataList, onPress}: Props) => {
-  const handlePress = () => {};
+  const {isDarkMode, colors} = useTheme();
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: isDarkMode
+              ? colors.lightBackgroundColor
+              : colors.backgroundColor,
+          },
+        ]}>
         {dataList ? (
           <View>
             <Image
@@ -34,7 +42,15 @@ const MyPetList = ({dataList, onPress}: Props) => {
               style={styles.image}
               resizeMode="cover"
             />
-            <View style={styles.textContainer}>
+            <View
+              style={[
+                styles.textContainer,
+                {
+                  backgroundColor: isDarkMode
+                    ? colors.lightBackgroundColor
+                    : colors.backgroundColor,
+                },
+              ]}>
               <Text style={styles.title}>Snoopy</Text>
               <Text style={styles.subTitle}>Cat</Text>
               <Text style={styles.description}>2 Years - Male</Text>
@@ -56,16 +72,15 @@ const styles = StyleSheet.create({
   container: {
     width: width / 2 - 20,
     height: height / 3.6,
-    backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden',
-    shadowColor: '#0000000A',
+    shadowColor: Colors.shadow,
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
     borderWidth: 1,
-    borderColor: '#0000000A',
+    borderColor: Colors.border,
   },
 
   image: {

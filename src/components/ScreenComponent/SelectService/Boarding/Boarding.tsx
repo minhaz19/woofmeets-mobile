@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 import {ScrollView, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import ServiceHeader from '../common/ServiceHeader';
-import ServiceDates from '../common/ServiceDates';
 import ServiceLocation from '../common/ServiceLocation';
 import {petType} from '../utils/petType';
 import ServicePetType from '../common/ServicePetType';
@@ -10,22 +9,14 @@ import Text_Size from '../../../../constants/textScaling';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import BottomButton from '../BottomButton';
 import HeaderText from '../../../common/text/HeaderText';
+import ServiceDate from '../common/ServiceDate';
 
 const Boarding = () => {
-  const [datePicker, setDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
-
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
         <ServiceHeader hText={'Boarding'} dText={'When do you need sitter?'} />
-        <ServiceDates
-          hText={'Dates'}
-          datePicker={datePicker}
-          date={date}
-          setDatePicker={setDatePicker}
-          setDate={setDate}
-        />
+        <ServiceDate hText="Dates" />
         <ServiceLocation
           hText={'Your location'}
           dText={'Enter a date to find someone faster'}

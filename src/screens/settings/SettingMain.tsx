@@ -56,7 +56,7 @@ const SettingMain = (props: {
       id: 1,
       title: 'Become a sitter',
       icon: SitterIcon,
-      screenName: () => {},
+      screenName: () => props.navigation.navigate('HomeProfile'),
       rightIcon: true,
       opacity: 1,
     },
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     marginRight:
       SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '8%' : '10%',
     marginVertical:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '2%',
   },
   titleContainer: {
     marginHorizontal:
@@ -187,7 +187,8 @@ const styles = StyleSheet.create({
   boxContainer: {
     marginHorizontal:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
-    marginVertical: '5%',
+    marginVertical:
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '3%' : '0%',
     borderWidth: 1,
     borderColor: Colors.subText,
     padding: '2%',
