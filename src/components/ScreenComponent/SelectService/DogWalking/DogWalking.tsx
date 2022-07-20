@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import ServiceCare from '../common/ServiceCare';

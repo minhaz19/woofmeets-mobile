@@ -102,7 +102,7 @@ const SettingMain = (props: {
       id: 3,
       title: 'Preference',
       icon: PreferenceIcon,
-      screenName: () => {},
+      screenName: () => props.navigation.navigate('Preference'),
       rightIcon: true,
       opacity: 1,
     },
