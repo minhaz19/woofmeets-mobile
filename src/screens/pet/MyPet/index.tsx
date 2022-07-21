@@ -21,14 +21,14 @@ const MyPet = ({navigation}: Props) => {
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <View>
         <FlatList
-          data={[{id: 1}]}
+          data={[{}, {}, {type: 'pet'}]}
           columnWrapperStyle={styles.columnWrapper}
           keyExtractor={(_, i) => i.toString()}
           numColumns={2}
           ListEmptyComponent={<MyPetHome />}
           renderItem={({item}) => (
             <View>
-              {item['add'] === 'pet' ? (
+              {item['type'] === 'pet' ? (
                 <MyPetList onPress={onPress} />
               ) : (
                 <MyPetList dataList={[{id: '1'}]} />
@@ -46,7 +46,8 @@ export default MyPet;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    paddingTop: 15,
   },
   columnWrapper: {
     justifyContent: 'space-between',

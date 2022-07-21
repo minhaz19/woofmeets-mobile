@@ -10,6 +10,7 @@ import BetweenCom from '../../../components/ScreenComponent/becomeSitter/profile
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import Colors from '../../../constants/Colors';
+import TitleText from '../../../components/common/text/TitleText';
 
 const HomeProfile = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -63,7 +64,7 @@ const HomeProfile = (props: {
       <BigText text="Complete the required steps to get approved" />
       <View style={styles.textContainer}>
         <View style={styles.iconContainer}>
-          <QuestionIcon />
+          <QuestionIcon fill={Colors.primary} />
         </View>
         <DescriptionText
           text="How dose approval work?"
@@ -75,7 +76,7 @@ const HomeProfile = (props: {
       </View>
       <View style={styles.textContainer}>
         <View style={styles.iconContainer}>
-          <QuestionIcon />
+          <QuestionIcon fill={Colors.primary} />
         </View>
         <DescriptionText
           text="Where are my other services?"
@@ -107,11 +108,11 @@ const HomeProfile = (props: {
         }}
       />
       {profileData.map(item => (
-        <TouchableOpacity onPress={item.screen} style={styles.profileItemStyle}>
-          <DescriptionText
-            text={item.text}
-            textStyle={{color: colors.blueText}}
-          />
+        <TouchableOpacity
+          onPress={item.screen}
+          style={styles.profileItemStyle}
+          key={item.id}>
+          <TitleText text={item.text} textStyle={{color: colors.blueText}} />
         </TouchableOpacity>
       ))}
       {/* testimonial */}
@@ -173,6 +174,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
     paddingVertical: 10,
+    alignItems: 'center',
   },
   textStyle: {
     paddingLeft: 5,
