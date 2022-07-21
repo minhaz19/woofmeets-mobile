@@ -6,6 +6,9 @@ import AuthNavigator from './AuthNavigator';
 import Notifications from '../screens/notification/Notifications';
 import HeaderWithBack from '../components/common/header/HeaderWithBack';
 import Colors from '../constants/Colors';
+import HomeProfile from '../screens/becomeSitter/HomeProfile';
+import BasicInfoSitter from '../screens/becomeSitter/BasicInfo';
+import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -13,6 +16,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName={
+          // !props.previousLoggedIn ? 'BottomTabNavigator' : 'HomeProfile'
           !props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
         }>
         <Stack.Screen
@@ -32,6 +36,39 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             title: '',
             header: () => (
               <HeaderWithBack navigation={navigation} title="Notifications" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="HomeProfile"
+          component={HomeProfile}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Profile" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="BasicInfoSitter"
+          component={BasicInfoSitter}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Profile" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="PhoneNumberSitter"
+          component={PhoneNumberSitter}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Profile" />
             ),
             backgroundColor: Colors.primary,
           })}

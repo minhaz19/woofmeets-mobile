@@ -80,7 +80,7 @@ const PetCareZipSearch = (props: {
       </ScrollView>
       <BottomButton
         title="Next"
-        onSelect={() => {}}
+        onSelect={() => props.navigation.navigate('ServiceMain')}
         widthStyle={styles.boxContainer}
       />
     </KeyboardAvoidingView>
