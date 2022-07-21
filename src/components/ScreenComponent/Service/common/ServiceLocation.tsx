@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet, Text, TextInput, View, Pressable} from 'react-native';
+import {StyleSheet, TextInput, View, Pressable} from 'react-native';
 import React, {FC, useState} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
