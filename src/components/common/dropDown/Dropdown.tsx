@@ -52,6 +52,7 @@ const Dropdown: FC<Props> = ({label, placeholder, data}) => {
           height: 40,
           backgroundColor: colors.lightBackgroundColor,
           marginVertical: 10,
+          borderRadius: 2,
         }}
         buttonTextStyle={{
           fontSize: Text_Size.Text_0,

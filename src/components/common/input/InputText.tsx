@@ -34,7 +34,8 @@ const InputText = (props: {
           textStyle={styles.descriptionText}
         />
       )}
-      <View style={styles._input}>
+      <View
+        style={[styles._input, {backgroundColor: colors.lightBackgroundColor}]}>
         <TextInput
           onChangeText={pCode => props.setValue(pCode)}
           style={[styles.text, {color: colors.headerText}]}
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderRadius: 2,
   },
   text: {
     fontSize: Text_Size.Text_0,
