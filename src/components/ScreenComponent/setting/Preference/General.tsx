@@ -89,9 +89,8 @@ const General = () => {
       </View>
       {tempData.map((item, index) => {
         return (
-          <>
+          <View key={index}>
             <View
-              key={index}
               style={[
                 styles.divider,
                 {backgroundColor: colors.descriptionText},
@@ -112,7 +111,7 @@ const General = () => {
             {item.input && (
               <Dropdown placeholder={'Anytime'} data={countries} />
             )}
-          </>
+          </View>
         );
       })}
       <TouchableOpacity onPress={() => {}}>
