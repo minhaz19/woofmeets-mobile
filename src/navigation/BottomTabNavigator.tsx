@@ -18,7 +18,7 @@ function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Tab.Navigator
-      initialRouteName="ServiceNavigator"
+      initialRouteName="HomeNavigator"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
@@ -71,7 +71,7 @@ function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Social"
+        name="HomeNavigator"
         component={HomeNavigator}
         options={{
           headerShown: false,

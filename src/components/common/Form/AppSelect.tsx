@@ -11,8 +11,9 @@ import {genders} from '../../../utils/config/Data/AddPetData';
 interface Props {
   name: string;
   label: string;
+  data?: [];
 }
-const AppSelect = ({label, name}: Props) => {
+const AppSelect = ({label, name, data}: Props) => {
   const {isDarkMode, colors} = useTheme();
   const {setFieldValue, errors, touched} = useFormikContext<FormikValues>();
   return (

@@ -1,24 +1,23 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
-import ServiceCare from '../common/ServiceCare';
-import ServiceLocation from '../common/ServiceLocation';
-import ServicePetType from '../common/ServicePetType';
-import ServiceDays from '../common/ServiceDays';
-import {dayOfWeek, time} from '../utils/petType';
-import Text_Size from '../../../../constants/textScaling';
-import BottomSpacingNav from '../../../UI/BottomSpacingNav';
-import BottomButton from '../BottomButton';
-import HeaderText from '../../../common/text/HeaderText';
-import ServiceDate from '../common/ServiceDate';
+import ServiceCare from '../../common/ServiceCare';
+import ServiceLocation from '../../common/ServiceLocation';
+import ServicePetType from '../../common/ServicePetType';
+import {dayOfWeek, time} from '../../utils/petType';
+import Text_Size from '../../../../../constants/textScaling';
+import ServiceDays from '../../common/ServiceDays';
+import BottomButton from '../../BottomButton';
+import BottomSpacingNav from '../../../../UI/BottomSpacingNav';
+import HeaderText from '../../../../common/text/HeaderText';
+import ServiceDate from '../../common/ServiceDate';
 
-const DoggyDayCare = () => {
+const DogWalking = () => {
   const [serviceType, setServiceType] = useState(1);
-
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <ScrollView style={styles.scrollContainer}>
         <ServiceCare
-          hText={'Doggy Day Care'}
+          hText={'Dog Walking'}
           dText={'When do you need a walker?'}
           setServiceType={setServiceType}
           serviceType={serviceType}
@@ -51,7 +50,7 @@ const DoggyDayCare = () => {
   );
 };
 
-export default DoggyDayCare;
+export default DogWalking;
 
 const styles = StyleSheet.create({
   container: {
