@@ -6,7 +6,7 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const ShortText = (props: {
   children?: ReactNode;
   textStyle?: TextStyle;
-  text: string;
+  text: string | number;
 }) => {
   const {colors} = useTheme();
   return (

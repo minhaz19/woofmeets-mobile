@@ -33,6 +33,7 @@ const MyPetList = ({dataList, onPress}: Props) => {
             backgroundColor: isDarkMode
               ? colors.lightBackgroundColor
               : colors.backgroundColor,
+            borderColor: isDarkMode ? Colors.shadow : Colors.border,
           },
         ]}>
         {dataList ? (
@@ -80,7 +81,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     borderWidth: 1,
-    borderColor: Colors.border,
   },
 
   image: {

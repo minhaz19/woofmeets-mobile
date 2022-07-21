@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: Text_Size.Text_0,
+    marginRight: 3,
   },
   errorCont: {marginTop: 8},
 });

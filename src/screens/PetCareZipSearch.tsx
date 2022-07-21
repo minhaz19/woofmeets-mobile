@@ -16,7 +16,7 @@ import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
 import {useTheme} from '../constants/theme/hooks/useTheme';
 import BottomSpacing from '../components/UI/BottomSpacing';
-import BottomButton from '../components/ScreenComponent/SelectService/BottomButton';
+import BottomButton from '../components/ScreenComponent/Service/BottomButton';
 
 const PetCareZipSearch = (props: {
   navigation: {goBack: () => void; navigate: (arg0: string) => void};
