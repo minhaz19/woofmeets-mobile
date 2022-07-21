@@ -1,15 +1,15 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
-import ServiceCare from '../common/ServiceCare';
-import ServiceLocation from '../common/ServiceLocation';
-import HeaderText from '../../../common/text/HeaderText';
-import ServicePetType from '../common/ServicePetType';
-import {dayOfWeek, time} from '../utils/petType';
-import ServiceDays from '../common/ServiceDays';
-import BottomSpacingNav from '../../../UI/BottomSpacingNav';
-import BottomButton from '../BottomButton';
-import Text_Size from '../../../../constants/textScaling';
-import ServiceDate from '../common/ServiceDate';
+import ServiceCare from '../../common/ServiceCare';
+import ServiceLocation from '../../common/ServiceLocation';
+import HeaderText from '../../../../common/text/HeaderText';
+import ServicePetType from '../../common/ServicePetType';
+import {dayOfWeek, time} from '../../utils/petType';
+import ServiceDays from '../../common/ServiceDays';
+import BottomSpacingNav from '../../../../UI/BottomSpacingNav';
+import BottomButton from '../../BottomButton';
+import Text_Size from '../../../../../constants/textScaling';
+import ServiceDate from '../../common/ServiceDate';
 
 const DropInVisits = () => {
   const [serviceType, setServiceType] = useState(1);

@@ -1,11 +1,11 @@
 import {StyleSheet, View} from 'react-native';
 import React, {FC} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import Boarding from './Boarding/Boarding';
-import DogWalking from './DogWalking/DogWalking';
-import DoggyDayCare from './DoggyDayCare/DoggyDayCare';
-import HouseSitting from './HouseSitting/HouseSitting';
-import DropInVisits from './DropInVisits/DropInVisits';
+import Boarding from './SelectService/Boarding/Boarding';
+import DogWalking from './SelectService/DogWalking/DogWalking';
+import DoggyDayCare from './SelectService/DoggyDayCare/DoggyDayCare';
+import HouseSitting from './SelectService/HouseSitting/HouseSitting';
+import DropInVisits from './SelectService/DropInVisits/DropInVisits';
 import HeaderWithBack from '../../common/header/HeaderWithBack';
 import {useNavigation} from '@react-navigation/native';
 

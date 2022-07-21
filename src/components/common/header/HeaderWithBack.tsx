@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  Platform,
-} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {BellIcon} from '../../../assets/SVG_LOGOS';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -13,15 +7,17 @@ import Ion from 'react-native-vector-icons/Ionicons';
 import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../text/HeaderText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import Screen from '../Screen';
 
 const HeaderWithBack = (props: {
   navigation: {goBack: () => void; navigate: (arg0: string) => void};
   title: string | undefined;
-  icon?: boolean;
+  notification?: boolean;
+  Icon?: any;
 }) => {
   const {colors} = useTheme();
   return (
-    <SafeAreaView
+    <Screen
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <View style={styles.container}>
         <TouchableOpacity
@@ -39,7 +35,20 @@ const HeaderWithBack = (props: {
         <View style={styles.titleBox}>
           <HeaderText text={props.title} />
         </View>
-        {props.icon && (
+        {props.Icon && (
+          <View style={styles.iconContainer}>
+            <TouchableOpacity
+              style={styles.filterContainer}
+              onPress={() => props.navigation.navigate('Notifications')}>
+              <props.Icon
+                height={
+                  SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
+                }
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+        {props.notification && (
           <View style={styles.headerContainer}>
             <TouchableOpacity
               style={styles.bellContainer}
@@ -54,7 +63,7 @@ const HeaderWithBack = (props: {
           </View>
         )}
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
@@ -62,8 +71,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    // paddingBottom: 10,
-    paddingTop: Platform.OS === 'ios' ? 0 : 10,
     position: 'relative',
     justifyContent: 'center',
     width: '100%',
@@ -71,6 +78,15 @@ const styles = StyleSheet.create({
   iconStyle: {paddingRight: 10},
   headerContainer: {
     marginRight: 10,
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 0,
+  },
+  filterContainer: {
+    marginRight: 10,
+  },
+  iconContainer: {
+    marginRight: 50,
     flexDirection: 'row',
     position: 'absolute',
     right: 0,
