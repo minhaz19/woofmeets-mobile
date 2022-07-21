@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   screenRoute: {
     fontSize: Text_Size.Text_0,
     color: Colors.primary,
-    marginRight: 5,
+    marginLeft: 3,
     textTransform: 'uppercase',
   },
 });

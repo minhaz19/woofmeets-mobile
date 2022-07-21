@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Colors from '../../constants/Colors';
-import ServiceMain from '../../screens/SelectService';
-import ServiceDetails from '../../components/ScreenComponent/SelectService/ServiceDetails';
+import ServiceMain from '../../screens/Service/SelectService';
+import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
 import PetCareZipSearch from '../../screens/PetCareZipSearch';
 
 const Stack1 = createStackNavigator();

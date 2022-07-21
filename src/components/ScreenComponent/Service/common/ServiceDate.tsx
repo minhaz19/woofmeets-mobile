@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react-native/no-inline-styles */
 import {Pressable, StyleSheet, TextInput, View} from 'react-native';
 import React, {FC, useState} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
@@ -62,7 +60,7 @@ const ServiceDate: FC<Props> = ({hText}) => {
   const newDates = filteredDates.flat();
 
   return (
-    <View style={{paddingTop: 10}}>
+    <View style={styles.container}>
       <HeaderText textStyle={styles.headerText} text={hText} />
       <Pressable onPress={showDatePicker}>
         <View
@@ -123,6 +121,7 @@ const ServiceDate: FC<Props> = ({hText}) => {
 export default ServiceDate;
 
 const styles = StyleSheet.create({
+  container: {paddingTop: 10},
   input: {
     borderRadius: 5,
     borderWidth: 1,
