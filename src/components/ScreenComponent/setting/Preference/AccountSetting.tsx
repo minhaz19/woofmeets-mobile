@@ -14,19 +14,16 @@ const data = [
   {
     id: 1,
     title: 'General',
-    screenName: () => {},
     opacity: 1,
   },
   {
     id: 2,
     title: 'Notification',
-    screenName: () => {},
     opacity: 1,
   },
   {
     id: 3,
     title: 'Sitter',
-    screenName: () => {},
     opacity: 1,
   },
 ];
