@@ -16,9 +16,6 @@ const AppInput = ({...otherProps}) => {
       style={[
         styles.container,
         {
-          backgroundColor: isDarkMode
-            ? colors.lightBackgroundColor
-            : colors.inputLightBg,
           borderColor: isDarkMode ? Colors.gray : Colors.border,
         },
       ]}>
@@ -63,13 +60,12 @@ export default AppInput;
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 5,
+    borderRadius: 2,
     flexDirection: 'row',
-    paddingHorizontal: 15,
+    paddingHorizontal: 5,
     marginBottom: 10,
     justifyContent: 'space-between',
     borderWidth: 1,
-
     flexWrap: 'wrap',
     alignItems: 'center',
   },

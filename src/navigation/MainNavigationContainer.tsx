@@ -9,6 +9,7 @@ import Colors from '../constants/Colors';
 import HomeProfile from '../screens/becomeSitter/HomeProfile';
 import BasicInfoSitter from '../screens/becomeSitter/BasicInfo';
 import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
+import SitterInitialScreen from '../screens/becomeSitter/InitialScreen';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -47,6 +48,20 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             title: '',
             header: () => (
               <HeaderWithBack navigation={navigation} title="Profile" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SitterInitialScreen"
+          component={SitterInitialScreen}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Dog Sitting Jobs"
+              />
             ),
             backgroundColor: Colors.primary,
           })}
