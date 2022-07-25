@@ -7,6 +7,7 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import HeaderText from '../text/HeaderText';
 import DescriptionText from '../text/DescriptionText';
+import {colors} from '../../../constants/theme/textTheme';
 
 const screen = SCREEN_WIDTH;
 const InputText = (props: {
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     paddingVertical: '2%',
     lineHeight: 20,
+    color: colors.descriptionText,
   },
 });
 

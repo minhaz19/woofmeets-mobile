@@ -8,7 +8,6 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Colors from '../../../../constants/Colors';
 import General from './General';
 import Notification from './Notification';
-import Sitter from './Sitter';
 
 const data = [
   {
@@ -19,11 +18,6 @@ const data = [
   {
     id: 2,
     title: 'Notification',
-    opacity: 1,
-  },
-  {
-    id: 3,
-    title: 'Sitter',
     opacity: 1,
   },
 ];
@@ -55,7 +49,6 @@ const AccountSetting = () => {
       />
       {showSetting === 1 && <General />}
       {showSetting === 2 && <Notification />}
-      {showSetting === 3 && <Sitter />}
     </View>
   );
 };
