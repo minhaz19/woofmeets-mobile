@@ -18,6 +18,7 @@ interface Props {
   subTitle?: string;
   Icon?: any;
   textInputStyle?: ViewStyle;
+  onPress?: () => void;
 }
 
 const AppInputSelectField = ({
@@ -29,6 +30,7 @@ const AppInputSelectField = ({
   subTitle,
   textInputStyle,
   Icon,
+  onPress,
 }: Props) => {
   const {setFieldTouched, touched, errors, setFieldValue} =
     useFormikContext<FormikValues>();
@@ -50,6 +52,7 @@ const AppInputSelectField = ({
           // value={values[name]}
           textInputStyle={textInputStyle}
           Icon={Icon}
+          onPress={onPress}
         />
 
         <ErrorMessage error={errors[name]} visible={touched[name]} />

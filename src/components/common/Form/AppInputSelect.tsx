@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import Colors from '../../../constants/Colors';
@@ -9,7 +9,8 @@ const AppInputSelect = ({...otherProps}) => {
   const {numberOfLines} = otherProps;
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={otherProps.onPress}
       style={[
         styles.container,
         {
@@ -22,6 +23,7 @@ const AppInputSelect = ({...otherProps}) => {
       <TextInput
         editable={false}
         placeholderTextColor={Colors.gray}
+        onPressIn={otherProps.onPress}
         style={[
           styles.text,
           {
@@ -34,7 +36,7 @@ const AppInputSelect = ({...otherProps}) => {
         {...otherProps}
       />
       {otherProps.Icon ? <otherProps.Icon /> : null}
-    </View>
+    </TouchableOpacity>
   );
 };
 

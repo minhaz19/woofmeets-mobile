@@ -1,8 +1,8 @@
 import {FlatList, StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import AppForm from '../../../common/Form/AppForm';
 import AppInputSelectField from '../../../common/Form/AppInputSelectField';
-import {Cross, HomeSvgICon, Plus} from '../../../../assets/SVG_LOGOS';
+import {BuildSvg, Cross, HomeSvg, Plus} from '../../../../assets/SVG_LOGOS';
 import ConsumerPetList from './ConsumerPetList';
 import TitleText from '../../../common/text/TitleText';
 import PriceRange from './PriceRange';
@@ -10,6 +10,8 @@ import HomeType from './HomeType';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import Text_Size from '../../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import DateRange from '../../../common/DateRange';
+
 interface Props {
   handleSubmit: (value: any) => void;
   initialValues: any;
@@ -22,6 +24,9 @@ const FilterProviderBody = ({
   initialValues,
   validationSchema,
 }: Props) => {
+  const [openCal, setOpenCal] = useState(false);
+  const [selectedPet, setSelectedPet] = useState(0);
+  const [selectedHome, setSelectedHome] = useState(0);
   const myPet = [
     {
       image: require('../../../../assets/image/selectServiceImage/mypet.png'),
@@ -38,13 +43,16 @@ const FilterProviderBody = ({
   ];
   const homeType = [
     {
-      type: HomeSvgICon,
+      type: HomeSvg,
+      title: 'Houses',
     },
     {
-      type: HomeSvgICon,
+      type: BuildSvg,
+      title: 'Apartments',
     },
     {
       type: Plus,
+      title: 'Add More',
     },
   ];
   const renderHeader = () => {
@@ -65,7 +73,9 @@ const FilterProviderBody = ({
           name={'dateRange'}
           label={'Date Range'}
           Icon={Cross}
+          onPress={() => setOpenCal(!openCal)}
         />
+        {openCal && <DateRange />}
         <View>
           <TitleText textStyle={styles.title} text="My Pet" />
           <FlatList
@@ -73,8 +83,16 @@ const FilterProviderBody = ({
             horizontal
             showsHorizontalScrollIndicator={false}
             keyExtractor={(_, i) => i.toString()}
-            renderItem={({item}) => {
-              return <ConsumerPetList image={item.image} name={item.name} />;
+            renderItem={({item, index}) => {
+              return (
+                <ConsumerPetList
+                  image={item.image}
+                  name={item.name}
+                  index={index}
+                  selected={selectedPet}
+                  onPress={() => setSelectedPet(index)}
+                />
+              );
             }}
           />
         </View>
@@ -86,13 +104,22 @@ const FilterProviderBody = ({
   const renderFooter = () => {
     return (
       <View>
+        <TitleText textStyle={styles.title} text="Home Type" />
         <FlatList
           data={homeType}
           showsHorizontalScrollIndicator={false}
           horizontal
           keyExtractor={(_, i) => i.toString()}
-          renderItem={({item}) => {
-            return <HomeType Icon={item.type} />;
+          renderItem={({item, index}) => {
+            return (
+              <HomeType
+                Icon={item.type}
+                index={index}
+                selected={selectedHome}
+                text={item.title}
+                onPress={() => setSelectedHome(index)}
+              />
+            );
           }}
         />
         <View style={styles.btnContainer}>
@@ -124,6 +151,7 @@ export default FilterProviderBody;
 
 const styles = StyleSheet.create({
   container: {marginTop: 10, marginBottom: 20},
+
   btnContainer: {
     marginTop: 10,
     marginBottom: SCREEN_WIDTH < 390 ? 30 : 0,

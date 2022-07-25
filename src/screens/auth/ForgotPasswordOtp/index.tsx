@@ -12,8 +12,9 @@ import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import {forgotPasswordOtpValue} from '../../../utils/config/initalValues';
 import {forgotPasswordOtpValidationSchema} from '../../../utils/config/validationSchema';
 import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
+import {AuthEmail} from '../../../assets/SVG_LOGOS';
 const forgotPassData = {
-  image: require('../../../assets/image/forgotPassword/email.png'),
+  icon: AuthEmail,
   title: 'Forgot Password?',
   subTitle:
     'We have sent an OTP (One Time Password) to your [Email]. Please enter the 4 digit code below to continue.',
@@ -52,7 +53,7 @@ const ForgotPasswordOtp = ({navigation}: Props) => {
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <ImageAndTitle
-            image={forgotPassData.image}
+            Icon={forgotPassData.icon}
             title={forgotPassData.title}
             subTitle={forgotPassData.subTitle}
           />

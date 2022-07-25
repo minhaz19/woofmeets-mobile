@@ -14,6 +14,7 @@ const HeaderWithBack = (props: {
   title: string | undefined;
   notification?: boolean;
   Icon?: any;
+  onPress?: (arg: any) => void;
 }) => {
   const {colors} = useTheme();
   return (
@@ -39,7 +40,7 @@ const HeaderWithBack = (props: {
           <View style={styles.iconContainer}>
             <TouchableOpacity
               style={styles.filterContainer}
-              onPress={() => props.navigation.navigate('Notifications')}>
+              onPress={props.onPress}>
               <props.Icon
                 height={
                   SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28

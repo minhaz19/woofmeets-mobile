@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {FlatList, Platform, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import Screen from '../../../components/common/Screen';
 import ShortText from '../../../components/common/text/ShortText';
 import Colors from '../../../constants/Colors';
@@ -10,10 +10,13 @@ import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {providers} from '../../../utils/config/Data/providers';
 import BottomHalfModal from '../../../components/UI/modal/BottomHalfModal';
 import FilterProvider from '../FilterProvider';
+import {useSelector} from 'react-redux';
 
 const AllProvider = () => {
   const {colors} = useTheme();
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const filter = useSelector((state: any) => state.filter.isOpen);
+
+  // const [isModalVisible, setIsModalVisible] = useState(filter);
 
   return (
     <Screen
@@ -47,8 +50,9 @@ const AllProvider = () => {
         ListFooterComponent={<BottomSpacing />}
       />
       <BottomHalfModal
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}>
+        isModalVisible={filter}
+        // setIsModalVisible={setIsModalVisible}
+      >
         <FilterProvider />
       </BottomHalfModal>
     </Screen>
