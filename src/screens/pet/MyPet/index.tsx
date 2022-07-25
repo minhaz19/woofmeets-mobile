@@ -5,6 +5,7 @@ import MyPetHome from '../../../components/ScreenComponent/Pet/MyPet/MyPetHome';
 import Screen from '../../../components/common/Screen';
 import MyPetList from '../../../components/ScreenComponent/Pet/MyPet/MyPetList';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 interface Props {
   navigation: {
     navigate: (arg0: string) => void;
@@ -24,7 +25,7 @@ const MyPet = ({navigation}: Props) => {
           data={[{}, {}, {type: 'pet'}]}
           columnWrapperStyle={styles.columnWrapper}
           keyExtractor={(_, i) => i.toString()}
-          numColumns={2}
+          numColumns={SCREEN_WIDTH >= 800 ? 3 : 2}
           ListEmptyComponent={<MyPetHome />}
           renderItem={({item}) => (
             <View>
