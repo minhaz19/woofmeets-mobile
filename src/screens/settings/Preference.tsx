@@ -70,13 +70,15 @@ const styles = StyleSheet.create({
   textContainer: {
     marginHorizontal:
       SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '5%' : '7%',
-    paddingVertical: '3%',
+    paddingVertical:
+      SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '3%' : '0%',
     fontSize: Text_Size.Text_9,
   },
   bottomTextContainer: {
     marginHorizontal:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
-    paddingVertical: '2%',
+    paddingVertical:
+      SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '2%' : '0%',
     fontSize: Text_Size.Text_2,
   },
 });
