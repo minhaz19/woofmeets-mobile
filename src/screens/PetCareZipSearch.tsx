@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   boxContainer: {paddingHorizontal: '10%'},
   _input: {
     width: '100%',
-    height: SCREEN_WIDTH <= 380 ? 35 : 50,
+    height: SCREEN_WIDTH <= 380 ? 35 : SCREEN_WIDTH <= 480 ? 45 : 50,
     fontSize: Text_Size.Text_1,
     borderWidth: 1,
     borderColor: Colors.border,
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   zipText: {
     fontSize: Text_Size.Text_0,
     fontWeight: '500',
+    paddingBottom: 10,
   },
   zipContainer: {
     paddingTop: '5%',
