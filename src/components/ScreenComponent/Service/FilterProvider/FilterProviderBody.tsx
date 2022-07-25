@@ -8,6 +8,8 @@ import TitleText from '../../../common/text/TitleText';
 import PriceRange from './PriceRange';
 import HomeType from './HomeType';
 import SubmitButton from '../../../common/Form/SubmitButton';
+import Text_Size from '../../../../constants/textScaling';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 interface Props {
   handleSubmit: (value: any) => void;
   initialValues: any;
@@ -45,12 +47,9 @@ const FilterProviderBody = ({
       type: Plus,
     },
   ];
-  return (
-    <View style={styles.container}>
-      <AppForm
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}>
+  const renderHeader = () => {
+    return (
+      <View>
         <AppInputSelectField
           autoCapitalize="none"
           autoCorrect={false}
@@ -68,10 +67,11 @@ const FilterProviderBody = ({
           Icon={Cross}
         />
         <View>
-          <TitleText text="My Pet" />
+          <TitleText textStyle={styles.title} text="My Pet" />
           <FlatList
             data={myPet}
             horizontal
+            showsHorizontalScrollIndicator={false}
             keyExtractor={(_, i) => i.toString()}
             renderItem={({item}) => {
               return <ConsumerPetList image={item.image} name={item.name} />;
@@ -80,21 +80,41 @@ const FilterProviderBody = ({
         </View>
 
         <PriceRange />
-
-        <View>
-          <FlatList
-            data={homeType}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            keyExtractor={(_, i) => i.toString()}
-            renderItem={({item}) => {
-              return <HomeType Icon={item.type} />;
-            }}
-          />
-        </View>
+      </View>
+    );
+  };
+  const renderFooter = () => {
+    return (
+      <View>
+        <FlatList
+          data={homeType}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          keyExtractor={(_, i) => i.toString()}
+          renderItem={({item}) => {
+            return <HomeType Icon={item.type} />;
+          }}
+        />
         <View style={styles.btnContainer}>
           <SubmitButton title="Search Result" />
         </View>
+      </View>
+    );
+  };
+  return (
+    <View style={styles.container}>
+      <AppForm
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}>
+        <FlatList
+          data={[]}
+          // @ts-ignore
+          renderItem={() => console.log('')}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={renderHeader}
+          ListFooterComponent={renderFooter}
+        />
       </AppForm>
     </View>
   );
@@ -106,5 +126,7 @@ const styles = StyleSheet.create({
   container: {marginTop: 10, marginBottom: 20},
   btnContainer: {
     marginTop: 10,
+    marginBottom: SCREEN_WIDTH < 390 ? 30 : 0,
   },
+  title: {fontSize: Text_Size.Text_0, fontWeight: 'bold'},
 });

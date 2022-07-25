@@ -55,6 +55,7 @@ const usePanGesture = (initalValue: number) => {
   }, [transx, offsetX]);
   return {transx, onGestureHandle};
 };
+
 const PanComponent = (initalValue: number) => {
   const {transx, onGestureHandle} = usePanGesture(initalValue);
   const Pan = () => (
@@ -108,6 +109,7 @@ const AppInputRange = ({
     ],
     [x2],
   );
+  console.log('getting size', SCREEN_WIDTH);
   return (
     <View style={styles.container}>
       <View style={styles.rangeBar} />
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     position: 'absolute',
     elevation: 5,
-    shadowColor: '#000',
+    shadowColor: Colors.darkShadow,
     shadowRadius: 4,
     shadowOffset: {
       height: 2,
@@ -179,8 +181,8 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     backgroundColor: Colors.primary,
-    width: '40%',
-    paddingVertical: 10,
+    paddingVertical: SCREEN_WIDTH === 390 ? 10 : 0,
+    paddingHorizontal: 10,
     flexDirection: 'row',
     top: -40,
     alignContent: 'center',
@@ -199,8 +201,9 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   label: {
-    fontSize: Text_Size.Text_0,
-    color: 'white',
+    fontSize: Text_Size.Text_1,
+    color: Colors.background,
     zIndex: 100,
+    alignSelf: 'center',
   },
 });

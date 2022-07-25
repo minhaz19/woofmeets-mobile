@@ -15,20 +15,20 @@ const AppInputSelect = ({...otherProps}) => {
         {
           backgroundColor: isDarkMode
             ? colors.lightBackgroundColor
-            : colors.inputLightBg,
+            : colors.backgroundColor,
           borderColor: isDarkMode ? Colors.gray : Colors.border,
         },
       ]}>
       <TextInput
         editable={false}
-        placeholderTextColor={'gray'}
+        placeholderTextColor={Colors.gray}
         style={[
           styles.text,
           {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
             height: numberOfLines >= 10 ? 120 : 40,
             flex: 1,
-            color: isDarkMode ? 'gray' : 'black',
+            color: isDarkMode ? Colors.gray : Colors.black,
           },
         ]}
         {...otherProps}

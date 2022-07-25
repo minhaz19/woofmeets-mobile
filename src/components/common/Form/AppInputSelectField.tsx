@@ -30,7 +30,7 @@ const AppInputSelectField = ({
   textInputStyle,
   Icon,
 }: Props) => {
-  const {setFieldTouched, touched, errors, values, setFieldValue} =
+  const {setFieldTouched, touched, errors, setFieldValue} =
     useFormikContext<FormikValues>();
 
   return (
@@ -47,7 +47,7 @@ const AppInputSelectField = ({
           placeholder={placeholder}
           onChangeText={(text: string) => setFieldValue(name, text)}
           onBlur={() => setFieldTouched(name)}
-          value={values[name]}
+          // value={values[name]}
           textInputStyle={textInputStyle}
           Icon={Icon}
         />

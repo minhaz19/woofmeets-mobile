@@ -30,7 +30,11 @@ const FilterProvider = () => {
 export default FilterProvider;
 
 const styles = StyleSheet.create({
-  textContainer: {flexDirection: 'row', justifyContent: 'space-between'},
+  textContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
   title1: {fontSize: Text_Size.Text_1, fontWeight: 'bold'},
   title2: {fontSize: Text_Size.Text_1, color: Colors.primary},
 });

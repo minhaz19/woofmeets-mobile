@@ -24,6 +24,7 @@ interface Props {
 }
 const MyPetList = ({dataList, onPress}: Props) => {
   const {isDarkMode, colors} = useTheme();
+  console.log(SCREEN_WIDTH);
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View
@@ -72,7 +73,7 @@ export default MyPetList;
 const styles = StyleSheet.create({
   container: {
     width: width / 2 - 20,
-    height: height / 3.6,
+    height: SCREEN_WIDTH <= 360 ? 200 : height / 3.6,
     borderRadius: 10,
     overflow: 'hidden',
     shadowColor: Colors.shadow,

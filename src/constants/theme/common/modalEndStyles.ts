@@ -45,11 +45,10 @@ export const designs = StyleSheet.create({
     // height: '40%',
     maxHeight: '90%',
     width: '100%',
-    backgroundColor: 'white',
+
     shadowColor: 'black',
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-    paddingHorizontal: 20,
     shadowOffset: {
       width: 2,
       height: 2,
@@ -57,6 +56,7 @@ export const designs = StyleSheet.create({
     shadowOpacity: 0.75,
     shadowRadius: 3.84,
     elevation: 9,
+    paddingHorizontal: 20,
     paddingTop: 20,
   },
   fullHeightModalView: {
