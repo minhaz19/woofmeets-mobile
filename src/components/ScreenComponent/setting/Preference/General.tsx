@@ -4,14 +4,13 @@ import HeaderText from '../../../common/text/HeaderText';
 import InputText from '../../../common/input/InputText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import DescriptionText from '../../../common/text/DescriptionText';
-import {CallIcon} from '../../../../assets/Setting_SVG';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import ButtonCom from '../../../UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import Dropdown from '../../../common/dropDown/Dropdown';
 import SwitchView from '../../../common/switch/SwitchView';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {colors} from '../../../../constants/theme/textTheme';
 
 const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
 
@@ -19,7 +18,6 @@ const General = () => {
   const [textInput, setTextInput] = useState('');
   const [isQuickHour, setIsQuickHour] = useState(false);
   const [isMessageSupport, setIsMessageSupport] = useState(false);
-  const {colors} = useTheme();
   const tempData = [
     {
       id: 1,
@@ -98,7 +96,7 @@ const General = () => {
             />
             <View style={styles.flexContainer}>
               <View style={styles.innerContainer}>
-                <HeaderText text={item.title} />
+                <HeaderText text={item.title} textStyle={styles._textHeader} />
                 <DescriptionText
                   textStyle={styles._text}
                   text={item.description}
@@ -115,10 +113,7 @@ const General = () => {
         );
       })}
       <TouchableOpacity onPress={() => {}}>
-        <DescriptionText text={'Deactivate'} textStyle={styles.input} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => {}}>
-        <DescriptionText text={'Account'} textStyle={styles.input} />
+        <DescriptionText text={'Deactivate Account'} textStyle={styles.input} />
       </TouchableOpacity>
       <View style={styles.footerContainer}>
         <ButtonCom
@@ -140,7 +135,7 @@ const styles = StyleSheet.create({
   flexContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: '2%',
+    marginTop: SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '2%' : '0%',
   },
   innerContainer: {
     width: '80%',
@@ -149,21 +144,27 @@ const styles = StyleSheet.create({
     // width: '20%',
   },
   _text: {
-    paddingTop: '4%',
+    paddingTop: SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '4%' : '0%',
+    color: colors.descriptionText,
+  },
+  _textHeader: {
+    fontWeight: '500',
   },
   divider: {
     height: 1,
     opacity: 0.3,
     marginVertical:
-      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '5%',
+      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '3%',
   },
   input: {
-    paddingTop: '2%',
+    paddingTop: SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '2%' : '0%',
   },
   footerContainer: {
-    paddingVertical: '10%',
+    paddingTop:
+      SCREEN_WIDTH <= 380 ? '10%' : SCREEN_WIDTH <= 600 ? '10%' : '4%',
   },
   container: {
-    marginVertical: '1%',
+    marginVertical:
+      SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '2%' : '0%',
   },
 });

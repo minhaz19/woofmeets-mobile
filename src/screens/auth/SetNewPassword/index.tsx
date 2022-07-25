@@ -30,7 +30,6 @@ const SetNewPassword = ({navigation}: Props) => {
     console.log('values', values);
     navigation.navigate('AfterIntroScreen');
   };
-  console.log('getting height', height);
   return (
     <ScrollView
       contentContainerStyle={{

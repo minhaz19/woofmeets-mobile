@@ -56,7 +56,7 @@ const SettingMain = (props: {
       id: 1,
       title: 'Become a sitter',
       icon: SitterIcon,
-      screenName: () => props.navigation.navigate('HomeProfile'),
+      screenName: () => props.navigation.navigate('SitterInitialScreen'),
       rightIcon: true,
       opacity: 1,
     },
