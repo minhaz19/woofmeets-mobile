@@ -4,7 +4,6 @@ import HeaderText from '../../../common/text/HeaderText';
 import InputText from '../../../common/input/InputText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import DescriptionText from '../../../common/text/DescriptionText';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import ButtonCom from '../../../UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
@@ -12,7 +11,6 @@ import Dropdown from '../../../common/dropDown/Dropdown';
 import SwitchView from '../../../common/switch/SwitchView';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {colors} from '../../../../constants/theme/textTheme';
-import Text_Size from '../../../../constants/textScaling';
 
 const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
 
@@ -20,7 +18,6 @@ const General = () => {
   const [textInput, setTextInput] = useState('');
   const [isQuickHour, setIsQuickHour] = useState(false);
   const [isMessageSupport, setIsMessageSupport] = useState(false);
-  const {colors} = useTheme();
   const tempData = [
     {
       id: 1,
@@ -157,7 +154,7 @@ const styles = StyleSheet.create({
     height: 1,
     opacity: 0.3,
     marginVertical:
-      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '5%',
+      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '3%',
   },
   input: {
     paddingTop: SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '2%' : '0%',

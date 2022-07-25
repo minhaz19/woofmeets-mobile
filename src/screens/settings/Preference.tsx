@@ -1,9 +1,8 @@
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import PreferenceItem from '../../components/ScreenComponent/setting/Preference/PreferenceItem';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import DescriptionText from '../../components/common/text/DescriptionText';
 import HeaderText from '../../components/common/text/HeaderText';
 import Text_Size from '../../constants/textScaling';
 

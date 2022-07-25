@@ -58,11 +58,11 @@ export default AccountSetting;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: '4%',
+    paddingHorizontal: '4%',
   },
   textContainer: {
     fontSize: Text_Size.Text_2,
-    marginBottom: '3%',
+    marginBottom: '1%',
   },
   itemContainer: {
     paddingTop: '4%',
@@ -85,6 +85,6 @@ const styles = StyleSheet.create({
     height: 1,
     opacity: 0.3,
     marginBottom:
-      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '4%' : '6%',
+      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
   },
 });

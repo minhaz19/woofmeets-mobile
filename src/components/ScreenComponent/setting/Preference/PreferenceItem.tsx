@@ -1,7 +1,6 @@
 import {
   GestureResponderEvent,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -50,6 +49,6 @@ const styles = StyleSheet.create({
     height: 1,
     opacity: 0.3,
     marginVertical:
-      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '5%',
+      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '1%',
   },
 });

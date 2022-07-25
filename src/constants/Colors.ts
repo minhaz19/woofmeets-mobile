@@ -45,4 +45,5 @@ export default {
   success: '#69e4a6',
   green: '#187d48',
   shadow: '#0000000A',
+  none: 'transparent',
 };
