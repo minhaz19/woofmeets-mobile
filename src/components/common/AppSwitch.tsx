@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   link: {
     color: Colors.primary,
     fontSize: Text_Size.Text_0,
+    textDecorationLine: 'underline',
   },
   text: {
     fontSize: Text_Size.Text_0,

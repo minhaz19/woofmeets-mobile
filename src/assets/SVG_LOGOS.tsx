@@ -672,7 +672,8 @@ export const Plus = (props: SvgProps) => (
     xmlns="http://www.w3.org/2000/svg"
     width="32"
     height="32"
-    viewBox="0 0 32 32">
+    viewBox="0 0 32 32"
+    {...props}>
     <G
       id="Icon_feather-plus-circle"
       data-name="Icon feather-plus-circle"
@@ -682,7 +683,7 @@ export const Plus = (props: SvgProps) => (
         data-name="Path 6080"
         d="M33,18A15,15,0,1,1,18,3,15,15,0,0,1,33,18Z"
         fill="none"
-        stroke="#9e9e9e"
+        stroke={props.fill}
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"
@@ -692,7 +693,7 @@ export const Plus = (props: SvgProps) => (
         data-name="Path 6081"
         d="M18,12V24"
         fill="none"
-        stroke="#9e9e9e"
+        stroke={props.fill}
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"
@@ -702,7 +703,7 @@ export const Plus = (props: SvgProps) => (
         data-name="Path 6082"
         d="M12,18H24"
         fill="none"
-        stroke="#9e9e9e"
+        stroke={props.fill}
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"

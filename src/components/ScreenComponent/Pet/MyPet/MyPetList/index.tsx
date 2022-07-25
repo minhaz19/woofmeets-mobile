@@ -6,14 +6,14 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Text_Size from '../../../../../constants/textScaling';
 import {Plus} from '../../../../../assets/SVG_LOGOS';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../../constants/Colors';
+import HeaderText from '../../../../common/text/HeaderText';
 
 const width = SCREEN_WIDTH;
-const height = SCREEN_HEIGHT;
 interface Props {
   dataList?: [
     {
@@ -30,7 +30,9 @@ const MyPetList = ({dataList, onPress}: Props) => {
         style={[
           styles.container,
           {
-            backgroundColor: isDarkMode
+            backgroundColor: !dataList
+              ? Colors.none
+              : isDarkMode
               ? colors.lightBackgroundColor
               : colors.backgroundColor,
             borderColor: isDarkMode ? Colors.shadow : Colors.border,
@@ -52,14 +54,14 @@ const MyPetList = ({dataList, onPress}: Props) => {
                     : colors.backgroundColor,
                 },
               ]}>
-              <Text style={styles.title}>Snoopy</Text>
+              <HeaderText text="Snoopy" textStyle={styles.title} />
               <Text style={styles.subTitle}>Cat</Text>
               <Text style={styles.description}>2 Years - Male</Text>
             </View>
           </View>
         ) : (
           <View style={styles.addPet}>
-            <Plus />
+            <Plus fill={isDarkMode ? 'white' : Colors.light.lightText} />
           </View>
         )}
       </View>
@@ -71,8 +73,7 @@ export default MyPetList;
 
 const styles = StyleSheet.create({
   container: {
-    width: width / 2 - 20,
-    height: height / 3.6,
+    width: SCREEN_WIDTH >= 800 ? width / 3 - 40 : width / 2 - 20,
     borderRadius: 10,
     overflow: 'hidden',
     shadowColor: Colors.shadow,
@@ -80,7 +81,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-    borderWidth: 1,
+    // borderWidth: 1,
+    marginVertical: 10,
   },
 
   image: {
@@ -90,9 +92,14 @@ const styles = StyleSheet.create({
   textContainer: {
     paddingHorizontal: 10,
     paddingBottom: 20,
+    paddingTop: 10,
   },
-  title: {fontSize: Text_Size.Text_1, fontWeight: '600'},
-  subTitle: {fontSize: Text_Size.Text_1},
+  title: {fontSize: Text_Size.Text_9, fontWeight: '600'},
+  subTitle: {fontSize: Text_Size.Text_9, fontWeight: '500'},
   description: {fontSize: Text_Size.Text_0},
-  addPet: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+  addPet: {
+    flex: 1,
+    paddingTop: 120,
+    paddingLeft: SCREEN_WIDTH >= 800 ? width / 8 : width / 5,
+  },
 });

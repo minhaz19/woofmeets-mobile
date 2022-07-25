@@ -27,7 +27,6 @@ const AllProvider = () => {
         data={providers}
         keyExtractor={(_, i) => i.toString()}
         renderItem={({item}) => {
-          console.log(item);
           return (
             <ProviderList
               image={item.image}
