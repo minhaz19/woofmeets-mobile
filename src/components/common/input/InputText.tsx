@@ -1,11 +1,16 @@
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet, TextStyle} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import HeaderText from '../text/HeaderText';
+import DescriptionText from '../text/DescriptionText';
 
+const screen = SCREEN_WIDTH;
 const InputText = (props: {
-  title:
+  title?:
     | boolean
     | React.ReactChild
     | React.ReactFragment
@@ -15,18 +20,37 @@ const InputText = (props: {
   placeholder: string | undefined;
   value: string | undefined;
   setValue: (arg0: string) => void;
+  icon?: any;
+  style?: TextStyle;
+  description?: string;
 }) => {
   const {colors} = useTheme();
   return (
-    <View style={styles.zipContainer}>
-      <Text style={[styles.zipText, {color: colors.headerText}]}>
-        {props.title}
-      </Text>
-      <TextInput
-        onChangeText={pCode => props.setValue(pCode)}
-        style={[styles._input, {color: colors.headerText}]}
-        {...props}
-      />
+    <View style={[styles.zipContainer, {...props.style}]}>
+      {props.title && <HeaderText text={props.title} />}
+      {props.description && (
+        <DescriptionText
+          text={props.description}
+          textStyle={styles.descriptionText}
+        />
+      )}
+      <View
+        style={[styles._input, {backgroundColor: colors.lightBackgroundColor}]}>
+        <TextInput
+          onChangeText={pCode => props.setValue(pCode)}
+          style={[styles.text, {color: colors.headerText}]}
+          placeholderTextColor={colors.placeholderTextColor}
+          {...props}
+        />
+        {props.icon && (
+          <MaterialCommunityIcons
+            name="chevron-right"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
+            style={styles.iconStyle}
+            color={Colors.subText}
+          />
+        )}
+      </View>
     </View>
   );
 };
@@ -36,20 +60,35 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   _input: {
-    width: '100%',
-    height: 35,
-    fontSize: Text_Size.Text_1,
     borderWidth: 1,
     borderColor: Colors.border,
-    padding: 8,
-    marginVertical: 6,
+    flexDirection: 'row',
+    width: '100%',
+    height: 40,
+    paddingVertical: screen > 390 ? -10 : 0,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 2,
+  },
+  text: {
+    fontSize: Text_Size.Text_0,
+    flex: 1,
   },
   zipText: {
     fontSize: Text_Size.Text_1,
-    fontWeight: '500',
   },
   zipContainer: {
     paddingTop: '2%',
+  },
+  iconStyle: {
+    paddingRight: 0,
+    transform: [{rotate: '90deg'}],
+  },
+  descriptionText: {
+    paddingVertical: '2%',
+    lineHeight: 20,
   },
 });
 
