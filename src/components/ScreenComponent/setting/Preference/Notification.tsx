@@ -1,10 +1,4 @@
-import {
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import HeaderText from '../../../common/text/HeaderText';
 import Text_Size from '../../../../constants/textScaling';
@@ -211,15 +205,6 @@ const Notification = () => {
           }}
         />
       ),
-    },
-  ];
-  const termsAndCondition = [
-    {
-      text: `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore orem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore orem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore orem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore orem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore  ${(
-        <TouchableOpacity>
-          <Text>Privacy Statement</Text>
-        </TouchableOpacity>
-      )}  and  ${(<TouchableOpacity>Privacy Statement</TouchableOpacity>)}`,
     },
   ];
   return (
