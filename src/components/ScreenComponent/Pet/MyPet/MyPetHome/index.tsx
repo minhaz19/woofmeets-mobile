@@ -1,8 +1,9 @@
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import AppButton from '../../../../common/AppButton';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {AddPet} from '../../../../../assets/SVG_LOGOS';
 
 type StackParamList = {
   AddPet: {foo: string; onBar: () => void} | undefined;
@@ -13,11 +14,8 @@ const MyPetHome = () => {
   const navigation = useNavigation<NavigationProps>();
   return (
     <View style={[styles.container]}>
-      <Image
-        style={styles.imageContainer}
-        source={require('../../../../../assets/image/pet/home.png')}
-        resizeMode="contain"
-      />
+      <AddPet width={300} height={300} />
+
       <View style={styles.btnStyle}>
         <AppButton
           title="Add Pet"

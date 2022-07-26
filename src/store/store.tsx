@@ -8,12 +8,14 @@ import {
 import addPetReducer from './slices/addPet';
 
 import authReducer from './slices/auth';
+import openFilter from './slices/openFilter';
 import userLogin from './slices/userLogin';
 
 const appReducer = combineReducers({
   auth: authReducer,
   addPet: addPetReducer,
   login: userLogin,
+  filter: openFilter,
 });
 
 const RootReducer = (

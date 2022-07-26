@@ -70,6 +70,13 @@ const addPetValidationSchema = Yup.object().shape({
     .required('This is required')
     .min(1, 'Please select at least one image'),
 });
+const filterProviderValidationSchema = Yup.object().shape({
+  priceRange: Yup.array(),
+  homeType: Yup.string(),
+  location: Yup.string(),
+  petType: Yup.string(),
+  dateRange: Yup.array(),
+});
 
 export {
   loginValidationSchema,
@@ -79,4 +86,5 @@ export {
   forgotPasswordOtpValidationSchema,
   verifyAccountValidationSchema,
   addPetValidationSchema,
+  filterProviderValidationSchema,
 };

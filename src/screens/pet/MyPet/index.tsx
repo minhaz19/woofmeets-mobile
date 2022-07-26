@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable dot-notation */
 import {FlatList, StyleSheet, useColorScheme, View} from 'react-native';
 import React from 'react';
@@ -53,7 +54,6 @@ export default MyPet;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
     paddingHorizontal: SCREEN_WIDTH >= 800 ? 15 : 0,
   },
   columnWrapper: {
