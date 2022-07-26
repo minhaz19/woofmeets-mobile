@@ -48,10 +48,7 @@ const AllProvider = () => {
         }}
         ListFooterComponent={<BottomSpacing />}
       />
-      <BottomHalfModal
-        isModalVisible={filter}
-        // setIsModalVisible={setIsModalVisible}
-      >
+      <BottomHalfModal isModalVisible={filter}>
         <FilterProvider />
       </BottomHalfModal>
     </Screen>

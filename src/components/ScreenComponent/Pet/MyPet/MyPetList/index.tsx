@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 
   image: {
     width: '100%',
-    height: SCREEN_HEIGHT / 7.5,
+    height: SCREEN_WIDTH < 390 ? SCREEN_HEIGHT / 6 : SCREEN_HEIGHT / 7.5,
   },
   textContainer: {
     paddingHorizontal: 10,
