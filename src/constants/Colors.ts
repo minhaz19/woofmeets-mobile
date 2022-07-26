@@ -30,6 +30,7 @@ export default {
     grey: 'grey',
   },
   gray: 'gray',
+  black: 'black',
   primary: '#FFA557',
   primaryLight: '#FFF2E9',
   secondary: '#FEF1E8',
@@ -45,5 +46,6 @@ export default {
   success: '#69e4a6',
   green: '#187d48',
   shadow: '#0000000A',
+  darkShadow: '#000',
   none: 'transparent',
 };

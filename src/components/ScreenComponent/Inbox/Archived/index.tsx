@@ -1,10 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import DescriptionText from '../../../common/text/DescriptionText';
 
 const Archived = () => {
   return (
     <View>
-      <Text>Archived</Text>
+      <DescriptionText text="Archived" />
     </View>
   );
 };

@@ -6,6 +6,7 @@ import {
   SignUpType,
   verifyAccountType,
   addPetType,
+  filterProviderType,
 } from './types';
 
 const loginValue: LoginType = {email: '', password: ''};
@@ -47,6 +48,13 @@ const addPetValue: addPetType = {
   petInfo: '',
   photoGallery: [],
 };
+const filterProviderValue: filterProviderType = {
+  location: '',
+  dateRange: [],
+  petType: '',
+  priceRange: [],
+  homeType: '',
+};
 
 export {
   loginValue,
@@ -56,4 +64,5 @@ export {
   forgotPasswordOtpValue,
   verifyAccountValue,
   addPetValue,
+  filterProviderValue,
 };

@@ -1,17 +1,12 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import React from 'react';
-import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Text_Size from '../../../../../constants/textScaling';
 import {Plus} from '../../../../../assets/SVG_LOGOS';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../../constants/Colors';
 import HeaderText from '../../../../common/text/HeaderText';
+import TitleText from '../../../../common/text/TitleText';
 
 const width = SCREEN_WIDTH;
 interface Props {
@@ -24,6 +19,7 @@ interface Props {
 }
 const MyPetList = ({dataList, onPress}: Props) => {
   const {isDarkMode, colors} = useTheme();
+  console.log(SCREEN_WIDTH);
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View
@@ -55,8 +51,8 @@ const MyPetList = ({dataList, onPress}: Props) => {
                 },
               ]}>
               <HeaderText text="Snoopy" textStyle={styles.title} />
-              <Text style={styles.subTitle}>Cat</Text>
-              <Text style={styles.description}>2 Years - Male</Text>
+              <TitleText textStyle={styles.subTitle} text="Cat" />
+              <TitleText textStyle={styles.description} text="2 Years - Male" />
             </View>
           </View>
         ) : (
@@ -81,13 +77,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-    // borderWidth: 1,
     marginVertical: 10,
   },
 
   image: {
     width: '100%',
-    height: 150,
+    height: SCREEN_WIDTH < 390 ? SCREEN_HEIGHT / 6 : SCREEN_HEIGHT / 7.5,
   },
   textContainer: {
     paddingHorizontal: 10,

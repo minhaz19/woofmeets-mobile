@@ -50,3 +50,10 @@ export interface addPetType {
   petInfo: string;
   photoGallery: [];
 }
+export interface filterProviderType {
+  location: string;
+  dateRange: [];
+  petType: string;
+  priceRange: [];
+  homeType: string;
+}

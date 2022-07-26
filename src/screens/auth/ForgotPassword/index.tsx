@@ -12,6 +12,7 @@ import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import {forgotPasswordValue} from '../../../utils/config/initalValues';
 import {forgotPasswordValidationSchema} from '../../../utils/config/validationSchema';
 import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
+import {AuthPassword} from '../../../assets/SVG_LOGOS';
 const forgotPassData = {
   image: require('../../../assets/image/forgotPassword/password.png'),
   title: 'Forgot Password?',
@@ -49,10 +50,7 @@ const ForgotPassword = ({navigation}: Props) => {
         ]}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <ImageAndTitle
-            image={forgotPassData.image}
-            title={forgotPassData.title}
-          />
+          <ImageAndTitle Icon={AuthPassword} title={forgotPassData.title} />
           <AuthForm
             initialValues={forgotPasswordValue}
             validationSchema={forgotPasswordValidationSchema}
