@@ -29,7 +29,7 @@ const AuthFooter = ({
 }: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation<any>();
-  console.log('icon', icons);
+
   return (
     <View style={styles.container}>
       <View style={styles.dividerContainer}>

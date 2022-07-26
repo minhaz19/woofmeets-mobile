@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {BellIcon} from '../../../assets/SVG_LOGOS';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'center',
     width: '100%',
+    paddingVertical: Platform.OS === 'ios' ? 0 : 5,
   },
   iconStyle: {paddingRight: 10},
   headerContainer: {
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     backfaceVisibility: 'hidden',
   },
   leftContainer: {
-    paddingLeft: SCREEN_WIDTH * 0.15,
+    paddingLeft: SCREEN_WIDTH <= 800 ? SCREEN_WIDTH * 0.15 : SCREEN_WIDTH * 0.1,
     paddingTop: 4,
     paddingRight: 4,
     paddingBottom: 4,

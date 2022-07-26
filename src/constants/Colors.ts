@@ -47,4 +47,5 @@ export default {
   green: '#187d48',
   shadow: '#0000000A',
   darkShadow: '#000',
+  none: 'transparent',
 };

@@ -84,7 +84,9 @@ function BottomTabNavigator() {
               />
               <Text
                 style={[
-                  focused ? {color: Colors.primary} : {color: '#424244'},
+                  focused
+                    ? {color: Colors.primary}
+                    : {color: Colors.light.lightText},
                   styles.textStyle,
                 ]}>
                 Inbox
@@ -113,7 +115,9 @@ function BottomTabNavigator() {
               />
               <Text
                 style={[
-                  focused ? {color: Colors.primary} : {color: '#424244'},
+                  focused
+                    ? {color: Colors.primary}
+                    : {color: Colors.light.lightText},
                   styles.textStyle,
                 ]}>
                 My Pets
@@ -137,7 +141,9 @@ function BottomTabNavigator() {
               />
               <Text
                 style={[
-                  focused ? {color: Colors.primary} : {color: '#424244'},
+                  focused
+                    ? {color: Colors.primary}
+                    : {color: Colors.light.lightText},
                   styles.textStyle,
                 ]}>
                 Setting

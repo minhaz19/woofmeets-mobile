@@ -678,7 +678,8 @@ export const Plus = (props: SvgProps) => (
     xmlns="http://www.w3.org/2000/svg"
     width="32"
     height="32"
-    viewBox="0 0 32 32">
+    viewBox="0 0 32 32"
+    {...props}>
     <G
       id="Icon_feather-plus-circle"
       data-name="Icon feather-plus-circle"
@@ -688,7 +689,7 @@ export const Plus = (props: SvgProps) => (
         data-name="Path 6080"
         d="M33,18A15,15,0,1,1,18,3,15,15,0,0,1,33,18Z"
         fill="none"
-        stroke="#9e9e9e"
+        stroke={props.fill}
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"
@@ -698,7 +699,7 @@ export const Plus = (props: SvgProps) => (
         data-name="Path 6081"
         d="M18,12V24"
         fill="none"
-        stroke="#9e9e9e"
+        stroke={props.fill}
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"
@@ -708,7 +709,7 @@ export const Plus = (props: SvgProps) => (
         data-name="Path 6082"
         d="M12,18H24"
         fill="none"
-        stroke="#9e9e9e"
+        stroke={props.fill}
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"
@@ -2052,13 +2053,13 @@ export const QuestionIcon = (props: SvgProps) => (
     xmlns="http://www.w3.org/2000/svg"
     width={16.5}
     height={16.5}
-    viewBox="0 0 16.5 16.5"
+    viewBox="0 0 17 17"
     {...props}>
     <Path
       data-name="Icon awesome-question-circle"
       d="M16.25 8.25a8 8 0 1 1-8-8 8 8 0 0 1 8 8ZM8.464 2.895a4.178 4.178 0 0 0-3.76 2.057.388.388 0 0 0 .088.524l1.119.849a.387.387 0 0 0 .538-.068c.576-.731.971-1.155 1.848-1.155.659 0 1.474.424 1.474 1.063 0 .483-.4.731-1.049 1.1-.759.422-1.763.95-1.763 2.275v.129a.387.387 0 0 0 .387.387h1.807a.387.387 0 0 0 .387-.387v-.043c0-.918 2.683-.956 2.683-3.441 0-1.871-1.936-3.29-3.759-3.29Zm-.215 8a1.484 1.484 0 1 0 1.484 1.484 1.486 1.486 0 0 0-1.483-1.484Z"
-      fill="none"
-      stroke="#21409A"
+      fill={props.fill}
+      stroke={props.fill}
       strokeWidth={0.5}
     />
   </Svg>

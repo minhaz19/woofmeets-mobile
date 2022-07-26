@@ -8,7 +8,6 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Colors from '../../../../constants/Colors';
 import General from './General';
 import Notification from './Notification';
-import Sitter from './Sitter';
 
 const data = [
   {
@@ -19,11 +18,6 @@ const data = [
   {
     id: 2,
     title: 'Notification',
-    opacity: 1,
-  },
-  {
-    id: 3,
-    title: 'Sitter',
     opacity: 1,
   },
 ];
@@ -55,7 +49,6 @@ const AccountSetting = () => {
       />
       {showSetting === 1 && <General />}
       {showSetting === 2 && <Notification />}
-      {showSetting === 3 && <Sitter />}
     </View>
   );
 };
@@ -65,11 +58,11 @@ export default AccountSetting;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: '4%',
+    paddingHorizontal: '4%',
   },
   textContainer: {
     fontSize: Text_Size.Text_2,
-    marginBottom: '3%',
+    marginBottom: '1%',
   },
   itemContainer: {
     paddingTop: '4%',
@@ -92,6 +85,6 @@ const styles = StyleSheet.create({
     height: 1,
     opacity: 0.3,
     marginBottom:
-      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '4%' : '6%',
+      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
   },
 });
