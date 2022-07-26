@@ -1,6 +1,6 @@
 export const providers = [
   {
-    image: require('../../../assets/image/selectServiceImage/providerImage.png'),
+    image: 'https://picsum.photos/id/237/200/300',
     name: 'Steve Goodman',
     rating: 5.0,
     distance: '1.5 miles away',
@@ -10,7 +10,7 @@ export const providers = [
     pricing: '$9.0',
   },
   {
-    image: require('../../../assets/image/selectServiceImage/providerImage.png'),
+    image: 'https://picsum.photos/id/237/200/300',
     name: 'Steve Goodman',
     rating: 5.0,
     distance: '1.5 miles away',
@@ -20,7 +20,7 @@ export const providers = [
     pricing: '$9.0',
   },
   {
-    image: require('../../../assets/image/selectServiceImage/providerImage.png'),
+    image: 'https://picsum.photos/id/237/200/300',
     name: 'Steve Goodman',
     rating: 5.0,
     distance: '1.5 miles away',
@@ -30,7 +30,7 @@ export const providers = [
     pricing: '$9.0',
   },
   {
-    image: require('../../../assets/image/selectServiceImage/providerImage.png'),
+    image: 'https://picsum.photos/id/237/200/300',
     name: 'Steve Goodman',
     rating: 5.0,
     distance: '1.5 miles away',
@@ -40,7 +40,7 @@ export const providers = [
     pricing: '$9.0',
   },
   {
-    image: require('../../../assets/image/selectServiceImage/providerImage.png'),
+    image: 'https://picsum.photos/id/237/200/300',
     name: 'Steve Goodman',
     rating: 5.0,
     distance: '1.5 miles away',
@@ -50,7 +50,7 @@ export const providers = [
     pricing: '$9.0',
   },
   {
-    image: require('../../../assets/image/selectServiceImage/providerImage.png'),
+    image: 'https://picsum.photos/id/237/200/300',
     name: 'Steve Goodman',
     rating: 5.0,
     distance: '1.5 miles away',

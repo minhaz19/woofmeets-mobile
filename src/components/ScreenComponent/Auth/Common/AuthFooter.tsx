@@ -13,7 +13,7 @@ import Text_Size from '../../../../constants/textScaling';
 import {useNavigation} from '@react-navigation/native';
 
 interface Props {
-  icons: {image: any}[];
+  icons: {image: any; icon: any}[];
   title: string;
   accountType: string;
   authType: string;
@@ -29,6 +29,7 @@ const AuthFooter = ({
 }: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation<any>();
+
   return (
     <View style={styles.container}>
       <View style={styles.dividerContainer}>
@@ -50,7 +51,7 @@ const AuthFooter = ({
       </View>
       <View style={styles.iconContainer}>
         {icons.map((icon, index) => (
-          <Icon key={index} image={icon.image} />
+          <Icon key={index} IconComp={icon?.icon} />
         ))}
       </View>
       <View style={styles.textContainer}>

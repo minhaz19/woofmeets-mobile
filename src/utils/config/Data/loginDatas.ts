@@ -1,3 +1,5 @@
+import {Apple, Facebook, Google} from '../../../assets/SVG_LOGOS';
+
 const loginInitalState = {
   title: 'Login',
   subTitle: 'Discover your social & try to login',
@@ -7,12 +9,15 @@ const loginInitalState = {
 const othersAuthIcons = [
   {
     image: require('../../../assets/image/login/google.png'),
+    icon: Google,
   },
   {
     image: require('../../../assets/image/login/facebook.png'),
+    icon: Facebook,
   },
   {
     image: require('../../../assets/image/login/apple.png'),
+    icon: Apple,
   },
 ];
 export {loginInitalState, othersAuthIcons};

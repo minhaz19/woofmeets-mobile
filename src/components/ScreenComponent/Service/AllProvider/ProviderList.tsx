@@ -4,7 +4,7 @@ import ImageContainer from './ImageContainer';
 import ProviderInfo from './ProviderInfo';
 import ProviderPricing from './ProviderPricing';
 interface Props {
-  image: any;
+  image: string;
   name: string;
   nature: string;
   rating: number;
