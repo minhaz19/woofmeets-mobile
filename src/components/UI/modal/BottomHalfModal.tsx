@@ -1,4 +1,4 @@
-import {View, Modal, TouchableWithoutFeedback} from 'react-native';
+import {View, Modal, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import React from 'react';
 import {designs} from '../../../constants/theme/common/modalEndStyles';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -23,21 +23,29 @@ const BottomHalfModal = (props: {
         animationType="slide"
         transparent={true}
         visible={props.isModalVisible}>
-        <TouchableWithoutFeedback
-          onPress={() => dispatch(setOpenFilter(false))}>
-          <View style={designs.centeredViewBg}>
-            <View
-              style={[
-                designs.modalViewRounded,
-                {backgroundColor: colors.backgroundColor},
-              ]}>
-              <View>{props.children}</View>
-            </View>
+        <View style={designs.centeredViewBg}>
+          <TouchableWithoutFeedback
+            onPress={() => dispatch(setOpenFilter(false))}>
+            <View style={styles.close} />
+          </TouchableWithoutFeedback>
+          <View
+            style={[
+              designs.modalViewRounded,
+              {backgroundColor: colors.backgroundColor},
+            ]}>
+            <View>{props.children}</View>
           </View>
-        </TouchableWithoutFeedback>
+        </View>
       </Modal>
     </TouchableWithoutFeedback>
   );
 };
 
 export default BottomHalfModal;
+const styles = StyleSheet.create({
+  close: {
+    width: '100%',
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+});

@@ -10,10 +10,7 @@ const Icon = ({name, IconComp}: Props) => {
   return (
     <TouchableOpacity style={styles.container}>
       {name && <Ant size={20} name={name} color={'black'} />}
-      {IconComp && (
-        // <Image source={image} style={styles.image} resizeMode="contain" />
-        <IconComp />
-      )}
+      {IconComp && <IconComp />}
     </TouchableOpacity>
   );
 };

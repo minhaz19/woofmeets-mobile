@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable radix */
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -34,6 +35,7 @@ const DateRange = () => {
         date =>
           new Date(date).getFullYear() +
           '-' +
+          // @ts-ignore
           parseInt(new Date(date).getMonth() + 1) +
           '-' +
           new Date(date).getDate(),
