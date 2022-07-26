@@ -8,9 +8,15 @@ import ProviderList from '../../../components/ScreenComponent/Service/AllProvide
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {providers} from '../../../utils/config/Data/providers';
+import BottomHalfModal from '../../../components/UI/modal/BottomHalfModal';
+import FilterProvider from '../FilterProvider';
+import {useSelector} from 'react-redux';
 
 const AllProvider = () => {
   const {colors} = useTheme();
+  const filter = useSelector((state: any) => state.filter.isOpen);
+
+  // const [isModalVisible, setIsModalVisible] = useState(filter);
 
   return (
     <Screen
@@ -42,6 +48,9 @@ const AllProvider = () => {
         }}
         ListFooterComponent={<BottomSpacing />}
       />
+      <BottomHalfModal isModalVisible={filter}>
+        <FilterProvider />
+      </BottomHalfModal>
     </Screen>
   );
 };

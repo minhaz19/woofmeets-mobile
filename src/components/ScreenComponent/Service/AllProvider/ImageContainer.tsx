@@ -6,12 +6,13 @@ import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {ScreenHeight} from 'react-native-elements/dist/helpers';
 interface Props {
-  image: any;
+  image: string;
 }
 const ImageContainer = ({image}: Props) => {
   return (
     <View style={styles.container}>
-      <Image source={image} resizeMode="contain" style={styles.image} />
+      <Image source={{uri: image}} resizeMode="contain" style={styles.image} />
+      {/* <Image source={image} resizeMode="contain" style={styles.image} /> */}
       <View style={styles.batchContainer}>
         <DogFeet />
         <ShortText textStyle={{color: Colors.text}} text="Verified" />
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH / 6,
     height: ScreenHeight / 8.5,
   },
-  image: {width: '100%', height: '100%'},
+  image: {width: '100%', height: '100%', borderRadius: 50},
   batchContainer: {
     marginTop: -10,
     flexDirection: 'row',
