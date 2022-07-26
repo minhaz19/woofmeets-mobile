@@ -4,6 +4,8 @@ import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Calendar} from 'react-native-calendars';
 import {_dateRange} from '../../utils/helpers/datesArray';
+import {colors} from '../../constants/theme/textTheme';
+import Colors from '../../constants/Colors';
 
 const DateRange = () => {
   const [step, setSteps] = useState(1);
@@ -64,6 +66,7 @@ const DateRange = () => {
   return (
     <View style={styles.containerCL}>
       <Calendar
+        style={styles.calenderStyles}
         onDayPress={handleDayPress}
         // firstDay={1}
         // hideDayNames={true}
@@ -88,6 +91,25 @@ const DateRange = () => {
             textColor: 'white',
           },
         }}
+        theme={{
+          backgroundColor: colors.backgroundColor,
+          calendarBackground: colors.backgroundColor,
+          selectedDayBackgroundColor: Colors.primary,
+          selectedDayTextColor: Colors.headerText,
+          todayTextColor: Colors.primary,
+          dayTextColor: Colors.headerText,
+          textDisabledColor: Colors.subText,
+          arrowColor: Colors.headerText,
+          disabledArrowColor: Colors.subText,
+          monthTextColor: Colors.headerText,
+          indicatorColor: Colors.headerText,
+          textDayFontWeight: '300',
+          textMonthFontWeight: 'bold',
+          textDayHeaderFontWeight: '300',
+          textDayFontSize: 14,
+          textMonthFontSize: 16,
+          textDayHeaderFontSize: 14,
+        }}
       />
     </View>
   );
@@ -97,6 +119,13 @@ export default DateRange;
 
 const styles = StyleSheet.create({
   containerCL: {
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
+  },
+  calenderStyles: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    borderRadius: 5,
+    marginBottom: 10,
   },
 });
