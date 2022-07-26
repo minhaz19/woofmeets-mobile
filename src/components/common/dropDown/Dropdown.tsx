@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import React, {FC} from 'react';
