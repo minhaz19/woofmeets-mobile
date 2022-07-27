@@ -1,9 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';
 import IOSButton from '../../../UI/IOSButton';
-import {AddPet} from '../../../../assets/SVG_LOGOS';
 import ButtonCom from '../../../UI/ButtonCom';
 import DescriptionText from '../../../common/text/DescriptionText';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
@@ -39,7 +38,6 @@ const Pending = () => {
             />
           </View>
         </View>
-        {/* <AddPet width={300} height={300} /> */}
       </View>
       <PendingMessage />
     </>
@@ -51,7 +49,7 @@ export default Pending;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
+    marginTop: SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '6%' : '2%',
   },
   flexContainer: {
     flexDirection: 'row',

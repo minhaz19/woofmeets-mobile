@@ -10,6 +10,7 @@ import {colors} from '../../../../constants/theme/textTheme';
 import ButtonCom from '../../../UI/ButtonCom';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
+import Colors from '../../../../constants/Colors';
 
 const Notification = () => {
   const {colors} = useTheme();
@@ -254,7 +255,7 @@ const Notification = () => {
             textStyle={styles.termsText}
           />
         </TouchableOpacity>
-        <DescriptionText text={'and'} textStyle={styles.termsText} />
+        <DescriptionText text={'and'} textStyle={styles.AndText} />
         <TouchableOpacity onPress={() => {}}>
           <DescriptionText
             text={'Privacy Statement.'}
@@ -314,6 +315,8 @@ const styles = StyleSheet.create({
   toggleContainer: {},
   input: {
     paddingTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+    color: Colors.button.blue,
+    textDecorationLine: 'underline',
   },
   footerContainer: {
     paddingTop:
@@ -326,7 +329,9 @@ const styles = StyleSheet.create({
   },
   termsText: {
     lineHeight: 20,
-    color: colors.descriptionText,
     paddingRight: 6,
+    color: Colors.button.blue,
+    textDecorationLine: 'underline',
   },
+  AndText: {lineHeight: 20, paddingRight: 6},
 });

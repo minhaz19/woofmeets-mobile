@@ -4,10 +4,11 @@ import DescriptionText from '../../../common/text/DescriptionText';
 import ButtonCom from '../../../UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import Text_Size from '../../../../constants/textScaling';
-import {SCREEN_HEIGHT} from '../../../../constants/WindowSize';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {AddPet} from '../../../../assets/SVG_LOGOS';
 import IOSButton from '../../../UI/IOSButton';
+import ArchivedMessage from './ArchivedMessage';
 
 const Archived = () => {
   const {colors} = useTheme();
@@ -38,8 +39,8 @@ const Archived = () => {
             />
           </View>
         </View>
-        <AddPet width={300} height={300} />
       </View>
+      <ArchivedMessage />
     </>
   );
 };
@@ -49,7 +50,7 @@ export default Archived;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: '4%',
+    marginTop: SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '6%' : '2%',
   },
   flexContainer: {
     flexDirection: 'row',

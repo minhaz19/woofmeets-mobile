@@ -11,31 +11,14 @@ import Dropdown from '../../../common/dropDown/Dropdown';
 import SwitchView from '../../../common/switch/SwitchView';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {colors} from '../../../../constants/theme/textTheme';
+import Colors from '../../../../constants/Colors';
 
 const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
 
 const General = () => {
   const [textInput, setTextInput] = useState('');
   const [isQuickHour, setIsQuickHour] = useState(false);
-  const [isMessageSupport, setIsMessageSupport] = useState(false);
   const tempData = [
-    {
-      id: 1,
-      title: 'MMS Message Support',
-      icon: true,
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      input: false,
-      iconComponent: (
-        <SwitchView
-          isActive={isMessageSupport}
-          activeText=""
-          inActiveText=""
-          onSelect={is => {
-            setIsMessageSupport(is);
-          }}
-        />
-      ),
-    },
     {
       id: 2,
       title: 'Quick Hours',
@@ -82,7 +65,6 @@ const General = () => {
           placeholder={'Mobile Number'}
           value={textInput}
           setValue={setTextInput}
-          icon={true}
         />
       </View>
       {tempData.map((item, index) => {
@@ -158,6 +140,8 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingTop: SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '2%' : '0%',
+    color: Colors.button.blue,
+    textDecorationLine: 'underline'
   },
   footerContainer: {
     paddingTop:

@@ -1,39 +1,71 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, ScrollView, View} from 'react-native';
 import React from 'react';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import HeaderText from '../../../common/text/HeaderText';
-import DescriptionText from '../../../common/text/DescriptionText';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import ReusableCard from '../utils/ReusableCard/ReusableCard';
+import Colors from '../../../../constants/Colors';
+import {PendingSvg} from '../utils/SvgComponent/SvgComponent';
+import MessageNotSend from '../utils/ReusableCard/MessageNotSend';
+
+export const data = [
+  {
+    id: 1,
+    image: require('../../../../assets/image/pet/mypet.png'),
+    name: 'Bobby',
+    boardingTime: 'Boarding on Jun 14 - Jun 16',
+    description: 'Bobby is a 2 year old dog who is looking for a home.',
+    status: 'Pending',
+  },
+  {
+    id: 2,
+    image: require('../../../../assets/image/pet/mypet.png'),
+    name: 'Bobby',
+    boardingTime: 'Boarding on Jun 14 - Jun 16',
+    description: 'Bobby is a 2 year old dog who is looking for a home.',
+    status: 'Pending',
+  },
+  {
+    id: 3,
+    image: require('../../../../assets/image/pet/mypet.png'),
+    name: 'Bobby',
+    boardingTime: 'Boarding on Jun 14 - Jun 16',
+    description: 'Bobby is a 2 year old dog who is looking for a home.',
+    status: 'Pending',
+  },
+];
 
 const PendingMessage = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.flexContainer}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={require('../../../../assets/image/pet/mypet.png')}
-            style={styles.image}
-            resizeMode="cover"
+    <ScrollView
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}>
+      <View style={styles.container}>
+        {data.length > 0 ? (
+          data?.map((item, index) => {
+            return (
+              <ReusableCard
+                key={index}
+                item={{
+                  name: item.name,
+                  image: item.image,
+                  description: item.description,
+                  boardingTime: item.boardingTime,
+                  status: item.status,
+                }}
+                buttonStyles={Colors.yellow}
+              />
+            );
+          })
+        ) : (
+          <MessageNotSend
+            svg={<PendingSvg width={200} height={200} />}
+            title={'No messages in Pending inbox'}
+            description={
+              'You will find messages here when you and sitter have confirmed a booking together'
+            }
           />
-        </View>
-        <View>
-          <HeaderText text="Steve Goodman" textStyle={styles.textHeader} />
-          <DescriptionText
-            text="Steve Goodman"
-            textStyle={styles.textDescription}
-          />
-          <DescriptionText
-            text="Steve Goodman"
-            textStyle={styles.textDescription}
-          />
-        </View>
-        <View>
-          <DescriptionText
-            text="Steve Goodman"
-            textStyle={styles.textDescription}
-          />
-        </View>
+        )}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -43,18 +75,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
-  },
-  image: {
-    borderRadius: 100,
-    width: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
-    height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
-  },
-  flexContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    // alignItems: 'center',
-  },
-  imageContainer: {
-    width: SCREEN_WIDTH <= 380 ? 25 : SCREEN_WIDTH <= 600 ? 30 : 40,
   },
 });
