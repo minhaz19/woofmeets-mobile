@@ -110,20 +110,21 @@ For more info please go to https://reactnative.dev/docs/signed-apk-android
 For more info please go to https://reactnative.dev/docs/publishing-to-app-store
 
 
-### Deployment Debug version 0.0.1
+# Deployment Debug version 0.0.1
 
 ## Features
 
-# UI Implementation
+### UI Implementation
 
 1. Authentication Module with Validation
 2. Services Menu and Corresponding Services Listing for Provider Listing
 3. My Pets and Add, Modify Pets UI with Validation
 4. Main Navigation Bottom Panel
 5. Drawer Menu Navigation and Thier Items
-6. Setting Navigation and Profile Navigation
+6. Setting Navigation and Profile Navigation and Preferences
 7. Profile, Contact Information for Customer Add with Validation
-
+8. Sitter Intro And Profile
+9. Provider Listing and Filtering
 
 ## APK Install
 

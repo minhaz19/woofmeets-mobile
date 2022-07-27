@@ -15,6 +15,7 @@ import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../../common/text/HeaderText';
 import ProfileHeader from '../profile/ProfileHeader';
 import BottomSpacing from '../../UI/BottomSpacing';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
   selectContainer: {width: '90%', marginHorizontal: '5%'},
   textInputStyle: {},
   nameContainer: {
-    paddingVertical: '5%',
+    paddingVertical: SCREEN_WIDTH <= 800 ? '5%' : '3%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -217,6 +218,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   footerContainer: {
-    paddingVertical: '15%',
+    paddingVertical: '6%',
   },
 });

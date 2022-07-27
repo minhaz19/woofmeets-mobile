@@ -8,6 +8,7 @@ import DescriptionText from '../../common/text/DescriptionText';
 
 interface Props {
   data: any;
+  noShadow?: boolean;
 }
 type StackParamList = {
   ServiceDetails: {itemId: any} | undefined;
@@ -30,6 +31,7 @@ const ReusableSelectService: FC<Props> = data => {
           styles.container,
           {
             backgroundColor: colors.backgroundColor,
+            borderWidth: data.noShadow ? 0 : 1,
           },
         ]}>
         <View style={styles.boxContainer}>
@@ -49,7 +51,6 @@ export default ReusableSelectService;
 const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
-    borderWidth: 1,
     borderColor: '#ffebd9',
     paddingHorizontal: 10,
     paddingVertical: 10,
@@ -65,5 +66,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  textContainer: {},
+  textContainer: {
+    width: '90%',
+  },
 });
