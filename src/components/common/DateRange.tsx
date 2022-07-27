@@ -1,86 +1,30 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable radix */
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import Colors from '../../constants/Colors';
 import {Calendar} from 'react-native-calendars';
 import {_dateRange} from '../../utils/helpers/datesArray';
-import {colors} from '../../constants/theme/textTheme';
-import Colors from '../../constants/Colors';
-
-const DateRange = () => {
-  const [step, setSteps] = useState(1);
-
-  const [startingDate, setStartingDate] = useState('');
-  const [endingDate, setEndingDate] = useState('');
+import {useTheme} from '../../constants/theme/hooks/useTheme';
+import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
+import {orderAndStyleRange} from '../../utils/helpers/CalendarRange/orderAndStyleRange';
+interface Props {
+  name: string;
+}
+const DateRange = ({name}: Props) => {
   const [_markedStyle, setMarkedStyle] = useState({});
+  const {colors} = useTheme();
 
-  const handleDayPress = (day: any) => {
-    // console.log('getting date', day.dateString, step);
-    // const start = startingDate !== '' && new Date(startingDate);
-    // const end = endingDate !== '' && new Date(endingDate);
-    // if (start > end) {
-    //   setStartingDate(endingDate);
-    //   setEndingDate(startingDate);
-    //   console.log('getting date', startingDate, endingDate);
-    // }
-    // console.log('start, end', startingDate, endingDate);
-    if (step === 1) {
-      setSteps(2);
-      setStartingDate(day.dateString);
-    } else if (step === 2) {
-      setSteps(1);
-      setEndingDate(day.dateString);
-    }
-  };
+  const {startingDate, endingDate, handleDayPress} = useHandleRange();
+
   useEffect(() => {
-    const range =
+    const range: Boolean | Date[] =
       typeof startingDate !== 'undefined' &&
       typeof endingDate !== 'undefined' &&
       _dateRange(startingDate, endingDate);
 
-    const unorderedRange =
-      range &&
-      range?.map(
-        date =>
-          new Date(date).getFullYear() +
-          '-' +
-          // @ts-ignore
-          parseInt(new Date(date).getMonth() + 1) +
-          '-' +
-          new Date(date).getDate(),
-      );
-    let orderRange: any = [];
-    unorderedRange &&
-      unorderedRange.map(or =>
-        orderRange.push(
-          or
-            .split('-')
-            .map(p => (parseInt(p) <= 9 ? '0' + p : p))
-            .join('-'),
-        ),
-      );
+    const {styledMarkedRange} = orderAndStyleRange(range, Colors.primary);
 
-    const styledRange =
-      orderRange.length !== 0 &&
-      orderRange.map((_: string, i: number) => ({
-        [orderRange[i]]: {
-          startingDay: i === 0,
-          color: Colors.primary,
-          textColor: 'white',
-          endingDay: i === orderRange.length - 1,
-        },
-      }));
-    let cc: any = {};
-
-    styledRange !== false &&
-      styledRange?.map(
-        (item: any, i: number) =>
-          // @ts-ignore
-          (cc[Object.keys(item)] = Object.values(item)[0]),
-      );
-
-    setMarkedStyle(cc);
-  }, [startingDate, endingDate]);
+    setMarkedStyle(styledMarkedRange);
+  }, [startingDate, endingDate, name]);
 
   return (
     <View style={styles.containerCL}>
@@ -89,20 +33,19 @@ const DateRange = () => {
         onDayPress={handleDayPress}
         markingType={'period'}
         markedDates={_markedStyle}
-        // minDate={'2022-05-10'}
-        // maxDate={'2022-05-1'}
+        enableSwipeMonths
         theme={{
           backgroundColor: colors.backgroundColor,
           calendarBackground: colors.backgroundColor,
           selectedDayBackgroundColor: Colors.primary,
           selectedDayTextColor: Colors.headerText,
           todayTextColor: Colors.primary,
-          dayTextColor: Colors.headerText,
-          textDisabledColor: Colors.subText,
+          dayTextColor: colors.headerText,
+          textDisabledColor: Colors.gray,
           arrowColor: Colors.headerText,
           disabledArrowColor: Colors.subText,
-          monthTextColor: Colors.headerText,
-          indicatorColor: Colors.headerText,
+          monthTextColor: colors.headerText,
+          indicatorColor: colors.headerText,
           textDayFontWeight: '300',
           textMonthFontWeight: 'bold',
           textDayHeaderFontWeight: '300',

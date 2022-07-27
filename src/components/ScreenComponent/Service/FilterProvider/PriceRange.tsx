@@ -10,8 +10,8 @@ const PriceRange = () => {
       <AppInputRange
         minValue={0}
         maxValue={10000}
-        onChangeMin={e => console.log(e)}
-        onChangeMax={e => console.log(e)}
+        onChangeMin={e => console.log('change min', e)}
+        onChangeMax={e => console.log('change max', e)}
       />
     </View>
   );

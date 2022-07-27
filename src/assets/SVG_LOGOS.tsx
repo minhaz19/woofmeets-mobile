@@ -2169,6 +2169,15 @@ export const RoundedCheckbox = (props: SvgProps) => (
     </G>
   </Svg>
 );
+export const RoundedCheckboxFilled = (props: SvgProps) => (
+  <Svg xmlns="http://www.w3.org/2000/svg" width={10} height={10} {...props}>
+    <Path
+      data-name="Icon awesome-check-circle"
+      d="M10 5a5 5 0 1 1-5-5 5 5 0 0 1 5 5ZM4.421 7.647l3.71-3.71a.323.323 0 0 0 0-.456l-.456-.456a.323.323 0 0 0-.456 0L4.193 6.05 2.781 4.637a.323.323 0 0 0-.456 0l-.456.456a.323.323 0 0 0 0 .456l2.1 2.1a.323.323 0 0 0 .452-.002Z"
+      fill="#187d48"
+    />
+  </Svg>
+);
 export const S = (props: SvgProps) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"

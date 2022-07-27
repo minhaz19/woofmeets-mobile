@@ -5,7 +5,10 @@ import Colors from '../../../constants/Colors';
 import Svg, {Line} from 'react-native-svg';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
 import Text_Size from '../../../constants/textScaling';
 interface Props {
   minValue: number;
@@ -33,6 +36,7 @@ const {
 const MAX_WIDTH = width - 20;
 const Aline = createAnimatedComponent(Line);
 const AText = createAnimatedComponent(TextInput);
+
 const usePanGesture = (initalValue: number) => {
   const transx = useRef(new Value(initalValue)).current;
   const offsetX = useRef(new Value(initalValue)).current;
@@ -58,9 +62,9 @@ const usePanGesture = (initalValue: number) => {
 
 const PanComponent = (initalValue: number) => {
   const {transx, onGestureHandle} = usePanGesture(initalValue);
+
   const Pan = () => (
     <PanGestureHandler
-      activeOffsetY={[0, 10]}
       onGestureEvent={onGestureHandle}
       onHandlerStateChange={onGestureHandle}>
       <Aview style={[styles.balls, {transform: [{translateX: transx}]}]} />
@@ -78,11 +82,23 @@ const AppInputRange = ({
   const max = useRef(null);
   const {Pan: Pan1, transx: x1} = PanComponent(0);
   const {Pan: Pan2, transx: x2} = PanComponent(MAX_WIDTH);
+
+  const offset = useSharedValue(0);
+
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{translateX: (offset.value / 100) * 50}],
+      // transform: [{translateX: (offset.value / 100) * 50}],
+      // transform: [{translateX: (offset.value / SCREEN_WIDTH) * 50}],
+    };
+  });
+
   useCode(
     () => [
       call([x1], ([value]) => {
         if (min.current) {
           onChangeMin(minValue + (value / MAX_WIDTH) * (maxValue - minValue));
+          offset.value = value;
           //@ts-ignore
           min.current.setNativeProps({
             text: `${Math.round(
@@ -98,7 +114,9 @@ const AppInputRange = ({
     () => [
       call([x2], ([value]) => {
         if (max.current) {
+          console.log(value);
           onChangeMax(minValue + (value / MAX_WIDTH) * (maxValue - minValue));
+          offset.value = value;
           //@ts-ignore
           max.current.setNativeProps({
             text: `${Math.round(
@@ -110,47 +128,55 @@ const AppInputRange = ({
     ],
     [x2],
   );
-  console.log('getting size', SCREEN_WIDTH);
   return (
-    <View style={styles.container}>
-      <View style={styles.rangeBar} />
-      <View style={styles.labelContainer}>
-        <View style={styles.labelArrow} />
-        <AText
-          defaultValue={'0'}
-          editable={false}
-          ref={min}
-          style={styles.label}
-        />
-        <Text style={styles.label}> {' - '}</Text>
-        <AText
-          defaultValue={MAX_WIDTH.toString()}
-          editable={false}
-          ref={max}
-          style={styles.label}
-        />
-      </View>
-      <View style={{position: 'absolute', alignSelf: 'center'}}>
-        <Svg height="6" width={width}>
-          <Aline
-            stroke={Colors.primary}
-            strokeWidth={12}
-            x1={x1}
-            y1={0}
-            x2={x2}
-            y2={0}
+    <>
+      <View style={styles.container}>
+        <View style={styles.rangeBar} />
+
+        <Animated.View style={[styles.labelContainer, animatedStyles]}>
+          <View style={styles.labelArrow} />
+          <AText
+            defaultValue={'0'}
+            editable={false}
+            ref={min}
+            style={styles.label}
           />
-        </Svg>
+          <Text style={styles.label}> {' - '}</Text>
+          <AText
+            defaultValue={MAX_WIDTH.toString()}
+            editable={false}
+            ref={max}
+            style={styles.label}
+          />
+        </Animated.View>
+
+        <View style={{position: 'absolute', alignSelf: 'center'}}>
+          <Svg height="6" width={width}>
+            <Aline
+              stroke={Colors.primary}
+              strokeWidth={12}
+              x1={x1}
+              y1={0}
+              x2={x2}
+              y2={0}
+            />
+          </Svg>
+        </View>
+        <Pan1 />
+        <Pan2 />
       </View>
-      <Pan1 />
-      <Pan2 />
-    </View>
+    </>
   );
 };
 
 export default AppInputRange;
 
 const styles = StyleSheet.create({
+  box: {
+    width: 100,
+    height: 100,
+    backgroundColor: 'blue',
+  },
   container: {
     marginHorizontal: 20,
     marginTop: 50,
@@ -184,6 +210,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     paddingVertical: SCREEN_WIDTH === 390 ? 10 : 0,
     paddingHorizontal: 10,
+
     flexDirection: 'row',
     top: -40,
     alignContent: 'center',

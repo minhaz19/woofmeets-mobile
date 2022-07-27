@@ -50,7 +50,7 @@ const addPetValue: addPetType = {
 };
 const filterProviderValue: filterProviderType = {
   location: '',
-  dateRange: [],
+  dateRange: '',
   petType: '',
   priceRange: [],
   homeType: '',

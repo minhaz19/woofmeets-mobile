@@ -8,6 +8,7 @@ import {
 import addPetReducer from './slices/addPet';
 
 import authReducer from './slices/auth';
+import hittingCross from './slices/hittingCross';
 import openFilter from './slices/openFilter';
 import userLogin from './slices/userLogin';
 
@@ -16,6 +17,7 @@ const appReducer = combineReducers({
   addPet: addPetReducer,
   login: userLogin,
   filter: openFilter,
+  cross: hittingCross,
 });
 
 const RootReducer = (

@@ -35,7 +35,16 @@ const AppInputSelect = ({...otherProps}) => {
         ]}
         {...otherProps}
       />
-      {otherProps.Icon ? <otherProps.Icon /> : null}
+      {otherProps.Icon
+        ? otherProps.value !== '' && (
+            <TouchableOpacity
+              style={styles.icon}
+              activeOpacity={1}
+              onPress={otherProps.onPressCross}>
+              <otherProps.Icon />
+            </TouchableOpacity>
+          )
+        : null}
     </TouchableOpacity>
   );
 };
@@ -55,8 +64,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    marginRight: 10,
-    justifyContent: 'center',
+    padding: 5,
+    paddingLeft: 10,
+    // backgroundColor: 'red',
   },
   text: {
     width: '90%',
