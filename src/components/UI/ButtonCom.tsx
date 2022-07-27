@@ -29,8 +29,8 @@ const ButtonCom = (props: {
     <Card
       style={{
         ...styles.cardlist,
-        ...props.containerStyle,
         backgroundColor: isDarkMode ? Colors.button.grey : Colors.primary,
+        ...props.containerStyle,
       }}>
       <View style={{...styles.progressContainer, ...props.progressStyle}} />
       <View style={{...styles.touchable}}>

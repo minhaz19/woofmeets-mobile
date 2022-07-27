@@ -1,11 +1,10 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import TitleText from '../../../common/text/TitleText';
-import Text_Size from '../../../../constants/textScaling';
 import {MapMarker, RoundedCheckbox, Star} from '../../../../assets/SVG_LOGOS';
 import ShortIconTitle from '../../../common/ShortIconTitle';
 import ShortText from '../../../common/text/ShortText';
 import Colors from '../../../../constants/Colors';
+import HeaderText from '../../../common/text/HeaderText';
 interface Props {
   name: string;
   nature: string;
@@ -24,12 +23,12 @@ const ProviderInfo = ({
 }: Props) => {
   return (
     <View style={styles.container}>
-      <TitleText textStyle={styles.title} text={name} />
+      <HeaderText textStyle={styles.title} text={"nadni anbdiaij iahdiai iadiajsio iaisd"} />
       <View style={styles.shortInfo}>
         <ShortIconTitle Icon={Star} text={rating} />
         <ShortIconTitle Icon={MapMarker} text={distance} />
       </View>
-      <ShortText text={nature} />
+      <ShortText text={"andiaio wnsfiisa anidnia andiai buhiu uuhi aidn aidia snifniosfo isnfis sbni sisnfi snifsn"} />
       <View style={styles.availableTime}>
         <ShortIconTitle
           Icon={RoundedCheckbox}
@@ -51,13 +50,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   title: {
-    fontSize: Text_Size.Text_2,
     fontWeight: '600',
+    width: '60%',
   },
   shortInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 5,
+    width: '60%',
   },
   availableTime: {
     marginVertical: 5,
