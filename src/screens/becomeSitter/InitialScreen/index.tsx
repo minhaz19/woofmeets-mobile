@@ -19,6 +19,7 @@ const SitterInitialScreen = (props: {
   const {colors} = useTheme();
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       style={[
         styles.container,
         {
