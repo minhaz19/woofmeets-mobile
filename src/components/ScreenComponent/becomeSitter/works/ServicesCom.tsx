@@ -1,4 +1,4 @@
-import {StyleSheet, View, SafeAreaView, Platform} from 'react-native';
+import {StyleSheet, View, SafeAreaView} from 'react-native';
 import React, {FC} from 'react';
 import Screen from '../../../common/Screen';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';

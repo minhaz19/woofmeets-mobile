@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginLeft: -20,
     // marginRight: 50,
     // marginLeft: 50,
     position: 'absolute',

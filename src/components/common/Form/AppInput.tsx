@@ -9,7 +9,6 @@ const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
   const {colors, isDarkMode} = useTheme();
   const {numberOfLines} = otherProps;
-  // isDarkMode ? colors.lightBackgroundColor :
 
   return (
     <View
@@ -27,7 +26,7 @@ const AppInput = ({...otherProps}) => {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
             height: numberOfLines >= 10 ? 120 : 40,
             flex: 1,
-            color: isDarkMode ? 'gray' : 'black',
+            color: isDarkMode ? 'white' : 'black',
           },
         ]}
         {...otherProps}
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
   },
   text: {
     width: '90%',
-    fontSize: Text_Size.Text_9,
+    fontSize: Text_Size.Text_0,
     flex: 0,
   },
   check: {height: '100%', alignSelf: 'center'},
