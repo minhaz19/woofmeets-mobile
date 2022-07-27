@@ -12,11 +12,18 @@ const DateRange = () => {
 
   const [startingDate, setStartingDate] = useState('');
   const [endingDate, setEndingDate] = useState('');
-  const [datesRange, setDatesRange] = useState([]);
-  const [key, setKey] = useState('');
+  const [_markedStyle, setMarkedStyle] = useState({});
 
-  const [_markedDates, setMarkedDates] = useState([]);
   const handleDayPress = (day: any) => {
+    // console.log('getting date', day.dateString, step);
+    // const start = startingDate !== '' && new Date(startingDate);
+    // const end = endingDate !== '' && new Date(endingDate);
+    // if (start > end) {
+    //   setStartingDate(endingDate);
+    //   setEndingDate(startingDate);
+    //   console.log('getting date', startingDate, endingDate);
+    // }
+    // console.log('start, end', startingDate, endingDate);
     if (step === 1) {
       setSteps(2);
       setStartingDate(day.dateString);
@@ -52,45 +59,38 @@ const DateRange = () => {
             .join('-'),
         ),
       );
-    setDatesRange(orderRange);
-    orderRange.map((date: any) => setKey(date));
+
+    const styledRange =
+      orderRange.length !== 0 &&
+      orderRange.map((_: string, i: number) => ({
+        [orderRange[i]]: {
+          startingDay: i === 0,
+          color: Colors.primary,
+          textColor: 'white',
+          endingDay: i === orderRange.length - 1,
+        },
+      }));
+    let cc: any = {};
+
+    styledRange !== false &&
+      styledRange?.map(
+        (item: any, i: number) =>
+          // @ts-ignore
+          (cc[Object.keys(item)] = Object.values(item)[0]),
+      );
+
+    setMarkedStyle(cc);
   }, [startingDate, endingDate]);
-  //   const objectmod = {
-  //     ...datesRange.map(date => {
-  //       return {
-  //         [date]: {color: '#70d7c7', textColor: 'white'},
-  //       };
-  //     }),
-  //   };
-  console.log('starting and ending', key);
+
   return (
     <View style={styles.containerCL}>
       <Calendar
         style={styles.calenderStyles}
         onDayPress={handleDayPress}
-        // firstDay={1}
-        // hideDayNames={true}
-        // showWeekNumbers={true}
-        // onPressArrowLeft={subtractMonth => subtractMonth()}
-        // onPressArrowRight={addMonth => addMonth()}
         markingType={'period'}
-        markedDates={{
-          [datesRange[0]]: {
-            startingDay: true,
-            color: '#50cebb',
-            textColor: 'white',
-          },
-
-          [key]: {
-            color: '#70d7c7',
-            textColor: 'white',
-          },
-          [datesRange[datesRange.length - 1]]: {
-            endingDay: true,
-            color: '#50cebb',
-            textColor: 'white',
-          },
-        }}
+        markedDates={_markedStyle}
+        // minDate={'2022-05-10'}
+        // maxDate={'2022-05-1'}
         theme={{
           backgroundColor: colors.backgroundColor,
           calendarBackground: colors.backgroundColor,
@@ -118,9 +118,7 @@ const DateRange = () => {
 export default DateRange;
 
 const styles = StyleSheet.create({
-  containerCL: {
-    // marginHorizontal: 20,
-  },
+  containerCL: {},
   calenderStyles: {
     width: '100%',
     borderWidth: 1,

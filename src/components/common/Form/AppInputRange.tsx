@@ -60,6 +60,7 @@ const PanComponent = (initalValue: number) => {
   const {transx, onGestureHandle} = usePanGesture(initalValue);
   const Pan = () => (
     <PanGestureHandler
+      activeOffsetY={[0, 10]}
       onGestureEvent={onGestureHandle}
       onHandlerStateChange={onGestureHandle}>
       <Aview style={[styles.balls, {transform: [{translateX: transx}]}]} />

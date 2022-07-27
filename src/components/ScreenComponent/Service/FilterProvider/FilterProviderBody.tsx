@@ -58,7 +58,7 @@ const FilterProviderBody = ({
   const renderHeader = () => {
     return (
       <View>
-        <AppInputSelectField
+        {/* <AppInputSelectField
           autoCapitalize="none"
           autoCorrect={false}
           placeholder={'Current Location'}
@@ -75,8 +75,8 @@ const FilterProviderBody = ({
           Icon={Cross}
           onPress={() => setOpenCal(!openCal)}
         />
-        {openCal && <DateRange />}
-        <View>
+        {openCal && <DateRange />} */}
+        {/* <View>
           <TitleText textStyle={styles.title} text="My Pet" />
           <FlatList
             data={myPet}
@@ -95,7 +95,7 @@ const FilterProviderBody = ({
               );
             }}
           />
-        </View>
+        </View> */}
 
         <PriceRange />
       </View>
@@ -104,7 +104,7 @@ const FilterProviderBody = ({
   const renderFooter = () => {
     return (
       <View>
-        <TitleText textStyle={styles.title} text="Home Type" />
+        {/* <TitleText textStyle={styles.title} text="Home Type" />
         <FlatList
           data={homeType}
           showsHorizontalScrollIndicator={false}
@@ -124,7 +124,7 @@ const FilterProviderBody = ({
         />
         <View style={styles.btnContainer}>
           <SubmitButton title="Search Result" />
-        </View>
+        </View> */}
       </View>
     );
   };

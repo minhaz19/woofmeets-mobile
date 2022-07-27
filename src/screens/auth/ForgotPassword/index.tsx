@@ -14,7 +14,6 @@ import {forgotPasswordValidationSchema} from '../../../utils/config/validationSc
 import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
 import {AuthPassword} from '../../../assets/SVG_LOGOS';
 const forgotPassData = {
-  image: require('../../../assets/image/forgotPassword/password.png'),
   title: 'Forgot Password?',
 };
 interface Props {
