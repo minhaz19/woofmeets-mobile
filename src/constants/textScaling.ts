@@ -17,7 +17,7 @@ const Text_Size_Type = {
         ? SCREEN_WIDTH * 0.038 <= 18
           ? SCREEN_WIDTH * 0.038
           : 18
-        : 20,
+        : 18,
     Text_2:
       SCREEN_WIDTH <= 380
         ? 14
