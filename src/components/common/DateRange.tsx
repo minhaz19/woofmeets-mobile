@@ -1,92 +1,58 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable radix */
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import Colors from '../../constants/Colors';
 import {Calendar} from 'react-native-calendars';
 import {_dateRange} from '../../utils/helpers/datesArray';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
+import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
+import {orderAndStyleRange} from '../../utils/helpers/CalendarRange/orderAndStyleRange';
+interface Props {
+  name: string;
+}
+const DateRange = ({name}: Props) => {
+  const [_markedStyle, setMarkedStyle] = useState({});
+  const {colors} = useTheme();
 
-const DateRange = () => {
-  const [step, setSteps] = useState(1);
+  const {startingDate, endingDate, handleDayPress} = useHandleRange();
 
-  const [startingDate, setStartingDate] = useState('');
-  const [endingDate, setEndingDate] = useState('');
-  const [datesRange, setDatesRange] = useState([]);
-  const [key, setKey] = useState('');
-
-  const [_markedDates, setMarkedDates] = useState([]);
-  const handleDayPress = (day: any) => {
-    if (step === 1) {
-      setSteps(2);
-      setStartingDate(day.dateString);
-    } else if (step === 2) {
-      setSteps(1);
-      setEndingDate(day.dateString);
-    }
-  };
   useEffect(() => {
-    const range =
+    const range: Boolean | Date[] =
       typeof startingDate !== 'undefined' &&
       typeof endingDate !== 'undefined' &&
       _dateRange(startingDate, endingDate);
 
-    const unorderedRange =
-      range &&
-      range?.map(
-        date =>
-          new Date(date).getFullYear() +
-          '-' +
-          // @ts-ignore
-          parseInt(new Date(date).getMonth() + 1) +
-          '-' +
-          new Date(date).getDate(),
-      );
-    let orderRange: any = [];
-    unorderedRange &&
-      unorderedRange.map(or =>
-        orderRange.push(
-          or
-            .split('-')
-            .map(p => (parseInt(p) <= 9 ? '0' + p : p))
-            .join('-'),
-        ),
-      );
-    setDatesRange(orderRange);
-    orderRange.map((date: any) => setKey(date));
-  }, [startingDate, endingDate]);
-  //   const objectmod = {
-  //     ...datesRange.map(date => {
-  //       return {
-  //         [date]: {color: '#70d7c7', textColor: 'white'},
-  //       };
-  //     }),
-  //   };
-  console.log('starting and ending', key);
+    const {styledMarkedRange} = orderAndStyleRange(range, Colors.primary);
+
+    setMarkedStyle(styledMarkedRange);
+  }, [startingDate, endingDate, name]);
+
   return (
     <View style={styles.containerCL}>
       <Calendar
+        style={styles.calenderStyles}
         onDayPress={handleDayPress}
-        // firstDay={1}
-        // hideDayNames={true}
-        // showWeekNumbers={true}
-        // onPressArrowLeft={subtractMonth => subtractMonth()}
-        // onPressArrowRight={addMonth => addMonth()}
         markingType={'period'}
-        markedDates={{
-          [datesRange[0]]: {
-            startingDay: true,
-            color: '#50cebb',
-            textColor: 'white',
-          },
-
-          [key]: {
-            color: '#70d7c7',
-            textColor: 'white',
-          },
-          [datesRange[datesRange.length - 1]]: {
-            endingDay: true,
-            color: '#50cebb',
-            textColor: 'white',
-          },
+        markedDates={_markedStyle}
+        minDate={new Date().toString()}
+        enableSwipeMonths
+        theme={{
+          backgroundColor: colors.backgroundColor,
+          calendarBackground: colors.backgroundColor,
+          selectedDayBackgroundColor: Colors.primary,
+          selectedDayTextColor: Colors.headerText,
+          todayTextColor: Colors.primary,
+          dayTextColor: colors.headerText,
+          textDisabledColor: Colors.gray,
+          arrowColor: Colors.headerText,
+          disabledArrowColor: Colors.subText,
+          monthTextColor: colors.headerText,
+          indicatorColor: colors.headerText,
+          textDayFontWeight: '300',
+          textMonthFontWeight: 'bold',
+          textDayHeaderFontWeight: '300',
+          textDayFontSize: 14,
+          textMonthFontSize: 16,
+          textDayHeaderFontSize: 14,
         }}
       />
     </View>
@@ -96,7 +62,12 @@ const DateRange = () => {
 export default DateRange;
 
 const styles = StyleSheet.create({
-  containerCL: {
-    marginHorizontal: 20,
+  containerCL: {},
+  calenderStyles: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    borderRadius: 5,
+    marginBottom: 10,
   },
 });

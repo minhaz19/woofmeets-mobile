@@ -13,7 +13,7 @@ interface Props {
   label: string;
   data?: [];
 }
-const AppSelect = ({label, name, data}: Props) => {
+const AppSelect = ({label, name}: Props) => {
   const {isDarkMode, colors} = useTheme();
   const {setFieldValue, errors, touched} = useFormikContext<FormikValues>();
   return (
@@ -23,14 +23,15 @@ const AppSelect = ({label, name, data}: Props) => {
         buttonStyle={{
           height: 40,
           width: '100%',
-          backgroundColor: isDarkMode
-            ? colors.lightBackgroundColor
-            : colors.inputLightBg,
-          borderRadius: 5,
+          backgroundColor: colors.backgroundColor,
           marginVertical: 10,
           justifyContent: 'space-between',
           borderWidth: 1,
-          borderColor: Colors.border,
+          borderColor: isDarkMode ? Colors.gray : Colors.border,
+          borderRadius: 2,
+          flexDirection: 'row',
+          paddingHorizontal: 5,
+          marginBottom: 10,
         }}
         selectedRowTextStyle={styles.text}
         buttonTextStyle={styles.buttonText}
@@ -58,7 +59,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {fontSize: Text_Size.Text_1, color: 'gray'},
   text: {
-    fontSize: Text_Size.Text_0,
     flex: 0,
     color: 'black',
   },
