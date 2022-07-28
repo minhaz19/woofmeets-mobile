@@ -7,6 +7,7 @@ import HeaderText from '../../../../common/text/HeaderText';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   item: {
@@ -22,8 +23,8 @@ interface Props {
 
 const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
   return (
-    <TouchableOpacity onPress={handlePress}>
-      <Card style={styles.itemContainer}>
+    <Card style={styles.itemContainer}>
+      <TouchableOpacity onPress={handlePress}>
         <View style={styles.flexContainer}>
           <View style={styles.imageContainer}>
             <Image
@@ -53,18 +54,15 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <View style={styles.buttonStyles}>
-            <IOSButton
-              containerStyle={styles.containerStyleSmall}
-              onSelect={() => {}}
-              textAlignment={{backgroundColor: buttonStyles, borderRadius: 100}}
-              titleStyle={btnStyles.textStyle}
-              title={item.status}
+          <View style={[styles.buttonStyles, {backgroundColor: buttonStyles}]}>
+            <DescriptionText
+              text={item.status}
+              textStyle={{color: Colors.light.background}}
             />
           </View>
         </View>
-      </Card>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Card>
   );
 };
 
@@ -101,22 +99,17 @@ const styles = StyleSheet.create({
   },
   buttonStyles: {
     width: '20%',
-  },
-  textAlignment: {
-    backgroundColor: Colors.success,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 100,
+    backgroundColor: Colors.primary,
+    paddingVertical: '2%',
+    paddingHorizontal: '2%',
+    marginTop: '2%',
   },
   buttonContainer: {
     alignItems: 'flex-end',
     marginRight: '2%',
-  },
-  containerStyleSmall: {
-    height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.04 : 30,
-    borderRadius: 100,
-    marginLeft: 0,
-    marginRight: 0,
-    justifyContent: 'center',
-    marginBottom: 0,
   },
   textDescription: {
     lineHeight: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.02 : 20,
@@ -126,9 +119,5 @@ const styles = StyleSheet.create({
   },
   textTimeDescription: {
     color: Colors.gray,
-  },
-  SvgContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
