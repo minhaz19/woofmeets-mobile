@@ -14,11 +14,10 @@ interface Props {
   active?: boolean;
   onPress?: () => void;
 }
-const AppSwitch = ({name, terms, auth, title, active, onPress}: Props) => {
+const AppSwitch = ({name, terms, auth, title}: Props) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const {touched, values, errors, setFieldValue} =
     useFormikContext<FormikValues>();
-  // console.log('active inside', active);
   return (
     <>
       <View style={styles.container}>
@@ -32,14 +31,12 @@ const AppSwitch = ({name, terms, auth, title, active, onPress}: Props) => {
         )}
         {title && <ShortText text={title} textStyle={styles.title} />}
         <SwitchView
-          isActive={active}
-          // isActive={values[name]}
+          isActive={values[name]}
           activeText=""
           inActiveText=""
           onSelect={is => {
-            // setIsEnabled(is);
+            setIsEnabled(is);
             setFieldValue(name, !isEnabled);
-            onPress();
           }}
         />
       </View>

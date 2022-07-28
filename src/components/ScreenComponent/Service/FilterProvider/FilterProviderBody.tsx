@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import AppForm from '../../../common/Form/AppForm';
 import AppInputSelectField from '../../../common/Form/AppInputSelectField';
-import {BuildSvg, Cross, HomeSvg, Plus} from '../../../../assets/SVG_LOGOS';
+import {Cross} from '../../../../assets/SVG_LOGOS';
 import ConsumerPetList from './ConsumerPetList';
 import TitleText from '../../../common/text/TitleText';
 import PriceRange from './PriceRange';
@@ -16,6 +16,11 @@ import FilterSwitch from './FilterSwitch';
 import HeaderText from '../../../common/text/HeaderText';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import AppButton from '../../../common/AppButton';
+import {
+  filterPetSwitch,
+  homeType,
+  myPet,
+} from '../../../../utils/config/Data/filterProviderDatas';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -24,116 +29,6 @@ interface Props {
   onPress?: () => void;
 }
 
-const myPet = [
-  {
-    image: require('../../../../assets/image/selectServiceImage/mypet.png'),
-    name: 'Puppy',
-  },
-  {
-    image: require('../../../../assets/image/selectServiceImage/mypet.png'),
-    name: 'Puppy',
-  },
-  {
-    image: require('../../../../assets/image/selectServiceImage/mypet.png'),
-    name: 'Puppy',
-  },
-];
-const filterPetSwitch = [
-  {
-    heading: 'Daytime Availability',
-    switch: [
-      {
-        title: 'Sitter is home full-time',
-        active: true,
-        id: 1,
-      },
-    ],
-  },
-  {
-    heading: 'Pets in the home',
-    switch: [
-      {
-        title: 'Does not own a dog',
-        active: true,
-      },
-      {
-        title: 'Does not own a cat',
-        active: true,
-      },
-      {
-        title: 'Accepts one client at a time',
-        active: true,
-      },
-      {
-        title: 'Does not own caged pet',
-        active: true,
-      },
-    ],
-  },
-  {
-    heading: 'Housing Condition',
-    switch: [
-      {
-        title: 'Has fenced yard',
-        active: true,
-      },
-      {
-        title: 'Dogs allowed on furniture',
-        active: true,
-      },
-      {
-        title: 'Dogs allowed on bed',
-        active: true,
-      },
-      {
-        title: 'Non-smoking home',
-        active: true,
-      },
-    ],
-  },
-  {
-    heading: 'Services',
-    switch: [
-      {
-        title: 'Cat care',
-        active: true,
-      },
-      {
-        title: 'Accepts unspayed female dogs',
-        active: true,
-      },
-      {
-        title: 'Acceipts non neutered male dogs',
-        active: true,
-      },
-      {
-        title: 'Bathing/Grooming',
-        active: true,
-      },
-      {
-        title: 'Dog first-aid/CPR',
-        active: true,
-      },
-    ],
-  },
-  {
-    heading: 'Children in the home',
-    switch: [
-      {
-        title: 'Has no children',
-        active: true,
-      },
-      {
-        title: 'No children 0 - 5 years old',
-        active: true,
-      },
-      {
-        title: 'No children 6 - 12 years old',
-        active: true,
-      },
-    ],
-  },
-];
 const FilterProviderBody = ({
   handleSubmit,
   initialValues,
@@ -142,22 +37,7 @@ const FilterProviderBody = ({
   const [openCal, setOpenCal] = useState(false);
   const [selectedPet, setSelectedPet] = useState(0);
   const [selectedHome, setSelectedHome] = useState(0);
-  const [filterItem, setFilterItem] = useState(filterPetSwitch);
-  const [active, setActive] = useState(false);
-  const homeType = [
-    {
-      type: HomeSvg,
-      title: 'Houses',
-    },
-    {
-      type: BuildSvg,
-      title: 'Apartments',
-    },
-    {
-      type: Plus,
-      title: 'Add More',
-    },
-  ];
+
   const renderHeader = () => {
     return (
       <View>
@@ -205,13 +85,7 @@ const FilterProviderBody = ({
       </View>
     );
   };
-  const handlePress = (i: number, id: number) => {
-    // const marked = filterPetSwitch.map(item => item.switch.filter((item: {}) => item?.id === id);
-    // marked[0].active = !marked[0].active;
-    // setFilterItem(marked));
-    // setActive(marked[0].active);
-    // console.log('marked', marked, filterPetSwitch[i]);
-  };
+
   const renderFooter = () => {
     return (
       <View>
@@ -240,10 +114,8 @@ const FilterProviderBody = ({
               {item.switch.map((switchItem, i) => (
                 <FilterSwitch
                   key={i}
-                  name="pass name from array"
+                  name={switchItem.name}
                   title={switchItem.title}
-                  active={switchItem.active}
-                  onPress={() => handlePress(i, switchItem?.id)}
                 />
               ))}
             </View>

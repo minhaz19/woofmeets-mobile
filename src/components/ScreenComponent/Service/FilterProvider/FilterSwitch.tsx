@@ -1,18 +1,15 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import AppSwitch from '../../../common/AppSwitch';
 interface Props {
   title: string;
-  active: boolean;
+
   name: string;
-  onPress: () => void;
 }
-const FilterSwitch = ({title, name, active, onPress}: Props) => {
-  // const [active, setActive] = useState(false);
-  console.log('activ setep,', active);
+const FilterSwitch = ({title, name}: Props) => {
   return (
     <View style={styles.container}>
-      <AppSwitch name={name} title={title} active={active} onPress={onPress} />
+      <AppSwitch name={name} title={title} />
     </View>
   );
 };
