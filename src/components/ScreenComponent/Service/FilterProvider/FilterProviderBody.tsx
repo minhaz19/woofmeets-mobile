@@ -45,6 +45,7 @@ const filterPetSwitch = [
       {
         title: 'Sitter is home full-time',
         active: true,
+        id: 1,
       },
     ],
   },
@@ -141,6 +142,8 @@ const FilterProviderBody = ({
   const [openCal, setOpenCal] = useState(false);
   const [selectedPet, setSelectedPet] = useState(0);
   const [selectedHome, setSelectedHome] = useState(0);
+  const [filterItem, setFilterItem] = useState(filterPetSwitch);
+  const [active, setActive] = useState(false);
   const homeType = [
     {
       type: HomeSvg,
@@ -202,6 +205,13 @@ const FilterProviderBody = ({
       </View>
     );
   };
+  const handlePress = (i: number, id: number) => {
+    // const marked = filterPetSwitch.map(item => item.switch.filter((item: {}) => item?.id === id);
+    // marked[0].active = !marked[0].active;
+    // setFilterItem(marked));
+    // setActive(marked[0].active);
+    // console.log('marked', marked, filterPetSwitch[i]);
+  };
   const renderFooter = () => {
     return (
       <View>
@@ -233,8 +243,7 @@ const FilterProviderBody = ({
                   name="pass name from array"
                   title={switchItem.title}
                   active={switchItem.active}
-                  onPress={() => (switchItem.active = !switchItem.active)}
-                  // setActive=
+                  onPress={() => handlePress(i, switchItem?.id)}
                 />
               ))}
             </View>
