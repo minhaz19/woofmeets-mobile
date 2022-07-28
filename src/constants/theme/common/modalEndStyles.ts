@@ -28,8 +28,7 @@ export const designs = StyleSheet.create({
     right: 10,
   },
   modalView: {
-    height: '40%',
-    width: '100%',
+    maxHeight: '100%',
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: {
@@ -42,7 +41,7 @@ export const designs = StyleSheet.create({
     paddingTop: 20,
   },
   modalViewRounded: {
-    // height: '40%',
+    minHeight: '40%',
     maxHeight: '90%',
     width: '100%',
 

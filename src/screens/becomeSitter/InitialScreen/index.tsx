@@ -12,6 +12,8 @@ import BottomSpacing from '../../../components/UI/BottomSpacing';
 import CardQuotes from '../../../components/ScreenComponent/becomeSitter/Card/CardQuotes';
 import ServicesCom from '../../../components/ScreenComponent/becomeSitter/works/ServicesCom';
 import HowItWorks from '../../../components/ScreenComponent/becomeSitter/works/HowItWorks';
+import { bulletData1, bulletData2, bulletData3 } from './data';
+import { styles } from './styles';
 
 const SitterInitialScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -58,9 +60,9 @@ const SitterInitialScreen = (props: {
           text="Flexibility puts you in Control"
         />
         {/* Bullets */}
-        <BulletPoints text="Set your own schedule and prices" />
-        <BulletPoints text="Offer any combination of pet care services" />
-        <BulletPoints text="Set size , age , and other pet preferences that work for you" />
+        {bulletData1.map(item => (
+          <BulletPoints text={item.text} key={item.id} />
+        ))}
       </View>
       <View style={styles.verticalPadding} />
       <View style={styles.verticalPadding} />
@@ -81,9 +83,9 @@ const SitterInitialScreen = (props: {
           textStyle={styles.titleStylePadding2}
           text="The tools to succeed"
         />
-        <BulletPoints text="The Woofmeets Guarantee, which includes up to $25.000 in vet care reimbursement." />
-        <BulletPoints text="Manage your pet sitting schedule and more with the Woofmeets app." />
-        <BulletPoints text="24/7 support , including vet assistance." />
+        {bulletData2.map(item => (
+          <BulletPoints text={item.text} key={item.id} />
+        ))}
       </View>
       <View style={styles.verticalPadding} />
       {/* Image Quotes 2 */}
@@ -126,10 +128,9 @@ const SitterInitialScreen = (props: {
           textStyle={styles.titleStylePaddingMedium}
           text="We work tirelessly to ensure tails keep wagging and pet owner's minds are at ease."
         />
-        <BulletPoints text="Every Service you offer on Woofmeets is backed by the Woofmeets Guarantee." />
-        <BulletPoints text="Safe , secured and convenient online payments." />
-        <BulletPoints text="A top tier support team available 24/7 ." />
-        <BulletPoints text="Ongoing pet care education for pet sitters." />
+        {bulletData3.map(item => (
+          <BulletPoints text={item.text} key={item.id} />
+        ))}
       </View>
       {/* Footer */}
       <View style={[styles.centerText, styles.innerContainer]}>
@@ -151,57 +152,5 @@ const SitterInitialScreen = (props: {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingVertical:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '2%',
-  },
-  imageContainer: {
-    width: '100%',
-    height: SCREEN_WIDTH >= 800 ? 260 : 200,
-
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  image: {width: '100%', height: '100%'},
-  innerContainer: {
-    paddingHorizontal:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '4%',
-  },
-  centerText: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  verticalPadding: {
-    paddingVertical: 10,
-  },
-  titleStyle: {
-    textAlign: 'center',
-  },
-  titleStyleMedium: {
-    textAlign: 'center',
-    fontWeight: '500',
-  },
-  titleStylePaddingMedium: {
-    textAlign: 'center',
-    paddingVertical: 20,
-    fontWeight: '500',
-  },
-  titleStylePadding: {
-    textAlign: 'center',
-    paddingVertical: 20,
-  },
-  titleStylePadding2: {
-    textAlign: 'center',
-    paddingBottom: 20,
-  },
-  buttonContainer: {
-    width: SCREEN_WIDTH <= 800 ? '90%' : '60%',
-    alignSelf: 'center',
-  },
-});
 
 export default SitterInitialScreen;
