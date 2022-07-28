@@ -1,4 +1,4 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import HeaderText from '../../../common/text/HeaderText';
 import DescriptionText from '../../../common/text/DescriptionText';
@@ -21,11 +21,12 @@ const BetweenCom = (props: {
     description: string;
     time: string;
     icon: string;
+    screen?: () => {} | void;
   };
 }) => {
   const {colors} = useTheme();
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <View style={styles.boxContainer}>
         {props.data?.image && (
           <View style={styles.imageContainer}>{props.data.image}</View>
@@ -38,7 +39,7 @@ const BetweenCom = (props: {
           />
         </View>
       </View>
-      <View style={styles.boxContainer}>
+      <View style={styles.boxContainerEnd}>
         <TitleText
           text={props.data.time}
           textStyle={{color: colors.descriptionText}}
@@ -50,7 +51,7 @@ const BetweenCom = (props: {
           color={Colors.subText}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -61,6 +62,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   boxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '70%',
+  },
+  boxContainerEnd: {
     flexDirection: 'row',
     alignItems: 'center',
   },
