@@ -1,8 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import AppForm from '../../../common/Form/AppForm';
 import AppInputSelectField from '../../../common/Form/AppInputSelectField';
-import {BuildSvg, Cross, HomeSvg, Plus} from '../../../../assets/SVG_LOGOS';
+import {Cross} from '../../../../assets/SVG_LOGOS';
 import ConsumerPetList from './ConsumerPetList';
 import TitleText from '../../../common/text/TitleText';
 import PriceRange from './PriceRange';
@@ -11,6 +12,15 @@ import SubmitButton from '../../../common/Form/SubmitButton';
 import Text_Size from '../../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import DateRange from '../../../common/DateRange';
+import FilterSwitch from './FilterSwitch';
+import HeaderText from '../../../common/text/HeaderText';
+import BottomSpacing from '../../../UI/BottomSpacing';
+import AppButton from '../../../common/AppButton';
+import {
+  filterPetSwitch,
+  homeType,
+  myPet,
+} from '../../../../utils/config/Data/filterProviderDatas';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -27,34 +37,7 @@ const FilterProviderBody = ({
   const [openCal, setOpenCal] = useState(false);
   const [selectedPet, setSelectedPet] = useState(0);
   const [selectedHome, setSelectedHome] = useState(0);
-  const myPet = [
-    {
-      image: require('../../../../assets/image/selectServiceImage/mypet.png'),
-      name: 'Puppy',
-    },
-    {
-      image: require('../../../../assets/image/selectServiceImage/mypet.png'),
-      name: 'Puppy',
-    },
-    {
-      image: require('../../../../assets/image/selectServiceImage/mypet.png'),
-      name: 'Puppy',
-    },
-  ];
-  const homeType = [
-    {
-      type: HomeSvg,
-      title: 'Houses',
-    },
-    {
-      type: BuildSvg,
-      title: 'Apartments',
-    },
-    {
-      type: Plus,
-      title: 'Add More',
-    },
-  ];
+
   const renderHeader = () => {
     return (
       <View>
@@ -75,7 +58,7 @@ const FilterProviderBody = ({
           Icon={Cross}
           onPress={() => setOpenCal(!openCal)}
         />
-        {openCal && <DateRange />}
+        {openCal && <DateRange name="dateRange" />}
         <View>
           <TitleText textStyle={styles.title} text="My Pet" />
           <FlatList
@@ -96,11 +79,13 @@ const FilterProviderBody = ({
             }}
           />
         </View>
-
-        <PriceRange />
+        <View>
+          <PriceRange />
+        </View>
       </View>
     );
   };
+
   const renderFooter = () => {
     return (
       <View>
@@ -122,9 +107,25 @@ const FilterProviderBody = ({
             );
           }}
         />
+        <View>
+          {filterPetSwitch.map((item, index) => (
+            <View key={index} style={styles.switch}>
+              <HeaderText text={item.heading} textStyle={{marginBottom: 10}} />
+              {item.switch.map((switchItem, i) => (
+                <FilterSwitch
+                  key={i}
+                  name={switchItem.name}
+                  title={switchItem.title}
+                />
+              ))}
+            </View>
+          ))}
+        </View>
         <View style={styles.btnContainer}>
           <SubmitButton title="Search Result" />
+          <AppButton title="cancel" />
         </View>
+        <BottomSpacing />
       </View>
     );
   };
@@ -151,7 +152,9 @@ export default FilterProviderBody;
 
 const styles = StyleSheet.create({
   container: {marginTop: 10, marginBottom: 20},
-
+  switch: {
+    marginBottom: 20,
+  },
   btnContainer: {
     marginTop: 10,
     marginBottom: SCREEN_WIDTH < 390 ? 30 : 0,

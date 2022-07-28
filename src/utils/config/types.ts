@@ -52,7 +52,7 @@ export interface addPetType {
 }
 export interface filterProviderType {
   location: string;
-  dateRange: [];
+  dateRange: string;
   petType: string;
   priceRange: [];
   homeType: string;

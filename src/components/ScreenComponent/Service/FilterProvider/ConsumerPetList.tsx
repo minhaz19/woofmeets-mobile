@@ -1,6 +1,6 @@
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {RoundedCheckbox} from '../../../../assets/SVG_LOGOS';
+import {RoundedCheckboxFilled} from '../../../../assets/SVG_LOGOS';
 import TitleText from '../../../common/text/TitleText';
 import Text_Size from '../../../../constants/textScaling';
 interface Props {
@@ -18,7 +18,7 @@ const ConsumerPetList = ({image, name, onPress, index, selected}: Props) => {
           <Image source={image} style={styles.image} />
           {index === selected && (
             <View style={styles.batchContainer}>
-              <RoundedCheckbox />
+              <RoundedCheckboxFilled />
             </View>
           )}
         </View>
