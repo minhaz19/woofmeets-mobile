@@ -33,6 +33,7 @@ const DateRange = ({name}: Props) => {
         onDayPress={handleDayPress}
         markingType={'period'}
         markedDates={_markedStyle}
+        minDate={new Date().toString()}
         enableSwipeMonths
         theme={{
           backgroundColor: colors.backgroundColor,

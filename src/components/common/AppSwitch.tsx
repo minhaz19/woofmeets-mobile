@@ -10,8 +10,10 @@ interface Props {
   name: string;
   terms?: boolean;
   auth?: boolean;
+  title?: string;
+  active?: boolean;
 }
-const AppSwitch = ({name, terms, auth}: Props) => {
+const AppSwitch = ({name, terms, auth, title, active}: Props) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const {touched, values, errors, setFieldValue} =
     useFormikContext<FormikValues>();
@@ -26,8 +28,9 @@ const AppSwitch = ({name, terms, auth}: Props) => {
             </TouchableOpacity>
           </View>
         )}
+        {title && <ShortText text={title} textStyle={styles.title} />}
         <SwitchView
-          isActive={values[name]}
+          isActive={values[name] || active}
           activeText=""
           inActiveText=""
           onSelect={is => {
@@ -57,6 +60,9 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flexDirection: 'row',
+  },
+  title: {
+    fontSize: Text_Size.Text_0,
   },
   link: {
     color: Colors.primary,

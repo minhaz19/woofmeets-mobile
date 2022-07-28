@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import AppForm from '../../../common/Form/AppForm';
@@ -11,6 +12,8 @@ import SubmitButton from '../../../common/Form/SubmitButton';
 import Text_Size from '../../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import DateRange from '../../../common/DateRange';
+import FilterSwitch from './FilterSwitch';
+import HeaderText from '../../../common/text/HeaderText';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -19,6 +22,115 @@ interface Props {
   onPress?: () => void;
 }
 
+const myPet = [
+  {
+    image: require('../../../../assets/image/selectServiceImage/mypet.png'),
+    name: 'Puppy',
+  },
+  {
+    image: require('../../../../assets/image/selectServiceImage/mypet.png'),
+    name: 'Puppy',
+  },
+  {
+    image: require('../../../../assets/image/selectServiceImage/mypet.png'),
+    name: 'Puppy',
+  },
+];
+const filterPetSwitch = [
+  {
+    heading: 'Daytime Availability',
+    switch: [
+      {
+        title: 'Sitter is home full-time',
+        active: true,
+      },
+    ],
+  },
+  {
+    heading: 'Pets in the home',
+    switch: [
+      {
+        title: 'Does not own a dog',
+        active: true,
+      },
+      {
+        title: 'Does not own a cat',
+        active: true,
+      },
+      {
+        title: 'Accepts one client at a time',
+        active: true,
+      },
+      {
+        title: 'Does not own caged pet',
+        active: true,
+      },
+    ],
+  },
+  {
+    heading: 'Housing Condition',
+    switch: [
+      {
+        title: 'Has fenced yard',
+        active: true,
+      },
+      {
+        title: 'Dogs allowed on furniture',
+        active: true,
+      },
+      {
+        title: 'Dogs allowed on bed',
+        active: true,
+      },
+      {
+        title: 'Non-smoking home',
+        active: true,
+      },
+    ],
+  },
+  {
+    heading: 'Services',
+    switch: [
+      {
+        title: 'Cat care',
+        active: true,
+      },
+      {
+        title: 'Accepts unspayed female dogs',
+        active: true,
+      },
+      {
+        title: 'Acceipts non neutered male dogs',
+        active: true,
+      },
+      {
+        title: 'Bathing/Grooming',
+        active: true,
+      },
+      {
+        title: 'Dog first-aid/CPR',
+        active: true,
+      },
+    ],
+  },
+  {
+    heading: 'Children in the home',
+    switch: [
+      {
+        title: 'Has no children',
+        active: true,
+      },
+      {
+        title: 'No children 0 - 5 years old',
+        active: true,
+      },
+      {
+        title: 'No children 6 - 12 years old',
+        active: true,
+      },
+    ],
+  },
+];
 const FilterProviderBody = ({
   handleSubmit,
   initialValues,
@@ -27,20 +139,6 @@ const FilterProviderBody = ({
   const [openCal, setOpenCal] = useState(false);
   const [selectedPet, setSelectedPet] = useState(0);
   const [selectedHome, setSelectedHome] = useState(0);
-  const myPet = [
-    {
-      image: require('../../../../assets/image/selectServiceImage/mypet.png'),
-      name: 'Puppy',
-    },
-    {
-      image: require('../../../../assets/image/selectServiceImage/mypet.png'),
-      name: 'Puppy',
-    },
-    {
-      image: require('../../../../assets/image/selectServiceImage/mypet.png'),
-      name: 'Puppy',
-    },
-  ];
   const homeType = [
     {
       type: HomeSvg,
@@ -96,8 +194,9 @@ const FilterProviderBody = ({
             }}
           />
         </View>
-
-        <PriceRange />
+        <View>
+          <PriceRange />
+        </View>
       </View>
     );
   };
@@ -122,6 +221,17 @@ const FilterProviderBody = ({
             );
           }}
         />
+        <View>
+          {[1, 2, 2, 2, 2].map((item, index) => (
+            <View key={index}>
+              <HeaderText
+                text={'Daytime Availablity'}
+                textStyle={{marginBottom: 10}}
+              />
+              <FilterSwitch title={'show us something'} />
+            </View>
+          ))}
+        </View>
         <View style={styles.btnContainer}>
           <SubmitButton title="Search Result" />
         </View>

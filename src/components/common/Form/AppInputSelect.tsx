@@ -7,7 +7,6 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const AppInputSelect = ({...otherProps}) => {
   const {colors, isDarkMode} = useTheme();
   const {numberOfLines} = otherProps;
-
   return (
     <TouchableOpacity
       onPress={otherProps.onPress}

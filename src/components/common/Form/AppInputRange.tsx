@@ -4,7 +4,11 @@ import React, {useMemo, useRef} from 'react';
 import Colors from '../../../constants/Colors';
 import Svg, {Line} from 'react-native-svg';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import {PanGestureHandler, State} from 'react-native-gesture-handler';
+import {
+  GestureHandlerRootView,
+  PanGestureHandler,
+  State,
+} from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -17,6 +21,7 @@ interface Props {
   onChangeMax: (arg: number) => void;
 }
 const width = SCREEN_WIDTH - 80;
+const MAX_WIDTH = width - 20;
 
 const {
   View: Aview,
@@ -33,7 +38,6 @@ const {
   useCode,
   call,
 } = Animated;
-const MAX_WIDTH = width - 20;
 const Aline = createAnimatedComponent(Line);
 const AText = createAnimatedComponent(TextInput);
 
@@ -74,7 +78,7 @@ const PanComponent = (initalValue: number) => {
 };
 const AppInputRange = ({
   minValue,
-  maxValue,
+  maxValue = 200,
   onChangeMin,
   onChangeMax,
 }: Props) => {
@@ -101,7 +105,7 @@ const AppInputRange = ({
           offset.value = value;
           //@ts-ignore
           min.current.setNativeProps({
-            text: `${Math.round(
+            text: `$${Math.round(
               minValue + (value / MAX_WIDTH) * (maxValue - minValue),
             )}`,
           });
@@ -114,12 +118,11 @@ const AppInputRange = ({
     () => [
       call([x2], ([value]) => {
         if (max.current) {
-          console.log(value);
           onChangeMax(minValue + (value / MAX_WIDTH) * (maxValue - minValue));
           offset.value = value;
           //@ts-ignore
           max.current.setNativeProps({
-            text: `${Math.round(
+            text: `$${Math.round(
               minValue + (value / MAX_WIDTH) * (maxValue - minValue),
             )}`,
           });
@@ -128,8 +131,9 @@ const AppInputRange = ({
     ],
     [x2],
   );
+
   return (
-    <>
+    <GestureHandlerRootView>
       <View style={styles.container}>
         <View style={styles.rangeBar} />
 
@@ -143,7 +147,7 @@ const AppInputRange = ({
           />
           <Text style={styles.label}> {' - '}</Text>
           <AText
-            defaultValue={MAX_WIDTH.toString()}
+            defaultValue={'200'}
             editable={false}
             ref={max}
             style={styles.label}
@@ -162,26 +166,23 @@ const AppInputRange = ({
             />
           </Svg>
         </View>
+
         <Pan1 />
         <Pan2 />
       </View>
-    </>
+    </GestureHandlerRootView>
   );
 };
 
 export default AppInputRange;
 
 const styles = StyleSheet.create({
-  box: {
-    width: 100,
-    height: 100,
-    backgroundColor: 'blue',
-  },
   container: {
     marginHorizontal: 20,
     marginTop: 50,
     justifyContent: 'center',
     marginBottom: 20,
+    height: 60,
   },
   rangeBar: {
     width: width,

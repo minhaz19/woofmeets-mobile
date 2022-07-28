@@ -35,12 +35,13 @@ export const useHandleRange = () => {
   };
 
   useMemo(() => {
+    console.log(startingDate, endingDate);
     if (startingDate !== '' && endingDate !== '' && cross === false) {
       setFieldValue(
         'dateRange',
-        `${moment(startingDate).format('MMMM d, YYYY')} - ${moment(
+        `${moment(startingDate).format('MMMM D, YYYY')} - ${moment(
           endingDate,
-        ).format('MMMM d, YYYY')}`,
+        ).format('MMMM D, YYYY')}`,
       );
     } else if (cross === true) {
       setSteps(1);
