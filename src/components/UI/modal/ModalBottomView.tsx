@@ -1,94 +1,51 @@
-import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  GestureResponderEvent,
-} from 'react-native';
+import {View, Modal, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import React from 'react';
-import Ent from 'react-native-vector-icons/Entypo';
-import {Success} from '../../../assets/SVG_LOGOS';
 import {designs} from '../../../constants/theme/common/modalEndStyles';
-import {btnStyles} from '../../../constants/theme/common/buttonStyles';
-import Colors from '../../../constants/Colors';
-import {descriptionDarkText} from '../../../constants/FontDetails';
-import ButtonCom from '../ButtonCom';
-
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {useDispatch} from 'react-redux';
+import {setOpenFilter} from '../../../store/slices/openFilter';
 const ModalBottomView = (props: {
-  modalVisible: boolean | undefined;
-  onSelect: ((event: GestureResponderEvent) => void) | undefined;
-  title: string | undefined;
-  notButton: boolean;
-  isOffer: boolean | undefined;
+  setIsModalVisible?: (arg0: boolean) => void;
+  isModalVisible?: boolean | undefined;
+  children:
+    | boolean
+    | React.ReactChild
+    | React.ReactFragment
+    | React.ReactPortal
+    | null
+    | undefined;
 }) => {
+  const {colors} = useTheme();
+  const dispatch = useDispatch();
   return (
-    <View>
+    <TouchableWithoutFeedback onPress={() => dispatch(setOpenFilter(false))}>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={props.modalVisible}>
-        <View style={designs.centeredView}>
-          <View style={designs.modalView}>
-            <TouchableOpacity
-              style={designs.modalCancelCross}
-              onPress={props.onSelect}>
-              <Ent name="cross" color="white" size={24} />
-            </TouchableOpacity>
-            <View style={designs.modalContainer}>
-              <View style={designs.successContainer}>
-                <Success />
-              </View>
-              <Text style={designs.textSuccess}>
-                {props.title ? props.title : 'Success'}
-              </Text>
-              {!props.notButton && (
-                <ButtonCom
-                  title="Continue"
-                  textAlignment={btnStyles.textAlignment}
-                  containerStyle={styles.containerStyle}
-                  titleStyle={styles.titleStyle}
-                  onSelect={props.onSelect}
-                  progressStyle={undefined}
-                  icon={undefined}
-                  isLeftIcon={false}
-                />
-              )}
-              {props.isOffer && (
-                <View style={styles.offerContainer}>
-                  <Text style={styles.offerText}>{props.isOffer}</Text>
-                </View>
-              )}
-            </View>
+        visible={props.isModalVisible}>
+        <View style={designs.centeredViewBg}>
+          <TouchableWithoutFeedback
+            onPress={() => dispatch(setOpenFilter(false))}>
+            <View style={styles.close} />
+          </TouchableWithoutFeedback>
+          <View
+            style={[
+              designs.modalViewRounded,
+              {backgroundColor: colors.backgroundColor},
+            ]}>
+            <View>{props.children}</View>
           </View>
         </View>
       </Modal>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
+export default ModalBottomView;
 const styles = StyleSheet.create({
-  titleStyle: {
-    color: 'white',
-  },
-  offerContainer: {
-    justifyContent: 'center',
-    paddingTop: 10,
-  },
-  offerText: {
-    color: Colors.primary,
-    fontSize: descriptionDarkText.fontSize,
-    textAlign: 'center',
-  },
-  textAlignment: {
-    justifyContent: 'center',
-  },
-  containerStyle: {
-    height: 40,
-    width: '90%',
-    backgroundColor: Colors.secondary,
-    borderRadius: 4,
+  close: {
+    width: '100%',
+    flex: 1,
+    backgroundColor: 'transparent',
   },
 });
-
-export default ModalBottomView;

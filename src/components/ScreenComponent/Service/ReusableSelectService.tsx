@@ -19,13 +19,13 @@ type NavigationProps = StackNavigationProp<StackParamList>;
 const ReusableSelectService: FC<Props> = data => {
   const {colors} = useTheme();
   const navigation = useNavigation<NavigationProps>();
+  const onPressEvent = () => {
+    navigation.navigate('ServiceDetails', {
+      itemId: data.data.id,
+    });
+  };
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate('ServiceDetails', {
-          itemId: data.data.id,
-        })
-      }>
+    <TouchableOpacity onPress={data.data.id ? onPressEvent : () => {}}>
       <View
         style={[
           styles.container,

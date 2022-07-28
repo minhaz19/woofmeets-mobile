@@ -1,5 +1,5 @@
 import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BigText from '../../../components/common/text/BigText';
 import DescriptionText from '../../../components/common/text/DescriptionText';
@@ -11,6 +11,8 @@ import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import Colors from '../../../constants/Colors';
 import TitleText from '../../../components/common/text/TitleText';
+import ModalBottomView from '../../../components/UI/modal/ModalBottomView';
+import IOSButton from '../../../components/UI/IOSButton';
 
 const HomeProfile = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -53,6 +55,55 @@ const HomeProfile = (props: {
       },
     },
   ];
+  const titleListingData = [
+    {
+      id: 1,
+      name: 'Request Testimonials',
+      description: 'Use reference to build trust new Potencial clients',
+      time: '3 mins',
+      icon: 'chevron-right',
+      screen: () => {
+        props.navigation.navigate('BasicInfoSitter');
+      },
+    },
+    {
+      id: 2,
+      name: 'Pass a Safety Quiz',
+      description: 'Safe stays lead to 5 star reviews',
+      time: '3 mins',
+      icon: 'chevron-right',
+      screen: () => {
+        props.navigation.navigate('BasicInfoSitter');
+      },
+    },
+    {
+      id: 3,
+      name: 'Final Details',
+      description: 'Background check and processing fee',
+      time: '3 mins',
+      icon: 'chevron-right',
+      screen: () => {
+        props.navigation.navigate('BasicInfoSitter');
+      },
+    },
+  ];
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [isServiceModalVisible, setIsServiceModalVisible] =
+    useState<boolean>(false);
+
+  const modalData = [
+    {
+      id: 1,
+      title: 'How does approval work?',
+      text: `Woofmeets selects a single service for you to complete during sign up. Once approved, youy can deactivate any services you no longer wish to offer or add additional service at any time. \n\nOnce you've completed the required sign - up steps , your profile will be auto- submitted and reviewed to ensure accuracy and quality. agna aliquyam erat, sed diam voluptua. \n\nAt vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. \n\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.`,
+    },
+    {
+      id: 2,
+      title: 'How does approval work?',
+      text: `Woofmeets selects a single service for you to complete during sign up. Once approved, youy can deactivate any services you no longer wish to offer or add additional service at any time. \n\nOnce you've completed the required sign - up steps , your profile will be auto- submitted and reviewed to ensure accuracy and quality. agna aliquyam erat, sed diam voluptua. \n\nAt vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. \n\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.`,
+    },
+  ];
+
   return (
     <ScrollView
       style={[
@@ -61,15 +112,49 @@ const HomeProfile = (props: {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
+      <ModalBottomView
+        isModalVisible={modalVisible}
+        setIsModalVisible={setModalVisible}>
+        <HeaderText text={modalData[0].title} />
+        <Divider />
+        <DescriptionText text={modalData[0].text} />
+        <IOSButton
+          title={'Close'}
+          textAlignment={btnStyles.textAlignment}
+          containerStyle={btnStyles.containerStyleFullWidth}
+          titleStyle={styles.titleStyle}
+          onSelect={() => {
+            setModalVisible(!modalVisible);
+          }}
+        />
+      </ModalBottomView>
+      <ModalBottomView
+        isModalVisible={isServiceModalVisible}
+        setIsModalVisible={setIsServiceModalVisible}>
+        <HeaderText text={modalData[0].title} />
+        <Divider />
+        <DescriptionText text={modalData[0].text} />
+        <IOSButton
+          title={'Close'}
+          textAlignment={btnStyles.textAlignment}
+          containerStyle={btnStyles.containerStyleFullWidth}
+          titleStyle={styles.titleStyle}
+          onSelect={() => {
+            setIsServiceModalVisible(!isServiceModalVisible);
+          }}
+        />
+      </ModalBottomView>
       <BigText text="Complete the required steps to get approved" />
       <View style={styles.textContainer}>
         <View style={styles.iconContainer}>
           <QuestionIcon fill={Colors.primary} />
         </View>
-        <DescriptionText
-          text="How dose approval work?"
-          textStyle={{color: colors.blueText}}
-        />
+        <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+          <DescriptionText
+            text="How dose approval work?"
+            textStyle={{color: colors.blueText}}
+          />
+        </TouchableOpacity>
       </View>
       <View>
         <HeaderText text="Service Setup" />
@@ -78,10 +163,13 @@ const HomeProfile = (props: {
         <View style={styles.iconContainer}>
           <QuestionIcon fill={Colors.primary} />
         </View>
-        <DescriptionText
-          text="Where are my other services?"
-          textStyle={{color: colors.blueText}}
-        />
+        <TouchableOpacity
+          onPress={() => setIsServiceModalVisible(!isServiceModalVisible)}>
+          <DescriptionText
+            text="Where are my other services?"
+            textStyle={{color: colors.blueText}}
+          />
+        </TouchableOpacity>
       </View>
       {/* Boarding */}
       <Divider />
@@ -92,6 +180,9 @@ const HomeProfile = (props: {
           description: 'Set your service preferences',
           time: '3 mins',
           icon: 'chevron-right',
+          screen: () => {
+            props.navigation.navigate('BasicInfoSitter');
+          },
         }}
       />
       {/* trust */}
@@ -115,36 +206,13 @@ const HomeProfile = (props: {
           <TitleText text={item.text} textStyle={{color: colors.blueText}} />
         </TouchableOpacity>
       ))}
-      {/* testimonial */}
-      <Divider />
-      <BetweenCom
-        data={{
-          name: 'Request Testimonials',
-          description: 'Use reference to build trust new Potencial clients',
-          time: '3 mins',
-          icon: 'chevron-right',
-        }}
-      />
-      {/* safety quiz */}
-      <Divider />
-      <BetweenCom
-        data={{
-          name: 'Pass a Safety Quiz',
-          description: 'Safe stays lead to 5 star reviews',
-          time: '3 mins',
-          icon: 'chevron-right',
-        }}
-      />
-      {/* final details */}
-      <Divider />
-      <BetweenCom
-        data={{
-          name: 'Final Details',
-          description: 'Background check and processing fee',
-          time: '3 mins',
-          icon: 'chevron-right',
-        }}
-      />
+      {/* testimonial, safety quiz, final Details */}
+      {titleListingData?.map(item => (
+        <View key={item.id}>
+          <Divider />
+          <BetweenCom data={item} />
+        </View>
+      ))}
       <Divider />
       {/* submit */}
       <View style={styles.footerContainer}>
@@ -178,6 +246,10 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     paddingLeft: 5,
+  },
+  titleStyle: {
+    color: Colors.alert,
+    fontWeight: '600',
   },
   iconContainer: {
     paddingRight: 10,
