@@ -6,7 +6,7 @@ import {Finder, Setting, Pets, InboxIcon} from '../assets/SVG_LOGOS';
 import Colors from '../constants/Colors';
 
 import {SCREEN_WIDTH} from '../constants/WindowSize';
-import HomeNavigator from './bottoms/HomeNavigator';
+import InboxNavigator from './bottoms/InboxNavigator';
 import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
@@ -18,7 +18,7 @@ function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Tab.Navigator
-      initialRouteName="HomeNavigator"
+      initialRouteName="InboxNavigator"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
@@ -71,8 +71,8 @@ function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="HomeNavigator"
-        component={HomeNavigator}
+        name="InboxNavigator"
+        component={InboxNavigator}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => (

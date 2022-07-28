@@ -3,11 +3,18 @@ import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 
-const DescriptionText = (props: {text: string; textStyle?: TextStyle}) => {
+const DescriptionText = (props: {
+  text: string;
+  textStyle?: TextStyle;
+  numberOfLines?: number;
+  ellipsizeMode?: string;
+}) => {
   const {colors} = useTheme();
   return (
     <View>
       <Text
+        numberOfLines={props.numberOfLines}
+        ellipsizeMode={props.ellipsizeMode}
         style={[
           styles.details,
           {color: colors.headerText},
