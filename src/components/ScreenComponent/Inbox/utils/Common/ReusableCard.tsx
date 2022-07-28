@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     paddingVertical: '2%',
     paddingHorizontal: '2%',
-    marginTop: '2%',
   },
   buttonContainer: {
     alignItems: 'flex-end',
