@@ -18,7 +18,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     {
       id: 2,
       title: 'Logout',
-      screenName: () => props.navigation.navigate('ContactScreen'),
+      screenName: () => {},
       opacity: 1,
     },
     {
@@ -31,14 +31,14 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     {
       id: 4,
       title: 'Privacy Policy',
-      screenName: () => props.navigation.navigate('PetNavigator'),
+      screenName: () => {},
       details: 'https://www.google.com',
       opacity: 1,
     },
     {
       id: 5,
       title: 'Version',
-      screenName: () => props.navigation.navigate('PetNavigator'),
+      screenName: () => {},
       details: '22.0615.00 - 165525120 - release',
       opacity: 1,
     },

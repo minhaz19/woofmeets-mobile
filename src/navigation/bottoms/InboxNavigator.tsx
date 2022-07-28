@@ -2,15 +2,11 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Colors from '../../constants/Colors';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
-import AllProvider from '../../screens/Service/AllProvider';
-import {FilterIcon} from '../../assets/SVG_LOGOS';
-import {useDispatch} from 'react-redux';
-import {setOpenFilter} from '../../store/slices/openFilter';
+import Inbox from '../../screens/Inbox';
 
 const Stack1 = createStackNavigator();
 
-const HomeNavigator = () => {
-  const dispatch = useDispatch();
+const InboxNavigator = () => {
   return (
     <Stack1.Navigator initialRouteName="details">
       {/* <Stack1.Screen
@@ -33,17 +29,15 @@ const HomeNavigator = () => {
         })}
       /> */}
       <Stack1.Screen
-        name="AllProvider"
-        component={AllProvider}
+        name="Inbox"
+        component={Inbox}
         options={({navigation}) => ({
           title: '',
           header: () => (
             <HeaderWithBack
               navigation={navigation}
-              title="All Provider"
-              Icon={FilterIcon}
+              title="Inbox"
               notification
-              onPress={() => dispatch(setOpenFilter(true))}
             />
           ),
           backgroundColor: Colors.primary,
@@ -53,4 +47,4 @@ const HomeNavigator = () => {
   );
 };
 
-export default HomeNavigator;
+export default InboxNavigator;
