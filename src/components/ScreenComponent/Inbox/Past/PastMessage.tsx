@@ -2,12 +2,13 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {data} from '../Pending/PendingMessage';
 import Colors from '../../../../constants/Colors';
-import ReusableCard from '../utils/ReusableCard/ReusableCard';
+import ReusableCard from '../utils/Common/ReusableCard';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {PastSvg} from '../utils/SvgComponent/SvgComponent';
-import MessageNotSend from '../utils/ReusableCard/MessageNotSend';
+import MessageNotSend from '../utils/Common/MessageNotSend';
 
 const PastMessage = () => {
+  
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
@@ -26,6 +27,7 @@ const PastMessage = () => {
                   status: item.status,
                 }}
                 buttonStyles={Colors.green}
+                handlePress={() => {}}
               />
             );
           })

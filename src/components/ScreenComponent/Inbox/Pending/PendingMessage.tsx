@@ -1,10 +1,10 @@
 import {StyleSheet, ScrollView, View} from 'react-native';
 import React from 'react';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import ReusableCard from '../utils/ReusableCard/ReusableCard';
+import ReusableCard from '../utils/Common/ReusableCard';
 import Colors from '../../../../constants/Colors';
 import {PendingSvg} from '../utils/SvgComponent/SvgComponent';
-import MessageNotSend from '../utils/ReusableCard/MessageNotSend';
+import MessageNotSend from '../utils/Common/MessageNotSend';
 
 export const data = [
   {

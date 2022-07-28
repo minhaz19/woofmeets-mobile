@@ -1,5 +1,5 @@
-import {StyleSheet, Image, View} from 'react-native';
-import React, {CSSProperties, FC} from 'react';
+import {StyleSheet, Image, View, TouchableOpacity} from 'react-native';
+import React, {FC} from 'react';
 import IOSButton from '../../../../UI/IOSButton';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Card from '../../../../UI/Card';
@@ -17,47 +17,54 @@ interface Props {
     status: string;
   };
   buttonStyles?: string;
+  handlePress?: () => void;
 }
 
-const ReusableCard: FC<Props> = ({item, buttonStyles}) => {
+const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
   return (
-    <Card style={styles.itemContainer}>
-      <View style={styles.flexContainer}>
-        <View style={styles.imageContainer}>
-          <Image source={item?.image} style={styles.image} resizeMode="cover" />
+    <TouchableOpacity onPress={handlePress}>
+      <Card style={styles.itemContainer}>
+        <View style={styles.flexContainer}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={item?.image}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          </View>
+          <View style={styles.detailsContainer}>
+            <HeaderText text={item.name} textStyle={styles.textHeader} />
+            <DescriptionText
+              text={item.boardingTime}
+              textStyle={styles.textDescription}
+            />
+            <DescriptionText
+              text={item.description}
+              textStyle={styles.textDescription}
+              numberOfLines={1}
+              ellipsizeMode={'tail'}
+            />
+          </View>
+          <View style={styles.timeContainer}>
+            <DescriptionText
+              text="9:00 AM"
+              textStyle={styles.textTimeDescription}
+            />
+          </View>
         </View>
-        <View style={styles.detailsContainer}>
-          <HeaderText text={item.name} textStyle={styles.textHeader} />
-          <DescriptionText
-            text={item.boardingTime}
-            textStyle={styles.textDescription}
-          />
-          <DescriptionText
-            text={item.description}
-            textStyle={styles.textDescription}
-            numberOfLines={1}
-            ellipsizeMode={'tail'}
-          />
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonStyles}>
+            <IOSButton
+              containerStyle={styles.containerStyleSmall}
+              onSelect={() => {}}
+              textAlignment={{backgroundColor: buttonStyles, borderRadius: 100}}
+              titleStyle={btnStyles.textStyle}
+              title={item.status}
+            />
+          </View>
         </View>
-        <View style={styles.timeContainer}>
-          <DescriptionText
-            text="9:00 AM"
-            textStyle={styles.textTimeDescription}
-          />
-        </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <View style={styles.buttonStyles}>
-          <IOSButton
-            containerStyle={styles.containerStyleSmall}
-            onSelect={() => {}}
-            textAlignment={{backgroundColor: buttonStyles, borderRadius: 100}}
-            titleStyle={btnStyles.textStyle}
-            title={item.status}
-          />
-        </View>
-      </View>
-    </Card>
+      </Card>
+    </TouchableOpacity>
   );
 };
 
@@ -71,7 +78,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     paddingHorizontal: '2%',
-    paddingVertical: '1%',
+    paddingVertical: '2%',
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 4,

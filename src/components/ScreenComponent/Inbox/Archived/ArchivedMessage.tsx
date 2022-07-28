@@ -1,10 +1,10 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {data} from '../Pending/PendingMessage';
-import ReusableCard from '../utils/ReusableCard/ReusableCard';
+import ReusableCard from '../utils/Common/ReusableCard';
 import {AddPet} from '../../../../assets/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import MessageNotSend from '../utils/ReusableCard/MessageNotSend';
+import MessageNotSend from '../utils/Common/MessageNotSend';
 import Colors from '../../../../constants/Colors';
 
 const ArchivedMessage = () => {
