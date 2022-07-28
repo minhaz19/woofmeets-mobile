@@ -14,6 +14,8 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import DateRange from '../../../common/DateRange';
 import FilterSwitch from './FilterSwitch';
 import HeaderText from '../../../common/text/HeaderText';
+import BottomSpacing from '../../../UI/BottomSpacing';
+import AppButton from '../../../common/AppButton';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -222,19 +224,27 @@ const FilterProviderBody = ({
           }}
         />
         <View>
-          {[1, 2, 2, 2, 2].map((item, index) => (
-            <View key={index}>
-              <HeaderText
-                text={'Daytime Availablity'}
-                textStyle={{marginBottom: 10}}
-              />
-              <FilterSwitch title={'show us something'} />
+          {filterPetSwitch.map((item, index) => (
+            <View key={index} style={styles.switch}>
+              <HeaderText text={item.heading} textStyle={{marginBottom: 10}} />
+              {item.switch.map((switchItem, i) => (
+                <FilterSwitch
+                  key={i}
+                  name="pass name from array"
+                  title={switchItem.title}
+                  active={switchItem.active}
+                  onPress={() => (switchItem.active = !switchItem.active)}
+                  // setActive=
+                />
+              ))}
             </View>
           ))}
         </View>
         <View style={styles.btnContainer}>
           <SubmitButton title="Search Result" />
+          <AppButton title="cancel" />
         </View>
+        <BottomSpacing />
       </View>
     );
   };
@@ -261,7 +271,9 @@ export default FilterProviderBody;
 
 const styles = StyleSheet.create({
   container: {marginTop: 10, marginBottom: 20},
-
+  switch: {
+    marginBottom: 20,
+  },
   btnContainer: {
     marginTop: 10,
     marginBottom: SCREEN_WIDTH < 390 ? 30 : 0,

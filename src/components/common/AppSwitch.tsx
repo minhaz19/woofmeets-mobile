@@ -12,8 +12,9 @@ interface Props {
   auth?: boolean;
   title?: string;
   active?: boolean;
+  onPress?: () => void;
 }
-const AppSwitch = ({name, terms, auth, title, active}: Props) => {
+const AppSwitch = ({name, terms, auth, title, active, onPress}: Props) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const {touched, values, errors, setFieldValue} =
     useFormikContext<FormikValues>();
@@ -36,6 +37,7 @@ const AppSwitch = ({name, terms, auth, title, active}: Props) => {
           onSelect={is => {
             setIsEnabled(is);
             setFieldValue(name, !isEnabled);
+            onPress();
           }}
         />
       </View>
