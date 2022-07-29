@@ -15,11 +15,13 @@ const Card = (props: {
     | null
     | undefined;
 }): JSX.Element => {
-  const {colors} = useTheme();
+  const {isDarkMode, colors} = useTheme();
   return (
     <View
       style={{
-        backgroundColor: colors.backgroundColor,
+        backgroundColor: isDarkMode
+          ? colors.lightBackgroundColor
+          : colors.backgroundColor,
         shadowColor: colors.headerText,
         ...styles.card,
         ...props.style,
@@ -34,9 +36,9 @@ const Card = (props: {
 const styles = StyleSheet.create({
   card: {
     shadowOpacity: 0.3,
-    shadowOffset: {width: 2, height: 2},
-    shadowRadius: 8,
-    elevation: 1,
+    shadowOffset: {width: 1, height: 1},
+    shadowRadius: 3,
+    elevation: 3,
     borderRadius: 10,
   },
 });
