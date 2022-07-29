@@ -6,9 +6,11 @@ import ReusableCard from '../utils/Common/ReusableCard';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {PastSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
+import {useDispatch} from 'react-redux';
+import {setOpenFilter} from '../../../../store/slices/openFilter';
 
 const PastMessage = () => {
-  
+  const dispatch = useDispatch();
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
@@ -27,7 +29,7 @@ const PastMessage = () => {
                   status: item.status,
                 }}
                 buttonStyles={Colors.green}
-                handlePress={() => {}}
+                handlePress={() => dispatch(setOpenFilter(true))}
               />
             );
           })

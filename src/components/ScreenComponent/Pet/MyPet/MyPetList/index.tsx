@@ -19,7 +19,7 @@ interface Props {
 }
 const MyPetList = ({dataList, onPress}: Props) => {
   const {isDarkMode, colors} = useTheme();
-  console.log(SCREEN_WIDTH);
+
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   description: {fontSize: Text_Size.Text_0},
   addPet: {
     flex: 1,
-    paddingTop: 120,
-    paddingLeft: SCREEN_WIDTH >= 800 ? width / 8 : width / 5,
+    paddingTop: '50%',
+    alignItems: 'center',
   },
 });

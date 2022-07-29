@@ -553,3 +553,123 @@ export const PastSvg = (props: SvgProps) => (
     </G>
   </Svg>
 );
+
+export const PaymentSvg = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={17.6}
+    height={17.8}
+    viewBox="0 0 17.6 17.8"
+    {...props}>
+    <Path
+      data-name="Icon material-payment"
+      d="M15.44.5H2.16A1.907 1.907 0 0 0 .508 2.6L.5 15.2a1.912 1.912 0 0 0 1.66 2.1h13.28a1.912 1.912 0 0 0 1.66-2.1V2.6A1.912 1.912 0 0 0 15.44.5Zm0 14.7H2.16V8.9h13.28Zm0-10.5H2.16V2.6h13.28Z"
+      fill="none"
+      stroke="#ff7c38"
+    />
+  </Svg>
+);
+
+export const CalendarSvg = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16.75}
+    height={19}
+    viewBox="0 0 16.75 19"
+    {...props}>
+    <Path
+      data-name="Icon awesome-calendar-alt"
+      d="M.5 16.812A1.688 1.688 0 0 0 2.187 18.5h12.376a1.688 1.688 0 0 0 1.687-1.688V7.25H.5Zm11.25-6.89a.423.423 0 0 1 .422-.422h1.406a.423.423 0 0 1 .422.422v1.406a.423.423 0 0 1-.422.422h-1.406a.423.423 0 0 1-.422-.422Zm0 4.5a.423.423 0 0 1 .422-.422h1.406a.423.423 0 0 1 .422.422v1.406a.423.423 0 0 1-.422.422h-1.406a.423.423 0 0 1-.422-.422Zm-4.5-4.5a.423.423 0 0 1 .422-.422h1.406a.423.423 0 0 1 .422.422v1.406a.423.423 0 0 1-.422.422H7.672a.423.423 0 0 1-.422-.422Zm0 4.5A.423.423 0 0 1 7.672 14h1.406a.423.423 0 0 1 .422.422v1.406a.423.423 0 0 1-.422.422H7.672a.423.423 0 0 1-.422-.422Zm-4.5-4.5a.423.423 0 0 1 .422-.422h1.406A.423.423 0 0 1 5 9.922v1.406a.423.423 0 0 1-.422.422H3.172a.423.423 0 0 1-.422-.422Zm0 4.5A.423.423 0 0 1 3.172 14h1.406a.423.423 0 0 1 .422.422v1.406a.423.423 0 0 1-.422.422H3.172a.423.423 0 0 1-.422-.422ZM14.563 2.75h-1.688V1.063A.564.564 0 0 0 12.312.5h-1.125a.564.564 0 0 0-.562.563V2.75h-4.5V1.063A.564.564 0 0 0 5.562.5H4.437a.564.564 0 0 0-.562.563V2.75H2.187A1.688 1.688 0 0 0 .5 4.437v1.688h15.75V4.437a1.688 1.688 0 0 0-1.687-1.687Z"
+      fill="none"
+      stroke="#ff7c38"
+    />
+  </Svg>
+);
+
+export const RightArrow = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={23}
+    height={9.099}
+    viewBox="0 0 23 9.099"
+    {...props}>
+    <Path
+      data-name="Icon awesome-long-arrow-alt-right"
+      d="M16.117 2.897H.616a.566.566 0 0 0-.616.5v2.314a.566.566 0 0 0 .616.5h15.5v1.9c0 .884 1.327 1.326 2.1.7l4.418-3.556a.862.862 0 0 0 0-1.4L18.216.299c-.776-.625-2.1-.182-2.1.7Z"
+      fill="#ff7c38"
+    />
+  </Svg>
+);
+
+export const LeftArrow = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={23}
+    height={9}
+    viewBox="0 0 23 9"
+    {...props}>
+    <Path
+      data-name="Icon awesome-long-arrow-alt-right"
+      d="M6.883 2.865h15.5a.564.564 0 0 1 .616.49v2.287a.564.564 0 0 1-.616.49h-15.5v1.882c0 .874-1.327 1.311-2.1.694L.361 5.194a.847.847 0 0 1 0-1.387L4.779.29c.776-.618 2.1-.18 2.1.694Z"
+      fill="#ff7c38"
+    />
+  </Svg>
+);
+
+export const LocationSvg = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={11}
+    height={16.267}
+    viewBox="0 0 11 16.267"
+    {...props}>
+    <Path
+      data-name="Icon material-location-on"
+      d="M5.5.5a5.126 5.126 0 0 0-5 5.25c0 3.938 5 9.75 5 9.75s5-5.812 5-9.75A5.126 5.126 0 0 0 5.5.5Zm0 7.125A1.833 1.833 0 0 1 3.714 5.75a1.788 1.788 0 1 1 3.571 0A1.833 1.833 0 0 1 5.5 7.625Z"
+      fill="none"
+      stroke="#ff7c38"
+    />
+  </Svg>
+);
+
+export const FeatherSvg = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={13.383}
+    height={13.383}
+    viewBox="0 0 13.383 13.383"
+    {...props}>
+    <G data-name="Icon feather-edit">
+      <Path
+        data-name="Path 3738"
+        d="M9.585 1.273a1.785 1.785 0 0 1 2.525 2.524l-7.994 7.994-3.366.841.841-3.366Z"
+        fill="none"
+        stroke="#06060a"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+      />
+    </G>
+  </Svg>
+);
+
+export const InfoSvg = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={17}
+    viewBox="0 0 16 17"
+    {...props}>
+    <G data-name="Group 17804">
+      <G data-name="Ellipse 207" fill="#fff" stroke="#707070">
+        <Ellipse cx={8} cy={8.5} rx={8} ry={8.5} stroke="none" />
+        <Ellipse cx={8} cy={8.5} rx={7.5} ry={8} fill="none" />
+      </G>
+      <Path
+        data-name="Icon awesome-exclamation"
+        d="M9.399 4.95A1.65 1.65 0 1 0 7.75 6.6a1.651 1.651 0 0 0 1.649-1.65Zm-3.108 8.388.284-5.609a.5.5 0 0 1 .494-.47h1.365a.5.5 0 0 1 .494.47l.28 5.609a.5.5 0 0 1-.494.52H6.785a.5.5 0 0 1-.494-.52Z"
+        fill="#707070"
+      />
+    </G>
+  </Svg>
+);

@@ -27,7 +27,7 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
             <Image
               source={item?.image}
               style={styles.image}
-              resizeMode="cover"
+              resizeMode="contain"
             />
           </View>
           <View style={styles.detailsContainer}>
@@ -70,14 +70,12 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
     height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
-
     alignItems: 'center',
     justifyContent: 'center',
   },
   itemContainer: {
     padding: '3%',
     borderRadius: 4,
-    marginHorizontal: 2,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
   },

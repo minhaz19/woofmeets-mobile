@@ -7,6 +7,8 @@ import Text_Size from '../../../constants/textScaling';
 import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
 import AppInputSelect from './AppInputSelect';
+import {useDispatch} from 'react-redux';
+import {setCross} from '../../../store/slices/hittingCross';
 interface Props {
   name: string;
   label: string;
@@ -32,9 +34,10 @@ const AppInputSelectField = ({
   Icon,
   onPress,
 }: Props) => {
-  const {setFieldTouched, touched, errors, setFieldValue} =
+  const {setFieldTouched, values, touched, errors} =
     useFormikContext<FormikValues>();
-
+  // console.log('values', values[name]);
+  const dispatch = useDispatch();
   return (
     <>
       <View style={{width: '100%'}}>
@@ -47,12 +50,15 @@ const AppInputSelectField = ({
           autoCapitalize={autoCapitalize}
           autoCorrect={autoCorrect}
           placeholder={placeholder}
-          onChangeText={(text: string) => setFieldValue(name, text)}
+          // onChangeText={(text: string) => setFieldValue(name, text)}
           onBlur={() => setFieldTouched(name)}
-          // value={values[name]}
+          value={values[name]}
           textInputStyle={textInputStyle}
           Icon={Icon}
           onPress={onPress}
+          onPressCross={() => {
+            dispatch(setCross(true));
+          }}
         />
 
         <ErrorMessage error={errors[name]} visible={touched[name]} />

@@ -4,10 +4,16 @@ import Colors from '../../constants/Colors';
 import ServiceMain from '../../screens/Service/SelectService';
 import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
 import PetCareZipSearch from '../../screens/PetCareZipSearch';
+import AllProvider from '../../screens/Service/AllProvider';
+import HeaderWithBack from '../../components/common/header/HeaderWithBack';
+import {FilterIcon} from '../../assets/SVG_LOGOS';
+import {useDispatch} from 'react-redux';
+import {setOpenFilter} from '../../store/slices/openFilter';
 
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
+  const dispatch = useDispatch();
   return (
     <Stack1.Navigator initialRouteName="PetCareZipSearch">
       <Stack1.Screen
@@ -50,6 +56,23 @@ const ServiceNavigator = () => {
           },
           headerShown: false,
           title: '',
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="AllProvider"
+        component={AllProvider}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="All Provider"
+              Icon={FilterIcon}
+              notification
+              onPress={() => dispatch(setOpenFilter(true))}
+            />
+          ),
           backgroundColor: Colors.primary,
         })}
       />
