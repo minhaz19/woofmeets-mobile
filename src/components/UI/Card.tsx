@@ -16,14 +16,11 @@ const Card = (props: {
     | undefined;
 }): JSX.Element => {
   const {colors} = useTheme();
-  const isDarkMode = useColorScheme() === 'dark';
   return (
     <View
       style={{
         backgroundColor: colors.backgroundColor,
-        shadowColor: isDarkMode
-          ? Colors.light.background
-          : Colors.light.subText,
+        shadowColor: colors.headerText,
         ...styles.card,
         ...props.style,
         ...props.containerStyle,

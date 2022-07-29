@@ -38,4 +38,18 @@ export const btnStyles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: 0,
   },
+  textStyle: {
+    color: 'white',
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: Text_Size.Text_8,
+    flex: 1,
+  },
+  containerStyleSmall: {
+    height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.04 : 30,
+    borderRadius: 100,
+    marginLeft: 0,
+    marginRight: 0,
+    justifyContent: 'center',
+  },
 });
