@@ -8,8 +8,15 @@ import Text_Size from '../../../../../constants/textScaling';
 import BottomButton from '../../BottomButton';
 import HeaderText from '../../../../common/text/HeaderText';
 import ServiceDate from '../../common/ServiceDate';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 
+type StackParamList = {
+  AllProvider: {foo: string; onBar: () => void} | undefined;
+};
+type NavigationProps = StackNavigationProp<StackParamList>;
 const HouseSitting = () => {
+  const navigation = useNavigation<NavigationProps>();
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
@@ -29,7 +36,10 @@ const HouseSitting = () => {
           })}
         </View>
       </ScrollView>
-      <BottomButton title="Next" onSelect={() => {}} />
+      <BottomButton
+        title="Next"
+        onSelect={() => navigation.navigate('AllProvider')}
+      />
     </View>
   );
 };

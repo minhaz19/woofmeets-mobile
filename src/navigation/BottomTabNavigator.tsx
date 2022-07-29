@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text, StyleSheet, useColorScheme, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -18,7 +17,7 @@ function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Tab.Navigator
-      initialRouteName="InboxNavigator"
+      initialRouteName="ServiceNavigator"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
