@@ -2,7 +2,7 @@
 import {StyleSheet, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import Text_Size from '../../../constants/textScaling';
-import {Check, EyeClose, EyeOpen} from '../../../assets/SVG_LOGOS';
+import {Check, EyeClose, EyeOpen} from '../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const AppInput = ({...otherProps}) => {

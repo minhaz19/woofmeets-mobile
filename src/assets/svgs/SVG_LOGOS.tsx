@@ -16,7 +16,7 @@ import Svg, {
   Text,
   Image,
 } from 'react-native-svg';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 
 export const Finder = (props: SvgProps) => (
   <Svg

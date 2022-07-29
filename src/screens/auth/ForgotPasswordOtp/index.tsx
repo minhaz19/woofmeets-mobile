@@ -12,7 +12,7 @@ import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import {forgotPasswordOtpValue} from '../../../utils/config/initalValues';
 import {forgotPasswordOtpValidationSchema} from '../../../utils/config/validationSchema';
 import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
-import {AuthEmail} from '../../../assets/SVG_LOGOS';
+import {AuthEmail} from '../../../assets/svgs/SVG_LOGOS';
 const forgotPassData = {
   icon: AuthEmail,
   title: 'Forgot Password?',

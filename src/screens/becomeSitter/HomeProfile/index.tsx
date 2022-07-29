@@ -5,7 +5,7 @@ import BigText from '../../../components/common/text/BigText';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 import HeaderText from '../../../components/common/text/HeaderText';
 import Divider from '../../../components/UI/Divider';
-import {BriefCaseSvg, QuestionIcon} from '../../../assets/SVG_LOGOS';
+import {BriefCaseSvg, QuestionIcon} from '../../../assets/svgs/SVG_LOGOS';
 import BetweenCom from '../../../components/ScreenComponent/becomeSitter/profile/BetweenCom';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';

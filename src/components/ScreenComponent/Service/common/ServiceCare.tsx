@@ -2,7 +2,7 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import {HomeSvg, RepeatSvg} from '../../../../assets/SVG_LOGOS';
+import {HomeSvg, RepeatSvg} from '../../../../assets/svgs/SVG_LOGOS';
 import Text_Size from '../../../../constants/textScaling';
 import Colors from '../../../../constants/Colors';
 import ServiceHeader from './ServiceHeader';

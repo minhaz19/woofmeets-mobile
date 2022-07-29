@@ -1,13 +1,10 @@
 import {StyleSheet, Image, View, TouchableOpacity} from 'react-native';
 import React, {FC} from 'react';
-import IOSButton from '../../../../UI/IOSButton';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Card from '../../../../UI/Card';
 import HeaderText from '../../../../common/text/HeaderText';
-import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
-import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   item: {
@@ -73,32 +70,28 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
     height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
+    marginRight: 10,
   },
   itemContainer: {
-    paddingHorizontal: '2%',
-    paddingVertical: '2%',
-    shadowOpacity: 1,
-    shadowRadius: 4,
-    elevation: 4,
+    padding: '3%',
     borderRadius: 4,
+    marginHorizontal: 2,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '3%',
   },
   flexContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    flex: 1,
   },
-  imageContainer: {
-    width: '10%',
-  },
+  imageContainer: {},
   detailsContainer: {
-    width: '60%',
+    flex: 1,
   },
   timeContainer: {
     width: '20%',
   },
   buttonStyles: {
-    width: '20%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
@@ -108,7 +101,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: 'flex-end',
-    marginRight: '2%',
+    width: '100%',
   },
   textDescription: {
     lineHeight: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.02 : 20,

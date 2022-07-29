@@ -10,7 +10,7 @@ import {
   Platform,
 } from 'react-native';
 import React, {useState} from 'react';
-import {ZipSearch} from '../assets/SVG_LOGOS';
+import {ZipSearch} from '../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../constants/WindowSize';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';

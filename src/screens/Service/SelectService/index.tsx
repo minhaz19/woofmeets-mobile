@@ -17,7 +17,7 @@ import {
   HomeSvgICon,
   WeatherSvg,
   PetFootSvg,
-} from '../../../assets/SVG_LOGOS';
+} from '../../../assets/svgs/SVG_LOGOS';
 
 const selectData = [
   {

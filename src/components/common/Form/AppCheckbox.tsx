@@ -5,7 +5,7 @@ import {
   CircleCheck,
   Square,
   SquareCheck,
-} from '../../../assets/SVG_LOGOS';
+} from '../../../assets/svgs/SVG_LOGOS';
 import Text_Size from '../../../constants/textScaling';
 interface Props {
   radio?: boolean;

@@ -12,7 +12,7 @@ import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import {forgotPasswordValue} from '../../../utils/config/initalValues';
 import {forgotPasswordValidationSchema} from '../../../utils/config/validationSchema';
 import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
-import {AuthPassword} from '../../../assets/SVG_LOGOS';
+import {AuthPassword} from '../../../assets/svgs/SVG_LOGOS';
 const forgotPassData = {
   title: 'Forgot Password?',
 };

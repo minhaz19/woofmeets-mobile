@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native';
-import {BellIcon} from '../../../assets/SVG_LOGOS';
+import {BellIcon} from '../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Ion from 'react-native-vector-icons/Ionicons';
