@@ -10,6 +10,7 @@ export const colors = {
   inputLightBg: Colors.light.inputBg,
   alert: Colors.alert,
   blueText: Colors.light.blue,
+  borderColor: Colors.light.borderColor,
 };
 
 export const themedColors = {
@@ -26,5 +27,6 @@ export const themedColors = {
     placeholderTextColor: Colors.dark.text,
     inputLightBg: Colors.dark.borderColor,
     blueText: Colors.dark.text,
+    borderColor: Colors.dark.borderColor,
   },
 };
