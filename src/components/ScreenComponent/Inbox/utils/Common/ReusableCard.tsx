@@ -5,6 +5,7 @@ import Card from '../../../../UI/Card';
 import HeaderText from '../../../../common/text/HeaderText';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   item: {
@@ -19,8 +20,15 @@ interface Props {
 }
 
 const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
+  const {isDarkMode, colors} = useTheme();
   return (
-    <Card style={styles.itemContainer}>
+    <Card
+      style={{
+        ...styles.itemContainer,
+        backgroundColor: isDarkMode
+          ? colors.lightBackgroundColor
+          : colors.backgroundColor,
+      }}>
       <TouchableOpacity onPress={handlePress}>
         <View style={styles.flexContainer}>
           <View style={styles.imageContainer}>

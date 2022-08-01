@@ -7,6 +7,7 @@ import {
   SquareCheck,
 } from '../../../assets/SVG_LOGOS';
 import Text_Size from '../../../constants/textScaling';
+import HeaderText from '../text/HeaderText';
 interface Props {
   radio?: boolean;
   square?: boolean;
@@ -28,7 +29,7 @@ const AppCheckbox = ({
       <View style={styles.checkInfoContainer}>
         {square && (!active ? <Square /> : <SquareCheck />)}
         {radio && (!active ? <Circle_ /> : <CircleCheck />)}
-        <Text style={styles.title}>{title}</Text>
+        <HeaderText text={title} textStyle={styles.title} />
       </View>
     </TouchableOpacity>
   );

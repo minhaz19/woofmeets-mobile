@@ -15,13 +15,11 @@ const Card = (props: {
     | null
     | undefined;
 }): JSX.Element => {
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   return (
     <View
       style={{
-        backgroundColor: isDarkMode
-          ? colors.lightBackgroundColor
-          : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
         shadowColor: colors.headerText,
         ...styles.card,
         ...props.style,

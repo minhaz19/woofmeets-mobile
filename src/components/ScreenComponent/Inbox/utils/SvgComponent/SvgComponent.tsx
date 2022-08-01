@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Svg, {SvgProps, G, Path, Circle} from 'react-native-svg';
+import Svg, {SvgProps, G, Path, Circle, Ellipse} from 'react-native-svg';
 
 export const UpcomingSvg = (props: SvgProps) => (
   <Svg
@@ -643,7 +643,7 @@ export const FeatherSvg = (props: SvgProps) => (
       <Path
         data-name="Path 3738"
         d="M9.585 1.273a1.785 1.785 0 0 1 2.525 2.524l-7.994 7.994-3.366.841.841-3.366Z"
-        fill="none"
+        fill="#fff"
         stroke="#06060a"
         strokeLinecap="round"
         strokeLinejoin="round"

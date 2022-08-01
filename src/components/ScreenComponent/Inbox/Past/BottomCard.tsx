@@ -46,7 +46,7 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
       id: 1,
       icon: <PaymentSvg height={16} width={16} />,
       title: '$34.41',
-      editSvg: <FeatherSvg height={16} width={16} />,
+      editSvg: <InfoSvg height={16} width={16} />,
       isActive: isPayment,
       onPress: () => {
         setIsPayment(true);
@@ -76,7 +76,7 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
       id: 6,
       icon: <LocationSvg height={16} width={16} />,
       title: '1 Pet',
-      editSvg: <FeatherSvg height={16} width={16} />,
+      editSvg: <InfoSvg height={16} width={16} />,
       isActive: isPet,
       onPress: () => {
         setIsPet(true);
@@ -214,7 +214,6 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
           <HeaderText text={'Cancel'} textStyle={styles.cancelText} />
         </TouchableOpacity>
       )}
-      <BottomSpacing />
     </View>
   );
 };
@@ -270,6 +269,8 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_2,
     color: Colors.alert,
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '12%' : '8%',
+    marginBottom:
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '10%' : '6%',
   },
 });
