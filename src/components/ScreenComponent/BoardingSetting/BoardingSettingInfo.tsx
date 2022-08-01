@@ -14,6 +14,13 @@ const BoardingSettingInfo: FC<Props> = ({
   validationSchema,
   onPress,
 }) => {
+  const RatesInput = [
+    {
+      title: 'What you want clients to pay per service:',
+      placeholder: 'Enter Base Rate',
+      name: 'baseRate',
+    },
+  ];
   return (
     <View>
       <Text>BoardingSettingInfo</Text>
