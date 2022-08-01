@@ -6,8 +6,10 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {UpcomingSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
 import Colors from '../../../../constants/Colors';
+import {useNavigation} from '@react-navigation/native';
 
 const UpcomingMessage = () => {
+  let navigation = useNavigation();
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
@@ -26,6 +28,7 @@ const UpcomingMessage = () => {
                   status: item.status,
                 }}
                 buttonStyles={Colors.primary}
+                handlePress={() => navigation.navigate('ActivityScreen')}
               />
             );
           })

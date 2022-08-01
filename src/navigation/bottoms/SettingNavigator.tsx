@@ -20,7 +20,11 @@ const SettingNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="Settings" icon />
+            <HeaderWithBack
+              navigation={navigation}
+              title="Settings"
+              notification
+            />
           ),
           backgroundColor: Colors.primary,
         })}
@@ -31,7 +35,11 @@ const SettingNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="Profile" icon />
+            <HeaderWithBack
+              navigation={navigation}
+              title="Profile"
+              notification
+            />
           ),
           backgroundColor: Colors.primary,
         })}
@@ -42,7 +50,11 @@ const SettingNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="Basic Info" icon />
+            <HeaderWithBack
+              navigation={navigation}
+              title="Basic Info"
+              notification
+            />
           ),
           backgroundColor: Colors.primary,
         })}
@@ -53,7 +65,11 @@ const SettingNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="Contact" icon />
+            <HeaderWithBack
+              navigation={navigation}
+              title="Contact"
+              notification
+            />
           ),
           backgroundColor: Colors.primary,
         })}
@@ -64,7 +80,11 @@ const SettingNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="Preference" icon />
+            <HeaderWithBack
+              navigation={navigation}
+              title="Preference"
+              notification
+            />
           ),
           backgroundColor: Colors.primary,
         })}
@@ -75,7 +95,11 @@ const SettingNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="Setting" icon />
+            <HeaderWithBack
+              navigation={navigation}
+              title="Setting"
+              notification
+            />
           ),
           backgroundColor: Colors.primary,
         })}

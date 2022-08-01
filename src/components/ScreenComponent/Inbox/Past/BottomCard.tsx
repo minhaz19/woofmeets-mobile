@@ -24,10 +24,10 @@ import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../../../store/slices/openFilter';
 
 interface Props {
-  isPayment: boolean;
-  isPet: boolean;
-  setIsPayment: (value: boolean) => void;
-  setIsPet: (value: boolean) => void;
+  isPayment?: boolean;
+  isPet?: boolean;
+  setIsPayment?: (value: boolean) => void;
+  setIsPet?: (value: boolean) => void;
 }
 
 const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {

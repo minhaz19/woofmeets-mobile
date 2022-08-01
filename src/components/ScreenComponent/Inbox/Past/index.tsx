@@ -27,7 +27,7 @@ const Past = () => {
             setIsPet={setIsPet}
           />
         ) : (
-          <Details setIsPayment={setIsPayment}/>
+          <Details setIsPayment={setIsPayment} />
         )}
         {}
       </BottomHalfModal>

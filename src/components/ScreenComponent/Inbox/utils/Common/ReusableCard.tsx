@@ -1,5 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, Image, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import React, {FC} from 'react';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Card from '../../../../UI/Card';
@@ -90,7 +96,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowOffset: {width: 1, height: 1},
     shadowRadius: 3,
-    elevation: 3,
+    elevation: Platform.OS === 'android' ? 8 : 1,
+    marginHorizontal: '3%',
   },
   flexContainer: {
     flexDirection: 'row',

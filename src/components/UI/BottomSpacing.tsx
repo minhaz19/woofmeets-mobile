@@ -9,11 +9,11 @@ const BottomSpacing = () => {
         height:
           SCREEN_WIDTH <= 380
             ? Platform.OS === 'ios'
-              ? 100
-              : 90
+              ? 80
+              : 70
             : Platform.OS === 'ios'
-            ? 125
-            : 135,
+            ? 105
+            : 85,
       }}
     />
   );

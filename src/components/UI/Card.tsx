@@ -20,7 +20,7 @@ const Card = (props: {
     <View
       style={{
         backgroundColor: colors.backgroundColor,
-        shadowColor: colors.headerText,
+        shadowColor: colors.descriptionText,
         ...styles.card,
         ...props.style,
         ...props.containerStyle,
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   card: {
     shadowOpacity: 0.3,
     shadowOffset: {width: 2, height: 2},
-    shadowRadius: 8,
+    shadowRadius: 4,
     elevation: 1,
     borderRadius: 10,
   },
