@@ -1,13 +1,16 @@
-import {StyleSheet, Image, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import React, {FC} from 'react';
-import IOSButton from '../../../../UI/IOSButton';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Card from '../../../../UI/Card';
 import HeaderText from '../../../../common/text/HeaderText';
-import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
-import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   item: {
@@ -77,9 +80,10 @@ const styles = StyleSheet.create({
   itemContainer: {
     paddingHorizontal: '2%',
     paddingVertical: '2%',
+    marginHorizontal: '4%',
     shadowOpacity: 1,
     shadowRadius: 4,
-    elevation: 4,
+    elevation: Platform.OS === 'android' ? 8 : 1,
     borderRadius: 4,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '3%',
@@ -88,9 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  imageContainer: {
-    width: '10%',
-  },
+  imageContainer: {},
   detailsContainer: {
     width: '60%',
   },
@@ -98,17 +100,15 @@ const styles = StyleSheet.create({
     width: '20%',
   },
   buttonStyles: {
-    width: '20%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
     backgroundColor: Colors.primary,
     paddingVertical: '2%',
-    paddingHorizontal: '2%',
+    paddingHorizontal: '4%',
   },
   buttonContainer: {
     alignItems: 'flex-end',
-    marginRight: '2%',
   },
   textDescription: {
     lineHeight: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.02 : 20,

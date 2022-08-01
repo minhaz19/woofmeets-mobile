@@ -2,6 +2,7 @@ import {
   FlatList,
   Keyboard,
   KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
@@ -146,7 +147,9 @@ const BasicInfoInput = ({
     );
   };
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <AppForm
           initialValues={initialValues}
@@ -189,6 +192,7 @@ const BasicInfoInput = ({
           />
         </AppForm>
       </TouchableWithoutFeedback>
+      <BottomSpacing />
     </KeyboardAvoidingView>
   );
 };
