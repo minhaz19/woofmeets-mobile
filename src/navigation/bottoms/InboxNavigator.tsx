@@ -4,6 +4,7 @@ import Colors from '../../constants/Colors';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import Inbox from '../../screens/Inbox';
 import ActivityScreen from '../../screens/Inbox/activity/ActivityScreen';
+import CheckoutDetails from '../../screens/checkout/CheckoutDetails';
 
 const Stack1 = createStackNavigator();
 
@@ -30,6 +31,17 @@ const InboxNavigator = () => {
         component={ActivityScreen}
         options={() => ({
           headerShown: false,
+        })}
+      />
+      <Stack1.Screen
+        name="Checkout"
+        component={CheckoutDetails}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack navigation={navigation} title="Checkout" />
+          ),
+          backgroundColor: Colors.primary,
         })}
       />
     </Stack1.Navigator>
