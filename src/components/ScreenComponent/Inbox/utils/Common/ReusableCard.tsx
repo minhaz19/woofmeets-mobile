@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   StyleSheet,
   Image,
@@ -11,6 +12,7 @@ import Card from '../../../../UI/Card';
 import HeaderText from '../../../../common/text/HeaderText';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   item: {
@@ -25,15 +27,22 @@ interface Props {
 }
 
 const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
+  const {isDarkMode, colors} = useTheme();
   return (
-    <Card style={styles.itemContainer}>
+    <Card
+      style={{
+        ...styles.itemContainer,
+        backgroundColor: isDarkMode
+          ? colors.lightBackgroundColor
+          : colors.backgroundColor,
+      }}>
       <TouchableOpacity onPress={handlePress}>
         <View style={styles.flexContainer}>
           <View style={styles.imageContainer}>
             <Image
               source={item?.image}
               style={styles.image}
-              resizeMode="cover"
+              resizeMode="contain"
             />
           </View>
           <View style={styles.detailsContainer}>
@@ -78,37 +87,39 @@ const styles = StyleSheet.create({
     height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
   },
   itemContainer: {
-    paddingHorizontal: '2%',
-    paddingVertical: '2%',
-    marginHorizontal: '4%',
-    shadowOpacity: 1,
-    shadowRadius: 4,
-    elevation: Platform.OS === 'android' ? 8 : 1,
+    padding: '3%',
     borderRadius: 4,
     marginBottom:
-      SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '3%',
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
+    shadowOpacity: 0.3,
+    shadowOffset: {width: 1, height: 1},
+    shadowRadius: 3,
+    elevation: Platform.OS === 'android' ? 8 : 1,
+    marginHorizontal: '3%',
   },
   flexContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    flex: 1,
   },
-  imageContainer: {},
+  imageContainer: {marginRight: 10},
   detailsContainer: {
-    width: '60%',
+    flex: 1,
   },
   timeContainer: {
     width: '20%',
+    alignItems: 'center',
   },
   buttonStyles: {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    backgroundColor: Colors.primary,
     paddingVertical: '2%',
-    paddingHorizontal: '4%',
+    paddingHorizontal: '3%',
   },
   buttonContainer: {
     alignItems: 'flex-end',
+    width: '100%',
   },
   textDescription: {
     lineHeight: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.02 : 20,
