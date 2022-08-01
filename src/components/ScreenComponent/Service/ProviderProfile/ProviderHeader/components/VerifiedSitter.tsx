@@ -12,8 +12,7 @@ const VerifiedSitter = () => {
     <View style={styles.container}>
       <VerifiedProviderSVG
         width={'100%'}
-        height={'100%'}
-        // height={SCREEN_WIDTH <= 390 ? 174 : 400}
+        height={SCREEN_WIDTH <= 390 ? 174 : 400}
       />
       <View style={styles.textContainer}>
         <TitleText textStyle={styles.title} text="Verified" />

@@ -11,6 +11,7 @@ import TitleText from '../../../../../common/text/TitleText';
 import ShortText from '../../../../../common/text/ShortText';
 import Text_Size from '../../../../../../constants/textScaling';
 import Colors from '../../../../../../constants/Colors';
+import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
 
 const ProviderProfileFeature = () => {
   const infos = [
@@ -37,7 +38,10 @@ const ProviderProfileFeature = () => {
   ];
   return (
     <View style={styles.container}>
-      <ProviderProfileFeaturedSVG />
+      <ProviderProfileFeaturedSVG
+        width={'100%'}
+        height={SCREEN_WIDTH <= 390 ? 194 : 500}
+      />
       <View style={styles.textContainer}>
         <TitleText textStyle={styles.title} text="Featured" />
         <View>
