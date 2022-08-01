@@ -85,8 +85,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
     height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   itemContainer: {
     padding: '3%',

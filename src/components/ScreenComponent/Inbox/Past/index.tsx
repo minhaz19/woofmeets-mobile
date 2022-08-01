@@ -29,7 +29,6 @@ const Past = () => {
         ) : (
           <Details setIsPayment={setIsPayment} />
         )}
-        {}
       </BottomHalfModal>
     </View>
   );
