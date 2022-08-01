@@ -50,8 +50,8 @@ const BottomButton = (props: {
               ? 90
               : 65
             : Platform.OS === 'ios'
-            ? 105
-            : 90,
+            ? 95
+            : 80,
         },
         {
           ...props?.widthStyle,
