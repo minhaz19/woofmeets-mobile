@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, Image, View, TouchableOpacity} from 'react-native';
 import React, {FC} from 'react';
 import DescriptionText from '../../../../common/text/DescriptionText';
@@ -86,6 +87,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
+    shadowOpacity: 0.3,
+    shadowOffset: {width: 1, height: 1},
+    shadowRadius: 3,
+    elevation: 3,
   },
   flexContainer: {
     flexDirection: 'row',
