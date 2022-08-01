@@ -40,7 +40,7 @@ const ProviderProfileFeature = () => {
     <View style={styles.container}>
       <ProviderProfileFeaturedSVG
         width={'100%'}
-        height={SCREEN_WIDTH <= 390 ? 194 : 500}
+        height={SCREEN_WIDTH > 500 ? 290 : 194}
       />
       <View style={styles.textContainer}>
         <TitleText textStyle={styles.title} text="Featured" />
@@ -89,10 +89,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '50%',
-    marginBottom: 10,
+    marginBottom: SCREEN_WIDTH > 500 ? 20 : 10,
   },
   title: {
-    fontSize: Text_Size.Text_0,
+    fontSize: SCREEN_WIDTH > 500 ? Text_Size.Text_1 : Text_Size.Text_0,
     fontWeight: 'bold',
     marginBottom: 10,
     color: Colors.text,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     position: 'absolute',
-    top: '18%',
+    top: SCREEN_WIDTH > 500 ? '25%' : '18%',
     left: 30,
   },
 });

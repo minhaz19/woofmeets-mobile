@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
   shadowProp: {
     shadowColor: Colors.darkShadow,
     shadowOffset: {width: 0, height: 1},
-    shadowOpacity: 0.1,
-    elevation: 1,
+    shadowOpacity: 0.07,
+    elevation: 0.7,
   },
   contentWrapper: {
     flexDirection: 'row',

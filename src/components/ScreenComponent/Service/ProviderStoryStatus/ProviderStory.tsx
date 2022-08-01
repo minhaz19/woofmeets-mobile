@@ -44,7 +44,7 @@ const ProviderStory = ({route, navigation}: Props) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="tranparent" barStyle="light-content" />
+      <StatusBar backgroundColor="transparent" barStyle="light-content" />
       <View style={styles.progressBarContainer}>
         <Animated.View
           style={[styles.progressBar, {width: progressAnimation}]}

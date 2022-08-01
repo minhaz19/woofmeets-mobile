@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
   shadow: {
     shadowColor: Colors.darkShadow,
     shadowOffset: {width: 0, height: 1},
-    shadowOpacity: 0.1,
-    elevation: 1,
+    shadowOpacity: 0.07,
+    elevation: 0.7,
   },
   textContainer: {
     flex: 1,

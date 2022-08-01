@@ -9,37 +9,17 @@ import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import {FilterIcon} from '../../assets/svgs/SVG_LOGOS';
 import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../store/slices/openFilter';
-import ProviderProfile from '../../screens/Service/ProviderProfile';
 
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
   const dispatch = useDispatch();
   return (
-    <Stack1.Navigator initialRouteName="ProviderProfile">
+    <Stack1.Navigator initialRouteName="PetCareZipSearch">
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
         options={{headerShown: false}}
-      />
-      <Stack1.Screen
-        name="ProviderProfile"
-        component={ProviderProfile}
-        options={() => ({
-          headerStyle: {
-            backgroundColor: Colors.background,
-            borderWidth: 0,
-            borderColor: Colors.primary,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: '600',
-            textAlign: 'center',
-          },
-          headerShown: false,
-          title: '',
-          backgroundColor: Colors.primary,
-        })}
       />
       <Stack1.Screen
         name="ServiceMain"

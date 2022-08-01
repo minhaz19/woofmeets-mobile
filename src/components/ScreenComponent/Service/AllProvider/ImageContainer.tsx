@@ -14,7 +14,13 @@ const ImageContainer = ({image, rounded}: Props) => {
     <View
       style={[
         styles.container,
-        {height: rounded ? SCREEN_WIDTH / 6 : SCREEN_HEIGHT / 8.5},
+        {
+          height: rounded
+            ? SCREEN_WIDTH > 500
+              ? SCREEN_WIDTH / 8
+              : SCREEN_WIDTH / 6
+            : SCREEN_HEIGHT / 8.5,
+        },
       ]}>
       <Image
         source={{uri: image}}
@@ -33,8 +39,7 @@ export default ImageContainer;
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH / 6,
-    height: SCREEN_HEIGHT / 8.5,
+    width: SCREEN_WIDTH > 500 ? SCREEN_WIDTH / 8 : SCREEN_WIDTH / 6,
   },
   image: {width: '100%', height: '100%'},
   batchContainer: {

@@ -8,6 +8,7 @@ import Services from './components/Services';
 import Reviews from './components/Reviews';
 import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 
 const tabs = [
   {
@@ -33,7 +34,8 @@ const ProviderTab = () => {
               text={tab.tab}
               textStyle={{
                 fontWeight: 'bold',
-                fontSize: Text_Size.Text_0,
+                fontSize:
+                  SCREEN_WIDTH > 500 ? Text_Size.Text_1 : Text_Size.Text_0,
                 color:
                   active === index
                     ? isDarkMode
@@ -72,5 +74,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     height: 3,
     borderRadius: 100,
+    marginTop: SCREEN_WIDTH > 500 ? 4 : 2,
   },
 });

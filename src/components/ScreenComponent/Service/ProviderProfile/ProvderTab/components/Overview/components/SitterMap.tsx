@@ -4,6 +4,7 @@ import MapView, {Marker} from 'react-native-maps';
 import TitleText from '../../../../../../../common/text/TitleText';
 import ShortText from '../../../../../../../common/text/ShortText';
 import {MapMarker} from '../../../../../../../../assets/svgs/SVG_LOGOS';
+import {SCREEN_WIDTH} from '../../../../../../../../constants/WindowSize';
 const SitterMap = () => {
   return (
     <>
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
   container: {
-    height: 200,
+    height: SCREEN_WIDTH > 500 ? 250 : 200,
     width: '100%',
   },
   map: {

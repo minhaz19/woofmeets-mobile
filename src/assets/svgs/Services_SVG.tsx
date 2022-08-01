@@ -103,6 +103,25 @@ export const DropIn = (props: SvgProps) => (
     </G>
   </Svg>
 );
+export const ArrowLeft = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={9.723}
+    height={17.535}
+    {...props}>
+    <G data-name="Group 598">
+      <Path
+        data-name="Path 1778"
+        d="m7.955 1.767-6.705 7 6.705 7"
+        fill="none"
+        stroke="#ffa557"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2.5}
+      />
+    </G>
+  </Svg>
+);
 export const ArrowRight = (props: SvgProps) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"

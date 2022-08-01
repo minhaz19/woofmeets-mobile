@@ -193,8 +193,8 @@ const Services = () => {
 
           <View>
             {d.petPricing.map((pricingD, inde) => (
-              <>
-                <View key={inde} style={styles.titleContainer}>
+              <View key={inde}>
+                <View style={styles.titleContainer}>
                   <pricingD.Icon fill="black" style={styles.icon} />
                   <View style={styles.sittingType}>
                     <TitleText
@@ -228,7 +228,7 @@ const Services = () => {
                     </View>
                   ))}
                 </View>
-              </>
+              </View>
             ))}
           </View>
         </View>

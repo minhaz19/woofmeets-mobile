@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {ReactElement} from 'react';
 import ShortText from '../../../../../../../common/text/ShortText';
@@ -6,6 +5,7 @@ import TitleText from '../../../../../../../common/text/TitleText';
 import Colors from '../../../../../../../../constants/Colors';
 import {SvgProps} from 'react-native-svg';
 import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
+import Text_Size from '../../../../../../../../constants/textScaling';
 interface Props {
   item: {
     title: string;
@@ -42,7 +42,7 @@ const SitterInfo = ({item}: Props) => {
               <TitleText
                 textStyle={{
                   color: isDarkMode ? Colors.background : Colors.text,
-                  opacity: 0.8,
+                  fontSize: Text_Size.Text_0,
                 }}
                 text={inf.info}
               />
