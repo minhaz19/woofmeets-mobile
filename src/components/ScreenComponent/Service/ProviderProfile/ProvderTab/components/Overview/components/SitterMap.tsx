@@ -1,38 +1,58 @@
-// import {StyleSheet, View} from 'react-native';
-// import React from 'react';
-// import MapboxGL from '@react-native-mapbox-gl/maps';
+import {StyleSheet, View} from 'react-native';
+import React from 'react';
+import MapView, {Marker} from 'react-native-maps';
+import TitleText from '../../../../../../../common/text/TitleText';
+import ShortText from '../../../../../../../common/text/ShortText';
+import {MapMarker} from '../../../../../../../../assets/svgs/SVG_LOGOS';
+const SitterMap = () => {
+  return (
+    <>
+      <TitleText textStyle={styles.titleText} text="Location" />
+      <View style={styles.locationText}>
+        <MapMarker />
+        <ShortText textStyle={styles.shortText} text="1.5 mile away from you" />
+      </View>
+      <View style={styles.container}>
+        <MapView
+          style={styles.map}
+          region={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}>
+          <Marker
+            coordinate={{latitude: 37.78825, longitude: -122.4324}}
+            title={'Meers home'}
+            description={'Meers wife home'}
+          />
+        </MapView>
+      </View>
+    </>
+  );
+};
 
-// MapboxGL.setAccessToken(
-//   'pk.eyJ1IjoibWFwYm94MTIzNDU2NzgiLCJhIjoiY2wzeWkwaHhvMGczcTNjbGRtanl0dHZxcCJ9.F-XAkRsj6nQRwPk08vbw_w',
-// );
-// const SitterMap = () => {
-//   return (
-//     <View style={{width: '100%', height: 200}}>
-//       {' '}
-//       <View style={styles.page}>
-//         <View style={styles.container}>
-//           <MapboxGL.MapView style={styles.map} />
-//         </View>
-//       </View>
-//     </View>
-//   );
-// };
-
-// export default SitterMap;
-
-// const styles = StyleSheet.create({
-//   page: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#F5FCFF',
-//   },
-//   container: {
-//     height: 300,
-//     width: 300,
-//     backgroundColor: 'tomato',
-//   },
-//   map: {
-//     flex: 1,
-//   },
-// });
+export default SitterMap;
+const styles = StyleSheet.create({
+  titleText: {
+    fontWeight: 'bold',
+    marginTop: 15,
+  },
+  shortText: {
+    marginLeft: 3,
+  },
+  locationText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 3,
+  },
+  container: {
+    height: 200,
+    width: '100%',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+});

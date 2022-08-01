@@ -7,6 +7,7 @@ import Overview from './components/Overview';
 import Services from './components/Services';
 import Reviews from './components/Reviews';
 import Colors from '../../../../../constants/Colors';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 const tabs = [
   {
@@ -21,6 +22,7 @@ const tabs = [
 ];
 const ProviderTab = () => {
   const [active, setActive] = useState(0);
+  const {isDarkMode} = useTheme();
   return (
     <View style={styles.container}>
       <View style={styles.tabContainer}>
@@ -32,7 +34,12 @@ const ProviderTab = () => {
               textStyle={{
                 fontWeight: 'bold',
                 fontSize: Text_Size.Text_0,
-                color: active === index ? Colors.black : Colors.gray,
+                color:
+                  active === index
+                    ? isDarkMode
+                      ? Colors.background
+                      : Colors.black
+                    : Colors.gray,
               }}
             />
             {active === index && <View style={styles.activeLabel} />}

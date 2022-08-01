@@ -10,6 +10,7 @@ import HomeProfile from '../screens/becomeSitter/HomeProfile';
 import BasicInfoSitter from '../screens/becomeSitter/BasicInfo';
 import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
 import SitterInitialScreen from '../screens/becomeSitter/InitialScreen';
+import ProviderNavigator from './ProviderNavigator';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -28,6 +29,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="AuthNavigator"
           component={AuthNavigator}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ProviderNavigator"
+          component={ProviderNavigator}
           options={{headerShown: false}}
         />
         <Stack.Screen

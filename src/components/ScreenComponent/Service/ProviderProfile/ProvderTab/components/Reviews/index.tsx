@@ -1,10 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
+import ReviewItem from './components/ReviewItem';
 
 const Reviews = () => {
   return (
     <View style={styles.container}>
-      <Text>Reviews</Text>
+      {[1, 2, 3, 4, 5].map((_, i) => (
+        <ReviewItem key={i} />
+      ))}
     </View>
   );
 };
@@ -12,5 +15,7 @@ const Reviews = () => {
 export default Reviews;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    marginTop: 10,
+  },
 });

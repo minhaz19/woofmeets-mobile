@@ -1,9 +1,11 @@
-import {StyleSheet, View} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {ReactElement} from 'react';
 import ShortText from '../../../../../../../common/text/ShortText';
 import TitleText from '../../../../../../../common/text/TitleText';
 import Colors from '../../../../../../../../constants/Colors';
 import {SvgProps} from 'react-native-svg';
+import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
 interface Props {
   item: {
     title: string;
@@ -16,6 +18,7 @@ interface Props {
   };
 }
 const SitterInfo = ({item}: Props) => {
+  const {isDarkMode} = useTheme();
   return (
     <View>
       <View style={styles.header}>
@@ -24,13 +27,26 @@ const SitterInfo = ({item}: Props) => {
           {item.Icon && <item.Icon fill={'black'} />}
         </View>
         {item.viewAll && (
-          <ShortText textStyle={{color: Colors.primary}} text={item.viewAll} />
+          <TouchableOpacity>
+            <ShortText
+              textStyle={{color: Colors.primary}}
+              text={item.viewAll}
+            />
+          </TouchableOpacity>
         )}
       </View>
       <View>
         {item.subInfo.map(inf => (
           <View key={Math.random()} style={styles.info}>
-            {inf.info && <TitleText text={inf.info} />}
+            {inf.info && (
+              <TitleText
+                textStyle={{
+                  color: isDarkMode ? Colors.background : Colors.text,
+                  opacity: 0.8,
+                }}
+                text={inf.info}
+              />
+            )}
             {inf?.description && <ShortText text={inf.description} />}
           </View>
         ))}

@@ -31,6 +31,7 @@
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^2.4.2",
     "react-native-image-picker": "^4.8.4",
+    "react-native-maps": "^1.1.0",
     "react-native-otp-inputs": "^7.4.0",
     "react-native-ratings": "^8.1.0",
     "react-native-reanimated": "^2.8.0",

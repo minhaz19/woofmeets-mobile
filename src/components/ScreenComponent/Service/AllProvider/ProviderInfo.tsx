@@ -1,6 +1,10 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {MapMarker, RoundedCheckbox} from '../../../../assets/svgs/SVG_LOGOS';
+import {
+  MapMarker,
+  RoundedCheckbox,
+  Star,
+} from '../../../../assets/svgs/SVG_LOGOS';
 import ShortIconTitle from '../../../common/ShortIconTitle';
 import ShortText from '../../../common/text/ShortText';
 import Colors from '../../../../constants/Colors';
@@ -26,13 +30,14 @@ const ProviderInfo = ({
     <View style={styles.container}>
       <HeaderText textStyle={styles.title} text={name} />
       <View style={styles.shortInfo}>
-        <Rating
-          type="star"
-          ratingBackgroundColor="#c8c7c8"
-          ratingCount={rating}
-          imageSize={10}
-          style={styles.rating}
-        />
+        <View>
+          <Rating
+            ratingCount={rating}
+            imageSize={10}
+            style={styles.rating}
+            ratingImage={<Star />}
+          />
+        </View>
         {/* <ShortIconTitle Icon={Star} text={rating} /> */}
         <ShortIconTitle Icon={MapMarker} text={distance} />
       </View>

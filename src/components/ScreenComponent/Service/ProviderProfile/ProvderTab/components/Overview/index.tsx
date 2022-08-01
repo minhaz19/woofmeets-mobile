@@ -3,6 +3,8 @@ import React from 'react';
 import {HomeSvg} from '../../../../../../../assets/svgs/SVG_LOGOS';
 import SitterInfo from './components/SitterInfo';
 import SitterMap from './components/SitterMap';
+import SitterPets from './components/SitterPets';
+import TitleText from '../../../../../../common/text/TitleText';
 
 const Overview = () => {
   const providerDatas = [
@@ -67,6 +69,13 @@ const Overview = () => {
           <SitterInfo key={index} item={item} />
         ))}
         <SitterMap />
+        <View>
+          <TitleText textStyle={styles.petTitle} text="Pets" />
+
+          {[1, 2, 3, 4, 5].map((_, i) => (
+            <SitterPets key={i} />
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -76,4 +85,9 @@ export default Overview;
 
 const styles = StyleSheet.create({
   container: {},
+  petTitle: {
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 10,
+  },
 });

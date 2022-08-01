@@ -10,6 +10,7 @@ import {
 import TitleText from '../../../../../common/text/TitleText';
 import ShortText from '../../../../../common/text/ShortText';
 import Text_Size from '../../../../../../constants/textScaling';
+import Colors from '../../../../../../constants/Colors';
 
 const ProviderProfileFeature = () => {
   const infos = [
@@ -51,7 +52,7 @@ const ProviderProfileFeature = () => {
                 </View>
                 <View>
                   <TitleText textStyle={styles.value} text={item.value} />
-                  <ShortText text={item.title} />
+                  <ShortText textStyle={styles.shortText} text={item.title} />
                 </View>
               </View>
             )}
@@ -90,19 +91,16 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_0,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: Colors.text,
   },
   value: {
     fontSize: Text_Size.Text_0,
+    color: Colors.text,
     fontWeight: 'bold',
   },
-  subTitle: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: 'bold',
-    marginVertical: 4,
-  },
+
   shortText: {
-    fontSize: Text_Size.Text_0,
-    width: '70%',
+    color: Colors.text,
   },
   textContainer: {
     position: 'absolute',

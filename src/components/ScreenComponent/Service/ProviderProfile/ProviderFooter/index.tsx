@@ -9,7 +9,7 @@ const ProviderFooter = () => {
   return (
     <View style={styles.container}>
       <ButtonCom
-        title={'Hire Sitter'}
+        title={'Hire This Sitter'}
         textAlignment={btnStyles.textAlignment}
         containerStyle={btnStyles.containerStyleFullWidth}
         titleStyle={btnStyles.titleStyle}
@@ -23,5 +23,7 @@ const ProviderFooter = () => {
 export default ProviderFooter;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    marginTop: 20,
+  },
 });

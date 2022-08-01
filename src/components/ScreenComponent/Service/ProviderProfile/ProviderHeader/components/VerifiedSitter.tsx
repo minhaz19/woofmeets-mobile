@@ -5,11 +5,16 @@ import TitleText from '../../../../../common/text/TitleText';
 import ShortText from '../../../../../common/text/ShortText';
 import Text_Size from '../../../../../../constants/textScaling';
 import Colors from '../../../../../../constants/Colors';
+import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
 
 const VerifiedSitter = () => {
   return (
     <View style={styles.container}>
-      <VerifiedProviderSVG />
+      <VerifiedProviderSVG
+        width={'100%'}
+        height={'100%'}
+        // height={SCREEN_WIDTH <= 390 ? 174 : 400}
+      />
       <View style={styles.textContainer}>
         <TitleText textStyle={styles.title} text="Verified" />
         <TitleText textStyle={styles.subTitle} text="Pet Sitter" />
@@ -40,9 +45,11 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_1,
     fontWeight: 'bold',
     marginVertical: 4,
+    color: Colors.text,
   },
   shortText: {
     fontSize: Text_Size.Text_0,
+    color: Colors.text,
     width: '70%',
   },
   textContainer: {
