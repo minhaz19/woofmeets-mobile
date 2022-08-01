@@ -1,4 +1,11 @@
-import {StyleSheet, Image, View, TouchableOpacity} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import {
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import React, {FC} from 'react';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Card from '../../../../UI/Card';
@@ -19,15 +26,22 @@ interface Props {
 }
 
 const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
+  const {isDarkMode, colors} = useTheme();
   return (
-    <Card style={styles.itemContainer}>
+    <Card
+      style={{
+        ...styles.itemContainer,
+        backgroundColor: isDarkMode
+          ? colors.lightBackgroundColor
+          : colors.backgroundColor,
+      }}>
       <TouchableOpacity onPress={handlePress}>
         <View style={styles.flexContainer}>
           <View style={styles.imageContainer}>
             <Image
               source={item?.image}
               style={styles.image}
-              resizeMode="cover"
+              resizeMode="contain"
             />
           </View>
           <View style={styles.detailsContainer}>
@@ -77,27 +91,32 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginHorizontal: 2,
     marginBottom:
-      SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '3%',
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
+    shadowOpacity: 0.3,
+    shadowOffset: {width: 1, height: 1},
+    shadowRadius: 3,
+    elevation: Platform.OS === 'android' ? 8 : 1,
+    marginHorizontal: '3%',
   },
   flexContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     flex: 1,
   },
-  imageContainer: {},
+  imageContainer: {marginRight: 10},
   detailsContainer: {
     flex: 1,
   },
   timeContainer: {
     width: '20%',
+    alignItems: 'center',
   },
   buttonStyles: {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    backgroundColor: Colors.primary,
     paddingVertical: '2%',
-    paddingHorizontal: '2%',
+    paddingHorizontal: '3%',
   },
   buttonContainer: {
     alignItems: 'flex-end',

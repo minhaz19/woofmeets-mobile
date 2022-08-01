@@ -38,7 +38,6 @@ const ServiceDetails: FC<Props> = props => {
             ? 'Drop in Visits'
             : 'House Sitting'
         }
-        icon
       />
       {itemId === 1 && <Boarding />}
       {itemId === 2 && <DogWalking />}

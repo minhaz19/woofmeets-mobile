@@ -4,8 +4,7 @@ import React from 'react';
 import ShortText from '../../../common/text/ShortText';
 import {DogFeet} from '../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../constants/Colors';
-import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import {ScreenHeight} from 'react-native-elements/dist/helpers';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 interface Props {
   image: string;
   rounded?: Boolean;
@@ -15,7 +14,7 @@ const ImageContainer = ({image, rounded}: Props) => {
     <View
       style={[
         styles.container,
-        {height: rounded ? SCREEN_WIDTH / 6 : ScreenHeight / 8.5},
+        {height: rounded ? SCREEN_WIDTH / 6 : SCREEN_HEIGHT / 8.5},
       ]}>
       <Image
         source={{uri: image}}
@@ -35,6 +34,7 @@ export default ImageContainer;
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH / 6,
+    height: SCREEN_HEIGHT / 8.5,
   },
   image: {width: '100%', height: '100%'},
   batchContainer: {
