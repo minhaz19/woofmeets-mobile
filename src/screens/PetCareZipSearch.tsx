@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   SafeAreaView,
   StyleSheet,
   TextInput,
@@ -17,6 +16,8 @@ import Text_Size from '../constants/textScaling';
 import {useTheme} from '../constants/theme/hooks/useTheme';
 import BottomButton from '../components/ScreenComponent/Service/BottomButton';
 import BottomSpacingNav from '../components/UI/BottomSpacingNav';
+import TitleText from '../components/common/text/TitleText';
+import DescriptionText from '../components/common/text/DescriptionText';
 
 const PetCareZipSearch = (props: {
   navigation: {goBack: () => void; navigate: (arg0: string) => void};
@@ -46,9 +47,7 @@ const PetCareZipSearch = (props: {
               {backgroundColor: colors.backgroundColor},
             ]}
             onPress={() => props.navigation.goBack()}>
-            <Text style={[styles.textHeader, {color: colors.headerText}]}>
-              Cancel
-            </Text>
+            <TitleText text="Cancel" textStyle={styles.textHeader} />
           </TouchableOpacity>
           <View style={styles.container}>
             <View>
@@ -60,13 +59,12 @@ const PetCareZipSearch = (props: {
             </View>
           </View>
           <View style={styles.boxContainer}>
-            <Text style={[styles.textHeader, {color: colors.headerText}]}>
-              Where are you looking for pet care?
-            </Text>
+            <TitleText
+              text="Where are you looking for pet care?"
+              textStyle={styles.textHeader}
+            />
             <View style={styles.zipContainer}>
-              <Text style={[styles.zipText, {color: colors.headerText}]}>
-                Zip code
-              </Text>
+              <DescriptionText text="Zip code" textStyle={styles.zipText} />
               <TextInput
                 placeholder="Enter zip code"
                 value={postCode}
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
   boxContainer: {paddingHorizontal: '10%'},
   _input: {
     width: '100%',
-    height: SCREEN_WIDTH <= 380 ? 35 : SCREEN_WIDTH <= 480 ? 45 : 50,
+    height: SCREEN_WIDTH <= 380 ? 35 : SCREEN_WIDTH <= 480 ? 40 : 50,
     fontSize: Text_Size.Text_1,
     borderWidth: 1,
     borderColor: Colors.border,

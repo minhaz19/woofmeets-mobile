@@ -12,7 +12,6 @@ import {setPetValue} from '../../../store/slices/addPet';
 const AddPet = () => {
   const dispatch = useDispatch();
   const handleSubmit = (e: {}) => {
-    console.log('values', e);
     dispatch(setPetValue(e));
   };
   const {isDarkMode} = useTheme();

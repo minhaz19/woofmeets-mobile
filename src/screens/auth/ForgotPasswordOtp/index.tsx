@@ -26,8 +26,7 @@ interface Props {
 }
 const ForgotPasswordOtp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = (value: {}) => {
-    console.log('value ogp', value);
+  const handleSubmit = () => {
     navigation.navigate('AfterIntroScreen');
   };
   return (

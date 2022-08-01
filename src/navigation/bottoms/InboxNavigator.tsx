@@ -11,25 +11,6 @@ const Stack1 = createStackNavigator();
 const InboxNavigator = () => {
   return (
     <Stack1.Navigator initialRouteName="details">
-      {/* <Stack1.Screen
-        name="HomeMain"
-        component={HomeMain}
-        options={() => ({
-          headerStyle: {
-            backgroundColor: Colors.background,
-            borderWidth: 0,
-            borderColor: Colors.primary,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: '600',
-            textAlign: 'center',
-          },
-          headerShown: false,
-          title: '',
-          backgroundColor: Colors.primary,
-        })}
-      /> */}
       <Stack1.Screen
         name="Inbox"
         component={Inbox}

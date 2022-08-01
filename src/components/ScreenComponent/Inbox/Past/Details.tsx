@@ -6,30 +6,12 @@ import HeaderText from '../../../common/text/HeaderText';
 import Ion from 'react-native-vector-icons/Ionicons';
 import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import DescriptionText from '../../../common/text/DescriptionText';
+import Pricing from './Pricing';
 import BottomSpacing from '../../../UI/BottomSpacing';
 
 interface Props {
   setIsPayment: (value: boolean) => void;
 }
-
-const tempData = [
-  {
-    id: 1,
-    title: 'Charges & Services',
-    priceFor: 'John Askelad',
-    subTitle: 'Standard Rate',
-    price: '$31.00',
-    description: '1 night @ $32.00 / night',
-  },
-  {
-    id: 2,
-    title: 'Add - ons & Adjustments',
-    priceFor: 'Pet Services fee',
-    price: '$3.00',
-    description: '1 night @ $32.00 / night',
-  },
-];
 
 const Details: FC<Props> = ({setIsPayment}) => {
   const {colors} = useTheme();
@@ -49,50 +31,7 @@ const Details: FC<Props> = ({setIsPayment}) => {
       <View
         style={[styles.divider, {backgroundColor: colors.descriptionText}]}
       />
-      {tempData.map((item, index) => {
-        return (
-          <View key={index} style={styles.mapContainer}>
-            <HeaderText text={item.title} textStyle={styles._textHeader} />
-            <View style={styles.flexContainer}>
-              <HeaderText
-                text={item.priceFor}
-                textStyle={styles.priceTextHeader}
-              />
-              <HeaderText text={item.price} textStyle={styles.priceText} />
-            </View>
-            {item.subTitle && (
-              <HeaderText
-                text={item.subTitle}
-                textStyle={{fontWeight: '500'}}
-              />
-            )}
-
-            <DescriptionText
-              text={item.description}
-              textStyle={{color: colors.descriptionText, lineHeight: 20}}
-            />
-          </View>
-        );
-      })}
-      <View
-        style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-      />
-      <View style={styles.totalContainer}>
-        <HeaderText
-          text={'Total:'}
-          textStyle={{
-            color: colors.descriptionText,
-            fontWeight: '400',
-            fontSize: Text_Size.Text_2,
-          }}
-        />
-        <HeaderText
-          text={' $34.00'}
-          textStyle={{
-            fontSize: Text_Size.Text_2,
-          }}
-        />
-      </View>
+      <Pricing />
       <BottomSpacing />
     </View>
   );

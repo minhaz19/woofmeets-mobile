@@ -26,8 +26,7 @@ interface Props {
 const SetNewPassword = ({navigation}: Props) => {
   const height = SCREEN_HEIGHT;
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = (values: any) => {
-    console.log('values', values);
+  const handleSubmit = () => {
     navigation.navigate('AfterIntroScreen');
   };
   return (

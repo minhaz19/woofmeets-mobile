@@ -27,7 +27,6 @@ const AddPetImage = ({name}: Props) => {
   const {setFieldValue, touched, setFieldTouched, values, errors} =
     useFormikContext<FormikValues>();
   function uploadImage(e: any) {
-    // console.log('e', e._parts[0][1]['uri'], petImage);
     setFieldValue(name, e._parts[0][1]['uri']);
   }
 
