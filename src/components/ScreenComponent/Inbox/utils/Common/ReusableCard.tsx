@@ -6,7 +6,7 @@ import Card from '../../../../UI/Card';
 import HeaderText from '../../../../common/text/HeaderText';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
-import { useTheme } from '../../../../../constants/theme/hooks/useTheme';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   item: {
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   timeContainer: {
-    alignItems: 'center',
     alignItems: 'center',
     borderRadius: 100,
     paddingVertical: '2%',
