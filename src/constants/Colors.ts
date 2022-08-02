@@ -48,4 +48,5 @@ export default {
   shadow: '#0000000A',
   darkShadow: '#000',
   none: 'transparent',
+  yellow: '#FBC12CC2',
 };

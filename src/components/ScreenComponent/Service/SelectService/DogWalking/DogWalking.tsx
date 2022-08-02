@@ -10,9 +10,16 @@ import BottomButton from '../../BottomButton';
 import BottomSpacingNav from '../../../../UI/BottomSpacingNav';
 import HeaderText from '../../../../common/text/HeaderText';
 import ServiceDate from '../../common/ServiceDate';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 
+type StackParamList = {
+  AllProvider: {foo: string; onBar: () => void} | undefined;
+};
+type NavigationProps = StackNavigationProp<StackParamList>;
 const DogWalking = () => {
   const [serviceType, setServiceType] = useState(1);
+  const navigation = useNavigation<NavigationProps>();
   return (
     <View style={[styles.container]}>
       <ScrollView style={styles.scrollContainer}>
@@ -45,7 +52,10 @@ const DogWalking = () => {
         )}
         <BottomSpacingNav />
       </ScrollView>
-      <BottomButton title="Next" onSelect={() => {}} />
+      <BottomButton
+        title="Next"
+        onSelect={() => navigation.navigate('AllProvider')}
+      />
     </View>
   );
 };

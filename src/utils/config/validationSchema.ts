@@ -75,7 +75,8 @@ const filterProviderValidationSchema = Yup.object().shape({
   homeType: Yup.string(),
   location: Yup.string(),
   petType: Yup.string(),
-  dateRange: Yup.array(),
+  dateRange: Yup.string(),
+  // dateRange: Yup.array(),
 });
 
 export {
