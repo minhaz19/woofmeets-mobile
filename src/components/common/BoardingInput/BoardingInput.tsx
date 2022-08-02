@@ -3,7 +3,6 @@ import {StyleSheet, TextInput, View} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import Colors from '../../../constants/Colors';
 import ShortText from '../text/ShortText';
 import HeaderText from '../text/HeaderText';
 
@@ -67,4 +66,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     fontWeight: '400',
   },
+  label: {},
 });

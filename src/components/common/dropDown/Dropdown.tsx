@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+import {FormikValues, useFormikContext} from 'formik';
 import {StyleSheet} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import React, {FC} from 'react';
@@ -7,23 +9,24 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../text/HeaderText';
+import ErrorMessage from '../Form/ErrorMessage';
 
 interface Props {
   label?: string;
   placeholder?: string;
   data: string[];
+  name: string;
 }
 
-const Dropdown: FC<Props> = ({label, placeholder, data}) => {
+const Dropdown: FC<Props> = ({label, placeholder, data, name}) => {
   const {colors} = useTheme();
+  const {setFieldValue, errors, touched} = useFormikContext<FormikValues>();
   return (
     <>
       {label && <HeaderText text={label} />}
       <SelectDropdown
         data={data}
-        onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-        }}
+        onSelect={selectedItem => setFieldValue(name, selectedItem)}
         buttonTextAfterSelection={selectedItem => {
           return selectedItem;
         }}
@@ -63,6 +66,9 @@ const Dropdown: FC<Props> = ({label, placeholder, data}) => {
         searchInputStyle={styles.searchInputStyle}
         searchPlaceHolder={'Search here'}
       />
+      {name === 'advancedNotice' && (
+        <ErrorMessage error={errors[name]} visible={touched[name]} />
+      )}
     </>
   );
 };

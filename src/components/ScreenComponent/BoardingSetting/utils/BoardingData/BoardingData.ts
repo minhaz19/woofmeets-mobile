@@ -53,6 +53,7 @@ export const availabilityInput = [
     id: 110,
     radio: true,
     square: false,
+    linkTitle: 'Why is availability important?',
     options: [
       {
         id: 5,
@@ -65,22 +66,26 @@ export const availabilityInput = [
     ],
   },
   {
-    title: 'Are you home full - time during the weekend?',
-    subtitle: '',
+    title:
+      'What days of the week will you typically be available for Boarding?',
+    name: 'selectDay',
+    subtitle:
+      'Select the days you are typically available. You can update your calendar at any time.',
+    id: 111,
     options: [
-      {id: 29, name: 'S'},
-      {id: 30, name: 'M'},
-      {id: 31, name: 'T'},
-      {id: 32, name: 'W'},
-      {id: 33, name: 'T'},
-      {id: 34, name: 'F'},
-      {id: 35, name: 'S'},
+      {id: 29, type: 'S'},
+      {id: 30, type: 'M'},
+      {id: 31, type: 'T'},
+      {id: 32, type: 'W'},
+      {id: 33, type: 'T'},
+      {id: 34, type: 'F'},
+      {id: 35, type: 'S'},
     ],
   },
   {
-    title: 'Are you home full - time during the day?',
+    title: 'How frequently can you provide potty break?',
     name: 'homeFullTimeInDay',
-    id: 111,
+    id: 112,
     radio: true,
     square: false,
     options: [
@@ -103,10 +108,13 @@ export const availabilityInput = [
     ],
   },
   {
-    title: 'Are you home full - time during the night?',
-    placeholder: 'Are you home full - time during the night?',
-    name: 'homeFullTimeInNight',
+    title:
+      'How far in advance do you need new clients to reach out to you before a booking ?',
+    placeholder: 'Select the time you need',
+    name: 'advancedNotice',
+    linkTitle: 'How will advance notice be used?',
     select: true,
+    data: [],
   },
 ];
 export const aboutYourHome = [
@@ -115,7 +123,7 @@ export const aboutYourHome = [
     name: 'homeType',
     id: 101,
     radio: true,
-
+    square: false,
     options: [
       {id: 7, type: 'House'},
       {id: 8, type: 'Apartment'},
@@ -127,6 +135,7 @@ export const aboutYourHome = [
     name: 'yardType',
     id: 102,
     radio: true,
+    square: false,
     options: [
       {id: 34, type: 'Fenced yard'},
       {id: 35, type: 'Unfenced yard'},
@@ -138,6 +147,7 @@ export const aboutYourHome = [
     subtitle: '( Check all that apply )',
     name: 'petOwnerBoarding',
     id: 103,
+    radio: false,
     square: true,
     options: [
       {id: 10, type: 'Smoking inside home'},
@@ -155,6 +165,7 @@ export const aboutYourHome = [
     subtitle: '( Check all that apply )',
     name: 'hosting',
     id: 104,
+    radio: false,
     square: true,
     options: [
       {id: 18, type: 'Pets from different families at the same time.'},
@@ -170,9 +181,10 @@ export const aboutYourHome = [
 export const CancellationPolicy = [
   {
     title: 'What is your cancellation policy for Dog Boarding?',
-    name: 'homeType',
+    name: 'cancellationPolicy',
     id: 105,
     radio: true,
+    square: false,
     options: [
       {id: 25, type: 'Same Day'},
       {id: 26, type: 'One Day'},
@@ -190,11 +202,11 @@ export const petPreference = [
     square: true,
     radio: false,
     options: [
-        {id: 36, type: 'Small dog ( 0-15 Ibs )'},
-        {id: 37, type: 'Medium dog ( 0-15 Ibs )'},
-        {id: 38, type: 'Large dog ( 0-15 Ibs )'},
-        {id: 39, type: 'Giant dog ( 0-15 Ibs )'},
-        {id: 40, type: 'Cat'},
+      {id: 36, type: 'Small dog ( 0-15 Ibs )'},
+      {id: 37, type: 'Medium dog ( 0-15 Ibs )'},
+      {id: 38, type: 'Large dog ( 0-15 Ibs )'},
+      {id: 39, type: 'Giant dog ( 0-15 Ibs )'},
+      {id: 40, type: 'Cat'},
     ],
   },
 ];

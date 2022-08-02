@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {FormikValues, useFormikContext} from 'formik';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import React from 'react';
@@ -17,10 +18,7 @@ interface Props {
   keyboardType?: string;
   placeholder?: string;
   textContentType?: string;
-  secureTextEntry?: boolean;
   forgotPassword?: boolean;
-  numberOfLines?: number;
-  multiline?: boolean;
   flex?: number;
   subTitle?: string;
   email?: boolean;
@@ -36,13 +34,9 @@ const BoardingForm = ({
   keyboardType,
   placeholder,
   textContentType,
-  secureTextEntry,
   label,
-  numberOfLines,
-  multiline,
   flex,
   subTitle,
-  email,
   textInputStyle,
   auth,
 }: Props) => {

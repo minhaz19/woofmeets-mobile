@@ -107,6 +107,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   timeContainer: {
+    width: '20%',
+    alignItems: 'center',
+  },
+  buttonStyles: {
+    justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
     paddingVertical: '2%',
