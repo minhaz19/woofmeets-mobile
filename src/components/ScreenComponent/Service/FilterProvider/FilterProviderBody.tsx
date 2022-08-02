@@ -151,7 +151,10 @@ const FilterProviderBody = ({
 export default FilterProviderBody;
 
 const styles = StyleSheet.create({
-  container: {marginTop: 10, marginBottom: 20},
+  container: {
+    marginTop: 10,
+    marginBottom: 20,
+  },
   switch: {
     marginBottom: 20,
   },

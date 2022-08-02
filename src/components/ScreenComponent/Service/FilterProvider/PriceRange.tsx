@@ -4,7 +4,6 @@ import AppInputRange from '../../../common/Form/AppInputRange';
 import TitleText from '../../../common/text/TitleText';
 import Text_Size from '../../../../constants/textScaling';
 const PriceRange = () => {
-  console.log('hitting');
   return (
     <View>
       <TitleText textStyle={styles.title} text="Rate Per Night" />

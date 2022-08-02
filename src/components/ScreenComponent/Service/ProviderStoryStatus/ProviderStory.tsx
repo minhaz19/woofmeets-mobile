@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Animated,
   StyleSheet,
-  Platform,
 } from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import Colors from '../../../../constants/Colors';

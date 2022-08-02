@@ -1,13 +1,10 @@
 import {StyleSheet, View, TextInput, Text} from 'react-native';
-import React, {useRef} from 'react';
+import React from 'react';
 import Colors from '../../../constants/Colors';
 import Svg, {Line} from 'react-native-svg';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated';
+import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import Text_Size from '../../../constants/textScaling';
 import {useCodeCom} from '../../../utils/helpers/PriceRange/useCode';
 import {PanComponent} from '../../../utils/helpers/PriceRange/PanComponent';
@@ -26,17 +23,22 @@ const AText = createAnimatedComponent(TextInput);
 
 const AppInputRange = ({
   minValue,
-  maxValue = 200,
+  maxValue,
   onChangeMin,
   onChangeMax,
 }: Props) => {
-  const min = useRef(null);
-  const max = useRef(null);
   const {Pan: Pan1, transx: x1} = PanComponent(0, MAX_WIDTH);
   const {Pan: Pan2, transx: x2} = PanComponent(MAX_WIDTH, MAX_WIDTH);
 
-  const offset = useSharedValue(0);
-
+  const {offset, min, max} = useCodeCom(
+    minValue,
+    maxValue,
+    onChangeMin,
+    onChangeMax,
+    x1,
+    x2,
+    MAX_WIDTH,
+  );
   const animatedStyles = useAnimatedStyle(() => {
     return {
       transform: [{translateX: (offset.value / 100) * 50}],
@@ -44,18 +46,6 @@ const AppInputRange = ({
       // transform: [{translateX: (offset.value / SCREEN_WIDTH) * 50}],
     };
   });
-  useCodeCom(
-    min,
-    max,
-    minValue,
-    maxValue,
-    onChangeMin,
-    onChangeMax,
-    x1,
-    x2,
-    offset,
-    MAX_WIDTH,
-  );
 
   return (
     <GestureHandlerRootView>
