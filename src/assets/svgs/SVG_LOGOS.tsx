@@ -2219,6 +2219,7 @@ export const AuthPassword = (props: SvgProps) => (
     xmlns="http://www.w3.org/2000/svg"
     width={223.502}
     height={207.672}
+    viewBox="0 0 223.502 207.672"
     {...props}>
     <Defs>
       <LinearGradient

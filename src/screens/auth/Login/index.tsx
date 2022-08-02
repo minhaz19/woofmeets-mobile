@@ -19,6 +19,7 @@ import {
 import {loginValidationSchema} from '../../../utils/config/validationSchema';
 import {useDispatch} from 'react-redux';
 import {setUserLoggedIn} from '../../../store/slices/userLogin';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
@@ -40,17 +41,19 @@ const Login = ({navigation}: Props) => {
             : Colors.secondary,
         },
       ]}>
-      <View
-        style={[
-          styles.infoContainer,
-          {
-            backgroundColor: isDarkMode
-              ? Colors.dark.lightDark
-              : Colors.background,
-          },
-        ]}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        // keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        <View
+          style={[
+            styles.infoContainer,
+            {
+              backgroundColor: isDarkMode
+                ? Colors.dark.lightDark
+                : Colors.background,
+            },
+          ]}>
           <AuthHeader
             title={loginInitalState.title}
             subTitle={loginInitalState.subTitle}
@@ -69,9 +72,9 @@ const Login = ({navigation}: Props) => {
             title="or login with"
             navigateScreen="SignUp"
           />
-        </KeyboardAvoidingView>
-        <View style={styles.view} />
-      </View>
+          <View style={styles.view} />
+        </View>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };
@@ -89,6 +92,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {
     height: 40,

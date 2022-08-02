@@ -68,7 +68,7 @@ export default AuthFooter;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '5%',
+    marginTop: '2%',
   },
   dividerContainer: {marginTop: '5%'},
   loginWith: {alignItems: 'center'},

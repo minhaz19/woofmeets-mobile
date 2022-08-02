@@ -102,10 +102,12 @@ const AuthForm = ({
             <ResendCode />
           </View>
         )}
-        <View style={styles.switchContainer}>
-          {termsAndCond && <AppSwitch name="terms" terms auth />}
-        </View>
-        <View style={{marginTop: setNewPassword ? 20 : 0}}>
+        {termsAndCond && (
+          <View style={styles.switchContainer}>
+            <AppSwitch name="terms" terms auth />
+          </View>
+        )}
+        <View style={{marginTop: setNewPassword ? 20 : 10}}>
           <SubmitButton title={btnTitle} />
           {(setNewPassword || forgotPassword || forgotPasswordOpt) && (
             <AppButton

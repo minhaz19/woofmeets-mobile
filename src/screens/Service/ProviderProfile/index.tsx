@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   infoContianer: {
     paddingVertical: 10,
     paddingHorizontal:
-      SCREEN_WIDTH > 500 ? '20%' : Platform.OS === 'ios' ? 20 : 30,
+      SCREEN_WIDTH > 800 ? '20%' : Platform.OS === 'ios' ? 20 : 30,
     flex: 1,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,

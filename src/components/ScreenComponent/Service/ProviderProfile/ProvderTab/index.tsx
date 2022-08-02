@@ -35,7 +35,7 @@ const ProviderTab = () => {
               textStyle={{
                 fontWeight: 'bold',
                 fontSize:
-                  SCREEN_WIDTH > 500 ? Text_Size.Text_1 : Text_Size.Text_0,
+                  SCREEN_WIDTH > 800 ? Text_Size.Text_1 : Text_Size.Text_0,
                 color:
                   active === index
                     ? isDarkMode
@@ -74,6 +74,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     height: 3,
     borderRadius: 100,
-    marginTop: SCREEN_WIDTH > 500 ? 4 : 2,
+    marginTop: SCREEN_WIDTH > 800 ? 4 : 2,
   },
 });

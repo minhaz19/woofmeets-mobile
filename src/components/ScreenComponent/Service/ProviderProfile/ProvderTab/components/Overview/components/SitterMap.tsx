@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
   container: {
-    height: SCREEN_WIDTH > 500 ? 250 : 200,
+    height: SCREEN_WIDTH > 800 ? 250 : 200,
     width: '100%',
   },
   map: {

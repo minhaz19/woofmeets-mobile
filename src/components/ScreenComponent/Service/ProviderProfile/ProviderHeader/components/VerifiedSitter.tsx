@@ -12,7 +12,7 @@ const VerifiedSitter = () => {
     <View style={styles.container}>
       <VerifiedProviderSVG
         width={'100%'}
-        height={SCREEN_WIDTH > 500 ? 300 : 174}
+        height={SCREEN_WIDTH > 800 ? 300 : 174}
       />
 
       <View style={styles.textContainer}>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: SCREEN_WIDTH > 500 ? Text_Size.Text_2 : Text_Size.Text_1,
+    fontSize: SCREEN_WIDTH > 800 ? Text_Size.Text_2 : Text_Size.Text_1,
     color: Colors.primary,
     fontWeight: 'bold',
   },
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     position: 'absolute',
-    top: SCREEN_WIDTH > 500 ? '39%' : '30%',
-    left: SCREEN_WIDTH > 500 ? 70 : 30,
+    top: SCREEN_WIDTH > 800 ? '39%' : '30%',
+    left: SCREEN_WIDTH > 800 ? 70 : 30,
   },
 });
