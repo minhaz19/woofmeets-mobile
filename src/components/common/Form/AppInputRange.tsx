@@ -1,5 +1,12 @@
-import {StyleSheet, View, TextInput, Text} from 'react-native';
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  TextInput,
+  Text,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import Colors from '../../../constants/Colors';
 import Svg, {Line} from 'react-native-svg';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -29,7 +36,7 @@ const AppInputRange = ({
 }: Props) => {
   const {Pan: Pan1, transx: x1} = PanComponent(0, MAX_WIDTH);
   const {Pan: Pan2, transx: x2} = PanComponent(MAX_WIDTH, MAX_WIDTH);
-
+  const [active, setActive] = useState<null | boolean>(null);
   const {offset, min, max} = useCodeCom(
     minValue,
     maxValue,
@@ -41,9 +48,13 @@ const AppInputRange = ({
   );
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      transform: [{translateX: (offset.value / 100) * 50}],
-      // transform: [{translateX: (offset.value / 100) * 50}],
-      // transform: [{translateX: (offset.value / SCREEN_WIDTH) * 50}],
+      transform: [
+        {
+          translateX: true
+            ? (offset.value / 100) * 50 - 145
+            : (offset.value / 100) * 50,
+        },
+      ],
     };
   });
 
@@ -51,7 +62,6 @@ const AppInputRange = ({
     <GestureHandlerRootView>
       <View style={styles.container}>
         <View style={styles.rangeBar} />
-
         <Animated.View style={[styles.labelContainer, animatedStyles]}>
           <View style={styles.labelArrow} />
           <AText
@@ -81,9 +91,12 @@ const AppInputRange = ({
             />
           </Svg>
         </View>
-
+        {/* <TouchableOpacity onPress={() => setActive(false)}> */}
         <Pan1 />
+        {/* </TouchableOpacity> */}
+        {/* <TouchableOpacity onPress={() => setActive(true)}> */}
         <Pan2 />
+        {/* </TouchableOpacity> */}
       </View>
     </GestureHandlerRootView>
   );

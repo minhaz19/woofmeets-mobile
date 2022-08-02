@@ -14,12 +14,13 @@ export const useCodeCom = (
   const min = useRef(null);
   const max = useRef(null);
   const offset = useSharedValue(0);
+
   useCode(
     () => [
       call([x1], ([value]) => {
         if (min.current) {
           onChangeMin(minValue + (value / MAX_WIDTH) * (maxValue - minValue));
-          // offset.value = value;
+          offset.value = value;
           //@ts-ignore
           min.current.setNativeProps({
             text: `$${Math.round(
@@ -36,7 +37,8 @@ export const useCodeCom = (
       call([x2], ([value]) => {
         if (max.current) {
           onChangeMax(minValue + (value / MAX_WIDTH) * (maxValue - minValue));
-          // offset.value = value;
+          offset.value = value;
+
           //@ts-ignore
           max.current.setNativeProps({
             text: `$${Math.round(

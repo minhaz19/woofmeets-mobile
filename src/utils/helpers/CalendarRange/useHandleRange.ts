@@ -35,7 +35,7 @@ export const useHandleRange = () => {
   };
 
   useMemo(() => {
-    console.log(startingDate, endingDate);
+   
     if (startingDate !== '' && endingDate !== '' && cross === false) {
       setFieldValue(
         'dateRange',

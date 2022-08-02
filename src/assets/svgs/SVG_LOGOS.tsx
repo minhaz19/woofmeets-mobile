@@ -2117,7 +2117,8 @@ export const Star = (props: SvgProps) => (
     xmlns="http://www.w3.org/2000/svg"
     width="10"
     height="9.586"
-    viewBox="0 0 10 9.586">
+    viewBox="0 0 10 9.586"
+    {...props}>
     <Path
       id="Path_1253"
       data-name="Path 1253"
