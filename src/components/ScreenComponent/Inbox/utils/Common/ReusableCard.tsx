@@ -12,6 +12,7 @@ import Card from '../../../../UI/Card';
 import HeaderText from '../../../../common/text/HeaderText';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   item: {

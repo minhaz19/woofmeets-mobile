@@ -61,7 +61,7 @@ const ProviderStory = ({route, navigation}: Props) => {
         <View style={styles.infoContainer}>
           <Text style={styles.text}>{name}</Text>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionic name="close" style={styles.icon} />
+            <Ionic name="close" style={styles.icon} color={'black'} />
           </TouchableOpacity>
         </View>
       </View>

@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, Platform, StyleSheet, View} from 'react-native';
 import React from 'react';
 import ProviderHeader from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderHeader';
 import ProviderFooter from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderFooter';
@@ -43,9 +43,11 @@ const styles = StyleSheet.create({
   container: {flex: 1},
   infoContianer: {
     paddingVertical: 10,
-    paddingHorizontal: SCREEN_WIDTH > 500 ? '20%' : 20,
+    paddingHorizontal:
+      SCREEN_WIDTH > 500 ? '20%' : Platform.OS === 'ios' ? 20 : 30,
     flex: 1,
-    borderRadius: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     marginTop: -20,
   },
 });

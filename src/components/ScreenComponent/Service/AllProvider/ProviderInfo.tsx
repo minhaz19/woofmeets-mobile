@@ -1,15 +1,11 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {
-  MapMarker,
-  RoundedCheckbox,
-  Star,
-} from '../../../../assets/svgs/SVG_LOGOS';
+import {MapMarker, RoundedCheckbox} from '../../../../assets/svgs/SVG_LOGOS';
 import ShortIconTitle from '../../../common/ShortIconTitle';
 import ShortText from '../../../common/text/ShortText';
 import Colors from '../../../../constants/Colors';
 import HeaderText from '../../../common/text/HeaderText';
-import {Rating} from 'react-native-ratings';
+import {AirbnbRating} from 'react-native-ratings';
 interface Props {
   name: string;
   nature: string;
@@ -31,11 +27,11 @@ const ProviderInfo = ({
       <HeaderText textStyle={styles.title} text={name} />
       <View style={styles.shortInfo}>
         <View>
-          <Rating
-            ratingCount={rating}
-            imageSize={10}
-            style={styles.rating}
-            ratingImage={<Star />}
+          <AirbnbRating
+            showRating={false}
+            count={rating}
+            defaultRating={4}
+            size={10}
           />
         </View>
         {/* <ShortIconTitle Icon={Star} text={rating} /> */}

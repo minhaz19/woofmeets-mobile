@@ -19,21 +19,25 @@ const serivesData = [
         Icon: Dog,
         weight: '0-15',
         weightType: 'Pounds',
+        id: 0,
       },
       {
         Icon: Dog,
         weight: '16-40',
         weightType: 'Pounds',
+        id: 1,
       },
       {
         Icon: Dog,
         weight: '41-100',
         weightType: 'Pounds',
+        id: 2,
       },
       {
         Icon: Dog,
         weight: '101+',
         weightType: 'Pounds',
+        id: 3,
       },
     ],
     petPricing: [
@@ -108,21 +112,25 @@ const serivesData = [
         Icon: Dog,
         weight: '0-15',
         weightType: 'Pounds',
+        id: 4,
       },
       {
         Icon: Dog,
         weight: '16-40',
         weightType: 'Pounds',
+        id: 5,
       },
       {
         Icon: Dog,
         weight: '41-100',
         weightType: 'Pounds',
+        id: 6,
       },
       {
         Icon: Dog,
         weight: '101+',
         weightType: 'Pounds',
+        id: 7,
       },
     ],
     petPricing: [
@@ -175,10 +183,10 @@ const Services = () => {
               <TouchableOpacity
                 key={key}
                 style={styles.petTypeTextContainer}
-                onPress={() => setActiveDog(key)}>
+                onPress={() => setActiveDog(item.id)}>
                 <item.Icon
                   fill={
-                    key === activeDog
+                    item.id === activeDog
                       ? Colors.primary
                       : isDarkMode
                       ? Colors.background
