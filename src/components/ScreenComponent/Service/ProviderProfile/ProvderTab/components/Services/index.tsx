@@ -1,82 +1,38 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
-import TitleText from '../../../../../../common/text/TitleText';
-import ShortText from '../../../../../../common/text/ShortText';
-import Text_Size from '../../../../../../../constants/textScaling';
-import Colors from '../../../../../../../constants/Colors';
-import {useTheme} from '../../../../../../../constants/theme/hooks/useTheme';
 import {serivesData} from '../../../../../../../utils/config/Data/ProviderProfileDatas';
+import ServicesCalendar from './component/ServicesCalendar';
+import PetWeightType from './component/PetWeightType';
+import PetPricing from './component/PetPricing';
 
 const Services = () => {
   const [activeDog, setActiveDog] = useState(0);
-  const {isDarkMode} = useTheme();
   return (
     <View style={styles.container}>
       {serivesData.map((d, index) => (
         <View key={index}>
           <View style={styles.petTypeContainer}>
             {d.petType.map((item, key) => (
-              <TouchableOpacity
+              <PetWeightType
                 key={key}
-                style={styles.petTypeTextContainer}
-                onPress={() => setActiveDog(item.id)}>
-                <item.Icon
-                  fill={
-                    item.id === activeDog
-                      ? Colors.primary
-                      : isDarkMode
-                      ? Colors.background
-                      : Colors.black
-                  }
-                />
-                <ShortText textStyle={styles.weight} text={item.weight} />
-                <ShortText text={item.weightType} />
-              </TouchableOpacity>
+                item={item}
+                activeDog={activeDog}
+                setActiveDog={setActiveDog}
+              />
             ))}
           </View>
 
           <View>
             {d.petPricing.map((pricingD, inde) => (
-              <View key={inde}>
-                <View style={styles.titleContainer}>
-                  <pricingD.Icon fill="black" style={styles.icon} />
-                  <View style={styles.sittingType}>
-                    <TitleText
-                      textStyle={styles.sittingTypeTitle}
-                      text={pricingD.sittingType}
-                    />
-                    <ShortText text={pricingD.sittingType} />
-                  </View>
-                  <View>
-                    <TitleText
-                      textStyle={styles.pricingDPrice}
-                      text={pricingD.price}
-                    />
-                    <ShortText text={pricingD.perNight} />
-                  </View>
-                </View>
-                <View>
-                  {pricingD.pricingInfo.map((pInfo, indexx) => (
-                    <View style={styles.pInfoContainer} key={indexx}>
-                      <TitleText
-                        textStyle={styles.pInfoTitle}
-                        text={pInfo.pricingInfoTitle}
-                      />
-                      <View>
-                        <TitleText
-                          textStyle={styles.pInfoPrice}
-                          text={pInfo.price}
-                        />
-                        <ShortText text={pInfo.perNight} />
-                      </View>
-                    </View>
-                  ))}
-                </View>
-              </View>
+              //@ts-ignore
+              <PetPricing key={inde} pricingD={pricingD} />
             ))}
           </View>
         </View>
       ))}
+      <View style={styles.calendar}>
+        <ServicesCalendar />
+      </View>
     </View>
   );
 };
@@ -85,44 +41,12 @@ export default Services;
 
 const styles = StyleSheet.create({
   container: {},
-  weight: {
-    fontSize: Text_Size.Text_0,
-    fontWeight: '600',
-    color: 'black',
-  },
   petTypeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     flex: 1,
   },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  sittingType: {
-    flex: 1,
-  },
-  pricingDPrice: {
-    textAlign: 'right',
-  },
-  sittingTypeTitle: {
-    fontWeight: 'bold',
-  },
-  pInfoContainer: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-between',
-    marginVertical: 10,
-  },
-  petTypeTextContainer: {marginVertical: 20, alignItems: 'center'},
-  pInfoTitle: {
-    flex: 1,
-  },
-  pInfoPrice: {
-    textAlign: 'right',
+  calendar: {
+    marginTop: 10,
   },
 });

@@ -50,7 +50,10 @@ export default HomeType;
 
 const styles = StyleSheet.create({
   homeTypeContainer: {
-    width: SCREEN_WIDTH / 3 - 28,
+    width:
+      SCREEN_WIDTH > 800
+        ? SCREEN_WIDTH / 3 - (SCREEN_WIDTH / 100) * 15
+        : SCREEN_WIDTH / 3 - 28,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 20,
@@ -61,7 +64,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
 
-    padding: 20,
+    padding: SCREEN_WIDTH > 800 ? 30 : 20,
+
     justifyContent: 'center',
     alignItems: 'center',
   },

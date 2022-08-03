@@ -58,9 +58,8 @@ const styles = StyleSheet.create({
 
   labelContainer: {
     backgroundColor: Colors.primary,
-    paddingVertical: SCREEN_WIDTH === 390 ? 10 : 0,
+    paddingVertical: SCREEN_WIDTH === 800 ? 20 : 10,
     paddingHorizontal: 10,
-
     flexDirection: 'row',
 
     alignContent: 'center',

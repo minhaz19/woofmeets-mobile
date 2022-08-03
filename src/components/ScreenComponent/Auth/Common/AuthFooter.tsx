@@ -11,6 +11,7 @@ import Colors from '../../../../constants/Colors';
 import Icon from '../../../common/Icon';
 import Text_Size from '../../../../constants/textScaling';
 import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 interface Props {
   icons: {image: any; icon: any}[];
@@ -19,6 +20,10 @@ interface Props {
   authType: string;
   navigateScreen?: string;
 }
+type StackParamList = {
+  navigateScreen: {foo: string; onBar: () => void} | undefined;
+};
+type NavigationProps = StackNavigationProp<StackParamList>;
 
 const AuthFooter = ({
   icons,
@@ -28,7 +33,7 @@ const AuthFooter = ({
   navigateScreen,
 }: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NavigationProps | any>();
 
   return (
     <View style={styles.container}>

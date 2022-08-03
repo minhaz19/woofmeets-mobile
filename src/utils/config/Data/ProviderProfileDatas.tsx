@@ -4,12 +4,10 @@ import {
   Dog,
   DropIn,
 } from '../../../assets/svgs/Services_SVG';
-import {HomeSvg} from '../../../assets/svgs/SVG_LOGOS';
 
 export const providerDatas = [
   {
-    title: 'Steve Goodman home',
-    Icon: HomeSvg,
+    title: 'Steve Goodman home 🏡',
     viewAll: 'View All',
     subInfo: [
       {
@@ -30,17 +28,16 @@ export const providerDatas = [
     ],
   },
   {
-    title: 'In your home',
-    Icon: HomeSvg,
+    title: 'In your home 🏠',
+
     subInfo: [
       {
-        info: 'Dogs over 1 year old',
+        info: 'Dogs over 1 year old ',
       },
     ],
   },
   {
-    title: 'Steve Goodman skills',
-    Icon: HomeSvg,
+    title: 'Steve Goodman skills 🤹‍♀️',
     viewAll: 'View All',
     subInfo: [
       {
