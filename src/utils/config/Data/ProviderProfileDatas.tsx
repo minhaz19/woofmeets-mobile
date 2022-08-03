@@ -217,3 +217,25 @@ export const serivesData = [
     ],
   },
 ];
+export const ProviderStories = [
+  {
+    id: 1,
+    avatar:
+      'https://images.unsplash.com/photo-1523480717984-24cba35ae1ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80',
+    name: 'Meer Habibi',
+    stories: [
+      {
+        id: 1,
+        image:
+          'https://images.unsplash.com/photo-1510215744419-742d9dce947f?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8MTA4MHgxOTIwfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1200',
+        swipeText: 'Custom swipe text for this story',
+        onPress: () => console.log('story 1 swiped'),
+      },
+      {
+        id: 2,
+        image:
+          'https://images.unsplash.com/photo-1493509094819-bd2d26fac21b?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8MTA4MHgxOTIwfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1200',
+      },
+    ],
+  },
+];
