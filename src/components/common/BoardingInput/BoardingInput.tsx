@@ -9,7 +9,7 @@ import HeaderText from '../text/HeaderText';
 const BoardingInput = ({...otherProps}) => {
   const {colors, isDarkMode} = useTheme();
   return (
-    <>
+    <View style={styles.mainContainer}>
       <View style={styles.rootContainer}>
         <View
           style={[
@@ -32,8 +32,18 @@ const BoardingInput = ({...otherProps}) => {
         </View>
         <HeaderText text={'/night'} textStyle={{...styles.headerText}} />
       </View>
-      <ShortText textStyle={styles.label} text={otherProps.value} />
-    </>
+      {!otherProps.icon ? (
+        <ShortText
+          textStyle={styles.label}
+          text={`You will earn per service: $${otherProps.value}`}
+        />
+      ) : (
+        <ShortText
+          textStyle={styles.label}
+          text={`You keep: $${otherProps.value}`}
+        />
+      )}
+    </View>
   );
 };
 
@@ -67,4 +77,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   label: {},
+  mainContainer: {
+    marginBottom: 10,
+  },
 });

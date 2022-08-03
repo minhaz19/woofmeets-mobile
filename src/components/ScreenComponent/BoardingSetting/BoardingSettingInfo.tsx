@@ -1,12 +1,6 @@
-import {
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {FC} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {FC, useState} from 'react';
 import BoardingForm from '../../common/BoardingInput/BoardingForm';
 import AppForm from '../../common/Form/AppForm';
 import HeaderText from '../../common/text/HeaderText';
@@ -20,16 +14,20 @@ import {
   availabilityInput,
   CancellationPolicy,
   petPreference,
+  Rates,
   RatesInput,
 } from './utils/BoardingData/BoardingData';
 import DescriptionText from '../../common/text/DescriptionText';
-import TitleText from '../../common/text/TitleText';
 import AppCheckboxField from '../../common/Form/AppCheckboxField';
 import useHandleCheck from '../../../utils/helpers/usehandleActiveCheck';
 import SubmitButton from '../../common/Form/SubmitButton';
 import BoardingDay from '../../common/BoardingInput/BoardingDay';
-import Dropdown from '../../common/dropDown/Dropdown';
 import {genders} from '../../../utils/config/Data/AddPetData';
+import BoardingDropdown from '../../common/BoardingInput/BoardingDropDown';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import Colors from '../../../constants/Colors';
+import useHandleMultipleActiveCheck from './utils/handleCheck/HandleCheck';
+import BoardingPetQuantity from '../../common/BoardingInput/BoardingPetQuantity';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -47,53 +45,97 @@ const BoardingSettingInfo: FC<Props> = ({
   const {
     handleActiveCheck,
     active0,
-    active1,
     active2,
     active3,
     active4,
-    active5,
-    active6,
     active7,
-    active8,
-    active9,
-    active10,
-    active11,
-    active12,
   } = useHandleCheck();
+  const [showAdditionalRates, setShowAdditionalRates] = useState(true);
+  const handlePress = () => {
+    setShowAdditionalRates(!showAdditionalRates);
+  };
+
+  const {
+    handlePetHostingActiveCheck,
+    handlePetOwnerExpectationActiveCheck,
+    handleSelectDaysActiveCheck,
+  } = useHandleMultipleActiveCheck();
+
   const RenderHeader = () => {
     return (
-      <View style={styles.headerContainer}>
-        <HeaderText text={'Boarding Setting'} textStyle={styles.headerText} />
+      <View>
+        <BigText text={'Boarding Setting'} textStyle={styles.headerText} />
         <HeaderText
           text={'Overnight pet care on your home'}
           textStyle={styles.subHeaderText}
         />
         <View style={styles.infoContainer}>
-          <InfoSvg height={20} width={20} />
+          <InfoSvg height={16} width={16} />
           <ShortText
             text={
-              'We have suggested some default settings based on what works well for new sitters and walkers. You can edit now , ,or at any time in the future .'
+              'We have suggested some default settings based on what works well for new sitters and walkers. You can edit now, or at any time in the future.'
             }
             textStyle={styles.infoText}
           />
         </View>
-        <View>
-          <BigText text={'Rates'} />
-          {RatesInput.map((item, index) => {
+        <View style={styles.headerContainer}>
+          <BigText text={'Rates'} textStyle={styles.headerText} />
+          {Rates.map((item, index) => {
             return (
               <BoardingForm
                 key={index}
                 autoCapitalize="none"
                 autoCorrect={false}
+                checkbox={item.checkbox}
+                icon={item.icon}
+                linkText={item.linkText}
+                additionalRates={item.additionalRates}
+                shortText={item.shortText}
                 keyboardType={'numeric'}
                 placeholder={item.placeholder}
                 textContentType={'none'}
-                icon={true}
                 name={item.name}
                 label={item.title}
+                handlePress={handlePress}
+                showAdditionalRates={showAdditionalRates}
               />
             );
           })}
+          {!showAdditionalRates &&
+            RatesInput.map((item, index) => {
+              return (
+                <BoardingForm
+                  key={index}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  icon={item.icon}
+                  keyboardType={'numeric'}
+                  placeholder={item.placeholder}
+                  checkbox={item.checkbox}
+                  textContentType={'none'}
+                  name={item.name}
+                  label={item.title}
+                  handlePress={handlePress}
+                  showAdditionalRates={showAdditionalRates}
+                />
+              );
+            })}
+          <View>
+            {!showAdditionalRates && (
+              <DescriptionText
+                text={'How are additional rates used ?'}
+                textStyle={styles.linkText}
+              />
+            )}
+            {!showAdditionalRates && (
+              <TouchableOpacity onPress={handlePress}>
+                <DescriptionText
+                  text="Hide additional rates"
+                  textStyle={{color: Colors.primary}}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       </View>
     );
@@ -101,18 +143,29 @@ const BoardingSettingInfo: FC<Props> = ({
 
   const RenderFooter = () => {
     return (
-      <>
+      <View style={styles.headerContainer}>
         <BigText text={'Pet Preferences'} textStyle={styles.headerText} />
-        <DescriptionText
-          text={'How should I set preference?'}
-          textStyle={styles.subHeaderText}
-        />
+        <TouchableOpacity>
+          <DescriptionText
+            text={'How should I set preference?'}
+            textStyle={styles.linkText}
+          />
+        </TouchableOpacity>
+        <View style={styles.headerContainer}>
+          <HeaderText
+            textStyle={styles.headerText}
+            text={'How many pets per day can host in your home?'}
+          />
+          <BoardingPetQuantity name={'petQuantity'} />
+        </View>
         <HeaderText
-          textStyle={styles.title}
-          text={'How many pets per day can host in your home?'}
+          textStyle={styles.subtitle}
+          text={petPreference[0].title!}
         />
-        <HeaderText textStyle={styles.title} text={petPreference[0].title!} />
-        <DescriptionText text={petPreference[0].subtitle} />
+        <DescriptionText
+          text={petPreference[0].subtitle}
+          textStyle={styles.subtitle}
+        />
         {petPreference[0].options.map((item, index) => {
           return (
             <AppCheckboxField
@@ -120,36 +173,48 @@ const BoardingSettingInfo: FC<Props> = ({
               key={index}
               square
               typeKey={item.id}
-              active={petPreference[0].id === 106 && active6[item.id]}
-              onPress={() => handleActiveCheck(106, item.id)}
+              active={item.checked}
+              onPress={() =>
+                handlePetHostingActiveCheck(item.id, petPreference[0].options)
+              }
               name={petPreference[0].name!}
             />
           );
         })}
-        <View>
-          <BigText text={'About your home'} />
+        <View style={styles.headerContainer}>
+          <BigText text={'About your home'} textStyle={styles.headerText} />
           {aboutYourHome.map((item, index) => {
             return (
               <View key={index}>
-                <HeaderText textStyle={styles.title} text={item.title!} />
+                <HeaderText
+                  text={item.title!}
+                  textStyle={{marginTop: 10, marginBottom: 6}}
+                />
                 {item.subtitle && <DescriptionText text={item.subtitle} />}
                 <View>
                   {item.options.map((type, i) => {
                     return (
-                      <View key={i} style={styles.additionalType}>
+                      <View key={i}>
                         <AppCheckboxField
                           title={type.type}
                           radio={item.radio}
                           square={item.square}
-                          key={index}
                           typeKey={type.id}
                           active={
-                            (item.id === 101 && active1[type.id]) ||
-                            (item.id === 102 && active2[type.id])
-                            // (item.id === 103 && active3[type.id]) ||
-                            // (item.id === 104 && active4[type.id])
+                            item.id === 103 || item.id === 104
+                              ? (item.id === 103 && active3[type.id]) ||
+                                (item.id === 104 && active4[type.id])
+                              : // @ts-ignore
+                                type.checked
                           }
-                          onPress={() => handleActiveCheck(item.id, type.id)}
+                          onPress={() =>
+                            item.id === 103 || item.id === 104
+                              ? handleActiveCheck(item.id, type.id)
+                              : handlePetOwnerExpectationActiveCheck(
+                                  type.id,
+                                  item.options,
+                                )
+                          }
                           name={item.name}
                         />
                       </View>
@@ -161,73 +226,96 @@ const BoardingSettingInfo: FC<Props> = ({
           })}
         </View>
         <View>
-          <BigText text={'Cancellation Policy'} />
-          <DescriptionText text={'What do this mean?'} />
-          <HeaderText text={CancellationPolicy[0].title} />
-          {CancellationPolicy[0].options.map((item, index) => {
-            return (
-              <AppCheckboxField
-                title={item.type}
-                key={index}
-                square={CancellationPolicy[0].square}
-                radio={CancellationPolicy[0].radio}
-                typeKey={item.id}
-                active={CancellationPolicy[0].id === 105 && active5[item.id]}
-                onPress={() => handleActiveCheck(105, item.id)}
-                name={CancellationPolicy[0].name!}
+          <View style={styles.footerContainer}>
+            <BigText
+              text={'Cancellation Policy'}
+              textStyle={styles.headerText}
+            />
+            <DescriptionText
+              text={'What do this mean?'}
+              textStyle={styles.linkText}
+            />
+            <HeaderText
+              text={CancellationPolicy[0].title}
+              textStyle={styles.subHeaderText}
+            />
+            {CancellationPolicy[0].options.map((item, index) => {
+              return (
+                <AppCheckboxField
+                  title={item.type}
+                  key={index}
+                  square={CancellationPolicy[0].square}
+                  radio={CancellationPolicy[0].radio}
+                  typeKey={item.id}
+                  active={CancellationPolicy[0].id === 107 && active7[item.id]}
+                  onPress={() => handleActiveCheck(107, item.id)}
+                  name={CancellationPolicy[0].name!}
+                />
+              );
+            })}
+            <DescriptionText
+              text={
+                'Note : service providers ( e.g. sitters ) must abide by applicable laws and regulations.'
+              }
+              textStyle={{marginTop: 6}}
+            />
+            <TouchableOpacity>
+              <DescriptionText
+                text={'Terms of Service'}
+                textStyle={styles.linkText}
               />
-            );
-          })}
-          <DescriptionText
-            text={
-              'Note : service providers ( e.g. sitters ) must abide by applicable laws and regulations.'
-            }
-          />
-          <TouchableOpacity>
-            <DescriptionText text={'Terms of Service'} />
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
           <View>
             <SubmitButton title="Save" />
           </View>
           <BottomSpacing />
         </View>
-      </>
+      </View>
     );
   };
 
   const RenderMain = () => {
     return (
       <View>
-        <BigText text={'Availability'} />
+        <BigText text={'Availability'} textStyle={styles.headerText} />
         <View>
           <HeaderText text={availabilityInput[0].title} />
-          {availabilityInput[0].options?.map((item, index) => {
-            return (
-              <AppCheckboxField
-                title={item.type}
-                key={index}
-                square={availabilityInput[0].square}
-                radio={availabilityInput[0].radio}
-                typeKey={item.id}
-                active={availabilityInput[0].id === 110 && active10[item.id]}
-                onPress={() => handleActiveCheck(110, item.id)}
-                name={availabilityInput[0].name!}
-              />
-            );
-          })}
+          <View style={styles.fullTimeContainer}>
+            {availabilityInput[0].options?.map((item, index) => {
+              return (
+                <AppCheckboxField
+                  title={item.type}
+                  key={index}
+                  square={availabilityInput[0].square}
+                  radio={availabilityInput[0].radio}
+                  typeKey={item.id}
+                  active={availabilityInput[0].id === 100 && active0[item.id]}
+                  onPress={() => handleActiveCheck(100, item.id)}
+                  name={availabilityInput[0].name!}
+                />
+              );
+            })}
+          </View>
           {availabilityInput[0].linkTitle && (
             <TouchableOpacity>
               <DescriptionText
                 text={availabilityInput[0].linkTitle}
-                textStyle={styles.linkModal}
+                textStyle={styles.linkText}
               />
             </TouchableOpacity>
           )}
         </View>
-        <View>
-          <HeaderText text={availabilityInput[1].title} />
+        <View style={{marginTop: '2%'}}>
+          <HeaderText
+            text={availabilityInput[1].title}
+            textStyle={styles.subHeaderText}
+          />
           {availabilityInput[1].subtitle && (
-            <DescriptionText text={availabilityInput[1].subtitle} />
+            <DescriptionText
+              text={availabilityInput[1].subtitle}
+              textStyle={styles.subHeaderText}
+            />
           )}
           <View style={styles.dayBoxContainer}>
             {availabilityInput[1].options?.map((item, index) => (
@@ -236,13 +324,18 @@ const BoardingSettingInfo: FC<Props> = ({
                 title={item.type}
                 name={availabilityInput[1].name}
                 typeKey={item.id}
-                active={availabilityInput[0].id === 111 && active11[item.id]}
-                onPress={() => handleActiveCheck(110, item.id)}
+                active={item.checked}
+                onPress={() =>
+                  handleSelectDaysActiveCheck(
+                    item.id,
+                    availabilityInput[1].options,
+                  )
+                }
               />
             ))}
           </View>
         </View>
-        <View>
+        <View style={styles.headerContainer}>
           <HeaderText text={availabilityInput[2].title} />
           {availabilityInput[2].options?.map((item, index) => {
             return (
@@ -252,20 +345,20 @@ const BoardingSettingInfo: FC<Props> = ({
                 square={availabilityInput[2].square}
                 radio={availabilityInput[2].radio}
                 typeKey={item.id}
-                active={availabilityInput[2].id === 112 && active12[item.id]}
-                onPress={() => handleActiveCheck(112, item.id)}
+                active={availabilityInput[2].id === 102 && active2[item.id]}
+                onPress={() => handleActiveCheck(102, item.id)}
                 name={availabilityInput[2].name!}
               />
             );
           })}
         </View>
         {availabilityInput[3].select && (
-          <View style={styles.selectContainer}>
+          <View>
             <DescriptionText
               text={availabilityInput[3].linkTitle}
               textStyle={styles.linkText}
             />
-            <Dropdown
+            <BoardingDropdown
               label={availabilityInput[3].title}
               name={availabilityInput[3].name}
               placeholder={availabilityInput[3].placeholder}
@@ -286,7 +379,6 @@ const BoardingSettingInfo: FC<Props> = ({
         onSubmit={handleSubmit}
         validationSchema={validationSchema}>
         <View style={styles.inputContainer}>
-          <BigText text={'Availability'} textStyle={styles.headerText} />
           <RenderHeader />
           <RenderMain />
           <RenderFooter />
@@ -301,17 +393,40 @@ export default BoardingSettingInfo;
 
 const styles = StyleSheet.create({
   headerContainer: {
-    // marginHorizontal: '2%',
+    marginVertical:
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+  },
+  footerContainer: {
+    marginBottom:
+      SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '5%' : '6%',
   },
   headerText: {
-    fontSize: Text_Size.Text_2,
+    paddingBottom:
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+    lineHeight: 20,
+  },
+  subHeaderText: {
+    paddingBottom:
+      SCREEN_WIDTH <= 380 ? '3%' : SCREEN_WIDTH <= 600 ? '2%' : '1%',
+    lineHeight: 20,
+  },
+  subtitle: {
+    paddingBottom: '1%',
+    lineHeight: 20,
+  },
+  linkText: {
+    color: Colors.light.blue,
+    marginVertical: '2%',
+    lineHeight: 20,
   },
   infoContainer: {
     flexDirection: 'row',
     marginHorizontal: 10,
+    marginVertical: 10,
   },
   infoText: {
     paddingLeft: 10,
+    fontSize: Text_Size.Text_8,
   },
   inputContainer: {paddingHorizontal: 20},
   flatList: {
@@ -322,6 +437,10 @@ const styles = StyleSheet.create({
   dayBoxContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 10,
+    paddingVertical: '2%',
+  },
+  fullTimeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
 });

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {FormikValues, useFormikContext} from 'formik';
-import {StyleSheet, View, ViewStyle} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import ErrorMessage from '../Form/ErrorMessage';
@@ -8,6 +8,8 @@ import BoardingInput from './BoardingInput';
 import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
 import {InfoSvg} from '../../ScreenComponent/Inbox/utils/SvgComponent/SvgComponent';
+import Colors from '../../../constants/Colors';
+import AppCheckboxField from '../Form/AppCheckboxField';
 
 interface Props {
   name: string;
@@ -19,11 +21,16 @@ interface Props {
   placeholder?: string;
   textContentType?: string;
   forgotPassword?: boolean;
-  flex?: number;
   subTitle?: string;
   email?: boolean;
   textInputStyle?: ViewStyle;
   auth?: boolean;
+  linkText?: string;
+  shortText?: string;
+  checkbox?: string;
+  additionalRates?: string;
+  handlePress?: () => void;
+  showAdditionalRates?: boolean;
 }
 
 const BoardingForm = ({
@@ -35,44 +42,81 @@ const BoardingForm = ({
   placeholder,
   textContentType,
   label,
-  flex,
   subTitle,
   textInputStyle,
   auth,
+  linkText,
+  shortText,
+  checkbox,
+  additionalRates,
+  handlePress,
+  showAdditionalRates,
 }: Props) => {
   const {setFieldTouched, touched, errors, values, setFieldValue} =
     useFormikContext<FormikValues>();
+
+    console.log('values', values);
   return (
     <>
-      <View style={{width: '60%'}}>
+      <View>
         <View style={styles.titleContainer}>
           <TitleText textStyle={styles.label} text={label} />
+
           {icon && <InfoSvg width={16} height={16} style={styles.svg} />}
         </View>
-        {subTitle && (
+
+        {subTitle && showAdditionalRates && (
           <DescriptionText textStyle={styles.subTitle} text={subTitle} />
         )}
 
-        <BoardingInput
-          autoCapitalize={autoCapitalize}
-          autoCorrect={autoCorrect}
-          icon={icon}
-          keyboardType={keyboardType}
-          placeholder={placeholder}
-          textContentType={textContentType}
-          onChangeText={(text: string) => setFieldValue(name, text)}
-          onBlur={() => setFieldTouched(name)}
-          value={values[name]}
-          error={errors[name]}
-          touch={touched[name]}
-          textInputStyle={textInputStyle}
-        />
+        <View style={{width: '60%'}}>
+          <BoardingInput
+            autoCapitalize={autoCapitalize}
+            autoCorrect={autoCorrect}
+            icon={icon}
+            keyboardType={keyboardType}
+            placeholder={placeholder}
+            textContentType={textContentType}
+            onChangeText={(text: string) => setFieldValue(name, text)}
+            onBlur={() => setFieldTouched(name)}
+            value={values[name]}
+            error={errors[name]}
+            touch={touched[name]}
+            textInputStyle={textInputStyle}
+          />
+        </View>
 
         <ErrorMessage
           error={errors[name]}
           visible={touched[name]}
           auth={auth}
         />
+        {checkbox && (
+          <AppCheckboxField
+            title={checkbox}
+            radio
+            typeKey={99}
+            active={values[name] === 99}
+            onPress={() => {}}
+            name={'updateRates'}
+          />
+        )}
+        {linkText && (
+          <TouchableOpacity>
+            <DescriptionText textStyle={styles.linkText} text={linkText} />
+          </TouchableOpacity>
+        )}
+        {shortText && (
+          <DescriptionText textStyle={styles.shortText} text={shortText} />
+        )}
+        {additionalRates && showAdditionalRates && (
+          <TouchableOpacity onPress={handlePress}>
+            <DescriptionText
+              text={additionalRates}
+              textStyle={{color: Colors.primary}}
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </>
   );
@@ -103,5 +147,13 @@ const styles = StyleSheet.create({
   },
   svg: {
     marginLeft: 10,
+  },
+  linkText: {
+    color: Colors.light.blue,
+    marginVertical: '2%',
+  },
+  shortText: {
+    color: Colors.gray,
+    marginVertical: '2%',
   },
 });
