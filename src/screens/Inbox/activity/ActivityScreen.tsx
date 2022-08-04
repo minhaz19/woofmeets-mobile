@@ -18,7 +18,9 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {CameraIcon, SendIcon} from '../../../assets/Inbox_SVG';
 
-const ActivityScreen = () => {
+const ActivityScreen = (props: {
+  navigation: {navigate: (arg0: string) => void};
+}) => {
   const {image} = {
     image: 'https://picsum.photos/200/200',
   };
@@ -114,10 +116,15 @@ const ActivityScreen = () => {
                               style={styles.imageStyle}
                             />
                           </View>
-                          <TitleText
-                            text="VIEW DETAILS"
-                            textStyle={styles.textDetailsStyle}
-                          />
+                          <TouchableOpacity
+                            onPress={() =>
+                              props.navigation.navigate('Checkout')
+                            }>
+                            <TitleText
+                              text="VIEW DETAILS"
+                              textStyle={styles.textDetailsStyle}
+                            />
+                          </TouchableOpacity>
                         </View>
                       )}
                       {!item.details && <ShortText text="Jun 14, 9:27" />}
