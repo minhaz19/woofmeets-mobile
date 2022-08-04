@@ -10,7 +10,7 @@ import {
 import React, {useState} from 'react';
 import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
 import Colors from '../../../../constants/Colors';
-import {UploadIcon} from '../../../../assets/SVG_LOGOS';
+import {UploadIcon} from '../../../../assets/svgs/SVG_LOGOS';
 import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {FormikValues, useFormikContext} from 'formik';

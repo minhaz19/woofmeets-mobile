@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import AppForm from '../../../common/Form/AppForm';
 import AppInputSelectField from '../../../common/Form/AppInputSelectField';
-import {Cross} from '../../../../assets/SVG_LOGOS';
+import {Cross} from '../../../../assets/svgs/SVG_LOGOS';
 import ConsumerPetList from './ConsumerPetList';
 import TitleText from '../../../common/text/TitleText';
 import PriceRange from './PriceRange';
@@ -151,7 +151,10 @@ const FilterProviderBody = ({
 export default FilterProviderBody;
 
 const styles = StyleSheet.create({
-  container: {marginTop: 10, marginBottom: 20},
+  container: {
+    marginTop: 10,
+    marginBottom: 20,
+  },
   switch: {
     marginBottom: 20,
   },

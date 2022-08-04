@@ -1,17 +1,18 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {MapMarker, RoundedCheckbox, Star} from '../../../../assets/SVG_LOGOS';
+import {MapMarker, RoundedCheckbox} from '../../../../assets/svgs/SVG_LOGOS';
 import ShortIconTitle from '../../../common/ShortIconTitle';
 import ShortText from '../../../common/text/ShortText';
 import Colors from '../../../../constants/Colors';
 import HeaderText from '../../../common/text/HeaderText';
+import {AirbnbRating} from 'react-native-ratings';
 interface Props {
   name: string;
   nature: string;
   rating: number;
   distance: string;
-  availablity: string;
-  repeatClient: string;
+  availablity?: string;
+  repeatClient?: string;
 }
 const ProviderInfo = ({
   name,
@@ -23,22 +24,34 @@ const ProviderInfo = ({
 }: Props) => {
   return (
     <View style={styles.container}>
-      <HeaderText textStyle={styles.title} text={"nadni anbdiaij iahdiai iadiajsio iaisd"} />
+      <HeaderText textStyle={styles.title} text={name} />
       <View style={styles.shortInfo}>
-        <ShortIconTitle Icon={Star} text={rating} />
+        <View>
+          <AirbnbRating
+            showRating={false}
+            count={rating}
+            defaultRating={4}
+            size={10}
+          />
+        </View>
+        {/* <ShortIconTitle Icon={Star} text={rating} /> */}
         <ShortIconTitle Icon={MapMarker} text={distance} />
       </View>
-      <ShortText text={"andiaio wnsfiisa anidnia andiai buhiu uuhi aidn aidia snifniosfo isnfis sbni sisnfi snifsn"} />
-      <View style={styles.availableTime}>
-        <ShortIconTitle
-          Icon={RoundedCheckbox}
-          text={availablity}
-          color={Colors.green}
-        />
-      </View>
-      <View style={styles.repeat}>
-        <ShortText text={repeatClient} />
-      </View>
+      <ShortText text={nature} />
+      {availablity && (
+        <View style={styles.availableTime}>
+          <ShortIconTitle
+            Icon={RoundedCheckbox}
+            text={availablity}
+            color={Colors.green}
+          />
+        </View>
+      )}
+      {repeatClient && (
+        <View style={styles.repeat}>
+          <ShortText text={repeatClient} />
+        </View>
+      )}
     </View>
   );
 };
@@ -62,6 +75,7 @@ const styles = StyleSheet.create({
   availableTime: {
     marginVertical: 5,
   },
+  rating: {marginRight: 5},
   repeat: {
     padding: 3,
     backgroundColor: Colors.shadow,

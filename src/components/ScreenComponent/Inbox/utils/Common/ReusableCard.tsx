@@ -84,10 +84,12 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
     height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
+    marginRight: 10,
   },
   itemContainer: {
     padding: '3%',
     borderRadius: 4,
+    marginHorizontal: 2,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
     shadowOpacity: 0.3,

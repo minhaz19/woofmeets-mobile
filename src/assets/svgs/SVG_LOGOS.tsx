@@ -16,7 +16,7 @@ import Svg, {
   Text,
   Image,
 } from 'react-native-svg';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 
 export const Finder = (props: SvgProps) => (
   <Svg
@@ -2117,7 +2117,8 @@ export const Star = (props: SvgProps) => (
     xmlns="http://www.w3.org/2000/svg"
     width="10"
     height="9.586"
-    viewBox="0 0 10 9.586">
+    viewBox="0 0 10 9.586"
+    {...props}>
     <Path
       id="Path_1253"
       data-name="Path 1253"
@@ -2219,6 +2220,7 @@ export const AuthPassword = (props: SvgProps) => (
     xmlns="http://www.w3.org/2000/svg"
     width={223.502}
     height={207.672}
+    viewBox="0 0 223.502 207.672"
     {...props}>
     <Defs>
       <LinearGradient
@@ -2300,7 +2302,8 @@ export const Cross = (props: SvgProps) => (
     xmlns="http://www.w3.org/2000/svg"
     width="8.793"
     height="8.794"
-    viewBox="0 0 8.793 8.794">
+    viewBox="0 0 8.793 8.794"
+    {...props}>
     <Path
       id="Vector"
       d="M4377.1,1052.708a.664.664,0,0,0-.94,0l-3.261,3.255-3.261-3.261a.665.665,0,0,0-.94.941l3.261,3.261-3.261,3.261a.665.665,0,0,0,.94.94l3.261-3.261,3.261,3.261a.665.665,0,0,0,.94-.94l-3.261-3.261,3.261-3.261a.668.668,0,0,0,0-.934Z"

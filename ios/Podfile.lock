@@ -284,6 +284,10 @@ PODS:
     - glog
   - react-native-image-picker (4.8.4):
     - React-Core
+  - react-native-insta-story (1.1.7):
+    - React
+  - react-native-maps (1.1.0):
+    - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
   - React-perflogger (0.68.2)
@@ -440,6 +444,8 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-insta-story (from `../node_modules/react-native-insta-story`)
+  - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -519,6 +525,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-insta-story:
+    :path: "../node_modules/react-native-insta-story"
+  react-native-maps:
+    :path: "../node_modules/react-native-maps"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-perflogger:
@@ -595,6 +605,8 @@ SPEC CHECKSUMS:
   React-jsinspector: c5989c77cb89ae6a69561095a61cce56a44ae8e8
   React-logger: a0833912d93b36b791b7a521672d8ee89107aff1
   react-native-image-picker: cffb727cf2f59bd5c0408e30b3dbe0b935f88835
+  react-native-insta-story: 118338ab3ee2e0697d0a14823b2b96723fc2aa53
+  react-native-maps: de23d141fa0289d1896739d0ddc8c5d11d9ca800
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162

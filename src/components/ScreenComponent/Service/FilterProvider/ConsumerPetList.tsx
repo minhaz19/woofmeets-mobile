@@ -1,6 +1,6 @@
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {RoundedCheckboxFilled} from '../../../../assets/SVG_LOGOS';
+import {RoundedCheckboxFilled} from '../../../../assets/svgs/SVG_LOGOS';
 import TitleText from '../../../common/text/TitleText';
 import Text_Size from '../../../../constants/textScaling';
 interface Props {

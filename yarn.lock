@@ -1347,6 +1347,11 @@
     read-package-json-fast "^2.0.3"
     which "^2.0.2"
 
+"@ptomasroos/react-native-multi-slider@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@ptomasroos/react-native-multi-slider/-/react-native-multi-slider-2.2.2.tgz#35a97fb8c355627c6a2ded010b360ac5728b44ad"
+  integrity sha512-HWyCnRD3Z3SbHK2FLWYmBBqd1B4iXipeKv1+AK0FoY/CElEDTEixHE8hN60TsqxalPrznn798LE2Q4tHuCiyaA==
+
 "@react-native-async-storage/async-storage@^1.17.6":
   version "1.17.7"
   resolved "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-1.17.7.tgz"
@@ -1752,6 +1757,11 @@
   version "1.0.0"
   resolved "https://registry.npmjs.org/@types/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz"
   integrity sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
+
+"@types/geojson@^7946.0.8":
+  version "7946.0.10"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.10.tgz#6dfbf5ea17142f7f9a043809f1cd4c448cb68249"
+  integrity sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
@@ -7563,7 +7573,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@*, prop-types@^15.5.10, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@*, prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -7708,6 +7718,29 @@ react-native-image-picker@^4.8.4:
   resolved "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.8.4.tgz"
   integrity sha512-Mjh2j/sddyolb16EpmprWzbtyeFvW8Xgzr/8WNi9d6bR2FC/kL78cY/a+7Yzujg5ZDtT1MWys+eWw/qtfwgGiw==
 
+react-native-insta-story@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/react-native-insta-story/-/react-native-insta-story-1.1.7.tgz#c818cc20cc5fd342a3eacfcc0be32b2a1a03dff8"
+  integrity sha512-Qk5BRQsncl97gFT2XkxEJi9Vo/H8a5CoOWuYRMj9+rNQVxvIP/FMmg6mi96O2ay+dce46CkvCukH1HGbN+qDZQ==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-modalbox "^2.0.2"
+    react-native-swipe-gestures "^1.0.5"
+
+react-native-maps@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-1.1.0.tgz#374dd1bcae1ef6702ff262e9f6f1967a65df00a2"
+  integrity sha512-PmdEVCisYkbvS5qKn/N5jiAP/zoUau0PBOc4CAil3lSMzLLwIqiLUzK1VNKQnbxwOaJalTZFxBoRUyPGgVAvmQ==
+  dependencies:
+    "@types/geojson" "^7946.0.8"
+
+react-native-modalbox@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-modalbox/-/react-native-modalbox-2.0.2.tgz#8a7b3d2e7be79b5d1cb9530b2c6bc535b1bc8c66"
+  integrity sha512-uSuoZ+siPPNqWGyw8NXhA/Aots7mOx2+qijFoeovequY0kczZEPZDd0ARHbzg+1cE3H3AATJEwGdkVA8lUxs0g==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-otp-inputs@^7.4.0:
   version "7.4.0"
   resolved "https://registry.npmjs.org/react-native-otp-inputs/-/react-native-otp-inputs-7.4.0.tgz"
@@ -7715,7 +7748,7 @@ react-native-otp-inputs@^7.4.0:
 
 react-native-ratings@^8.1.0:
   version "8.1.0"
-  resolved "https://registry.npmjs.org/react-native-ratings/-/react-native-ratings-8.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-8.1.0.tgz#3fa9ad29128dc3a88e59518ba151e61c59dd0647"
   integrity sha512-+QOJ4G3NjVkI1D+tk4EGx1dCvVfbD2nQdkrj9cXrcAoEiwmbep4z4bZbCKmWMpQ5h2dqbxABU8/eBnbDmvAc3g==
   dependencies:
     lodash "^4.17.15"
@@ -7756,6 +7789,21 @@ react-native-size-matters@^0.4.0:
   version "0.4.0"
   resolved "https://registry.npmjs.org/react-native-size-matters/-/react-native-size-matters-0.4.0.tgz"
   integrity sha512-8/C0htHrFWeUm9N8JegmadovUfgTWkGBkDPZ1N3YkXtDWb+98Ya2gThiKcu445r8c7YhcrBfnHz/mYsXIusaOQ==
+
+react-native-status-bar-height@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.6.0.tgz#b6afd25b6e3d533c43d0fcdcfd5cafd775592cea"
+  integrity sha512-z3SGLF0mHT+OlJDq7B7h/jXPjWcdBT3V14Le5L2PjntjjWM3+EJzq2BcXDwV+v67KFNJic5pgA26cCmseYek6w==
+
+react-native-story-component@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-story-component/-/react-native-story-component-0.5.0.tgz#3e48a712ddb12ff9bef4860653b45dce344c054a"
+  integrity sha512-USDGspJMudQx1l1JBU1LO2zPTvqUvQGFsgKDGHymP9jUYxxDUp8/nDg1QLGyvCsO/H0KnXrD6pXYlyx3aJd+fg==
+  dependencies:
+    prop-types "^15.8.1"
+    react-native-modalbox "^2.0.2"
+    react-native-status-bar-height "^2.6.0"
+    react-native-swipe-gestures "^1.0.5"
 
 react-native-svg@^12.3.0:
   version "12.4.3"

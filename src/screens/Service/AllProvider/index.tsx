@@ -16,14 +16,12 @@ const AllProvider = () => {
   const {colors} = useTheme();
   const filter = useSelector((state: any) => state.filter.isOpen);
 
-  // const [isModalVisible, setIsModalVisible] = useState(filter);
-
   return (
     <Screen
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <ShortText
         textStyle={{
-          paddingTop: Platform.OS === 'ios' ? 10 : 0,
+          paddingVertical: Platform.OS === 'ios' ? 10 : 0,
           color: Colors.gray,
         }}
         text="20 Result"

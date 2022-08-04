@@ -12,6 +12,7 @@ import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import {verifyAccountValue} from '../../../utils/config/initalValues';
 import {verifyAccountValidationSchema} from '../../../utils/config/validationSchema';
 import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 const forgotPassData = {
   image: require('../../../assets/image/verifyAccount/logo.png'),
   title: 'Verify Account',
@@ -38,17 +39,19 @@ const VerifyAccount = ({navigation}: Props) => {
             : Colors.secondary,
         },
       ]}>
-      <View
-        style={[
-          styles.infoContainer,
-          {
-            backgroundColor: isDarkMode
-              ? Colors.dark.lightDark
-              : Colors.background,
-          },
-        ]}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        <View
+          style={[
+            styles.infoContainer,
+            {
+              backgroundColor: isDarkMode
+                ? Colors.dark.lightDark
+                : Colors.background,
+            },
+          ]}>
           <ImageAndTitle
             image={forgotPassData.image}
             title={forgotPassData.title}
@@ -63,9 +66,9 @@ const VerifyAccount = ({navigation}: Props) => {
             btn2Title="Resend Code"
             verifyAccount
           />
-        </KeyboardAvoidingView>
-        <View style={styles.view} />
-      </View>
+          <View style={styles.view} />
+        </View>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };
@@ -82,6 +85,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     padding: 20,
     bottom: 0,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {height: 70},
 });

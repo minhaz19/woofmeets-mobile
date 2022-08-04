@@ -12,7 +12,9 @@ import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import {forgotPasswordOtpValue} from '../../../utils/config/initalValues';
 import {forgotPasswordOtpValidationSchema} from '../../../utils/config/validationSchema';
 import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
-import {AuthEmail} from '../../../assets/SVG_LOGOS';
+import {AuthEmail} from '../../../assets/svgs/SVG_LOGOS';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import BottomSpacing from '../../../components/UI/BottomSpacing';
 const forgotPassData = {
   icon: AuthEmail,
   title: 'Forgot Password?',
@@ -40,17 +42,19 @@ const ForgotPasswordOtp = ({navigation}: Props) => {
             : Colors.secondary,
         },
       ]}>
-      <View
-        style={[
-          styles.infoContainer,
-          {
-            backgroundColor: isDarkMode
-              ? Colors.dark.lightDark
-              : Colors.background,
-          },
-        ]}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        <View
+          style={[
+            styles.infoContainer,
+            {
+              backgroundColor: isDarkMode
+                ? Colors.dark.lightDark
+                : Colors.background,
+            },
+          ]}>
           <ImageAndTitle
             Icon={forgotPassData.icon}
             title={forgotPassData.title}
@@ -64,8 +68,9 @@ const ForgotPasswordOtp = ({navigation}: Props) => {
             btn2Title="Resend Code"
             forgotPasswordOpt
           />
-        </KeyboardAvoidingView>
-      </View>
+          {SCREEN_WIDTH > 800 && <BottomSpacing />}
+        </View>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };
@@ -81,6 +86,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
+
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
     bottom: 0,
   },
 });
