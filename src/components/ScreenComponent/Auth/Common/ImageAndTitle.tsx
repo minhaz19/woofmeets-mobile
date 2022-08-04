@@ -3,8 +3,9 @@ import React from 'react';
 import Text_Size from '../../../../constants/textScaling';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 interface Props {
-  Icon: any;
+  Icon?: any;
   title: string;
   subTitle?: string;
   image?: any;
@@ -12,7 +13,14 @@ interface Props {
 const ImageAndTitle = ({title, Icon, subTitle}: Props) => {
   return (
     <View>
-      <View style={styles.iconContainer}>{Icon && <Icon />}</View>
+      <View style={styles.iconContainer}>
+        {Icon && (
+          <Icon
+            width={SCREEN_WIDTH > 800 ? 200 : 180}
+            height={SCREEN_WIDTH > 800 ? 200 : 180}
+          />
+        )}
+      </View>
       <View style={styles.textContainer}>
         <TitleText textStyle={styles.title} text={title} />
         {subTitle && (

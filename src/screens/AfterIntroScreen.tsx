@@ -2,7 +2,6 @@ import {
   Image,
   ScrollView,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from 'react-native';
@@ -14,6 +13,8 @@ import IOSButton from '../components/UI/IOSButton';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
 import {SCREEN_WIDTH} from '../constants/WindowSize';
+import BigText from '../components/common/text/BigText';
+import TitleText from '../components/common/text/TitleText';
 
 const AfterIntroScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -45,12 +46,11 @@ const AfterIntroScreen = (props: {
           />
         </View>
         <View style={styles.middleContainer}>
-          <Text style={[styles.title, {color: colors.headerText}]}>
-            Woofmeets
-          </Text>
-          <Text style={[styles.description, {color: colors.headerText}]}>
-            Loving pet care in your neighbourhood
-          </Text>
+          <BigText text="Woofmeets" />
+          <TitleText
+            text="Loving pet care in your neighbourhood"
+            textStyle={styles.description}
+          />
         </View>
         <View style={styles.footerContainer}>
           <ButtonCom
@@ -108,7 +108,8 @@ const styles = StyleSheet.create({
     paddingTop: '10%',
   },
   footerContainer: {
-    paddingTop: '20%',
+    paddingTop: '18%',
+    paddingHorizontal: SCREEN_WIDTH <= 800 ? '5%' : '10%',
   },
   titleStyle: {
     color: Colors.primary,
@@ -117,13 +118,7 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_1,
     flex: 1,
   },
-  title: {
-    fontSize: Text_Size.Text_2,
-    fontWeight: '600',
-    marginTop: '3%',
-  },
   description: {
-    fontSize: Text_Size.Text_0,
     marginTop: '3%',
   },
 });

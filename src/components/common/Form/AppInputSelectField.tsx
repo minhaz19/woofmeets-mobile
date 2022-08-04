@@ -36,7 +36,6 @@ const AppInputSelectField = ({
 }: Props) => {
   const {setFieldTouched, values, touched, errors} =
     useFormikContext<FormikValues>();
-  // console.log('values', values[name]);
   const dispatch = useDispatch();
   return (
     <>

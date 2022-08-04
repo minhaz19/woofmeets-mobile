@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ViewStyle, useColorScheme} from 'react-native';
-import Colors from '../../constants/Colors';
+import {View, StyleSheet, ViewStyle} from 'react-native';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 
 const Card = (props: {

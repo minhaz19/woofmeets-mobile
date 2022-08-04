@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Image, StyleSheet, Text, useColorScheme, View} from 'react-native';
+import {Image, StyleSheet, useColorScheme, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import DescriptionText from '../components/common/text/DescriptionText';
+import HeaderText from '../components/common/text/HeaderText';
 import AppIntroSlider from '../components/splash/react-native-app-intro-slider/dist';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
-import {textStyle} from '../constants/theme/common/textStyle';
 import MainNavigationContainer from '../navigation/MainNavigationContainer';
 import FirstScreen from './FirstScreen';
 
@@ -64,24 +65,8 @@ const Splash = ({}) => {
         ]}>
         <Image source={item.image} style={styles.image} />
         <View style={styles.footerContainer}>
-          <Text
-            style={[
-              styles.text,
-              {
-                color: isDarkMode ? Colors.dark.text : Colors.headerText,
-              },
-            ]}>
-            {item.title}
-          </Text>
-          <Text
-            style={[
-              styles.description,
-              {
-                color: isDarkMode ? Colors.dark.text : Colors.subText,
-              },
-            ]}>
-            {item.text}
-          </Text>
+          <HeaderText text={item.title} textStyle={styles.text} />
+          <DescriptionText text={item.text} textStyle={styles.description} />
         </View>
       </View>
     );
@@ -186,13 +171,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontSize: Text_Size.Text_5,
+    fontSize: Text_Size.Text_4,
     fontWeight: 'bold',
     marginHorizontal: '10%',
     textAlign: 'center',
   },
   headerText: {
-    fontSize: Text_Size.Text_4,
+    fontSize: Text_Size.Text_5,
     fontFamily: 'Arial',
     paddingHorizontal: '5%',
     paddingVertical: '2%',
@@ -214,7 +199,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     marginHorizontal: '10%',
-    ...textStyle.descriptionText,
   },
   image: {
     flex: 1,

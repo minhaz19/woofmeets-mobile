@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
@@ -15,68 +16,77 @@ import BigText from '../../components/common/text/BigText';
 import Text_Size from '../../constants/textScaling';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import BottomButton from '../../components/ScreenComponent/Service/BottomButton';
+import Pricing from '../../components/ScreenComponent/Inbox/Past/Pricing';
+import ButtonCom from '../../components/UI/ButtonCom';
+import {btnStyles} from '../../constants/theme/common/buttonStyles';
+import BottomSpacingNav from '../../components/UI/BottomSpacingNav';
 
-const CheckoutDetails = (props: {
-  navigation: {navigate: (arg0: string) => void};
-}) => {
+const CheckoutDetails = () => {
   const {colors} = useTheme();
   const [promoCode, setPromoCode] = useState<string>();
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
-      <View style={styles.innerContainer}>
-        <BigText text="Review and Payment" />
-        <View style={styles.profileContainer}>
-          <ProfileInfo />
-        </View>
-        <BigText text="Stay Details" />
-        <HeaderText
-          textStyle={{...styles.textStyle, ...styles.textPadding}}
-          text="Boarding"
-        />
-        {/* Boarding Details */}
-        <TitleText text="In their home" textStyle={styles.textPadding} />
-        <View style={styles.dateContainer}>
-          <TitleText text="Jun 14, 2022" textStyle={styles.textPadding} />
-          <TitleText text=" - " textStyle={styles.textPadding} />
-          <TitleText text="Jun 16, 2022" textStyle={styles.textPadding} />
-        </View>
-        <View style={styles.dateContainer}>
-          <TitleText text="Starts 10:00 AM" textStyle={styles.textPadding} />
-          <TitleText text=" - " textStyle={styles.textPadding} />
-          <TitleText text="11:00 AM" textStyle={styles.textPadding} />
-        </View>
-        <View style={styles.dateContainer}>
-          <TitleText text="Ends 2:00PM" textStyle={styles.textPadding} />
-          <TitleText text=" - " textStyle={styles.textPadding} />
-          <TitleText text="2:00PM" textStyle={styles.textPadding} />
-        </View>
-        <TitleText text="With Tommy" textStyle={styles.textPadding} />
-        {/* Charges & Services */}
-        <BigText text="Charges & Services" textStyle={styles.textPadding} />
-        {/* Promo Code */}
-        <BigText text="Enter Promo code" textStyle={styles.textPadding} />
-        <View style={styles.promoContainer}>
-          <View style={styles.widthTextBox}>
-            <TextInput
-              placeholder="Enter zip code"
-              value={promoCode}
-              onChangeText={pCode => setPromoCode(pCode)}
-              style={[styles._input, {color: colors.headerText}]}
-            />
+      style={[styles.container, {backgroundColor: colors.backgroundColor}]}
+      keyboardVerticalOffset={120}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.innerContainer}>
+          <BigText text="Review and Payment" />
+          <View style={styles.profileContainer}>
+            <ProfileInfo />
           </View>
-          <TouchableOpacity style={styles.widthApply}>
-            <HeaderText text="Apply" textStyle={styles.applyText} />
-          </TouchableOpacity>
+          <BigText text="Stay Details" />
+          <HeaderText
+            textStyle={{...styles.textStyle, ...styles.textPadding}}
+            text="Boarding"
+          />
+          {/* Boarding Details */}
+          <TitleText text="In their home" textStyle={styles.textPadding} />
+          <View style={styles.dateContainer}>
+            <TitleText text="Jun 14, 2022" textStyle={styles.textPadding} />
+            <TitleText text=" - " textStyle={styles.textPadding} />
+            <TitleText text="Jun 16, 2022" textStyle={styles.textPadding} />
+          </View>
+          <View style={styles.dateContainer}>
+            <TitleText text="Starts 10:00 AM" textStyle={styles.textPadding} />
+            <TitleText text=" - " textStyle={styles.textPadding} />
+            <TitleText text="11:00 AM" textStyle={styles.textPadding} />
+          </View>
+          <View style={styles.dateContainer}>
+            <TitleText text="Ends 2:00PM" textStyle={styles.textPadding} />
+            <TitleText text=" - " textStyle={styles.textPadding} />
+            <TitleText text="2:00PM" textStyle={styles.textPadding} />
+          </View>
+          <TitleText text="With Tommy" textStyle={styles.textPadding} />
+          {/* Charges & Services */}
+          <Pricing />
+          {/* Promo Code */}
+          <BigText text="Enter Promo code" textStyle={styles.textPadding} />
+          <View style={styles.promoContainer}>
+            <View style={styles.widthTextBox}>
+              <TextInput
+                placeholder="Enter zip code"
+                value={promoCode}
+                onChangeText={pCode => setPromoCode(pCode)}
+                style={[styles._input, {color: colors.headerText}]}
+              />
+            </View>
+            <TouchableOpacity style={styles.widthApply}>
+              <HeaderText text="Apply" textStyle={styles.applyText} />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      <BottomButton
-        title="Add to Pay"
-        onSelect={() => props.navigation.navigate('ServiceMain')}
-        widthStyle={styles.boxContainer}
-      />
+        <View style={styles.footerContainer}>
+          <ButtonCom
+            title="Add to Pay"
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={btnStyles.containerStyleFullWidth}
+            titleStyle={btnStyles.titleStyle}
+            onSelect={() => {}}
+          />
+        </View>
+        <BottomSpacingNav />
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -84,6 +94,7 @@ const CheckoutDetails = (props: {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
+    flex: 1,
   },
   innerContainer: {
     paddingHorizontal: '5%',
@@ -112,7 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textPadding: {
-    paddingVertical: 3,
+    paddingVertical: 5,
   },
   promoContainer: {
     flexDirection: 'row',
@@ -129,6 +140,9 @@ const styles = StyleSheet.create({
   },
   applyText: {
     color: 'white',
+  },
+  footerContainer: {
+    paddingHorizontal: '5%',
   },
 });
 

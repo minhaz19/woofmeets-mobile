@@ -5,7 +5,7 @@ import {
   Payment2Icon,
   PetsIcon,
   Profile2Icon,
-} from '../../assets/Setting_SVG';
+} from '../../assets/svgs/Setting_SVG';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';

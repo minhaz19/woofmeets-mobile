@@ -9,6 +9,7 @@ const {View} = Animated;
 
 export const PanComponent = (initalValue: number, MAX_WIDTH: number) => {
   const {transx, onGestureHandle} = usePanGesture(initalValue, MAX_WIDTH);
+
   const Pan = () => (
     <PanGestureHandler
       onGestureEvent={onGestureHandle}

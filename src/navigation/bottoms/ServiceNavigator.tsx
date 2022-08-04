@@ -6,7 +6,7 @@ import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDeta
 import PetCareZipSearch from '../../screens/PetCareZipSearch';
 import AllProvider from '../../screens/Service/AllProvider';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
-import {FilterIcon} from '../../assets/SVG_LOGOS';
+import {FilterIcon} from '../../assets/svgs/SVG_LOGOS';
 import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../store/slices/openFilter';
 

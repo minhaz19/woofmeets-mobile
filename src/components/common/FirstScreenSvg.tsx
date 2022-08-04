@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {PetFootSvg} from '../../assets/SVG_LOGOS';
+import {PetFootSvg} from '../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 
 const FirstScreenSvg = () => {

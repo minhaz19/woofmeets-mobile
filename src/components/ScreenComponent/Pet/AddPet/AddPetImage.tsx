@@ -10,7 +10,7 @@ import {
 import React, {useState} from 'react';
 import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
 import Colors from '../../../../constants/Colors';
-import {UploadIcon} from '../../../../assets/SVG_LOGOS';
+import {UploadIcon} from '../../../../assets/svgs/SVG_LOGOS';
 import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {FormikValues, useFormikContext} from 'formik';
@@ -27,7 +27,6 @@ const AddPetImage = ({name}: Props) => {
   const {setFieldValue, touched, setFieldTouched, values, errors} =
     useFormikContext<FormikValues>();
   function uploadImage(e: any) {
-    // console.log('e', e._parts[0][1]['uri'], petImage);
     setFieldValue(name, e._parts[0][1]['uri']);
   }
 

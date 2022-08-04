@@ -21,9 +21,7 @@ const Dropdown: FC<Props> = ({label, placeholder, data}) => {
       {label && <HeaderText text={label} />}
       <SelectDropdown
         data={data}
-        onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-        }}
+        onSelect={() => {}}
         buttonTextAfterSelection={selectedItem => {
           return selectedItem;
         }}
