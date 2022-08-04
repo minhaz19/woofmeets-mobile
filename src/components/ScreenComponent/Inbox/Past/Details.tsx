@@ -10,15 +10,21 @@ import Pricing from './Pricing';
 import BottomSpacing from '../../../UI/BottomSpacing';
 
 interface Props {
-  setIsPayment: (value: boolean) => void;
+  setIsPayment?: (value: boolean) => void;
+  setIsDetailsModal?: (value: boolean) => void;
 }
 
-const Details: FC<Props> = ({setIsPayment}) => {
+const Details: FC<Props> = props => {
   const {colors} = useTheme();
   return (
     <View>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => setIsPayment(false)}>
+        <TouchableOpacity
+          onPress={() => {
+            props?.setIsDetailsModal
+              ? props.setIsDetailsModal(false)
+              : props.setIsPayment && props.setIsPayment(false);
+          }}>
           <Ion
             name="ios-chevron-back"
             size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}

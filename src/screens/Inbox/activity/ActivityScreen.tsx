@@ -17,6 +17,8 @@ import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {CameraIcon, SendIcon} from '../../../assets/Inbox_SVG';
+import BottomHalfModal from '../../../components/UI/modal/BottomHalfModal';
+import Details from '../../../components/ScreenComponent/Inbox/Past/Details';
 
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -55,6 +57,7 @@ const ActivityScreen = (props: {
   }, []);
 
   const {colors} = useTheme();
+  const [isDetailsModal, setIsDetailsModal] = useState(false);
 
   return (
     <SafeAreaView>
@@ -62,7 +65,12 @@ const ActivityScreen = (props: {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
         <>
-          <ActivityHeader />
+          <ActivityHeader setIsDetailsModal={setIsDetailsModal} />
+          <BottomHalfModal
+            isModalVisible={isDetailsModal}
+            setIsModalVisible={setIsDetailsModal}>
+            <Details setIsDetailsModal={setIsDetailsModal} />
+          </BottomHalfModal>
           <ScrollView
             ref={scrollViewRef}
             style={styles.scrollTop}

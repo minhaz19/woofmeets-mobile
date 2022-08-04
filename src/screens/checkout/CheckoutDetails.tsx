@@ -16,13 +16,12 @@ import BigText from '../../components/common/text/BigText';
 import Text_Size from '../../constants/textScaling';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import BottomButton from '../../components/ScreenComponent/Service/BottomButton';
 import Pricing from '../../components/ScreenComponent/Inbox/Past/Pricing';
-import BottomSpacing from '../../components/UI/BottomSpacing';
+import ButtonCom from '../../components/UI/ButtonCom';
+import {btnStyles} from '../../constants/theme/common/buttonStyles';
+import BottomSpacingNav from '../../components/UI/BottomSpacingNav';
 
-const CheckoutDetails = (props: {
-  navigation: {navigate: (arg0: string) => void};
-}) => {
+const CheckoutDetails = () => {
   const {colors} = useTheme();
   const [promoCode, setPromoCode] = useState<string>();
   return (
@@ -30,7 +29,7 @@ const CheckoutDetails = (props: {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}
       keyboardVerticalOffset={120}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.innerContainer}>
           <BigText text="Review and Payment" />
           <View style={styles.profileContainer}>
@@ -77,13 +76,16 @@ const CheckoutDetails = (props: {
             </TouchableOpacity>
           </View>
         </View>
-        <BottomSpacing />
-        <BottomButton
-          title="Add to Pay"
-          onSelect={() => props.navigation.navigate('ServiceMain')}
-          widthStyle={styles.boxContainer}
-        />
-        <BottomSpacing />
+        <View style={styles.footerContainer}>
+          <ButtonCom
+            title="Add to Pay"
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={btnStyles.containerStyleFullWidth}
+            titleStyle={btnStyles.titleStyle}
+            onSelect={() => {}}
+          />
+        </View>
+        <BottomSpacingNav />
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -138,6 +140,9 @@ const styles = StyleSheet.create({
   },
   applyText: {
     color: 'white',
+  },
+  footerContainer: {
+    paddingHorizontal: '5%',
   },
 });
 

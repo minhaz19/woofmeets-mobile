@@ -5,6 +5,7 @@ import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import Inbox from '../../screens/Inbox';
 import ActivityScreen from '../../screens/Inbox/activity/ActivityScreen';
 import CheckoutDetails from '../../screens/checkout/CheckoutDetails';
+import EditDetails from '../../screens/Inbox/editDetails';
 
 const Stack1 = createStackNavigator();
 
@@ -40,6 +41,17 @@ const InboxNavigator = () => {
           title: '',
           header: () => (
             <HeaderWithBack navigation={navigation} title="Checkout" />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="EditDetails"
+        component={EditDetails}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack navigation={navigation} title="Edit Details" />
           ),
           backgroundColor: Colors.primary,
         })}
