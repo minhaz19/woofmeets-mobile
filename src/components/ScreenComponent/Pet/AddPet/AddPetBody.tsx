@@ -41,7 +41,7 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
   } = useHandleCheck();
 
   const [isAdditionalDetails, setIsAdditionalDetails] = useState<boolean>(true);
-
+  console.log('active', active0);
   const renderHeader = () => {
     return (
       <View>

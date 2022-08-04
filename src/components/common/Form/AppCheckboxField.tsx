@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import AppCheckbox from './AppCheckbox';
 import {FormikValues, useFormikContext} from 'formik';
 import ErrorMessage from './ErrorMessage';
 interface Props {
-  onPress?: (() => void | undefined) | undefined;
+  onPress: () => void;
   title: string;
   typeKey: number;
   active: boolean;
@@ -27,6 +27,7 @@ const AppCheckboxField = ({
   const handleValues = () => {
     setFieldValue(name, typeKey);
   };
+  console.log('rending time', name);
   return (
     <View style={styles.container}>
       <View style={{marginBottom: errors[name] ? 25 : 0}}>
@@ -39,7 +40,6 @@ const AppCheckboxField = ({
           onBlur={() => setFieldTouched(name)}
           onPress={() => {
             handleValues();
-            // @ts-ignore
             onPress();
           }}
         />
@@ -53,7 +53,7 @@ const AppCheckboxField = ({
   );
 };
 
-export default AppCheckboxField;
+export default memo(AppCheckboxField);
 const styles = StyleSheet.create({
   container: {position: 'relative'},
   errorContainer: {

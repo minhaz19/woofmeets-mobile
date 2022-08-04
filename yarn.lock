@@ -7573,7 +7573,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@*, prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@*, prop-types@^15.5.10, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -7717,15 +7717,6 @@ react-native-image-picker@^4.8.4:
   version "4.8.4"
   resolved "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.8.4.tgz"
   integrity sha512-Mjh2j/sddyolb16EpmprWzbtyeFvW8Xgzr/8WNi9d6bR2FC/kL78cY/a+7Yzujg5ZDtT1MWys+eWw/qtfwgGiw==
-
-react-native-insta-story@^1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/react-native-insta-story/-/react-native-insta-story-1.1.7.tgz#c818cc20cc5fd342a3eacfcc0be32b2a1a03dff8"
-  integrity sha512-Qk5BRQsncl97gFT2XkxEJi9Vo/H8a5CoOWuYRMj9+rNQVxvIP/FMmg6mi96O2ay+dce46CkvCukH1HGbN+qDZQ==
-  dependencies:
-    prop-types "^15.6.2"
-    react-native-modalbox "^2.0.2"
-    react-native-swipe-gestures "^1.0.5"
 
 react-native-maps@^1.1.0:
   version "1.1.0"
