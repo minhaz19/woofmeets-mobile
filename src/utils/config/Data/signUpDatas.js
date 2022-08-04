@@ -1,4 +1,4 @@
-import {Apple, Facebook, Google} from '../../../assets/SVG_LOGOS';
+import {Apple, Facebook, Google} from '../../../assets/svgs/SVG_LOGOS';
 
 const signUpInitalState = {
   title: 'Sign Up',

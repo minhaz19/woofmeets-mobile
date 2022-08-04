@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import Ent from 'react-native-vector-icons/Entypo';
-import {Success} from '../../../assets/SVG_LOGOS';
+import {Success} from '../../../assets/svgs/SVG_LOGOS';
 import {designs} from '../../../constants/theme/common/modalEndStyles';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import Colors from '../../../constants/Colors';

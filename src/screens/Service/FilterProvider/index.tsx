@@ -7,9 +7,7 @@ import FilterProviderBody from '../../../components/ScreenComponent/Service/Filt
 import {filterProviderValue} from '../../../utils/config/initalValues';
 import {filterProviderValidationSchema} from '../../../utils/config/validationSchema';
 const FilterProvider = () => {
-  const handleSubmit = (e: {}) => {
-    console.log('values', e);
-  };
+  const handleSubmit = () => {};
   return (
     <View>
       <View style={styles.textContainer}>

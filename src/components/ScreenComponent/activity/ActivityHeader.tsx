@@ -10,7 +10,9 @@ import HeaderText from '../../common/text/HeaderText';
 import DescriptionText from '../../common/text/DescriptionText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 
-const ActivityHeader = () => {
+const ActivityHeader = (props: {
+  setIsDetailsModal: (arg0: boolean) => void;
+}) => {
   let navigation = useNavigation();
   const {colors} = useTheme();
   return (
@@ -46,14 +48,14 @@ const ActivityHeader = () => {
       </View>
       <View style={styles.innerTwo}>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Checkout')}>
             <TitleText
               text="Book"
               textStyle={{...styles.textStyle, color: Colors.light.background}}
             />
           </TouchableOpacity>
           <View style={styles.divider} />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('EditDetails')}>
             <TitleText
               text="Modify"
               textStyle={{...styles.textStyle, color: Colors.light.background}}
@@ -61,6 +63,7 @@ const ActivityHeader = () => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
+          onPress={() => props.setIsDetailsModal(true)}
           style={[
             styles.detailsButtonStyle,
             {borderColor: colors.borderColor},

@@ -1,18 +1,17 @@
-import {View, SafeAreaView, StyleSheet, ScrollView, Image} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
 import {
   CallIcon,
   Payment2Icon,
   PetsIcon,
   Profile2Icon,
-} from '../../assets/Setting_SVG';
+} from '../../assets/svgs/Setting_SVG';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import HeaderText from '../../components/common/text/HeaderText';
 import Colors from '../../constants/Colors';
-import ShortText from '../../components/common/text/ShortText';
 import Text_Size from '../../constants/textScaling';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
+import ProfileInfo from '../../components/ScreenComponent/profile/ProfileInfo';
 
 const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();
@@ -60,29 +59,9 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
         },
       ]}>
       <SafeAreaView>
-        <View style={styles.topContainer}>
-          <View
-            style={[
-              styles.imageContainer,
-              {borderColor: colors.descriptionText},
-            ]}>
-            <Image
-              source={{
-                uri: 'https://picsum.photos/200/300',
-              }}
-              style={styles.imageStyle}
-            />
-          </View>
-          <View style={styles.nameContainer}>
-            <View>
-              <HeaderText text="John Askelad" />
-              <View>
-                <ShortText text="Hey there! I am ………." />
-              </View>
-            </View>
-          </View>
+        <View style={styles.profileContainer}>
+          <ProfileInfo />
         </View>
-
         <View
           style={[styles.divider, {backgroundColor: colors.descriptionText}]}
         />
@@ -104,6 +83,10 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+  },
+  profileContainer: {
+    padding: 20,
+    paddingLeft: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
   },
   divider: {
     height: 1,

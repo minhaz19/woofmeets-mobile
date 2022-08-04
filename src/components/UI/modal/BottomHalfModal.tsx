@@ -18,14 +18,23 @@ const BottomHalfModal = (props: {
   const {colors} = useTheme();
   const dispatch = useDispatch();
   return (
-    <TouchableWithoutFeedback onPress={() => dispatch(setOpenFilter(false))}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        props.setIsModalVisible
+          ? props.setIsModalVisible(false)
+          : dispatch(setOpenFilter(false));
+      }}>
       <Modal
         animationType="slide"
         transparent={true}
         visible={props.isModalVisible}>
         <View style={designs.centeredViewBg}>
           <TouchableWithoutFeedback
-            onPress={() => dispatch(setOpenFilter(false))}>
+            onPress={() => {
+              props.setIsModalVisible
+                ? props.setIsModalVisible(false)
+                : dispatch(setOpenFilter(false));
+            }}>
             <View style={styles.close} />
           </TouchableWithoutFeedback>
           <View
