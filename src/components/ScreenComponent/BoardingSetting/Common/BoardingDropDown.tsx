@@ -3,13 +3,13 @@ import {FormikValues, useFormikContext} from 'formik';
 import {StyleSheet} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import React, {FC} from 'react';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import Colors from '../../../constants/Colors';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import Colors from '../../../../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import Text_Size from '../../../constants/textScaling';
-import HeaderText from '../text/HeaderText';
-import ErrorMessage from '../Form/ErrorMessage';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import Text_Size from '../../../../constants/textScaling';
+import HeaderText from '../../../common/text/HeaderText';
+import ErrorMessage from '../../../common/Form/ErrorMessage';
 
 interface Props {
   label?: string;

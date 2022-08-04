@@ -17,7 +17,7 @@ function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Tab.Navigator
-      initialRouteName="BoardingSetting"
+      initialRouteName="ServiceNavigator"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
@@ -42,7 +42,7 @@ function BottomTabNavigator() {
           shadowColor: isDarkMode ? Colors.dark.background : Colors.background,
         },
       }}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="BoardingSetting"
         component={BoardingSetting}
         options={{
@@ -68,8 +68,8 @@ function BottomTabNavigator() {
             </View>
           ),
         }}
-      />
-      {/* <Tab.Screen
+      /> */}
+      <Tab.Screen
         name="ServiceNavigator"
         component={ServiceNavigator}
         options={{
@@ -95,7 +95,7 @@ function BottomTabNavigator() {
             </View>
           ),
         }}
-      /> */}
+      />
       <Tab.Screen
         name="InboxNavigator"
         component={InboxNavigator}

@@ -1,10 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, TextInput, View} from 'react-native';
 import React from 'react';
-import Text_Size from '../../../constants/textScaling';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import ShortText from '../text/ShortText';
-import HeaderText from '../text/HeaderText';
+import Text_Size from '../../../../constants/textScaling';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import ShortText from '../../../common/text/ShortText';
+import HeaderText from '../../../common/text/HeaderText';
+import { SCREEN_WIDTH } from '../../../../constants/WindowSize';
 
 const BoardingInput = ({...otherProps}) => {
   const {colors, isDarkMode} = useTheme();
@@ -62,7 +63,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderWidth: 1,
     alignItems: 'center',
-    flex: 1,
+    width: SCREEN_WIDTH <= 380 ? '50%' : SCREEN_WIDTH <= 600 ? '50%' : '30%',
+    overflow: 'hidden',
   },
   icon: {
     marginRight: 10,

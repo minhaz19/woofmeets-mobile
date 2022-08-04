@@ -2,6 +2,8 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import BoardingSettingInfo from '../../components/ScreenComponent/BoardingSetting/BoardingSettingInfo';
+import {BoardingSettings} from '../../utils/config/initalValues';
+import {BoardingSettingsSchema} from '../../utils/config/validationSchema';
 
 const BoardingSetting = () => {
   const {colors} = useTheme();
@@ -18,7 +20,7 @@ const BoardingSetting = () => {
       ]}>
       <BoardingSettingInfo
         handleSubmit={handleSubmit}
-        initialValues={undefined}
+        initialValues={BoardingSettings}
         validationSchema={undefined}
       />
     </View>

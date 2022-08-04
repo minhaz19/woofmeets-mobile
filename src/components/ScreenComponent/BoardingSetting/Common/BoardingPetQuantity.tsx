@@ -1,9 +1,9 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC, useEffect, useState} from 'react';
-import {MinusSvg, PlusSvg} from './utils/BoardingSvg';
-import HeaderText from '../text/HeaderText';
+import {MinusSvg, PlusSvg} from '../utils/BoardingSvg';
+import HeaderText from '../../../common/text/HeaderText';
 import {FormikValues, useFormikContext} from 'formik';
-import ErrorMessage from '../Form/ErrorMessage';
+import ErrorMessage from '../../../common/Form/ErrorMessage';
 
 interface Props {
   name: string;

@@ -238,3 +238,11 @@ export const petPreference = [
     ],
   },
 ];
+export const beforeBookingDays = [
+  '0 days ( I accept same day bookings)',
+  '1 day',
+  '2 days',
+  '3 days',
+  '1 week',
+  '2 weeks',
+];

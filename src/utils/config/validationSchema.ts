@@ -79,6 +79,64 @@ const filterProviderValidationSchema = Yup.object().shape({
   // dateRange: Yup.array(),
 });
 
+const BoardingSettingsSchema = Yup.object().shape({
+  payPerService: Yup.number()
+    .nullable(true)
+    .required('Pet per service is required')
+    .typeError('A Number is Required')
+    .max(150, 'Please enter a value less than or equal to 150.'),
+  holiDayRate: Yup.number()
+    .nullable(true)
+    .required('holiday rate is required')
+    .typeError('A Number is Required')
+    .max(150, 'Please enter a value less than or equal to 150.'),
+  additionalDogRate: Yup.number()
+    .nullable(true)
+    .required('Additional dog rate is required')
+    .typeError('A Number is Required')
+    .max(150, 'Please enter a value less than or equal to 150.'),
+  puppyRate: Yup.number()
+    .nullable(true)
+    .required('Puppy rate is required')
+    .typeError('A Number is Required')
+    .max(150, 'Please enter a value less than or equal to 150.'),
+  catRate: Yup.number()
+    .nullable(true)
+    .required('Cate rate is required')
+    .typeError('A Number is Required')
+    .max(150, 'Please enter a value less than or equal to 150.'),
+  additionalCat: Yup.number()
+    .nullable(true)
+    .required('Additional cat rate is required')
+    .typeError('A Number is Required')
+    .max(150, 'Please enter a value less than or equal to 150.'),
+  extendedStayRate: Yup.number()
+    .nullable(true)
+    .required('Extended stay rate is required')
+    .typeError('A Number is Required')
+    .max(150, 'Please enter a value less than or equal to 150.'),
+  bathingGrooming: Yup.number()
+    .nullable(true)
+    .required('Bathing grooming is required')
+    .typeError('A Number is Required')
+    .max(150, 'Please enter a value less than or equal to 150.'),
+  pickUpDropOff: Yup.number()
+    .nullable(true)
+    .required('Pick up drop off is required')
+    .typeError('A Number is Required')
+    .max(150, 'Please enter a value less than or equal to 150.'),
+  homeFullTimeInWeek: Yup.boolean().oneOf([true], 'This field must be checked'),
+  selectDay: Yup.array().required('Please Select at least one'),
+  homeFullTimeInDay: Yup.string().required('Please Select at least one'),
+  advancedNotice: Yup.string().required('Please Select at least one'),
+  homeType: Yup.string().required('Please Select at least one'),
+  yardType: Yup.string().required('Please Select at least one'),
+  petOwnerBoarding: Yup.string().required('Please Select at least one'),
+  hosting: Yup.string().required('Please Select at least one'),
+  cancellationPolicy: Yup.string().required('Please Select at least one'),
+  petPreference: Yup.string().required('Please Select at least one'),
+});
+
 export {
   loginValidationSchema,
   signUpValidationSchema,
@@ -88,4 +146,5 @@ export {
   verifyAccountValidationSchema,
   addPetValidationSchema,
   filterProviderValidationSchema,
+  BoardingSettingsSchema,
 };

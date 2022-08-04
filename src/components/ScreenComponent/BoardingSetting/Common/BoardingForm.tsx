@@ -1,15 +1,14 @@
-/* eslint-disable react-native/no-inline-styles */
 import {FormikValues, useFormikContext} from 'formik';
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
-import React from 'react';
-import Text_Size from '../../../constants/textScaling';
-import ErrorMessage from '../Form/ErrorMessage';
+import React, {useState} from 'react';
+import Text_Size from '../../../../constants/textScaling';
+import ErrorMessage from '../../../common/Form/ErrorMessage';
 import BoardingInput from './BoardingInput';
-import TitleText from '../text/TitleText';
-import DescriptionText from '../text/DescriptionText';
-import {InfoSvg} from '../../ScreenComponent/Inbox/utils/SvgComponent/SvgComponent';
-import Colors from '../../../constants/Colors';
-import AppCheckboxField from '../Form/AppCheckboxField';
+import TitleText from '../../../common/text/TitleText';
+import DescriptionText from '../../../common/text/DescriptionText';
+import {InfoSvg} from '../../Inbox/utils/SvgComponent/SvgComponent';
+import Colors from '../../../../constants/Colors';
+import AppCheckboxField from '../../../common/Form/AppCheckboxField';
 
 interface Props {
   name: string;
@@ -52,10 +51,9 @@ const BoardingForm = ({
   handlePress,
   showAdditionalRates,
 }: Props) => {
+  const [updateRates, setUpdateRates] = useState(true);
   const {setFieldTouched, touched, errors, values, setFieldValue} =
     useFormikContext<FormikValues>();
-
-    console.log('values', values);
   return (
     <>
       <View>
@@ -69,22 +67,20 @@ const BoardingForm = ({
           <DescriptionText textStyle={styles.subTitle} text={subTitle} />
         )}
 
-        <View style={{width: '60%'}}>
-          <BoardingInput
-            autoCapitalize={autoCapitalize}
-            autoCorrect={autoCorrect}
-            icon={icon}
-            keyboardType={keyboardType}
-            placeholder={placeholder}
-            textContentType={textContentType}
-            onChangeText={(text: string) => setFieldValue(name, text)}
-            onBlur={() => setFieldTouched(name)}
-            value={values[name]}
-            error={errors[name]}
-            touch={touched[name]}
-            textInputStyle={textInputStyle}
-          />
-        </View>
+        <BoardingInput
+          autoCapitalize={autoCapitalize}
+          autoCorrect={autoCorrect}
+          icon={icon}
+          keyboardType={keyboardType}
+          // placeholder={placeholder}
+          textContentType={textContentType}
+          onChangeText={(text: string) => setFieldValue(name, text)}
+          onBlur={() => setFieldTouched(name)}
+          value={values[name]}
+          error={errors[name]}
+          touch={touched[name]}
+          textInputStyle={textInputStyle}
+        />
 
         <ErrorMessage
           error={errors[name]}
@@ -96,8 +92,11 @@ const BoardingForm = ({
             title={checkbox}
             radio
             typeKey={99}
-            active={values[name] === 99}
-            onPress={() => {}}
+            active={updateRates}
+            onPress={() => {
+              setUpdateRates(!updateRates);
+              // setFieldValue('updateRates', updateRates);
+            }}
             name={'updateRates'}
           />
         )}

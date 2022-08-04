@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC, useState} from 'react';
-import BoardingForm from '../../common/BoardingInput/BoardingForm';
+import BoardingForm from './Common/BoardingForm';
 import AppForm from '../../common/Form/AppForm';
 import HeaderText from '../../common/text/HeaderText';
 import Text_Size from '../../../constants/textScaling';
@@ -12,6 +12,7 @@ import BottomSpacing from '../../UI/BottomSpacing';
 import {
   aboutYourHome,
   availabilityInput,
+  beforeBookingDays,
   CancellationPolicy,
   petPreference,
   Rates,
@@ -21,13 +22,12 @@ import DescriptionText from '../../common/text/DescriptionText';
 import AppCheckboxField from '../../common/Form/AppCheckboxField';
 import useHandleCheck from '../../../utils/helpers/usehandleActiveCheck';
 import SubmitButton from '../../common/Form/SubmitButton';
-import BoardingDay from '../../common/BoardingInput/BoardingDay';
-import {genders} from '../../../utils/config/Data/AddPetData';
-import BoardingDropdown from '../../common/BoardingInput/BoardingDropDown';
+import BoardingDay from './Common/BoardingDay';
+import BoardingDropdown from './Common/BoardingDropDown';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
 import useHandleMultipleActiveCheck from './utils/handleCheck/HandleCheck';
-import BoardingPetQuantity from '../../common/BoardingInput/BoardingPetQuantity';
+import BoardingPetQuantity from './Common/BoardingPetQuantity';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -40,28 +40,22 @@ const BoardingSettingInfo: FC<Props> = ({
   handleSubmit,
   initialValues,
   validationSchema,
-  onPress,
 }) => {
-  const {
-    handleActiveCheck,
-    active0,
-    active2,
-    active3,
-    active4,
-    active7,
-  } = useHandleCheck();
+  const {handleActiveCheck, active0, active2, active3, active4, active7} =
+    useHandleCheck();
   const [showAdditionalRates, setShowAdditionalRates] = useState(true);
   const handlePress = () => {
     setShowAdditionalRates(!showAdditionalRates);
   };
 
   const {
+    selectDays,
     handlePetHostingActiveCheck,
     handlePetOwnerExpectationActiveCheck,
     handleSelectDaysActiveCheck,
   } = useHandleMultipleActiveCheck();
 
-  const RenderHeader = () => {
+  const BoardingHeader = () => {
     return (
       <View>
         <BigText text={'Boarding Setting'} textStyle={styles.headerText} />
@@ -141,7 +135,7 @@ const BoardingSettingInfo: FC<Props> = ({
     );
   };
 
-  const RenderFooter = () => {
+  const BoardingFooter = () => {
     return (
       <View style={styles.headerContainer}>
         <BigText text={'Pet Preferences'} textStyle={styles.headerText} />
@@ -275,7 +269,7 @@ const BoardingSettingInfo: FC<Props> = ({
     );
   };
 
-  const RenderMain = () => {
+  const BoardingMain = () => {
     return (
       <View>
         <BigText text={'Availability'} textStyle={styles.headerText} />
@@ -325,6 +319,7 @@ const BoardingSettingInfo: FC<Props> = ({
                 name={availabilityInput[1].name}
                 typeKey={item.id}
                 active={item.checked}
+                selectDays={selectDays.items}
                 onPress={() =>
                   handleSelectDaysActiveCheck(
                     item.id,
@@ -362,7 +357,7 @@ const BoardingSettingInfo: FC<Props> = ({
               label={availabilityInput[3].title}
               name={availabilityInput[3].name}
               placeholder={availabilityInput[3].placeholder}
-              data={genders}
+              data={beforeBookingDays}
             />
           </View>
         )}
@@ -371,17 +366,15 @@ const BoardingSettingInfo: FC<Props> = ({
   };
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <AppForm
-        initialValues={{
-          name: '',
-        }}
+        initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}>
         <View style={styles.inputContainer}>
-          <RenderHeader />
-          <RenderMain />
-          <RenderFooter />
+          <BoardingHeader />
+          <BoardingMain />
+          <BoardingFooter />
         </View>
       </AppForm>
       <BottomSpacing />

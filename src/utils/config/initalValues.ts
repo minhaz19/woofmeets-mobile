@@ -7,6 +7,7 @@ import {
   verifyAccountType,
   addPetType,
   filterProviderType,
+  BoardingSettingsType,
 } from './types';
 
 const loginValue: LoginType = {email: '', password: ''};
@@ -56,6 +57,28 @@ const filterProviderValue: filterProviderType = {
   homeType: '',
 };
 
+const BoardingSettings: BoardingSettingsType = {
+  payPerService: '27',
+  holiDayRate: '0',
+  additionalDogRate: '0',
+  puppyRate: '0',
+  catRate: '0',
+  additionalCat: '0',
+  extendedStayRate: '0',
+  bathingGrooming: '0',
+  pickUpDropOff: '0',
+  homeFullTimeInWeek: true,
+  selectDay: [],
+  homeFullTimeInDay: '',
+  advancedNotice: '',
+  homeType: '',
+  yardType: '',
+  petOwnerBoarding: '',
+  hosting: '',
+  cancellationPolicy: '',
+  petPreference: '',
+};
+
 export {
   loginValue,
   signupValue,
@@ -65,4 +88,5 @@ export {
   verifyAccountValue,
   addPetValue,
   filterProviderValue,
+  BoardingSettings,
 };
