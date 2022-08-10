@@ -1,4 +1,3 @@
-/* eslint-disable dot-notation */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Image,
@@ -7,14 +6,14 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
 import Colors from '../../../../constants/Colors';
 import {UploadIcon} from '../../../../assets/svgs/SVG_LOGOS';
 import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import {FormikValues, useFormikContext} from 'formik';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
+import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
 
 interface Props {
   name: string;
@@ -24,22 +23,22 @@ const AddPetImage = ({name}: Props) => {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const {isDarkMode} = useTheme();
   const [petImage, setPetImage] = useState();
-  const {setFieldValue, touched, setFieldTouched, values, errors} =
-    useFormikContext<FormikValues>();
-  function uploadImage(e: any) {
-    setFieldValue(name, e._parts[0][1]['uri']);
-  }
 
+  const {setValue, errors, onBlur} = useRHFContext(name);
+
+  function uploadImage(e: any) {
+    setValue(name, e._parts[0][1].uri, {shouldValidate: true});
+    // setValue(name, e._parts[0][1]['uri'], {shouldValidate: true});
+  }
+  console.log('image value', errors[name]);
   return (
     <View>
       {!petImage && (
         <TouchableWithoutFeedback
           onPress={() => {
             setIsModalVisible(!isModalVisible);
-            values[name] === undefined &&
-              errors[name] !== '' &&
-              setFieldTouched(name);
-          }}>
+          }}
+          onBlur={onBlur}>
           <View
             style={[
               styles.container,
@@ -66,7 +65,7 @@ const AddPetImage = ({name}: Props) => {
         </View>
       )}
       <View style={styles.errorContainer}>
-        <ErrorMessage error={errors[name]} visible={touched[name]} />
+        <ErrorMessage error={errors[name]?.message} />
       </View>
       <ImageUploadModal
         isModalVisible={isModalVisible}
@@ -79,7 +78,7 @@ const AddPetImage = ({name}: Props) => {
   );
 };
 
-export default AddPetImage;
+export default memo(AddPetImage);
 
 const styles = StyleSheet.create({
   container: {

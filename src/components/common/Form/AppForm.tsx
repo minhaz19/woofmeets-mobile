@@ -1,25 +1,24 @@
-import {Formik} from 'formik';
-import React from 'react';
+import {yupResolver} from '@hookform/resolvers/yup';
+import React, {memo} from 'react';
+import {FormProvider, useForm} from 'react-hook-form';
+import {AnyObjectSchema} from 'yup';
+import Lazy from 'yup/lib/Lazy';
 interface Props {
   children: React.ReactNode;
   initialValues: {};
   onSubmit: (v: {}) => void;
-  validationSchema: {};
+  validationSchema: AnyObjectSchema | Lazy<any, unknown>;
 }
-const AppForm = ({
-  children,
-  initialValues,
-  onSubmit,
-  validationSchema,
-}: Props) => {
+const AppForm = ({children, initialValues, validationSchema}: Props) => {
+  const methods = useForm({
+    resolver: yupResolver(validationSchema),
+    defaultValues: initialValues,
+  });
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      validationSchema={validationSchema}>
-      {() => <>{children}</>}
-    </Formik>
+    <FormProvider {...methods}>
+      <>{children}</>
+    </FormProvider>
   );
 };
 
-export default AppForm;
+export default memo(AppForm);
