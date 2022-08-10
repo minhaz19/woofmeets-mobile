@@ -57,3 +57,25 @@ export interface filterProviderType {
   priceRange: [];
   homeType: string;
 }
+
+export interface BoardingSettingsType {
+  payPerService: string;
+  holiDayRate: string;
+  additionalDogRate: string;
+  puppyRate: string;
+  catRate: string;
+  additionalCat: string;
+  extendedStayRate: string;
+  bathingGrooming: string;
+  pickUpDropOff: string;
+  homeFullTimeInWeek: boolean;
+  selectDay: [];
+  homeFullTimeInDay: string;
+  advancedNotice: string;
+  homeType: string;
+  yardType: string;
+  petOwnerBoarding: string;
+  hosting: string;
+  cancellationPolicy: string;
+  petPreference: string;
+}
