@@ -1,6 +1,8 @@
 import {Platform, StyleSheet} from 'react-native';
 import Colors from '../../Colors';
 import {descriptionDarkText, titleDarkText} from '../../FontDetails';
+import {SCREEN_WIDTH} from '../../WindowSize';
+// import {SCREEN_WIDTH} from '../../WindowSize';
 
 export const designs = StyleSheet.create({
   modalContainer: {
@@ -55,7 +57,7 @@ export const designs = StyleSheet.create({
     shadowOpacity: 0.75,
     shadowRadius: 3.84,
     elevation: 9,
-    paddingHorizontal: 20,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
     paddingTop: 20,
   },
   fullHeightModalView: {

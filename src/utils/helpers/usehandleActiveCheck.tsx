@@ -31,7 +31,6 @@ const useHandleCheck = () => {
     parentId === 111 && setActive11({[key]: true});
     parentId === 112 && setActive12({[key]: true});
   };
-
   return {
     active0,
     active1,

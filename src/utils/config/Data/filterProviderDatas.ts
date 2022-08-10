@@ -1,4 +1,4 @@
-import {BuildSvg, HomeSvg, Plus} from '../../../assets/SVG_LOGOS';
+import {BuildSvg, HomeSvg, Plus} from '../../../assets/svgs/SVG_LOGOS';
 
 export const myPet = [
   {

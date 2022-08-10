@@ -15,7 +15,7 @@ import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import {setPasswordValidationSchema} from '../../../utils/config/validationSchema';
 import {setPasswordInfo} from '../../../utils/config/Data/setNewPasswordDatas';
 import {setPasswordValue} from '../../../utils/config/initalValues';
-import {SCREEN_HEIGHT} from '../../../constants/WindowSize';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
 
 interface Props {
   navigation: {
@@ -26,8 +26,7 @@ interface Props {
 const SetNewPassword = ({navigation}: Props) => {
   const height = SCREEN_HEIGHT;
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = (values: any) => {
-    console.log('values', values);
+  const handleSubmit = () => {
     navigation.navigate('AfterIntroScreen');
   };
   return (
@@ -46,17 +45,19 @@ const SetNewPassword = ({navigation}: Props) => {
             : Colors.secondary,
         },
       ]}>
-      <View
-        style={[
-          styles.infoContainer,
-          {
-            backgroundColor: isDarkMode
-              ? Colors.dark.lightDark
-              : Colors.background,
-          },
-        ]}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        <View
+          style={[
+            styles.infoContainer,
+            {
+              backgroundColor: isDarkMode
+                ? Colors.dark.lightDark
+                : Colors.background,
+            },
+          ]}>
           <AuthHeader
             title={setPasswordInfo.title}
             subTitle={setPasswordInfo.subTitle}
@@ -70,9 +71,9 @@ const SetNewPassword = ({navigation}: Props) => {
             onPress={() => navigation.goBack()}
             setNewPassword
           />
-        </KeyboardAvoidingView>
-        <View style={styles.view} />
-      </View>
+          <View style={styles.view} />
+        </View>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {
     height: 20,

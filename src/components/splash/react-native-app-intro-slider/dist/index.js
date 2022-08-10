@@ -23,22 +23,24 @@ var __importDefault =
   };
 import {
   Dimensions,
-  Text,
   TouchableOpacity,
   View,
   SafeAreaView,
+  FlatList,
+  I18nManager,
+  Platform,
+  StyleSheet,
 } from 'react-native';
 import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import TitleText from '../../../common/text/TitleText';
 
 Object.defineProperty(exports, '__esModule', {value: true});
 const React = __importStar(require('react'));
-const react_native_1 = require('react-native');
 const merge_extradata_1 = __importDefault(require('./merge-extradata'));
 const windowWidth = Dimensions.get('window').width;
-const isAndroidRTL =
-  react_native_1.I18nManager.isRTL && react_native_1.Platform.OS === 'android';
+const isAndroidRTL = I18nManager.isRTL && Platform.OS === 'android';
 class AppIntroSlider extends React.Component {
   constructor() {
     super(...arguments);
@@ -67,10 +69,10 @@ class AppIntroSlider extends React.Component {
       const {width, height} = this.state;
       const props = {...flatListArgs, dimensions: {width, height}};
       return (
-        <react_native_1.View
+        <View
           style={{
             width,
-            position: 'relative',
+            ...styles.skipPositionContainer,
           }}>
           {this.props.renderItem(props)}
           <TouchableOpacity
@@ -81,14 +83,9 @@ class AppIntroSlider extends React.Component {
               this.props.onDone();
             }}
             style={styles.skipContainerView}>
-            <Text style={styles.skipText}>Skip</Text>
+            <TitleText text="SKIP" textStyle={styles.skipText} />
           </TouchableOpacity>
-          {/* <View style={{position: 'absolute', left: 0, top: 0}}>
-          {this.props.renderPagination
-          ? this.props.renderPagination(this.state.activeIndex)
-          : this._renderPagination()}
-          </View> */}
-        </react_native_1.View>
+        </View>
       );
     };
     this._renderButton = (name, label, onPress, render) => {
@@ -99,23 +96,21 @@ class AppIntroSlider extends React.Component {
     };
     this._renderDefaultButton = (name, label) => {
       let content = (
-        <react_native_1.View style={styles.buttonViewContainer}>
-          <react_native_1.Text style={styles.buttonText}>
-            {label}
-          </react_native_1.Text>
-        </react_native_1.View>
+        <View style={styles.buttonViewContainer}>
+          <TitleText text={label} textStyle={styles.buttonText} />
+        </View>
       );
       if (this.props.bottomButton) {
         content = (
-          <react_native_1.View
+          <View
             style={[
               name === 'Skip' || name === 'Prev'
                 ? styles.transparentBottomButton
                 : styles.bottomButton,
-              {width: 120, height: 40, backgroundColor: Colors.primary},
+              styles.skipContainerPrev,
             ]}>
             {content}
-          </react_native_1.View>
+          </View>
         );
       }
       return content;
@@ -126,13 +121,13 @@ class AppIntroSlider extends React.Component {
           ? styles.leftButtonContainer
           : styles.rightButtonContainer;
       return (
-        <react_native_1.View style={!this.props.bottomButton && style}>
-          <react_native_1.TouchableOpacity
+        <View style={!this.props.bottomButton && style}>
+          <TouchableOpacity
             onPress={onPress}
             style={this.props.bottomButton && styles.flexOne}>
             {content}
-          </react_native_1.TouchableOpacity>
-        </react_native_1.View>
+          </TouchableOpacity>
+        </View>
       );
     };
     this._renderNextButton = () => {};
@@ -183,11 +178,11 @@ class AppIntroSlider extends React.Component {
               {
                 <View style={styles.dotContainerView}>
                   <View>
-                    <react_native_1.View style={styles.paginationDots}>
+                    <View style={styles.paginationDots}>
                       {this.props.data.length > 1 &&
                         this.props.data.map((_, i) =>
                           this.props.dotClickEnabled ? (
-                            <react_native_1.TouchableOpacity
+                            <TouchableOpacity
                               key={i}
                               style={[
                                 styles.dot,
@@ -198,7 +193,7 @@ class AppIntroSlider extends React.Component {
                               onPress={() => this.goToSlide(i, true)}
                             />
                           ) : (
-                            <react_native_1.View
+                            <View
                               key={i}
                               style={[
                                 styles.dot,
@@ -209,7 +204,7 @@ class AppIntroSlider extends React.Component {
                             />
                           ),
                         )}
-                    </react_native_1.View>
+                    </View>
                   </View>
                 </View>
               }
@@ -287,8 +282,8 @@ class AppIntroSlider extends React.Component {
     // Merge component width and user-defined extraData
     const extra = merge_extradata_1.default(extraData, this.state.width);
     return (
-      <react_native_1.View style={styles.flexOne}>
-        <react_native_1.FlatList
+      <View style={styles.flexOne}>
+        <FlatList
           ref={ref => (this.flatList = ref)}
           data={this.props.data}
           horizontal
@@ -308,7 +303,7 @@ class AppIntroSlider extends React.Component {
         {renderPagination
           ? renderPagination(this.state.activeIndex)
           : this._renderPagination()}
-      </react_native_1.View>
+      </View>
     );
   }
 }
@@ -331,7 +326,7 @@ AppIntroSlider.defaultProps = {
   showSkipButton: false,
   bottomButton: false,
 };
-const styles = react_native_1.StyleSheet.create({
+const styles = StyleSheet.create({
   flexOne: {
     flex: 1,
     position: 'relative',
@@ -339,9 +334,6 @@ const styles = react_native_1.StyleSheet.create({
   flatList: {
     flex: 1,
     width: '100%',
-    // height: 100,
-    // aspectRatio: 0.7,
-    // resizeMode: 'contain',
     flexDirection: isAndroidRTL ? 'row-reverse' : 'row',
   },
   paginationContainer: {
@@ -387,6 +379,7 @@ const styles = react_native_1.StyleSheet.create({
     right: 40,
     alignSelf: 'center',
   },
+  skipContainerPrev: {width: 120, height: 40, backgroundColor: Colors.primary},
   dotContainerView: {
     position: 'absolute',
     bottom: 40,
@@ -418,4 +411,5 @@ const styles = react_native_1.StyleSheet.create({
     marginRight: '5%',
     borderRadius: 50,
   },
+  skipPositionContainer: {position: 'relative'},
 });

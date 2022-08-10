@@ -7,9 +7,7 @@ import {basicInfoValidationSchema} from '../../../utils/config/becomeSitter/vali
 
 const BasicInfoSitter = () => {
   const {colors} = useTheme();
-  const handleSubmit = (e: any) => {
-    console.log('values', e);
-  };
+  const handleSubmit = () => {};
   return (
     <View
       style={[

@@ -10,7 +10,7 @@ import {
   PreferenceIcon,
   ProfileIcon,
   SitterIcon,
-} from '../../assets/Setting_SVG';
+} from '../../assets/svgs/Setting_SVG';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
 import TitleText from '../../components/common/text/TitleText';

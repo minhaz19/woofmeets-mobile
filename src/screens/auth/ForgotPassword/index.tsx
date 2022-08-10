@@ -12,7 +12,9 @@ import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import {forgotPasswordValue} from '../../../utils/config/initalValues';
 import {forgotPasswordValidationSchema} from '../../../utils/config/validationSchema';
 import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
-import {AuthPassword} from '../../../assets/SVG_LOGOS';
+import {AuthPassword} from '../../../assets/svgs/SVG_LOGOS';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import BottomSpacing from '../../../components/UI/BottomSpacing';
 const forgotPassData = {
   title: 'Forgot Password?',
 };
@@ -38,17 +40,19 @@ const ForgotPassword = ({navigation}: Props) => {
             : Colors.secondary,
         },
       ]}>
-      <View
-        style={[
-          styles.infoContainer,
-          {
-            backgroundColor: isDarkMode
-              ? Colors.dark.lightDark
-              : Colors.background,
-          },
-        ]}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        <View
+          style={[
+            styles.infoContainer,
+            {
+              backgroundColor: isDarkMode
+                ? Colors.dark.lightDark
+                : Colors.background,
+            },
+          ]}>
           <ImageAndTitle Icon={AuthPassword} title={forgotPassData.title} />
           <AuthForm
             initialValues={forgotPasswordValue}
@@ -58,9 +62,10 @@ const ForgotPassword = ({navigation}: Props) => {
             forgotPassword
             onPress={() => navigation.goBack()}
           />
-        </KeyboardAvoidingView>
-        <View style={styles.view} />
-      </View>
+          <View style={styles.view} />
+          {SCREEN_WIDTH > 800 && <BottomSpacing />}
+        </View>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };
@@ -77,6 +82,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     padding: 20,
     bottom: 0,
+
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {height: 20},
 });
