@@ -26,7 +26,7 @@ const BetweenCom = (props: {
 }) => {
   const {colors} = useTheme();
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={props.data.screen}>
       <View style={styles.boxContainer}>
         {props.data?.image && (
           <View style={styles.imageContainer}>{props.data.image}</View>
