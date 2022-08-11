@@ -8,6 +8,7 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
 import {useDispatch} from 'react-redux';
 import {setPetValue} from '../../../store/slices/addPet';
+import AppForm from '../../../components/common/Form/AppForm';
 
 const AddPet = () => {
   const dispatch = useDispatch();
@@ -25,11 +26,15 @@ const AddPet = () => {
             : Colors.background,
         },
       ]}>
-      <AddPetBody
+      <AppForm
         initialValues={addPetValue}
-        validationSchema={addPetValidationSchema}
-        handleSubmit={handleSubmit}
-      />
+        validationSchema={addPetValidationSchema}>
+        <AddPetBody
+          // initialValues={addPetValue}
+          // validationSchema={addPetValidationSchema}
+          handleSubmit={handleSubmit}
+        />
+      </AppForm>
     </Screen>
   );
 };

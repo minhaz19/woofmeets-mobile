@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, TextInput, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {Check, EyeClose, EyeOpen} from '../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../constants/Colors';
@@ -9,7 +9,7 @@ const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
   const {colors, isDarkMode} = useTheme();
   const {numberOfLines} = otherProps;
-
+  console.log('inside input');
   return (
     <View
       style={[
@@ -55,7 +55,7 @@ const AppInput = ({...otherProps}) => {
   );
 };
 
-export default AppInput;
+export default memo(AppInput);
 
 const styles = StyleSheet.create({
   container: {

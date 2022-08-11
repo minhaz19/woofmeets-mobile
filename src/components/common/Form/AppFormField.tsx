@@ -9,6 +9,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
 import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
+import {Controller} from 'react-hook-form';
 interface Props {
   name: string;
   label: string;
@@ -27,6 +28,7 @@ interface Props {
   email?: boolean;
   textInputStyle?: ViewStyle;
   auth?: boolean;
+  methods?: any;
 }
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;
@@ -50,9 +52,15 @@ const AppFormField = ({
   email,
   textInputStyle,
   auth,
+  methods,
 }: Props) => {
-  const {errors, value, onBlur, onChange} = useRHFContext(name);
+  const {
+    formState: {errors},
+    control,
+  } = methods;
+  // const A = useRHFContext(name, control);
   const navigation = useNavigation<NavigationProps>();
+  console.log('rendering input fucking field');
   return (
     <>
       <View style={{width: flex ? '48%' : '100%'}}>
@@ -61,27 +69,33 @@ const AppFormField = ({
           <DescriptionText textStyle={styles.subTitle} text={subTitle} />
         )}
 
-        <AppInput
-          autoCapitalize={autoCapitalize}
-          autoCorrect={autoCorrect}
-          icon={icon}
-          keyboardType={keyboardType}
-          placeholder={placeholder}
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <AppInput
+              autoCapitalize={autoCapitalize}
+              autoCorrect={autoCorrect}
+              icon={icon}
+              keyboardType={keyboardType}
+              placeholder={placeholder}
+              name={name}
+              textContentType={textContentType}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              value={value}
+              secureTextEntry={secureTextEntry}
+              error={errors?.name}
+              numberOfLines={numberOfLines && numberOfLines}
+              multiline={multiline ? true : false}
+              flex={flex}
+              email={email}
+              textInputStyle={textInputStyle}
+            />
+          )}
           name={name}
-          textContentType={textContentType}
-          onChangeText={onChange}
-          onBlur={onBlur}
-          value={value}
-          secureTextEntry={secureTextEntry}
-          error={errors[name]}
-          numberOfLines={numberOfLines && numberOfLines}
-          multiline={multiline ? true : false}
-          flex={flex}
-          email={email}
-          textInputStyle={textInputStyle}
         />
 
-        <ErrorMessage error={errors[name]?.message} auth={auth} />
+        <ErrorMessage error={errors && errors[name]?.message} auth={auth} />
       </View>
       {forgotPassword && (
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
@@ -95,9 +109,9 @@ const AppFormField = ({
   );
 };
 const areEqual = (prevProps: any, nextProps: any) => {
-  const a = JSON.stringify(prevProps);
-  const b = JSON.stringify(nextProps);
-  return a === b;
+  return (
+    prevProps.methods.formState.isDirty === nextProps.methods.formState.isDirty
+  );
 };
 
 export default memo(AppFormField, areEqual);
@@ -120,3 +134,24 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
+{
+  /* <AppInput
+  autoCapitalize={autoCapitalize}
+  autoCorrect={autoCorrect}
+  icon={icon}
+  keyboardType={keyboardType}
+  placeholder={placeholder}
+  name={name}
+  textContentType={textContentType}
+  // onChangeText={onChange}
+  // onBlur={onBlur}
+  // value={value}
+  secureTextEntry={secureTextEntry}
+  error={errors?.name}
+  numberOfLines={numberOfLines && numberOfLines}
+  multiline={multiline ? true : false}
+  flex={flex}
+  email={email}
+  textInputStyle={textInputStyle}
+/>; */
+}

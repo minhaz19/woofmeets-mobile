@@ -16,6 +16,8 @@ import HeaderText from '../../../common/text/HeaderText';
 import AppImagePicker from '../../../common/ImagePicker/AppImagePicker';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import {memo} from 'react';
+import NestedInputContainer from '../../../common/Form/NestedInputContainer';
+import {useFormContext} from 'react-hook-form';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -42,7 +44,8 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
     active11,
     active12,
   } = useHandleCheck();
-
+  const methods = useFormContext();
+  // console.log('active', active0);
   const yourPetType = useMemo(() => {
     return addPetInputs[0].pet!.map((item, index) => (
       <AppCheckboxField
@@ -55,9 +58,10 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
         onPress={() => {
           handleActiveCheck(addPetInputs[0].id!, item.id);
         }}
+        methods={methods}
       />
     ));
-  }, [active0]);
+  }, [active0, handleActiveCheck]);
   const petInfoInputs = useMemo(() => {
     return (
       <View style={styles.flatList}>
@@ -74,6 +78,7 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
                 label={item.title}
                 flex={item.flex}
                 key={index}
+                methods={methods}
               />
             )}
             {item.select && (
@@ -87,111 +92,109 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
     );
   }, []);
 
-  const AdditionalInfoCheck = useMemo(() => {
-    return (
-      <View>
-        {addPetInputs[2].additionalDetails!.map((item, index) => (
-          <View key={index} style={styles.radioContainer}>
-            <TitleText textStyle={styles.title} text={item.title} />
+  // const AdditionalInfoCheck = useMemo(() => {
+  //   return (
+  //     <View>
+  //       {addPetInputs[2].additionalDetails!.map((item, index) => (
+  //         <View key={index} style={styles.radioContainer}>
+  //           <TitleText textStyle={styles.title} text={item.title} />
 
-            <View style={styles.additionalTypeContainer}>
-              {item.radio.map((type, key) => (
-                <AppCheckboxField
-                  title={type.type}
-                  radio
-                  key={key}
-                  typeKey={type.id}
-                  active={
-                    (type.id === active1 ? true : false) ||
-                    (type.id === active2 ? true : false) ||
-                    (type.id === active3 ? true : false) ||
-                    (type.id === active4 ? true : false) ||
-                    (type.id === active5 ? true : false) ||
-                    (type.id === active6 ? true : false) ||
-                    (type.id === active7 ? true : false)
-                  }
-                  onPress={() => handleActiveCheck(item.id, type.id)}
-                  name={item.name}
-                />
-              ))}
-            </View>
-          </View>
-        ))}
-      </View>
-    );
-  }, [active1, active2, active3, active4, active5, active6, active7]);
-  const careInfoChecks = useMemo(() => {
-    return addPetInputs[4].careInfo?.map((item, index) => (
-      <View key={index} style={styles.radioContainer}>
-        <TitleText textStyle={styles.title} text={item.title} />
+  //           <View style={styles.additionalTypeContainer}>
+  //             {item.radio.map((type, key) => (
+  //               <AppCheckboxField
+  //                 title={type.type}
+  //                 radio
+  //                 key={key}
+  //                 typeKey={type.id}
+  //                 active={
+  //                   (type.id === active1 ? true : false) ||
+  //                   (type.id === active2 ? true : false) ||
+  //                   (type.id === active3 ? true : false) ||
+  //                   (type.id === active4 ? true : false) ||
+  //                   (type.id === active5 ? true : false) ||
+  //                   (type.id === active6 ? true : false) ||
+  //                   (type.id === active7 ? true : false)
+  //                 }
+  //                 onPress={() => handleActiveCheck(item.id, type.id)}
+  //                 name={item.name}
+  //               />
+  //             ))}
+  //           </View>
+  //         </View>
+  //       ))}
+  //     </View>
+  //   );
+  // }, [active1, active2, active3, active4, active5, active6, active7]);
+  // const careInfoChecks = useMemo(() => {
+  //   return addPetInputs[4].careInfo?.map((item, index) => (
+  //     <View key={index} style={styles.radioContainer}>
+  //       <TitleText textStyle={styles.title} text={item.title} />
 
-        <View style={styles.additionalTypeContainer}>
-          {item.radio.map((type, key) => (
-            <AppCheckboxField
-              title={type.type}
-              radio
-              key={key}
-              typeKey={type.id}
-              active={
-                (type.id === active8 ? true : false) ||
-                (type.id === active9 ? true : false) ||
-                (type.id === active10 ? true : false) ||
-                (type.id === active11 ? true : false)
-              }
-              name={item.name}
-              onPress={() => handleActiveCheck(item.id, type.id)}
-            />
-          ))}
-        </View>
-      </View>
-    ));
-  }, [active10, active11, active8, active9]);
-  const bottomCheck = useMemo(() => {
-    return addPetInputs[6].pet!.map((item, index) => (
-      <AppCheckboxField
-        title={item.type}
-        key={index}
-        square
-        typeKey={item.id}
-        active={item.id === active12 ? true : false}
-        name={addPetInputs[6].name!}
-        onPress={() => handleActiveCheck(112, item.id)}
-      />
-    ));
-  }, [active12]);
-  const bottomInputs = useMemo(() => {
-    return (
-      <>
-        {addPetInputs[7].inputs!.map((item, index) => (
-          <AppFormField
-            key={index}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType={'default'}
-            placeholder={item.placeholder}
-            textContentType={'none'}
-            name={item.name}
-            label={item.title}
-            subTitle={item.subTitle}
-            multiline={item.numberOfLines ? true : false}
-            numberOfLines={item.numberOfLines! && item.numberOfLines!}
-          />
-        ))}
-      </>
-    );
-  }, []);
+  //       <View style={styles.additionalTypeContainer}>
+  //         {item.radio.map((type, key) => (
+  //           <AppCheckboxField
+  //             title={type.type}
+  //             radio
+  //             key={key}
+  //             typeKey={type.id}
+  //             active={
+  //               (type.id === active8 ? true : false) ||
+  //               (type.id === active9 ? true : false) ||
+  //               (type.id === active10 ? true : false) ||
+  //               (type.id === active11 ? true : false)
+  //             }
+  //             name={item.name}
+  //             onPress={() => handleActiveCheck(item.id, type.id)}
+  //           />
+  //         ))}
+  //       </View>
+  //     </View>
+  //   ));
+  // }, [active10, active11, active8, active9]);
+  // const bottomCheck = useMemo(() => {
+  //   return addPetInputs[6].pet!.map((item, index) => (
+  //     <AppCheckboxField
+  //       title={item.type}
+  //       key={index}
+  //       square
+  //       typeKey={item.id}
+  //       active={item.id === active12 ? true : false}
+  //       name={addPetInputs[6].name!}
+  //       onPress={() => handleActiveCheck(112, item.id)}
+  //     />
+  //   ));
+  // }, [active12]);
+  // const bottomInputs = useMemo(() => {
+  //   return (
+  //     <>
+  //       {addPetInputs[7].inputs!.map((item, index) => (
+  //         <AppFormField
+  //           key={index}
+  //           autoCapitalize="none"
+  //           autoCorrect={false}
+  //           keyboardType={'default'}
+  //           placeholder={item.placeholder}
+  //           textContentType={'none'}
+  //           name={item.name}
+  //           label={item.title}
+  //           subTitle={item.subTitle}
+  //           multiline={item.numberOfLines ? true : false}
+  //           numberOfLines={item.numberOfLines! && item.numberOfLines!}
+  //         />
+  //       ))}
+  //     </>
+  //   );
+  // }, []);
   return (
     <View style={styles.container}>
-      <AppForm
-        initialValues={initialValues}
-        validationSchema={validationSchema}>
+      <>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.inputContainer}>
           <View>
-            <View>
+            {/* <View>
               <AddPetImage name="petImage" />
-            </View>
+            </View> */}
             <View>
               <HeaderText
                 textStyle={styles.header}
@@ -205,9 +208,49 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
                 textStyle={styles.title}
                 text={addPetInputs[0].title!}
               />
-              <View style={styles.petType}>{yourPetType}</View>
+              <View style={styles.petType}>
+                {addPetInputs[0].pet!.map((item, index) => (
+                  <AppCheckboxField
+                    title={item.type}
+                    key={index}
+                    typeKey={item.id}
+                    square
+                    active={active0 === item.id ? true : false}
+                    name={addPetInputs[0].name!}
+                    onPress={() => {
+                      handleActiveCheck(addPetInputs[0].id!, item.id);
+                    }}
+                    methods={methods}
+                  />
+                ))}
+              </View>
             </View>
-            <View>{petInfoInputs}</View>
+            {/* <View>{petInfoInputs}</View> */}
+            <View style={styles.flatList}>
+              {addPetInputs[1].inputs!.map((item, index) => (
+                <>
+                  {!item.select && (
+                    <AppFormField
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      keyboardType={'default'}
+                      placeholder={item.placeholder}
+                      textContentType={'none'}
+                      name={item.name}
+                      label={item.title}
+                      flex={item.flex}
+                      key={index}
+                      methods={methods}
+                    />
+                  )}
+                  {item.select && (
+                    <View style={styles.selectContainer} key={index}>
+                      <AppSelect label={item.title} name={item.name} />
+                    </View>
+                  )}
+                </>
+              ))}
+            </View>
           </View>
           <TouchableOpacity
             style={styles.spaceHeader}
@@ -216,9 +259,9 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
           </TouchableOpacity>
           {isAdditionalDetails && (
             <View>
-              {AdditionalInfoCheck}
+              {/* {AdditionalInfoCheck} */}
               <View>
-                <AppFormField
+                {/* <AppFormField
                   autoCapitalize="none"
                   autoCorrect={false}
                   keyboardType={'default'}
@@ -228,7 +271,7 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
                   label={addPetInputs[3].title!}
                   multiline
                   numberOfLines={addPetInputs[3].numberOfLines}
-                />
+                /> */}
               </View>
               <View>
                 <View>
@@ -241,10 +284,10 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
                     text={addPetInputs[4].subTitle!}
                   />
                 </View>
-                {careInfoChecks}
+                {/* {careInfoChecks} */}
               </View>
               <View>
-                <AppFormField
+                {/* <AppFormField
                   autoCapitalize="none"
                   autoCorrect={false}
                   keyboardType={'default'}
@@ -254,31 +297,31 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
                   label={addPetInputs[5].title!}
                   multiline
                   numberOfLines={addPetInputs[5].numberOfLines}
-                />
+                /> */}
               </View>
               <View>
                 <TitleText
                   textStyle={styles.title}
                   text={addPetInputs[6].title!}
                 />
-                <View style={styles.petType}>{bottomCheck}</View>
+                {/* <View style={styles.petType}>{bottomCheck}</View> */}
               </View>
-              <View>{bottomInputs}</View>
+              {/* <View>{bottomInputs}</View> */}
             </View>
           )}
-          <View>
+          {/* <View>
             <AppImagePicker
               label="Photo Gallery"
               subTitle="Show off your pet through image gallery"
               name="photoGallery"
             />
-          </View>
+          </View> */}
           <View>
             <SubmitButton title="Add Pet" />
           </View>
           <BottomSpacing />
         </ScrollView>
-      </AppForm>
+      </>
     </View>
   );
 };
