@@ -14,7 +14,6 @@ const AppImagePicker = ({label, name, subTitle}: Props) => {
 
   const imageUris = value;
   const handleAdd = (uri: string) => {
-    console.log(uri);
     setValue(name, [...imageUris, uri]);
   };
   const handleRemove = (uri: string) => {

@@ -27,7 +27,6 @@ const AppCheckboxField = ({
     setValue(name, typeKey, {shouldValidate: true});
     onPress();
   };
-  console.log('calling form checkbox');
   return (
     <View style={styles.container}>
       <View style={{marginBottom: errors[name] ? 25 : 0}}>
