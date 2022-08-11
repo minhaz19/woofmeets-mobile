@@ -45,6 +45,7 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
 
   console.log('active', active0);
   const yourPetType = useMemo(() => {
+    console.log('callign checkbox from memo');
     return addPetInputs[0].pet!.map((item, index) => (
       <AppCheckboxField
         title={item.type}

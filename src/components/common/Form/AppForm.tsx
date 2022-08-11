@@ -6,7 +6,6 @@ import Lazy from 'yup/lib/Lazy';
 interface Props {
   children: React.ReactNode;
   initialValues: {};
-  onSubmit: (v: {}) => void;
   validationSchema: AnyObjectSchema | Lazy<any, unknown>;
 }
 const AppForm = ({children, initialValues, validationSchema}: Props) => {

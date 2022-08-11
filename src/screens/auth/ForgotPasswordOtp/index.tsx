@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
-
+    paddingBottom: SCREEN_WIDTH < 800 ? 40 : 0,
     paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
     bottom: 0,
   },

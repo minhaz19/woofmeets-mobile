@@ -4,23 +4,23 @@ import React from 'react';
 import OtpInputs from 'react-native-otp-inputs';
 import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import {FormikValues, useFormikContext} from 'formik';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
+import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
 interface Props {
   name: string;
   auth?: boolean;
 }
 const AuthOTP = ({name, auth}: Props) => {
   const {isDarkMode} = useTheme();
-  const {setFieldTouched, touched, errors, setFieldValue} =
-    useFormikContext<FormikValues>();
+  const {errors, onBlur, onChange} = useRHFContext(name);
   return (
     <View style={styles.container}>
       <OtpInputs
-        handleChange={code => setFieldValue(name, code)}
+        // handleChange={code => setValue(name, code)}
+        handleChange={onChange}
         numberOfInputs={4}
         autofillFromClipboard={false}
-        onBlur={() => setFieldTouched(name)}
+        onBlur={onBlur}
         placeholder={'-'}
         style={[
           styles.inputContainer,
@@ -29,11 +29,7 @@ const AuthOTP = ({name, auth}: Props) => {
         inputStyles={[styles.input]}
       />
       <View>
-        <ErrorMessage
-          error={errors[name]}
-          visible={touched[name]}
-          auth={auth}
-        />
+        <ErrorMessage error={errors[name]?.message} auth={auth} />
       </View>
     </View>
   );

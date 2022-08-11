@@ -30,7 +30,6 @@ const AddPetImage = ({name}: Props) => {
     setValue(name, e._parts[0][1].uri, {shouldValidate: true});
     // setValue(name, e._parts[0][1]['uri'], {shouldValidate: true});
   }
-  console.log('image value', errors[name]);
   return (
     <View>
       {!petImage && (
