@@ -3,9 +3,9 @@ import React, {useState} from 'react';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
 import ErrorMessage from './Form/ErrorMessage';
-import {FormikValues, useFormikContext} from 'formik';
 import SwitchView from './switch/SwitchView';
 import ShortText from './text/ShortText';
+import {useRHFContext} from '../../utils/helpers/Form/useRHFContext';
 interface Props {
   name: string;
   terms?: boolean;
@@ -16,8 +16,8 @@ interface Props {
 }
 const AppSwitch = ({name, terms, auth, title}: Props) => {
   const [isEnabled, setIsEnabled] = useState(false);
-  const {touched, values, errors, setFieldValue} =
-    useFormikContext<FormikValues>();
+
+  const {errors, value, setValue} = useRHFContext(name);
   return (
     <>
       <View style={styles.container}>
@@ -31,21 +31,17 @@ const AppSwitch = ({name, terms, auth, title}: Props) => {
         )}
         {title && <ShortText text={title} textStyle={styles.title} />}
         <SwitchView
-          isActive={values[name]}
+          isActive={value}
           activeText=""
           inActiveText=""
           onSelect={is => {
             setIsEnabled(is);
-            setFieldValue(name, !isEnabled);
+            setValue(name, !isEnabled, {shouldValidate: true});
           }}
         />
       </View>
       <View style={styles.errorCont}>
-        <ErrorMessage
-          auth={auth}
-          error={errors[name]}
-          visible={touched[name]}
-        />
+        <ErrorMessage auth={auth} error={errors[name]?.message} />
       </View>
     </>
   );

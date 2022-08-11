@@ -1,22 +1,15 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
-import {FormikErrors, FormikTouched} from 'formik';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
 interface Props {
-  error:
-    | string
-    | string[]
-    | FormikErrors<any>
-    | FormikErrors<any>[]
-    | undefined;
-  visible: boolean | FormikTouched<any> | FormikTouched<any>[] | undefined;
+  error: string | undefined | any;
   auth?: boolean;
 }
-const ErrorMessage = ({error, visible, auth}: Props) => {
+const ErrorMessage = ({error, auth}: Props) => {
   const {isDarkMode, colors} = useTheme();
-  if (!visible || !error) {
+  if (!error) {
     return null;
   }
 

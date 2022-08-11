@@ -32,10 +32,7 @@ const App = () => {
   // Geocoder.init(GOOGLE_MAP_KEY);
   return (
     <Provider store={store}>
-      {/* <SafeAreaView style={GlobalStyles.droidSafeArea}> */}
       <Splash />
-      {/* <MainNavigationContainer previousLoggedIn={false} /> */}
-      {/* </SafeAreaView> */}
     </Provider>
   );
 };

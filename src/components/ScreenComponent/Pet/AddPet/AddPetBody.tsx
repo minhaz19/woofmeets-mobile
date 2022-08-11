@@ -1,5 +1,6 @@
-import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {useMemo, useState} from 'react';
 import AppForm from '../../../common/Form/AppForm';
 import AppFormField from '../../../common/Form/AppFormField';
 import Text_Size from '../../../../constants/textScaling';
@@ -14,6 +15,7 @@ import DescriptionText from '../../../common/text/DescriptionText';
 import HeaderText from '../../../common/text/HeaderText';
 import AppImagePicker from '../../../common/ImagePicker/AppImagePicker';
 import BottomSpacing from '../../../UI/BottomSpacing';
+import {memo} from 'react';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -22,7 +24,8 @@ interface Props {
   onPress?: () => void;
 }
 
-const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
+const AddPetBody = ({initialValues, validationSchema}: Props) => {
+  const [isAdditionalDetails, setIsAdditionalDetails] = useState<boolean>(true);
   const {
     handleActiveCheck,
     active0,
@@ -40,248 +43,247 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
     active12,
   } = useHandleCheck();
 
-  const [isAdditionalDetails, setIsAdditionalDetails] = useState<boolean>(true);
-
-  const renderHeader = () => {
+  const yourPetType = useMemo(() => {
+    return addPetInputs[0].pet!.map((item, index) => (
+      <AppCheckboxField
+        title={item.type}
+        key={index}
+        typeKey={item.id}
+        square
+        active={active0 === item.id ? true : false}
+        name={addPetInputs[0].name!}
+        onPress={() => {
+          handleActiveCheck(addPetInputs[0].id!, item.id);
+        }}
+      />
+    ));
+  }, [active0]);
+  const petInfoInputs = useMemo(() => {
     return (
-      <View>
-        <View>
-          <AddPetImage name="petImage" />
-        </View>
-        <View>
-          <HeaderText
-            textStyle={styles.header}
-            text={addPetInputs[0].header!}
-          />
-          <DescriptionText
-            textStyle={styles.topSubTitle}
-            text={addPetInputs[0].subTitle!}
-          />
-          <TitleText textStyle={styles.title} text={addPetInputs[0].title!} />
-          <View style={styles.petType}>
-            {addPetInputs[0].pet!.map((item, index) => (
-              <AppCheckboxField
-                title={item.type}
+      <View style={styles.flatList}>
+        {addPetInputs[1].inputs!.map((item, index) => (
+          <>
+            {!item.select && (
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType={'default'}
+                placeholder={item.placeholder}
+                textContentType={'none'}
+                name={item.name}
+                label={item.title}
+                flex={item.flex}
                 key={index}
-                typeKey={item.id}
-                square
-                active={active0[item.id]}
-                onPress={() => handleActiveCheck(addPetInputs[0].id!, item.id)}
-                name={addPetInputs[0].name!}
               />
-            ))}
-          </View>
-        </View>
+            )}
+            {item.select && (
+              <View style={styles.selectContainer} key={index}>
+                <AppSelect label={item.title} name={item.name} />
+              </View>
+            )}
+          </>
+        ))}
       </View>
     );
-  };
+  }, []);
 
-  const renderFooter = () => {
+  const AdditionalInfoCheck = useMemo(() => {
     return (
       <View>
-        <TouchableOpacity
-          style={styles.spaceHeader}
-          onPress={() => setIsAdditionalDetails(!isAdditionalDetails)}>
-          <HeaderText text="Additional Details" />
-        </TouchableOpacity>
-        {isAdditionalDetails && (
-          <View>
-            <View>
-              {addPetInputs[2].additionalDetails!.map((item, index) => (
-                <View key={index} style={styles.radioContainer}>
-                  <TitleText textStyle={styles.title} text={item.title} />
+        {addPetInputs[2].additionalDetails!.map((item, index) => (
+          <View key={index} style={styles.radioContainer}>
+            <TitleText textStyle={styles.title} text={item.title} />
 
-                  <View style={styles.additionalTypeContainer}>
-                    {item.radio.map((type, key) => (
-                      <View key={key} style={styles.additionalType}>
-                        <AppCheckboxField
-                          title={type.type}
-                          radio
-                          key={index}
-                          typeKey={type.id}
-                          active={
-                            (item.id === 101 && active1[type.id]) ||
-                            (item.id === 102 && active2[type.id]) ||
-                            (item.id === 103 && active3[type.id]) ||
-                            (item.id === 104 && active4[type.id]) ||
-                            (item.id === 105 && active5[type.id]) ||
-                            (item.id === 106 && active6[type.id]) ||
-                            (item.id === 107 && active7[type.id])
-                          }
-                          onPress={() => handleActiveCheck(item.id, type.id)}
-                          name={item.name}
-                        />
-                      </View>
-                    ))}
-                  </View>
-                </View>
-              ))}
-            </View>
-            <View>
-              <AppFormField
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType={'default'}
-                placeholder={addPetInputs[3].placeholder}
-                textContentType={'none'}
-                name={addPetInputs[3].name!}
-                label={addPetInputs[3].title!}
-                multiline
-                numberOfLines={addPetInputs[3].numberOfLines}
-              />
-            </View>
-            <View>
-              <View>
-                <TitleText
-                  textStyle={styles.header}
-                  text={addPetInputs[4].header!}
-                />
-                <TitleText
-                  textStyle={styles.subTitle}
-                  text={addPetInputs[4].subTitle!}
-                />
-              </View>
-              {addPetInputs[4].careInfo?.map((item, index) => (
-                <View key={index} style={styles.radioContainer}>
-                  <TitleText textStyle={styles.title} text={item.title} />
-
-                  <View style={styles.additionalTypeContainer}>
-                    {item.radio.map((type, key) => (
-                      <View key={key} style={styles.additionalType}>
-                        <AppCheckboxField
-                          title={type.type}
-                          radio
-                          key={index}
-                          typeKey={type.id}
-                          active={
-                            (item.id === 108 && active8[type.id]) ||
-                            (item.id === 109 && active9[type.id]) ||
-                            (item.id === 110 && active10[type.id]) ||
-                            (item.id === 111 && active11[type.id])
-                          }
-                          onPress={() => handleActiveCheck(item.id, type.id)}
-                          name={item.name}
-                        />
-                      </View>
-                    ))}
-                  </View>
-                </View>
-              ))}
-            </View>
-            <View>
-              <AppFormField
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType={'default'}
-                placeholder={addPetInputs[5].placeholder}
-                textContentType={'none'}
-                name={addPetInputs[5].name!}
-                label={addPetInputs[5].title!}
-                multiline
-                numberOfLines={addPetInputs[5].numberOfLines}
-              />
-            </View>
-            <View>
-              <TitleText
-                textStyle={styles.title}
-                text={addPetInputs[6].title!}
-              />
-              <View style={styles.petType}>
-                {addPetInputs[6].pet!.map((item, index) => (
-                  <AppCheckboxField
-                    title={item.type}
-                    key={index}
-                    square
-                    typeKey={item.id}
-                    active={addPetInputs[6].id === 112 && active12[item.id]}
-                    onPress={() => handleActiveCheck(112, item.id)}
-                    name={addPetInputs[6].name!}
-                  />
-                ))}
-              </View>
-            </View>
-            <View>
-              {addPetInputs[7].inputs!.map((item, index) => (
-                <AppFormField
-                  key={index}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType={'default'}
-                  placeholder={item.placeholder}
-                  textContentType={'none'}
+            <View style={styles.additionalTypeContainer}>
+              {item.radio.map((type, key) => (
+                <AppCheckboxField
+                  title={type.type}
+                  radio
+                  key={key}
+                  typeKey={type.id}
+                  active={
+                    (type.id === active1 ? true : false) ||
+                    (type.id === active2 ? true : false) ||
+                    (type.id === active3 ? true : false) ||
+                    (type.id === active4 ? true : false) ||
+                    (type.id === active5 ? true : false) ||
+                    (type.id === active6 ? true : false) ||
+                    (type.id === active7 ? true : false)
+                  }
+                  onPress={() => handleActiveCheck(item.id, type.id)}
                   name={item.name}
-                  label={item.title}
-                  subTitle={item.subTitle}
-                  multiline={item.numberOfLines ? true : false}
-                  numberOfLines={item.numberOfLines! && item.numberOfLines!}
                 />
               ))}
             </View>
           </View>
-        )}
-        <View>
-          <AppImagePicker
-            label="Photo Gallery"
-            subTitle="Show off your pet through image gallery"
-            name="photoGallery"
-          />
-        </View>
-        <View>
-          <SubmitButton title="Add Pet" />
-        </View>
-        <BottomSpacing />
+        ))}
       </View>
     );
-  };
+  }, [active1, active2, active3, active4, active5, active6, active7]);
+  const careInfoChecks = useMemo(() => {
+    return addPetInputs[4].careInfo?.map((item, index) => (
+      <View key={index} style={styles.radioContainer}>
+        <TitleText textStyle={styles.title} text={item.title} />
 
+        <View style={styles.additionalTypeContainer}>
+          {item.radio.map((type, key) => (
+            <AppCheckboxField
+              title={type.type}
+              radio
+              key={key}
+              typeKey={type.id}
+              active={
+                (type.id === active8 ? true : false) ||
+                (type.id === active9 ? true : false) ||
+                (type.id === active10 ? true : false) ||
+                (type.id === active11 ? true : false)
+              }
+              name={item.name}
+              onPress={() => handleActiveCheck(item.id, type.id)}
+            />
+          ))}
+        </View>
+      </View>
+    ));
+  }, [active10, active11, active8, active9]);
+  const bottomCheck = useMemo(() => {
+    return addPetInputs[6].pet!.map((item, index) => (
+      <AppCheckboxField
+        title={item.type}
+        key={index}
+        square
+        typeKey={item.id}
+        active={item.id === active12 ? true : false}
+        name={addPetInputs[6].name!}
+        onPress={() => handleActiveCheck(112, item.id)}
+      />
+    ));
+  }, [active12]);
+  const bottomInputs = useMemo(() => {
+    return (
+      <>
+        {addPetInputs[7].inputs!.map((item, index) => (
+          <AppFormField
+            key={index}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType={'default'}
+            placeholder={item.placeholder}
+            textContentType={'none'}
+            name={item.name}
+            label={item.title}
+            subTitle={item.subTitle}
+            multiline={item.numberOfLines ? true : false}
+            numberOfLines={item.numberOfLines! && item.numberOfLines!}
+          />
+        ))}
+      </>
+    );
+  }, []);
   return (
     <View style={styles.container}>
       <AppForm
         initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}>
-        <View style={styles.inputContainer}>
-          <View style={styles.flatList}>
-            <FlatList
-              columnWrapperStyle={styles.flatList}
-              data={addPetInputs[1].inputs}
-              showsVerticalScrollIndicator={false}
-              renderItem={({item}) => {
-                return (
-                  <>
-                    {!item.select && (
-                      <AppFormField
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        keyboardType={'default'}
-                        placeholder={item.placeholder}
-                        textContentType={'none'}
-                        name={item.name}
-                        label={item.title}
-                        flex={item.flex}
-                      />
-                    )}
-                    {item.select && (
-                      <View style={styles.selectContainer}>
-                        <AppSelect label={item.title} name={item.name} />
-                      </View>
-                    )}
-                  </>
-                );
-              }}
-              numColumns={2}
-              keyExtractor={(item, index) => index.toString()}
-              ListHeaderComponent={renderHeader}
-              ListFooterComponent={renderFooter}
+        validationSchema={validationSchema}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.inputContainer}>
+          <View>
+            <View>
+              <AddPetImage name="petImage" />
+            </View>
+            <View>
+              <HeaderText
+                textStyle={styles.header}
+                text={addPetInputs[0].header!}
+              />
+              <DescriptionText
+                textStyle={styles.topSubTitle}
+                text={addPetInputs[0].subTitle!}
+              />
+              <TitleText
+                textStyle={styles.title}
+                text={addPetInputs[0].title!}
+              />
+              <View style={styles.petType}>{yourPetType}</View>
+            </View>
+            <View>{petInfoInputs}</View>
+          </View>
+          <TouchableOpacity
+            style={styles.spaceHeader}
+            onPress={() => setIsAdditionalDetails(!isAdditionalDetails)}>
+            <HeaderText text="Additional Details" />
+          </TouchableOpacity>
+          {isAdditionalDetails && (
+            <View>
+              {AdditionalInfoCheck}
+              <View>
+                <AppFormField
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  keyboardType={'default'}
+                  placeholder={addPetInputs[3].placeholder}
+                  textContentType={'none'}
+                  name={addPetInputs[3].name!}
+                  label={addPetInputs[3].title!}
+                  multiline
+                  numberOfLines={addPetInputs[3].numberOfLines}
+                />
+              </View>
+              <View>
+                <View>
+                  <TitleText
+                    textStyle={styles.header}
+                    text={addPetInputs[4].header!}
+                  />
+                  <TitleText
+                    textStyle={styles.subTitle}
+                    text={addPetInputs[4].subTitle!}
+                  />
+                </View>
+                {careInfoChecks}
+              </View>
+              <View>
+                <AppFormField
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  keyboardType={'default'}
+                  placeholder={addPetInputs[5].placeholder}
+                  textContentType={'none'}
+                  name={addPetInputs[5].name!}
+                  label={addPetInputs[5].title!}
+                  multiline
+                  numberOfLines={addPetInputs[5].numberOfLines}
+                />
+              </View>
+              <View>
+                <TitleText
+                  textStyle={styles.title}
+                  text={addPetInputs[6].title!}
+                />
+                <View style={styles.petType}>{bottomCheck}</View>
+              </View>
+              <View>{bottomInputs}</View>
+            </View>
+          )}
+          <View>
+            <AppImagePicker
+              label="Photo Gallery"
+              subTitle="Show off your pet through image gallery"
+              name="photoGallery"
             />
           </View>
-        </View>
+          <View>
+            <SubmitButton title="Add Pet" />
+          </View>
+          <BottomSpacing />
+        </ScrollView>
       </AppForm>
     </View>
   );
 };
 
-export default AddPetBody;
+export default memo(AddPetBody);
 
 const styles = StyleSheet.create({
   container: {
@@ -309,7 +311,9 @@ const styles = StyleSheet.create({
   flatList: {
     flexWrap: 'wrap',
     flex: 1,
+    // width: '50%',
     justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   additionalTypeContainer: {
     flexDirection: 'row',

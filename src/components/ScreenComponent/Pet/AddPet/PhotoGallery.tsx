@@ -38,7 +38,6 @@ const PhotoGallery = ({imageUri, onChangeImage}: Props) => {
         {imageUri ? (
           <Image source={{uri: imageUri}} style={styles.image} />
         ) : (
-          // </View>
           <>
             <TouchableOpacity
               style={styles.imageContainer}

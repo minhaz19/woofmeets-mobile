@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   KeyboardAvoidingView,
   Platform,
@@ -28,7 +29,7 @@ interface Props {
 }
 const ForgotPasswordOtp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = () => {
+  const handleSubmit = (value: {}) => {
     navigation.navigate('AfterIntroScreen');
   };
   return (
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
-
+    paddingBottom: SCREEN_WIDTH < 800 ? 40 : 0,
     paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
     bottom: 0,
   },
