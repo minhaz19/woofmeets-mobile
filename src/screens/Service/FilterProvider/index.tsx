@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import TitleText from '../../../components/common/text/TitleText';
@@ -7,7 +8,7 @@ import FilterProviderBody from '../../../components/ScreenComponent/Service/Filt
 import {filterProviderValue} from '../../../utils/config/initalValues';
 import {filterProviderValidationSchema} from '../../../utils/config/validationSchema';
 const FilterProvider = () => {
-  const handleSubmit = () => {};
+  const handleSubmit = (e: {}) => {};
   return (
     <View>
       <View style={styles.textContainer}>

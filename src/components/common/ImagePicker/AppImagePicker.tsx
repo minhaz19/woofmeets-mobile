@@ -1,8 +1,8 @@
 import {} from 'react-native';
 import React from 'react';
 import ErrorMessage from '../Form/ErrorMessage';
-import {FormikValues, useFormikContext} from 'formik';
 import PhotoGalleryList from './PhotoGalleryList';
+import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
 
 interface Props {
   label: string;
@@ -10,15 +10,14 @@ interface Props {
   name: string;
 }
 const AppImagePicker = ({label, name, subTitle}: Props) => {
-  const {errors, touched, values, setFieldValue} =
-    useFormikContext<FormikValues>();
+  const {setValue, errors, value} = useRHFContext(name);
 
-  const imageUris = values[name];
+  const imageUris = value;
   const handleAdd = (uri: string) => {
-    setFieldValue(name, [...imageUris, uri]);
+    setValue(name, [...imageUris, uri]);
   };
   const handleRemove = (uri: string) => {
-    setFieldValue(
+    setValue(
       name,
       imageUris.filter((imageUri: string) => imageUri !== uri),
     );
@@ -33,7 +32,7 @@ const AppImagePicker = ({label, name, subTitle}: Props) => {
         onRemoveImage={handleRemove}
         onAddImage={handleAdd}
       />
-      <ErrorMessage error={errors[name]} visible={touched[name]} />
+      <ErrorMessage error={errors[name]} />
     </>
   );
 };

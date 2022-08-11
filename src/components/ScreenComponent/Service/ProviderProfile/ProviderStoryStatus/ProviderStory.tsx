@@ -20,12 +20,8 @@ const ProviderStory = ({image}: Props) => {
       <Stories
         data={ProviderStories}
         duration={5}
-        onStart={(openedStory: IUserStory) => {
-          console.log(openedStory);
-        }}
-        onClose={(closedStory: IUserStory) => {
-          console.log(closedStory);
-        }}
+        onStart={(openedStory: IUserStory) => {}}
+        onClose={(closedStory: IUserStory) => {}}
         customSwipeUpButton={() => (
           <View>
             <Text>Swipe</Text>
