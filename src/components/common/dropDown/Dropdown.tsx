@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -22,7 +23,7 @@ const Dropdown: FC<Props> = ({label, placeholder, data}) => {
       {label && <HeaderText text={label} />}
       <SelectDropdown
         data={data}
-        onSelect={() => {}}
+        onSelect={(selectedItem, index) => {}}
         buttonTextAfterSelection={selectedItem => {
           return selectedItem;
         }}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
@@ -7,9 +8,7 @@ import {BoardingSettingsSchema} from '../../utils/config/validationSchema';
 
 const BoardingSetting = () => {
   const {colors} = useTheme();
-  const handleSubmit = (e: any) => {
-    console.log('values', e);
-  };
+  const handleSubmit = (e: any) => {};
   return (
     <View
       style={[

@@ -229,7 +229,7 @@ export const ProviderStories = [
         image:
           'https://images.unsplash.com/photo-1510215744419-742d9dce947f?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8MTA4MHgxOTIwfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1200',
         swipeText: 'Custom swipe text for this story',
-        onPress: () => console.log('story 1 swiped'),
+        onPress: () => console.log(''),
       },
       {
         id: 2,

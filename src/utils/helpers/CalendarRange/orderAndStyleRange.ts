@@ -22,7 +22,6 @@ export const orderAndStyleRange = (range: any, color: string) => {
           .join('-'),
       ),
     );
-  console.log('orderrange', orderRange);
 
   const styledRange =
     orderRange.length !== 0 &&

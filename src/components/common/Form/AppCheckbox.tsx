@@ -1,5 +1,5 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import React, {memo} from 'react';
 import {
   Circle_,
   CircleCheck,
@@ -17,25 +17,27 @@ interface Props {
   onBlur?: () => void;
 }
 const AppCheckbox = ({
+  onPress,
+  onBlur,
   radio,
   square,
   title,
   active,
-  onPress,
-  onBlur,
 }: Props) => {
   return (
-    <TouchableOpacity activeOpacity={1} onPress={onPress} onBlur={onBlur}>
-      <View style={styles.checkInfoContainer}>
-        {square && (!active ? <Square /> : <SquareCheck />)}
-        {radio && (!active ? <Circle_ /> : <CircleCheck />)}
-        <HeaderText text={title} textStyle={styles.title} />
-      </View>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={onPress}
+      onBlur={onBlur}
+      style={styles.checkInfoContainer}>
+      {square && (!active ? <Square /> : <SquareCheck />)}
+      {radio && (!active ? <Circle_ /> : <CircleCheck />)}
+      <HeaderText text={title} textStyle={styles.title} />
     </TouchableOpacity>
   );
 };
 
-export default AppCheckbox;
+export default memo(AppCheckbox);
 
 const styles = StyleSheet.create({
   checkInfoContainer: {
