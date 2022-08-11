@@ -25,8 +25,7 @@ interface Props {
 const VerifyAccount = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const handleSubmit = (value: {}) => {
-    console.log('value veri', value);
+  const handleSubmit = () => {
     navigation.navigate('AfterIntroScreen');
   };
   return (
@@ -57,6 +56,7 @@ const VerifyAccount = ({navigation}: Props) => {
             image={forgotPassData.image}
             title={forgotPassData.title}
             subTitle={forgotPassData.subTitle}
+            Icon={undefined}
           />
           <AuthForm
             initialValues={verifyAccountValue}

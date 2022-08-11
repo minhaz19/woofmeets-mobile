@@ -11,8 +11,11 @@ import MI from 'react-native-vector-icons/MaterialIcons';
 import Fe from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Foundation from 'react-native-vector-icons/Foundation';
-import store from './src/store/store';
 import Splash from './src/screens/splash';
+import store from './src/store/store';
+// import MainNavigationContainer from './src/navigation/MainNavigationContainer';
+// import {SafeAreaView} from 'react-native';
+// import GlobalStyles from './GlobalStyles';
 
 Icon.loadFont();
 Fst.loadFont();

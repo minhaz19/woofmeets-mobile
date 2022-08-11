@@ -11,6 +11,7 @@ import HeaderText from '../../../../common/text/HeaderText';
 import ServiceDate from '../../common/ServiceDate';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 
 type StackParamList = {
   AllProvider: {foo: string; onBar: () => void} | undefined;
@@ -38,6 +39,7 @@ const Boarding = () => {
       <BottomButton
         title="Next"
         onSelect={() => navigation.navigate('AllProvider')}
+        widthStyle={styles.boxContainer}
       />
     </View>
   );
@@ -59,5 +61,8 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 20,
     fontSize: Text_Size.Text_9,
+  },
+  boxContainer: {
+    paddingHorizontal: SCREEN_WIDTH <= 800 ? '5%' : '10%',
   },
 });

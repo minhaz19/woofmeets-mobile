@@ -11,6 +11,7 @@ import BasicInfoSitter from '../screens/becomeSitter/BasicInfo';
 import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
 import SitterInitialScreen from '../screens/becomeSitter/InitialScreen';
 import ProviderNavigator from './ProviderNavigator';
+import BoardingSetting from '../screens/boardingSetting/BoardingSetting';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -94,6 +95,21 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
+        <Stack.Screen
+        name="BoardingSetting"
+        component={BoardingSetting}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="BoardingSetting"
+              notification
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
       </Stack.Navigator>
     </NavigationContainer>
   );

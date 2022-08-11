@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {View, StyleSheet} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
@@ -8,7 +7,7 @@ import {basicInfoValidationSchema} from '../../utils/config/setting/validationSc
 
 const BasicInfo = () => {
   const {colors} = useTheme();
-  const handleSubmit = (e: any) => {};
+  const handleSubmit = () => {};
   return (
     <View
       style={[

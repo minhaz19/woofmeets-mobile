@@ -138,7 +138,7 @@ const FilterProviderBody = ({
         <FlatList
           data={[]}
           // @ts-ignore
-          renderItem={() => console.log('')}
+          renderItem={() => {}}
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={renderHeader}
           ListFooterComponent={renderFooter}

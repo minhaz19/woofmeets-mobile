@@ -39,7 +39,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 5,
       title: 'Version',
       screenName: () => {},
-      details: '22.0615.00 - 165525120 - release',
+      details: '1.0.2 - beta',
       opacity: 1,
     },
   ];
