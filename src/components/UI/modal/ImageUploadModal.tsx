@@ -63,7 +63,7 @@ const ImageUploadModal = (props: {
         let formData = new FormData();
         props?.setPetImage(response1.uri);
         // @ts-ignore
-        props?.uploadImageUri(response1.uri);
+        // props?.uploadImageUri(response1.uri);
         formData.append('file', {
           uri: response1.uri,
           // @ts-ignore

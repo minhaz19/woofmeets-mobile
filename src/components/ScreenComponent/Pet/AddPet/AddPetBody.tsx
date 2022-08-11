@@ -24,7 +24,7 @@ interface Props {
   onPress?: () => void;
 }
 
-const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
+const AddPetBody = ({initialValues, validationSchema}: Props) => {
   const [isAdditionalDetails, setIsAdditionalDetails] = useState<boolean>(true);
   const {
     handleActiveCheck,
@@ -184,8 +184,7 @@ const AddPetBody = ({handleSubmit, initialValues, validationSchema}: Props) => {
     <View style={styles.container}>
       <AppForm
         initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}>
+        validationSchema={validationSchema}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.inputContainer}>

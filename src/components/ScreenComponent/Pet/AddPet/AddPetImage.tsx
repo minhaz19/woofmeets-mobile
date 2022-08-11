@@ -28,7 +28,6 @@ const AddPetImage = ({name}: Props) => {
 
   function uploadImage(e: any) {
     setValue(name, e._parts[0][1].uri, {shouldValidate: true});
-    // setValue(name, e._parts[0][1]['uri'], {shouldValidate: true});
   }
   return (
     <View>
