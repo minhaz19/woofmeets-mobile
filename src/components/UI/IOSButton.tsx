@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   GestureResponderEvent,
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
+import TitleText from '../common/text/TitleText';
 
 const IOSButton = (props: {
   containerStyle: any;
@@ -18,7 +18,7 @@ const IOSButton = (props: {
   textAlignment: ViewStyle | undefined;
   isLeftIcon?: any;
   titleStyle: TextStyle | undefined;
-  title: String | undefined;
+  title: string;
   icon?: any;
 }) => {
   return (
@@ -31,12 +31,12 @@ const IOSButton = (props: {
       <View style={{...styles.touchable}}>
         <TouchableOpacity onPress={props.onSelect}>
           <View style={{...styles.card, ...props.textAlignment}}>
-            <Text
-              style={{
+            <TitleText
+              textStyle={{
                 ...props.titleStyle,
-              }}>
-              {props.title}
-            </Text>
+              }}
+              text={props.title}
+            />
             {props.icon && (
               <Icon
                 name="keyboard-arrow-right"
