@@ -10,6 +10,7 @@ import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
 import PetNavigator from './bottoms/PetNavigator';
 import BoardingSetting from '../screens/boardingSetting/BoardingSetting';
+import Gallery from '../screens/Gallery/Gallery';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +18,7 @@ function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Tab.Navigator
-      initialRouteName="ServiceNavigator"
+      initialRouteName="Gallery"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
@@ -42,9 +43,9 @@ function BottomTabNavigator() {
           shadowColor: isDarkMode ? Colors.dark.background : Colors.background,
         },
       }}>
-      {/* <Tab.Screen
-        name="BoardingSetting"
-        component={BoardingSetting}
+      <Tab.Screen
+        name="Gallery"
+        component={Gallery}
         options={{
           tabBarLabel: 'Services',
           tabBarShowLabel: false,
@@ -68,8 +69,8 @@ function BottomTabNavigator() {
             </View>
           ),
         }}
-      /> */}
-      <Tab.Screen
+      />
+      {/* <Tab.Screen
         name="ServiceNavigator"
         component={ServiceNavigator}
         options={{
@@ -95,7 +96,7 @@ function BottomTabNavigator() {
             </View>
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="InboxNavigator"
         component={InboxNavigator}
