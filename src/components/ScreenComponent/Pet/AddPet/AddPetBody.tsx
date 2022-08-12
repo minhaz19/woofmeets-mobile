@@ -63,7 +63,7 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
       <View style={styles.flatList}>
         {addPetInputs[1].inputs!.map((item, index) => (
           <>
-            {!item.select && (
+            {!item.select ? (
               <AppFormField
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -75,8 +75,7 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
                 flex={item.flex}
                 key={index}
               />
-            )}
-            {item.select && (
+            ) : (
               <View style={styles.selectContainer} key={index}>
                 <AppSelect label={item.title} name={item.name} />
               </View>

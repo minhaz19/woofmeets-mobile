@@ -29,6 +29,7 @@ const AddPetImage = ({name}: Props) => {
   function uploadImage(e: any) {
     setValue(name, e._parts[0][1].uri, {shouldValidate: true});
   }
+  const uploadImageUri = () => {} 
   return (
     <View>
       {!petImage && (
@@ -70,6 +71,7 @@ const AddPetImage = ({name}: Props) => {
         setIsModalVisible={setIsModalVisible}
         setIsImageLoading={setIsImageLoading}
         uploadImage={uploadImage}
+        uploadImageUri={uploadImageUri}
         setPetImage={setPetImage}
       />
     </View>
