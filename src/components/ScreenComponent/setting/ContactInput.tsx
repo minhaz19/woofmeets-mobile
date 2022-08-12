@@ -32,7 +32,7 @@ const ContactInput = ({
     {
       title: 'Phone number',
       placeholder: 'Enter Phone number',
-      name: 'emergencyContactName',
+      name: 'emergencyPhone',
     },
   ];
   return (
