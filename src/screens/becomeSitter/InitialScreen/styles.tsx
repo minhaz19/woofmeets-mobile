@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
     height: SCREEN_WIDTH >= 800 ? 260 : 200,
+    borderWidth: 1,
 
     justifyContent: 'center',
     alignItems: 'center',
