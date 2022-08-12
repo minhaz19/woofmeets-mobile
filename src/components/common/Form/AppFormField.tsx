@@ -8,7 +8,6 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
-import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
 import {Controller} from 'react-hook-form';
 interface Props {
   name: string;
@@ -57,8 +56,8 @@ const AppFormField = ({
   const {
     formState: {errors},
     control,
+    watch,
   } = methods;
-  // const A = useRHFContext(name, control);
   const navigation = useNavigation<NavigationProps>();
   console.log('rendering input fucking field');
   return (
@@ -84,7 +83,7 @@ const AppFormField = ({
               onBlur={onBlur}
               value={value}
               secureTextEntry={secureTextEntry}
-              error={errors?.name}
+              error={errors[name]}
               numberOfLines={numberOfLines && numberOfLines}
               multiline={multiline ? true : false}
               flex={flex}
@@ -95,7 +94,7 @@ const AppFormField = ({
           name={name}
         />
 
-        <ErrorMessage error={errors && errors[name]?.message} auth={auth} />
+        <ErrorMessage error={errors[name]?.message} auth={auth} />
       </View>
       {forgotPassword && (
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
@@ -114,8 +113,8 @@ const areEqual = (prevProps: any, nextProps: any) => {
   );
 };
 
-export default memo(AppFormField, areEqual);
-
+export default memo(AppFormField);
+// export default AppFormField;1
 const styles = StyleSheet.create({
   label: {
     fontSize: Text_Size.Text_1,
@@ -134,24 +133,3 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
-{
-  /* <AppInput
-  autoCapitalize={autoCapitalize}
-  autoCorrect={autoCorrect}
-  icon={icon}
-  keyboardType={keyboardType}
-  placeholder={placeholder}
-  name={name}
-  textContentType={textContentType}
-  // onChangeText={onChange}
-  // onBlur={onBlur}
-  // value={value}
-  secureTextEntry={secureTextEntry}
-  error={errors?.name}
-  numberOfLines={numberOfLines && numberOfLines}
-  multiline={multiline ? true : false}
-  flex={flex}
-  email={email}
-  textInputStyle={textInputStyle}
-/>; */
-}

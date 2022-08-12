@@ -55,11 +55,7 @@ const AddPetImage = ({name}: Props) => {
       )}
       {petImage && (
         <View style={styles.container}>
-          <Image
-            source={{uri: petImage}}
-            style={styles.image}
-            // resizeMode="cover"
-          />
+          <Image source={{uri: petImage}} style={styles.image} />
         </View>
       )}
       <View style={styles.errorContainer}>

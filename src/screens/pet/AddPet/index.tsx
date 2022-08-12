@@ -14,6 +14,7 @@ const AddPet = () => {
   const dispatch = useDispatch();
   const handleSubmit = (e: {}) => {
     dispatch(setPetValue(e));
+    console.log('getting values', e);
   };
   const {isDarkMode} = useTheme();
   return (
@@ -29,11 +30,7 @@ const AddPet = () => {
       <AppForm
         initialValues={addPetValue}
         validationSchema={addPetValidationSchema}>
-        <AddPetBody
-          // initialValues={addPetValue}
-          // validationSchema={addPetValidationSchema}
-          handleSubmit={handleSubmit}
-        />
+        <AddPetBody handleSubmit={handleSubmit} />
       </AppForm>
     </Screen>
   );

@@ -1,6 +1,19 @@
-import {useController} from 'react-hook-form';
+import {useController, useFormContext} from 'react-hook-form';
 
-export const useRHFContext = (name: string, control: any) => {
+export const useRHFContext = (name: string) => {
+  const {
+    control,
+    setValue,
+    resetField,
+    clearErrors,
+    reset,
+    watch,
+    getValues,
+    setFocus,
+    handleSubmit,
+    formState: {errors},
+  } = useFormContext();
+
   const {
     field: {onBlur, onChange, value},
   } = useController({name, control});
@@ -8,5 +21,14 @@ export const useRHFContext = (name: string, control: any) => {
     onBlur,
     onChange,
     value,
+    errors,
+    setValue,
+    reset,
+    resetField,
+    clearErrors,
+    watch,
+    getValues,
+    setFocus,
+    handleSubmit,
   };
 };
