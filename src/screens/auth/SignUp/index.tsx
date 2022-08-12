@@ -18,6 +18,7 @@ import {
   signUpInitalState,
 } from '../../../utils/config/Data/signUpDatas';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import AppForm from '../../../components/common/Form/AppForm';
 
 interface Props {
   navigation: {navigate: (arg0: string) => void};
@@ -56,13 +57,15 @@ const SignUp = ({navigation}: Props) => {
             subTitle={signUpInitalState.subTitle}
             image={signUpInitalState.image}
           />
-          <AuthForm
+          <AppForm
             initialValues={signupValue}
-            validationSchema={signUpValidationSchema}
-            handleSubmit={handleSubmit}
-            btnTitle="SIGN UP"
-            termsAndCond
-          />
+            validationSchema={signUpValidationSchema}>
+            <AuthForm
+              handleSubmit={handleSubmit}
+              btnTitle="SIGN UP"
+              termsAndCond
+            />
+          </AppForm>
           <AuthFooter
             icons={othersAuthIcons}
             accountType="Already have an account? "

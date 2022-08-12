@@ -15,6 +15,7 @@ import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/Image
 import {AuthPassword} from '../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
+import AppForm from '../../../components/common/Form/AppForm';
 const forgotPassData = {
   title: 'Forgot Password?',
 };
@@ -54,14 +55,16 @@ const ForgotPassword = ({navigation}: Props) => {
             },
           ]}>
           <ImageAndTitle Icon={AuthPassword} title={forgotPassData.title} />
-          <AuthForm
+          <AppForm
             initialValues={forgotPasswordValue}
-            validationSchema={forgotPasswordValidationSchema}
-            handleSubmit={handleSubmit}
-            btnTitle="Continue"
-            forgotPassword
-            onPress={() => navigation.goBack()}
-          />
+            validationSchema={forgotPasswordValidationSchema}>
+            <AuthForm
+              handleSubmit={handleSubmit}
+              btnTitle="Continue"
+              forgotPassword
+              onPress={() => navigation.goBack()}
+            />
+          </AppForm>
           <View style={styles.view} />
           {SCREEN_WIDTH > 800 && <BottomSpacing />}
         </View>

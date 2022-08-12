@@ -20,6 +20,7 @@ import {loginValidationSchema} from '../../../utils/config/validationSchema';
 import {useDispatch} from 'react-redux';
 import {setUserLoggedIn} from '../../../store/slices/userLogin';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import AppForm from '../../../components/common/Form/AppForm';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
@@ -59,12 +60,12 @@ const Login = ({navigation}: Props) => {
             subTitle={loginInitalState.subTitle}
             image={loginInitalState.image}
           />
-          <AuthForm
+
+          <AppForm
             initialValues={loginValue}
-            validationSchema={loginValidationSchema}
-            handleSubmit={handleSubmit}
-            btnTitle="LOGIN"
-          />
+            validationSchema={loginValidationSchema}>
+            <AuthForm handleSubmit={handleSubmit} btnTitle="LOGIN" />
+          </AppForm>
           <AuthFooter
             icons={othersAuthIcons}
             accountType="Don't have any account? "
