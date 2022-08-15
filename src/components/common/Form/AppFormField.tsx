@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {memo} from 'react';
 import ErrorMessage from './ErrorMessage';
-import {FormikValues, useFormikContext} from 'formik';
 import AppInput from './AppInput';
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import Text_Size from '../../../constants/textScaling';
@@ -9,6 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
+import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
 interface Props {
   name: string;
   label: string;
@@ -51,8 +51,7 @@ const AppFormField = ({
   textInputStyle,
   auth,
 }: Props) => {
-  const {setFieldTouched, touched, errors, values, setFieldValue} =
-    useFormikContext<FormikValues>();
+  const {errors, value, onBlur, onChange} = useRHFContext(name);
   const navigation = useNavigation<NavigationProps>();
   return (
     <>
@@ -68,13 +67,13 @@ const AppFormField = ({
           icon={icon}
           keyboardType={keyboardType}
           placeholder={placeholder}
+          name={name}
           textContentType={textContentType}
-          onChangeText={(text: string) => setFieldValue(name, text)}
-          onBlur={() => setFieldTouched(name)}
-          value={values[name]}
+          onChangeText={onChange}
+          onBlur={onBlur}
+          value={value}
           secureTextEntry={secureTextEntry}
           error={errors[name]}
-          touch={touched[name]}
           numberOfLines={numberOfLines && numberOfLines}
           multiline={multiline ? true : false}
           flex={flex}
@@ -82,11 +81,7 @@ const AppFormField = ({
           textInputStyle={textInputStyle}
         />
 
-        <ErrorMessage
-          error={errors[name]}
-          visible={touched[name]}
-          auth={auth}
-        />
+        <ErrorMessage error={errors[name]?.message} auth={auth} />
       </View>
       {forgotPassword && (
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
@@ -99,8 +94,13 @@ const AppFormField = ({
     </>
   );
 };
+const areEqual = (prevProps: any, nextProps: any) => {
+  const a = JSON.stringify(prevProps);
+  const b = JSON.stringify(nextProps);
+  return a === b;
+};
 
-export default AppFormField;
+export default memo(AppFormField, areEqual);
 
 const styles = StyleSheet.create({
   label: {

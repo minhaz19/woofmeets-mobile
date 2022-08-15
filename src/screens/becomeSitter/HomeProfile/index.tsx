@@ -181,7 +181,7 @@ const HomeProfile = (props: {
           time: '3 mins',
           icon: 'chevron-right',
           screen: () => {
-            props.navigation.navigate('BasicInfoSitter');
+            props.navigation.navigate('BoardingSetting');
           },
         }}
       />

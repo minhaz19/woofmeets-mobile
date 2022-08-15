@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   KeyboardAvoidingView,
   Platform,
@@ -26,7 +27,7 @@ interface Props {
 const SetNewPassword = ({navigation}: Props) => {
   const height = SCREEN_HEIGHT;
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = () => {
+  const handleSubmit = (values: any) => {
     navigation.navigate('AfterIntroScreen');
   };
   return (

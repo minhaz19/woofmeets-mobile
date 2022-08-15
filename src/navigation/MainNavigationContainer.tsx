@@ -11,6 +11,10 @@ import BasicInfoSitter from '../screens/becomeSitter/BasicInfo';
 import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
 import SitterInitialScreen from '../screens/becomeSitter/InitialScreen';
 import ProviderNavigator from './ProviderNavigator';
+import BoardingSetting from '../screens/boardingSetting/BoardingSetting';
+import InviteFriends from '../screens/Misc/InviteFriends';
+import PromoGiftCodes from '../screens/Misc/PromoGiftCodes';
+import ReceivePayments from '../screens/Misc/ReceivePayments';
 import Gallery from '../screens/becomeSitter/Gallery/Gallery';
 const Stack = createStackNavigator();
 
@@ -101,7 +105,70 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Profile" />
+              <HeaderWithBack
+                navigation={navigation}
+                title="Profile"
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="BoardingSetting"
+          component={BoardingSetting}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Boarding Setting"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="InviteFriends"
+          component={InviteFriends}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Invite Friends"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="PromoGiftCodes"
+          component={PromoGiftCodes}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Promo & Gift Codes"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ReceivePayments"
+          component={ReceivePayments}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Receive Payments"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}

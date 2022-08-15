@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
@@ -8,6 +9,7 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {FormikValues, useFormikContext} from 'formik';
 import ErrorMessage from './ErrorMessage';
 import {genders} from '../../../utils/config/Data/AddPetData';
+import {useController, useFormContext} from 'react-hook-form';
 interface Props {
   name: string;
   label: string;
@@ -15,7 +17,14 @@ interface Props {
 }
 const AppSelect = ({label, name}: Props) => {
   const {isDarkMode, colors} = useTheme();
-  const {setFieldValue, errors, touched} = useFormikContext<FormikValues>();
+  const {
+    control,
+    setValue,
+    formState: {errors},
+  } = useFormContext();
+  const {
+    field: {onBlur, onChange, value},
+  } = useController({name, control});
   return (
     <View>
       <Text style={[styles.label, {color: colors.headerText}]}>{label}</Text>
@@ -36,7 +45,9 @@ const AppSelect = ({label, name}: Props) => {
         selectedRowTextStyle={styles.text}
         buttonTextStyle={styles.buttonText}
         data={genders}
-        onSelect={selectedItem => setFieldValue('gender', selectedItem)}
+        onSelect={selectedItem =>
+          setValue('gender', selectedItem, {shouldValidate: true})
+        }
         buttonTextAfterSelection={selectedItem => {
           return selectedItem;
         }}
@@ -44,7 +55,7 @@ const AppSelect = ({label, name}: Props) => {
           return item;
         }}
       />
-      <ErrorMessage error={errors[name]} visible={touched[name]} />
+      <ErrorMessage error={errors[name]?.message} />
     </View>
   );
 };

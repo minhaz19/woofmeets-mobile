@@ -1,5 +1,4 @@
 const rateCalculation = (values: any) => {
-  console.log(values);
   const holidayRate = (values.holidayRate * 115) / 100;
   const additionalDogRate = (values.additionalDogRate * 80) / 100;
   const puppyRate = (values.puppyRate * 110) / 100;

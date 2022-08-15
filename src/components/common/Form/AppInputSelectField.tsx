@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import ErrorMessage from './ErrorMessage';
-import {FormikValues, useFormikContext} from 'formik';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import Text_Size from '../../../constants/textScaling';
 import TitleText from '../text/TitleText';
@@ -9,6 +8,7 @@ import DescriptionText from '../text/DescriptionText';
 import AppInputSelect from './AppInputSelect';
 import {useDispatch} from 'react-redux';
 import {setCross} from '../../../store/slices/hittingCross';
+import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
 interface Props {
   name: string;
   label: string;
@@ -34,8 +34,7 @@ const AppInputSelectField = ({
   Icon,
   onPress,
 }: Props) => {
-  const {setFieldTouched, values, touched, errors} =
-    useFormikContext<FormikValues>();
+  const {errors, value, onBlur} = useRHFContext(name);
   const dispatch = useDispatch();
   return (
     <>
@@ -50,8 +49,8 @@ const AppInputSelectField = ({
           autoCorrect={autoCorrect}
           placeholder={placeholder}
           // onChangeText={(text: string) => setFieldValue(name, text)}
-          onBlur={() => setFieldTouched(name)}
-          value={values[name]}
+          onBlur={onBlur}
+          value={value}
           textInputStyle={textInputStyle}
           Icon={Icon}
           onPress={onPress}
@@ -60,7 +59,7 @@ const AppInputSelectField = ({
           }}
         />
 
-        <ErrorMessage error={errors[name]} visible={touched[name]} />
+        <ErrorMessage error={errors[name]?.message} />
       </View>
     </>
   );

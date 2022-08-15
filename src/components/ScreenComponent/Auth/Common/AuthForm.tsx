@@ -39,8 +39,7 @@ const AuthForm = ({
     <View style={styles.container}>
       <AppForm
         initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}>
+        validationSchema={validationSchema}>
         {!forgotPasswordOpt && !verifyAccount && (
           <>
             <View>
@@ -108,7 +107,7 @@ const AuthForm = ({
           </View>
         )}
         <View style={{marginTop: setNewPassword ? 20 : 10}}>
-          <SubmitButton title={btnTitle} />
+          <SubmitButton title={btnTitle} onPress={handleSubmit} />
           {(setNewPassword || forgotPassword || forgotPasswordOpt) && (
             <AppButton
               title={btn2Title ? btn2Title : 'Cancel'}
