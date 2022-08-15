@@ -1,6 +1,5 @@
-import {View, Image, StyleSheet, ScrollView} from 'react-native';
+import {View, Image, ScrollView} from 'react-native';
 import React from 'react';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BigText from '../../../components/common/text/BigText';
 import TitleText from '../../../components/common/text/TitleText';
@@ -28,7 +27,7 @@ const SitterInitialScreen = (props: {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <View style={styles.imageContainer}>
+      <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
           source={{uri: 'https://picsum.photos/800'}}
           style={styles.image}
@@ -67,7 +66,7 @@ const SitterInitialScreen = (props: {
       <View style={styles.verticalPadding} />
       <View style={styles.verticalPadding} />
       {/* Image Quotes 1 */}
-      <View style={styles.imageContainer}>
+      <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
           source={{uri: 'https://picsum.photos/800'}}
           style={styles.image}
@@ -89,7 +88,7 @@ const SitterInitialScreen = (props: {
       </View>
       <View style={styles.verticalPadding} />
       {/* Image Quotes 2 */}
-      <View style={styles.imageContainer}>
+      <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
           source={{uri: 'https://picsum.photos/800'}}
           style={styles.image}
