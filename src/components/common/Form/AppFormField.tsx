@@ -54,12 +54,13 @@ const AppFormField = ({
   methods,
 }: Props) => {
   const {
-    formState: {errors},
+    getValues,
+    formState: {errors, value},
     control,
     watch,
   } = methods;
   const navigation = useNavigation<NavigationProps>();
-  console.log('rendering input fucking field');
+  console.log('watching inputsfields', watch(name));
   return (
     <>
       <View style={{width: flex ? '48%' : '100%'}}>
@@ -108,13 +109,14 @@ const AppFormField = ({
   );
 };
 const areEqual = (prevProps: any, nextProps: any) => {
+  const a = prevProps.methods.watch(prevProps.name);
+  console.log('is it true', prevProps.methods.formState.value);
   return (
-    prevProps.methods.formState.isDirty === nextProps.methods.formState.isDirty
+    prevProps.methods.formState.isDirty !== nextProps.methods.formState.isDirty
   );
 };
-
 export default memo(AppFormField);
-// export default AppFormField;1
+
 const styles = StyleSheet.create({
   label: {
     fontSize: Text_Size.Text_1,

@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
 import React, {memo} from 'react';
 import AppCheckbox from './AppCheckbox';
 import ErrorMessage from './ErrorMessage';
-import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
 import {Controller} from 'react-hook-form';
 interface Props {
   title: string;
@@ -30,18 +30,16 @@ const AppCheckboxField = ({
     control,
     formState: {errors},
   } = methods;
-  console.log('getting methods form checkobx');
-  // const {value, onBlur, onChange} = useRHFContext(name, control);
   const handleValues = () => {
     setValue(name, typeKey, {shouldValidate: true});
     onPress();
   };
   return (
     <View style={styles.container}>
-      <View style={{marginBottom: errors[name] ? 25 : 0}}>
+      <View style={{marginBottom: errors[name]?.message ? 25 : 0}}>
         <Controller
           control={control}
-          render={({field: {onChange, onBlur, value}}) => (
+          render={({field: {onBlur}}) => (
             <AppCheckbox
               title={title}
               key={typeKey}

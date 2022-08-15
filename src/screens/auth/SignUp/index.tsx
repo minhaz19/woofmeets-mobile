@@ -9,7 +9,6 @@ import {
 import React from 'react';
 import Colors from '../../../constants/Colors';
 import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHeader';
-import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import AuthFooter from '../../../components/ScreenComponent/Auth/Common/AuthFooter';
 import {signupValue} from '../../../utils/config/initalValues';
 import {signUpValidationSchema} from '../../../utils/config/validationSchema';
@@ -19,6 +18,7 @@ import {
 } from '../../../utils/config/Data/signUpDatas';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
+import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
 
 interface Props {
   navigation: {navigate: (arg0: string) => void};
@@ -32,7 +32,6 @@ const SignUp = ({navigation}: Props) => {
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={[
-        styles.container,
         {
           backgroundColor: isDarkMode
             ? Colors.dark.background
@@ -40,7 +39,8 @@ const SignUp = ({navigation}: Props) => {
         },
       ]}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+        // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
         enabled={Platform.OS === 'ios' ? true : false}>
         <View
@@ -60,7 +60,7 @@ const SignUp = ({navigation}: Props) => {
           <AppForm
             initialValues={signupValue}
             validationSchema={signUpValidationSchema}>
-            <AuthForm
+            <SignUpAuthForm
               handleSubmit={handleSubmit}
               btnTitle="SIGN UP"
               termsAndCond
@@ -84,7 +84,7 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
   },
   infoContainer: {
     flexGrow: 1,

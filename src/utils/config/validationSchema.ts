@@ -7,6 +7,12 @@ const loginValidationSchema = Yup.object().shape({
 });
 
 const signUpValidationSchema = Yup.object().shape({
+  firstName: Yup.string().required().label('First Name'),
+  lastName: Yup.string().required().label('Last Name'),
+  zipCode: Yup.number()
+    .required('Year Required')
+    .label('Zip Code')
+    .typeError('A Number is Required'),
   email: Yup.string().required().email().label('Email'),
   password: Yup.string().required().min(8).label('Password'),
   terms: Yup.boolean()
@@ -66,7 +72,7 @@ const addPetValidationSchema = Yup.object().shape({
   injectionMedication: Yup.string(),
   additionalInfo: Yup.string(),
   petInfo: Yup.string(),
-  imageGallery: Yup.array()
+  photoGallery: Yup.array()
     .required('This is required')
     .min(1, 'Please select at least one image'),
 });
