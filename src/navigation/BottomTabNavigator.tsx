@@ -10,7 +10,7 @@ import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
 import PetNavigator from './bottoms/PetNavigator';
 import BoardingSetting from '../screens/boardingSetting/BoardingSetting';
-import Gallery from '../screens/Gallery/Gallery';
+import Gallery from '../screens/becomeSitter/Gallery/Gallery';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +18,7 @@ function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Tab.Navigator
-      initialRouteName="Gallery"
+      initialRouteName="ServiceNavigator"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
@@ -44,33 +44,6 @@ function BottomTabNavigator() {
         },
       }}>
       <Tab.Screen
-        name="Gallery"
-        component={Gallery}
-        options={{
-          tabBarLabel: 'Services',
-          tabBarShowLabel: false,
-          headerShown: false,
-          tabBarIcon: ({focused}) => (
-            <View style={styles.bottomContainer}>
-              <Finder
-                fill={focused ? Colors.primary : Colors.light.lightText}
-                height={SCREEN_WIDTH <= 380 ? 24 : 28}
-                width={SCREEN_WIDTH <= 380 ? 26 : 33}
-              />
-              <Text
-                style={[
-                  focused
-                    ? {color: Colors.primary}
-                    : {color: Colors.light.lightText},
-                  styles.textStyle,
-                ]}>
-                Services
-              </Text>
-            </View>
-          ),
-        }}
-      />
-      {/* <Tab.Screen
         name="ServiceNavigator"
         component={ServiceNavigator}
         options={{
@@ -96,7 +69,7 @@ function BottomTabNavigator() {
             </View>
           ),
         }}
-      /> */}
+      />
       <Tab.Screen
         name="InboxNavigator"
         component={InboxNavigator}

@@ -11,6 +11,7 @@ import BasicInfoSitter from '../screens/becomeSitter/BasicInfo';
 import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
 import SitterInitialScreen from '../screens/becomeSitter/InitialScreen';
 import ProviderNavigator from './ProviderNavigator';
+import Gallery from '../screens/becomeSitter/Gallery/Gallery';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -86,6 +87,17 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="PhoneNumberSitter"
           component={PhoneNumberSitter}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Profile" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="GallerySitter"
+          component={Gallery}
           options={({navigation}) => ({
             title: '',
             header: () => (

@@ -44,7 +44,7 @@ const HomeProfile = (props: {
       id: 4,
       text: 'Photos',
       screen: () => {
-        props.navigation.navigate('PhoneNumberSitter');
+        props.navigation.navigate('GallerySitter');
       },
     },
     {
