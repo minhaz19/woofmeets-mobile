@@ -331,6 +331,8 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
+  - react-native-webview (11.23.0):
+    - React-Core
   - React-perflogger (0.68.2)
   - React-RCTActionSheet (0.68.2):
     - React-Core/RCTActionSheetHeaders (= 0.68.2)
@@ -492,6 +494,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -587,6 +590,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-maps"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -676,6 +681,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: cffb727cf2f59bd5c0408e30b3dbe0b935f88835
   react-native-maps: de23d141fa0289d1896739d0ddc8c5d11d9ca800
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
+  react-native-webview: e771bc375f789ebfa02a26939a57dbc6fa897336
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162
   React-RCTAnimation: bc9440a1c37b06ae9ebbb532d244f607805c6034

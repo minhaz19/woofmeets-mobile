@@ -7,7 +7,7 @@ import DescriptionText from '../text/DescriptionText';
 interface Props {
   label: string;
   subTitle: string;
-  imageUris: [];
+  imageUris: [] | string[];
   onRemoveImage: (arg0: string) => void;
   onAddImage: (arg0: string) => void;
 }

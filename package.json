@@ -40,9 +40,11 @@
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^3.15.0",
     "react-native-select-dropdown": "^2.0.4",
+    "react-native-sortable-list": "^0.0.25",
     "react-native-story-component": "^0.5.0",
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.1.0",
+    "react-native-webview": "^11.23.0",
     "react-redux": "^8.0.2",
     "uuid": "^8.3.2",
     "yup": "^0.32.11"
