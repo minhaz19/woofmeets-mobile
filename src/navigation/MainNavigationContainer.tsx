@@ -15,6 +15,7 @@ import BoardingSetting from '../screens/boardingSetting/BoardingSetting';
 import InviteFriends from '../screens/Misc/InviteFriends';
 import PromoGiftCodes from '../screens/Misc/PromoGiftCodes';
 import ReceivePayments from '../screens/Misc/ReceivePayments';
+import Gallery from '../screens/becomeSitter/Gallery/Gallery';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -94,6 +95,20 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             title: '',
             header: () => (
               <HeaderWithBack navigation={navigation} title="Profile" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="GallerySitter"
+          component={Gallery}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Profile"
+              />
             ),
             backgroundColor: Colors.primary,
           })}
