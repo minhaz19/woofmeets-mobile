@@ -1,4 +1,6 @@
 import {
+  Alert,
+  Button,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,7 +14,7 @@ import Icon from '../../../common/Icon';
 import Text_Size from '../../../../constants/textScaling';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-
+import {LoginManager} from 'react-native-fbsdk-next';
 interface Props {
   icons: {image: any; icon: any}[];
   title: string;
@@ -64,6 +66,30 @@ const AuthFooter = ({
         <TouchableOpacity onPress={() => navigation.navigate(navigateScreen)}>
           <Text style={styles.screenRoute}>{authType}</Text>
         </TouchableOpacity>
+      </View>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Facebook Login React Native Example</Text>
+        <Button
+          title={'Login with Facebook'}
+          onPress={() => {
+            LoginManager.logInWithPermissions(['public_profile', 'email']).then(
+              function (result) {
+                if (result.isCancelled) {
+                  Alert.alert('Login Cancelled ' + JSON.stringify(result));
+                } else {
+                  Alert.alert(
+                    'Login success with  permisssions: ' +
+                      result.grantedPermissions.toString(),
+                  );
+                  Alert.alert('Login Success ' + result.toString());
+                }
+              },
+              function (error) {
+                Alert.alert('Login failed with error: ' + error);
+              },
+            );
+          }}
+        />
       </View>
     </View>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {} from 'react-native';
 import React from 'react';
 import ErrorMessage from '../Form/ErrorMessage';
