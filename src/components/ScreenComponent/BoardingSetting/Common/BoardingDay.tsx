@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {FC} from 'react';
 import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import {FormikValues, useFormikContext} from 'formik';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
 import Colors from '../../../../constants/Colors';
 import Card from '../../../UI/Card';
+import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
 
 interface Props {
   title: string;
@@ -25,9 +26,8 @@ const BoardingDay: FC<Props> = ({
   selectDays,
 }) => {
   const {colors} = useTheme();
-  const {setFieldValue, errors, touched, setFieldTouched,values} =
-    useFormikContext<FormikValues>();
- 
+  const {setValue, errors, onBlur} = useRHFContext(name);
+
   // const filteredDays = selectDays
   //         ?.filter((item: any) => {
   //           return item.checked;
@@ -39,8 +39,8 @@ const BoardingDay: FC<Props> = ({
   // console.log('values', values);
 
   // useEffect(() => {
-  //   setFieldValue(name, filteredDays);
-  // }, [filteredDays, setFieldValue, name]);
+  //   setValue(name, filteredDays);
+  // }, [filteredDays, setValue, name]);
 
   return (
     <View style={styles.rootContainer}>
@@ -50,7 +50,7 @@ const BoardingDay: FC<Props> = ({
           onPress={() => {
             onPress();
           }}
-          onBlur={() => setFieldTouched(name)}>
+          onBlur={onBlur}>
           <View
             style={[
               styles.container,
@@ -72,7 +72,7 @@ const BoardingDay: FC<Props> = ({
       </Card>
       {/* {typeKey === 29 && ( */}
       <View style={styles.errorContainer}>
-        <ErrorMessage error={errors[name]} visible={touched[name]} />
+        <ErrorMessage error={errors[name]?.message} />
       </View>
       {/* )} */}
     </View>

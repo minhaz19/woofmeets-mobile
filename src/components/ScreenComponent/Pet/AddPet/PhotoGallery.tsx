@@ -28,9 +28,8 @@ const PhotoGallery = ({imageUri, onChangeImage}: Props) => {
       ]);
     }
   };
-  const uploadImage = (e: any) => {};
-  const uploadImageUri = (uri: string) => {
-    onChangeImage(uri);
+  const uploadImage = (e: any) => {
+    onChangeImage(e._parts[0][1].uri);
   };
   return (
     <>
@@ -52,7 +51,6 @@ const PhotoGallery = ({imageUri, onChangeImage}: Props) => {
         setIsModalVisible={setIsModalVisible}
         setIsImageLoading={setIsImageLoading}
         uploadImage={uploadImage}
-        uploadImageUri={uploadImageUri}
         setPetImage={setPetImage}
       />
     </>

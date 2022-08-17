@@ -8,7 +8,7 @@ import {
 import {UploadIcon} from '../../../assets/svgs/SVG_LOGOS';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 import TitleText from '../../../components/common/text/TitleText';
-import PhotoGalleryPlace from '../../../components/ScreenComponent/Gallery/PhotoGalleryPlace';
+import PhotoGalleryPlace from '../../../components/ScreenComponent/becomeSitter/Gallery/PhotoGalleryPlace';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import ImageUploadModal from '../../../components/UI/modal/ImageUploadModal';
@@ -17,7 +17,6 @@ import Text_Size from '../../../constants/textScaling';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-
 
 const Gallery = () => {
   const scrollRef = useRef<ScrollView | null>(null);

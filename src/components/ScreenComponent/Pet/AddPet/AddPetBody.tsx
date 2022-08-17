@@ -9,7 +9,7 @@ import {addPetInputs} from '../../../../utils/config/Data/AddPetData';
 import AddPetImage from './AddPetImage';
 import AppSelect from '../../../common/Form/AppSelect';
 import AppCheckboxField from '../../../common/Form/AppCheckboxField';
-import useHandleCheck from '../../../../utils/helpers/usehandleActiveCheck';
+import {useHandleCheck} from '../../../../utils/helpers/usehandleActiveCheck';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import HeaderText from '../../../common/text/HeaderText';
@@ -63,7 +63,7 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
       <View style={styles.flatList}>
         {addPetInputs[1].inputs!.map((item, index) => (
           <>
-            {!item.select && (
+            {!item.select ? (
               <AppFormField
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -75,8 +75,7 @@ const AddPetBody = ({initialValues, validationSchema}: Props) => {
                 flex={item.flex}
                 key={index}
               />
-            )}
-            {item.select && (
+            ) : (
               <View style={styles.selectContainer} key={index}>
                 <AppSelect label={item.title} name={item.name} />
               </View>

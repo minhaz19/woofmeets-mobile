@@ -2,8 +2,8 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC, useEffect, useState} from 'react';
 import {MinusSvg, PlusSvg} from '../utils/BoardingSvg';
 import HeaderText from '../../../common/text/HeaderText';
-import {FormikValues, useFormikContext} from 'formik';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
+import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
 
 interface Props {
   name: string;
@@ -11,8 +11,7 @@ interface Props {
 
 const BoardingPetQuantity: FC<Props> = ({name}) => {
   const [countState, setCountState] = useState(1);
-  const {setFieldValue, errors, touched, setFieldTouched} =
-    useFormikContext<FormikValues>();
+  const {setValue, errors, onBlur} = useRHFContext(name);
   const handleIncrement = () => {
     setCountState(countState + 1);
   };
@@ -22,25 +21,21 @@ const BoardingPetQuantity: FC<Props> = ({name}) => {
     }
   };
   useEffect(() => {
-    setFieldValue(name, countState);
-  }, [countState, name, setFieldValue]);
+    setValue(name, countState);
+  }, [countState, name, setValue]);
 
   return (
     <>
       <View style={styles.flexContainer}>
-        <TouchableOpacity
-          onPress={handleDecrement}
-          onBlur={() => setFieldTouched(name)}>
+        <TouchableOpacity onPress={handleDecrement} onBlur={onBlur}>
           <MinusSvg height={18} width={18} />
         </TouchableOpacity>
         <HeaderText text={countState} textStyle={styles.headerText} />
-        <TouchableOpacity
-          onPress={handleIncrement}
-          onBlur={() => setFieldTouched(name)}>
+        <TouchableOpacity onPress={handleIncrement} onBlur={onBlur}>
           <PlusSvg height={18} width={18} />
         </TouchableOpacity>
       </View>
-      <ErrorMessage error={errors[name]} visible={touched[name]} />
+      <ErrorMessage error={errors[name]?.message} />
     </>
   );
 };

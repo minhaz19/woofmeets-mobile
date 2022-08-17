@@ -20,7 +20,7 @@ const BoardingSetting = () => {
       <BoardingSettingInfo
         handleSubmit={handleSubmit}
         initialValues={BoardingSettings}
-        validationSchema={undefined}
+        validationSchema={BoardingSettingsSchema}
       />
     </View>
   );

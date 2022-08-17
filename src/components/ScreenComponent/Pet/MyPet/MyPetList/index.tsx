@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    elevation: 5,
+    // elevation: 5,
     marginVertical: 10,
   },
 
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
   addPet: {
     flex: 1,
     paddingTop: '50%',
+    paddingBottom: '50%',
     alignItems: 'center',
   },
 });
