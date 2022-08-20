@@ -9,7 +9,6 @@ const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
   const {colors, isDarkMode} = useTheme();
   const {numberOfLines} = otherProps;
-  console.log('inside input');
   return (
     <View
       style={[

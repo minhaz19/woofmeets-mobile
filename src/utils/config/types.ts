@@ -5,7 +5,7 @@ export interface LoginType {
 export interface SignUpType {
   firstName: string;
   lastName: string;
-  zipCode: null | number;
+  zipcode: null | number;
   email: string;
   password: string;
   terms: boolean;

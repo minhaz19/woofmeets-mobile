@@ -1,24 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  Alert,
-  Button,
   StyleSheet,
   Text,
   TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Divider} from '@rneui/themed';
 import Colors from '../../../../constants/Colors';
 import Icon from '../../../common/Icon';
 import Text_Size from '../../../../constants/textScaling';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {LoginManager} from 'react-native-fbsdk-next';
-import {
-  GoogleSignin,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
+import {useHandleProviderAuth} from '../../../../utils/helpers/auth/useHandleProviderAuth';
 interface Props {
   icons: {image: any; icon: any}[];
   title: string;
@@ -40,33 +35,7 @@ const AuthFooter = ({
 }: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation<NavigationProps | any>();
-  const [googleUser, setGoogleUser] = useState({});
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        '527665236551-b62374li29m4maonk4n3bkv0a5uacnp4.apps.googleusercontent.com',
-      offlineAccess: true,
-      iosClientId:
-        '527665236551-ecpfe6kab9q918ca6t3u4eddpmlctupo.apps.googleusercontent.com',
-    });
-  }, []);
-  const GoogleSingUp = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      setGoogleUser({userInfo});
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
-    }
-  };
+  const {handleGFauth, user} = useHandleProviderAuth();
   return (
     <View style={styles.container}>
       <View style={styles.dividerContainer}>
@@ -88,7 +57,9 @@ const AuthFooter = ({
       </View>
       <View style={styles.iconContainer}>
         {icons.map((icon, index) => (
-          <Icon key={index} IconComp={icon?.icon} />
+          <TouchableOpacity key={index} onPress={() => handleGFauth(index)}>
+            <Icon IconComp={icon?.icon} />
+          </TouchableOpacity>
         ))}
       </View>
       <View style={styles.textContainer}>
@@ -96,34 +67,6 @@ const AuthFooter = ({
         <TouchableOpacity onPress={() => navigation.navigate(navigateScreen)}>
           <Text style={styles.screenRoute}>{authType}</Text>
         </TouchableOpacity>
-      </View>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Facebook Login React Native Example</Text>
-        <Button title={'Login with google'} onPress={GoogleSingUp} />
-      </View>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Facebook Login React Native Example</Text>
-        <Button
-          title={'Login with Facebook'}
-          onPress={() => {
-            LoginManager.logInWithPermissions(['public_profile', 'email']).then(
-              function (result) {
-                if (result.isCancelled) {
-                  Alert.alert('Login Cancelled ' + JSON.stringify(result));
-                } else {
-                  Alert.alert(
-                    'Login success with  permisssions: ' +
-                      result.grantedPermissions.toString(),
-                  );
-                  Alert.alert('Login Success ' + result.toString());
-                }
-              },
-              function (error) {
-                Alert.alert('Login failed with error: ' + error);
-              },
-            );
-          }}
-        />
       </View>
     </View>
   );

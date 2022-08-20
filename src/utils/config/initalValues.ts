@@ -16,7 +16,7 @@ const signupValue: SignUpType = {
   lastName: '',
   email: '',
   password: '',
-  zipCode: null,
+  zipcode: null,
   terms: false,
 };
 const setPasswordValue: SetPasswordType = {

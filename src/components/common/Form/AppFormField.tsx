@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import React, {memo} from 'react';
 import ErrorMessage from './ErrorMessage';
@@ -55,12 +56,11 @@ const AppFormField = ({
 }: Props) => {
   const {
     getValues,
-    formState: {errors, value},
+    formState: {errors},
     control,
     watch,
   } = methods;
   const navigation = useNavigation<NavigationProps>();
-  console.log('watching inputsfields', watch(name));
   return (
     <>
       <View style={{width: flex ? '48%' : '100%'}}>

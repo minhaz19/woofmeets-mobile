@@ -6,7 +6,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Colors from '../../../constants/Colors';
 import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHeader';
 import AuthFooter from '../../../components/ScreenComponent/Auth/Common/AuthFooter';
@@ -19,16 +19,39 @@ import {
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
+import {registerUser} from '../../../store/slices/auth/userAction';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import AppActivityIndicator from '../../../components/common/AppActivityIndicator';
 
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
+interface RegProps {
+  email: string;
+  firstName: string;
+  lastName: string;
+  zipcode: string;
+  password: string;
+  term: boolean;
+}
 const SignUp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = () => {
-    navigation.navigate('VerifyAccount');
+  const {success, loading} = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (success) {
+      navigation.navigate('LogIn');
+    }
+  }, [navigation, success]);
+
+  console.log('dataaa', success);
+  const handleSubmit = (regInfo: RegProps) => {
+    dispatch(registerUser(regInfo));
   };
-  return (
+
+  return loading ? (
+    <AppActivityIndicator visible={true} />
+  ) : (
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={[
@@ -96,5 +119,10 @@ const styles = StyleSheet.create({
   },
   view: {
     height: 40,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

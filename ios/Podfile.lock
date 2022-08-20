@@ -102,6 +102,10 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.2)
   - libevent (2.1.12)
+  - lottie-ios (3.4.2)
+  - lottie-react-native (5.1.4):
+    - lottie-ios (~> 3.4.0)
+    - React-Core
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
@@ -474,6 +478,7 @@ DEPENDENCIES:
   - FlipperKit/FlipperKitUserDefaultsPlugin (= 0.125.0)
   - FlipperKit/SKIOSNetworkPlugin (= 0.125.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
@@ -541,6 +546,7 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - libevent
+    - lottie-ios
     - OpenSSL-Universal
     - SocketRocket
     - YogaKit
@@ -556,6 +562,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  lottie-react-native:
+    :path: "../node_modules/lottie-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -663,6 +671,8 @@ SPEC CHECKSUMS:
   GTMAppAuth: 4d8f864896f3646f0c33baf38a28362f4c601e15
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  lottie-ios: 6bbc53eef6957e4744a50321507015fba72d8ca6
+  lottie-react-native: b702fab740cdb952a8e2354713d3beda63ff97b0
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 3e917ea5377751094f38145fdece525aa90545a0

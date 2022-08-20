@@ -52,7 +52,7 @@ const signUpData = [
     keyboardType: 'numeric',
     placeholder: 'Enter your zip code',
     textContentType: 'postalCode',
-    name: 'zipCode',
+    name: 'zipcode',
   },
 ];
 const SignUpAuthForm = ({
@@ -111,17 +111,3 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
 });
-
-//  <AppFormField
-//    autoCapitalize="none"
-//    autoCorrect={false}
-//    icon={'lock'}
-//    secureTextEntry
-//    placeholder={setNewPassword ? 'Enter new password' : 'Enter your password'}
-//    methods={methods}
-//    name={setNewPassword ? 'newPass' : 'password'}
-//    label={setNewPassword ? 'New Password' : 'Password'}
-//    forgotPassword={setNewPassword || termsAndCond ? false : true}
-//    textContentType={setNewPassword ? 'newPassword' : 'password'}
-//    auth
-//  />;
