@@ -9,8 +9,6 @@ import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
 import PetNavigator from './bottoms/PetNavigator';
-import BoardingSetting from '../screens/boardingSetting/BoardingSetting';
-import Gallery from '../screens/becomeSitter/Gallery/Gallery';
 
 const Tab = createBottomTabNavigator();
 
