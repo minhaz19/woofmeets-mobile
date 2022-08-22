@@ -14,9 +14,7 @@ import TitleText from '../../../components/common/text/TitleText';
 import ModalBottomView from '../../../components/UI/modal/ModalBottomView';
 import IOSButton from '../../../components/UI/IOSButton';
 
-const HomeProfile = (props: {
-  navigation: {navigate: (arg0: string) => void};
-}) => {
+const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; }; route: { params: { serviceData: any[]; }; }; }) => {
   const {colors} = useTheme();
   const profileData = [
     {
@@ -106,6 +104,7 @@ const HomeProfile = (props: {
 
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       style={[
         styles.container,
         {
@@ -173,18 +172,24 @@ const HomeProfile = (props: {
       </View>
       {/* Boarding */}
       <Divider />
-      <BetweenCom
-        data={{
-          name: 'Boarding',
-          image: <BriefCaseSvg />,
-          description: 'Set your service preferences',
-          time: '3 mins',
-          icon: 'chevron-right',
-          screen: () => {
-            props.navigation.navigate('BoardingSetting');
-          },
-        }}
-      />
+      {props.route.params?.serviceData?.map(item => (
+        item.clicked && (
+          <View key={item.id} style={styles.serviceContainer}>
+            <BetweenCom
+              data={{
+                name: item.name,
+                image: item.image,
+                description: 'Set your service preferences',
+                time: '3 mins',
+                icon: 'chevron-right',
+                screen: () => {
+                  props.navigation.navigate('BoardingSetting');
+                },
+              }}
+            />
+          </View>
+        )
+      ))}
       {/* trust */}
       <Divider />
       <HeaderText text="Build Trust" />
@@ -263,6 +268,9 @@ const styles = StyleSheet.create({
   },
   profileItemStyle: {
     paddingTop: 15,
+  },
+  serviceContainer: {
+    paddingVertical: 10,
   },
 });
 
