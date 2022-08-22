@@ -1,4 +1,3 @@
-import {FormikValues, useFormikContext} from 'formik';
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import React, {useState} from 'react';
 import Text_Size from '../../../../constants/textScaling';
@@ -9,6 +8,7 @@ import DescriptionText from '../../../common/text/DescriptionText';
 import {InfoSvg} from '../../Inbox/utils/SvgComponent/SvgComponent';
 import Colors from '../../../../constants/Colors';
 import AppCheckboxField from '../../../common/Form/AppCheckboxField';
+import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
 
 interface Props {
   name: string;
@@ -38,7 +38,6 @@ const BoardingForm = ({
   autoCorrect,
   icon,
   keyboardType,
-  placeholder,
   textContentType,
   label,
   subTitle,
@@ -52,8 +51,8 @@ const BoardingForm = ({
   showAdditionalRates,
 }: Props) => {
   const [updateRates, setUpdateRates] = useState(true);
-  const {setFieldTouched, touched, errors, values, setFieldValue} =
-    useFormikContext<FormikValues>();
+  const {onBlur, errors, value, onChange} = useRHFContext(name);
+  // need to replace context with controller for reducing re render
   return (
     <>
       <View>
@@ -74,19 +73,14 @@ const BoardingForm = ({
           keyboardType={keyboardType}
           // placeholder={placeholder}
           textContentType={textContentType}
-          onChangeText={(text: string) => setFieldValue(name, text)}
-          onBlur={() => setFieldTouched(name)}
-          value={values[name]}
-          error={errors[name]}
-          touch={touched[name]}
+          onChangeText={onChange}
+          onBlur={onBlur}
+          value={value}
+          error={errors[name]?.message}
           textInputStyle={textInputStyle}
         />
 
-        <ErrorMessage
-          error={errors[name]}
-          visible={touched[name]}
-          auth={auth}
-        />
+        <ErrorMessage error={errors[name]?.message} auth={auth} />
         {checkbox && (
           <AppCheckboxField
             title={checkbox}

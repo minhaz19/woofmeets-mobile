@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {FormikValues, useFormikContext} from 'formik';
+
 import {StyleSheet} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import React, {FC} from 'react';
@@ -10,6 +10,7 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../constants/textScaling';
 import HeaderText from '../../../common/text/HeaderText';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
+import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
 
 interface Props {
   label?: string;
@@ -20,13 +21,13 @@ interface Props {
 
 const BoardingDropdown: FC<Props> = ({label, placeholder, data, name}) => {
   const {colors} = useTheme();
-  const {setFieldValue, errors, touched} = useFormikContext<FormikValues>();
+  const {setValue, errors} = useRHFContext(name);
   return (
     <>
       {label && <HeaderText text={label} />}
       <SelectDropdown
         data={data}
-        onSelect={selectedItem => setFieldValue(name, selectedItem)}
+        onSelect={selectedItem => setValue(name, selectedItem)}
         buttonTextAfterSelection={selectedItem => {
           return selectedItem;
         }}
@@ -67,7 +68,7 @@ const BoardingDropdown: FC<Props> = ({label, placeholder, data, name}) => {
         searchPlaceHolder={'Search here'}
       />
       {name === 'advancedNotice' && (
-        <ErrorMessage error={errors[name]} visible={touched[name]} />
+        <ErrorMessage error={errors[name]?.message} />
       )}
     </>
   );
