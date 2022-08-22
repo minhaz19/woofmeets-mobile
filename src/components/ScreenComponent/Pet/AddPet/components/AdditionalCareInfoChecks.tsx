@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {StyleSheet, View} from 'react-native';
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import TitleText from '../../../../common/text/TitleText';
 import {careInfoChecks} from '../../../../../utils/config/Data/AddPetData';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
@@ -43,7 +44,6 @@ const AdditionalCareInfoChecks = ({
                 title={type.type}
                 radio
                 key={key}
-                typeKey={type.id}
                 active={
                   (type.id === active8 ? true : false) ||
                   (type.id === active9 ? true : false) ||
@@ -52,9 +52,11 @@ const AdditionalCareInfoChecks = ({
                 }
                 name={item.name}
                 errors={errors}
-                setValue={setValue}
                 control={control}
-                onPress={() => handleActiveCheck(item.id, type.id)}
+                onPress={useCallback(() => {
+                  handleActiveCheck(item.id, type.id);
+                  setValue(item.name, type.id);
+                }, [type.id])}
               />
             ))}
           </View>

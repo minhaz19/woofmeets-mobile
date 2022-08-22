@@ -4,7 +4,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {Alert} from 'react-native';
-import {LoginManager} from 'react-native-fbsdk-next';
+import {LoginManager, Profile} from 'react-native-fbsdk-next';
 
 export const useHandleProviderAuth = () => {
   const [user, setUser] = useState({});
@@ -36,18 +36,23 @@ export const useHandleProviderAuth = () => {
       }
     }
   };
+
   const facebook = () => {
     LoginManager.logInWithPermissions(['public_profile', 'email']).then(
       function (result: any) {
         if (result.isCancelled) {
           Alert.alert('Login Cancelled ' + JSON.stringify(result));
         } else {
-          setUser(result);
-          Alert.alert(
-            'Login success with  permisssions: ' +
-              result.grantedPermissions.toString(),
-          );
-          Alert.alert('Login Success ' + result.toString());
+          // Alert.alert(
+          //   'Login success with  permisssions: ' +
+          //     result.grantedPermissions.toString(),
+          // );
+          Profile.getCurrentProfile().then(function (currentProfile) {
+            if (currentProfile) {
+              setUser(currentProfile);
+            }
+          });
+          Alert.alert('Login Success ');
         }
       },
       function (error) {
@@ -55,6 +60,7 @@ export const useHandleProviderAuth = () => {
       },
     );
   };
+
   const handleGFauth = (auth: number | boolean) => {
     switch (auth) {
       case 0:

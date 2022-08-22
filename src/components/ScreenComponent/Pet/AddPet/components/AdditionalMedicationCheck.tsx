@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {medicationChecks} from '../../../../../utils/config/Data/AddPetData';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import TitleText from '../../../../common/text/TitleText';
@@ -34,7 +34,11 @@ const AdditionalMedicationCheck = ({
             errors={errors}
             setValue={setValue}
             control={control}
-            onPress={() => handleActiveCheck(112, item.id)}
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            onPress={useCallback(() => {
+              handleActiveCheck(112, item.id);
+              setValue(medicationChecks.name, item.id);
+            }, [item.id])}
           />
         ))}
       </View>

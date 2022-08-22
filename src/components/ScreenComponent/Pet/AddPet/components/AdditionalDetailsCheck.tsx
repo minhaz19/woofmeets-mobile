@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {additionalDetailChecks} from '../../../../../utils/config/Data/AddPetData';
 import TitleText from '../../../../common/text/TitleText';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
@@ -31,6 +31,8 @@ const AdditionalDetailsCheck = ({
   control,
   setValue,
 }: Props) => {
+  console.log('additional pet');
+
   return (
     <View>
       {additionalDetailChecks.map((item, index) => (
@@ -43,7 +45,6 @@ const AdditionalDetailsCheck = ({
                 title={type.type}
                 radio
                 key={key}
-                typeKey={type.id}
                 active={
                   (type.id === active1 ? true : false) ||
                   (type.id === active2 ? true : false) ||
@@ -54,9 +55,12 @@ const AdditionalDetailsCheck = ({
                   (type.id === active7 ? true : false)
                 }
                 errors={errors}
-                setValue={setValue}
                 control={control}
-                onPress={() => handleActiveCheck(item.id, type.id)}
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                onPress={useCallback(() => {
+                  handleActiveCheck(item.id, type.id);
+                  setValue(item.name, type.id);
+                }, [type.id])}
                 name={item.name}
               />
             ))}

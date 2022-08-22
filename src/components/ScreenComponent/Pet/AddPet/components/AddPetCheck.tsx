@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, {memo} from 'react';
+import React, {useCallback} from 'react';
 import HeaderText from '../../../../common/text/HeaderText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import TitleText from '../../../../common/text/TitleText';
@@ -39,11 +39,14 @@ const AddPetCheck = ({
             square
             active={active0 === item.id ? true : false}
             name={addPetCheck1.name!}
-            onPress={() => {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            onPress={useCallback(() => {
               handleActiveCheck(addPetCheck1.id!, item.id);
-            }}
+              setValue(addPetCheck1.name, item.id, {
+                shouldValidate: errors[addPetCheck1.name] ? true : false,
+              });
+            }, [item.id])}
             errors={errors}
-            setValue={setValue}
             control={control}
           />
         ))}
@@ -52,7 +55,7 @@ const AddPetCheck = ({
   );
 };
 
-export default memo(AddPetCheck);
+export default AddPetCheck;
 
 const styles = StyleSheet.create({
   topHeader: {

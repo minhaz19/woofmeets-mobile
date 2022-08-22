@@ -55,11 +55,6 @@ const AppFormField = ({
   errors,
   control,
 }: Props) => {
-  // const {
-  //   formState: {errors},
-  //   control,
-  //   watch,
-  // } = methods;
   const navigation = useNavigation<NavigationProps>();
   console.log('calling form field', name);
   return (
@@ -109,18 +104,7 @@ const AppFormField = ({
     </>
   );
 };
-const areEqual = (prevProps: any, nextProps: any) => {
-  const a = prevProps.methods.watch(prevProps.name);
-  const b = nextProps.methods.watch(prevProps.name);
-  // console.log('is it true', a, 'b', b);
-  return prevProps.methods.watch(prevProps.name) === undefined;
-  // if (b === undefined) {
-  //   return true;
-  // } else {
-  //   return false;
-  // }
-  // return b === undefined;
-};
+
 export default AppFormField;
 
 const styles = StyleSheet.create({

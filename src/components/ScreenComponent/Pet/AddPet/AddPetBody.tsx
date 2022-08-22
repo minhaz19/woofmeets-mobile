@@ -63,6 +63,7 @@ const AddPetBody = ({handleSubmit}: Props) => {
           handleActiveCheck={handleActiveCheck}
         />
         <AddPetInfoInputs errors={errors} control={control} />
+
         <TouchableOpacity
           style={styles.spaceHeader}
           onPress={() => setIsAdditionalDetails(!isAdditionalDetails)}>
@@ -83,7 +84,6 @@ const AddPetBody = ({handleSubmit}: Props) => {
               control={control}
               handleActiveCheck={handleActiveCheck}
             />
-
             <AppFormField
               autoCapitalize="none"
               autoCorrect={false}
