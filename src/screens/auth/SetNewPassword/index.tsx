@@ -17,6 +17,7 @@ import {setPasswordValidationSchema} from '../../../utils/config/validationSchem
 import {setPasswordInfo} from '../../../utils/config/Data/setNewPasswordDatas';
 import {setPasswordValue} from '../../../utils/config/initalValues';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
+import AppForm from '../../../components/common/Form/AppForm';
 
 interface Props {
   navigation: {
@@ -64,14 +65,16 @@ const SetNewPassword = ({navigation}: Props) => {
             subTitle={setPasswordInfo.subTitle}
             image={setPasswordInfo.image}
           />
-          <AuthForm
+          <AppForm
             initialValues={setPasswordValue}
-            validationSchema={setPasswordValidationSchema}
-            handleSubmit={handleSubmit}
-            btnTitle="Confirm"
-            onPress={() => navigation.goBack()}
-            setNewPassword
-          />
+            validationSchema={setPasswordValidationSchema}>
+            <AuthForm
+              handleSubmit={handleSubmit}
+              btnTitle="Confirm"
+              onPress={() => navigation.goBack()}
+              setNewPassword
+            />
+          </AppForm>
           <View style={styles.view} />
         </View>
       </KeyboardAvoidingView>

@@ -18,7 +18,7 @@ const AuthOTP = ({name, auth}: Props) => {
       <OtpInputs
         // handleChange={code => setValue(name, code)}
         handleChange={onChange}
-        numberOfInputs={4}
+        numberOfInputs={5}
         autofillFromClipboard={false}
         onBlur={onBlur}
         placeholder={'-'}

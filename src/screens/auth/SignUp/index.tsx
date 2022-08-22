@@ -6,10 +6,9 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Colors from '../../../constants/Colors';
 import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHeader';
-import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import AuthFooter from '../../../components/ScreenComponent/Auth/Common/AuthFooter';
 import {signupValue} from '../../../utils/config/initalValues';
 import {signUpValidationSchema} from '../../../utils/config/validationSchema';
@@ -18,20 +17,41 @@ import {
   signUpInitalState,
 } from '../../../utils/config/Data/signUpDatas';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-
+import AppForm from '../../../components/common/Form/AppForm';
+import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
+import {registerUser} from '../../../store/slices/auth/userAction';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
+interface RegProps {
+  email: string;
+  firstName: string;
+  lastName: string;
+  zipcode: string;
+  password: string;
+  term: boolean;
+}
 const SignUp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = () => {
-    navigation.navigate('VerifyAccount');
+  const {success, loading} = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (success) {
+      navigation.navigate('LogIn');
+    }
+  }, [navigation, success]);
+
+  const handleSubmit = (regInfo: RegProps) => {
+    dispatch(registerUser(regInfo));
   };
+  // loading ? (
+  //     <AppActivityIndicator visible={true} />
+  //   ) :
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={[
-        styles.container,
         {
           backgroundColor: isDarkMode
             ? Colors.dark.background
@@ -39,7 +59,8 @@ const SignUp = ({navigation}: Props) => {
         },
       ]}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+        // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
         enabled={Platform.OS === 'ios' ? true : false}>
         <View
@@ -56,13 +77,16 @@ const SignUp = ({navigation}: Props) => {
             subTitle={signUpInitalState.subTitle}
             image={signUpInitalState.image}
           />
-          <AuthForm
+          <AppForm
             initialValues={signupValue}
-            validationSchema={signUpValidationSchema}
-            handleSubmit={handleSubmit}
-            btnTitle="SIGN UP"
-            termsAndCond
-          />
+            validationSchema={signUpValidationSchema}>
+            <SignUpAuthForm
+              handleSubmit={handleSubmit}
+              btnTitle="SIGN UP"
+              termsAndCond
+              loading={loading}
+            />
+          </AppForm>
           <AuthFooter
             icons={othersAuthIcons}
             accountType="Already have an account? "
@@ -81,7 +105,7 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
   },
   infoContainer: {
     flexGrow: 1,
@@ -93,5 +117,10 @@ const styles = StyleSheet.create({
   },
   view: {
     height: 40,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

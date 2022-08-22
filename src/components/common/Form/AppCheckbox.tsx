@@ -36,7 +36,6 @@ const AppCheckbox = ({
     </TouchableOpacity>
   );
 };
-
 export default memo(AppCheckbox);
 
 const styles = StyleSheet.create({

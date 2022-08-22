@@ -15,7 +15,7 @@ interface Props {
 const PhotoGalleryList = ({
   label,
   subTitle,
-  imageUris = [],
+  imageUris,
   onRemoveImage,
   onAddImage,
 }: Props) => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   StyleSheet,
   Text,
@@ -12,7 +13,7 @@ import Icon from '../../../common/Icon';
 import Text_Size from '../../../../constants/textScaling';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-
+import {useHandleProviderAuth} from '../../../../utils/helpers/auth/useHandleProviderAuth';
 interface Props {
   icons: {image: any; icon: any}[];
   title: string;
@@ -34,7 +35,7 @@ const AuthFooter = ({
 }: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation<NavigationProps | any>();
-
+  const {handleGFauth, user} = useHandleProviderAuth();
   return (
     <View style={styles.container}>
       <View style={styles.dividerContainer}>
@@ -56,7 +57,9 @@ const AuthFooter = ({
       </View>
       <View style={styles.iconContainer}>
         {icons.map((icon, index) => (
-          <Icon key={index} IconComp={icon?.icon} />
+          <TouchableOpacity key={index} onPress={() => handleGFauth(index)}>
+            <Icon IconComp={icon?.icon} />
+          </TouchableOpacity>
         ))}
       </View>
       <View style={styles.textContainer}>

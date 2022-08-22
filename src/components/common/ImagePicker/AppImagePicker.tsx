@@ -1,4 +1,3 @@
-import {} from 'react-native';
 import React from 'react';
 import ErrorMessage from '../Form/ErrorMessage';
 import PhotoGalleryList from './PhotoGalleryList';
@@ -8,18 +7,22 @@ interface Props {
   label: string;
   subTitle: string;
   name: string;
+  methods: any;
 }
 const AppImagePicker = ({label, name, subTitle}: Props) => {
   const {setValue, errors, value} = useRHFContext(name);
-
+  // const {
+  //   setValue,
+  //   formState: {errors, value},
+  // } = methods;
   const imageUris = value;
-  const handleAdd = (uri: string) => {
-    setValue(name, [...imageUris, uri]);
-  };
+  function handleAdd(uri: string) {
+    setValue(name, [...imageUris, uri], {shouldValidate: true});
+  }
   const handleRemove = (uri: string) => {
     setValue(
       name,
-      imageUris.filter((imageUri: string) => imageUri !== uri),
+      imageUris?.filter((imageUri: string) => imageUri !== uri),
     );
   };
 
@@ -28,15 +31,13 @@ const AppImagePicker = ({label, name, subTitle}: Props) => {
       <PhotoGalleryList
         label={label}
         subTitle={subTitle}
-        imageUris={imageUris}
+        imageUris={value}
         onRemoveImage={handleRemove}
         onAddImage={handleAdd}
       />
-      <ErrorMessage error={errors[name]} />
+      <ErrorMessage error={errors[name]?.message} />
     </>
   );
 };
 
 export default AppImagePicker;
-
-// const styles = StyleSheet.create({});

@@ -11,7 +11,14 @@ import {
 } from './types';
 
 const loginValue: LoginType = {email: '', password: ''};
-const signupValue: SignUpType = {email: '', password: '', terms: false};
+const signupValue: SignUpType = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  zipcode: null,
+  terms: false,
+};
 const setPasswordValue: SetPasswordType = {
   oldPass: '',
   newPass: '',
