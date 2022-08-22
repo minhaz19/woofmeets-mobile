@@ -1,3 +1,3 @@
-const baseUrl = 'https://api.navplace.com/api/v1';
+const baseUrl = 'http://api-stg.woofmeets.com/v1/';
 
 export default baseUrl;

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
 import React, {memo} from 'react';
 import AppCheckbox from './AppCheckbox';
 import ErrorMessage from './ErrorMessage';
-import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
+import {Controller} from 'react-hook-form';
 interface Props {
   title: string;
   typeKey: number;
@@ -12,6 +13,7 @@ interface Props {
   square?: boolean;
   radio?: boolean;
   onPress: () => void;
+  methods?: any;
 }
 const AppCheckboxField = ({
   title,
@@ -21,23 +23,34 @@ const AppCheckboxField = ({
   name,
   radio,
   onPress,
+  methods,
 }: Props) => {
-  const {setValue, errors, onBlur} = useRHFContext(name);
+  const {
+    setValue,
+    control,
+    formState: {errors},
+  } = methods;
   const handleValues = () => {
     setValue(name, typeKey, {shouldValidate: true});
     onPress();
   };
   return (
     <View style={styles.container}>
-      <View style={{marginBottom: errors[name] ? 25 : 0}}>
-        <AppCheckbox
-          title={title}
-          key={typeKey}
-          square={square}
-          radio={radio}
-          active={active}
-          onPress={handleValues}
-          onBlur={onBlur}
+      <View style={{marginBottom: errors[name]?.message ? 25 : 0}}>
+        <Controller
+          control={control}
+          render={({field: {onBlur}}) => (
+            <AppCheckbox
+              title={title}
+              key={typeKey}
+              square={square}
+              radio={radio}
+              active={active}
+              onPress={handleValues}
+              onBlur={onBlur}
+            />
+          )}
+          name={name}
         />
       </View>
       {typeKey === 1 && (
@@ -49,11 +62,11 @@ const AppCheckboxField = ({
   );
 };
 const areEqual = (prevProps: any, nextProps: any) => {
-  const a = JSON.stringify(prevProps);
-  const b = JSON.stringify(nextProps);
-  return a === b; // props are equal
+  return (
+    prevProps.methods.formState.isDirty === nextProps.methods.formState.isDirty
+  );
 };
-export default memo(AppCheckboxField, areEqual);
+export default memo(AppCheckboxField);
 const styles = StyleSheet.create({
   container: {position: 'relative'},
   errorContainer: {

@@ -1,18 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import AppForm from '../../../common/Form/AppForm';
 import AppFormField from '../../../common/Form/AppFormField';
 import AppButton from '../../../common/AppButton';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import AuthOTP from './AuthOTP';
 import ResendCode from '../VerifyAccount/ResendCode';
 import AppSwitch from '../../../common/AppSwitch';
+import {useFormContext} from 'react-hook-form';
 
 interface Props {
   handleSubmit: (value: any) => void;
-  initialValues: any;
-  validationSchema: any;
+
   btnTitle: string;
   setNewPassword?: boolean;
   forgotPassword?: boolean;
@@ -21,11 +20,10 @@ interface Props {
   termsAndCond?: boolean;
   btn2Title?: string;
   onPress?: () => void;
+  loading?: boolean;
 }
 const AuthForm = ({
   handleSubmit,
-  initialValues,
-  validationSchema,
   btnTitle,
   setNewPassword,
   forgotPassword,
@@ -34,12 +32,12 @@ const AuthForm = ({
   verifyAccount,
   termsAndCond,
   onPress,
+  loading,
 }: Props) => {
+  const methods = useFormContext();
   return (
     <View style={styles.container}>
-      <AppForm
-        initialValues={initialValues}
-        validationSchema={validationSchema}>
+      <>
         {!forgotPasswordOpt && !verifyAccount && (
           <>
             <View>
@@ -56,6 +54,7 @@ const AuthForm = ({
                 label={setNewPassword ? 'Old Password' : 'Email/Phone Number'}
                 secureTextEntry={setNewPassword ? true : false}
                 email={setNewPassword ? false : true}
+                methods={methods}
                 auth
               />
             </View>
@@ -69,6 +68,7 @@ const AuthForm = ({
                 placeholder={
                   setNewPassword ? 'Enter new password' : 'Enter your password'
                 }
+                methods={methods}
                 name={setNewPassword ? 'newPass' : 'password'}
                 label={setNewPassword ? 'New Password' : 'Password'}
                 forgotPassword={setNewPassword || termsAndCond ? false : true}
@@ -84,6 +84,7 @@ const AuthForm = ({
             autoCorrect={false}
             icon={'lock'}
             secureTextEntry
+            methods={methods}
             placeholder="Confirm your password"
             textContentType="password"
             name="confirmPass"
@@ -107,7 +108,11 @@ const AuthForm = ({
           </View>
         )}
         <View style={{marginTop: setNewPassword ? 20 : 10}}>
-          <SubmitButton title={btnTitle} onPress={handleSubmit} />
+          <SubmitButton
+            title={btnTitle}
+            onPress={handleSubmit}
+            loading={loading}
+          />
           {(setNewPassword || forgotPassword || forgotPasswordOpt) && (
             <AppButton
               title={btn2Title ? btn2Title : 'Cancel'}
@@ -115,7 +120,7 @@ const AuthForm = ({
             />
           )}
         </View>
-      </AppForm>
+      </>
     </View>
   );
 };

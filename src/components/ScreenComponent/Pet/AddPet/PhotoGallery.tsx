@@ -31,6 +31,7 @@ const PhotoGallery = ({imageUri, onChangeImage}: Props) => {
   const uploadImage = (e: any) => {
     onChangeImage(e._parts[0][1].uri);
   };
+
   return (
     <>
       <TouchableOpacity onPress={handlePress} style={styles.galleryContainer}>

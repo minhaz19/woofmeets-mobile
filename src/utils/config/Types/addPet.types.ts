@@ -1,18 +1,10 @@
-export type addPetTypes = Root2[];
-
-export interface Root2 {
-  id?: number;
-  title?: string;
-  pet?: Pet[];
-  inputs?: Input[];
-  additionalDetails?: AdditionalDetail[];
-  placeholder?: string;
-  name?: string;
-  numberOfLines?: number;
-  header?: string;
-  subTitle?: string;
-  careInfo?: CareInfo[];
-  image?: Image;
+export interface AddPetCheckType {
+  id: number;
+  header: string;
+  title: string;
+  subTitle: string;
+  name: string;
+  pet: Pet[];
 }
 
 export interface Pet {
@@ -20,41 +12,39 @@ export interface Pet {
   type: string;
 }
 
-export interface Input {
+export type addPetInfoInputsType = Input1[];
+
+export interface Input1 {
   title: string;
   placeholder: string;
   name: string;
-  numberOfLines?: number;
-  subTitle?: string;
   flex?: number;
   select?: boolean;
 }
 
-export interface AdditionalDetail {
-  id: number;
+export type additionalPetDetailsCheckType = Check2[];
+
+export interface Check2 {
   title: string;
-  radio: Radio[];
   name: string;
+  id: number;
+  radio: Radio[];
 }
 
-export interface Radio {
-  type: string;
-  id: number;
+export interface CareInfoChecksType {
+  header: string;
+  subTitle: string;
+  careInfo: CareInfo[];
 }
 
 export interface CareInfo {
   title: string;
   id: number;
-  radio: Radio2[];
   name: string;
+  radio: Radio[];
 }
 
-export interface Radio2 {
-  id: number;
+export interface Radio {
   type: string;
-}
-
-export interface Image {
-  title: string;
-  subTitle: string;
+  id: number;
 }

@@ -4,18 +4,19 @@ import {
   combineReducers,
   configureStore,
   getDefaultMiddleware,
+  Store,
+  ThunkDispatch,
 } from '@reduxjs/toolkit';
+import {TypedUseSelectorHook, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import addPetReducer from './slices/addPet';
-
-import authReducer from './slices/auth';
+import authReducer from './slices/auth/userSlice';
 import hittingCross from './slices/hittingCross';
 import openFilter from './slices/openFilter';
-import userLogin from './slices/userLogin';
 
 const appReducer = combineReducers({
   auth: authReducer,
   addPet: addPetReducer,
-  login: userLogin,
   filter: openFilter,
   cross: hittingCross,
 });
@@ -53,5 +54,18 @@ const store = configureStore({
 export type RootState = ReturnType<typeof RootReducer>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
+
+// 2. Create a type for thunk dispatch
+export type AppThunkDispatch = ThunkDispatch<RootState, any, AnyAction>;
+
+
+// 3. Create a type for store using RootState and Thunk enabled dispatch
+export type AppStore = Omit<Store<RootState, AnyAction>, 'dispatch'> & {
+  dispatch: AppThunkDispatch;
+};
+
+// you can also create some redux hooks using the above explicit types
+export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;

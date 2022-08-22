@@ -3,6 +3,9 @@ export interface LoginType {
   password: string;
 }
 export interface SignUpType {
+  firstName: string;
+  lastName: string;
+  zipcode: null | number;
   email: string;
   password: string;
   terms: boolean;
