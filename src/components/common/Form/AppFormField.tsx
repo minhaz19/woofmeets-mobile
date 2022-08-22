@@ -61,6 +61,7 @@ const AppFormField = ({
     watch,
   } = methods;
   const navigation = useNavigation<NavigationProps>();
+  console.log('calling form field');
   return (
     <>
       <View style={{width: flex ? '48%' : '100%'}}>

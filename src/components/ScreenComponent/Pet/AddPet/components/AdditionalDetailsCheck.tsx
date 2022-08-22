@@ -27,6 +27,7 @@ const AdditionalDetailsCheck = ({
   handleActiveCheck,
   methods,
 }: Props) => {
+  console.log('calling check field');
   return (
     <View>
       {additionalDetailChecks.map((item, index) => (
