@@ -10,15 +10,19 @@ interface Props {
   active10: number | null;
   active11: number | null;
   handleActiveCheck: (arg: number, arg1: number) => void;
-  methods: any;
+  errors: any;
+  control: any;
+  setValue: any;
 }
-const AdditionalCareInputs = ({
+const AdditionalCareInfoChecks = ({
   active8,
   active9,
   active10,
   active11,
   handleActiveCheck,
-  methods,
+  errors,
+  control,
+  setValue,
 }: Props) => {
   return (
     <View>
@@ -47,7 +51,9 @@ const AdditionalCareInputs = ({
                   (type.id === active11 ? true : false)
                 }
                 name={item.name}
-                methods={methods}
+                errors={errors}
+                setValue={setValue}
+                control={control}
                 onPress={() => handleActiveCheck(item.id, type.id)}
               />
             ))}
@@ -58,7 +64,7 @@ const AdditionalCareInputs = ({
   );
 };
 
-export default memo(AdditionalCareInputs);
+export default memo(AdditionalCareInfoChecks);
 
 const styles = StyleSheet.create({
   title: {

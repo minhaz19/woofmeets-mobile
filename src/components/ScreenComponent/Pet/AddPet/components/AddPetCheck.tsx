@@ -8,11 +8,19 @@ import Text_Size from '../../../../../constants/textScaling';
 import {addPetCheck1} from '../../../../../utils/config/Data/AddPetData';
 
 interface Props {
-  methods: any;
+  errors: any;
+  control: any;
+  setValue: any;
   active0: number | null;
   handleActiveCheck: (arg: number, arg2: number) => void;
 }
-const AddPetCheck = ({methods, active0, handleActiveCheck}: Props) => {
+const AddPetCheck = ({
+  errors,
+  control,
+  setValue,
+  active0,
+  handleActiveCheck,
+}: Props) => {
   console.log('calling pet check');
   return (
     <View>
@@ -34,7 +42,9 @@ const AddPetCheck = ({methods, active0, handleActiveCheck}: Props) => {
             onPress={() => {
               handleActiveCheck(addPetCheck1.id!, item.id);
             }}
-            methods={methods}
+            errors={errors}
+            setValue={setValue}
+            control={control}
           />
         ))}
       </View>

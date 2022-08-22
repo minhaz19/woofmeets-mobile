@@ -6,12 +6,16 @@ import TitleText from '../../../../common/text/TitleText';
 import Text_Size from '../../../../../constants/textScaling';
 
 interface Props {
-  methods: any;
   active12: number | null;
   handleActiveCheck: (arg0: number, arg1: number) => void;
+  errors: any;
+  setValue: any;
+  control: any;
 }
 const AdditionalMedicationCheck = ({
-  methods,
+  errors,
+  setValue,
+  control,
   active12,
   handleActiveCheck,
 }: Props) => {
@@ -27,7 +31,9 @@ const AdditionalMedicationCheck = ({
             typeKey={item.id}
             active={item.id === active12 ? true : false}
             name={medicationChecks.name!}
-            methods={methods}
+            errors={errors}
+            setValue={setValue}
+            control={control}
             onPress={() => handleActiveCheck(112, item.id)}
           />
         ))}

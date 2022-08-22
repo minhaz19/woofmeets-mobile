@@ -14,7 +14,9 @@ interface Props {
   active6: number | null;
   active7: number | null;
   handleActiveCheck: (arg: number, arg1: number) => void;
-  methods: any;
+  errors: any;
+  control: any;
+  setValue: any;
 }
 const AdditionalDetailsCheck = ({
   active1,
@@ -25,9 +27,10 @@ const AdditionalDetailsCheck = ({
   active6,
   active7,
   handleActiveCheck,
-  methods,
+  errors,
+  control,
+  setValue,
 }: Props) => {
-  console.log('calling check field');
   return (
     <View>
       {additionalDetailChecks.map((item, index) => (
@@ -50,7 +53,9 @@ const AdditionalDetailsCheck = ({
                   (type.id === active6 ? true : false) ||
                   (type.id === active7 ? true : false)
                 }
-                methods={methods}
+                errors={errors}
+                setValue={setValue}
+                control={control}
                 onPress={() => handleActiveCheck(item.id, type.id)}
                 name={item.name}
               />

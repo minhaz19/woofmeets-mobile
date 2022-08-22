@@ -45,9 +45,7 @@ const SignUp = ({navigation}: Props) => {
   const handleSubmit = (regInfo: RegProps) => {
     dispatch(registerUser(regInfo));
   };
-  // loading ? (
-  //     <AppActivityIndicator visible={true} />
-  //   ) :
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}

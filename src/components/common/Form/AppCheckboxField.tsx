@@ -13,7 +13,9 @@ interface Props {
   square?: boolean;
   radio?: boolean;
   onPress: () => void;
-  methods?: any;
+  errors?: any;
+  control?: any;
+  setValue: (arg1: string, arg2: any, arg3: any) => void;
 }
 const AppCheckboxField = ({
   title,
@@ -23,17 +25,21 @@ const AppCheckboxField = ({
   name,
   radio,
   onPress,
-  methods,
+  setValue,
+  control,
+  errors,
 }: Props) => {
-  const {
-    setValue,
-    control,
-    formState: {errors},
-  } = methods;
+  // const {
+  //   setValue,
+  //   control,
+  //   formState: {errors},
+  // } = methods;
   const handleValues = () => {
     setValue(name, typeKey, {shouldValidate: true});
     onPress();
   };
+
+  console.log('calling check field');
   return (
     <View style={styles.container}>
       <View style={{marginBottom: errors[name]?.message ? 25 : 0}}>
