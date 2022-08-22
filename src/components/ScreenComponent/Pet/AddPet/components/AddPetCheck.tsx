@@ -4,35 +4,35 @@ import HeaderText from '../../../../common/text/HeaderText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import TitleText from '../../../../common/text/TitleText';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
-import {addPetInputs} from '../../../../../utils/config/Data/AddPetData';
 import Text_Size from '../../../../../constants/textScaling';
+import {addPetCheck1} from '../../../../../utils/config/Data/AddPetData';
 
 interface Props {
   methods: any;
   active0: number | null;
   handleActiveCheck: (arg: number, arg2: number) => void;
 }
-const AddPetCheck = ({ methods, active0, handleActiveCheck }: Props) => {
+const AddPetCheck = ({methods, active0, handleActiveCheck}: Props) => {
   console.log('calling pet check');
   return (
     <View>
-      <HeaderText textStyle={styles.header} text={addPetInputs[0].header!} />
+      <HeaderText textStyle={styles.header} text={addPetCheck1.header!} />
       <DescriptionText
         textStyle={styles.topSubTitle}
-        text={addPetInputs[0].subTitle!}
+        text={addPetCheck1.subTitle!}
       />
-      <TitleText textStyle={styles.title} text={addPetInputs[0].title!} />
+      <TitleText textStyle={styles.title} text={addPetCheck1.title!} />
       <View style={styles.petType}>
-        {addPetInputs[0].pet!.map((item, index) => (
+        {addPetCheck1.pet!.map((item, index) => (
           <AppCheckboxField
             title={item.type}
             key={index}
             typeKey={item.id}
             square
             active={active0 === item.id ? true : false}
-            name={addPetInputs[0].name!}
+            name={addPetCheck1.name!}
             onPress={() => {
-              handleActiveCheck(addPetInputs[0].id!, item.id);
+              handleActiveCheck(addPetCheck1.id!, item.id);
             }}
             methods={methods}
           />

@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
-import React, { memo } from 'react';
-import {addPetInputs} from '../../../../../utils/config/Data/AddPetData';
+import React, {memo} from 'react';
+import {medicationChecks} from '../../../../../utils/config/Data/AddPetData';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import TitleText from '../../../../common/text/TitleText';
 import Text_Size from '../../../../../constants/textScaling';
@@ -17,16 +17,16 @@ const AdditionalMedicationCheck = ({
 }: Props) => {
   return (
     <View>
-      <TitleText textStyle={styles.title} text={addPetInputs[6].title!} />
+      <TitleText textStyle={styles.title} text={medicationChecks.title!} />
       <View style={styles.petType}>
-        {addPetInputs[6].pet!.map((item, index) => (
+        {medicationChecks.pet!.map((item, index) => (
           <AppCheckboxField
             title={item.type}
             key={index}
             square
             typeKey={item.id}
             active={item.id === active12 ? true : false}
-            name={addPetInputs[6].name!}
+            name={medicationChecks.name!}
             methods={methods}
             onPress={() => handleActiveCheck(112, item.id)}
           />

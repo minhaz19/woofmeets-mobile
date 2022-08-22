@@ -12,12 +12,12 @@ export const userLogin = createAsyncThunk(
         email,
         password,
       });
-      // if (!response.ok) {
-      //   Alert.alert(response.data.message);
-      //   throw new Error(response.data.message);
-      // } else {
-      //   authStorage.storeToken(response.data.data.access_token);
-      // }
+      if (!response.ok) {
+        Alert.alert(response.data.message);
+        throw new Error(response.data.message);
+      } else {
+        authStorage.storeToken(response.data.data.access_token);
+      }
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {

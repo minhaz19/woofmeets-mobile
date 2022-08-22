@@ -21,7 +21,6 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {userLogin} from '../../../store/slices/auth/userAction';
-import AppActivityIndicator from '../../../components/common/AppActivityIndicator';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
@@ -39,9 +38,7 @@ const Login = ({navigation}: Props) => {
   const handleSubmit = (loginData: any) => {
     dispatch(userLogin(loginData));
   };
-  return loading ? (
-    <AppActivityIndicator visible />
-  ) : (
+  return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.container}
@@ -74,7 +71,11 @@ const Login = ({navigation}: Props) => {
           <AppForm
             initialValues={loginValue}
             validationSchema={loginValidationSchema}>
-            <AuthForm handleSubmit={handleSubmit} btnTitle="LOGIN" />
+            <AuthForm
+              handleSubmit={handleSubmit}
+              btnTitle="LOGIN"
+              loading={loading}
+            />
           </AppForm>
           <AuthFooter
             icons={othersAuthIcons}

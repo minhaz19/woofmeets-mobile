@@ -20,6 +20,7 @@ interface Props {
   termsAndCond?: boolean;
   btn2Title?: string;
   onPress?: () => void;
+  loading?: boolean;
 }
 const AuthForm = ({
   handleSubmit,
@@ -31,6 +32,7 @@ const AuthForm = ({
   verifyAccount,
   termsAndCond,
   onPress,
+  loading,
 }: Props) => {
   const methods = useFormContext();
   return (
@@ -106,7 +108,11 @@ const AuthForm = ({
           </View>
         )}
         <View style={{marginTop: setNewPassword ? 20 : 10}}>
-          <SubmitButton title={btnTitle} onPress={handleSubmit} />
+          <SubmitButton
+            title={btnTitle}
+            onPress={handleSubmit}
+            loading={loading}
+          />
           {(setNewPassword || forgotPassword || forgotPasswordOpt) && (
             <AppButton
               title={btn2Title ? btn2Title : 'Cancel'}

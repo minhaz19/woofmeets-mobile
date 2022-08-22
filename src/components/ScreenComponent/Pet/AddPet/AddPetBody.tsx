@@ -2,7 +2,10 @@ import React, {useState} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import AppFormField from '../../../common/Form/AppFormField';
 import SubmitButton from '../../../common/Form/SubmitButton';
-import {addPetInputs} from '../../../../utils/config/Data/AddPetData';
+import {
+  additionalDescriptionInput,
+  petDescriptionInput,
+} from '../../../../utils/config/Data/AddPetData';
 import AddPetImage from './AddPetImage';
 import useHandleCheck from '../../../../utils/helpers/usehandleActiveCheck';
 import HeaderText from '../../../common/text/HeaderText';
@@ -13,7 +16,7 @@ import {useFormContext} from 'react-hook-form';
 import AddPetCheck from './components/AddPetCheck';
 import AddPetInfoInputs from './components/AddPetInfoInputs';
 import AdditionalDetailsCheck from './components/AdditionalDetailsCheck';
-import AdditionalCareInputs from './components/AdditionalCareInputs';
+import AdditionalCareInputs from './components/AdditionalCareInfoChecks';
 import AdditionalMedicationCheck from './components/AdditionalMedicationCheck';
 import AdditionalButtonInputs from './components/AdditionalButtonInputs';
 
@@ -77,12 +80,12 @@ const AddPetBody = ({handleSubmit}: Props) => {
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType={'default'}
-              placeholder={addPetInputs[3].placeholder}
+              placeholder={petDescriptionInput.placeholder}
               textContentType={'none'}
-              name={addPetInputs[3].name!}
-              label={addPetInputs[3].title!}
+              name={petDescriptionInput.name!}
+              label={petDescriptionInput.title!}
               multiline
-              numberOfLines={addPetInputs[3].numberOfLines}
+              numberOfLines={petDescriptionInput.numberOfLines}
               methods={methods}
             />
 
@@ -99,12 +102,12 @@ const AddPetBody = ({handleSubmit}: Props) => {
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType={'default'}
-              placeholder={addPetInputs[5].placeholder}
+              placeholder={additionalDescriptionInput.placeholder}
               textContentType={'none'}
-              name={addPetInputs[5].name!}
-              label={addPetInputs[5].title!}
+              name={additionalDescriptionInput.name!}
+              label={additionalDescriptionInput.title!}
               multiline
-              numberOfLines={addPetInputs[5].numberOfLines}
+              numberOfLines={additionalDescriptionInput.numberOfLines}
               methods={methods}
             />
 

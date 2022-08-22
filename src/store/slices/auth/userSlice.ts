@@ -4,11 +4,9 @@ import {registerUser, userLogin} from './userAction';
 
 const initialState: any = {
   isLoggedIn: false,
-  userResponse: null,
   userInfo: null,
   userToken: null,
   error: null,
-  status: 'idle',
   loading: false,
   success: false,
 };

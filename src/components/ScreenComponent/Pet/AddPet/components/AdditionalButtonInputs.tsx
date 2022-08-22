@@ -1,7 +1,7 @@
 import {View} from 'react-native';
 import React, {memo} from 'react';
 import AppFormField from '../../../../common/Form/AppFormField';
-import {addPetInputs} from '../../../../../utils/config/Data/AddPetData';
+import {additionalDetailsBottomInputs} from '../../../../../utils/config/Data/AddPetData';
 
 interface Props {
   methods: any;
@@ -10,7 +10,7 @@ const AdditionalButtonInputs = ({methods}: Props) => {
   console.log('from buttom');
   return (
     <View>
-      {addPetInputs[7].inputs!.map((item, index) => (
+      {additionalDetailsBottomInputs.map((item, index) => (
         <AppFormField
           key={index}
           autoCapitalize="none"

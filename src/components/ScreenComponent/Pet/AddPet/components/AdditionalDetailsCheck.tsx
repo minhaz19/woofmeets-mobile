@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
-import React, { memo } from 'react';
-import {addPetInputs} from '../../../../../utils/config/Data/AddPetData';
+import React, {memo} from 'react';
+import {additionalDetailChecks} from '../../../../../utils/config/Data/AddPetData';
 import TitleText from '../../../../common/text/TitleText';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import Text_Size from '../../../../../constants/textScaling';
@@ -29,7 +29,7 @@ const AdditionalDetailsCheck = ({
 }: Props) => {
   return (
     <View>
-      {addPetInputs[2].additionalDetails!.map((item, index) => (
+      {additionalDetailChecks.map((item, index) => (
         <View key={index} style={styles.radioContainer}>
           <TitleText textStyle={styles.title} text={item.title} />
 

@@ -17,6 +17,7 @@ interface Props {
   termsAndCond?: boolean;
   btn2Title?: string;
   onPress?: () => void;
+  loading?: boolean;
 }
 const signUpData = [
   {
@@ -60,6 +61,7 @@ const SignUpAuthForm = ({
   btnTitle,
   setNewPassword,
   termsAndCond,
+  loading,
 }: Props) => {
   const methods = useFormContext();
   return (
@@ -88,7 +90,11 @@ const SignUpAuthForm = ({
           </View>
         )}
         <View style={{marginTop: setNewPassword ? 20 : 10}}>
-          <SubmitButton title={btnTitle} onPress={handleSubmit} />
+          <SubmitButton
+            title={btnTitle}
+            onPress={handleSubmit}
+            loading={loading}
+          />
         </View>
       </>
     </View>

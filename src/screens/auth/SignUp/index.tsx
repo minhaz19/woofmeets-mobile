@@ -21,8 +21,6 @@ import AppForm from '../../../components/common/Form/AppForm';
 import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
 import {registerUser} from '../../../store/slices/auth/userAction';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import AppActivityIndicator from '../../../components/common/AppActivityIndicator';
-
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
@@ -44,14 +42,13 @@ const SignUp = ({navigation}: Props) => {
     }
   }, [navigation, success]);
 
-  console.log('dataaa', success);
   const handleSubmit = (regInfo: RegProps) => {
     dispatch(registerUser(regInfo));
   };
-
-  return loading ? (
-    <AppActivityIndicator visible={true} />
-  ) : (
+  // loading ? (
+  //     <AppActivityIndicator visible={true} />
+  //   ) :
+  return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={[
@@ -87,6 +84,7 @@ const SignUp = ({navigation}: Props) => {
               handleSubmit={handleSubmit}
               btnTitle="SIGN UP"
               termsAndCond
+              loading={loading}
             />
           </AppForm>
           <AuthFooter

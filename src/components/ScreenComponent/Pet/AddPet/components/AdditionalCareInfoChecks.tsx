@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
-import React, { memo } from 'react';
+import React, {memo} from 'react';
 import TitleText from '../../../../common/text/TitleText';
-import {addPetInputs} from '../../../../../utils/config/Data/AddPetData';
+import {careInfoChecks} from '../../../../../utils/config/Data/AddPetData';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import Text_Size from '../../../../../constants/textScaling';
 interface Props {
@@ -23,13 +23,13 @@ const AdditionalCareInputs = ({
   return (
     <View>
       <View>
-        <TitleText textStyle={styles.header} text={addPetInputs[4].header!} />
+        <TitleText textStyle={styles.header} text={careInfoChecks.header!} />
         <TitleText
           textStyle={styles.subTitle}
-          text={addPetInputs[4].subTitle!}
+          text={careInfoChecks.subTitle!}
         />
       </View>
-      {addPetInputs[4].careInfo?.map((item, index) => (
+      {careInfoChecks.careInfo?.map((item, index) => (
         <View key={index} style={styles.radioContainer}>
           <TitleText textStyle={styles.title} text={item.title} />
 

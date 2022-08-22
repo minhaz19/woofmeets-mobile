@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, View} from 'react-native';
 import React, {memo} from 'react';
 import AppFormField from '../../../../common/Form/AppFormField';
 import AppSelect from '../../../../common/Form/AppSelect';
-import {addPetInputs} from '../../../../../utils/config/Data/AddPetData';
+import {addPetInfoInputs} from '../../../../../utils/config/Data/AddPetData';
 interface Props {
   methods: any;
 }
@@ -10,7 +11,7 @@ const AddPetInfoInputs = ({methods}: Props) => {
   console.log('calling from input comp');
   return (
     <View style={styles.flatList}>
-      {addPetInputs[1].inputs!.map((item, index) => (
+      {addPetInfoInputs.map((item, index) => (
         <>
           {!item.select ? (
             <AppFormField
