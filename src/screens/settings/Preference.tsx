@@ -5,9 +5,12 @@ import PreferenceItem from '../../components/ScreenComponent/setting/Preference/
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
 import Text_Size from '../../constants/textScaling';
+import { useAppDispatch } from '../../store/store';
+import { logout } from '../../store/slices/auth';
 
 const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();
+  const dispatch = useAppDispatch();
   const supportData = [
     {
       id: 1,
@@ -18,7 +21,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     {
       id: 2,
       title: 'Logout',
-      screenName: () => {},
+      screenName: () => {dispatch(logout()); props.navigation.navigate('LogIn')},
       opacity: 1,
     },
     {

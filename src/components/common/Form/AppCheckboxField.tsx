@@ -27,8 +27,6 @@ const AppCheckboxField = ({
   control,
   errors,
 }: Props) => {
-
-
   console.log('calling check field');
   return (
     <View style={styles.container}>
@@ -57,7 +55,6 @@ const AppCheckboxField = ({
     </View>
   );
 };
-
 export default memo(AppCheckboxField);
 const styles = StyleSheet.create({
   container: {position: 'relative'},

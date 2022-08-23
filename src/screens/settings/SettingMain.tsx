@@ -1,4 +1,4 @@
-import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
 import {
   CallIcon,
@@ -17,13 +17,27 @@ import TitleText from '../../components/common/text/TitleText';
 import Colors from '../../constants/Colors';
 import ShortText from '../../components/common/text/ShortText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
-import BottomSpacing from '../../components/UI/BottomSpacing';
 import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
+import BottomSpacingNav from '../../components/UI/BottomSpacingNav';
+import { useAppSelector } from '../../store/store';
 
 const SettingMain = (props: {
   navigation: {navigate: (arg0: string) => any};
 }) => {
   const {colors} = useTheme();
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+
+  const loginData = [
+    {
+      id: 3,
+      title: 'Sign Up',
+      icon: PreferenceIcon,
+      screenName: () => props.navigation.navigate('SignUp'),
+      rightIcon: true,
+      opacity: 1,
+      isGuest: true,
+    },
+  ];
   const profileData = [
     {
       id: 1,
@@ -98,6 +112,9 @@ const SettingMain = (props: {
       rightIcon: true,
       opacity: 1,
     },
+  ];
+
+  const preferenceData = [
     {
       id: 3,
       title: 'Preference',
@@ -105,18 +122,18 @@ const SettingMain = (props: {
       screenName: () => props.navigation.navigate('Preference'),
       rightIcon: true,
       opacity: 1,
+      isGuest: true,
     },
   ];
 
   return (
-    <ScrollView>
-      <SafeAreaView
-        style={[
-          styles.rootContainer,
-          {
-            backgroundColor: colors.backgroundColor,
-          },
-        ]}>
+    <ScrollView style={[
+      styles.rootContainer,
+      {
+        backgroundColor: colors.backgroundColor,
+      },
+    ]}>
+      <View>
         <View style={[styles.titleContainer, styles.paddingTop]}>
           <HeaderText text="More" />
         </View>
@@ -128,13 +145,18 @@ const SettingMain = (props: {
           </View>
           <ShortText text={'Share Now'} />
         </View>
-
-        {profileData?.map(item => (
+        {!isLoggedIn && loginData?.map(item => (
           <SettingItem data={item} key={item.id} />
         ))}
-        <View
+        {!isLoggedIn && <View
           style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-        />
+        />}
+        {isLoggedIn && profileData?.map(item => (
+          <SettingItem data={item} key={item.id} />
+        ))}
+        {isLoggedIn && <View
+          style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+        />}
         <View style={styles.titleContainer}>
           <TitleText text="Sitting" />
         </View>
@@ -144,23 +166,28 @@ const SettingMain = (props: {
         <View
           style={[styles.divider, {backgroundColor: colors.descriptionText}]}
         />
-        <View style={styles.titleContainer}>
-          <TitleText text="Refferals and Promos" />
-        </View>
-        {referralData?.map(item => (
-          <SettingItem data={item} key={item.id} />
-        ))}
-        <View
-          style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-        />
+        {isLoggedIn && <View>
+          <View style={styles.titleContainer}>
+            <TitleText text="Refferals and Promos" />
+          </View>
+          {referralData?.map(item => (
+            <SettingItem data={item} key={item.id} />
+          ))}
+          <View
+            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+          />
+        </View>}
         <View style={styles.titleContainer}>
           <TitleText text="Support" />
         </View>
         {supportData?.map(item => (
           <SettingItem data={item} key={item.id} />
         ))}
-        <BottomSpacing />
-      </SafeAreaView>
+        {isLoggedIn && preferenceData?.map(item => (
+          <SettingItem data={item} key={item.id} />
+        ))}
+      </View>
+      <BottomSpacingNav />
     </ScrollView>
   );
 };

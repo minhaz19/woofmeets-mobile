@@ -9,17 +9,26 @@ const initialState: any = {
   error: null,
   loading: false,
   provider: false,
+  success: false,
 };
 
 const userSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    signIn: (state, action) => {
+      state.loading = false;
+      state.success = true; // login successful
+      state.userInfo = action.payload;
+      state.userToken = action.payload.token;
+      state.isLoggedIn = true;
+    },
     logout: state => {
       state.loading = false;
       state.userInfo = null;
       state.userToken = null;
       state.error = null;
+      state.isLoggedIn = false;
       storage.removeToken();
     },
   },
@@ -35,6 +44,7 @@ const userSlice = createSlice({
         state.isLoggedIn = true; // login successful
         state.userInfo = payload;
         state.userToken = payload.data.access_token;
+        state.success = true; // login successful
       })
       .addCase(userLogin.rejected, (state, {payload}) => {
         state.loading = false;
@@ -49,6 +59,7 @@ const userSlice = createSlice({
         state.isLoggedIn = true; // registration successful
         state.userInfo = payload;
         state.userToken = payload.data.access_token;
+        state.success = true;
       })
       .addCase(registerUser.rejected, (state, {payload}) => {
         state.loading = false;
@@ -74,6 +85,6 @@ const userSlice = createSlice({
   },
 });
 
-export const {logout} = userSlice.actions;
+export const {signIn, logout} = userSlice.actions;
 
 export default userSlice.reducer;

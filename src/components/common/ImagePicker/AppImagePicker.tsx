@@ -7,6 +7,7 @@ interface Props {
   label: string;
   subTitle: string;
   name: string;
+  methods?: any;
 }
 const AppImagePicker = ({label, name, subTitle}: Props) => {
   const {setValue, errors, value} = useRHFContext(name);

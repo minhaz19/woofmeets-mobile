@@ -1,18 +1,16 @@
 import React from 'react';
 import {View, Text, StyleSheet, useColorScheme, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Finder, Setting, Pets, InboxIcon} from '../assets/svgs/SVG_LOGOS';
+import {Finder, Setting} from '../assets/svgs/SVG_LOGOS';
 import Colors from '../constants/Colors';
 import {SCREEN_WIDTH} from '../constants/WindowSize';
-import InboxNavigator from './bottoms/InboxNavigator';
 import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
-import PetNavigator from './bottoms/PetNavigator';
 
 const Tab = createBottomTabNavigator();
 
-function BottomTabNavigator() {
+function GuestBottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Tab.Navigator
@@ -69,62 +67,6 @@ function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="InboxNavigator"
-        component={InboxNavigator}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({focused}) => (
-            <View style={styles.bottomContainer}>
-              <InboxIcon
-                stroke={focused ? Colors.primary : Colors.subText}
-                height={SCREEN_WIDTH <= 380 ? 24 : 28}
-                width={SCREEN_WIDTH <= 380 ? 26 : 33}
-              />
-              <Text
-                style={[
-                  focused
-                    ? {color: Colors.primary}
-                    : {color: Colors.light.lightText},
-                  styles.textStyle,
-                ]}>
-                Inbox
-              </Text>
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="PetNavigator"
-        component={PetNavigator}
-        options={() => ({
-          headerShown: false,
-          tabBarIcon: ({focused}) => (
-            <View style={styles.bottomContainer}>
-              <Pets
-                fill={
-                  focused
-                    ? Colors.primary
-                    : isDarkMode
-                    ? Colors.light.placeholderTextColor
-                    : Colors.subText
-                }
-                height={SCREEN_WIDTH <= 380 ? 24 : 28}
-                width={SCREEN_WIDTH <= 380 ? 26 : 33}
-              />
-              <Text
-                style={[
-                  focused
-                    ? {color: Colors.primary}
-                    : {color: Colors.light.lightText},
-                  styles.textStyle,
-                ]}>
-                My Pets
-              </Text>
-            </View>
-          ),
-        })}
-      />
-      <Tab.Screen
         name="SettingNavigator"
         component={SettingNavigator}
         options={{
@@ -168,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BottomTabNavigator;
+export default GuestBottomTabNavigator;

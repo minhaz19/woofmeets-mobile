@@ -14,6 +14,7 @@ interface Props {
   name: string;
   label: string;
   data?: [];
+  methods?: any;
 }
 const AppSelect = ({label, name}: Props) => {
   const {isDarkMode, colors} = useTheme();

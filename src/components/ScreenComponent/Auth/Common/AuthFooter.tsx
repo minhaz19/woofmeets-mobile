@@ -13,7 +13,6 @@ import Text_Size from '../../../../constants/textScaling';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useHandleProviderAuth} from '../../../../utils/helpers/auth/useHandleProviderAuth';
-
 interface Props {
   icons: {image: any; icon: any}[];
   title: string;
