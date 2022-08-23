@@ -26,9 +26,7 @@ interface Props {
 }
 const Login = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const auth = useAppSelector(state => state.auth);
   const {success, loading} = useAppSelector(state => state.auth);
-  console.log('auth', auth.userInfo);
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (success) {
@@ -39,6 +37,7 @@ const Login = ({navigation}: Props) => {
 
   const handleSubmit = (loginData: any) => {
     dispatch(userLogin(loginData));
+    navigation.navigate('BottomTabNavigator');
   };
   return (
     <ScrollView

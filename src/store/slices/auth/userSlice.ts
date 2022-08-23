@@ -27,6 +27,7 @@ const userSlice = createSlice({
       state.userInfo = null;
       state.userToken = null;
       state.error = null;
+      state.isLoggedIn = false;
       storage.removeToken();
     },
   },
@@ -66,6 +67,6 @@ const userSlice = createSlice({
   },
 });
 
-export const {logout} = userSlice.actions;
+export const {signIn, logout} = userSlice.actions;
 
 export default userSlice.reducer;

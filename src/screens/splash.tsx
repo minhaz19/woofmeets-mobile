@@ -45,13 +45,8 @@ const slides = [
 ];
 const Splash = ({}) => {
   const isDarkMode = useColorScheme() === 'dark';
-  // const loggedIn = useSelector(state => state.login);
   const [isPreviousUser, setIsPreviousUser] = useState(false);
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   setIsPreviousUser(loggedIn.isPreviousUser);
-  // }, [loggedIn]);
   const [state, setState] = useState({
     showRealApp: false,
   });
@@ -135,7 +130,6 @@ const Splash = ({}) => {
   const signInHandler = async () => {
     try {
       const token = await authStorage.getToken();
-      console.log('token', token);
       if (token) {
         const decode = jwt_decode(token);
         const expiryData = decode.exp;
@@ -178,7 +172,7 @@ const Splash = ({}) => {
         {isPreviousUser ? (
           <MainNavigationContainer previousLoggedIn={true} />
         ) : state.showRealApp ? (
-          <MainNavigationContainer previousLoggedIn />
+          <MainNavigationContainer previousLoggedIn={false} />
         ) : (
           <AppIntroSlider
             activeDotStyle={styles.activeDotStyle}
