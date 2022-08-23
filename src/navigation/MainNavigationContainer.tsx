@@ -25,7 +25,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
       <Stack.Navigator
         initialRouteName={
           // !props.previousLoggedIn ? 'BottomTabNavigator' : 'HomeProfile'
-          !props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
+          props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
         }>
         <Stack.Screen
           name="BottomTabNavigator"

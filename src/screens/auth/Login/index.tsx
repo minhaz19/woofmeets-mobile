@@ -37,6 +37,7 @@ const Login = ({navigation}: Props) => {
 
   const handleSubmit = (loginData: any) => {
     dispatch(userLogin(loginData));
+    navigation.navigate('BottomTabNavigator');
   };
   return (
     <ScrollView

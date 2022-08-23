@@ -15,11 +15,19 @@ const userSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    signIn: (state, action) => {
+      state.loading = false;
+        state.success = true; // login successful
+        state.userInfo = action.payload;
+        state.userToken = action.payload.token;
+        state.isLoggedIn = true;
+    },
     logout: state => {
       state.loading = false;
       state.userInfo = null;
       state.userToken = null;
       state.error = null;
+      state.isLoggedIn = false;
       storage.removeToken();
     },
   },
@@ -33,7 +41,7 @@ const userSlice = createSlice({
       .addCase(userLogin.fulfilled, (state, {payload}) => {
         state.loading = false;
         state.success = true; // login successful
-        state.userInfo = payload;
+        state.userInfo = payload.data.info;
         state.userToken = payload.data.access_token;
         state.isLoggedIn = true;
       })
@@ -59,6 +67,6 @@ const userSlice = createSlice({
   },
 });
 
-export const {logout} = userSlice.actions;
+export const {signIn, logout} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -55,5 +55,5 @@ export const titleWhiteText = {
 };
 
 export const useArialNormal = {
-  fontFamily: 'ARIAL',
+  // fontFamily: 'ARIAL',
 };
