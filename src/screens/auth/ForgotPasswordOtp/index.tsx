@@ -31,7 +31,7 @@ interface Props {
 const ForgotPasswordOtp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const handleSubmit = (value: {}) => {
-    navigation.navigate('AfterIntroScreen');
+    navigation.navigate('SetNewPassword');
   };
   return (
     <ScrollView

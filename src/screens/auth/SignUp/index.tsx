@@ -21,6 +21,7 @@ import AppForm from '../../../components/common/Form/AppForm';
 import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
 import {registerUser} from '../../../store/slices/auth/userAction';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
+import AppActivityIndicator from '../../../components/common/AppActivityIndicator';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
@@ -34,68 +35,71 @@ interface RegProps {
 }
 const SignUp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const {success, loading} = useAppSelector(state => state.auth);
+  const {isLoggedIn, provider, loading} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (success) {
+    if (isLoggedIn) {
       navigation.navigate('LogIn');
     }
-  }, [navigation, success]);
+  }, [navigation, isLoggedIn]);
 
   const handleSubmit = (regInfo: RegProps) => {
     dispatch(registerUser(regInfo));
   };
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={[
-        {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
-        },
-      ]}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-        enabled={Platform.OS === 'ios' ? true : false}>
-        <View
-          style={[
-            styles.infoContainer,
-            {
-              backgroundColor: isDarkMode
-                ? Colors.dark.lightDark
-                : Colors.background,
-            },
-          ]}>
-          <AuthHeader
-            title={signUpInitalState.title}
-            subTitle={signUpInitalState.subTitle}
-            image={signUpInitalState.image}
-          />
-          <AppForm
-            initialValues={signupValue}
-            validationSchema={signUpValidationSchema}>
-            <SignUpAuthForm
-              handleSubmit={handleSubmit}
-              btnTitle="SIGN UP"
-              termsAndCond
-              loading={loading}
+    <>
+      {loading && provider && <AppActivityIndicator visible />}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={[
+          {
+            backgroundColor: isDarkMode
+              ? Colors.dark.background
+              : Colors.secondary,
+          },
+        ]}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+          enabled={Platform.OS === 'ios' ? true : false}>
+          <View
+            style={[
+              styles.infoContainer,
+              {
+                backgroundColor: isDarkMode
+                  ? Colors.dark.lightDark
+                  : Colors.background,
+              },
+            ]}>
+            <AuthHeader
+              title={signUpInitalState.title}
+              subTitle={signUpInitalState.subTitle}
+              image={signUpInitalState.image}
             />
-          </AppForm>
-          <AuthFooter
-            icons={othersAuthIcons}
-            accountType="Already have an account? "
-            authType="LOGIN"
-            title="or login with"
-            navigateScreen="LogIn"
-          />
-          <View style={styles.view} />
-        </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+            <AppForm
+              initialValues={signupValue}
+              validationSchema={signUpValidationSchema}>
+              <SignUpAuthForm
+                handleSubmit={handleSubmit}
+                btnTitle="SIGN UP"
+                termsAndCond
+                loading={loading}
+              />
+            </AppForm>
+            <AuthFooter
+              icons={othersAuthIcons}
+              accountType="Already have an account? "
+              authType="LOGIN"
+              title="or login with"
+              navigateScreen="LogIn"
+            />
+            <View style={styles.view} />
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </>
   );
 };
 

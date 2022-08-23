@@ -27,15 +27,7 @@ const AppCheckboxField = ({
   control,
   errors,
 }: Props) => {
-  // const {
-  //   setValue,
-  //   control,
-  //   formState: {errors},
-  // } = methods;
-  // const handleValues = () => {
-  //   setValue(name, typeKey, {shouldValidate: true});
-  //   onPress();
-  // };
+
 
   console.log('calling check field');
   return (

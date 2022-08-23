@@ -21,73 +21,77 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {userLogin} from '../../../store/slices/auth/userAction';
+import AppActivityIndicator from '../../../components/common/AppActivityIndicator';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
 const Login = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const {success, loading} = useAppSelector(state => state.auth);
+  const {isLoggedIn, provider, loading} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (success) {
+    if (isLoggedIn) {
       // do something
       // navigation.navigate('SignUp');
     }
-  }, [success, navigation]);
+  }, [isLoggedIn, navigation]);
 
   const handleSubmit = (loginData: any) => {
     dispatch(userLogin(loginData));
   };
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.container}
-      style={[
-        {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
-        },
-      ]}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        // keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-        enabled={Platform.OS === 'ios' ? true : false}>
-        <View
-          style={[
-            styles.infoContainer,
-            {
-              backgroundColor: isDarkMode
-                ? Colors.dark.lightDark
-                : Colors.background,
-            },
-          ]}>
-          <AuthHeader
-            title={loginInitalState.title}
-            subTitle={loginInitalState.subTitle}
-            image={loginInitalState.image}
-          />
-
-          <AppForm
-            initialValues={loginValue}
-            validationSchema={loginValidationSchema}>
-            <AuthForm
-              handleSubmit={handleSubmit}
-              btnTitle="LOGIN"
-              loading={loading}
+    <>
+      {loading && provider && <AppActivityIndicator visible={true} />}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.container}
+        style={[
+          {
+            backgroundColor: isDarkMode
+              ? Colors.dark.background
+              : Colors.secondary,
+          },
+        ]}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          // keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+          enabled={Platform.OS === 'ios' ? true : false}>
+          <View
+            style={[
+              styles.infoContainer,
+              {
+                backgroundColor: isDarkMode
+                  ? Colors.dark.lightDark
+                  : Colors.background,
+              },
+            ]}>
+            <AuthHeader
+              title={loginInitalState.title}
+              subTitle={loginInitalState.subTitle}
+              image={loginInitalState.image}
             />
-          </AppForm>
-          <AuthFooter
-            icons={othersAuthIcons}
-            accountType="Don't have any account? "
-            authType="Sign Up"
-            title="or login with"
-            navigateScreen="SignUp"
-          />
-          <View style={styles.view} />
-        </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+
+            <AppForm
+              initialValues={loginValue}
+              validationSchema={loginValidationSchema}>
+              <AuthForm
+                handleSubmit={handleSubmit}
+                btnTitle="LOGIN"
+                loading={loading}
+              />
+            </AppForm>
+            <AuthFooter
+              icons={othersAuthIcons}
+              accountType="Don't have any account? "
+              authType="Sign Up"
+              title="or login with"
+              navigateScreen="SignUp"
+            />
+            <View style={styles.view} />
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </>
   );
 };
 

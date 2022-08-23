@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -37,7 +35,7 @@ const AuthFooter = ({
 }: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation<NavigationProps | any>();
-  const {handleGFauth, user} = useHandleProviderAuth();
+  const {handleGFauth} = useHandleProviderAuth();
   return (
     <View style={styles.container}>
       <View style={styles.dividerContainer}>

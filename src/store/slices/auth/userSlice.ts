@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import storage from '../../../utils/helpers/auth/storage';
-import {registerUser, userLogin} from './userAction';
+import {providerAuth, registerUser, userLogin} from './userAction';
 
 const initialState: any = {
   isLoggedIn: false,
@@ -8,7 +8,7 @@ const initialState: any = {
   userToken: null,
   error: null,
   loading: false,
-  success: false,
+  provider: false,
 };
 
 const userSlice = createSlice({
@@ -32,10 +32,9 @@ const userSlice = createSlice({
       })
       .addCase(userLogin.fulfilled, (state, {payload}) => {
         state.loading = false;
-        state.success = true; // login successful
+        state.isLoggedIn = true; // login successful
         state.userInfo = payload;
         state.userToken = payload.data.access_token;
-        state.isLoggedIn = true;
       })
       .addCase(userLogin.rejected, (state, {payload}) => {
         state.loading = false;
@@ -47,14 +46,30 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, {payload}) => {
         state.loading = false;
-        state.success = true; // registration successful
+        state.isLoggedIn = true; // registration successful
         state.userInfo = payload;
         state.userToken = payload.data.access_token;
-        state.isLoggedIn = true;
       })
       .addCase(registerUser.rejected, (state, {payload}) => {
         state.loading = false;
         state.error = payload;
+      })
+      .addCase(providerAuth.pending, state => {
+        state.loading = true;
+        state.error = null;
+        state.provider = true;
+      })
+      .addCase(providerAuth.fulfilled, (state, {payload}) => {
+        state.loading = false;
+        state.isLoggedIn = true; // provider authentication successful
+        state.userInfo = payload;
+        state.userToken = payload.data.access_token;
+        state.provider = false;
+      })
+      .addCase(providerAuth.rejected, (state, {payload}) => {
+        state.loading = false;
+        state.error = payload;
+        state.provider = false;
       });
   },
 });
