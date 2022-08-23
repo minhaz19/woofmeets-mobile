@@ -19,8 +19,8 @@ const BasicInfoSitter = () => {
       ]}>
       <AppForm
         validationSchema={basicInfoValidationSchema}
-        handleSubmit={handleSubmit}>
-        <BasicInfoSitterInput initialValues={basicInfoValue} />
+        initialValues={basicInfoValue}>
+        <BasicInfoSitterInput handleSubmit={handleSubmit} />
       </AppForm>
     </View>
   );

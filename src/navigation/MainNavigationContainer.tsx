@@ -106,10 +106,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack
-                navigation={navigation}
-                title="Profile"
-              />
+              <HeaderWithBack navigation={navigation} title="Profile" />
             ),
             backgroundColor: Colors.primary,
           })}

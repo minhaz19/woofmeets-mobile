@@ -34,7 +34,7 @@ const Login = ({navigation}: Props) => {
   useEffect(() => {
     if (isLoggedIn) {
       // do something
-      // navigation.navigate('SignUp');
+      navigation.navigate('PetCareZipSearch');
     }
   }, [isLoggedIn, navigation]);
 

@@ -3,7 +3,6 @@ import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../api/client';
 import authStorage from '../../../utils/helpers/auth/storage';
-
 export const userLogin = createAsyncThunk(
   'auth/login',
   async ({email, password}: any, {rejectWithValue}) => {
