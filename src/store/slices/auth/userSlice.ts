@@ -15,6 +15,13 @@ const userSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    signIn: (state, action) => {
+      state.loading = false;
+        state.success = true; // login successful
+        state.userInfo = action.payload;
+        state.userToken = action.payload.token;
+        state.isLoggedIn = true;
+    },
     logout: state => {
       state.loading = false;
       state.userInfo = null;
@@ -33,7 +40,7 @@ const userSlice = createSlice({
       .addCase(userLogin.fulfilled, (state, {payload}) => {
         state.loading = false;
         state.success = true; // login successful
-        state.userInfo = payload;
+        state.userInfo = payload.data.info;
         state.userToken = payload.data.access_token;
         state.isLoggedIn = true;
       })

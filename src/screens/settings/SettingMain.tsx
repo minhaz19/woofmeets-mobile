@@ -1,4 +1,4 @@
-import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
 import {
   CallIcon,
@@ -17,8 +17,8 @@ import TitleText from '../../components/common/text/TitleText';
 import Colors from '../../constants/Colors';
 import ShortText from '../../components/common/text/ShortText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
-import BottomSpacing from '../../components/UI/BottomSpacing';
 import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
+import BottomSpacingNav from '../../components/UI/BottomSpacingNav';
 
 const SettingMain = (props: {
   navigation: {navigate: (arg0: string) => any};
@@ -109,14 +109,13 @@ const SettingMain = (props: {
   ];
 
   return (
-    <ScrollView>
-      <SafeAreaView
-        style={[
-          styles.rootContainer,
-          {
-            backgroundColor: colors.backgroundColor,
-          },
-        ]}>
+    <ScrollView style={[
+      styles.rootContainer,
+      {
+        backgroundColor: colors.backgroundColor,
+      },
+    ]}>
+      <View>
         <View style={[styles.titleContainer, styles.paddingTop]}>
           <HeaderText text="More" />
         </View>
@@ -159,8 +158,8 @@ const SettingMain = (props: {
         {supportData?.map(item => (
           <SettingItem data={item} key={item.id} />
         ))}
-        <BottomSpacing />
-      </SafeAreaView>
+      </View>
+      <BottomSpacingNav />
     </ScrollView>
   );
 };

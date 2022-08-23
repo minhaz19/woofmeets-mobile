@@ -16,6 +16,7 @@ export const userLogin = createAsyncThunk(
         Alert.alert(response.data.message);
         throw new Error(response.data.message);
       } else {
+        console.log('login data', response.data.data.access_token);
         authStorage.storeToken(response.data.data.access_token);
       }
       return response.data;

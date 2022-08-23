@@ -8,6 +8,10 @@ import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
 import MainNavigationContainer from '../navigation/MainNavigationContainer';
 import FirstScreen from './FirstScreen';
+import authStorage from '../utils/helpers/auth/storage';
+import jwt_decode from 'jwt-decode';
+import { useDispatch } from 'react-redux';
+import { signIn } from '../store/slices/auth';
 
 const slides = [
   {
@@ -42,7 +46,8 @@ const slides = [
 const Splash = ({}) => {
   const isDarkMode = useColorScheme() === 'dark';
   // const loggedIn = useSelector(state => state.login);
-  const [isPreviousUser] = useState(false);
+  const [isPreviousUser, setIsPreviousUser] = useState(false);
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   setIsPreviousUser(loggedIn.isPreviousUser);
@@ -127,6 +132,36 @@ const Splash = ({}) => {
     return () => clearTimeout(timer);
   }, [ldIcon]);
 
+  const signInHandler = async () => {
+    try {
+      const token = await authStorage.getToken();
+      console.log('token', token);
+      if (token) {
+        const decode = jwt_decode(token);
+        const expiryData = decode.exp;
+        const nowDate = new Date();
+        let expDate = new Date(expiryData * 1000) > nowDate;
+        if (expDate) {
+          await dispatch(
+            signIn({
+              token: token,
+              userInfo: decode,
+            }),
+          );
+          setIsPreviousUser(true);
+        } else {
+          authStorage.removeToken();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    signInHandler();
+  }, []);
+
   const RenderIcon = () => {
     return (
       <View style={styles.logoContainer}>
@@ -141,7 +176,7 @@ const Splash = ({}) => {
     return (
       <>
         {isPreviousUser ? (
-          <MainNavigationContainer previousLoggedIn={false} />
+          <MainNavigationContainer previousLoggedIn={true} />
         ) : state.showRealApp ? (
           <MainNavigationContainer previousLoggedIn />
         ) : (
@@ -177,7 +212,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: Text_Size.Text_5,
-    fontFamily: 'Arial',
+    // fontFamily: 'Arial',
     paddingHorizontal: '5%',
     paddingVertical: '2%',
   },

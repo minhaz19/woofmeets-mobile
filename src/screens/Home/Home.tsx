@@ -49,12 +49,12 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: Text_Size.Text_1,
-    fontFamily: 'Arial',
+    // fontFamily: 'Arial',
     paddingHorizontal: '5%',
   },
   headerText: {
     fontSize: Text_Size.Text_4,
-    fontFamily: 'Arial',
+    // fontFamily: 'Arial',
     paddingHorizontal: '5%',
     paddingVertical: '2%',
   },
