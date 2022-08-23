@@ -4,6 +4,7 @@ import {useTheme} from '../../constants/theme/hooks/useTheme';
 import BasicInfoInput from '../../components/ScreenComponent/setting/BasicInfoInput';
 import {basicInfoValue} from '../../utils/config/setting/initalValues';
 import {basicInfoValidationSchema} from '../../utils/config/setting/validationSchema';
+import AppForm from '../../components/common/Form/AppForm';
 
 const BasicInfo = () => {
   const {colors} = useTheme();
@@ -16,11 +17,11 @@ const BasicInfo = () => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <BasicInfoInput
+      <AppForm
         initialValues={basicInfoValue}
-        validationSchema={basicInfoValidationSchema}
-        handleSubmit={handleSubmit}
-      />
+        validationSchema={basicInfoValidationSchema}>
+        <BasicInfoInput handleSubmit={handleSubmit} />
+      </AppForm>
     </View>
   );
 };

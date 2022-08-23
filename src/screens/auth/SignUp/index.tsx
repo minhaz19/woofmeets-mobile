@@ -35,7 +35,9 @@ interface RegProps {
 }
 const SignUp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const {isLoggedIn, provider, loading} = useAppSelector(state => state.auth);
+  const {isLoggedIn, providerLoading, loading} = useAppSelector(
+    state => state.auth,
+  );
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (isLoggedIn) {
@@ -49,7 +51,7 @@ const SignUp = ({navigation}: Props) => {
 
   return (
     <>
-      {loading && provider && <AppActivityIndicator visible />}
+      {providerLoading && <AppActivityIndicator visible />}
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={[

@@ -27,8 +27,8 @@ interface Props {
   email?: boolean;
   textInputStyle?: ViewStyle;
   auth?: boolean;
-  errors?: any;
-  control?: any;
+  errors: any;
+  control: any;
 }
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;

@@ -12,8 +12,8 @@ interface Props {
   square?: boolean;
   radio?: boolean;
   onPress: () => void;
-  errors?: any;
-  control?: any;
+  errors: any;
+  control: any;
   setValue?: (arg1: string, arg2: any, arg3: any) => void;
 }
 const AppCheckboxField = ({

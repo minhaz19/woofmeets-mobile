@@ -13,57 +13,56 @@ import React, {useState} from 'react';
 import HeaderText from '../../../common/text/HeaderText';
 import AppFormField from '../../../common/Form/AppFormField';
 import SubmitButton from '../../../common/Form/SubmitButton';
-import AppForm from '../../../common/Form/AppForm';
 import Text_Size from '../../../../constants/textScaling';
 import DescriptionText from '../../../common/text/DescriptionText';
 import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
+import {useFormContext} from 'react-hook-form';
 
 interface Props {
   handleSubmit: (value: any) => void;
-  initialValues: any;
-  validationSchema: any;
+
   onPress?: () => void;
 }
+const locationInput = [
+  {
+    title: 'Address Line 1',
+    placeholder: 'Enter Address Line 1',
+    name: 'addressLineOne',
+  },
+  {
+    title: 'Address Line 2',
+    placeholder: 'Enter Address Line 2',
+    name: 'addressLineTwo',
+  },
+  {
+    title: 'City',
+    placeholder: 'Enter City',
+    name: 'city',
+  },
+  {
+    title: 'State or Province',
+    placeholder: 'Enter State or Province ',
+    name: 'state',
+  },
+  {
+    title: 'Zip/ Postal/ Postcode',
+    placeholder: 'Enter Zip/ Postal/ Postcode',
+    name: 'postalCode',
+  },
+];
 
-const BasicInfoSitterInput = ({
-  handleSubmit,
-  initialValues,
-  validationSchema,
-}: Props) => {
+const BasicInfoSitterInput = ({handleSubmit}: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const uploadImage = () => {};
   const [petImage, setPetImage] = useState();
-  const locationInput = [
-    {
-      title: 'Address Line 1',
-      placeholder: 'Enter Address Line 1',
-      name: 'addressLineOne',
-    },
-    {
-      title: 'Address Line 2',
-      placeholder: 'Enter Address Line 2',
-      name: 'addressLineTwo',
-    },
-    {
-      title: 'City',
-      placeholder: 'Enter City',
-      name: 'city',
-    },
-    {
-      title: 'State or Province',
-      placeholder: 'Enter State or Province ',
-      name: 'state',
-    },
-    {
-      title: 'Zip/ Postal/ Postcode',
-      placeholder: 'Enter Zip/ Postal/ Postcode',
-      name: 'postalCode',
-    },
-  ];
+  const {
+    control,
+    formState: {errors},
+  } = useFormContext();
 
   const renderHeader = () => {
     return (
@@ -129,7 +128,7 @@ const BasicInfoSitterInput = ({
           <TitleText text="We won't share or display this on your profile ." />
         </View>
         <View style={styles.footerContainer}>
-          <SubmitButton title="Save" />
+          <SubmitButton title="Save" onPress={handleSubmit} />
         </View>
       </View>
     );
@@ -137,41 +136,39 @@ const BasicInfoSitterInput = ({
   return (
     <KeyboardAvoidingView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <AppForm
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}>
-          <FlatList
-            columnWrapperStyle={styles.flatList}
-            data={locationInput}
-            horizontal={false}
-            // showsVerticalScrollIndicator={false}
-            renderItem={({item}) => {
-              return (
-                <>
-                  {
-                    <View style={styles.inputContainer}>
-                      <AppFormField
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        keyboardType={'default'}
-                        placeholder={item.placeholder}
-                        textContentType={'none'}
-                        name={item.name}
-                        label={item.title}
-                        textInputStyle={styles.textInputStyle}
-                      />
-                    </View>
-                  }
-                </>
-              );
-            }}
-            numColumns={2}
-            keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={renderHeader}
-            ListFooterComponent={renderFooter}
-          />
-        </AppForm>
+        <FlatList
+          columnWrapperStyle={styles.flatList}
+          data={locationInput}
+          horizontal={false}
+          // showsVerticalScrollIndicator={false}
+          renderItem={({item}) => {
+            return (
+              <>
+                {
+                  <View style={styles.inputContainer}>
+                    <AppFormField
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      keyboardType={'default'}
+                      placeholder={item.placeholder}
+                      textContentType={'none'}
+                      name={item.name}
+                      label={item.title}
+                      textInputStyle={styles.textInputStyle}
+                      errors={errors}
+                      control={control}
+                    />
+                  </View>
+                }
+              </>
+            );
+          }}
+          numColumns={2}
+          keyExtractor={(item, index) => index.toString()}
+          ListHeaderComponent={renderHeader}
+          ListFooterComponent={renderFooter}
+        />
+        {/* </AppForm> */}
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );

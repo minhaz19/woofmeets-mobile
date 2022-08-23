@@ -2,7 +2,6 @@
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC, useState} from 'react';
 import BoardingForm from './Common/BoardingForm';
-import AppForm from '../../common/Form/AppForm';
 import HeaderText from '../../common/text/HeaderText';
 import Text_Size from '../../../constants/textScaling';
 import {InfoSvg} from '../Inbox/utils/SvgComponent/SvgComponent';
@@ -28,19 +27,19 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
 import useHandleMultipleActiveCheck from './utils/handleCheck/HandleCheck';
 import BoardingPetQuantity from './Common/BoardingPetQuantity';
+import {useFormContext} from 'react-hook-form';
 
 interface Props {
   handleSubmit: (value: any) => void;
-  initialValues: any;
-  validationSchema: any;
   onPress?: () => void;
 }
 
-const BoardingSettingInfo: FC<Props> = ({
-  handleSubmit,
-  initialValues,
-  validationSchema,
-}) => {
+const BoardingSettingInfo: FC<Props> = ({handleSubmit}) => {
+  const {
+    control,
+    setValue,
+    formState: {errors},
+  } = useFormContext();
   const {handleActiveCheck, active0, active2, active3, active4, active7} =
     useHandleTempCheck();
   const [showAdditionalRates, setShowAdditionalRates] = useState(true);
@@ -172,6 +171,9 @@ const BoardingSettingInfo: FC<Props> = ({
                 handlePetHostingActiveCheck(item.id, petPreference[0].options)
               }
               name={petPreference[0].name!}
+              errors={errors}
+              control={control}
+              setValue={setValue}
             />
           );
         })}
@@ -210,6 +212,9 @@ const BoardingSettingInfo: FC<Props> = ({
                                 )
                           }
                           name={item.name}
+                          errors={errors}
+                          control={control}
+                          setValue={setValue}
                         />
                       </View>
                     );
@@ -244,6 +249,9 @@ const BoardingSettingInfo: FC<Props> = ({
                   active={CancellationPolicy[0].id === 107 && active7[item.id]}
                   onPress={() => handleActiveCheck(107, item.id)}
                   name={CancellationPolicy[0].name!}
+                  errors={errors}
+                  control={control}
+                  setValue={setValue}
                 />
               );
             })}
@@ -287,6 +295,9 @@ const BoardingSettingInfo: FC<Props> = ({
                   active={availabilityInput[0].id === 100 && active0[item.id]}
                   onPress={() => handleActiveCheck(100, item.id)}
                   name={availabilityInput[0].name!}
+                  errors={errors}
+                  control={control}
+                  setValue={setValue}
                 />
               );
             })}
@@ -343,6 +354,9 @@ const BoardingSettingInfo: FC<Props> = ({
                 active={availabilityInput[2].id === 102 && active2[item.id]}
                 onPress={() => handleActiveCheck(102, item.id)}
                 name={availabilityInput[2].name!}
+                errors={errors}
+                control={control}
+                setValue={setValue}
               />
             );
           })}
@@ -367,16 +381,12 @@ const BoardingSettingInfo: FC<Props> = ({
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <AppForm
-        initialValues={initialValues}
-        // onSubmit={handleSubmit}
-        validationSchema={validationSchema}>
-        <View style={styles.inputContainer}>
-          <BoardingHeader />
-          <BoardingMain />
-          <BoardingFooter />
-        </View>
-      </AppForm>
+      <View style={styles.inputContainer}>
+        <BoardingHeader />
+        <BoardingMain />
+        <BoardingFooter />
+      </View>
+
       <BottomSpacing />
     </ScrollView>
   );

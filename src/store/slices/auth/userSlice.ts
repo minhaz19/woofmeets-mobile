@@ -8,7 +8,7 @@ const initialState: any = {
   userToken: null,
   error: null,
   loading: false,
-  provider: false,
+  providerLoading: false,
   success: false,
 };
 
@@ -66,21 +66,19 @@ const userSlice = createSlice({
         state.error = payload;
       })
       .addCase(providerAuth.pending, state => {
-        state.loading = true;
+        state.providerLoading = true;
         state.error = null;
-        state.provider = true;
       })
       .addCase(providerAuth.fulfilled, (state, {payload}) => {
-        state.loading = false;
+        state.providerLoading = false;
         state.isLoggedIn = true; // provider authentication successful
         state.userInfo = payload;
+        state.success = true;
         state.userToken = payload.data.access_token;
-        state.provider = false;
       })
       .addCase(providerAuth.rejected, (state, {payload}) => {
-        state.loading = false;
+        state.providerLoading = false;
         state.error = payload;
-        state.provider = false;
       });
   },
 });
