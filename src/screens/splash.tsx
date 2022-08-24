@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, useColorScheme, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -125,7 +126,6 @@ const Splash = ({}) => {
 
   useEffect(() => {
     signInHandler();
-   
   }, []);
 
   const RenderIcon = () => {

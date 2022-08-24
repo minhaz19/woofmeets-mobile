@@ -11,6 +11,7 @@ export const userLogin = createAsyncThunk(
         email,
         password,
       });
+      console.log('response', response);
       if (!response.ok) {
         Alert.alert(response.data.message);
         throw new Error(response.data.message);
