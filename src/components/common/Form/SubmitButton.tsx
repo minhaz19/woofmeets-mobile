@@ -5,12 +5,14 @@ import {useFormContext} from 'react-hook-form';
 interface Props {
   title: string;
   onPress?: any;
+  loading?: boolean;
 }
-const SubmitButton = ({title, onPress}: Props) => {
+const SubmitButton = ({title, onPress, loading}: Props) => {
   const {handleSubmit} = useFormContext();
   return (
     <ButtonCom
       title={title}
+      loading={loading}
       textAlignment={btnStyles.textAlignment}
       containerStyle={btnStyles.containerStyleFullWidth}
       titleStyle={btnStyles.titleStyle}

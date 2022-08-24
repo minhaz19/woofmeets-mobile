@@ -6,7 +6,6 @@ import SelectDropdown from 'react-native-select-dropdown';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {FormikValues, useFormikContext} from 'formik';
 import ErrorMessage from './ErrorMessage';
 import {genders} from '../../../utils/config/Data/AddPetData';
 import {useController, useFormContext} from 'react-hook-form';
@@ -14,6 +13,7 @@ interface Props {
   name: string;
   label: string;
   data?: [];
+  methods?: any;
 }
 const AppSelect = ({label, name}: Props) => {
   const {isDarkMode, colors} = useTheme();

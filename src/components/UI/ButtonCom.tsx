@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {forModalPresentationIOS} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
+import Lottie from 'lottie-react-native';
 import React from 'react';
 import {
   View,
@@ -12,8 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
 import Card from './Card';
-
-const ButtonCom = (props: {
+interface Props {
   containerStyle: any;
   progressStyle?: ViewStyle | undefined;
   onSelect: ((event: GestureResponderEvent) => void) | undefined;
@@ -22,7 +24,19 @@ const ButtonCom = (props: {
   titleStyle: TextStyle | undefined;
   title: String | undefined;
   icon?: any;
-}) => {
+  loading?: boolean;
+}
+const ButtonCom = ({
+  containerStyle,
+  progressStyle,
+  onSelect,
+  textAlignment,
+  isLeftIcon,
+  titleStyle,
+  title,
+  icon,
+  loading = false,
+}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
@@ -30,25 +44,36 @@ const ButtonCom = (props: {
       style={{
         ...styles.cardlist,
         backgroundColor: isDarkMode ? Colors.button.grey : Colors.primary,
-        ...props.containerStyle,
+        ...containerStyle,
       }}>
-      <View style={{...styles.progressContainer, ...props.progressStyle}} />
+      <View style={{...styles.progressContainer, ...progressStyle}} />
       <View style={{...styles.touchable}}>
-        <TouchableOpacity onPress={props.onSelect}>
-          <View style={{...styles.card, ...props.textAlignment}}>
-            <Text
-              style={{
-                ...styles.title,
-                ...props.titleStyle,
-              }}>
-              {props.title}
-            </Text>
-            {props.icon && (
-              <Icon
-                name="keyboard-arrow-right"
-                size={24}
-                color={Colors.primary}
+        <TouchableOpacity onPress={onSelect} disabled={loading}>
+          <View style={{...styles.card, ...textAlignment}}>
+            {loading ? (
+              <Lottie
+                autoPlay
+                loop
+                source={require('../../assets/loadingDotStatic.json')}
+                style={styles.loaderStyle}
               />
+            ) : (
+              <>
+                <Text
+                  style={{
+                    ...styles.title,
+                    ...titleStyle,
+                  }}>
+                  {title}
+                </Text>
+                {icon && (
+                  <Icon
+                    name="keyboard-arrow-right"
+                    size={24}
+                    color={Colors.primary}
+                  />
+                )}
+              </>
             )}
           </View>
         </TouchableOpacity>
@@ -86,5 +111,6 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
   },
+  loaderStyle: {width: '30%'},
 });
 export default ButtonCom;

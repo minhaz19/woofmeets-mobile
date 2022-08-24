@@ -5,6 +5,7 @@ import {useTheme} from '../../constants/theme/hooks/useTheme';
 import BoardingSettingInfo from '../../components/ScreenComponent/BoardingSetting/BoardingSettingInfo';
 import {BoardingSettings} from '../../utils/config/initalValues';
 import {BoardingSettingsSchema} from '../../utils/config/validationSchema';
+import AppForm from '../../components/common/Form/AppForm';
 
 const BoardingSetting = () => {
   const {colors} = useTheme();
@@ -17,11 +18,12 @@ const BoardingSetting = () => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <BoardingSettingInfo
-        handleSubmit={handleSubmit}
+      <AppForm
         initialValues={BoardingSettings}
-        validationSchema={undefined}
-      />
+        // onSubmit={handleSubmit}
+        validationSchema={BoardingSettingsSchema}>
+        <BoardingSettingInfo handleSubmit={handleSubmit} />
+      </AppForm>
     </View>
   );
 };

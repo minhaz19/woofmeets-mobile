@@ -8,10 +8,12 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
 import {useDispatch} from 'react-redux';
 import {setPetValue} from '../../../store/slices/addPet';
+import AppForm from '../../../components/common/Form/AppForm';
 
 const AddPet = () => {
   const dispatch = useDispatch();
-  const handleSubmit = (e: {}) => {
+  const handleSubmit = (e: any) => {
+    console.log('getting values', e);
     dispatch(setPetValue(e));
   };
   const {isDarkMode} = useTheme();
@@ -25,11 +27,11 @@ const AddPet = () => {
             : Colors.background,
         },
       ]}>
-      <AddPetBody
+      <AppForm
         initialValues={addPetValue}
-        validationSchema={addPetValidationSchema}
-        handleSubmit={handleSubmit}
-      />
+        validationSchema={addPetValidationSchema}>
+        <AddPetBody handleSubmit={handleSubmit} />
+      </AppForm>
     </Screen>
   );
 };

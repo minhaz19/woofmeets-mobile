@@ -15,6 +15,9 @@ import BoardingSetting from '../screens/boardingSetting/BoardingSetting';
 import InviteFriends from '../screens/Misc/InviteFriends';
 import PromoGiftCodes from '../screens/Misc/PromoGiftCodes';
 import ReceivePayments from '../screens/Misc/ReceivePayments';
+import Gallery from '../screens/becomeSitter/Gallery/Gallery';
+import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
+import GuestBottomTabNavigator from './GuestBottomTabNavigator';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -23,7 +26,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
       <Stack.Navigator
         initialRouteName={
           // !props.previousLoggedIn ? 'BottomTabNavigator' : 'HomeProfile'
-          !props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
+          props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
         }>
         <Stack.Screen
           name="BottomTabNavigator"
@@ -33,6 +36,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="AuthNavigator"
           component={AuthNavigator}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="GuestBottomTabNavigator"
+          component={GuestBottomTabNavigator}
           options={{headerShown: false}}
         />
         <Stack.Screen
@@ -99,6 +107,17 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           })}
         />
         <Stack.Screen
+          name="GallerySitter"
+          component={Gallery}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Profile" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
           name="BoardingSetting"
           component={BoardingSetting}
           options={({navigation}) => ({
@@ -152,6 +171,21 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
               <HeaderWithBack
                 navigation={navigation}
                 title="Receive Payments"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSelection"
+          component={ServiceSelection}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Selection"
                 notification
               />
             ),

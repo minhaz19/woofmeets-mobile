@@ -7,6 +7,7 @@ import AfterIntroScreen from '../screens/AfterIntroScreen';
 import VerifyAccount from '../screens/auth/VerifyAccount';
 import ForgotPassword from '../screens/auth/ForgotPassword';
 import ForgotPasswordOtp from '../screens/auth/ForgotPasswordOtp';
+import GuestBottomTabNavigator from './GuestBottomTabNavigator';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,11 @@ function AuthNavigator() {
       <Stack.Screen
         name="SetNewPassword"
         component={SetNewPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GuestBottomTab"
+        component={GuestBottomTabNavigator}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

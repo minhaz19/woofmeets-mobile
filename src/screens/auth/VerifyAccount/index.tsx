@@ -13,6 +13,7 @@ import {verifyAccountValue} from '../../../utils/config/initalValues';
 import {verifyAccountValidationSchema} from '../../../utils/config/validationSchema';
 import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import AppForm from '../../../components/common/Form/AppForm';
 const forgotPassData = {
   image: require('../../../assets/image/verifyAccount/logo.png'),
   title: 'Verify Account',
@@ -58,14 +59,16 @@ const VerifyAccount = ({navigation}: Props) => {
             subTitle={forgotPassData.subTitle}
             Icon={undefined}
           />
-          <AuthForm
+          <AppForm
             initialValues={verifyAccountValue}
-            validationSchema={verifyAccountValidationSchema}
-            handleSubmit={handleSubmit}
-            btnTitle="Continue"
-            btn2Title="Resend Code"
-            verifyAccount
-          />
+            validationSchema={verifyAccountValidationSchema}>
+            <AuthForm
+              handleSubmit={handleSubmit}
+              btnTitle="Continue"
+              btn2Title="Resend Code"
+              verifyAccount
+            />
+          </AppForm>
           <View style={styles.view} />
         </View>
       </KeyboardAvoidingView>

@@ -5,14 +5,15 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Divider} from '@rneui/themed';
 import Colors from '../../../../constants/Colors';
 import Icon from '../../../common/Icon';
 import Text_Size from '../../../../constants/textScaling';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-
+import {useHandleProviderAuth} from '../../../../utils/helpers/auth/useHandleProviderAuth';
+import {useAppSelector} from '../../../../store/store';
 interface Props {
   icons: {image: any; icon: any}[];
   title: string;
@@ -34,6 +35,13 @@ const AuthFooter = ({
 }: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation<NavigationProps | any>();
+  const {handleGFauth} = useHandleProviderAuth();
+  const {isLoggedIn} = useAppSelector(state => state.auth);
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigation.navigate('PetCareZipSearch');
+    }
+  }, [isLoggedIn, navigation]);
 
   return (
     <View style={styles.container}>
@@ -56,7 +64,9 @@ const AuthFooter = ({
       </View>
       <View style={styles.iconContainer}>
         {icons.map((icon, index) => (
-          <Icon key={index} IconComp={icon?.icon} />
+          <TouchableOpacity key={index} onPress={() => handleGFauth(index)}>
+            <Icon IconComp={icon?.icon} />
+          </TouchableOpacity>
         ))}
       </View>
       <View style={styles.textContainer}>

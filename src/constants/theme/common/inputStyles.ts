@@ -4,7 +4,6 @@ import {
   descriptionDarkText,
   descriptionLightText,
   descriptionPrimaryText,
-  useArialNormal,
 } from '../../FontDetails';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -57,18 +56,15 @@ export const inputStyles = StyleSheet.create({
     color: 'black',
     letterSpacing: 1,
     fontSize: descriptionDarkText.fontSize,
-    fontFamily: useArialNormal.fontFamily,
     paddingLeft: 17,
   },
   inputStyle: {
     color: Colors.light.text,
     letterSpacing: 1,
     fontSize: descriptionPrimaryText.fontSize,
-    fontFamily: useArialNormal.fontFamily,
     paddingLeft: 15,
   },
   inputFontStyle: {
-    fontFamily: useArialNormal.fontFamily,
     color: '#424244',
     fontSize: descriptionLightText.fontSize,
   },
@@ -85,6 +81,5 @@ export const inputStyles = StyleSheet.create({
     color: 'black',
     letterSpacing: 1,
     fontSize: descriptionDarkText.fontSize,
-    fontFamily: useArialNormal.fontFamily,
   },
 });

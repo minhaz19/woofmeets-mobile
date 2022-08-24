@@ -7,8 +7,28 @@ const loginValidationSchema = Yup.object().shape({
 });
 
 const signUpValidationSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
+    .min(2)
+    .max(40)
+    .required()
+    .label('First Name'),
+  lastName: Yup.string()
+    .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
+    .min(2)
+    .max(40)
+    .required()
+    .label('Last Name'),
+  zipcode: Yup.string()
+    .required('Zipcode is required')
+    .matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/, 'Invalid Zipcode')
+    .nullable()
+    .label('Zip Code'),
   email: Yup.string().required().email().label('Email'),
-  password: Yup.string().required().min(8).label('Password'),
+  password: Yup.string()
+    .required('No password provided.')
+    .min(8, 'Too short - should be min 8 character.')
+    .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   terms: Yup.boolean()
     .required('The terms and conditions must be accepted.')
     .oneOf([true], 'The terms and conditions must be accepted.'),
@@ -66,7 +86,7 @@ const addPetValidationSchema = Yup.object().shape({
   injectionMedication: Yup.string(),
   additionalInfo: Yup.string(),
   petInfo: Yup.string(),
-  imageGallery: Yup.array()
+  photoGallery: Yup.array()
     .required('This is required')
     .min(1, 'Please select at least one image'),
 });

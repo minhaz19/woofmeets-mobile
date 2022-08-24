@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">woofmeets</string>
+
+<string name="facebook_app_id">1520902598343701</string>
+<string name="fb_login_protocol_scheme">fb1234</string>
+<string name="facebook_client_token">8f3395b75da0f7c7c6d5a3affb944135</string>
+
+
 </resources>

@@ -1,4 +1,3 @@
-import {FormikValues, useFormikContext} from 'formik';
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import React, {useState} from 'react';
 import Text_Size from '../../../../constants/textScaling';
@@ -9,6 +8,7 @@ import DescriptionText from '../../../common/text/DescriptionText';
 import {InfoSvg} from '../../Inbox/utils/SvgComponent/SvgComponent';
 import Colors from '../../../../constants/Colors';
 import AppCheckboxField from '../../../common/Form/AppCheckboxField';
+import {Controller, useFormContext} from 'react-hook-form';
 
 interface Props {
   name: string;
@@ -38,7 +38,6 @@ const BoardingForm = ({
   autoCorrect,
   icon,
   keyboardType,
-  placeholder,
   textContentType,
   label,
   subTitle,
@@ -52,8 +51,12 @@ const BoardingForm = ({
   showAdditionalRates,
 }: Props) => {
   const [updateRates, setUpdateRates] = useState(true);
-  const {setFieldTouched, touched, errors, values, setFieldValue} =
-    useFormikContext<FormikValues>();
+  const {
+    control,
+    setValue,
+    formState: {errors},
+  } = useFormContext();
+  // need to replace context with controller for reducing re render
   return (
     <>
       <View>
@@ -66,27 +69,26 @@ const BoardingForm = ({
         {subTitle && showAdditionalRates && (
           <DescriptionText textStyle={styles.subTitle} text={subTitle} />
         )}
-
-        <BoardingInput
-          autoCapitalize={autoCapitalize}
-          autoCorrect={autoCorrect}
-          icon={icon}
-          keyboardType={keyboardType}
-          // placeholder={placeholder}
-          textContentType={textContentType}
-          onChangeText={(text: string) => setFieldValue(name, text)}
-          onBlur={() => setFieldTouched(name)}
-          value={values[name]}
-          error={errors[name]}
-          touch={touched[name]}
-          textInputStyle={textInputStyle}
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <BoardingInput
+              autoCapitalize={autoCapitalize}
+              autoCorrect={autoCorrect}
+              icon={icon}
+              keyboardType={keyboardType}
+              // placeholder={placeholder}
+              textContentType={textContentType}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              value={value}
+              error={errors[name]?.message}
+              textInputStyle={textInputStyle}
+            />
+          )}
+          name={name}
         />
-
-        <ErrorMessage
-          error={errors[name]}
-          visible={touched[name]}
-          auth={auth}
-        />
+        <ErrorMessage error={errors[name]?.message} auth={auth} />
         {checkbox && (
           <AppCheckboxField
             title={checkbox}
@@ -98,6 +100,9 @@ const BoardingForm = ({
               // setFieldValue('updateRates', updateRates);
             }}
             name={'updateRates'}
+            errors={errors}
+            control={control}
+            setValue={setValue}
           />
         )}
         {linkText && (

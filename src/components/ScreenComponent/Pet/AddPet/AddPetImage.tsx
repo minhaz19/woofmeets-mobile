@@ -14,7 +14,6 @@ import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
 import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
-
 interface Props {
   name: string;
 }
@@ -23,8 +22,7 @@ const AddPetImage = ({name}: Props) => {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const {isDarkMode} = useTheme();
   const [petImage, setPetImage] = useState();
-
-  const {setValue, errors, onBlur} = useRHFContext(name);
+  const {setValue, errors, onBlur, value} = useRHFContext(name);
 
   function uploadImage(e: any) {
     setValue(name, e._parts[0][1].uri, {shouldValidate: true});
@@ -56,11 +54,7 @@ const AddPetImage = ({name}: Props) => {
       )}
       {petImage && (
         <View style={styles.container}>
-          <Image
-            source={{uri: petImage}}
-            style={styles.image}
-            // resizeMode="cover"
-          />
+          <Image source={{uri: petImage}} style={styles.image} />
         </View>
       )}
       <View style={styles.errorContainer}>

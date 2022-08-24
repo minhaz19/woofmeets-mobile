@@ -1,6 +1,6 @@
-import {FormikValues, useFormikContext} from 'formik';
 import moment from 'moment';
 import {useMemo, useState} from 'react';
+import {useFormContext} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import {setCross} from '../../../store/slices/hittingCross';
@@ -11,7 +11,7 @@ export const useHandleRange = () => {
   const [prevDate, setPrevDate] = useState<false | undefined | Date>();
   const [startingDate, setStartingDate] = useState('');
   const [endingDate, setEndingDate] = useState('');
-  const {setFieldValue} = useFormikContext<FormikValues>();
+  const {setValue} = useFormContext();
   const cross = useSelector((state: any) => state.cross.cross);
   const dispatch = useDispatch();
   const handleDayPress = (day: any) => {
@@ -36,7 +36,7 @@ export const useHandleRange = () => {
 
   useMemo(() => {
     if (startingDate !== '' && endingDate !== '' && cross === false) {
-      setFieldValue(
+      setValue(
         'dateRange',
         `${moment(startingDate).format('MMMM D, YYYY')} - ${moment(
           endingDate,
@@ -46,9 +46,9 @@ export const useHandleRange = () => {
       setSteps(1);
       setStartingDate('');
       setEndingDate('');
-      setFieldValue('dateRange', '');
+      setValue('dateRange', '');
       dispatch(setCross(false));
     }
-  }, [startingDate, endingDate, setFieldValue, cross, dispatch]);
+  }, [startingDate, endingDate, setValue, cross, dispatch]);
   return {startingDate, endingDate, handleDayPress};
 };

@@ -16,6 +16,7 @@ import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/Image
 import {AuthEmail} from '../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
+import AppForm from '../../../components/common/Form/AppForm';
 const forgotPassData = {
   icon: AuthEmail,
   title: 'Forgot Password?',
@@ -30,7 +31,7 @@ interface Props {
 const ForgotPasswordOtp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const handleSubmit = (value: {}) => {
-    navigation.navigate('AfterIntroScreen');
+    navigation.navigate('SetNewPassword');
   };
   return (
     <ScrollView
@@ -61,14 +62,16 @@ const ForgotPasswordOtp = ({navigation}: Props) => {
             title={forgotPassData.title}
             subTitle={forgotPassData.subTitle}
           />
-          <AuthForm
+          <AppForm
             initialValues={forgotPasswordOtpValue}
-            validationSchema={forgotPasswordOtpValidationSchema}
-            handleSubmit={handleSubmit}
-            btnTitle="Continue"
-            btn2Title="Resend Code"
-            forgotPasswordOpt
-          />
+            validationSchema={forgotPasswordOtpValidationSchema}>
+            <AuthForm
+              handleSubmit={handleSubmit}
+              btnTitle="Continue"
+              btn2Title="Resend Code"
+              forgotPasswordOpt
+            />
+          </AppForm>
           {SCREEN_WIDTH > 800 && <BottomSpacing />}
         </View>
       </KeyboardAvoidingView>

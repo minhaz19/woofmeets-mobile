@@ -58,7 +58,14 @@ const AfterIntroScreen = (props: {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => props.navigation.navigate('BottomTabNavigator')}
+            onSelect={() => props.navigation.navigate('GuestBottomTab')}
+          />
+          <IOSButton
+            title={'Sign In'}
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={btnStyles.containerStyleFullWidth}
+            titleStyle={styles.titleStyle}
+            onSelect={() => props.navigation.navigate('LogIn')}
           />
           <IOSButton
             title={'Create account'}

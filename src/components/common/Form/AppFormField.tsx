@@ -1,4 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {memo} from 'react';
 import ErrorMessage from './ErrorMessage';
 import AppInput from './AppInput';
@@ -8,7 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
-import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
+import {Controller} from 'react-hook-form';
 interface Props {
   name: string;
   label: string;
@@ -27,6 +27,8 @@ interface Props {
   email?: boolean;
   textInputStyle?: ViewStyle;
   auth?: boolean;
+  errors: any;
+  control: any;
 }
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;
@@ -50,35 +52,43 @@ const AppFormField = ({
   email,
   textInputStyle,
   auth,
+  errors,
+  control,
 }: Props) => {
-  const {errors, value, onBlur, onChange} = useRHFContext(name);
   const navigation = useNavigation<NavigationProps>();
+  console.log('calling form field', name);
   return (
     <>
-      <View style={{width: flex ? '48%' : '100%'}}>
+      <View>
         <TitleText textStyle={styles.label} text={label} />
         {subTitle && (
           <DescriptionText textStyle={styles.subTitle} text={subTitle} />
         )}
 
-        <AppInput
-          autoCapitalize={autoCapitalize}
-          autoCorrect={autoCorrect}
-          icon={icon}
-          keyboardType={keyboardType}
-          placeholder={placeholder}
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <AppInput
+              autoCapitalize={autoCapitalize}
+              autoCorrect={autoCorrect}
+              icon={icon}
+              keyboardType={keyboardType}
+              placeholder={placeholder}
+              name={name}
+              textContentType={textContentType}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              value={value}
+              secureTextEntry={secureTextEntry}
+              error={errors[name]}
+              numberOfLines={numberOfLines && numberOfLines}
+              multiline={multiline ? true : false}
+              flex={flex}
+              email={email}
+              textInputStyle={textInputStyle}
+            />
+          )}
           name={name}
-          textContentType={textContentType}
-          onChangeText={onChange}
-          onBlur={onBlur}
-          value={value}
-          secureTextEntry={secureTextEntry}
-          error={errors[name]}
-          numberOfLines={numberOfLines && numberOfLines}
-          multiline={multiline ? true : false}
-          flex={flex}
-          email={email}
-          textInputStyle={textInputStyle}
         />
 
         <ErrorMessage error={errors[name]?.message} auth={auth} />
@@ -94,13 +104,8 @@ const AppFormField = ({
     </>
   );
 };
-const areEqual = (prevProps: any, nextProps: any) => {
-  const a = JSON.stringify(prevProps);
-  const b = JSON.stringify(nextProps);
-  return a === b;
-};
 
-export default memo(AppFormField, areEqual);
+export default AppFormField;
 
 const styles = StyleSheet.create({
   label: {
