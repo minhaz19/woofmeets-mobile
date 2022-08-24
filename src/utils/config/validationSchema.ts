@@ -45,10 +45,10 @@ const forgotPasswordValidationSchema = Yup.object().shape({
 });
 
 const forgotPasswordOtpValidationSchema = Yup.object().shape({
-  code: Yup.string().required().min(4).max(4).label('Opt'),
+  code: Yup.string().required().min(6).max(6).label('OTP'),
 });
 const verifyAccountValidationSchema = Yup.object().shape({
-  code: Yup.string().required().min(4).max(4).label('Opt'),
+  code: Yup.string().required().min(6).max(6).label('OTP'),
 });
 const addPetValidationSchema = Yup.object().shape({
   petImage: Yup.string().required('Image is required'),

@@ -60,11 +60,12 @@ const AfterIntroScreen = (props: {
             titleStyle={btnStyles.titleStyle}
             onSelect={() => props.navigation.navigate('GuestBottomTab')}
           />
+
           <IOSButton
             title={'Sign In'}
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
-            titleStyle={styles.titleStyle}
+            titleStyle={styles.signTitleStyle}
             onSelect={() => props.navigation.navigate('LogIn')}
           />
           <IOSButton
@@ -124,6 +125,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: Text_Size.Text_1,
     flex: 1,
+  },
+  signTitleStyle: {
+    color: Colors.primary,
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: Text_Size.Text_1,
+    flex: 1,
+    marginTop: 15,
   },
   description: {
     marginTop: '3%',

@@ -126,6 +126,7 @@ const Splash = ({}) => {
 
   useEffect(() => {
     signInHandler();
+   
   }, []);
 
   const RenderIcon = () => {

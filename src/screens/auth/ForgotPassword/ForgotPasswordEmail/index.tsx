@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   KeyboardAvoidingView,
   Platform,
@@ -8,30 +7,28 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import Colors from '../../../constants/Colors';
-import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
-import {forgotPasswordOtpValue} from '../../../utils/config/initalValues';
-import {forgotPasswordOtpValidationSchema} from '../../../utils/config/validationSchema';
-import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
-import {AuthEmail} from '../../../assets/svgs/SVG_LOGOS';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import BottomSpacing from '../../../components/UI/BottomSpacing';
-import AppForm from '../../../components/common/Form/AppForm';
+import Colors from '../../../../constants/Colors';
+import AuthForm from '../../../../components/ScreenComponent/Auth/Common/AuthForm';
+import {forgotPasswordValue} from '../../../../utils/config/initalValues';
+import {forgotPasswordValidationSchema} from '../../../../utils/config/validationSchema';
+import ImageAndTitle from '../../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
+import {AuthPassword} from '../../../../assets/svgs/SVG_LOGOS';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import BottomSpacing from '../../../../components/UI/BottomSpacing';
+import AppForm from '../../../../components/common/Form/AppForm';
 const forgotPassData = {
-  icon: AuthEmail,
   title: 'Forgot Password?',
-  subTitle:
-    'We have sent an OTP (One Time Password) to your [Email]. Please enter the 4 digit code below to continue.',
 };
 interface Props {
   navigation: {
     navigate: (arg0: string) => void;
+    goBack: () => void;
   };
 }
-const ForgotPasswordOtp = ({navigation}: Props) => {
+const ForgotPassword = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = (value: {}) => {
-    navigation.navigate('SetNewPassword');
+  const handleSubmit = () => {
+    navigation.navigate('ForgotPasswordOtp');
   };
   return (
     <ScrollView
@@ -57,21 +54,18 @@ const ForgotPasswordOtp = ({navigation}: Props) => {
                 : Colors.background,
             },
           ]}>
-          <ImageAndTitle
-            Icon={forgotPassData.icon}
-            title={forgotPassData.title}
-            subTitle={forgotPassData.subTitle}
-          />
+          <ImageAndTitle Icon={AuthPassword} title={forgotPassData.title} />
           <AppForm
-            initialValues={forgotPasswordOtpValue}
-            validationSchema={forgotPasswordOtpValidationSchema}>
+            initialValues={forgotPasswordValue}
+            validationSchema={forgotPasswordValidationSchema}>
             <AuthForm
               handleSubmit={handleSubmit}
               btnTitle="Continue"
-              btn2Title="Resend Code"
-              forgotPasswordOpt
+              forgotPassword
+              onPress={() => navigation.goBack()}
             />
           </AppForm>
+          <View style={styles.view} />
           {SCREEN_WIDTH > 800 && <BottomSpacing />}
         </View>
       </KeyboardAvoidingView>
@@ -79,7 +73,7 @@ const ForgotPasswordOtp = ({navigation}: Props) => {
   );
 };
 
-export default ForgotPasswordOtp;
+export default ForgotPassword;
 
 const styles = StyleSheet.create({
   container: {
@@ -90,8 +84,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
-    paddingBottom: SCREEN_WIDTH < 800 ? 40 : 0,
-    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
     bottom: 0,
+
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
+  view: {height: 20},
 });
