@@ -63,40 +63,42 @@ const SignUpAuthForm = ({
   termsAndCond,
   loading,
 }: Props) => {
-  const methods = useFormContext();
+  const {
+    formState: {errors},
+    control,
+  } = useFormContext();
   return (
     <View style={styles.container}>
-      <>
-        {signUpData.map(item => (
-          <View key={item.label}>
-            <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
-              icon={item.name === 'password' ? 'lock' : ''}
-              keyboardType={item.keyboardType}
-              placeholder={item.placeholder}
-              textContentType={item.textContentType}
-              name={item.name}
-              label={item.label}
-              secureTextEntry={item.name === 'password' ? true : false}
-              methods={methods}
-            />
-          </View>
-        ))}
-
-        {termsAndCond && (
-          <View style={styles.switchContainer}>
-            <AppSwitch name="terms" terms auth />
-          </View>
-        )}
-        <View style={{marginTop: setNewPassword ? 20 : 10}}>
-          <SubmitButton
-            title={btnTitle}
-            onPress={handleSubmit}
-            loading={loading}
+      {signUpData.map((item, index) => (
+        <View key={index}>
+          <AppFormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon={item.name === 'password' ? 'lock' : ''}
+            keyboardType={item.keyboardType}
+            placeholder={item.placeholder}
+            textContentType={item.textContentType}
+            name={item.name}
+            label={item.label}
+            secureTextEntry={item.name === 'password' ? true : false}
+            errors={errors}
+            control={control}
           />
         </View>
-      </>
+      ))}
+
+      {termsAndCond && (
+        <View style={styles.switchContainer}>
+          <AppSwitch name="terms" terms auth />
+        </View>
+      )}
+      <View style={{marginTop: setNewPassword ? 20 : 10}}>
+        <SubmitButton
+          title={btnTitle}
+          onPress={handleSubmit}
+          loading={loading}
+        />
+      </View>
     </View>
   );
 };

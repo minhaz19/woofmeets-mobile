@@ -1,37 +1,39 @@
 import {View} from 'react-native';
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import AppFormField from '../../../../common/Form/AppFormField';
 import {additionalDetailsBottomInputs} from '../../../../../utils/config/Data/AddPetData';
 
 interface Props {
-  methods: any;
+  errors: any;
+  control: any;
 }
-const AdditionalButtonInputs = ({methods}: Props) => {
+const AdditionalButtonInputs = ({errors, control}: Props) => {
+  console.log('from buttom');
   return (
     <View>
-      {additionalDetailsBottomInputs.map((item, index) => (
-        <AppFormField
-          key={index}
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType={'default'}
-          placeholder={item.placeholder}
-          textContentType={'none'}
-          name={item.name}
-          label={item.title}
-          subTitle={item.subTitle}
-          multiline={item.numberOfLines ? true : false}
-          numberOfLines={item.numberOfLines! && item.numberOfLines!}
-          methods={methods}
-        />
-      ))}
+      {additionalDetailsBottomInputs.map(
+        useCallback(
+          (item, index) => (
+            <AppFormField
+              key={index}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType={'default'}
+              placeholder={item.placeholder}
+              textContentType={'none'}
+              name={item.name}
+              label={item.title}
+              subTitle={item.subTitle}
+              multiline={item.numberOfLines ? true : false}
+              numberOfLines={item.numberOfLines! && item.numberOfLines!}
+              errors={errors}
+              control={control}
+            />
+          ),
+          [errors, control],
+        ),
+      )}
     </View>
   );
 };
-const areEqual = (prevProps: any, nextProps: any) => {
-  return (
-    prevProps.methods.formState.isDirty === nextProps.methods.formState.isDirty
-  );
-};
-
-export default memo(AdditionalButtonInputs, areEqual);
+export default memo(AdditionalButtonInputs);

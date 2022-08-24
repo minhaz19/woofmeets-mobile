@@ -8,7 +8,7 @@ import DescriptionText from '../../../common/text/DescriptionText';
 import {InfoSvg} from '../../Inbox/utils/SvgComponent/SvgComponent';
 import Colors from '../../../../constants/Colors';
 import AppCheckboxField from '../../../common/Form/AppCheckboxField';
-import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
+import {Controller, useFormContext} from 'react-hook-form';
 
 interface Props {
   name: string;
@@ -51,7 +51,11 @@ const BoardingForm = ({
   showAdditionalRates,
 }: Props) => {
   const [updateRates, setUpdateRates] = useState(true);
-  const {onBlur, errors, value, onChange} = useRHFContext(name);
+  const {
+    control,
+    setValue,
+    formState: {errors},
+  } = useFormContext();
   // need to replace context with controller for reducing re render
   return (
     <>
@@ -65,21 +69,25 @@ const BoardingForm = ({
         {subTitle && showAdditionalRates && (
           <DescriptionText textStyle={styles.subTitle} text={subTitle} />
         )}
-
-        <BoardingInput
-          autoCapitalize={autoCapitalize}
-          autoCorrect={autoCorrect}
-          icon={icon}
-          keyboardType={keyboardType}
-          // placeholder={placeholder}
-          textContentType={textContentType}
-          onChangeText={onChange}
-          onBlur={onBlur}
-          value={value}
-          error={errors[name]?.message}
-          textInputStyle={textInputStyle}
+        <Controller
+          control={control}
+          render={({field: {onChange, onBlur, value}}) => (
+            <BoardingInput
+              autoCapitalize={autoCapitalize}
+              autoCorrect={autoCorrect}
+              icon={icon}
+              keyboardType={keyboardType}
+              // placeholder={placeholder}
+              textContentType={textContentType}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              value={value}
+              error={errors[name]?.message}
+              textInputStyle={textInputStyle}
+            />
+          )}
+          name={name}
         />
-
         <ErrorMessage error={errors[name]?.message} auth={auth} />
         {checkbox && (
           <AppCheckboxField
@@ -92,6 +100,9 @@ const BoardingForm = ({
               // setFieldValue('updateRates', updateRates);
             }}
             name={'updateRates'}
+            errors={errors}
+            control={control}
+            setValue={setValue}
           />
         )}
         {linkText && (

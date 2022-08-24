@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, {memo} from 'react';
+import React, {useCallback} from 'react';
 import HeaderText from '../../../../common/text/HeaderText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import TitleText from '../../../../common/text/TitleText';
@@ -8,11 +8,20 @@ import Text_Size from '../../../../../constants/textScaling';
 import {addPetCheck1} from '../../../../../utils/config/Data/AddPetData';
 
 interface Props {
-  methods: any;
+  errors: any;
+  control: any;
+  setValue: any;
   active0: number | null;
   handleActiveCheck: (arg: number, arg2: number) => void;
 }
-const AddPetCheck = ({methods, active0, handleActiveCheck}: Props) => {
+const AddPetCheck = ({
+  errors,
+  control,
+  setValue,
+  active0,
+  handleActiveCheck,
+}: Props) => {
+  console.log('calling pet check');
   return (
     <View>
       <HeaderText textStyle={styles.header} text={addPetCheck1.header!} />
@@ -30,10 +39,15 @@ const AddPetCheck = ({methods, active0, handleActiveCheck}: Props) => {
             square
             active={active0 === item.id ? true : false}
             name={addPetCheck1.name!}
-            onPress={() => {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            onPress={useCallback(() => {
               handleActiveCheck(addPetCheck1.id!, item.id);
-            }}
-            methods={methods}
+              setValue(addPetCheck1.name, item.id, {
+                shouldValidate: errors[addPetCheck1.name] ? true : false,
+              });
+            }, [item.id])}
+            errors={errors}
+            control={control}
           />
         ))}
       </View>
@@ -41,7 +55,7 @@ const AddPetCheck = ({methods, active0, handleActiveCheck}: Props) => {
   );
 };
 
-export default memo(AddPetCheck);
+export default AddPetCheck;
 
 const styles = StyleSheet.create({
   topHeader: {

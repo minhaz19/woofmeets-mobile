@@ -13,19 +13,16 @@ import {UploadIcon} from '../../../../assets/svgs/SVG_LOGOS';
 import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
+import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
 interface Props {
   name: string;
-  methods: any;
 }
-const AddPetImage = ({name, methods}: Props) => {
+const AddPetImage = ({name}: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const {isDarkMode} = useTheme();
   const [petImage, setPetImage] = useState();
-  const {
-    setValue,
-    formState: {errors, onBlur, value},
-  } = methods;
+  const {setValue, errors, onBlur, value} = useRHFContext(name);
 
   function uploadImage(e: any) {
     setValue(name, e._parts[0][1].uri, {shouldValidate: true});

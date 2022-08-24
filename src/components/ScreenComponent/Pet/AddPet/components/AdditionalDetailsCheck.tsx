@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {additionalDetailChecks} from '../../../../../utils/config/Data/AddPetData';
 import TitleText from '../../../../common/text/TitleText';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
@@ -14,7 +14,9 @@ interface Props {
   active6: number | null;
   active7: number | null;
   handleActiveCheck: (arg: number, arg1: number) => void;
-  methods: any;
+  errors: any;
+  control: any;
+  setValue: any;
 }
 const AdditionalDetailsCheck = ({
   active1,
@@ -25,8 +27,12 @@ const AdditionalDetailsCheck = ({
   active6,
   active7,
   handleActiveCheck,
-  methods,
+  errors,
+  control,
+  setValue,
 }: Props) => {
+  console.log('additional pet');
+
   return (
     <View>
       {additionalDetailChecks.map((item, index) => (
@@ -39,7 +45,6 @@ const AdditionalDetailsCheck = ({
                 title={type.type}
                 radio
                 key={key}
-                typeKey={type.id}
                 active={
                   (type.id === active1 ? true : false) ||
                   (type.id === active2 ? true : false) ||
@@ -49,8 +54,13 @@ const AdditionalDetailsCheck = ({
                   (type.id === active6 ? true : false) ||
                   (type.id === active7 ? true : false)
                 }
-                methods={methods}
-                onPress={() => handleActiveCheck(item.id, type.id)}
+                errors={errors}
+                control={control}
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                onPress={useCallback(() => {
+                  handleActiveCheck(item.id, type.id);
+                  setValue(item.name, type.id);
+                }, [type.id])}
                 name={item.name}
               />
             ))}

@@ -4,26 +4,39 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {Alert} from 'react-native';
-import {LoginManager} from 'react-native-fbsdk-next';
+import {LoginManager, Profile, Settings} from 'react-native-fbsdk-next';
+import {providerAuth} from '../../../store/slices/auth/userAction';
+import {useAppDispatch} from '../../../store/store';
 
 export const useHandleProviderAuth = () => {
   const [user, setUser] = useState({});
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
-        '527665236551-b62374li29m4maonk4n3bkv0a5uacnp4.apps.googleusercontent.com',
+        '313710503954-rfarp6c2ngohhtlo1cvpetiaj1lh8d2o.apps.googleusercontent.com',
       offlineAccess: true,
       iosClientId:
-        '527665236551-ecpfe6kab9q918ca6t3u4eddpmlctupo.apps.googleusercontent.com',
+        '313710503954-3n02f9k6848u5f2lkoaefm5ii33pfivu.apps.googleusercontent.com',
     });
   }, []);
   const google = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      setUser({userInfo});
+      if (userInfo.user) {
+        // setUser(user);
+        const userInfos = {
+          email: userInfo?.user.email,
+          firstName: userInfo?.user.givenName,
+          lastName: userInfo?.user.familyName,
+          provider: 'GOOGLE',
+          facebookId: userInfo?.user.id,
+        };
+        dispatch(providerAuth(userInfos));
+      }
     } catch (error: any) {
+      Alert.alert('Login failed');
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -35,25 +48,42 @@ export const useHandleProviderAuth = () => {
       }
     }
   };
-  const facebook = () => {
-    LoginManager.logInWithPermissions(['public_profile', 'email']).then(
-      function (result: any) {
+
+  const facebook = async () => {
+    Settings.initializeSDK();
+    try {
+      const result = await LoginManager.logInWithPermissions([
+        'public_profile',
+      ]);
+      if (result) {
         if (result.isCancelled) {
           Alert.alert('Login Cancelled ' + JSON.stringify(result));
         } else {
-          setUser(result);
-          Alert.alert(
-            'Login success with  permisssions: ' +
-              result.grantedPermissions.toString(),
-          );
-          Alert.alert('Login Success ' + result.toString());
+          try {
+            const currentProfile = await Profile.getCurrentProfile();
+
+            if (currentProfile) {
+              setUser(currentProfile);
+              const userInfo = {
+                email: currentProfile?.email,
+                firstName: currentProfile?.firstName,
+                lastName: currentProfile?.lastName,
+                provider: 'FACEBOOK',
+                facebookId: currentProfile?.userID,
+              };
+              dispatch(providerAuth(userInfo));
+            }
+          } catch (error) {
+            console.log(error);
+          }
         }
-      },
-      function (error) {
-        Alert.alert('Login failed with error: ' + error);
-      },
-    );
+      }
+    } catch (error) {
+      Alert.alert('Login failed');
+      console.log(error);
+    }
   };
+
   const handleGFauth = (auth: number | boolean) => {
     switch (auth) {
       case 0:

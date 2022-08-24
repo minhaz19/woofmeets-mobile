@@ -7,7 +7,7 @@ interface Props {
   label: string;
   subTitle: string;
   name: string;
-  methods: any;
+  methods?: any;
 }
 const AppImagePicker = ({label, name, subTitle}: Props) => {
   const {setValue, errors, value} = useRHFContext(name);
@@ -15,6 +15,7 @@ const AppImagePicker = ({label, name, subTitle}: Props) => {
   //   setValue,
   //   formState: {errors, value},
   // } = methods;
+  console.log('values', value);
   const imageUris = value;
   function handleAdd(uri: string) {
     setValue(name, [...imageUris, uri], {shouldValidate: true});
