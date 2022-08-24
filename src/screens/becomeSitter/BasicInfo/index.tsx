@@ -4,6 +4,7 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BasicInfoSitterInput from '../../../components/ScreenComponent/becomeSitter/basicInfo';
 import {basicInfoValue} from '../../../utils/config/becomeSitter/initalValues';
 import {basicInfoValidationSchema} from '../../../utils/config/becomeSitter/validationSchema';
+import AppForm from '../../../components/common/Form/AppForm';
 
 const BasicInfoSitter = () => {
   const {colors} = useTheme();
@@ -16,11 +17,11 @@ const BasicInfoSitter = () => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <BasicInfoSitterInput
-        initialValues={basicInfoValue}
+      <AppForm
         validationSchema={basicInfoValidationSchema}
-        handleSubmit={handleSubmit}
-      />
+        initialValues={basicInfoValue}>
+        <BasicInfoSitterInput handleSubmit={handleSubmit} />
+      </AppForm>
     </View>
   );
 };

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {StyleSheet, View} from 'react-native';
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import TitleText from '../../../../common/text/TitleText';
 import {careInfoChecks} from '../../../../../utils/config/Data/AddPetData';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
@@ -10,15 +11,19 @@ interface Props {
   active10: number | null;
   active11: number | null;
   handleActiveCheck: (arg: number, arg1: number) => void;
-  methods: any;
+  errors: any;
+  control: any;
+  setValue: any;
 }
-const AdditionalCareInputs = ({
+const AdditionalCareInfoChecks = ({
   active8,
   active9,
   active10,
   active11,
   handleActiveCheck,
-  methods,
+  errors,
+  control,
+  setValue,
 }: Props) => {
   return (
     <View>
@@ -39,7 +44,6 @@ const AdditionalCareInputs = ({
                 title={type.type}
                 radio
                 key={key}
-                typeKey={type.id}
                 active={
                   (type.id === active8 ? true : false) ||
                   (type.id === active9 ? true : false) ||
@@ -47,8 +51,12 @@ const AdditionalCareInputs = ({
                   (type.id === active11 ? true : false)
                 }
                 name={item.name}
-                methods={methods}
-                onPress={() => handleActiveCheck(item.id, type.id)}
+                errors={errors}
+                control={control}
+                onPress={useCallback(() => {
+                  handleActiveCheck(item.id, type.id);
+                  setValue(item.name, type.id);
+                }, [type.id])}
               />
             ))}
           </View>
@@ -58,7 +66,7 @@ const AdditionalCareInputs = ({
   );
 };
 
-export default memo(AdditionalCareInputs);
+export default memo(AdditionalCareInfoChecks);
 
 const styles = StyleSheet.create({
   title: {

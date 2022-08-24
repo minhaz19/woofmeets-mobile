@@ -1,17 +1,21 @@
 import {StyleSheet, View} from 'react-native';
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {medicationChecks} from '../../../../../utils/config/Data/AddPetData';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import TitleText from '../../../../common/text/TitleText';
 import Text_Size from '../../../../../constants/textScaling';
 
 interface Props {
-  methods: any;
   active12: number | null;
   handleActiveCheck: (arg0: number, arg1: number) => void;
+  errors: any;
+  setValue: any;
+  control: any;
 }
 const AdditionalMedicationCheck = ({
-  methods,
+  errors,
+  setValue,
+  control,
   active12,
   handleActiveCheck,
 }: Props) => {
@@ -27,8 +31,14 @@ const AdditionalMedicationCheck = ({
             typeKey={item.id}
             active={item.id === active12 ? true : false}
             name={medicationChecks.name!}
-            methods={methods}
-            onPress={() => handleActiveCheck(112, item.id)}
+            errors={errors}
+            setValue={setValue}
+            control={control}
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            onPress={useCallback(() => {
+              handleActiveCheck(112, item.id);
+              setValue(medicationChecks.name, item.id);
+            }, [item.id])}
           />
         ))}
       </View>

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-native/no-inline-styles */
 import React, {memo} from 'react';
 import ErrorMessage from './ErrorMessage';
 import AppInput from './AppInput';
@@ -28,7 +27,8 @@ interface Props {
   email?: boolean;
   textInputStyle?: ViewStyle;
   auth?: boolean;
-  methods?: any;
+  errors: any;
+  control: any;
 }
 type StackParamList = {
   ForgotPassword: {foo: string; onBar: () => void} | undefined;
@@ -52,18 +52,14 @@ const AppFormField = ({
   email,
   textInputStyle,
   auth,
-  methods,
+  errors,
+  control,
 }: Props) => {
-  const {
-    getValues,
-    formState: {errors},
-    control,
-    watch,
-  } = methods;
   const navigation = useNavigation<NavigationProps>();
+  console.log('calling form field', name);
   return (
     <>
-      <View style={{width: flex ? '48%' : '100%'}}>
+      <View>
         <TitleText textStyle={styles.label} text={label} />
         {subTitle && (
           <DescriptionText textStyle={styles.subTitle} text={subTitle} />
@@ -108,13 +104,8 @@ const AppFormField = ({
     </>
   );
 };
-const areEqual = (prevProps: any, nextProps: any) => {
-  const a = prevProps.methods.watch(prevProps.name);
-  return (
-    prevProps.methods.formState.isDirty !== nextProps.methods.formState.isDirty
-  );
-};
-export default memo(AppFormField);
+
+export default AppFormField;
 
 const styles = StyleSheet.create({
   label: {

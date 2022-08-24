@@ -13,6 +13,7 @@ import AppForm from '../../../components/common/Form/AppForm';
 const AddPet = () => {
   const dispatch = useDispatch();
   const handleSubmit = (e: any) => {
+    console.log('getting values', e);
     dispatch(setPetValue(e));
   };
   const {isDarkMode} = useTheme();

@@ -8,6 +8,7 @@ import ContactInput from '../../components/ScreenComponent/setting/ContactInput'
 import {contactValues} from '../../utils/config/setting/initalValues';
 import {contactValidationSchema} from '../../utils/config/setting/validationSchema';
 import BottomSpacing from '../../components/UI/BottomSpacing';
+import AppForm from '../../components/common/Form/AppForm';
 
 const ContactScreen = () => {
   const {colors} = useTheme();
@@ -19,11 +20,11 @@ const ContactScreen = () => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <ContactInput
+      <AppForm
         initialValues={contactValues}
-        validationSchema={contactValidationSchema}
-        handleSubmit={() => {}}
-      />
+        validationSchema={contactValidationSchema}>
+        <ContactInput handleSubmit={() => {}} />
+      </AppForm>
       <View style={styles.footerContainer}>
         <View style={styles.termsContainer}>
           <Text style={[styles.details, {color: colors.lightText}]}>

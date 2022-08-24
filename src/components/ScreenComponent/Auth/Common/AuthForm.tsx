@@ -34,7 +34,10 @@ const AuthForm = ({
   onPress,
   loading,
 }: Props) => {
-  const methods = useFormContext();
+  const {
+    control,
+    formState: {errors},
+  } = useFormContext();
   return (
     <View style={styles.container}>
       <>
@@ -54,7 +57,8 @@ const AuthForm = ({
                 label={setNewPassword ? 'Old Password' : 'Email/Phone Number'}
                 secureTextEntry={setNewPassword ? true : false}
                 email={setNewPassword ? false : true}
-                methods={methods}
+                errors={errors}
+                control={control}
                 auth
               />
             </View>
@@ -68,7 +72,8 @@ const AuthForm = ({
                 placeholder={
                   setNewPassword ? 'Enter new password' : 'Enter your password'
                 }
-                methods={methods}
+                errors={errors}
+                control={control}
                 name={setNewPassword ? 'newPass' : 'password'}
                 label={setNewPassword ? 'New Password' : 'Password'}
                 forgotPassword={setNewPassword || termsAndCond ? false : true}
@@ -84,7 +89,8 @@ const AuthForm = ({
             autoCorrect={false}
             icon={'lock'}
             secureTextEntry
-            methods={methods}
+            errors={errors}
+            control={control}
             placeholder="Confirm your password"
             textContentType="password"
             name="confirmPass"

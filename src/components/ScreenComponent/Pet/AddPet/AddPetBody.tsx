@@ -15,10 +15,10 @@ import {useFormContext} from 'react-hook-form';
 import AddPetCheck from './components/AddPetCheck';
 import AddPetInfoInputs from './components/AddPetInfoInputs';
 import AdditionalDetailsCheck from './components/AdditionalDetailsCheck';
-import AdditionalCareInputs from './components/AdditionalCareInfoChecks';
 import AdditionalMedicationCheck from './components/AdditionalMedicationCheck';
 import AdditionalButtonInputs from './components/AdditionalButtonInputs';
 import {useHandleCheck} from '../../../../utils/helpers/usehandleActiveCheck';
+import AdditionalCareInfoChecks from './components/AdditionalCareInfoChecks';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -42,20 +42,28 @@ const AddPetBody = ({handleSubmit}: Props) => {
     active11,
     active12,
   } = useHandleCheck();
-  const methods = useFormContext();
+  const {
+    control,
+    setValue,
+    formState: {errors},
+  } = useFormContext();
+  console.log('active', active0);
 
   return (
     <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.inputContainer}>
-        <AddPetImage name="petImage" methods={methods} />
+        <AddPetImage name="petImage" />
         <AddPetCheck
-          methods={methods}
+          errors={errors}
+          setValue={setValue}
+          control={control}
           active0={active0}
           handleActiveCheck={handleActiveCheck}
         />
-        <AddPetInfoInputs methods={methods} />
+        <AddPetInfoInputs errors={errors} control={control} />
+
         <TouchableOpacity
           style={styles.spaceHeader}
           onPress={() => setIsAdditionalDetails(!isAdditionalDetails)}>
@@ -71,10 +79,11 @@ const AddPetBody = ({handleSubmit}: Props) => {
               active5={active5}
               active6={active6}
               active7={active7}
-              methods={methods}
+              errors={errors}
+              setValue={setValue}
+              control={control}
               handleActiveCheck={handleActiveCheck}
             />
-
             <AppFormField
               autoCapitalize="none"
               autoCorrect={false}
@@ -85,11 +94,14 @@ const AddPetBody = ({handleSubmit}: Props) => {
               label={petDescriptionInput.title!}
               multiline
               numberOfLines={petDescriptionInput.numberOfLines}
-              methods={methods}
+              errors={errors}
+              control={control}
             />
 
-            <AdditionalCareInputs
-              methods={methods}
+            <AdditionalCareInfoChecks
+              errors={errors}
+              setValue={setValue}
+              control={control}
               handleActiveCheck={handleActiveCheck}
               active8={active8}
               active9={active9}
@@ -107,23 +119,25 @@ const AddPetBody = ({handleSubmit}: Props) => {
               label={additionalDescriptionInput.title!}
               multiline
               numberOfLines={additionalDescriptionInput.numberOfLines}
-              methods={methods}
+              errors={errors}
+              control={control}
             />
 
             <AdditionalMedicationCheck
-              methods={methods}
+              errors={errors}
+              setValue={setValue}
+              control={control}
               active12={active12}
               handleActiveCheck={handleActiveCheck}
             />
 
-            <AdditionalButtonInputs methods={methods} />
+            <AdditionalButtonInputs errors={errors} control={control} />
           </View>
         )}
         <AppImagePicker
           label="Photo Gallery"
           subTitle="Show off your pet through image gallery"
           name="photoGallery"
-          methods={methods}
         />
         <SubmitButton title="Add Pet" onPress={handleSubmit} />
         <BottomSpacing />

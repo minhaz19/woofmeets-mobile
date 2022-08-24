@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import storage from '../../../utils/helpers/auth/storage';
-import {registerUser, userLogin} from './userAction';
+import {providerAuth, registerUser, userLogin} from './userAction';
 
 const initialState: any = {
   isLoggedIn: false,
@@ -8,6 +8,7 @@ const initialState: any = {
   userToken: null,
   error: null,
   loading: false,
+  providerLoading: false,
   success: false,
 };
 
@@ -17,10 +18,10 @@ const userSlice = createSlice({
   reducers: {
     signIn: (state, action) => {
       state.loading = false;
-        state.success = true; // login successful
-        state.userInfo = action.payload;
-        state.userToken = action.payload.token;
-        state.isLoggedIn = true;
+      state.success = true; // login successful
+      state.userInfo = action.payload;
+      state.userToken = action.payload.token;
+      state.isLoggedIn = true;
     },
     logout: state => {
       state.loading = false;
@@ -40,10 +41,10 @@ const userSlice = createSlice({
       })
       .addCase(userLogin.fulfilled, (state, {payload}) => {
         state.loading = false;
-        state.success = true; // login successful
-        state.userInfo = payload.data.info;
+        state.isLoggedIn = true; // login successful
+        state.userInfo = payload;
         state.userToken = payload.data.access_token;
-        state.isLoggedIn = true;
+        state.success = true; // login successful
       })
       .addCase(userLogin.rejected, (state, {payload}) => {
         state.loading = false;
@@ -55,13 +56,28 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, {payload}) => {
         state.loading = false;
-        state.success = true; // registration successful
+        state.isLoggedIn = true; // registration successful
         state.userInfo = payload;
         state.userToken = payload.data.access_token;
-        state.isLoggedIn = true;
+        state.success = true;
       })
       .addCase(registerUser.rejected, (state, {payload}) => {
         state.loading = false;
+        state.error = payload;
+      })
+      .addCase(providerAuth.pending, state => {
+        state.providerLoading = true;
+        state.error = null;
+      })
+      .addCase(providerAuth.fulfilled, (state, {payload}) => {
+        state.providerLoading = false;
+        state.isLoggedIn = true; // provider authentication successful
+        state.userInfo = payload;
+        state.success = true;
+        state.userToken = payload.data.access_token;
+      })
+      .addCase(providerAuth.rejected, (state, {payload}) => {
+        state.providerLoading = false;
         state.error = payload;
       });
   },

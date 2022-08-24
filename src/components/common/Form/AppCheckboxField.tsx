@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
 import React, {memo} from 'react';
@@ -7,13 +6,15 @@ import ErrorMessage from './ErrorMessage';
 import {Controller} from 'react-hook-form';
 interface Props {
   title: string;
-  typeKey: number;
+  typeKey?: number | null;
   active: boolean;
   name: string;
   square?: boolean;
   radio?: boolean;
   onPress: () => void;
-  methods?: any;
+  errors: any;
+  control: any;
+  setValue?: (arg1: string, arg2: any, arg3: any) => void;
 }
 const AppCheckboxField = ({
   title,
@@ -23,17 +24,10 @@ const AppCheckboxField = ({
   name,
   radio,
   onPress,
-  methods,
+  control,
+  errors,
 }: Props) => {
-  const {
-    setValue,
-    control,
-    formState: {errors},
-  } = methods;
-  const handleValues = () => {
-    setValue(name, typeKey, {shouldValidate: true});
-    onPress();
-  };
+  console.log('calling check field');
   return (
     <View style={styles.container}>
       <View style={{marginBottom: errors[name]?.message ? 25 : 0}}>
@@ -46,7 +40,7 @@ const AppCheckboxField = ({
               square={square}
               radio={radio}
               active={active}
-              onPress={handleValues}
+              onPress={onPress}
               onBlur={onBlur}
             />
           )}
@@ -59,11 +53,6 @@ const AppCheckboxField = ({
         </View>
       )}
     </View>
-  );
-};
-const areEqual = (prevProps: any, nextProps: any) => {
-  return (
-    prevProps.methods.formState.isDirty === nextProps.methods.formState.isDirty
   );
 };
 export default memo(AppCheckboxField);

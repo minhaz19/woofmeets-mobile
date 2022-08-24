@@ -17,6 +17,7 @@ import PromoGiftCodes from '../screens/Misc/PromoGiftCodes';
 import ReceivePayments from '../screens/Misc/ReceivePayments';
 import Gallery from '../screens/becomeSitter/Gallery/Gallery';
 import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
+import GuestBottomTabNavigator from './GuestBottomTabNavigator';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -35,6 +36,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="AuthNavigator"
           component={AuthNavigator}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="GuestBottomTabNavigator"
+          component={GuestBottomTabNavigator}
           options={{headerShown: false}}
         />
         <Stack.Screen
@@ -106,10 +112,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack
-                navigation={navigation}
-                title="Profile"
-              />
+              <HeaderWithBack navigation={navigation} title="Profile" />
             ),
             backgroundColor: Colors.primary,
           })}
