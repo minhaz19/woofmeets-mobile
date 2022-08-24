@@ -23,7 +23,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       title: 'Logout',
       screenName: () => {
         dispatch(logout());
-        props.navigation.navigate('LogIn');
+        props.navigation.navigate('AuthNavigator');
       },
       opacity: 1,
     },

@@ -101,9 +101,8 @@ const Splash = ({}) => {
   const signInHandler = async () => {
     try {
       const token = await authStorage.getToken();
-      console.log('toekn', token);
       if (token) {
-        const decode = jwt_decode(token);
+        const decode: any = jwt_decode(token);
         const expiryData = decode.exp;
         const nowDate = new Date();
         let expDate = new Date(expiryData * 1000) > nowDate;
@@ -126,6 +125,7 @@ const Splash = ({}) => {
 
   useEffect(() => {
     signInHandler();
+   
   }, []);
 
   const RenderIcon = () => {
