@@ -13,9 +13,7 @@ import {SCREEN_WIDTH} from '../../constants/WindowSize';
 
 const CreditAndDebitCard = () => {
   const {colors} = useTheme();
-  const handleValues = (e: any) => {
-    console.log('debit and credit,', e);
-  };
+  const handleValues = () => {};
   return (
     <View
       style={[

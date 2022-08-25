@@ -60,7 +60,6 @@ export const useHandleProviderAuth = () => {
         } else {
           try {
             const currentProfile = await Profile.getCurrentProfile();
-            console.log('current user', currentProfile);
             if (currentProfile) {
               setUser(currentProfile);
               const userInfo = {

@@ -11,7 +11,6 @@ export const userLogin = createAsyncThunk(
         email,
         password,
       });
-      console.log('login response', response);
       if (!response.ok) {
         if (response.data) {
           Alert.alert(response.data.message);
@@ -82,7 +81,6 @@ export const providerAuth = createAsyncThunk(
         '/auth/Oauth/signup',
         userInfo,
       );
-      console.log('response', response);
       if (!response.ok) {
         if (response.data) {
           Alert.alert(response.data.message);
