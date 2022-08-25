@@ -24,24 +24,33 @@ import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import AppForm from '../../../../components/common/Form/AppForm';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
+import {RouteProp} from '@react-navigation/native';
 
 interface Props {
   navigation: {
     goBack: () => void;
     navigate: (arg0: string) => void;
   };
+  route: RouteProp<{params: {token: string}}, 'params'>;
 }
 const slug = '/auth/forget-password';
-const ForgotPasswordReset = ({navigation}: Props) => {
+const ForgotPasswordReset = ({route, navigation}: Props) => {
   const height = SCREEN_HEIGHT;
   const isDarkMode = useColorScheme() === 'dark';
+  const {token} = route.params;
   const {request, loading} = useApi(methods._post);
   const handleSubmit = async ({newPassword}: any) => {
-    const result = await request(slug, {password: newPassword});
+    const result = await request(
+      slug,
+      {password: newPassword},
+      `Bearer ${token}`,
+    );
     if (result.ok) {
       navigation.navigate('LogIn');
     }
   };
+  console.log('token', token);
+  // problem: 'TIMEOUT_ERROR';
   return (
     <ScrollView
       contentContainerStyle={{

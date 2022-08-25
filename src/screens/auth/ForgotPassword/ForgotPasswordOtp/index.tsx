@@ -27,7 +27,7 @@ const forgotPassData = {
 };
 interface Props {
   navigation: {
-    navigate: (arg0: string) => void;
+    navigate: (arg0: string, arg2: {token: string}) => void;
   };
   route: RouteProp<{params: {email: string}}, 'params'>;
 }
@@ -43,7 +43,9 @@ const ForgotPasswordOtp = ({route, navigation}: Props) => {
     });
 
     if (result.ok) {
-      navigation.navigate('ForgotPasswordReset');
+      navigation.navigate('ForgotPasswordReset', {
+        token: result?.data.data.token,
+      });
     }
   };
   return (
