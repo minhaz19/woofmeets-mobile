@@ -74,16 +74,16 @@ const BoardingSettings: BoardingSettingsType = {
   extendedStayRate: '0',
   bathingGrooming: '0',
   pickUpDropOff: '0',
-  homeFullTimeInWeek: true,
+  homeFullTimeInWeek: '',
   selectDay: [],
   homeFullTimeInDay: '',
   advancedNotice: '',
   homeType: '',
   yardType: '',
-  petOwnerBoarding: '',
-  hosting: '',
+  petOwnerBoarding: [],
+  hosting: [],
   cancellationPolicy: '',
-  petPreference: '',
+  petPreference: [],
 };
 
 export {

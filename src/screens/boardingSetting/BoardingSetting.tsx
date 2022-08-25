@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
@@ -9,7 +8,9 @@ import AppForm from '../../components/common/Form/AppForm';
 
 const BoardingSetting = () => {
   const {colors} = useTheme();
-  const handleSubmit = (e: any) => {};
+  const handleSubmit = () => {
+    // console.log('submitted', e);
+  };
   return (
     <View
       style={[
@@ -20,7 +21,6 @@ const BoardingSetting = () => {
       ]}>
       <AppForm
         initialValues={BoardingSettings}
-        // onSubmit={handleSubmit}
         validationSchema={BoardingSettingsSchema}>
         <BoardingSettingInfo handleSubmit={handleSubmit} />
       </AppForm>

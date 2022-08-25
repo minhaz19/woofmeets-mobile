@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import ErrorMessage from '../../../common/Form/ErrorMessage';
 import Colors from '../../../../constants/Colors';
 import Card from '../../../UI/Card';
-import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
+import {Controller} from 'react-hook-form';
 
 interface Props {
   title: string;
@@ -15,6 +14,8 @@ interface Props {
   onPress: () => void;
   active: boolean;
   selectDays: any;
+  control: any,
+  setValue: (name: string, value: any, shouldValidate: any) => void;
 }
 
 const BoardingDay: FC<Props> = ({
@@ -24,10 +25,14 @@ const BoardingDay: FC<Props> = ({
   onPress,
   active,
   selectDays,
+  control,
+  setValue,
 }) => {
   const {colors} = useTheme();
-  const {setValue, errors, onBlur} = useRHFContext(name);
-
+  const handleValues = () => {
+    setValue(name, typeKey, {shouldValidate: true});
+    onPress();
+  };
   // const filteredDays = selectDays
   //         ?.filter((item: any) => {
   //           return item.checked;
@@ -44,42 +49,43 @@ const BoardingDay: FC<Props> = ({
 
   return (
     <View style={styles.rootContainer}>
-      <Card style={styles.cardSetting}>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => {
-            onPress();
-          }}
-          onBlur={onBlur}>
-          <View
-            style={[
-              styles.container,
-              active
-                ? {
-                    borderColor: Colors.primary,
-                    backgroundColor: colors.backgroundColor,
-                  }
-                : {
-                    backgroundColor: colors.backgroundColor,
-                    borderColor: Colors.gray,
-                  },
-            ]}>
-            <Text style={[styles.text, {color: colors.descriptionText}]}>
-              {title}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </Card>
-      {/* {typeKey === 29 && ( */}
-      <View style={styles.errorContainer}>
-        <ErrorMessage error={errors[name]?.message} />
-      </View>
-      {/* )} */}
+      <Controller
+        control={control}
+        render={({field: {onBlur}}) => (
+          <Card style={styles.cardSetting}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => {
+                handleValues();
+              }}
+              onBlur={onBlur}>
+              <View
+                style={[
+                  styles.container,
+                  active
+                    ? {
+                        borderColor: Colors.primary,
+                        backgroundColor: colors.backgroundColor,
+                      }
+                    : {
+                        backgroundColor: colors.backgroundColor,
+                        borderColor: Colors.gray,
+                      },
+                ]}>
+                <Text style={[styles.text, {color: colors.descriptionText}]}>
+                  {title}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </Card>
+        )}
+        name={name}
+      />
     </View>
   );
 };
 
-export default BoardingDay;
+export default memo(BoardingDay);
 
 const styles = StyleSheet.create({
   container: {
