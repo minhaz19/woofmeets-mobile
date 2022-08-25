@@ -7,7 +7,7 @@ import DoggyDayCare from './SelectService/DoggyDayCare/DoggyDayCare';
 import HouseSitting from './SelectService/HouseSitting/HouseSitting';
 import DropInVisits from './SelectService/DropInVisits/DropInVisits';
 import HeaderWithBack from '../../common/header/HeaderWithBack';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   route: {params: {itemId: number}};

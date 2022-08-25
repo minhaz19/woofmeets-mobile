@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, TextInput, View} from 'react-native';
-import React from 'react';
+import React, { memo } from 'react';
 import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import ShortText from '../../../common/text/ShortText';
@@ -48,7 +48,7 @@ const BoardingInput = ({...otherProps}) => {
   );
 };
 
-export default BoardingInput;
+export default memo(BoardingInput);
 
 const styles = StyleSheet.create({
   rootContainer: {

@@ -1,14 +1,14 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
 import Colors from '../../constants/Colors';
 import ServiceMain from '../../screens/Service/SelectService';
-import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
 import PetCareZipSearch from '../../screens/PetCareZipSearch';
 import AllProvider from '../../screens/Service/AllProvider';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import {FilterIcon} from '../../assets/svgs/SVG_LOGOS';
 import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../store/slices/openFilter';
+import { createStackNavigator } from '@react-navigation/stack';
+import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
 
 const Stack1 = createStackNavigator();
 

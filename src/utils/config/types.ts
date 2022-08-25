@@ -75,14 +75,14 @@ export interface BoardingSettingsType {
   extendedStayRate: string;
   bathingGrooming: string;
   pickUpDropOff: string;
-  homeFullTimeInWeek: boolean;
+  homeFullTimeInWeek: string;
   selectDay: [];
   homeFullTimeInDay: string;
   advancedNotice: string;
   homeType: string;
   yardType: string;
-  petOwnerBoarding: string;
-  hosting: string;
+  petOwnerBoarding: [];
+  hosting: [];
   cancellationPolicy: string;
-  petPreference: string;
+  petPreference: [];
 }

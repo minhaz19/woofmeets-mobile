@@ -59,7 +59,7 @@ const SettingMain = (props: {
       id: 3,
       title: 'Cards',
       icon: CardsIcon,
-      screenName: () => {},
+      screenName: () => props.navigation.navigate('CreditAndDebitCard'),
       rightIcon: true,
       opacity: 1,
     },
