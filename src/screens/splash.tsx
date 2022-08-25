@@ -12,8 +12,8 @@ import FirstScreen from './FirstScreen';
 import authStorage from '../utils/helpers/auth/storage';
 import jwt_decode from 'jwt-decode';
 import {useDispatch} from 'react-redux';
-import {signIn} from '../store/slices/auth';
 import {slides} from '../utils/config/Data/splashDatas';
+import {signIn} from '../store/slices/auth/userSlice';
 
 const Splash = ({}) => {
   const isDarkMode = useColorScheme() === 'dark';
