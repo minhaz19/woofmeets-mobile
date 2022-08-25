@@ -35,9 +35,25 @@ const signUpValidationSchema = Yup.object().shape({
 });
 
 const setPasswordValidationSchema = Yup.object().shape({
-  oldPass: Yup.string().required().min(8).label('Old Password'),
-  newPass: Yup.string().required().min(8).label('New Password'),
-  confirmPass: Yup.string().required().min(8).label('Confirm Password'),
+  oldPassword: Yup.string().required().min(8).label('Old Password'),
+  newPassword: Yup.string()
+    .required('No password provided.')
+    .min(8, 'Too short - should be min 8 character.')
+    .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
+  confirmPassword: Yup.string()
+    .label('confirm password')
+    .required()
+    .oneOf([Yup.ref('newPassword'), null], 'Password does not match'),
+});
+const forgotPasswordResetValidationSchema = Yup.object().shape({
+  newPassword: Yup.string()
+    .required('No password provided.')
+    .min(8, 'Too short - should be min 8 character.')
+    .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
+  confirmPassword: Yup.string()
+    .label('confirm password')
+    .required()
+    .oneOf([Yup.ref('newPassword'), null], 'Password does not match'),
 });
 
 const forgotPasswordValidationSchema = Yup.object().shape({
@@ -45,10 +61,10 @@ const forgotPasswordValidationSchema = Yup.object().shape({
 });
 
 const forgotPasswordOtpValidationSchema = Yup.object().shape({
-  code: Yup.string().required().min(4).max(4).label('Opt'),
+  code: Yup.string().required().min(6).max(6).label('OTP'),
 });
 const verifyAccountValidationSchema = Yup.object().shape({
-  code: Yup.string().required().min(4).max(4).label('Opt'),
+  code: Yup.string().required().min(6).max(6).label('OTP'),
 });
 const addPetValidationSchema = Yup.object().shape({
   petImage: Yup.string().required('Image is required'),
@@ -173,4 +189,5 @@ export {
   addPetValidationSchema,
   filterProviderValidationSchema,
   BoardingSettingsSchema,
+  forgotPasswordResetValidationSchema,
 };

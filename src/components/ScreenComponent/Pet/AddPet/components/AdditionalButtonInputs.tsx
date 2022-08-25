@@ -8,7 +8,6 @@ interface Props {
   control: any;
 }
 const AdditionalButtonInputs = ({errors, control}: Props) => {
-  console.log('from buttom');
   return (
     <View>
       {additionalDetailsBottomInputs.map(

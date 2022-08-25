@@ -12,9 +12,16 @@ export const userLogin = createAsyncThunk(
         password,
       });
       if (!response.ok) {
-        Alert.alert(response.data.message);
+        if (response.data) {
+          Alert.alert(response.data.message);
+        } else if (response.problem === 'TIMEOUT_ERROR') {
+          Alert.alert('Response Timeout! Please try again');
+        } else {
+          Alert.alert('An unexpected error happened');
+        }
         throw new Error(response.data.message);
-      } else {
+      }
+      if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
       }
       return response.data;
@@ -43,11 +50,17 @@ export const registerUser = createAsyncThunk(
         password,
       });
       if (!response.ok) {
-        Alert.alert(response.data.message);
+        if (response.data) {
+          Alert.alert(response.data.message);
+        } else if (response.problem === 'TIMEOUT_ERROR') {
+          Alert.alert('Response Timeout! Please try again');
+        } else {
+          Alert.alert('An unexpected error happened');
+        }
         throw new Error(response.data.message);
-      } else {
+      }
+      if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
-        Alert.alert(response.data.message);
       }
       return response.data;
     } catch (error: any) {
@@ -68,13 +81,18 @@ export const providerAuth = createAsyncThunk(
         '/auth/Oauth/signup',
         userInfo,
       );
-      console.log('response', response);
       if (!response.ok) {
-        Alert.alert(response.data.message);
+        if (response.data) {
+          Alert.alert(response.data.message);
+        } else if (response.problem === 'TIMEOUT_ERROR') {
+          Alert.alert('Response Timeout! Please try again');
+        } else {
+          Alert.alert('An unexpected error happened');
+        }
         throw new Error(response.data.message);
-      } else {
+      }
+      if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
-        Alert.alert(response.data.message);
       }
       return response.data;
     } catch (error: any) {

@@ -6,6 +6,7 @@ import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
 import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
+import Text_Size from '../../../../constants/textScaling';
 interface Props {
   name: string;
   auth?: boolean;
@@ -18,7 +19,7 @@ const AuthOTP = ({name, auth}: Props) => {
       <OtpInputs
         // handleChange={code => setValue(name, code)}
         handleChange={onChange}
-        numberOfInputs={5}
+        numberOfInputs={6}
         autofillFromClipboard={false}
         onBlur={onBlur}
         placeholder={'-'}
@@ -46,8 +47,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.light.borderColor,
     backgroundColor: 'white',
-    width: 50,
+    width: 40,
     height: 40,
+    fontSize: Text_Size.Text_0,
     textAlign: 'center',
     color: 'black',
   },

@@ -6,7 +6,8 @@ import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
 import Text_Size from '../../constants/textScaling';
 import {useAppDispatch} from '../../store/store';
-import {logout} from '../../store/slices/auth';
+import {logout} from '../../store/slices/auth/userSlice';
+import methods from '../../api/methods';
 
 const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();
@@ -23,6 +24,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       title: 'Logout',
       screenName: () => {
         dispatch(logout());
+        methods._get('/auth/logout');
         props.navigation.navigate('AuthNavigator');
       },
       opacity: 1,
