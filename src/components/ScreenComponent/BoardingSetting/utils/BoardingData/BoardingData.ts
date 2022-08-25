@@ -161,9 +161,9 @@ export const aboutYourHome = [
     radio: true,
     square: false,
     options: [
-      {id: 34, type: 'Fenced yard'},
-      {id: 35, type: 'Unfenced yard'},
-      {id: 36, type: 'No yard'},
+      {id: 41, type: 'Fenced yard'},
+      {id: 42, type: 'Unfenced yard'},
+      {id: 43, type: 'No yard'},
     ],
   },
   {

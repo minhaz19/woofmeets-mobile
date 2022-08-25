@@ -56,7 +56,6 @@ const AppFormField = ({
   control,
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
-  console.log('calling form field', name);
   return (
     <>
       <View>

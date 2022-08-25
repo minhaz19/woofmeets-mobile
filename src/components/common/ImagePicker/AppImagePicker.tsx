@@ -9,7 +9,7 @@ interface Props {
   name: string;
   methods?: any;
 }
-const AppImagePicker = ({label, name, subTitle}: Props) => {
+const AppImagePicker = ({label, name, subTitle, methods}: Props) => {
   const {setValue, errors, value} = useRHFContext(name);
   // const {
   //   setValue,

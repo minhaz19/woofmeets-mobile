@@ -3,15 +3,17 @@ import React, {FC, useEffect, useState} from 'react';
 import {MinusSvg, PlusSvg} from '../utils/BoardingSvg';
 import HeaderText from '../../../common/text/HeaderText';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
-import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
+import {Controller} from 'react-hook-form';
 
 interface Props {
   name: string;
+  errors: any;
+  control: any;
+  setValue: (arg1: string, arg2: any, arg3?: any) => void;
 }
 
-const BoardingPetQuantity: FC<Props> = ({name}) => {
+const BoardingPetQuantity: FC<Props> = ({name, control, setValue, errors}) => {
   const [countState, setCountState] = useState(1);
-  const {setValue, errors, onBlur} = useRHFContext(name);
   const handleIncrement = () => {
     setCountState(countState + 1);
   };
@@ -27,13 +29,25 @@ const BoardingPetQuantity: FC<Props> = ({name}) => {
   return (
     <>
       <View style={styles.flexContainer}>
-        <TouchableOpacity onPress={handleDecrement} onBlur={onBlur}>
-          <MinusSvg height={18} width={18} />
-        </TouchableOpacity>
+        <Controller
+          control={control}
+          name={name}
+          render={({field: {onBlur}}) => (
+            <TouchableOpacity onPress={handleDecrement} onBlur={onBlur}>
+              <MinusSvg height={18} width={18} />
+            </TouchableOpacity>
+          )}
+        />
         <HeaderText text={countState} textStyle={styles.headerText} />
-        <TouchableOpacity onPress={handleIncrement} onBlur={onBlur}>
-          <PlusSvg height={18} width={18} />
-        </TouchableOpacity>
+        <Controller
+          control={control}
+          name={name}
+          render={({field: {onBlur}}) => (
+            <TouchableOpacity onPress={handleIncrement} onBlur={onBlur}>
+              <PlusSvg height={18} width={18} />
+            </TouchableOpacity>
+          )}
+        />
       </View>
       <ErrorMessage error={errors[name]?.message} />
     </>

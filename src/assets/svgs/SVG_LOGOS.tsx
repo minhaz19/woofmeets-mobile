@@ -2781,3 +2781,4 @@ export function SendMsgIcon(props): JSX.Element {
     </Svg>
   );
 }
+

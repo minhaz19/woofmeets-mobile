@@ -8,7 +8,7 @@ import DescriptionText from '../../../common/text/DescriptionText';
 import {InfoSvg} from '../../Inbox/utils/SvgComponent/SvgComponent';
 import Colors from '../../../../constants/Colors';
 import AppCheckboxField from '../../../common/Form/AppCheckboxField';
-import {Controller, useFormContext} from 'react-hook-form';
+import {Controller} from 'react-hook-form';
 
 interface Props {
   name: string;
@@ -30,6 +30,9 @@ interface Props {
   additionalRates?: string;
   handlePress?: () => void;
   showAdditionalRates?: boolean;
+  control: any;
+  errors: any;
+  setValue: (arg1: any, arg2: any, arg3: any) => void;
 }
 
 const BoardingForm = ({
@@ -49,14 +52,11 @@ const BoardingForm = ({
   additionalRates,
   handlePress,
   showAdditionalRates,
+  control,
+  errors,
+  setValue,
 }: Props) => {
   const [updateRates, setUpdateRates] = useState(true);
-  const {
-    control,
-    setValue,
-    formState: {errors},
-  } = useFormContext();
-  // need to replace context with controller for reducing re render
   return (
     <>
       <View>
