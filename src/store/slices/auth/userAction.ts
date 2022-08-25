@@ -11,10 +11,18 @@ export const userLogin = createAsyncThunk(
         email,
         password,
       });
+      console.log('login response', response);
       if (!response.ok) {
-        Alert.alert(response.data.message);
+        if (response.data) {
+          Alert.alert(response.data.message);
+        } else if (response.problem === 'TIMEOUT_ERROR') {
+          Alert.alert('Response Timeout! Please try again');
+        } else {
+          Alert.alert('An unexpected error happened');
+        }
         throw new Error(response.data.message);
-      } else {
+      }
+      if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
       }
       return response.data;
@@ -42,13 +50,18 @@ export const registerUser = createAsyncThunk(
         email,
         password,
       });
-      console.log('response', response);
       if (!response.ok) {
-        Alert.alert(response.data.message);
+        if (response.data) {
+          Alert.alert(response.data.message);
+        } else if (response.problem === 'TIMEOUT_ERROR') {
+          Alert.alert('Response Timeout! Please try again');
+        } else {
+          Alert.alert('An unexpected error happened');
+        }
         throw new Error(response.data.message);
-      } else {
+      }
+      if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
-        Alert.alert(response.data.message);
       }
       return response.data;
     } catch (error: any) {
@@ -64,7 +77,6 @@ export const registerUser = createAsyncThunk(
 export const providerAuth = createAsyncThunk(
   'auth/Oauth/signup',
   async (userInfo: any, {rejectWithValue}) => {
-    console.log('disptach data', userInfo);
     try {
       const response: ApiResponse<any> = await apiClient.post(
         '/auth/Oauth/signup',
@@ -72,11 +84,17 @@ export const providerAuth = createAsyncThunk(
       );
       console.log('response', response);
       if (!response.ok) {
-        Alert.alert(response.data.message);
+        if (response.data) {
+          Alert.alert(response.data.message);
+        } else if (response.problem === 'TIMEOUT_ERROR') {
+          Alert.alert('Response Timeout! Please try again');
+        } else {
+          Alert.alert('An unexpected error happened');
+        }
         throw new Error(response.data.message);
-      } else {
+      }
+      if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
-        Alert.alert(response.data.message);
       }
       return response.data;
     } catch (error: any) {
