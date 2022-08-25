@@ -17,8 +17,8 @@ import AddPetInfoInputs from './components/AddPetInfoInputs';
 import AdditionalDetailsCheck from './components/AdditionalDetailsCheck';
 import AdditionalMedicationCheck from './components/AdditionalMedicationCheck';
 import AdditionalButtonInputs from './components/AdditionalButtonInputs';
-import {useHandleCheck} from '../../../../utils/helpers/usehandleActiveCheck';
 import AdditionalCareInfoChecks from './components/AdditionalCareInfoChecks';
+import useHandleCheck from '../../../../utils/helpers/usehandleActiveCheck';
 
 interface Props {
   handleSubmit: (value: any) => void;
