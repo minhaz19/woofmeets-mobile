@@ -35,6 +35,7 @@ const ForgotPassword = ({navigation}: Props) => {
     const result = await request(slug, {
       email: e.email,
     });
+    console.log('response', result);
     if (result.ok) {
       navigation.navigate('ForgotPasswordOtp', {email: e.email});
     }

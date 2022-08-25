@@ -42,6 +42,7 @@ export const registerUser = createAsyncThunk(
         email,
         password,
       });
+      console.log('response', response);
       if (!response.ok) {
         Alert.alert(response.data.message);
         throw new Error(response.data.message);
@@ -63,11 +64,13 @@ export const registerUser = createAsyncThunk(
 export const providerAuth = createAsyncThunk(
   'auth/Oauth/signup',
   async (userInfo: any, {rejectWithValue}) => {
+    console.log('disptach data', userInfo);
     try {
       const response: ApiResponse<any> = await apiClient.post(
         '/auth/Oauth/signup',
         userInfo,
       );
+      console.log('response', response);
       if (!response.ok) {
         Alert.alert(response.data.message);
         throw new Error(response.data.message);

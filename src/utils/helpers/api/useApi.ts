@@ -15,6 +15,8 @@ export const useApi = (apiFunc: any) => {
         Alert.alert(response.data.message);
       } else if (response.status === 500) {
         Alert.alert('Something went wrong! please try again later');
+      } else if (response.problem === 'TIMEOUT_ERROR') {
+        Alert.alert('Response Timeout! Please try again');
       } else {
         Alert.alert('An unexpected error occurred.');
       }
