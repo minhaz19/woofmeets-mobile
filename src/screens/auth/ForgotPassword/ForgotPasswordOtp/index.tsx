@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   KeyboardAvoidingView,
   Platform,
@@ -8,15 +7,18 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import Colors from '../../../constants/Colors';
-import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
-import {forgotPasswordOtpValue} from '../../../utils/config/initalValues';
-import {forgotPasswordOtpValidationSchema} from '../../../utils/config/validationSchema';
-import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
-import {AuthEmail} from '../../../assets/svgs/SVG_LOGOS';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import BottomSpacing from '../../../components/UI/BottomSpacing';
-import AppForm from '../../../components/common/Form/AppForm';
+import Colors from '../../../../constants/Colors';
+import AuthForm from '../../../../components/ScreenComponent/Auth/Common/AuthForm';
+import {forgotPasswordOtpValue} from '../../../../utils/config/initalValues';
+import {forgotPasswordOtpValidationSchema} from '../../../../utils/config/validationSchema';
+import ImageAndTitle from '../../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
+import {AuthEmail} from '../../../../assets/svgs/SVG_LOGOS';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import BottomSpacing from '../../../../components/UI/BottomSpacing';
+import AppForm from '../../../../components/common/Form/AppForm';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
+import {RouteProp} from '@react-navigation/native';
 const forgotPassData = {
   icon: AuthEmail,
   title: 'Forgot Password?',
@@ -25,13 +27,26 @@ const forgotPassData = {
 };
 interface Props {
   navigation: {
-    navigate: (arg0: string) => void;
+    navigate: (arg0: string, arg2: {token: string}) => void;
   };
+  route: RouteProp<{params: {email: string}}, 'params'>;
 }
-const ForgotPasswordOtp = ({navigation}: Props) => {
+const slug = '/auth/forget-password-otp-check';
+const ForgotPasswordOtp = ({route, navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = (value: {}) => {
-    navigation.navigate('SetNewPassword');
+  const {email} = route.params;
+  const {request, loading} = useApi(methods._post);
+  const handleSubmit = async ({code}: any) => {
+    const result = await request(slug, {
+      email,
+      otp: code,
+    });
+
+    if (result.ok) {
+      navigation.navigate('ForgotPasswordReset', {
+        token: result?.data.data.token,
+      });
+    }
   };
   return (
     <ScrollView
@@ -70,6 +85,7 @@ const ForgotPasswordOtp = ({navigation}: Props) => {
               btnTitle="Continue"
               btn2Title="Resend Code"
               forgotPasswordOpt
+              loading={loading}
             />
           </AppForm>
           {SCREEN_WIDTH > 800 && <BottomSpacing />}

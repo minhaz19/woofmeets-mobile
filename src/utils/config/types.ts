@@ -11,9 +11,13 @@ export interface SignUpType {
   terms: boolean;
 }
 export interface SetPasswordType {
-  oldPass: string;
-  newPass: string;
-  confirmPass: string;
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+export interface forgotPasswordResetType {
+  newPassword: string;
+  confirmPassword: string;
 }
 export interface forgotPasswordType {
   email: string;

@@ -8,6 +8,7 @@ import {
   addPetType,
   filterProviderType,
   BoardingSettingsType,
+  forgotPasswordResetType,
 } from './types';
 
 const loginValue: LoginType = {email: '', password: ''};
@@ -20,9 +21,13 @@ const signupValue: SignUpType = {
   terms: false,
 };
 const setPasswordValue: SetPasswordType = {
-  oldPass: '',
-  newPass: '',
-  confirmPass: '',
+  oldPassword: '',
+  newPassword: '',
+  confirmPassword: '',
+};
+const forgotPasswordReset: forgotPasswordResetType = {
+  newPassword: '',
+  confirmPassword: '',
 };
 const forgotPasswordValue: forgotPasswordType = {email: ''};
 const forgotPasswordOtpValue: forgotPasswordOtpType = {code: ''};
@@ -96,4 +101,5 @@ export {
   addPetValue,
   filterProviderValue,
   BoardingSettings,
+  forgotPasswordReset,
 };

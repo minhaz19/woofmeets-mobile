@@ -31,7 +31,6 @@ const AdditionalDetailsCheck = ({
   control,
   setValue,
 }: Props) => {
-  console.log('additional pet');
 
   return (
     <View>

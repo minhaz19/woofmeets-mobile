@@ -31,7 +31,7 @@ interface Props {
   control: any;
 }
 type StackParamList = {
-  ForgotPassword: {foo: string; onBar: () => void} | undefined;
+  ForgotPasswordEmail: {foo: string; onBar: () => void} | undefined;
 };
 type NavigationProps = StackNavigationProp<StackParamList>;
 const AppFormField = ({
@@ -93,7 +93,8 @@ const AppFormField = ({
         <ErrorMessage error={errors[name]?.message} auth={auth} />
       </View>
       {forgotPassword && (
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ForgotPasswordEmail')}>
           <TitleText
             textStyle={styles.forgotPassword}
             text="Forgot Password ?"

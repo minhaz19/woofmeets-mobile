@@ -31,10 +31,14 @@ const Login = ({navigation}: Props) => {
     state => state.auth,
   );
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigation.navigate('BottomTabNavigator');
+    }
+  }, [isLoggedIn, navigation]);
 
   const handleSubmit = (loginData: any) => {
     dispatch(userLogin(loginData));
-    navigation.navigate('BottomTabNavigator');
   };
   return (
     <>
