@@ -14,11 +14,16 @@ import Colors from '../../../../constants/Colors';
 import AuthHeader from '../../../../components/ScreenComponent/Auth/Common/AuthHeader';
 import AuthForm from '../../../../components/ScreenComponent/Auth/Common/AuthForm';
 
-import {setPasswordValidationSchema} from '../../../../utils/config/validationSchema';
+import {
+  forgotPasswordResetValidationSchema,
+  setPasswordValidationSchema,
+} from '../../../../utils/config/validationSchema';
 import {resetForgotPassword} from '../../../../utils/config/Data/setNewPasswordDatas';
 import {forgotPasswordReset} from '../../../../utils/config/initalValues';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import AppForm from '../../../../components/common/Form/AppForm';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
 
 interface Props {
   navigation: {
@@ -26,11 +31,16 @@ interface Props {
     navigate: (arg0: string) => void;
   };
 }
+const slug = '/auth/forget-password';
 const ForgotPasswordReset = ({navigation}: Props) => {
   const height = SCREEN_HEIGHT;
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = (values: any) => {
-    navigation.navigate('AfterIntroScreen');
+  const {request, loading} = useApi(methods._post);
+  const handleSubmit = async ({newPassword}: any) => {
+    const result = await request(slug, {password: newPassword});
+    if (result.ok) {
+      navigation.navigate('LogIn');
+    }
   };
   return (
     <ScrollView
@@ -68,12 +78,13 @@ const ForgotPasswordReset = ({navigation}: Props) => {
           />
           <AppForm
             initialValues={forgotPasswordReset}
-            validationSchema={setPasswordValidationSchema}>
+            validationSchema={forgotPasswordResetValidationSchema}>
             <AuthForm
               handleSubmit={handleSubmit}
               btnTitle="Confirm"
               onPress={() => navigation.goBack()}
               forgotPasswordReset
+              loading={loading}
             />
           </AppForm>
           <View style={styles.view} />

@@ -80,7 +80,11 @@ const AuthForm = ({
                 }
                 errors={errors}
                 control={control}
-                name={setNewPassword ? 'newPass' : 'password'}
+                name={
+                  setNewPassword || forgotPasswordReset
+                    ? 'newPassword'
+                    : 'password'
+                }
                 label={
                   setNewPassword || forgotPasswordReset
                     ? 'New Password'
@@ -111,7 +115,7 @@ const AuthForm = ({
             control={control}
             placeholder="Confirm your password"
             textContentType="password"
-            name="confirmPass"
+            name="confirmPassword"
             label="Confirm Password"
             auth
           />

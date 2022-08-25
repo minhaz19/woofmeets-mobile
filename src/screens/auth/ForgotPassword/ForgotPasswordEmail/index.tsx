@@ -16,19 +16,29 @@ import {AuthPassword} from '../../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import BottomSpacing from '../../../../components/UI/BottomSpacing';
 import AppForm from '../../../../components/common/Form/AppForm';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import api from '../../../../api/methods';
 const forgotPassData = {
   title: 'Forgot Password?',
 };
+const slug = '/auth/forget-password-otp-generate';
 interface Props {
   navigation: {
-    navigate: (arg0: string) => void;
+    navigate: (arg0: string, arg2: any) => void;
     goBack: () => void;
   };
 }
 const ForgotPassword = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = () => {
-    navigation.navigate('ForgotPasswordOtp');
+  const {request, loading} = useApi(api._post);
+  const handleSubmit = async (e: any) => {
+    const result = await request(slug, {
+      email: e.email,
+    });
+    console.log(result);
+    if (result.ok) {
+      navigation.navigate('ForgotPasswordOtp', {email: e.email});
+    }
   };
   return (
     <ScrollView
@@ -63,6 +73,7 @@ const ForgotPassword = ({navigation}: Props) => {
               btnTitle="Continue"
               forgotPassword
               onPress={() => navigation.goBack()}
+              loading={loading}
             />
           </AppForm>
           <View style={styles.view} />

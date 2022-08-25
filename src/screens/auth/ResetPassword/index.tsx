@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {
   KeyboardAvoidingView,
   Platform,
@@ -18,6 +18,8 @@ import {setPasswordInfo} from '../../../utils/config/Data/setNewPasswordDatas';
 import {setPasswordValue} from '../../../utils/config/initalValues';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
+import methods from '../../../api/methods';
+import {useApi} from '../../../utils/helpers/api/useApi';
 
 interface Props {
   navigation: {
@@ -25,11 +27,17 @@ interface Props {
     navigate: (arg0: string) => void;
   };
 }
+const slug = '/auth/update-password';
 const SetNewPassword = ({navigation}: Props) => {
   const height = SCREEN_HEIGHT;
   const isDarkMode = useColorScheme() === 'dark';
-  const handleSubmit = (values: any) => {
-    navigation.navigate('AfterIntroScreen');
+  const {request, loading} = useApi(methods._post);
+  const handleSubmit = async ({oldPassword: password, newPassword}: any) => {
+    const result = await request(slug, {password, newPassword});
+    if (result.ok) {
+      // navigate somewhere
+      // navigation.navigate('LogIn');
+    }
   };
   return (
     <ScrollView
@@ -73,6 +81,7 @@ const SetNewPassword = ({navigation}: Props) => {
               btnTitle="Confirm"
               onPress={() => navigation.goBack()}
               setNewPassword
+              loading={loading}
             />
           </AppForm>
           <View style={styles.view} />
