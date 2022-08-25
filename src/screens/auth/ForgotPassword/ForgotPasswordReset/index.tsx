@@ -49,8 +49,6 @@ const ForgotPasswordReset = ({route, navigation}: Props) => {
       navigation.navigate('LogIn');
     }
   };
-  console.log('token', token);
-  // problem: 'TIMEOUT_ERROR';
   return (
     <ScrollView
       contentContainerStyle={{

@@ -47,7 +47,6 @@ const AddPetBody = ({handleSubmit}: Props) => {
     setValue,
     formState: {errors},
   } = useFormContext();
-  console.log('active', active0);
 
   return (
     <View style={styles.container}>

@@ -27,7 +27,6 @@ const AppCheckboxField = ({
   control,
   errors,
 }: Props) => {
-  console.log('calling check field');
   return (
     <View style={styles.container}>
       <View style={{marginBottom: errors[name]?.message ? 25 : 0}}>

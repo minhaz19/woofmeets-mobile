@@ -9,7 +9,6 @@ interface Props {
   control: any;
 }
 const AddPetInfoInputs = ({errors, control}: Props) => {
-  console.log('calling from input comp');
 
   return (
     <View style={styles.flatList}>
