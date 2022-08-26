@@ -19,14 +19,13 @@ import ShortText from '../../components/common/text/ShortText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
 import BottomSpacingNav from '../../components/UI/BottomSpacingNav';
-import { useAppSelector } from '../../store/store';
+import {useAppSelector} from '../../store/store';
 
 const SettingMain = (props: {
   navigation: {navigate: (arg0: string) => any};
 }) => {
   const {colors} = useTheme();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
-
   const loginData = [
     {
       id: 3,
@@ -59,7 +58,7 @@ const SettingMain = (props: {
       id: 3,
       title: 'Cards',
       icon: CardsIcon,
-      screenName: () => {},
+      screenName: () => props.navigation.navigate('CreditAndDebitCard'),
       rightIcon: true,
       opacity: 1,
     },
@@ -127,12 +126,13 @@ const SettingMain = (props: {
   ];
 
   return (
-    <ScrollView style={[
-      styles.rootContainer,
-      {
-        backgroundColor: colors.backgroundColor,
-      },
-    ]}>
+    <ScrollView
+      style={[
+        styles.rootContainer,
+        {
+          backgroundColor: colors.backgroundColor,
+        },
+      ]}>
       <View>
         <View style={[styles.titleContainer, styles.paddingTop]}>
           <HeaderText text="More" />
@@ -145,18 +145,20 @@ const SettingMain = (props: {
           </View>
           <ShortText text={'Share Now'} />
         </View>
-        {!isLoggedIn && loginData?.map(item => (
-          <SettingItem data={item} key={item.id} />
-        ))}
-        {!isLoggedIn && <View
-          style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-        />}
-        {isLoggedIn && profileData?.map(item => (
-          <SettingItem data={item} key={item.id} />
-        ))}
-        {isLoggedIn && <View
-          style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-        />}
+        {!isLoggedIn &&
+          loginData?.map(item => <SettingItem data={item} key={item.id} />)}
+        {!isLoggedIn && (
+          <View
+            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+          />
+        )}
+        {isLoggedIn &&
+          profileData?.map(item => <SettingItem data={item} key={item.id} />)}
+        {isLoggedIn && (
+          <View
+            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+          />
+        )}
         <View style={styles.titleContainer}>
           <TitleText text="Sitting" />
         </View>
@@ -166,26 +168,32 @@ const SettingMain = (props: {
         <View
           style={[styles.divider, {backgroundColor: colors.descriptionText}]}
         />
-        {isLoggedIn && <View>
-          <View style={styles.titleContainer}>
-            <TitleText text="Refferals and Promos" />
+        {isLoggedIn && (
+          <View>
+            <View style={styles.titleContainer}>
+              <TitleText text="Refferals and Promos" />
+            </View>
+            {referralData?.map(item => (
+              <SettingItem data={item} key={item.id} />
+            ))}
+            <View
+              style={[
+                styles.divider,
+                {backgroundColor: colors.descriptionText},
+              ]}
+            />
           </View>
-          {referralData?.map(item => (
-            <SettingItem data={item} key={item.id} />
-          ))}
-          <View
-            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-          />
-        </View>}
+        )}
         <View style={styles.titleContainer}>
           <TitleText text="Support" />
         </View>
         {supportData?.map(item => (
           <SettingItem data={item} key={item.id} />
         ))}
-        {isLoggedIn && preferenceData?.map(item => (
-          <SettingItem data={item} key={item.id} />
-        ))}
+        {isLoggedIn &&
+          preferenceData?.map(item => (
+            <SettingItem data={item} key={item.id} />
+          ))}
       </View>
       <BottomSpacingNav />
     </ScrollView>

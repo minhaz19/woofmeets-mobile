@@ -39,7 +39,7 @@ const AuthFooter = ({
   const {isLoggedIn} = useAppSelector(state => state.auth);
   useEffect(() => {
     if (isLoggedIn) {
-      navigation.navigate('PetCareZipSearch');
+      navigation.navigate('BottomTabNavigator');
     }
   }, [isLoggedIn, navigation]);
 

@@ -8,6 +8,7 @@ import {
   addPetType,
   filterProviderType,
   BoardingSettingsType,
+  forgotPasswordResetType,
 } from './types';
 
 const loginValue: LoginType = {email: '', password: ''};
@@ -20,9 +21,13 @@ const signupValue: SignUpType = {
   terms: false,
 };
 const setPasswordValue: SetPasswordType = {
-  oldPass: '',
-  newPass: '',
-  confirmPass: '',
+  oldPassword: '',
+  newPassword: '',
+  confirmPassword: '',
+};
+const forgotPasswordReset: forgotPasswordResetType = {
+  newPassword: '',
+  confirmPassword: '',
 };
 const forgotPasswordValue: forgotPasswordType = {email: ''};
 const forgotPasswordOtpValue: forgotPasswordOtpType = {code: ''};
@@ -74,16 +79,16 @@ const BoardingSettings: BoardingSettingsType = {
   extendedStayRate: '0',
   bathingGrooming: '0',
   pickUpDropOff: '0',
-  homeFullTimeInWeek: true,
+  homeFullTimeInWeek: '',
   selectDay: [],
   homeFullTimeInDay: '',
   advancedNotice: '',
   homeType: '',
   yardType: '',
-  petOwnerBoarding: '',
-  hosting: '',
+  petOwnerBoarding: [],
+  hosting: [],
   cancellationPolicy: '',
-  petPreference: '',
+  petPreference: [],
 };
 
 export {
@@ -96,4 +101,5 @@ export {
   addPetValue,
   filterProviderValue,
   BoardingSettings,
+  forgotPasswordReset,
 };

@@ -21,6 +21,7 @@ interface Props {
   btn2Title?: string;
   onPress?: () => void;
   loading?: boolean;
+  forgotPasswordReset?: boolean;
 }
 const AuthForm = ({
   handleSubmit,
@@ -32,6 +33,7 @@ const AuthForm = ({
   verifyAccount,
   termsAndCond,
   onPress,
+  forgotPasswordReset,
   loading,
 }: Props) => {
   const {
@@ -43,25 +45,27 @@ const AuthForm = ({
       <>
         {!forgotPasswordOpt && !verifyAccount && (
           <>
-            <View>
-              <AppFormField
-                autoCapitalize="none"
-                autoCorrect={false}
-                icon={'email'}
-                keyboardType={'email-address'}
-                placeholder={
-                  setNewPassword ? 'Enter old password' : 'Enter your email'
-                }
-                textContentType={setNewPassword ? 'password' : 'emailAddress'}
-                name={setNewPassword ? 'oldPass' : 'email'}
-                label={setNewPassword ? 'Old Password' : 'Email/Phone Number'}
-                secureTextEntry={setNewPassword ? true : false}
-                email={setNewPassword ? false : true}
-                errors={errors}
-                control={control}
-                auth
-              />
-            </View>
+            {!forgotPasswordReset && (
+              <View>
+                <AppFormField
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  icon={'email'}
+                  keyboardType={'email-address'}
+                  placeholder={
+                    setNewPassword ? 'Enter old password' : 'Enter your email'
+                  }
+                  textContentType={setNewPassword ? 'password' : 'emailAddress'}
+                  name={setNewPassword ? 'oldPass' : 'email'}
+                  label={setNewPassword ? 'Old Password' : 'Email/Phone Number'}
+                  secureTextEntry={setNewPassword ? true : false}
+                  email={setNewPassword ? false : true}
+                  errors={errors}
+                  control={control}
+                  auth
+                />
+              </View>
+            )}
 
             {!forgotPassword && (
               <AppFormField
@@ -70,20 +74,38 @@ const AuthForm = ({
                 icon={'lock'}
                 secureTextEntry
                 placeholder={
-                  setNewPassword ? 'Enter new password' : 'Enter your password'
+                  setNewPassword || forgotPasswordReset
+                    ? 'Enter new password'
+                    : 'Enter your password'
                 }
                 errors={errors}
                 control={control}
-                name={setNewPassword ? 'newPass' : 'password'}
-                label={setNewPassword ? 'New Password' : 'Password'}
-                forgotPassword={setNewPassword || termsAndCond ? false : true}
-                textContentType={setNewPassword ? 'newPassword' : 'password'}
+                name={
+                  setNewPassword || forgotPasswordReset
+                    ? 'newPassword'
+                    : 'password'
+                }
+                label={
+                  setNewPassword || forgotPasswordReset
+                    ? 'New Password'
+                    : 'Password'
+                }
+                forgotPassword={
+                  setNewPassword || termsAndCond || forgotPasswordReset
+                    ? false
+                    : true
+                }
+                textContentType={
+                  setNewPassword || forgotPasswordReset
+                    ? 'newPassword'
+                    : 'password'
+                }
                 auth
               />
             )}
           </>
         )}
-        {setNewPassword && (
+        {(setNewPassword || forgotPasswordReset) && (
           <AppFormField
             autoCapitalize="none"
             autoCorrect={false}
@@ -93,7 +115,7 @@ const AuthForm = ({
             control={control}
             placeholder="Confirm your password"
             textContentType="password"
-            name="confirmPass"
+            name="confirmPassword"
             label="Confirm Password"
             auth
           />
@@ -113,7 +135,10 @@ const AuthForm = ({
             <AppSwitch name="terms" terms auth />
           </View>
         )}
-        <View style={{marginTop: setNewPassword ? 20 : 10}}>
+        <View
+          style={{
+            marginTop: setNewPassword ? 20 : forgotPasswordReset ? 30 : 10,
+          }}>
           <SubmitButton
             title={btnTitle}
             onPress={handleSubmit}

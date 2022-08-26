@@ -21,7 +21,6 @@ const AddPetCheck = ({
   active0,
   handleActiveCheck,
 }: Props) => {
-  console.log('calling pet check');
   return (
     <View>
       <HeaderText textStyle={styles.header} text={addPetCheck1.header!} />

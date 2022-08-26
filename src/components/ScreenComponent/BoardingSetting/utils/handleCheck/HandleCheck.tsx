@@ -11,12 +11,15 @@ const useHandleMultipleActiveCheck = () => {
       item.checked = item.id === typeId ? !item.checked : item.checked;
       return item;
     });
-
+    const updatedActiveId = updatedArray.filter((item: any) => item.checked === true)
+    .map((item: any) => item.id);
     setActivePetHosting({
       ...activePetHosting,
       items: updatedArray,
+      activeItem: updatedActiveId,
     });
   };
+
   const handlePetOwnerExpectationActiveCheck = (
     typeId: number,
     optionsType: any,
@@ -42,6 +45,37 @@ const useHandleMultipleActiveCheck = () => {
     });
   };
 
+  // filter active check in activePetHosting if activePetHosting is not undefined
+  const handleActivePetHostingActiveCheck = () => {
+    if (activePetHosting.items) {
+      return activePetHosting.items
+        .filter((item: any) => item.checked === true)
+        .map((item: any) => item.id);
+    }
+    return [];
+  };
+  // console.log(
+  //   'handleActivePetHostingActiveCheck()',
+  //   handleActivePetHostingActiveCheck(),
+  // );
+
+  const handleActivePetOwnerExpectationActiveCheck = () => {
+    if (activePetOwnerExpectation.items) {
+      return activePetOwnerExpectation.items
+        .filter((item: any) => item.checked === true)
+        .map((item: any) => item.id);
+    }
+    return [];
+  };
+  const handleActiveSelectDaysActiveCheck = () => {
+    if (selectDays.items) {
+      return selectDays.items
+        .filter((item: any) => item.checked === true)
+        .map((item: any) => item.id);
+    }
+    return [];
+  };
+
   return {
     activePetHosting,
     activePetOwnerExpectation,
@@ -49,6 +83,10 @@ const useHandleMultipleActiveCheck = () => {
     handlePetHostingActiveCheck,
     handlePetOwnerExpectationActiveCheck,
     handleSelectDaysActiveCheck,
+    handleActivePetHostingActiveCheck,
+    handleActiveSelectDaysActiveCheck,
+    handleActivePetOwnerExpectationActiveCheck,
+    // multipleActivePetHosting,
   };
 };
 

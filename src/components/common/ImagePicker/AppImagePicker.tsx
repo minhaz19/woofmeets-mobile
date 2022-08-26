@@ -9,13 +9,12 @@ interface Props {
   name: string;
   methods?: any;
 }
-const AppImagePicker = ({label, name, subTitle}: Props) => {
+const AppImagePicker = ({label, name, subTitle, methods}: Props) => {
   const {setValue, errors, value} = useRHFContext(name);
   // const {
   //   setValue,
   //   formState: {errors, value},
   // } = methods;
-  console.log('values', value);
   const imageUris = value;
   function handleAdd(uri: string) {
     setValue(name, [...imageUris, uri], {shouldValidate: true});

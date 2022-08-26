@@ -8,6 +8,7 @@ import BasicInfo from '../../screens/profile/BasicInfo';
 import ContactScreen from '../../screens/profile/ContactScreen';
 import Preference from '../../screens/settings/Preference';
 import AccountSetting from '../../components/ScreenComponent/setting/Preference/AccountSetting';
+import CreditAndDebitCard from '../../screens/checkout/CreditAndDebitCard';
 
 const Stack1 = createStackNavigator();
 
@@ -98,6 +99,21 @@ const SettingNavigator = () => {
             <HeaderWithBack
               navigation={navigation}
               title="Setting"
+              notification
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="CreditAndDebitCard"
+        component={CreditAndDebitCard}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="Checkout"
               notification
             />
           ),

@@ -41,7 +41,7 @@ const SignUp = ({navigation}: Props) => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (isLoggedIn) {
-      navigation.navigate('PetCareZipSearch');
+      navigation.navigate('BottomTabNavigator');
     }
   }, [navigation, isLoggedIn]);
 

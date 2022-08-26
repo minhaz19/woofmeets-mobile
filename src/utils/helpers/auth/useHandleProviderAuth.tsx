@@ -31,7 +31,6 @@ export const useHandleProviderAuth = () => {
           firstName: userInfo?.user.givenName,
           lastName: userInfo?.user.familyName,
           provider: 'GOOGLE',
-          facebookId: userInfo?.user.id,
         };
         dispatch(providerAuth(userInfos));
       }
@@ -61,7 +60,6 @@ export const useHandleProviderAuth = () => {
         } else {
           try {
             const currentProfile = await Profile.getCurrentProfile();
-
             if (currentProfile) {
               setUser(currentProfile);
               const userInfo = {

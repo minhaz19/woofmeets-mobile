@@ -11,9 +11,13 @@ export interface SignUpType {
   terms: boolean;
 }
 export interface SetPasswordType {
-  oldPass: string;
-  newPass: string;
-  confirmPass: string;
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+export interface forgotPasswordResetType {
+  newPassword: string;
+  confirmPassword: string;
 }
 export interface forgotPasswordType {
   email: string;
@@ -71,14 +75,14 @@ export interface BoardingSettingsType {
   extendedStayRate: string;
   bathingGrooming: string;
   pickUpDropOff: string;
-  homeFullTimeInWeek: boolean;
+  homeFullTimeInWeek: string;
   selectDay: [];
   homeFullTimeInDay: string;
   advancedNotice: string;
   homeType: string;
   yardType: string;
-  petOwnerBoarding: string;
-  hosting: string;
+  petOwnerBoarding: [];
+  hosting: [];
   cancellationPolicy: string;
-  petPreference: string;
+  petPreference: [];
 }
