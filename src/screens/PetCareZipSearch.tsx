@@ -18,12 +18,15 @@ import BottomButton from '../components/ScreenComponent/Service/BottomButton';
 import BottomSpacingNav from '../components/UI/BottomSpacingNav';
 import TitleText from '../components/common/text/TitleText';
 import DescriptionText from '../components/common/text/DescriptionText';
+import { useAppSelector } from '../store/store';
 
 const PetCareZipSearch = (props: {
   navigation: {goBack: () => void; navigate: (arg0: string) => void};
 }) => {
   const [postCode, setPostCode] = useState<string>();
   const {colors} = useTheme();
+  const {userInfo} = useAppSelector(state => state.auth);
+  console.log(userInfo);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
