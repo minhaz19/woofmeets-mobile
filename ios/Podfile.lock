@@ -404,11 +404,7 @@ PODS:
     - React-Core
   - RNCClipboard (1.11.0):
     - React-Core
-<<<<<<< HEAD
-  - RNGestureHandler (2.5.0):
-=======
   - RNGestureHandler (2.6.0):
->>>>>>> 75a77adb8510450dcbbe22fbcb5946a8c3c703cd
     - React-Core
   - RNGoogleSignin (8.0.0):
     - GoogleSignIn (~> 6.2.2)
@@ -687,11 +683,7 @@ SPEC CHECKSUMS:
   React-jsinspector: c5989c77cb89ae6a69561095a61cce56a44ae8e8
   React-logger: a0833912d93b36b791b7a521672d8ee89107aff1
   react-native-fbsdk-next: d6e1c6ad1693c891add104ab529d96906784ba9c
-<<<<<<< HEAD
-  react-native-image-picker: ebb7ad7f6ac50248989d6560e8aa07c412a32241
-=======
   react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
->>>>>>> 75a77adb8510450dcbbe22fbcb5946a8c3c703cd
   react-native-maps: ca4946228cb514d8f2bca95e0482753b4edde100
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
