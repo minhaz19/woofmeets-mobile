@@ -1,0 +1,37 @@
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import AppForm from '../../../components/common/Form/AppForm';
+import Screen from '../../../components/common/Screen';
+import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar';
+import Colors from '../../../constants/Colors';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {providerAvailablityValidationSchema} from '../../../utils/config/validationSchema';
+
+const ProviderAvailablity = () => {
+  const {isDarkMode} = useTheme();
+  return (
+    <Screen
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkMode
+            ? Colors.dark.background
+            : Colors.background,
+        },
+      ]}>
+      <AppForm
+        validationSchema={providerAvailablityValidationSchema}
+        initialValues={{
+          dateRange: '',
+        }}>
+        <AvailablityCalendar />
+      </AppForm>
+    </Screen>
+  );
+};
+
+export default ProviderAvailablity;
+
+const styles = StyleSheet.create({
+  container: {flex: 1, paddingBottom: 0},
+});

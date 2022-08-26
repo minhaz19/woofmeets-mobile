@@ -114,6 +114,9 @@ const filterProviderValidationSchema = Yup.object().shape({
   dateRange: Yup.string(),
   // dateRange: Yup.array(),
 });
+const providerAvailablityValidationSchema = Yup.object().shape({
+  dateRange: Yup.array(),
+});
 
 const BoardingSettingsSchema = Yup.object().shape({
   payPerService: Yup.number()
@@ -190,4 +193,5 @@ export {
   filterProviderValidationSchema,
   BoardingSettingsSchema,
   forgotPasswordResetValidationSchema,
+  providerAvailablityValidationSchema,
 };
