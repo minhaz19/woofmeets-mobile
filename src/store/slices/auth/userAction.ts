@@ -81,6 +81,7 @@ export const providerAuth = createAsyncThunk(
         '/auth/Oauth/signup',
         userInfo,
       );
+      console.log('user actiion', response);
       if (!response.ok) {
         if (response.data) {
           Alert.alert(response.data.message);
