@@ -1,5 +1,5 @@
 import moment from 'moment';
-import {useCallback, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
@@ -14,28 +14,30 @@ export const useHandleRange = (name = 'dateRange') => {
   const {setValue} = useFormContext();
   const cross = useSelector((state: any) => state.cross.cross);
   const dispatch = useDispatch();
-  const handleDayPress = useCallback(
-    (day: any) => {
-      const {end} = compareDate(day.dateString, step, setPrevDate);
+  const handleDayPress = (day: any) => {
+    const {end} = compareDate(day.dateString, step, setPrevDate);
 
-      if (step === 1) {
-        setSteps(2);
-        setStartingDate(day.dateString);
-      } else if (step === 2) {
-        setEndingDate(day.dateString);
+    if (step === 1) {
+      setSteps(2);
+      setStartingDate(day.dateString);
+    } else if (step === 2) {
+      setEndingDate(day.dateString);
 
-        if (prevDate !== undefined) {
-          if (prevDate < end) {
-            setEndingDate(day.dateString);
-          } else if (prevDate > end) {
-            setStartingDate(day.dateString);
-            setEndingDate(startingDate);
-          }
+      if (prevDate !== undefined) {
+        if (prevDate < end) {
+          setEndingDate(day.dateString);
+        } else if (prevDate > end) {
+          setStartingDate(day.dateString);
+          setEndingDate(startingDate);
         }
       }
-    },
-    [prevDate, startingDate, step],
-  );
+    }
+  };
+  const resetRange = () => {
+    setStartingDate('');
+    setEndingDate('');
+    setSteps(1);
+  };
 
   useMemo(() => {
     if (startingDate !== '' && endingDate !== '' && cross === false) {
@@ -52,6 +54,6 @@ export const useHandleRange = (name = 'dateRange') => {
       setValue(name, '');
       dispatch(setCross(false));
     }
-  }, [startingDate, endingDate, setValue, cross, dispatch]);
-  return {startingDate, endingDate, handleDayPress};
+  }, [startingDate, endingDate, cross, setValue, name, dispatch]);
+  return {startingDate, endingDate, resetRange, handleDayPress};
 };

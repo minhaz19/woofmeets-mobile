@@ -1,25 +1,41 @@
-import {StyleSheet, Text, TextStyle, View} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import {
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {CalendarList} from 'react-native-calendars';
 import {orderAndStyleRange} from '../../../utils/helpers/CalendarRange/orderAndStyleRange';
 import {_dateRange} from '../../../utils/helpers/datesArray';
 import {useHandleRange} from '../../../utils/helpers/CalendarRange/useHandleRange';
-// import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-const RANGE = 24;
-const initialDate = '2022-07-05';
-interface Props {
-  horizontalView?: boolean;
-}
-const AvailablityCalendar = (props: Props) => {
-  const {horizontalView} = props;
+import Colors from '../../../constants/Colors';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
+import Text_Size from '../../../constants/textScaling';
+import {Reset} from '../../../assets/svgs/SVG_LOGOS';
 
+const RANGE = 12;
+const initialDate = '2022-08-17';
+const AvailablityCalendar = () => {
   const [_markedStyle, setMarkedStyle] = useState({});
-  // const {colors} = useTheme();
 
-  const {startingDate, endingDate, handleDayPress} = useHandleRange('range');
+  const {startingDate, endingDate, resetRange, handleDayPress} =
+    useHandleRange('range');
 
   useMemo(() => {
+    console.log(
+      'start end',
+      typeof startingDate,
+      startingDate,
+      typeof endingDate,
+      endingDate,
+    );
     const range: Boolean | Date[] =
       typeof startingDate !== 'undefined' &&
       typeof endingDate !== 'undefined' &&
@@ -30,22 +46,60 @@ const AvailablityCalendar = (props: Props) => {
     setMarkedStyle(styledMarkedRange);
   }, [startingDate, endingDate]);
 
+  const offset = useSharedValue(0);
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: offset.value}],
+    };
+  });
+
+  useMemo(() => {
+    offset.value = withSpring(startingDate ? 10 / 100 : 300);
+  }, [startingDate, offset]);
   return (
-    <CalendarList
-      testID={'calendarList'}
-      current={initialDate}
-      pastScrollRange={RANGE}
-      futureScrollRange={RANGE}
-      onDayPress={handleDayPress}
-      markingType={'period'}
-      markedDates={_markedStyle}
-      renderHeader={!horizontalView ? renderCustomHeader : undefined}
-      calendarHeight={!horizontalView ? 390 : undefined}
-      theme={!horizontalView ? theme : undefined}
-      horizontal={false}
-      pagingEnabled={horizontalView}
-      staticHeader={horizontalView}
-    />
+    <>
+      <CalendarList
+        // testID={'calendarList'}
+        current={initialDate}
+        pastScrollRange={0}
+        futureScrollRange={RANGE}
+        onDayPress={handleDayPress}
+        markingType={'period'}
+        markedDates={_markedStyle}
+        renderHeader={renderCustomHeader}
+        calendarHeight={390}
+        theme={theme}
+        horizontal={false}
+        pagingEnabled={true}
+        staticHeader={false}
+      />
+      <Animated.View style={[styles.editContainer, animatedStyles]}>
+        <View style={styles.availablity}>
+          <TouchableOpacity
+            style={{
+              borderRightWidth: 1,
+              borderRightColor: 'white',
+              paddingVertical: 10,
+              width: '70%',
+            }}>
+            <Text style={styles.mark}>Mark as unavailable</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              borderRightWidth: 1,
+              borderRightColor: 'white',
+              paddingVertical: 10,
+              width: '22%',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.edit}>Edit</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.icon} onPress={resetRange}>
+          <Reset width={30} height={20} fill={'white'} />
+        </TouchableOpacity>
+      </Animated.View>
+    </>
   );
 };
 const theme = {
@@ -79,7 +133,7 @@ function renderCustomHeader(date: any) {
     fontWeight: 'bold',
     paddingTop: 10,
     paddingBottom: 10,
-    color: '#5E60CE',
+    color: Colors.primary,
     paddingRight: 5,
   };
 
@@ -106,5 +160,36 @@ const styles = StyleSheet.create({
   },
   year: {
     marginRight: 5,
+  },
+  editContainer: {
+    position: 'absolute',
+    bottom: '10%',
+    backgroundColor: Colors.primary,
+    width: '90%',
+    marginHorizontal: 20,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  availablity: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  mark: {
+    fontSize: Text_Size.Text_0,
+    color: Colors.background,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  edit: {
+    fontSize: Text_Size.Text_0,
+    color: Colors.background,
+    fontWeight: 'bold',
+    alignItems: 'center',
+  },
+  icon: {
+    paddingRight: 25,
   },
 });
