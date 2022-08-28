@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import AppForm from '../../../components/common/Form/AppForm';
 import Screen from '../../../components/common/Screen';
-import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar';
+import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar/AvailablityCalendar';
 import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {providerAvailablityValidationSchema} from '../../../utils/config/validationSchema';
@@ -33,5 +33,5 @@ const ProviderAvailablity = () => {
 export default ProviderAvailablity;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, paddingBottom: 0},
+  container: {flex: 1, width: '100%', paddingBottom: 0},
 });

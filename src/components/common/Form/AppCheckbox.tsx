@@ -15,6 +15,7 @@ interface Props {
   active?: boolean;
   onPress?: () => void;
   onBlur?: () => void;
+  Comp?: React.ElementType;
 }
 const AppCheckbox = ({
   onPress,
@@ -23,6 +24,7 @@ const AppCheckbox = ({
   square,
   title,
   active,
+  Comp,
 }: Props) => {
   return (
     <TouchableOpacity
@@ -32,7 +34,8 @@ const AppCheckbox = ({
       style={styles.checkInfoContainer}>
       {square && (!active ? <Square /> : <SquareCheck />)}
       {radio && (!active ? <Circle_ /> : <CircleCheck />)}
-      <HeaderText text={title} textStyle={styles.title} />
+      {title && <HeaderText text={title} textStyle={styles.title} />}
+      {Comp && <Comp />}
     </TouchableOpacity>
   );
 };
