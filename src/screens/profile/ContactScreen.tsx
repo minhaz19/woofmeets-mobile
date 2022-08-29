@@ -1,5 +1,5 @@
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
-import React from 'react';
+import {View, StyleSheet, Text, ScrollView, RefreshControl} from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
@@ -9,11 +9,38 @@ import {contactValues} from '../../utils/config/setting/initalValues';
 import {contactValidationSchema} from '../../utils/config/setting/validationSchema';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import AppForm from '../../components/common/Form/AppForm';
+import { getContactInfo, postContactInfo } from '../../store/slices/profile/contact';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
-const ContactScreen = () => {
+const ContactScreen = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
   const {colors} = useTheme();
+  const dispatch = useAppDispatch();
+  const emergencyContactSubmit = (contactData: any) => {
+    dispatch(postContactInfo(contactData));
+  };
+  const [refreshing, setRefreshing] = useState(false);
+  const contact = useAppSelector(
+    state => state.contact,
+  );
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(getContactInfo());
+    setRefreshing(false);
+  }, [dispatch]);
+
+  useEffect(() => {
+    onRefresh();
+  }, [onRefresh]);
+
   return (
     <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }
       style={[
         styles.rootContainer,
         {
@@ -21,9 +48,12 @@ const ContactScreen = () => {
         },
       ]}>
       <AppForm
-        initialValues={contactValues}
+        initialValues={contact.contactInfo ? {  emergencyContactName: contact.contactInfo.name,
+        email: contact.contactInfo.email,
+        phone: contact.contactInfo.phone,
+        emergencyPhone: contact.contactInfo.phone} : contactValues}
         validationSchema={contactValidationSchema}>
-        <ContactInput handleSubmit={() => {}} />
+        <ContactInput handleSubmit={emergencyContactSubmit} navigation={props.navigation} />
       </AppForm>
       <View style={styles.footerContainer}>
         <View style={styles.termsContainer}>
