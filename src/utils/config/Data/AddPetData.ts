@@ -1,4 +1,18 @@
 export const genders = ['Male', 'Female', 'Others'];
+export const contries = [
+  {
+    id: 0,
+    value: 'Bangladesh',
+  },
+  {
+    id: 1,
+    value: 'USA',
+  },
+  {
+    id: 2,
+    value: 'India',
+  },
+];
 
 export const addPetCheck1 = {
   id: 100,

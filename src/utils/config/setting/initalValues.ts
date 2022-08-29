@@ -1,16 +1,15 @@
 import {basicInfoType, contactType} from './types';
 
 const basicInfoValue: basicInfoType = {
-  addressLineOne: '',
-  addressLineTwo: '',
+  profileImage: '',
+  addressLine1: '',
+  addressLine2: '',
   city: '',
   state: '',
-  postalCode: '',
-  country: '',
+  zipCode: '',
+  countryId: 1,
   name: '',
-  emailAddress: '',
   dob: '',
-  newPassword: '',
 };
 
 const contactValues: contactType = {

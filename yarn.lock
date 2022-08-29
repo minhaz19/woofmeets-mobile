@@ -7904,6 +7904,11 @@ react-native-codegen@^0.0.17:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-draggable-grid@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/react-native-draggable-grid/-/react-native-draggable-grid-2.1.6.tgz#87a6c40797b15e874dbd305c3bca6d08bb2b1f5d"
+  integrity sha512-yIuOwQziFBvBbn+6Q62SFo2dOdJtFv6uvAIx7eMarfz3i4yp6ZtvNsIxlZlPCP7hdpNAeyX/9da+2kb7gIlcyA==
+
 react-native-fbsdk-next@^10.1.0:
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-10.1.0.tgz#e26c4e2505ffe34050ffdd44b8e6bbb8eaf736a4"

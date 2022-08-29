@@ -29,6 +29,7 @@ interface Props {
   auth?: boolean;
   errors: any;
   control: any;
+  defaultValue?: string;
 }
 type StackParamList = {
   ForgotPasswordEmail: {foo: string; onBar: () => void} | undefined;
@@ -54,6 +55,7 @@ const AppFormField = ({
   auth,
   errors,
   control,
+  defaultValue,
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
   return (
@@ -78,6 +80,7 @@ const AppFormField = ({
               onChangeText={onChange}
               onBlur={onBlur}
               value={value}
+              defaultValue={defaultValue}
               secureTextEntry={secureTextEntry}
               error={errors[name]}
               numberOfLines={numberOfLines && numberOfLines}

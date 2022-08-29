@@ -21,7 +21,7 @@ import AppForm from '../../../components/common/Form/AppForm';
 import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
 import {registerUser} from '../../../store/slices/auth/userAction';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import AppActivityIndicator from '../../../components/common/AppActivityIndicator';
+import AppActivityIndicator from '../../../components/Loaders/AppActivityIndicator';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }

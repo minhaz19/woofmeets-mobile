@@ -1,14 +1,14 @@
 export interface basicInfoType {
-  addressLineOne: string;
-  addressLineTwo: string;
+  profileImage: string;
+  addressLine1: string;
+  addressLine2: string;
   city: string;
   state: string;
-  postalCode: string;
-  country: string;
+  zipCode: string;
+  countryId: number | null;
   name: string;
-  emailAddress: string;
+
   dob: string;
-  newPassword: string;
 }
 
 export interface contactType {

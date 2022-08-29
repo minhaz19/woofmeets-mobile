@@ -1,19 +1,16 @@
 import * as Yup from 'yup';
 
 const basicInfoValidationSchema = Yup.object().shape({
-  addressLineOne: Yup.string().required('Address Line 1 is required'),
-  addressLineTwo: Yup.string(),
-  city: Yup.string().required('City is required'),
-  state: Yup.string().required('State is required'),
-  postalCode: Yup.string().required('Postal Code is required'),
-  country: Yup.string().required('Country is required'),
-  name: Yup.string().required('Name is required'),
-  emailAddress: Yup.string()
-    .required('Email Address is required')
-    .email()
-    .label('Email'),
+  profileImage: Yup.string(),
+  addressLine1: Yup.string(),
+  addressLine2: Yup.string(),
+  city: Yup.string(),
+  state: Yup.string(),
+  street: Yup.string(),
+  zipCode: Yup.string(),
+  countryId: Yup.number(),
+  name: Yup.string(),
   dob: Yup.string(),
-  newPassword: Yup.string().min(8).label('Password'),
 });
 
 const contactValidationSchema = Yup.object().shape({

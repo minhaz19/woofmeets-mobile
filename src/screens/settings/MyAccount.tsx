@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   CallIcon,
   Payment2Icon,
@@ -12,9 +13,13 @@ import Text_Size from '../../constants/textScaling';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
 import ProfileInfo from '../../components/ScreenComponent/profile/ProfileInfo';
+import {useAppDispatch, useAppSelector} from '../../store/store';
+import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileAction';
+import AppActivityIndicator from '../../components/Loaders/AppActivityIndicator';
 
 const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
-  const {colors} = useTheme();
+  const dispatch = useAppDispatch();
+  const {loading} = useAppSelector(state => state.userProfile);
   const supportData = [
     {
       id: 1,
@@ -48,35 +53,50 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       details: 'Edit, pet, add new pet',
       opacity: 1,
     },
+    {
+      id: 5,
+      title: 'Change Password',
+      icon: PetsIcon,
+      screenName: () => props.navigation.navigate('PetNavigator'),
+      details: 'Update and secure your password',
+      opacity: 1,
+    },
   ];
-
+  const {colors} = useTheme();
+  useEffect(() => {
+    dispatch(getUserProfileInfo());
+  }, []);
   return (
-    <ScrollView
-      style={[
-        styles.rootContainer,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
-      <SafeAreaView>
-        <View style={styles.profileContainer}>
-          <ProfileInfo />
-        </View>
-        <View
-          style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-        />
-        {supportData?.map(item => (
-          <SettingItem
-            data={item}
-            key={item.id}
-            descriptionStyle={{
-              color: colors.lightText,
-              fontSize: Text_Size.Text_8,
-            }}
+    <>
+      {loading && <AppActivityIndicator visible={true} />}
+
+      <ScrollView
+        style={[
+          styles.rootContainer,
+          {
+            backgroundColor: colors.backgroundColor,
+          },
+        ]}>
+        <SafeAreaView>
+          <View style={styles.profileContainer}>
+            <ProfileInfo />
+          </View>
+          <View
+            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
           />
-        ))}
-      </SafeAreaView>
-    </ScrollView>
+          {supportData?.map(item => (
+            <SettingItem
+              data={item}
+              key={item.id}
+              descriptionStyle={{
+                color: colors.lightText,
+                fontSize: Text_Size.Text_8,
+              }}
+            />
+          ))}
+        </SafeAreaView>
+      </ScrollView>
+    </>
   );
 };
 

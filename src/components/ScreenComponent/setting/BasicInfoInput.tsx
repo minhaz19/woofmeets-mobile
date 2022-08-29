@@ -17,21 +17,23 @@ import ProfileHeader from '../profile/ProfileHeader';
 import BottomSpacing from '../../UI/BottomSpacing';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useFormContext} from 'react-hook-form';
+import {contries} from '../../../utils/config/Data/AddPetData';
+import {useAppSelector} from '../../../store/store';
 
 interface Props {
   handleSubmit: (value: any) => void;
-  onPress?: () => void;
+  loading: boolean;
 }
 const locationInput = [
   {
     title: 'Address Line 1',
     placeholder: 'Enter Address Line 1',
-    name: 'addressLineOne',
+    name: 'addressLine1',
   },
   {
     title: 'Address Line 2',
     placeholder: 'Enter Address Line 2',
-    name: 'addressLineTwo',
+    name: 'addressLine2',
   },
   {
     title: 'City',
@@ -44,15 +46,20 @@ const locationInput = [
     name: 'state',
   },
   {
+    title: 'Street',
+    placeholder: 'Enter Street or Road no. ',
+    name: 'street',
+  },
+  {
     title: 'Zip/ Postal/ Postcode',
     placeholder: 'Enter Zip/ Postal/ Postcode',
-    name: 'postalCode',
+    name: 'zipCode',
   },
   {
     title: 'Country',
     placeholder: 'Enter Country',
     select: true,
-    name: 'country',
+    name: 'countryId',
   },
 ];
 const basicInfoInput = [
@@ -61,11 +68,7 @@ const basicInfoInput = [
     placeholder: 'Enter name',
     name: 'name',
   },
-  {
-    title: 'Email',
-    placeholder: 'Enter Email',
-    name: 'email',
-  },
+
   {
     title: 'Date of Birth',
     placeholder: 'Enter Date of Birth',
@@ -73,75 +76,81 @@ const basicInfoInput = [
   },
 ];
 
-const BasicInfoInput = ({handleSubmit}: Props) => {
+const BasicInfoInput = ({handleSubmit, loading}: Props) => {
+  const data = useAppSelector(state => state.userProfile);
+  const {
+    firstName,
+    lastName,
+    basicInfo,
+    loading: gLoading,
+    image,
+  } = data?.userInfo;
+
   const {
     control,
     formState: {errors},
   } = useFormContext();
   const renderHeader = () => {
     return (
-      <View style={styles.inputContainer}>
-        <ProfileHeader />
-        <View style={styles.nameContainer}>
-          <HeaderText
-            text="Location Information"
-            textStyle={styles.textStyle}
-          />
+      <>
+        <ProfileHeader
+          name="profileImage"
+          gLoading={gLoading}
+          url={image?.url}
+        />
+        <View style={styles.headerContainer}>
+          <View style={styles.nameContainer}>
+            <HeaderText text="Basic Information" textStyle={styles.textStyle} />
+          </View>
+          <View>
+            <FlatList
+              columnWrapperStyle={styles.flatList}
+              data={basicInfoInput}
+              horizontal={false}
+              renderItem={({item}) => {
+                return (
+                  <>
+                    <AppFormField
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      keyboardType={'default'}
+                      placeholder={item.placeholder}
+                      textContentType={'none'}
+                      name={item.name}
+                      label={item.title}
+                      errors={errors}
+                      control={control}
+                      defaultValue={
+                        item.name === 'name'
+                          ? `${firstName + ' ' + lastName}`
+                          : basicInfo?.[item.name]
+                          ? new Date(basicInfo?.[item.name])?.toDateString()
+                          : ''
+                      }
+                    />
+                  </>
+                );
+              }}
+              numColumns={2}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </View>
+          <View style={styles.nameContainer}>
+            <HeaderText
+              text="Location Information"
+              textStyle={styles.textStyle}
+            />
+          </View>
         </View>
-      </View>
+      </>
     );
   };
 
   const renderFooter = () => {
     return (
       <View style={styles.inputContainer}>
-        <View>
-          <View style={styles.nameContainer}>
-            <HeaderText text="Basic Information" textStyle={styles.textStyle} />
-          </View>
-          <FlatList
-            columnWrapperStyle={styles.flatList}
-            data={basicInfoInput}
-            horizontal={false}
-            renderItem={({item}) => {
-              return (
-                <>
-                  <AppFormField
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType={'default'}
-                    placeholder={item.placeholder}
-                    textContentType={'none'}
-                    name={item.name}
-                    label={item.title}
-                    errors={errors}
-                    control={control}
-                  />
-                </>
-              );
-            }}
-            numColumns={2}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-        <View style={styles.nameContainer}>
-          <HeaderText text="Change Password" textStyle={styles.textStyle} />
-        </View>
-        <AppFormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType={'default'}
-          icon={'lock'}
-          secureTextEntry
-          placeholder={'Enter Password'}
-          textContentType={'none'}
-          name={'password'}
-          label={'Password'}
-          errors={errors}
-          control={control}
-        />
         <View style={styles.footerContainer}>
-          <SubmitButton title="Save" onPress={handleSubmit} />
+          <SubmitButton title="Save" onPress={handleSubmit} loading={loading} />
         </View>
         <BottomSpacing />
       </View>
@@ -156,7 +165,7 @@ const BasicInfoInput = ({handleSubmit}: Props) => {
           columnWrapperStyle={styles.flatList}
           data={locationInput}
           horizontal={false}
-          // showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
               <>
@@ -173,12 +182,17 @@ const BasicInfoInput = ({handleSubmit}: Props) => {
                       textInputStyle={styles.textInputStyle}
                       control={control}
                       errors={errors}
+                      defaultValue={basicInfo?.[item.name]}
                     />
                   </View>
                 )}
                 {item.select && (
                   <View style={styles.selectContainer}>
-                    <AppSelect label={item.title} name={item.name} />
+                    <AppSelect
+                      label={item.title}
+                      name={item.name}
+                      data={contries}
+                    />
                   </View>
                 )}
               </>
@@ -201,6 +215,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: '1%',
   },
+  headerContainer: {marginHorizontal: '5%', width: '100%'},
   inputContainer: {marginHorizontal: '5%', width: '90%'},
   flatList: {
     flexWrap: 'wrap',
