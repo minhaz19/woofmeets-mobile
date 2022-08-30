@@ -9,6 +9,7 @@ import ContactScreen from '../../screens/profile/ContactScreen';
 import Preference from '../../screens/settings/Preference';
 import AccountSetting from '../../components/ScreenComponent/setting/Preference/AccountSetting';
 import CreditAndDebitCard from '../../screens/checkout/CreditAndDebitCard';
+import SetNewPassword from '../../screens/auth/ResetPassword';
 
 const Stack1 = createStackNavigator();
 
@@ -60,6 +61,22 @@ const SettingNavigator = () => {
           backgroundColor: Colors.primary,
         })}
       />
+      <Stack1.Screen
+        name="ResetPassword"
+        component={SetNewPassword}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="Basic Info"
+              notification
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+
       <Stack1.Screen
         name="ContactScreen"
         component={ContactScreen}

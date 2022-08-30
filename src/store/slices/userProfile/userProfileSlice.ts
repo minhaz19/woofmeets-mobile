@@ -2,7 +2,6 @@ import {createSlice} from '@reduxjs/toolkit';
 import {getUserProfileInfo} from './userProfileAction';
 
 const initialState: any = {
-  basicInfo: null,
   userInfo: null,
   error: null,
   loading: false,

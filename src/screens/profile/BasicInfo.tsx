@@ -7,12 +7,16 @@ import AppForm from '../../components/common/Form/AppForm';
 import {useApi} from '../../utils/helpers/api/useApi';
 import methods from '../../api/methods';
 import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileAction';
-import {useAppDispatch} from '../../store/store';
+import {useAppDispatch, useAppSelector} from '../../store/store';
+import {useBasicInitalState} from './useBasicInitalState';
 const slug = '/user-profile/basic-info';
 
 const BasicInfo = () => {
   const {colors} = useTheme();
-  const {request, loading} = useApi(methods._update);
+  const {userInfo} = useAppSelector(state => state.userProfile);
+  const {request, loading} = useApi(
+    userInfo.basicInfo === null ? methods._post : methods._update,
+  );
   const dispatch = useAppDispatch();
   const handleSubmit = async (e: any) => {
     const formatedPayload = {
@@ -26,7 +30,7 @@ const BasicInfo = () => {
       dob: e.dob,
     };
     const result = await request(slug, formatedPayload);
-    console.log('result', result, formatedPayload);
+    console.log('result', formatedPayload);
     if (result.ok) {
       Alert.alert('Information Updated!');
       dispatch(getUserProfileInfo());
@@ -42,7 +46,7 @@ const BasicInfo = () => {
           },
         ]}>
         <AppForm
-          // initialValues={basicInfoValue}
+          initialValues={useBasicInitalState()}
           validationSchema={basicInfoValidationSchema}>
           <BasicInfoInput handleSubmit={handleSubmit} loading={loading} />
         </AppForm>

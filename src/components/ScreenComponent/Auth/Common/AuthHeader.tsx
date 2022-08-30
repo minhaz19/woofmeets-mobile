@@ -7,12 +7,14 @@ import DescriptionText from '../../../common/text/DescriptionText';
 interface Props {
   title: string;
   subTitle: string;
-  image: any;
+  image?: any;
 }
 const AuthHeader = ({image, title, subTitle}: Props) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.image} resizeMode="contain" source={image} />
+      {image && (
+        <Image style={styles.image} resizeMode="contain" source={image} />
+      )}
       <View>
         <TitleText textStyle={styles.title} text={title} />
         <DescriptionText textStyle={styles.subTitle} text={subTitle} />

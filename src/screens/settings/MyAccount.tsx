@@ -19,14 +19,15 @@ import AppActivityIndicator from '../../components/Loaders/AppActivityIndicator'
 
 const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const dispatch = useAppDispatch();
-  const {loading} = useAppSelector(state => state.userProfile);
+  const {loading, userInfo} = useAppSelector(state => state.userProfile);
+  console.log('my account', userInfo);
   const supportData = [
     {
       id: 1,
       title: 'Basic Info',
       icon: Profile2Icon,
       screenName: () => props.navigation.navigate('BasicInfo'),
-      details: 'Name, Gender, Age, Photo, Password',
+      details: 'Name, Age, Photo, Address, Country',
       opacity: 1,
     },
     {
@@ -39,6 +40,14 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     },
     {
       id: 3,
+      title: 'Change Password',
+      icon: PetsIcon,
+      screenName: () => props.navigation.navigate('ResetPassword'),
+      details: 'Update and secure your password',
+      opacity: 1,
+    },
+    {
+      id: 4,
       title: 'Payment method',
       icon: Payment2Icon,
       screenName: () => {},
@@ -46,25 +55,17 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       opacity: 1,
     },
     {
-      id: 4,
+      id: 5,
       title: 'Your Pets',
       icon: PetsIcon,
       screenName: () => props.navigation.navigate('PetNavigator'),
       details: 'Edit, pet, add new pet',
       opacity: 1,
     },
-    {
-      id: 5,
-      title: 'Change Password',
-      icon: PetsIcon,
-      screenName: () => props.navigation.navigate('PetNavigator'),
-      details: 'Update and secure your password',
-      opacity: 1,
-    },
   ];
   const {colors} = useTheme();
   useEffect(() => {
-    dispatch(getUserProfileInfo());
+    userInfo === null ? dispatch(getUserProfileInfo()) : false;
   }, []);
   return (
     <>

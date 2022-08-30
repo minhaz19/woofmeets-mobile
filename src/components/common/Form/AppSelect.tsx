@@ -13,7 +13,7 @@ interface Props {
   data: any[];
   disable?: boolean;
 }
-const AppSelect = ({label, name, data, disable = true}: Props) => {
+const AppSelect = ({label, name, data, disable = false}: Props) => {
   const {isDarkMode, colors} = useTheme();
   const {setValue, errors} = useRHFContext(name);
   return (

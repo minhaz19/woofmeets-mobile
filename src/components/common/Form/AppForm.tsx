@@ -5,7 +5,7 @@ import {AnyObjectSchema} from 'yup';
 import Lazy from 'yup/lib/Lazy';
 interface Props {
   children: React.ReactNode;
-  initialValues?: {};
+  initialValues: {};
   validationSchema: AnyObjectSchema | Lazy<any, unknown>;
 }
 const AppForm = ({children, initialValues, validationSchema}: Props) => {
