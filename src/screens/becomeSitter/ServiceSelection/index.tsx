@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import React, {FC, useState} from 'react';
 import HeaderText from '../../../components/common/text/HeaderText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -15,14 +15,13 @@ import {
 } from '../../../assets/svgs/Services_SVG';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface Props {
   item: any;
 }
 
-const ServiceSelection = (props: {
-  navigation: {navigate: (arg0: string) => void};
-}) => {
+const ServiceSelection = (props: { navigation: { navigate: (arg0: string, arg1: { serviceData: { id: number; name: string; image: JSX.Element; description: string; price: string; clicked: boolean; }[]; }) => void; }; }) => {
   const {colors} = useTheme();
   const [selectData, setSelectData] = useState([
     {
@@ -73,41 +72,38 @@ const ServiceSelection = (props: {
   const RenderItem: FC<Props> = ({item}) => (
     <ReusableServices data={item} noShadow onPressEvent={onPressEvent} />
   );
-  return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={[
-        styles.container,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
+  const renderHeader = () => {
+    return (
       <View style={styles.innerViewContainer}>
         <HeaderText text="Service Selection" />
-        <DescriptionText
-          textStyle={styles.descriptionStyle}
-          text="1- Select at least one service you’re interested in. You can always add more later."
-        />
-        <DescriptionText
-          textStyle={styles.descriptionStyle}
-          text="2- If you select more than one service, you will only see one of them during the sign up process."
-        />
-        <DescriptionText
-          textStyle={styles.descriptionStyle}
-          text="3- After your profile is submitted for review, you can edit your selected services or add more."
-        />
         <View style={styles.viewQuestionStyle}>
+          <MaterialIcons
+            name="error"
+            size={14}
+            color={Colors.primary}
+          />
           <ShortText
-            textStyle={{...styles.shortText, color: Colors.light.blue}}
+            textStyle={{...styles.shortText, color: Colors.primary}}
             text="Which services should I choose?"
           />
         </View>
-        <View>
-          {selectData.map(item => {
-            return <RenderItem key={item.id} item={item} />;
-          })}
-        </View>
+        <DescriptionText
+          textStyle={styles.descriptionStyle}
+          text="1. Select at least one service you’re interested in. You can always add more later."
+        />
+        <DescriptionText
+          textStyle={styles.descriptionStyle}
+          text="2. If you select more than one service, you will only see one of them during the sign up process."
+        />
+        <DescriptionText
+          textStyle={styles.descriptionStyle}
+          text="3. After your profile is submitted for review, you can edit your selected services or add more."
+        />
       </View>
+    )
+  }
+  const renderFooter = () => {
+    return (
       <View style={styles.footerContainer}>
         <ButtonCom
           title="Save and Continue"
@@ -119,7 +115,26 @@ const ServiceSelection = (props: {
           }
         />
       </View>
-    </ScrollView>
+    )
+  }
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: colors.backgroundColor,
+        },
+      ]}>
+          <FlatList
+            columnWrapperStyle={styles.flatList}
+            data={selectData}
+            numColumns={2}
+            renderItem={RenderItem}
+            keyExtractor={(item) => item.id}
+            ListFooterComponent={renderFooter}
+            ListHeaderComponent={renderHeader}
+          />
+    </View>
   );
 };
 
@@ -133,14 +148,24 @@ const styles = StyleSheet.create({
   descriptionStyle: {
     paddingVertical: '2%',
   },
-  shortText: {},
+  shortText: {
+    paddingLeft: 5,
+  },
   viewQuestionStyle: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: 10,
   },
   footerContainer: {
     paddingHorizontal: '10%',
     paddingBottom: 100,
+  },
+  flatList: {
+    flexWrap: 'wrap',
+    flex: 1,
+    marginTop: 5,
+    marginHorizontal: 20,
+    justifyContent: 'center',
   },
 });
 

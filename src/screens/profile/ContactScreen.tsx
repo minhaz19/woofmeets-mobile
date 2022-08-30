@@ -33,6 +33,8 @@ const ContactScreen = (props: { navigation: { navigate: (arg0: string) => void; 
     onRefresh();
   }, [onRefresh]);
 
+  useEffect(() => {}, [contact.contactInfo]);
+
   return (
     <ScrollView
       refreshControl={

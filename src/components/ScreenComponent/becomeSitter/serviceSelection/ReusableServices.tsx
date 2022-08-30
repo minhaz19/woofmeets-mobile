@@ -1,16 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, GestureResponderEvent} from 'react-native';
 import React, {FC} from 'react';
 import { useTheme } from '../../../../constants/theme/hooks/useTheme';
 import HeaderText from '../../../common/text/HeaderText';
 import DescriptionText from '../../../common/text/DescriptionText';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '../../../../constants/Colors';
+import { SCREEN_WIDTH } from '../../../../constants/WindowSize';
 
 interface Props {
   data: any;
   noShadow?: boolean;
-  onPressEvent(id: number): () => void;
+  onPressEvent: ((id: number) => void);
 }
 
 const ReusableServices: FC<Props> = data => {
@@ -22,7 +22,8 @@ const ReusableServices: FC<Props> = data => {
           styles.container,
           {
             backgroundColor: colors.backgroundColor,
-            borderBottomWidth: 1,
+            borderWidth: 1,
+            borderColor: data.data.clicked ? Colors.primary : colors.borderColor,
           },
         ]}>
         <View style={styles.boxContainer}>
@@ -33,7 +34,7 @@ const ReusableServices: FC<Props> = data => {
             <DescriptionText text={data.data.price} textStyle={styles.description} />
           </View>
         </View>
-        <Ionicons name="checkmark-circle" size={22} color={data.data.clicked ? Colors.primary : Colors.subText} />
+        {data.data.clicked && <View style={styles.rightSelection} />}
       </View>
     </TouchableOpacity>
   );
@@ -43,29 +44,42 @@ export default ReusableServices;
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
-    borderColor: '#ffebd9',
-    paddingHorizontal: 10,
+    borderColor: Colors.subText,
+    width: SCREEN_WIDTH / 2 - 30,
+    marginBottom: 10,
+    marginRight: 10,
+    borderRadius: 5,
     paddingVertical: 10,
-    flexDirection: 'row',
+    minHeight: 160,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   boxContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
-    width: '95%',
+    width: '100%'
   },
   imageContainer: {
-    marginRight: 10,
+    paddingBottom: 10,
   },
   image: {
     width: '100%',
     height: '100%',
   },
   textContainer: {
-    width: '90%',
+    alignItems: 'center',
   },
   description: {
     paddingVertical: 6,
+    textAlign: 'center',
   },
+  rightSelection: {
+    height: 8,
+    width: 8,
+    borderRadius: 10,
+    borderColor: Colors.primary,
+    borderWidth: 2,
+    position: 'absolute',
+    right: 10,
+    top: 10,
+  }
 });

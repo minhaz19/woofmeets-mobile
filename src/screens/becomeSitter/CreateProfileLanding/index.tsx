@@ -49,7 +49,7 @@ const CreateProfileLanding = (props: { navigation: { navigate: (arg0: string) =>
       ]}>
         <BigText text="Create Yout Profile" />
       {sitterData.map(item => (
-        <ProfileItemCard title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} />
+        <ProfileItemCard key={item.id} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} />
       ))}
       <View style={styles.footerContainer}>
         <ButtonCom
