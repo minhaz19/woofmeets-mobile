@@ -24,7 +24,6 @@
     "@reduxjs/toolkit": "^1.8.2",
     "@rneui/base": "^4.0.0-rc.5",
     "@rneui/themed": "^4.0.0-rc.5",
-    "@types/xdate": "^0.8.32",
     "apisauce": "^2.1.5",
     "date-fns": "^2.29.2",
     "jwt-decode": "^3.1.2",
