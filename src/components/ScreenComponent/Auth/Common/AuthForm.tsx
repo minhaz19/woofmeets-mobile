@@ -56,7 +56,7 @@ const AuthForm = ({
                     setNewPassword ? 'Enter old password' : 'Enter your email'
                   }
                   textContentType={setNewPassword ? 'password' : 'emailAddress'}
-                  name={setNewPassword ? 'oldPass' : 'email'}
+                  name={setNewPassword ? 'oldPassword' : 'email'}
                   label={setNewPassword ? 'Old Password' : 'Email/Phone Number'}
                   secureTextEntry={setNewPassword ? true : false}
                   email={setNewPassword ? false : true}

@@ -30,7 +30,6 @@ const BasicInfo = () => {
       dob: e.dob,
     };
     const result = await request(slug, formatedPayload);
-    console.log('result', formatedPayload);
     if (result.ok) {
       Alert.alert('Information Updated!');
       dispatch(getUserProfileInfo());

@@ -11,24 +11,24 @@ import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import UploadingLoader from '../../Loaders/UploadingLoader';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {useAppDispatch} from '../../../store/store';
 import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 interface Props {
   name: string;
   gLoading: boolean;
   url: string | null;
+  userName: string;
 }
 const slug = '/user-profile/upload-profile-picture';
 const img =
   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-const ProfileHeader = ({name, gLoading, url}: Props) => {
+const ProfileHeader = ({name, gLoading, url, userName}: Props) => {
   const {colors} = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [image, setImage] = useState('');
   const {setValue} = useRHFContext(name);
   const dispatch = useAppDispatch();
-  const {} = useAppSelector(state => state.userProfile);
 
   const {request, loading} = useApi(methods._post);
 
@@ -75,7 +75,7 @@ const ProfileHeader = ({name, gLoading, url}: Props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.nameContainer}>
-          <HeaderText text="John Askelad" />
+          <HeaderText text={userName} />
         </View>
       </View>
       <ImageUploadModal

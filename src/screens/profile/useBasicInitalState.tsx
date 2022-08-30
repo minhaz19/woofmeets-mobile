@@ -4,7 +4,6 @@ import {useAppSelector} from '../../store/store';
 export const useBasicInitalState = () => {
   const {userInfo} = useAppSelector(state => state.userProfile);
   useEffect(() => {
-    console.log('user', userInfo);
   }, [userInfo]);
   const basicInitalState = {
     profileImage: userInfo?.image?.url ? userInfo?.image?.url : '',

@@ -36,6 +36,11 @@ const locationInput = [
     name: 'addressLine2',
   },
   {
+    title: 'Street',
+    placeholder: 'Enter Street or Road no. ',
+    name: 'street',
+  },
+  {
     title: 'City',
     placeholder: 'Enter City',
     name: 'city',
@@ -44,11 +49,6 @@ const locationInput = [
     title: 'State or Province',
     placeholder: 'Enter State or Province ',
     name: 'state',
-  },
-  {
-    title: 'Street',
-    placeholder: 'Enter Street or Road no. ',
-    name: 'street',
   },
   {
     title: 'Zip/ Postal/ Postcode',
@@ -78,7 +78,7 @@ const basicInfoInput = [
 
 const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   const data = useAppSelector(state => state.userProfile);
-  const {loading: gLoading, image} = data?.userInfo;
+  const {loading: gLoading, image, firstName, lastName} = data?.userInfo;
 
   const {
     control,
@@ -91,6 +91,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
           name="profileImage"
           gLoading={gLoading}
           url={image?.url}
+          userName={firstName + ' ' + lastName}
         />
         <View style={styles.headerContainer}>
           <View style={styles.nameContainer}>
@@ -128,7 +129,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
         </View>
       </>
     );
-  }, [control, errors, gLoading, image?.url]);
+  }, [control, errors, firstName, gLoading, image?.url, lastName]);
 
   const renderFooter = useCallback(() => {
     return (

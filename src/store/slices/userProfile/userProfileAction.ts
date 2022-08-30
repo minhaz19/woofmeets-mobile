@@ -7,7 +7,6 @@ export const getUserProfileInfo = createAsyncThunk(
   async () => {
     try {
       const response: ApiResponse<any> = await apiClient.get('/user-profile');
-      console.log(response);
       if (!response.ok) {
         if (response.data) {
           Alert.alert(response.data.message);

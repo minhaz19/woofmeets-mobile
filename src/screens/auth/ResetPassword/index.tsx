@@ -80,7 +80,7 @@ const SetNewPassword = ({navigation}: Props) => {
               handleSubmit={handleSubmit}
               btnTitle="Confirm"
               onPress={() => navigation.goBack()}
-              setNewPassword
+              setNewPassword={true}
               loading={loading}
             />
           </AppForm>

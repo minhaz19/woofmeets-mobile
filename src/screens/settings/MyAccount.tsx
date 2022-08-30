@@ -20,7 +20,6 @@ import AppActivityIndicator from '../../components/Loaders/AppActivityIndicator'
 const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const dispatch = useAppDispatch();
   const {loading, userInfo} = useAppSelector(state => state.userProfile);
-  console.log('my account', userInfo);
   const supportData = [
     {
       id: 1,

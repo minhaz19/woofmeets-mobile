@@ -16,7 +16,7 @@ const Stack1 = createStackNavigator();
 const ServiceNavigator = () => {
   const dispatch = useDispatch();
   return (
-    <Stack1.Navigator initialRouteName="ProviderAvailablity">
+    <Stack1.Navigator initialRouteName="PetCareZipSearch">
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
