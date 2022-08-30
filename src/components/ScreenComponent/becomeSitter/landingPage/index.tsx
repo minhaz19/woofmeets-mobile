@@ -12,7 +12,7 @@ const LandingCard = (props: {title: string; id: number; isCompleted: boolean, ha
       <Card style={styles.headerContainer} containerStyle={styles.contentStyle}>
         <View style={styles.cardContainer}>
           <View style={styles.textContainer}>
-          <View style={{...styles.numberViewContainer, backgroundColor: props.isCompleted ? Colors.primary : Colors.border}}>
+          <View style={{...styles.numberViewContainer, backgroundColor: props.isCompleted ? Colors.primary : Colors.light.subText}}>
              <TitleText text={props.id} textStyle={{...styles.numberStyle, color: Colors.light.background}} />
           </View>
           <TitleText text={props.title} textStyle={{...styles.textStyle, color: props.isCompleted ? Colors.primary : Colors.light.subText}} />
@@ -67,8 +67,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
     justifyContent: 'center',
     textAlign: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    alignItems: 'center',
+    height: 22,
+    width: 22,
     borderRadius: 100,
   },
   iconStyle: {

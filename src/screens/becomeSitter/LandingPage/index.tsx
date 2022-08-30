@@ -45,7 +45,7 @@ const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => an
         },
       ]}>
       {sitterData.map(item => (
-        <LandingCard title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} />
+        <LandingCard key={item.id} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} />
       ))}
       <View style={styles.footerContainer}>
         <ButtonCom
