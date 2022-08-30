@@ -9,8 +9,8 @@ import {
 import React from 'react';
 import Colors from '../../../../constants/Colors';
 import AuthForm from '../../../../components/ScreenComponent/Auth/Common/AuthForm';
-import {forgotPasswordOtpValue} from '../../../../utils/config/initalValues';
-import {forgotPasswordOtpValidationSchema} from '../../../../utils/config/validationSchema';
+import {otpValue} from '../../../../utils/config/initalValues';
+import {otpValidationSchema} from '../../../../utils/config/validationSchema';
 import ImageAndTitle from '../../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
 import {AuthEmail} from '../../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
@@ -78,8 +78,8 @@ const ForgotPasswordOtp = ({route, navigation}: Props) => {
             subTitle={forgotPassData.subTitle}
           />
           <AppForm
-            initialValues={forgotPasswordOtpValue}
-            validationSchema={forgotPasswordOtpValidationSchema}>
+            initialValues={otpValue}
+            validationSchema={otpValidationSchema}>
             <AuthForm
               handleSubmit={handleSubmit}
               btnTitle="Continue"

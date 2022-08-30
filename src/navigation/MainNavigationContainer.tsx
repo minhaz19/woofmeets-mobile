@@ -18,6 +18,11 @@ import ReceivePayments from '../screens/Misc/ReceivePayments';
 import Gallery from '../screens/becomeSitter/Gallery/Gallery';
 import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
 import GuestBottomTabNavigator from './GuestBottomTabNavigator';
+import SitterLandingPage from '../screens/becomeSitter/LandingPage';
+import CreateProfileLanding from '../screens/becomeSitter/CreateProfileLanding';
+import BasicInfo from '../screens/profile/BasicInfo';
+import ContactScreen from '../screens/profile/ContactScreen';
+import PetNavigator from './bottoms/PetNavigator';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -189,6 +194,75 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 notification
               />
             ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SitterLandingPage"
+          component={SitterLandingPage}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Become A Sitter"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="CreateProfileLanding"
+          component={CreateProfileLanding}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Create Your Profile"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SitterBasicInfo"
+          component={BasicInfo}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Basic Info"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SitterContactScreen"
+          component={ContactScreen}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Contact"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="PetScreens"
+          component={PetNavigator}
+          options={() => ({
+            title: '',
+            headerShown: false,
             backgroundColor: Colors.primary,
           })}
         />

@@ -1,4 +1,4 @@
-import {View, TextInput, StyleSheet, TextStyle} from 'react-native';
+import {View, TextInput, StyleSheet, TextStyle, KeyboardTypeOptions} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import Colors from '../../../constants/Colors';
@@ -7,7 +7,6 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import HeaderText from '../text/HeaderText';
 import DescriptionText from '../text/DescriptionText';
-import {colors} from '../../../constants/theme/textTheme';
 
 const screen = SCREEN_WIDTH;
 const InputText = (props: {
@@ -22,8 +21,12 @@ const InputText = (props: {
   value: string | undefined;
   setValue: (arg0: string) => void;
   icon?: any;
+  leftIcon?: any;
   style?: TextStyle;
   description?: string;
+  keyboardType?: KeyboardTypeOptions;
+  ref?: any;
+  onChangeText?: (arg0: string) => void;
 }) => {
   const {colors} = useTheme();
   return (
@@ -37,8 +40,9 @@ const InputText = (props: {
       )}
       <View
         style={[styles._input, {backgroundColor: colors.lightBackgroundColor}]}>
+        <View style={styles.iconView}>{props.leftIcon}</View>
         <TextInput
-          onChangeText={pCode => props.setValue(pCode)}
+          onChangeText={props.onChangeText ? props.onChangeText : pCode => props.setValue(pCode)}
           style={[styles.text, {color: colors.headerText}]}
           placeholderTextColor={colors.placeholderTextColor}
           {...props}
@@ -90,7 +94,9 @@ const styles = StyleSheet.create({
   descriptionText: {
     paddingVertical: '2%',
     lineHeight: 20,
-    color: colors.descriptionText,
+  },
+  iconView: {
+    paddingRight: 10,
   },
 });
 

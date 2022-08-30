@@ -26,6 +26,7 @@ const SettingMain = (props: {
 }) => {
   const {colors} = useTheme();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  console.log(isLoggedIn);
   const loginData = [
     {
       id: 3,

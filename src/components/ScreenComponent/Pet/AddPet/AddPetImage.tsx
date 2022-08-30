@@ -25,7 +25,9 @@ const AddPetImage = ({name}: Props) => {
   const {setValue, errors, onBlur, value} = useRHFContext(name);
 
   function uploadImage(e: any) {
-    setValue(name, e._parts[0][1].uri, {shouldValidate: true});
+    setValue(name, e._parts[0][1].uri, {
+      shouldValidate: errors.name ? true : false,
+    });
   }
   const uploadImageUri = () => {} 
   return (

@@ -21,7 +21,7 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {userLogin} from '../../../store/slices/auth/userAction';
-import AppActivityIndicator from '../../../components/common/AppActivityIndicator';
+import AppActivityIndicator from '../../../components/Loaders/AppActivityIndicator';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }

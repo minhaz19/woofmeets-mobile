@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 import {setCross} from '../../../store/slices/hittingCross';
 import {compareDate} from './compareDate';
 
-export const useHandleRange = () => {
+export const useHandleRange = (name = 'dateRange') => {
   const [step, setSteps] = useState(1);
   const [prevDate, setPrevDate] = useState<false | undefined | Date>();
   const [startingDate, setStartingDate] = useState('');
@@ -33,11 +33,16 @@ export const useHandleRange = () => {
       }
     }
   };
+  const resetRange = () => {
+    setStartingDate('');
+    setEndingDate('');
+    setSteps(1);
+  };
 
   useMemo(() => {
     if (startingDate !== '' && endingDate !== '' && cross === false) {
       setValue(
-        'dateRange',
+        name,
         `${moment(startingDate).format('MMMM D, YYYY')} - ${moment(
           endingDate,
         ).format('MMMM D, YYYY')}`,
@@ -46,9 +51,9 @@ export const useHandleRange = () => {
       setSteps(1);
       setStartingDate('');
       setEndingDate('');
-      setValue('dateRange', '');
+      setValue(name, '');
       dispatch(setCross(false));
     }
-  }, [startingDate, endingDate, setValue, cross, dispatch]);
-  return {startingDate, endingDate, handleDayPress};
+  }, [startingDate, endingDate, cross, setValue, name, dispatch]);
+  return {startingDate, endingDate, resetRange, handleDayPress};
 };

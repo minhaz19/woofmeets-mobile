@@ -26,7 +26,7 @@ const MiddleModal = (props: {
       onBlur={props.onBlur}
       onPress={() => props.setIsModalVisible(false)}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={props.isModalVisible}>
         <TouchableWithoutFeedback
@@ -45,8 +45,9 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     width: '100%',
-    marginLeft: '5%',
+    alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.7)',
   },
   modalText: {
     color: 'black',
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
   iconView: {height: 80, width: 80, marginBottom: 10},
   modalView: {
     width: '90%',
-    height: '20%',
+    minHeight: '20%',
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: {
@@ -68,7 +69,8 @@ const styles = StyleSheet.create({
     elevation: 9,
     justifyContent: 'space-around',
     alignItems: 'center',
-    flexDirection: 'row',
+    // flexDirection: 'row',
+    overflow: 'hidden',
     borderRadius: 10,
   },
 });

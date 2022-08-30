@@ -3,6 +3,7 @@ export interface basicInfoType {
   addressLineTwo: string;
   city: string;
   state: string;
+  street: string;
   postalCode: string;
   name: string;
   emailAddress: string;
@@ -14,5 +15,5 @@ export interface contactType {
   phone: string;
   emergencyContactName: string;
   email: string;
-  emergencyContactPhone: string;
+  emergencyPhone: string;
 }
