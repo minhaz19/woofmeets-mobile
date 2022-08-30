@@ -30,7 +30,7 @@ const forgotPasswordReset: forgotPasswordResetType = {
   confirmPassword: '',
 };
 const forgotPasswordValue: forgotPasswordType = {email: ''};
-const forgotPasswordOtpValue: forgotPasswordOtpType = {code: ''};
+const otpValue: forgotPasswordOtpType = {code: ''};
 const verifyAccountValue: verifyAccountType = {code: ''};
 const addPetValue: addPetType = {
   petImage: '',
@@ -96,7 +96,7 @@ export {
   signupValue,
   setPasswordValue,
   forgotPasswordValue,
-  forgotPasswordOtpValue,
+  otpValue,
   verifyAccountValue,
   addPetValue,
   filterProviderValue,

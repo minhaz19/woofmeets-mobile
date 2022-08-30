@@ -14,9 +14,11 @@ import authReducer from './slices/auth/userSlice';
 import hittingCross from './slices/hittingCross';
 import openFilter from './slices/openFilter';
 import userProfileSlice from './slices/userProfile/userProfileSlice';
+import contactReducer from './slices/profile/contact';
 
 const appReducer = combineReducers({
   auth: authReducer,
+  contact: contactReducer,
   addPet: addPetReducer,
   filter: openFilter,
   cross: hittingCross,

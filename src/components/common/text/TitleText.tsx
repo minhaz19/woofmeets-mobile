@@ -3,7 +3,7 @@ import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 
-const TitleText = (props: {text: string; textStyle?: TextStyle}) => {
+const TitleText = (props: {text: string | number; textStyle?: TextStyle}) => {
   const {colors} = useTheme();
   return (
       <Text

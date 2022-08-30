@@ -50,7 +50,7 @@ const SitterInitialScreen = (props: {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => props.navigation.navigate('ServiceSelection')}
+            onSelect={() => props.navigation.navigate('SitterLandingPage')}
           />
         </View>
         {/* Flexibility */}
@@ -108,7 +108,7 @@ const SitterInitialScreen = (props: {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => props.navigation.navigate('ServiceSelection')}
+            onSelect={() => props.navigation.navigate('SitterLandingPage')}
           />
         </View>
       </View>
@@ -144,7 +144,7 @@ const SitterInitialScreen = (props: {
           textAlignment={btnStyles.textAlignment}
           containerStyle={btnStyles.containerStyleFullWidth}
           titleStyle={btnStyles.titleStyle}
-          onSelect={() => props.navigation.navigate('ServiceSelection')}
+          onSelect={() => props.navigation.navigate('SitterLandingPage')}
         />
       </View>
       <BottomSpacing />

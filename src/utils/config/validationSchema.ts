@@ -60,7 +60,7 @@ const forgotPasswordValidationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
 });
 
-const forgotPasswordOtpValidationSchema = Yup.object().shape({
+const otpValidationSchema = Yup.object().shape({
   code: Yup.string().required().min(6).max(6).label('OTP'),
 });
 const verifyAccountValidationSchema = Yup.object().shape({
@@ -187,7 +187,7 @@ export {
   signUpValidationSchema,
   setPasswordValidationSchema,
   forgotPasswordValidationSchema,
-  forgotPasswordOtpValidationSchema,
+  otpValidationSchema,
   verifyAccountValidationSchema,
   addPetValidationSchema,
   filterProviderValidationSchema,

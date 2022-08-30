@@ -32,7 +32,7 @@ export default {
   gray: 'gray',
   black: 'black',
   primary: '#FFA557',
-  primaryLight: '#FFF2E9',
+  primaryLight: '#FFEDD5',
   secondary: '#FEF1E8',
   background: 'white',
   text: '#231F20',
