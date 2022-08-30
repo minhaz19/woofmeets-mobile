@@ -2,7 +2,7 @@ import {Image, StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import React from 'react';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Text_Size from '../../../../../constants/textScaling';
-import {Plus} from '../../../../../assets/svgs/SVG_LOGOS';
+import { PlusRounded} from '../../../../../assets/svgs/SVG_LOGOS';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../../constants/Colors';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -57,7 +57,7 @@ const MyPetList = ({dataList, onPress}: Props) => {
           </View>
         ) : (
           <View style={styles.addPet}>
-            <Plus fill={isDarkMode ? 'white' : Colors.light.lightText} />
+            <PlusRounded fill={isDarkMode ? 'white' : Colors.light.lightText} />
           </View>
         )}
       </View>

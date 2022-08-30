@@ -1,20 +1,28 @@
+import {parse} from 'date-fns';
 import * as Yup from 'yup';
 import { phoneNumberReg, emailReg } from '../../../constants/regex';
 
 const basicInfoValidationSchema = Yup.object().shape({
-  addressLineOne: Yup.string().required('Address Line 1 is required'),
-  addressLineTwo: Yup.string(),
+  profileImage: Yup.string(),
+  addressLine1: Yup.string().required('Address is required'),
+  addressLine2: Yup.string(),
   city: Yup.string().required('City is required'),
   state: Yup.string().required('State is required'),
-  postalCode: Yup.string().required('Postal Code is required'),
-  country: Yup.string().required('Country is required'),
+  street: Yup.string(),
+  zipCode: Yup.string().required('Zip code is required'),
+  countryId: Yup.number(),
   name: Yup.string().required('Name is required'),
-  emailAddress: Yup.string()
-    .required('Email Address is required')
-    .email()
-    .label('Email'),
-  dob: Yup.string(),
-  newPassword: Yup.string().min(8).label('Password'),
+  dob: Yup.date()
+    .transform(function (value, originalValue) {
+      if (this.isType(value)) {
+        return value;
+      }
+      const result = parse(originalValue, 'dd/MM/yyyy', new Date());
+      return result;
+    })
+    .typeError('please enter a valid date')
+    .required()
+    .min('1969-11-13', 'Date is too early'),
 });
 
 const contactValidationSchema = Yup.object().shape({

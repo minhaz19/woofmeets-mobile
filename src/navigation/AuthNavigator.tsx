@@ -1,7 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Login from '../screens/auth/Login';
-import SetNewPassword from '../screens/auth/ResetPassword';
 import SignUp from '../screens/auth/SignUp';
 import AfterIntroScreen from '../screens/AfterIntroScreen';
 import VerifyAccount from '../screens/auth/VerifyAccount';
@@ -50,11 +49,7 @@ function AuthNavigator() {
         component={ForgotPasswordReset}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="ResetPassword"
-        component={SetNewPassword}
-        options={{headerShown: false}}
-      />
+
       <Stack.Screen
         name="GuestBottomTab"
         component={GuestBottomTabNavigator}

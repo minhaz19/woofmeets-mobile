@@ -78,7 +78,6 @@ export const useHandleProviderAuth = () => {
       }
     } catch (error) {
       Alert.alert('Login failed');
-      console.log(error);
     }
   };
 

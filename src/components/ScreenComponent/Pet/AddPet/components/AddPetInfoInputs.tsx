@@ -3,13 +3,15 @@ import {StyleSheet, View} from 'react-native';
 import React, {useCallback} from 'react';
 import AppFormField from '../../../../common/Form/AppFormField';
 import AppSelect from '../../../../common/Form/AppSelect';
-import {addPetInfoInputs} from '../../../../../utils/config/Data/AddPetData';
+import {
+  addPetInfoInputs,
+  genders,
+} from '../../../../../utils/config/Data/AddPetData';
 interface Props {
   errors: any;
   control: any;
 }
 const AddPetInfoInputs = ({errors, control}: Props) => {
-
   return (
     <View style={styles.flatList}>
       {addPetInfoInputs.map(
@@ -32,7 +34,11 @@ const AddPetInfoInputs = ({errors, control}: Props) => {
                 />
               ) : (
                 <View style={styles.selectContainer} key={index}>
-                  <AppSelect label={item.title} name={item.name} />
+                  <AppSelect
+                    label={item.title}
+                    name={item.name}
+                    data={genders}
+                  />
                 </View>
               )}
             </View>

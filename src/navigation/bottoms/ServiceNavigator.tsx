@@ -7,7 +7,8 @@ import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import {FilterIcon} from '../../assets/svgs/SVG_LOGOS';
 import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../store/slices/openFilter';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
+import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
 
 const Stack1 = createStackNavigator();
@@ -19,6 +20,11 @@ const ServiceNavigator = () => {
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
+        options={{headerShown: false}}
+      />
+      <Stack1.Screen
+        name="ProviderAvailablity"
+        component={ProviderAvailablity}
         options={{headerShown: false}}
       />
       <Stack1.Screen

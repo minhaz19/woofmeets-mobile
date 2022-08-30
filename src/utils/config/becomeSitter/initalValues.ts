@@ -5,6 +5,7 @@ const basicInfoValue: basicInfoType = {
   addressLineTwo: '',
   city: '',
   state: '',
+  street: '',
   postalCode: '',
   name: '',
   emailAddress: '',
