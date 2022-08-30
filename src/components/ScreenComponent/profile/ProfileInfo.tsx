@@ -4,25 +4,34 @@ import HeaderText from '../../common/text/HeaderText';
 import ShortText from '../../common/text/ShortText';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-
+import {useAppSelector} from '../../../store/store';
+const img =
+  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 const ProfileInfo = () => {
   const {colors} = useTheme();
+  const {userInfo} = useAppSelector(state => state.userProfile);
   return (
     <View style={styles.topContainer}>
       <View
         style={[styles.imageContainer, {borderColor: colors.descriptionText}]}>
         <Image
           source={{
-            uri: 'https://picsum.photos/200/300',
+            uri: userInfo?.image?.url ? userInfo?.image?.url : img,
           }}
           style={styles.imageStyle}
         />
       </View>
       <View style={styles.nameContainer}>
         <View>
-          <HeaderText text="John Askelad" />
+          <HeaderText
+            text={`${
+              userInfo?.firstName
+                ? userInfo?.firstName + ' ' + userInfo?.lastName
+                : 'loading...'
+            }`}
+          />
           <View>
-            <ShortText text="Hey there! I am ………." />
+            <ShortText text="Hey there! I am ………" />
           </View>
         </View>
       </View>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 
 import {
@@ -14,10 +13,7 @@ import Colors from '../../../../constants/Colors';
 import AuthHeader from '../../../../components/ScreenComponent/Auth/Common/AuthHeader';
 import AuthForm from '../../../../components/ScreenComponent/Auth/Common/AuthForm';
 
-import {
-  forgotPasswordResetValidationSchema,
-  setPasswordValidationSchema,
-} from '../../../../utils/config/validationSchema';
+import {forgotPasswordResetValidationSchema} from '../../../../utils/config/validationSchema';
 import {resetForgotPassword} from '../../../../utils/config/Data/setNewPasswordDatas';
 import {forgotPasswordReset} from '../../../../utils/config/initalValues';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';

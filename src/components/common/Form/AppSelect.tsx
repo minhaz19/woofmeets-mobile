@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
@@ -7,24 +6,16 @@ import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import ErrorMessage from './ErrorMessage';
-import {genders} from '../../../utils/config/Data/AddPetData';
-import {useController, useFormContext} from 'react-hook-form';
+import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
 interface Props {
   name: string;
   label: string;
-  data?: [];
-  methods?: any;
+  data: any[];
+  disable?: boolean;
 }
-const AppSelect = ({label, name}: Props) => {
+const AppSelect = ({label, name, data, disable = false}: Props) => {
   const {isDarkMode, colors} = useTheme();
-  const {
-    control,
-    setValue,
-    formState: {errors},
-  } = useFormContext();
-  const {
-    field: {onBlur, onChange, value},
-  } = useController({name, control});
+  const {setValue, errors} = useRHFContext(name);
   return (
     <View>
       <Text style={[styles.label, {color: colors.headerText}]}>{label}</Text>
@@ -32,7 +23,9 @@ const AppSelect = ({label, name}: Props) => {
         buttonStyle={{
           height: 40,
           width: '100%',
-          backgroundColor: colors.backgroundColor,
+          backgroundColor: disable
+            ? Colors.light.borderColor
+            : colors.backgroundColor,
           marginVertical: 10,
           justifyContent: 'space-between',
           borderWidth: 1,
@@ -44,15 +37,17 @@ const AppSelect = ({label, name}: Props) => {
         }}
         selectedRowTextStyle={styles.text}
         buttonTextStyle={styles.buttonText}
-        data={genders}
-        onSelect={selectedItem =>
-          setValue('gender', selectedItem, {shouldValidate: true})
-        }
+        data={data}
+        defaultButtonText="USA"
+        disabled={disable}
+        onSelect={selectedItem => {
+          setValue(name, selectedItem.id);
+        }}
         buttonTextAfterSelection={selectedItem => {
-          return selectedItem;
+          return selectedItem.value;
         }}
         rowTextForSelection={item => {
-          return item;
+          return item.value;
         }}
       />
       <ErrorMessage error={errors[name]?.message} />

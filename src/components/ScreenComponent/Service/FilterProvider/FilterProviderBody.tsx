@@ -122,7 +122,7 @@ const FilterProviderBody = ({
           ))}
         </View>
         <View style={styles.btnContainer}>
-          <SubmitButton title="Search Result" />
+          <SubmitButton title="Search Result" onPress={handleSubmit} />
           <AppButton title="cancel" />
         </View>
         <BottomSpacing />
@@ -133,8 +133,7 @@ const FilterProviderBody = ({
     <View style={styles.container}>
       <AppForm
         initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}>
+        validationSchema={validationSchema}>
         <FlatList
           data={[]}
           // @ts-ignore

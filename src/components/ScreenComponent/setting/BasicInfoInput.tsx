@@ -7,7 +7,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useCallback} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import AppSelect from '../../common/Form/AppSelect';
 import SubmitButton from '../../common/Form/SubmitButton';
@@ -17,21 +17,28 @@ import ProfileHeader from '../profile/ProfileHeader';
 import BottomSpacing from '../../UI/BottomSpacing';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useFormContext} from 'react-hook-form';
+import {contries} from '../../../utils/config/Data/AddPetData';
+import {useAppSelector} from '../../../store/store';
 
 interface Props {
   handleSubmit: (value: any) => void;
-  onPress?: () => void;
+  loading: boolean;
 }
 const locationInput = [
   {
     title: 'Address Line 1',
     placeholder: 'Enter Address Line 1',
-    name: 'addressLineOne',
+    name: 'addressLine1',
   },
   {
     title: 'Address Line 2',
     placeholder: 'Enter Address Line 2',
-    name: 'addressLineTwo',
+    name: 'addressLine2',
+  },
+  {
+    title: 'Street',
+    placeholder: 'Enter Street or Road no. ',
+    name: 'street',
   },
   {
     title: 'City',
@@ -46,13 +53,13 @@ const locationInput = [
   {
     title: 'Zip/ Postal/ Postcode',
     placeholder: 'Enter Zip/ Postal/ Postcode',
-    name: 'postalCode',
+    name: 'zipCode',
   },
   {
     title: 'Country',
     placeholder: 'Enter Country',
     select: true,
-    name: 'country',
+    name: 'countryId',
   },
 ];
 const basicInfoInput = [
@@ -61,107 +68,41 @@ const basicInfoInput = [
     placeholder: 'Enter name',
     name: 'name',
   },
-  {
-    title: 'Email',
-    placeholder: 'Enter Email',
-    name: 'email',
-  },
+
   {
     title: 'Date of Birth',
-    placeholder: 'Enter Date of Birth',
+    placeholder: 'DD / MM / YYYY',
     name: 'dob',
   },
 ];
 
-const BasicInfoInput = ({handleSubmit}: Props) => {
+const BasicInfoInput = ({handleSubmit, loading}: Props) => {
+  const data = useAppSelector(state => state.userProfile);
+  const {loading: gLoading, image, firstName, lastName} = data?.userInfo;
+
   const {
     control,
     formState: {errors},
   } = useFormContext();
-  const renderHeader = () => {
+  const renderHeader = useCallback(() => {
     return (
-      <View style={styles.inputContainer}>
-        <ProfileHeader />
-        <View style={styles.nameContainer}>
-          <HeaderText
-            text="Location Information"
-            textStyle={styles.textStyle}
-          />
-        </View>
-      </View>
-    );
-  };
-
-  const renderFooter = () => {
-    return (
-      <View style={styles.inputContainer}>
-        <View>
+      <>
+        <ProfileHeader
+          name="profileImage"
+          gLoading={gLoading}
+          url={image?.url}
+          userName={firstName + ' ' + lastName}
+        />
+        <View style={styles.headerContainer}>
           <View style={styles.nameContainer}>
             <HeaderText text="Basic Information" textStyle={styles.textStyle} />
           </View>
-          <FlatList
-            columnWrapperStyle={styles.flatList}
-            data={basicInfoInput}
-            horizontal={false}
-            renderItem={({item}) => {
-              return (
-                <>
-                  <AppFormField
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType={'default'}
-                    placeholder={item.placeholder}
-                    textContentType={'none'}
-                    name={item.name}
-                    label={item.title}
-                    errors={errors}
-                    control={control}
-                  />
-                </>
-              );
-            }}
-            numColumns={2}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-        <View style={styles.nameContainer}>
-          <HeaderText text="Change Password" textStyle={styles.textStyle} />
-        </View>
-        <AppFormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType={'default'}
-          icon={'lock'}
-          secureTextEntry
-          placeholder={'Enter Password'}
-          textContentType={'none'}
-          name={'password'}
-          label={'Password'}
-          errors={errors}
-          control={control}
-        />
-        <View style={styles.footerContainer}>
-          <SubmitButton title="Save" onPress={handleSubmit} />
-        </View>
-        <BottomSpacing />
-      </View>
-    );
-  };
-  return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <FlatList
-          columnWrapperStyle={styles.flatList}
-          data={locationInput}
-          horizontal={false}
-          // showsVerticalScrollIndicator={false}
-          renderItem={({item}) => {
-            return (
-              <>
-                {!item.select && (
-                  <View style={styles.inputContainer}>
+          <View>
+            <FlatList
+              data={basicInfoInput}
+              renderItem={({item}) => {
+                return (
+                  <>
                     <AppFormField
                       autoCapitalize="none"
                       autoCorrect={false}
@@ -170,22 +111,82 @@ const BasicInfoInput = ({handleSubmit}: Props) => {
                       textContentType={'none'}
                       name={item.name}
                       label={item.title}
-                      textInputStyle={styles.textInputStyle}
-                      control={control}
                       errors={errors}
+                      control={control}
                     />
-                  </View>
-                )}
-                {item.select && (
-                  <View style={styles.selectContainer}>
-                    <AppSelect label={item.title} name={item.name} />
-                  </View>
-                )}
-              </>
-            );
-          }}
-          numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
+                  </>
+                );
+              }}
+              keyExtractor={(item, index) => item.name + index.toString()}
+            />
+          </View>
+          <View style={styles.nameContainer}>
+            <HeaderText
+              text="Location Information"
+              textStyle={styles.textStyle}
+            />
+          </View>
+        </View>
+      </>
+    );
+  }, [control, errors, firstName, gLoading, image?.url, lastName]);
+
+  const renderFooter = useCallback(() => {
+    return (
+      <View style={styles.inputContainer}>
+        <View style={styles.footerContainer}>
+          <SubmitButton title="Save" onPress={handleSubmit} loading={loading} />
+        </View>
+        <BottomSpacing />
+      </View>
+    );
+  }, [handleSubmit, loading]);
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <FlatList
+          data={locationInput}
+          horizontal={false}
+          showsVerticalScrollIndicator={false}
+          renderItem={useCallback(
+            ({item}) => {
+              return (
+                <>
+                  {!item.select && (
+                    <View style={styles.inputContainer}>
+                      <AppFormField
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        keyboardType={'default'}
+                        placeholder={item.placeholder}
+                        textContentType={'none'}
+                        name={item.name}
+                        label={item.title}
+                        textInputStyle={styles.textInputStyle}
+                        control={control}
+                        errors={errors}
+                        // defaultValue={basicInfo?.[item.name]}
+                      />
+                    </View>
+                  )}
+                  {item.select && (
+                    <View style={styles.selectContainer}>
+                      <AppSelect
+                        label={item.title}
+                        name={item.name}
+                        data={contries}
+                        disable={true}
+                      />
+                    </View>
+                  )}
+                </>
+              );
+            },
+            [control, errors],
+          )}
+          keyExtractor={(item, index) => item.name + index.toString()}
           ListHeaderComponent={renderHeader}
           ListFooterComponent={renderFooter}
         />
@@ -201,6 +202,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: '1%',
   },
+  headerContainer: {marginHorizontal: '5%', width: '100%'},
   inputContainer: {marginHorizontal: '5%', width: '90%'},
   flatList: {
     flexWrap: 'wrap',
@@ -221,5 +223,6 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     paddingVertical: '6%',
+    marginBottom: '6%',
   },
 });
