@@ -15,7 +15,7 @@ const BasicInfo = () => {
   const {colors} = useTheme();
   const {userInfo} = useAppSelector(state => state.userProfile);
   const {request, loading} = useApi(
-    userInfo.basicInfo === null ? methods._post : methods._update,
+    userInfo?.basicInfo === null ? methods._post : methods._update,
   );
   const dispatch = useAppDispatch();
   const handleSubmit = async (e: any) => {
