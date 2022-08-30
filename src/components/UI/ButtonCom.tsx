@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
+import DotLoader from '../Loaders/DotLoader';
 import Card from './Card';
 interface Props {
   containerStyle: any;
@@ -51,12 +52,7 @@ const ButtonCom = ({
         <TouchableOpacity onPress={onSelect} disabled={loading}>
           <View style={{...styles.card, ...textAlignment}}>
             {loading ? (
-              <Lottie
-                autoPlay
-                loop
-                source={require('../../assets/loadingDotStatic.json')}
-                style={styles.loaderStyle}
-              />
+              <DotLoader />
             ) : (
               <>
                 <Text
@@ -111,6 +107,5 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
   },
-  loaderStyle: {width: '30%'},
 });
 export default ButtonCom;

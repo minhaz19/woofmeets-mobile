@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -20,6 +21,7 @@ import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 import methods from '../../../api/methods';
 import {useApi} from '../../../utils/helpers/api/useApi';
+import BottomSpacing from '../../../components/UI/BottomSpacing';
 
 interface Props {
   navigation: {
@@ -35,8 +37,7 @@ const SetNewPassword = ({navigation}: Props) => {
   const handleSubmit = async ({oldPassword: password, newPassword}: any) => {
     const result = await request(slug, {password, newPassword});
     if (result.ok) {
-      // navigate somewhere
-      // navigation.navigate('LogIn');
+      Alert.alert('Password Updated');
     }
   };
   return (
@@ -44,7 +45,7 @@ const SetNewPassword = ({navigation}: Props) => {
       contentContainerStyle={{
         // height: '100%',
         flex: height > 800 ? 1 : 0,
-        justifyContent: height > 800 ? 'flex-end' : 'flex-start',
+        justifyContent: height > 800 ? 'center' : 'flex-start',
       }}
       showsVerticalScrollIndicator={false}
       style={[
@@ -52,7 +53,7 @@ const SetNewPassword = ({navigation}: Props) => {
         {
           backgroundColor: isDarkMode
             ? Colors.dark.background
-            : Colors.secondary,
+            : Colors.background,
         },
       ]}>
       <KeyboardAvoidingView
@@ -71,7 +72,6 @@ const SetNewPassword = ({navigation}: Props) => {
           <AuthHeader
             title={setPasswordInfo.title}
             subTitle={setPasswordInfo.subTitle}
-            image={setPasswordInfo.image}
           />
           <AppForm
             initialValues={setPasswordValue}
@@ -80,11 +80,12 @@ const SetNewPassword = ({navigation}: Props) => {
               handleSubmit={handleSubmit}
               btnTitle="Confirm"
               onPress={() => navigation.goBack()}
-              setNewPassword
+              setNewPassword={true}
               loading={loading}
             />
           </AppForm>
           <View style={styles.view} />
+          <BottomSpacing />
         </View>
       </KeyboardAvoidingView>
     </ScrollView>
@@ -95,17 +96,17 @@ export default SetNewPassword;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
   },
   infoContainer: {
-    flexGrow: 1,
-    marginTop: 120,
+    // flexGrow: 1,
+    // marginTop: '5%',
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
     paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {
-    height: 20,
+    // height: 60,
   },
 });

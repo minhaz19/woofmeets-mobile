@@ -1,4 +1,4 @@
-import {BuildSvg, HomeSvg, Plus} from '../../../assets/svgs/SVG_LOGOS';
+import {BuildSvg, HomeSvg, PlusRounded} from '../../../assets/svgs/SVG_LOGOS';
 
 export const myPet = [
   {
@@ -120,7 +120,7 @@ export const homeType = [
     title: 'Apartments',
   },
   {
-    type: Plus,
+    type: PlusRounded,
     title: 'Add More',
   },
 ];

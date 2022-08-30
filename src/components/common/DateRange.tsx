@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Colors from '../../constants/Colors';
 import {Calendar} from 'react-native-calendars';
 import {_dateRange} from '../../utils/helpers/datesArray';
@@ -15,7 +16,7 @@ const DateRange = ({name}: Props) => {
 
   const {startingDate, endingDate, handleDayPress} = useHandleRange();
 
-  useEffect(() => {
+  useMemo(() => {
     const range: Boolean | Date[] =
       typeof startingDate !== 'undefined' &&
       typeof endingDate !== 'undefined' &&
@@ -24,7 +25,7 @@ const DateRange = ({name}: Props) => {
     const {styledMarkedRange} = orderAndStyleRange(range, Colors.primary);
 
     setMarkedStyle(styledMarkedRange);
-  }, [startingDate, endingDate, name]);
+  }, [startingDate, endingDate]);
 
   return (
     <View style={styles.containerCL}>

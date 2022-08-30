@@ -13,6 +13,7 @@ import addPetReducer from './slices/addPet';
 import authReducer from './slices/auth/userSlice';
 import hittingCross from './slices/hittingCross';
 import openFilter from './slices/openFilter';
+import userProfileSlice from './slices/userProfile/userProfileSlice';
 import contactReducer from './slices/profile/contact';
 
 const appReducer = combineReducers({
@@ -21,6 +22,7 @@ const appReducer = combineReducers({
   addPet: addPetReducer,
   filter: openFilter,
   cross: hittingCross,
+  userProfile: userProfileSlice,
 });
 
 const RootReducer = (
@@ -59,7 +61,6 @@ export type AppDispatch = typeof store.dispatch;
 
 // 2. Create a type for thunk dispatch
 export type AppThunkDispatch = ThunkDispatch<RootState, any, AnyAction>;
-
 
 // 3. Create a type for store using RootState and Thunk enabled dispatch
 export type AppStore = Omit<Store<RootState, AnyAction>, 'dispatch'> & {
