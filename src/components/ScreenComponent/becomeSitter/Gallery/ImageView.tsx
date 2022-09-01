@@ -1,13 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, {useRef, useEffect} from 'react';
-import {
-  Animated,
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  Image,
-} from 'react-native';
+import React from 'react';
+import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import {Cross} from '../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../constants/Colors';
 import {FeatherSvg} from '../../Inbox/utils/SvgComponent/SvgComponent';
@@ -20,53 +13,35 @@ interface Props {
 }
 
 const ImageView = ({id, name, handlePress, handleEdit}: Props) => {
-  const opacity = useRef(new Animated.Value(0)).current;
-
-  const fadeIn = () => {
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  useEffect(() => {
-    setTimeout(function () {
-      fadeIn();
-    }, 300);
-  }, []);
-
   return (
-    <Animated.View style={{opacity: opacity}}>
-      <View style={Styles.area}>
-        <Image style={Styles.image} source={{uri: name}} />
-        <TouchableOpacity
-          onPress={() => {
-            handlePress(id);
-          }}>
-          <View style={Styles.delete}>
-            <Cross
-              height={20}
-              width={20}
-              color={Colors.dark.text}
-              style={{justifyContent: 'center', alignItems: 'center'}}
-            />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            handleEdit(id);
-          }}>
-          <View style={Styles.edit}>
-            <FeatherSvg
-              height={20}
-              width={20}
-              style={{justifyContent: 'center', alignItems: 'center'}}
-            />
-          </View>
-        </TouchableOpacity>
-      </View>
-    </Animated.View>
+    <View style={Styles.area}>
+      <Image style={Styles.image} source={{uri: name}} />
+      <TouchableOpacity
+        onPress={() => {
+          handlePress(id);
+        }}>
+        <View style={Styles.delete}>
+          <Cross
+            height={16}
+            width={16}
+            color={Colors.dark.text}
+            style={{justifyContent: 'center', alignItems: 'center'}}
+          />
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          handleEdit(id);
+        }}>
+        <View style={Styles.edit}>
+          <FeatherSvg
+            height={16}
+            width={16}
+            style={{justifyContent: 'center', alignItems: 'center'}}
+          />
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 export default ImageView;
@@ -90,21 +65,25 @@ const Styles = StyleSheet.create({
     height: 160,
   },
   delete: {
-    width: 20,
-    height: 20,
+    width: 26,
+    height: 26,
     opacity: 0.8,
     position: 'absolute',
-    bottom: 135,
+    bottom: 130,
     right: 6,
     backgroundColor: Colors.dark.lightDark,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   edit: {
-    width: 20,
-    height: 20,
+    width: 26,
+    height: 26,
     opacity: 0.8,
     position: 'absolute',
     bottom: 5,
     right: 6,
     backgroundColor: Colors.dark.lightDark,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
