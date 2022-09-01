@@ -77,8 +77,7 @@ const basicInfoInput = [
 ];
 
 const BasicInfoInput = ({handleSubmit, loading}: Props) => {
-  const data = useAppSelector(state => state.userProfile);
-  const {loading: gLoading, image, firstName, lastName} = data?.userInfo;
+  const {loading: gLoading, userInfo} = useAppSelector(state => state.userProfile);
 
   const {
     control,
@@ -90,8 +89,8 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
         <ProfileHeader
           name="profileImage"
           gLoading={gLoading}
-          url={image?.url}
-          userName={firstName + ' ' + lastName}
+          url={userInfo?.image?.url}
+          userName={userInfo?.firstName + ' ' + userInfo?.lastName}
         />
         <View style={styles.headerContainer}>
           <View style={styles.nameContainer}>
@@ -129,7 +128,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
         </View>
       </>
     );
-  }, [control, errors, firstName, gLoading, image?.url, lastName]);
+  }, [control, errors, userInfo, gLoading]);
 
   const renderFooter = useCallback(() => {
     return (

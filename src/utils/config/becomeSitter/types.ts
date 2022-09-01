@@ -17,3 +17,14 @@ export interface contactType {
   email: string;
   emergencyPhone: string;
 }
+
+export interface contactDetailsType {
+  headline: string;
+  yearsOfExperience: number;
+  // dogsExperience: string;
+  // walkingExperience: string;
+  // requestedDogInfo: string;
+  experienceDescription: string;
+  environmentDescription: string;
+  scheduleDescription: string;
+}

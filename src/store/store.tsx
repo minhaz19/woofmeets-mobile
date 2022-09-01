@@ -15,6 +15,7 @@ import hittingCross from './slices/hittingCross';
 import openFilter from './slices/openFilter';
 import userProfileSlice from './slices/userProfile/userProfileSlice';
 import contactReducer from './slices/profile/contact';
+import servicesReducer from './slices/profile/services';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -23,6 +24,7 @@ const appReducer = combineReducers({
   filter: openFilter,
   cross: hittingCross,
   userProfile: userProfileSlice,
+  services: servicesReducer,
 });
 
 const RootReducer = (

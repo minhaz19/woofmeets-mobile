@@ -1,4 +1,4 @@
-import {basicInfoType, contactType} from './types';
+import {basicInfoType, contactDetailsType, contactType} from './types';
 
 const basicInfoValue: basicInfoType = {
   addressLineOne: '',
@@ -17,7 +17,18 @@ const contactValues: contactType = {
   phone: '',
   emergencyContactName: '',
   email: '',
-  emergencyContactPhone: '',
+  emergencyPhone: '',
 };
 
-export {basicInfoValue, contactValues};
+const sitterDetailsValue: contactDetailsType = {
+  headline: '',
+  yearsOfExperience: 0,
+  // dogsExperience: '',
+  // walkingExperience: '',
+  // requestedDogInfo: '',
+  experienceDescription: '',
+  environmentDescription: '',
+  scheduleDescription: '',
+}
+
+export {basicInfoValue, contactValues, sitterDetailsValue};

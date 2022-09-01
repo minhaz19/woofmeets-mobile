@@ -25,6 +25,7 @@ import CreateProfileLanding from '../screens/becomeSitter/CreateProfileLanding';
 import BasicInfo from '../screens/profile/BasicInfo';
 import ContactScreen from '../screens/profile/ContactScreen';
 import PetNavigator from './bottoms/PetNavigator';
+import SitterDetails from '../screens/becomeSitter/Details';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -294,8 +295,24 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
+        <Stack.Screen
+          name="SitterDetails"
+          component={SitterDetails}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Details"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
 export default MainNavigator;
