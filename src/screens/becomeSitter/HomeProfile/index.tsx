@@ -14,7 +14,7 @@ import TitleText from '../../../components/common/text/TitleText';
 import ModalBottomView from '../../../components/UI/modal/ModalBottomView';
 import IOSButton from '../../../components/UI/IOSButton';
 
-const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; }; route: { params: { serviceData: any[]; }; }; }) => {
+const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; }; route: { params: { serviceData: any[]; sequence: number }; }; }) => {
   const {colors} = useTheme();
   const profileData = [
     {
@@ -173,7 +173,7 @@ const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; };
       {/* Boarding */}
       <Divider />
       {props.route.params?.serviceData?.map(item => (
-        item.clicked && (
+        props.route.params.sequence === item.sequence && (
           <View key={item.id} style={styles.serviceContainer}>
             <BetweenCom
               data={{

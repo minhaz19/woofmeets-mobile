@@ -6,35 +6,54 @@ import HeaderText from '../../../common/text/HeaderText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import Colors from '../../../../constants/Colors';
 import { SCREEN_WIDTH } from '../../../../constants/WindowSize';
+import { getIconType } from '@rneui/base';
+import { BoardingIcon, DoggyDayCareIcon, DogWalkingIcon, DropInVisitIcon, HouseSittingIcon } from '../../../../assets/svgs/Services_SVG';
 
 interface Props {
   data: any;
   noShadow?: boolean;
+  sequence: number;
   onPressEvent: ((id: number) => void);
 }
 
-const ReusableServices: FC<Props> = data => {
+const ReusableServices: FC<Props> = props => {
   const {colors} = useTheme();
+  const getIcon = (iconId: number) => {
+    switch (iconId) {
+      case 1:
+        return <BoardingIcon width={34} height={36} />;
+      case 2:
+        return <HouseSittingIcon width={34} height={36} />
+      case 3:
+        return <DropInVisitIcon width={34} height={36} />
+      case 4:
+        return <DoggyDayCareIcon width={34} height={36} />
+      case 5:
+        return <DogWalkingIcon width={34} height={36} />
+    }
+  }
   return (
-    <TouchableOpacity onPress={() => data.onPressEvent(data.data.id - 1)}>
+    <TouchableOpacity onPress={() => props.onPressEvent(props.data.sequence)}>
       <View
         style={[
           styles.container,
           {
             backgroundColor: colors.backgroundColor,
             borderWidth: 1,
-            borderColor: data.data.clicked ? Colors.primary : colors.borderColor,
+            borderColor: props.sequence === props.data.sequence ? Colors.primary : colors.borderColor,
           },
         ]}>
         <View style={styles.boxContainer}>
-          <View style={styles.imageContainer}>{data.data.image}</View>
+          <View style={styles.imageContainer}>
+            {getIcon(props.data.sequence)}
+          </View>
           <View style={styles.textContainer}>
-            <HeaderText text={data.data.name} />
-            <DescriptionText text={data.data.description} textStyle={styles.description} />
-            <DescriptionText text={data.data.price} textStyle={styles.description} />
+            <HeaderText text={props.data.name} />
+            <DescriptionText text={props.data.description} textStyle={styles.description} />
+            <DescriptionText text={props.data.price} textStyle={styles.description} />
           </View>
         </View>
-        {data.data.clicked && <View style={styles.rightSelection} />}
+        {props.sequence === props.data.sequence && <View style={styles.rightSelection} />}
       </View>
     </TouchableOpacity>
   );
