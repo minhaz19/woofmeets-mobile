@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   iconView: {height: 80, width: 80, marginBottom: 10},
   modalView: {
     width: '90%',
-    minHeight: '20%',
+    height: '50%',
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: {
