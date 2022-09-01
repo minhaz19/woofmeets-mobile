@@ -183,7 +183,7 @@ const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; };
                 time: '3 mins',
                 icon: 'chevron-right',
                 screen: () => {
-                  props.navigation.navigate('BoardingSetting');
+                  props.navigation.navigate('ServiceSetup');
                 },
               }}
             />
