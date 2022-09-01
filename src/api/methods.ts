@@ -13,6 +13,12 @@ const _update = (slug: string, payload: any, value?: string) =>
       Authorization: value,
     },
   });
-const _deletee = (slug: string, payload: any) => client.delete(slug, payload);
+const _put = (slug: string, payload: any, value?: string) =>
+  client.put(slug, payload, {
+    headers: {
+      Authorization: value,
+    },
+  });
+const _delete = (slug: string, payload: any) => client.delete(slug, payload);
 
-export default {_get, _post, _update, _deletee};
+export default {_get, _post, _update, _delete, _put};
