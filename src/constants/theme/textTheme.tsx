@@ -11,6 +11,7 @@ export const colors = {
   alert: Colors.alert,
   blueText: Colors.light.blue,
   borderColor: Colors.light.borderColor,
+  inputBackground: Colors.light.inputBackground,
 };
 
 export const themedColors = {
@@ -28,5 +29,6 @@ export const themedColors = {
     inputLightBg: Colors.dark.borderColor,
     blueText: Colors.dark.text,
     borderColor: Colors.dark.borderColor,
+    inputBackground: Colors.dark.text,
   },
 };

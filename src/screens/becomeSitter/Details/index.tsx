@@ -1,18 +1,24 @@
 import {View, StyleSheet, Text, ScrollView, RefreshControl} from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import HeaderText from '../../../components/common/text/HeaderText';
 import TitleText from '../../../components/common/text/TitleText';
 import DescriptionText from '../../../components/common/text/DescriptionText';
+import AppForm from '../../../components/common/Form/AppForm';
+import { sitterDetailsValue } from '../../../utils/config/becomeSitter/initalValues';
+import { sitterDetailsValidationSchema } from '../../../utils/config/becomeSitter/validationSchema';
+import SitterDetailsInput from '../../../components/ScreenComponent/becomeSitter/details/SitterDetailsInput';
+import { getSitterDetails, postSitterDetails } from '../../../store/slices/profile/details';
 
 const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
+  const sitterDetailsSubmit = (sitterData: any) => {
+    dispatch(postSitterDetails(sitterData));
+  };
 
   const [refreshing, setRefreshing] = useState(false);
   const contact = useAppSelector(
@@ -21,15 +27,13 @@ const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; 
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    // dispatch(getContactInfo());
+    dispatch(getSitterDetails());
     setRefreshing(false);
   }, [dispatch]);
 
   useEffect(() => {
     onRefresh();
   }, [onRefresh]);
-
-  useEffect(() => {}, [contact.contactInfo]);
 
   return (
     <ScrollView
@@ -56,16 +60,17 @@ const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; 
             />
             <DescriptionText
               text="Let pet owners know about your personal qualities and overall love of animals"
-              textStyle={styles.details}
+              textStyle={{...styles.details, color: colors.descriptionText}}
             />
             <DescriptionText
               text="Quick tips:"
               textStyle={styles.details}
             />
-            <TitleText
-              text="Years of personal or professional ex-perience caring for pets"
-              textStyle={styles.titleTextStyle}
-            />
+          <AppForm
+            initialValues={sitterDetailsValue}
+            validationSchema={sitterDetailsValidationSchema}>
+            <SitterDetailsInput handleSubmit={sitterDetailsSubmit} />
+          </AppForm>
           </View>
       <BottomSpacing />
     </ScrollView>
@@ -98,6 +103,7 @@ const styles = StyleSheet.create({
     width: '95%',
     paddingLeft: '5%',
   },
+  textInputStyle: {},
 });
 
 export default SitterDetails;

@@ -8,6 +8,7 @@ export default {
     subText: '#9E9E9E',
     lightText: '#707070',
     placeholderTextColor: '#424244',
+    inputBackground: '#F5F5F5',
     background: '#ffffff',
     borderColor: '#d7dae2',
     tint: tintColorLight,

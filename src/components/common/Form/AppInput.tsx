@@ -8,7 +8,7 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
   const {colors, isDarkMode} = useTheme();
-  const {numberOfLines} = otherProps;
+  const {numberOfLines, textInputBoxStyle, inputBoxContainerStyle} = otherProps;
   return (
     <View
       style={[
@@ -16,6 +16,7 @@ const AppInput = ({...otherProps}) => {
         {
           borderColor: isDarkMode ? Colors.gray : Colors.border,
         },
+        inputBoxContainerStyle
       ]}>
       <TextInput
         placeholderTextColor={'gray'}
@@ -27,6 +28,7 @@ const AppInput = ({...otherProps}) => {
             flex: 1,
             color: isDarkMode ? 'white' : 'black',
           },
+          textInputBoxStyle
         ]}
         {...otherProps}
         secureTextEntry={otherProps.secureTextEntry ? show : false}

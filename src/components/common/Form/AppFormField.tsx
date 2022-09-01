@@ -30,6 +30,8 @@ interface Props {
   errors: any;
   control: any;
   defaultValue?: string;
+  textInputBoxStyle?: ViewStyle;
+  inputBoxContainerStyle?: ViewStyle;
 }
 type StackParamList = {
   ForgotPasswordEmail: {foo: string; onBar: () => void} | undefined;
@@ -56,6 +58,8 @@ const AppFormField = ({
   errors,
   control,
   defaultValue,
+  textInputBoxStyle,
+  inputBoxContainerStyle,
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
   return (
@@ -88,6 +92,8 @@ const AppFormField = ({
               flex={flex}
               email={email}
               textInputStyle={textInputStyle}
+              textInputBoxStyle={textInputBoxStyle}
+              inputBoxContainerStyle={inputBoxContainerStyle}
             />
           )}
           name={name}
