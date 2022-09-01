@@ -20,7 +20,7 @@ const contactValidationSchema = Yup.object().shape({
   phone: Yup.string().required('Please add at least one phone number'),
   emergencyContactName: Yup.string(),
   email: Yup.string(),
-  emergencyContactPhone: Yup.string(),
+  emergencyPhone: Yup.string(),
 });
 
 export {basicInfoValidationSchema, contactValidationSchema};

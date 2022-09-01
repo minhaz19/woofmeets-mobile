@@ -1,5 +1,5 @@
 import {View, StyleSheet, Alert} from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import BasicInfoInput from '../../components/ScreenComponent/setting/BasicInfoInput';
 import {basicInfoValidationSchema} from '../../utils/config/setting/validationSchema';
@@ -35,6 +35,19 @@ const BasicInfo = () => {
       dispatch(getUserProfileInfo());
     }
   };
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(getUserProfileInfo());
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
+
   return (
     <>
       <View

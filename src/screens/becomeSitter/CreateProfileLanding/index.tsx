@@ -1,10 +1,13 @@
 import {View, StyleSheet} from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
 import BigText from '../../../components/common/text/BigText';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import { btnStyles } from '../../../constants/theme/common/buttonStyles';
+import { useAppDispatch } from '../../../store/store';
+import { getUserProfileInfo } from '../../../store/slices/userProfile/userProfileAction';
+import { getContactInfo } from '../../../store/slices/profile/contact';
 
 const CreateProfileLanding = (props: { navigation: { navigate: (arg0: string) => any; }; }) => {
   const {colors} = useTheme();
@@ -25,6 +28,7 @@ const CreateProfileLanding = (props: { navigation: { navigate: (arg0: string) =>
         id: 3,
         title: 'Details',
         isCompleted: false,
+        onPress: () => props.navigation.navigate('SitterDetails'),
       },
       {
         id: 4,
@@ -39,6 +43,19 @@ const CreateProfileLanding = (props: { navigation: { navigate: (arg0: string) =>
         onPress: () => props.navigation.navigate('PetScreens'),
       },
   ];
+  const [refreshing, setRefreshing] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(getUserProfileInfo());
+    dispatch(getContactInfo());
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
   return (
     <View
       style={[

@@ -31,9 +31,7 @@ const ContactScreen = (props: { navigation: { navigate: (arg0: string) => void; 
 
   useEffect(() => {
     onRefresh();
-  }, [onRefresh]);
-
-  useEffect(() => {}, [contact.contactInfo]);
+  }, []);
 
   return (
     <ScrollView

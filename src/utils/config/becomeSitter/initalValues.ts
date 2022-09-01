@@ -17,7 +17,7 @@ const contactValues: contactType = {
   phone: '',
   emergencyContactName: '',
   email: '',
-  emergencyContactPhone: '',
+  emergencyPhone: '',
 };
 
 export {basicInfoValue, contactValues};
