@@ -38,6 +38,7 @@ export const postSitterDetails = createAsyncThunk(
         if (!response.ok) {
           throw new Error(response.data.message);
         }
+        console.log('sitter', response.data)
         return response.data;
     },
   );
@@ -75,7 +76,7 @@ const details = createSlice({
       })
       .addCase(getSitterDetails.fulfilled, (state, {payload}) => {
         state.loading = false;
-        state.sitterInfo = payload.data.emergencyContact;
+        state.sitterInfo = payload.data;
         state.error = null;
       })
       .addCase(getSitterDetails.rejected, (state, {payload}) => {
