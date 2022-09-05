@@ -1,5 +1,5 @@
 import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BigText from '../../../components/common/text/BigText';
 import DescriptionText from '../../../components/common/text/DescriptionText';
@@ -7,84 +7,16 @@ import HeaderText from '../../../components/common/text/HeaderText';
 import Divider from '../../../components/UI/Divider';
 import {QuestionIcon} from '../../../assets/svgs/SVG_LOGOS';
 import BetweenCom from '../../../components/ScreenComponent/becomeSitter/profile/BetweenCom';
-import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import Colors from '../../../constants/Colors';
-import TitleText from '../../../components/common/text/TitleText';
 import ModalBottomView from '../../../components/UI/modal/ModalBottomView';
 import IOSButton from '../../../components/UI/IOSButton';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { getUserServices } from '../../../store/slices/profile/services';
+import { BoardingIcon, DoggyDayCareIcon, DogWalkingIcon, DropInVisitIcon, HouseSittingIcon } from '../../../assets/svgs/Services_SVG';
 
-const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; }; route: { params: { serviceData: any[]; sequence: number }; }; }) => {
+const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
   const {colors} = useTheme();
-  const profileData = [
-    {
-      id: 1,
-      text: 'Basic Info',
-      screen: () => {
-        props.navigation.navigate('BasicInfoSitter');
-      },
-    },
-    {
-      id: 2,
-      text: 'Phone Number',
-      screen: () => {
-        props.navigation.navigate('PhoneNumberSitter');
-      },
-    },
-    {
-      id: 3,
-      text: 'Details',
-      screen: () => {
-        props.navigation.navigate('PhoneNumberSitter');
-      },
-    },
-    {
-      id: 4,
-      text: 'Photos',
-      screen: () => {
-        props.navigation.navigate('GallerySitter');
-      },
-    },
-    {
-      id: 5,
-      text: 'Your pets',
-      screen: () => {
-        props.navigation.navigate('PhoneNumberSitter');
-      },
-    },
-  ];
-  const titleListingData = [
-    {
-      id: 1,
-      name: 'Request Testimonials',
-      description: 'Use reference to build trust new Potencial clients',
-      time: '3 mins',
-      icon: 'chevron-right',
-      screen: () => {
-        props.navigation.navigate('BasicInfoSitter');
-      },
-    },
-    {
-      id: 2,
-      name: 'Pass a Safety Quiz',
-      description: 'Safe stays lead to 5 star reviews',
-      time: '3 mins',
-      icon: 'chevron-right',
-      screen: () => {
-        props.navigation.navigate('BasicInfoSitter');
-      },
-    },
-    {
-      id: 3,
-      name: 'Final Details',
-      description: 'Background check and processing fee',
-      time: '3 mins',
-      icon: 'chevron-right',
-      screen: () => {
-        props.navigation.navigate('BasicInfoSitter');
-      },
-    },
-  ];
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [isServiceModalVisible, setIsServiceModalVisible] =
     useState<boolean>(false);
@@ -101,6 +33,41 @@ const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; };
       text: `Woofmeets selects a single service for you to complete during sign up. Once approved, youy can deactivate any services you no longer wish to offer or add additional service at any time. \n\nOnce you've completed the required sign - up steps , your profile will be auto- submitted and reviewed to ensure accuracy and quality. agna aliquyam erat, sed diam voluptua. \n\nAt vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. \n\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.`,
     },
   ];
+
+  const userServices = useAppSelector(
+    state => state.services.userServices,
+  );
+
+  console.log('hello', userServices)
+
+  const dispatch = useAppDispatch();
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(getUserServices());
+    setRefreshing(false);
+  }, [dispatch]);
+
+  useEffect(() => {
+    onRefresh();
+  }, [onRefresh]);
+
+  const getIcon = (icon: string) => {
+    switch (icon) {
+      case 'sitter-home':
+        return <BoardingIcon width={34} height={36} />;
+      case 'sitter-traveling':
+        return <HouseSittingIcon width={34} height={36} />
+      case 'homevists':
+        return <DropInVisitIcon width={34} height={36} />
+      case 'walking':
+          return <DogWalkingIcon width={34} height={36} />
+      case 'walking':
+        return <DoggyDayCareIcon width={34} height={36} />
+    }
+  }
 
   return (
     <ScrollView
@@ -143,43 +110,29 @@ const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; };
           }}
         />
       </ModalBottomView>
-      <BigText text="Complete the required steps to get approved" />
+      <BigText text="Set Up Services" />
       <View style={styles.textContainer}>
         <View style={styles.iconContainer}>
           <QuestionIcon fill={Colors.primary} />
         </View>
         <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
           <DescriptionText
-            text="How dose approval work?"
-            textStyle={{color: colors.blueText}}
+            text="Where are the rest of my services?"
+            textStyle={{color: Colors.primary}}
           />
         </TouchableOpacity>
       </View>
       <View>
-        <HeaderText text="Service Setup" />
+        <HeaderText text="Your Services" />
       </View>
-      <View style={styles.textContainer}>
-        <View style={styles.iconContainer}>
-          <QuestionIcon fill={Colors.primary} />
-        </View>
-        <TouchableOpacity
-          onPress={() => setIsServiceModalVisible(!isServiceModalVisible)}>
-          <DescriptionText
-            text="Where are my other services?"
-            textStyle={{color: colors.blueText}}
-          />
-        </TouchableOpacity>
-      </View>
-      {/* Boarding */}
-      <Divider />
-      {props.route.params?.serviceData?.map(item => (
-        props.route.params.sequence === item.sequence && (
-          <View key={item.id} style={styles.serviceContainer}>
+      {userServices && userServices?.map((item: { id: React.Key | null | undefined; serviceType: { name: any; icon: string; description: any; }; }) => (
+         (
+          <View key={item.id} style={{...styles.serviceContainer, borderColor: colors.borderColor}}>
             <BetweenCom
               data={{
-                name: item.name,
-                image: item.image,
-                description: 'Set your service preferences',
+                name: item.serviceType.name,
+                image: getIcon(item.serviceType.icon),
+                description: `${item.serviceType.description} ${item.serviceType.description}`,
                 time: '3 mins',
                 icon: 'chevron-right',
                 screen: () => {
@@ -190,51 +143,6 @@ const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; };
           </View>
         )
       ))}
-      {/* trust */}
-      <Divider />
-      <HeaderText text="Build Trust" />
-      {/* create profile */}
-      <Divider />
-      <BetweenCom
-        data={{
-          name: 'Create Your Profile',
-          description: 'Make a great first impression',
-          time: '12 mins',
-          icon: 'chevron-down',
-        }}
-      />
-      {profileData.map(item => (
-        <TouchableOpacity
-          onPress={item.screen}
-          style={styles.profileItemStyle}
-          key={item.id}>
-          <TitleText text={item.text} textStyle={{color: colors.blueText}} />
-        </TouchableOpacity>
-      ))}
-      {/* testimonial, safety quiz, final Details */}
-      {titleListingData?.map(item => (
-        <View key={item.id}>
-          <Divider />
-          <BetweenCom data={item} />
-        </View>
-      ))}
-      <Divider />
-      {/* submit */}
-      <View style={styles.footerContainer}>
-        <ButtonCom
-          title={'Submit'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={() => {}}
-        />
-      </View>
-      <View style={styles.footerText}>
-        <HeaderText
-          text="I no longer want to provide services on Woofmeets"
-          textStyle={{color: Colors.primary, textAlign: 'center'}}
-        />
-      </View>
     </ScrollView>
   );
 };
@@ -248,6 +156,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 10,
     alignItems: 'center',
+    paddingBottom: 24,
   },
   textStyle: {
     paddingLeft: 5,
@@ -271,6 +180,10 @@ const styles = StyleSheet.create({
   },
   serviceContainer: {
     paddingVertical: 10,
+    borderWidth: 1,
+    padding: 5,
+    marginVertical: 10,
+    borderRadius: 5,
   },
 });
 

@@ -6,73 +6,25 @@ import DescriptionText from '../../../components/common/text/DescriptionText';
 import ShortText from '../../../components/common/text/ShortText';
 import Colors from '../../../constants/Colors';
 import ReusableServices from '../../../components/ScreenComponent/becomeSitter/serviceSelection/ReusableServices';
-import {
-  BoardingIcon,
-  DoggyDayCareIcon,
-  DogWalkingIcon,
-  DropInVisitIcon,
-  HouseSittingIcon,
-} from '../../../assets/svgs/Services_SVG';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { getServiceTypes } from '../../../store/slices/profile/services';
+import { ApiResponse } from 'apisauce';
+import apiClient from '../../../api/client';
 
 interface Props {
   item: any;
 }
 
-const ServiceSelection = (props: { navigation: { navigate: (arg0: string, arg1: { serviceData: { id: number; name: string; image: JSX.Element; description: string; price: string; clicked: boolean; }[]; }) => void; }; }) => {
+const ServiceSelection = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
   const {colors} = useTheme();
   const [sequence, setSequence] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const serviceTypes = useAppSelector(
     state => state.services.serviceTypes,
   );
-  const [selectData, setSelectData] = useState([
-    {
-      id: 1,
-      sequence: 1,
-      name: 'Boarding',
-      image: <BoardingIcon width={34} height={36} />,
-      description: 'Overnight pet care in your clients home',
-      price: 'Avg. $25.60 / night',
-    },
-    {
-      id: 2,
-      sequence: 2,
-      name: 'House Sitting',
-      image: <HouseSittingIcon width={34} height={36} />,
-      description: 'Overnight pet care in your clients home',
-      price: 'Avg. $25.60 / night',
-    },
-    {
-      id: 3,
-      sequence: 3,
-      name: 'Drop-in Visits',
-      image: <DropInVisitIcon width={34} height={36} />,
-      description: 'Potty breaks and play dates',
-      price: 'Avg. $25.60 / night',
-    },
-    {
-      id: 4,
-      sequence: 4,
-      name: 'Doggy Day Care',
-      image: <DoggyDayCareIcon width={34} height={36} />,
-      description: 'Daytime pet care in your home',
-      price: 'Avg. $25.60 / night',
-    },
-    {
-      id: 5,
-      sequence: 5,
-      name: 'Dog Waking',
-      image: <DogWalkingIcon width={34} height={36} />,
-      description: 'Dog walks that fit your schedule',
-      price: 'Avg. $25.60 / night',
-    },
-  ]);
-
-  console.log('types ', serviceTypes);
 
   const dispatch = useAppDispatch();
 
@@ -93,6 +45,30 @@ const ServiceSelection = (props: { navigation: { navigate: (arg0: string, arg1: 
     // selectData[id].clicked = !selectData[id].clicked;
     // setSelectData([...selectData]);
   };
+
+  const onServicePostHandle = async () => {
+    setLoading(true);
+    try {
+      const response: ApiResponse<any> = await apiClient.post(`/provider-services/${sequence}`);
+      console.log(response.data);
+      if (!response.ok) {
+          setLoading(false);
+          props.navigation.navigate('HomeProfile');
+          throw new Error(response.data.message);
+      }
+      if (response.ok) {
+        setLoading(false);
+        props.navigation.navigate('HomeProfile');
+      }
+      // return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        console.log(error.response);
+      }
+      setLoading(false);
+    }
+  }
+
   const RenderItem: FC<Props> = ({item}) => (
     <ReusableServices data={item} noShadow onPressEvent={onPressEvent} sequence={sequence} />
   );
@@ -134,9 +110,8 @@ const ServiceSelection = (props: { navigation: { navigate: (arg0: string, arg1: 
           textAlignment={btnStyles.textAlignment}
           containerStyle={btnStyles.containerStyleFullWidth}
           titleStyle={btnStyles.titleStyle}
-          onSelect={() =>
-            props.navigation.navigate('HomeProfile', {serviceData: serviceTypes, sequence: sequence})
-          }
+          onSelect={onServicePostHandle}
+          loading={loading}
         />
       </View>
     )

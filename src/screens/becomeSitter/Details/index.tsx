@@ -21,8 +21,8 @@ const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; 
   };
 
   const [refreshing, setRefreshing] = useState(false);
-  const contact = useAppSelector(
-    state => state.contact,
+  const sitterInfo = useAppSelector(
+    state => state.details.sitterInfo,
   );
 
   const onRefresh = useCallback(() => {
@@ -67,7 +67,13 @@ const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; 
               textStyle={styles.details}
             />
           <AppForm
-            initialValues={sitterDetailsValue}
+            initialValues={sitterInfo ? {
+              headline: sitterInfo.headline,
+              yearsOfExperience: sitterInfo.yearsOfExperience,
+              experienceDescription: sitterInfo.experienceDescription,
+              environmentDescription: sitterInfo.environmentDescription,
+              scheduleDescription: sitterInfo.scheduleDescription,
+            } : sitterDetailsValue}
             validationSchema={sitterDetailsValidationSchema}>
             <SitterDetailsInput handleSubmit={sitterDetailsSubmit} />
           </AppForm>

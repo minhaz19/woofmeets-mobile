@@ -23,12 +23,12 @@ const contactValues: contactType = {
 const sitterDetailsValue: contactDetailsType = {
   headline: '',
   yearsOfExperience: 0,
-  // dogsExperience: '',
-  // walkingExperience: '',
-  // requestedDogInfo: '',
   experienceDescription: '',
   environmentDescription: '',
   scheduleDescription: '',
+  // dogsExperience: '',
+  // walkingExperience: '',
+  // requestedDogInfo: '',
 }
 
 export {basicInfoValue, contactValues, sitterDetailsValue};

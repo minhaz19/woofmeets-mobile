@@ -28,7 +28,7 @@ function BottomTabNavigator() {
     }
   }
   getDecodedToken();
-  if (token && !token.provider) {
+  if (token && token.provider) {
     return (
       <Tab.Navigator
         initialRouteName="ProHomeNavigator"
