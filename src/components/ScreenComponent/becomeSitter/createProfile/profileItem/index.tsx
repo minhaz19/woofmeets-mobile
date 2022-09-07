@@ -5,24 +5,92 @@ import Colors from '../../../../../constants/Colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ProfileItemCard = (props: {title: string; id: number; isCompleted: boolean, handleClick: ((event: GestureResponderEvent) => void) | undefined}) => {
+const ProfileItemCard = (props: {
+  userInfo: any;title: string; id: number; isCompleted: boolean, handleClick: ((event: GestureResponderEvent) => void) | undefined; name: string 
+}) => {
+  const CompletedIcon = () => {
+    return (
+      <View style={styles.iconContainer}>
+        <AntDesign
+          name="checkcircle"
+          size={12}
+          color={Colors.primary}
+          style={styles.iconStyle}
+        />
+      </View>
+    )
+  }
+  const UnCompletedIcon = () => {
+    return (
+      <View style={{...styles.numberViewContainerOuter, backgroundColor: Colors.primaryLight}}>
+        <View style={{...styles.numberViewContainer, backgroundColor: Colors.primary}}/>
+      </View>
+    )
+  }
+  const getIconType = (name: string) => {
+    switch(name) {
+      case 'pet':
+        if (props.userInfo[`${props.name}`].length > 0) {
+          return (
+            <CompletedIcon />
+          )
+        } else {
+          return (
+            <UnCompletedIcon />
+          )
+        }
+        case 'Gallery':
+          if (props.userInfo[`${props.name}`].length > 0) {
+            return (
+              <CompletedIcon />
+            )
+          } else {
+            return (
+              <UnCompletedIcon />
+            )
+          }
+        case 'basicInfo':
+          if (props.userInfo[`${props.name}`]) {
+            return (
+              <CompletedIcon />
+            )
+          } else {
+            return (
+              <UnCompletedIcon />
+            )
+          }
+        case 'contact':
+          if (props.userInfo[`${props.name}`]) {
+            return (
+              <CompletedIcon />
+            )
+          } else {
+            return (
+              <UnCompletedIcon />
+            )
+          }
+        case 'provider':
+          if (props.userInfo[`${props.name}`]?.providerDetails) {
+            return (
+              <CompletedIcon />
+            )
+          } else {
+            return (
+              <UnCompletedIcon />
+            )
+          }
+    }
+  }
   return (
     <TouchableOpacity onPress={props.handleClick}>
       <View style={styles.headerContainer}>
         <View style={styles.cardContainer}>
           <View style={styles.textContainer}>
-          {props.isCompleted ?
-           <View style={styles.iconContainer}>
-            <AntDesign
-              name="checkcircle"
-              size={12}
-              color={Colors.primary}
-              style={styles.iconStyle}
-            />
-           </View> :
+          {!props.userInfo[props.name] ?
           <View style={{...styles.numberViewContainerOuter, backgroundColor: Colors.primaryLight}}>
             <View style={{...styles.numberViewContainer, backgroundColor: Colors.primary}}/>
-          </View>}
+          </View> : 
+          getIconType(props.name)}
           <TitleText text={props.title} textStyle={{...styles.textStyle, color: props.isCompleted ? Colors.primary : Colors.light.subText}} />
           </View>
           {props.isCompleted ?

@@ -72,7 +72,7 @@ const SitterDetailsInput = (props: { handleSubmit: any; }) => {
                   textInputStyle={styles.textInputStyle}
                   control={control}
                   errors={errors}
-                  multiline
+                  multiline={true}
                   numberOfLines={item.numberOfLines}
                   textInputBoxStyle={{backgroundColor: colors.inputBackground, width: '100%', borderRadius: 2, paddingHorizontal: 8,}}
                   inputBoxContainerStyle={{ borderRadius: 2, paddingHorizontal: 0, borderWidth: isDarkMode ? 2 : 0}}

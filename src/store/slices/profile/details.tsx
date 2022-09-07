@@ -5,7 +5,6 @@ import apiClient from '../../../api/client';
 export const postSitterDetails = createAsyncThunk(
     'details/postSitterDetails',
     async ({headline, yearsOfExperience, experienceDescription, environmentDescription, scheduleDescription}: any, {rejectWithValue}) => {
-        console.log(headline, experienceDescription);
         const body = {
             headline: headline,
             yearsOfExperience: yearsOfExperience,
@@ -15,11 +14,9 @@ export const postSitterDetails = createAsyncThunk(
         };
       try {
         const response: ApiResponse<any> = await apiClient.post('/user-profile/provider-details', body);
-        console.log(response)
         if (!response.ok) {
           throw new Error(response.data.message);
         }
-        console.log(response.data)
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data.message) {
@@ -38,7 +35,6 @@ export const postSitterDetails = createAsyncThunk(
         if (!response.ok) {
           throw new Error(response.data.message);
         }
-        console.log('sitter', response.data)
         return response.data;
     },
   );
