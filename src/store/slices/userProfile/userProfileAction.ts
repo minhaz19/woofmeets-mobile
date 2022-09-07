@@ -12,6 +12,8 @@ export const getUserProfileInfo = createAsyncThunk(
           Alert.alert(response.data.message);
         } else if (response.problem === 'TIMEOUT_ERROR') {
           Alert.alert('Response Timeout! Please try again');
+          const res: ApiResponse<any> = await apiClient.get('/user-profile');
+          return res.data;
         } else {
           Alert.alert('An unexpected error happened');
         }

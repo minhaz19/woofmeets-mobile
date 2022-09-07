@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {addPetValue} from '../../utils/config/initalValues';
+import {addPetValue} from '../../../utils/config/initalValues/initalValues';
 
 export const addPetSlice = createSlice({
   name: 'addPet',

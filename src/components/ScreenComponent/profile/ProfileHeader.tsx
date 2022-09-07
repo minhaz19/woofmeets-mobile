@@ -10,14 +10,14 @@ import ImageUploadModal from '../../UI/modal/ImageUploadModal';
 import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
-import UploadingLoader from '../../Loaders/UploadingLoader';
+import UploadingLoader from '../../common/Loaders/UploadingLoader';
 import {useAppDispatch} from '../../../store/store';
 import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 interface Props {
   name: string;
-  gLoading: boolean;
+  gLoading?: boolean;
   url: string | null;
-  userName: string;
+  userName?: string;
 }
 const slug = '/user-profile/upload-profile-picture';
 const img =
@@ -75,7 +75,7 @@ const ProfileHeader = ({name, gLoading, url, userName}: Props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.nameContainer}>
-          <HeaderText text={userName} />
+          <HeaderText text={userName ?? ''} />
         </View>
       </View>
       <ImageUploadModal

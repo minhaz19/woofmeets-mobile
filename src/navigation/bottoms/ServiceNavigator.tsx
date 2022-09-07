@@ -10,13 +10,14 @@ import {setOpenFilter} from '../../store/slices/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
 import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
+import SafetyQuiz from '../../screens/SafetyQuiz';
 
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
   const dispatch = useDispatch();
   return (
-    <Stack1.Navigator initialRouteName="PetCareZipSearch">
+    <Stack1.Navigator initialRouteName="SafetyQuiz">
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
@@ -26,6 +27,27 @@ const ServiceNavigator = () => {
         name="ProviderAvailablity"
         component={ProviderAvailablity}
         options={{headerShown: false}}
+      />
+      <Stack1.Screen
+        name="SafetyQuiz"
+        component={SafetyQuiz}
+        options={({navigation}) => ({
+          headerStyle: {
+            backgroundColor: Colors.background,
+            borderWidth: 0,
+            borderColor: Colors.primary,
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: '600',
+            textAlign: 'center',
+          },
+          title: '',
+          header: () => (
+            <HeaderWithBack navigation={navigation} title="Safety Quiz" />
+          ),
+          backgroundColor: Colors.primary,
+        })}
       />
       <Stack1.Screen
         name="ServiceMain"

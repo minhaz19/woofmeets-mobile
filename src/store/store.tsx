@@ -9,14 +9,18 @@ import {
 } from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
-import addPetReducer from './slices/addPet';
+import addPetReducer from './slices/pet/addPet';
 import authReducer from './slices/auth/userSlice';
 import hittingCross from './slices/hittingCross';
 import openFilter from './slices/openFilter';
 import userProfileSlice from './slices/userProfile/userProfileSlice';
+import contactReducer from './slices/profile/contact';
+import breedsSlice from './slices/pet/breeds/breedsSlice';
+import allPetsSlice from './slices/pet/allPets/allPetsSlice';
+import petGallerySlice from './slices/pet/petGallery/petGallerySlice';
+import singlePetSlice from './slices/pet/singlePet/singlePetSlice';
 import servicesReducer from './slices/profile/services';
 import detailsReducer from './slices/profile/details';
-import contactReducer from './slices/profile/contact';
 import PetPreferenceSlice from './slices/setUpService/petPreference/PetPreferenceSlice';
 
 const appReducer = combineReducers({
@@ -26,6 +30,10 @@ const appReducer = combineReducers({
   filter: openFilter,
   cross: hittingCross,
   userProfile: userProfileSlice,
+  petBreeds: breedsSlice,
+  allPets: allPetsSlice,
+  petGallery: petGallerySlice,
+  singlePet: singlePetSlice,
   petPreference: PetPreferenceSlice,
   services: servicesReducer,
   details: detailsReducer,

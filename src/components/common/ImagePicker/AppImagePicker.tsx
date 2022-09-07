@@ -1,7 +1,8 @@
 import React from 'react';
 import ErrorMessage from '../Form/ErrorMessage';
 import PhotoGalleryList from './PhotoGalleryList';
-import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
+import GalleryImageCaptionModal from '../../ScreenComponent/Pet/AddPet/components/GalleryImageCaption';
+import {useImagePicker} from './utils/useImagePicker';
 
 interface Props {
   label: string;
@@ -9,22 +10,18 @@ interface Props {
   name: string;
   methods?: any;
 }
-const AppImagePicker = ({label, name, subTitle, methods}: Props) => {
-  const {setValue, errors, value} = useRHFContext(name);
-  // const {
-  //   setValue,
-  //   formState: {errors, value},
-  // } = methods;
-  const imageUris = value;
-  function handleAdd(uri: string) {
-    setValue(name, [...imageUris, uri], {shouldValidate: true});
-  }
-  const handleRemove = (uri: string) => {
-    setValue(
-      name,
-      imageUris?.filter((imageUri: string) => imageUri !== uri),
-    );
-  };
+const AppImagePicker = ({label, name, subTitle}: Props) => {
+  const {
+    handleAdd,
+    handleRemove,
+    handlePress,
+    handleSubmit,
+    value,
+    errors,
+    isVisible,
+    setIsVisible,
+    selectedImgInfo,
+  } = useImagePicker(name);
 
   return (
     <>
@@ -34,8 +31,17 @@ const AppImagePicker = ({label, name, subTitle, methods}: Props) => {
         imageUris={value}
         onRemoveImage={handleRemove}
         onAddImage={handleAdd}
+        handlePress={handlePress}
       />
       <ErrorMessage error={errors[name]?.message} />
+      {isVisible && (
+        <GalleryImageCaptionModal
+          isVisible={true}
+          selectedImgInfo={selectedImgInfo}
+          setIsVisible={setIsVisible}
+          onPress={handleSubmit}
+        />
+      )}
     </>
   );
 };

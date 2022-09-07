@@ -1,56 +1,69 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import SelectDropdown from 'react-native-select-dropdown';
+import React, {useCallback, useState} from 'react';
 import Colors from '../../../constants/Colors';
+import {Dropdown} from 'react-native-element-dropdown';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import ErrorMessage from './ErrorMessage';
-import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
 interface Props {
   name: string;
-  label: string;
   data: any[];
   disable?: boolean;
+  defaultText?: string;
+  placeholder: string;
+  onChange: (arg: any) => void;
 }
-const AppSelect = ({label, name, data, disable = false}: Props) => {
+const AppSelect = ({
+  data,
+  defaultText,
+  placeholder,
+  disable = false,
+  onChange,
+}: Props) => {
   const {isDarkMode, colors} = useTheme();
-  const {setValue, errors} = useRHFContext(name);
+  const [value, setValuee] = useState(defaultText);
+  const [isFocus, setIsFocus] = useState(false);
+  const renderItem = useCallback((item: any) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.selectedTextStyle}>{item.label}</Text>
+      </View>
+    );
+  }, []);
   return (
     <View>
-      <Text style={[styles.label, {color: colors.headerText}]}>{label}</Text>
-      <SelectDropdown
-        buttonStyle={{
-          height: 40,
-          width: '100%',
-          backgroundColor: disable
-            ? Colors.light.borderColor
-            : colors.backgroundColor,
-          marginVertical: 10,
-          justifyContent: 'space-between',
+      <Dropdown
+        style={[
+          styles.dropdown,
+          {
+            backgroundColor: colors.backgroundColor,
+            borderColor: isDarkMode ? Colors.gray : Colors.border,
+          },
+        ]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        containerStyle={{
+          backgroundColor: colors.backgroundColor,
           borderWidth: 1,
-          borderColor: isDarkMode ? Colors.gray : Colors.border,
-          borderRadius: 2,
-          flexDirection: 'row',
-          paddingHorizontal: 5,
-          marginBottom: 10,
         }}
-        selectedRowTextStyle={styles.text}
-        buttonTextStyle={styles.buttonText}
         data={data}
-        defaultButtonText="USA"
-        disabled={disable}
-        onSelect={selectedItem => {
-          setValue(name, selectedItem.id);
-        }}
-        buttonTextAfterSelection={selectedItem => {
-          return selectedItem.value;
-        }}
-        rowTextForSelection={item => {
-          return item.value;
+        maxHeight={300}
+        labelField="label"
+        valueField="value"
+        placeholder={!isFocus ? placeholder : '...'}
+        value={value}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        disable={disable}
+        renderItem={renderItem}
+        onChange={item => {
+          setValuee(item.value);
+          setIsFocus(false);
+          onChange(item.value);
         }}
       />
-      <ErrorMessage error={errors[name]?.message} />
     </View>
   );
 };
@@ -58,14 +71,67 @@ const AppSelect = ({label, name, data, disable = false}: Props) => {
 export default AppSelect;
 
 const styles = StyleSheet.create({
+  container: {paddingVertical: 16},
   label: {
     fontSize: Text_Size.Text_1,
     fontWeight: '600',
     marginBottom: 10,
   },
-  buttonText: {fontSize: Text_Size.Text_1, color: 'gray'},
-  text: {
+  dropdown: {
+    padding: 2,
+    borderRadius: 2,
+    paddingHorizontal: 8,
+    marginBottom: 10,
+    borderWidth: 1,
+  },
+  placeholderStyle: {
+    fontSize: Text_Size.Text_0,
+    color: 'gray',
+  },
+  selectedTextStyle: {
+    fontSize: Text_Size.Text_0,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: Text_Size.Text_0,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  item: {
+    paddingHorizontal: 17,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  selectedStyle: {
+    backgroundColor: Colors.primary,
+    borderRadius: 50,
     flex: 0,
-    color: 'black',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#000',
+    marginTop: 10,
+    marginRight: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  textSelectedStyle: {
+    marginRight: 5,
+    fontSize: Text_Size.Text_0,
+    color: Colors.background,
   },
 });

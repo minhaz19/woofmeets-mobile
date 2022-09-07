@@ -5,7 +5,7 @@ import Screen from '../../../components/common/Screen';
 import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar/AvailablityCalendar';
 import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {providerAvailablityValidationSchema} from '../../../utils/config/validationSchema';
+import {providerAvailablityValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 
 const ProviderAvailablity = () => {
   const {isDarkMode} = useTheme();

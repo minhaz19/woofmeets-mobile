@@ -1,67 +1,33 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-native/no-inline-styles */
-import {StyleSheet} from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
-import React, {FC} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import React, {FC, useCallback, useState} from 'react';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../text/HeaderText';
+import AppSelectField from '../Form/AppSelectField';
+import {contries} from '../../../utils/config/Data/AddPetData';
+import {useForm} from 'react-hook-form';
 
 interface Props {
-  label?: string;
-  placeholder?: string;
-  data: string[];
+  label: string;
+  data: any[];
+  name?: string;
+  placeholder: string;
 }
 
-const Dropdown: FC<Props> = ({label, placeholder, data}) => {
-  const {colors} = useTheme();
+const Dropdown: FC<Props> = ({label, data, placeholder}) => {
+  const {control} = useForm();
   return (
     <>
-      {label && <HeaderText text={label} />}
-      <SelectDropdown
+      <AppSelectField
+        placeholder={placeholder}
+        label={label}
+        name={''}
         data={data}
-        onSelect={(selectedItem, index) => {}}
-        buttonTextAfterSelection={selectedItem => {
-          return selectedItem;
-        }}
-        rowTextForSelection={item => {
-          return item;
-        }}
-        renderDropdownIcon={() => {
-          return (
-            <MaterialCommunityIcons
-              name="chevron-right"
-              size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
-              style={styles.iconStyle}
-              color={Colors.subText}
-            />
-          );
-        }}
-        dropdownIconPosition={'right'}
-        // search={true}
-        defaultButtonText={placeholder}
-        buttonStyle={{
-          borderWidth: 1,
-          borderColor: Colors.border,
-          width: '100%',
-          height: 40,
-          backgroundColor: colors.lightBackgroundColor,
-          marginVertical: 10,
-          borderRadius: 2,
-        }}
-        buttonTextStyle={{
-          fontSize: Text_Size.Text_0,
-          color: colors.headerText,
-          textAlign: 'left',
-        }}
-        rowTextStyle={styles.rowTextStyle}
-        selectedRowTextStyle={styles.text}
-        dropdownStyle={styles.dropdownStyle}
-        searchInputStyle={styles.searchInputStyle}
-        searchPlaceHolder={'Search here'}
+        control={control}
       />
     </>
   );
@@ -70,25 +36,64 @@ const Dropdown: FC<Props> = ({label, placeholder, data}) => {
 export default Dropdown;
 
 const styles = StyleSheet.create({
+  container: {paddingVertical: 16},
+
+  dropdown: {
+    backgroundColor: 'white',
+    padding: 2,
+    borderRadius: 2,
+    paddingHorizontal: 8,
+    marginBottom: 10,
+    borderWidth: 1,
+  },
+  placeholderStyle: {
+    fontSize: Text_Size.Text_0,
+    color: 'gray',
+  },
+  selectedTextStyle: {
+    fontSize: Text_Size.Text_0,
+  },
   iconStyle: {
-    paddingRight: 0,
-    transform: [{rotate: '90deg'}],
+    width: 20,
+    height: 20,
   },
-  text: {
-    color: Colors.primary,
-  },
-  dropdownStyle: {
-    borderRadius: 10,
-    marginTop: '2%',
+  inputSearchStyle: {
+    height: 40,
     fontSize: Text_Size.Text_0,
   },
-  searchInputStyle: {
-    width: '100%',
-    fontSize: Text_Size.Text_0,
-    color: Colors.text,
-    borderColor: Colors.border,
+  icon: {
+    marginRight: 5,
   },
-  rowTextStyle: {
+  item: {
+    paddingHorizontal: 17,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  selectedStyle: {
+    backgroundColor: Colors.primary,
+    borderRadius: 50,
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#000',
+    marginTop: 10,
+    marginRight: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  textSelectedStyle: {
+    marginRight: 5,
     fontSize: Text_Size.Text_0,
+    color: Colors.background,
   },
 });

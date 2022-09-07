@@ -6,12 +6,12 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import Colors from '../../../constants/Colors';
 import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHeader';
 import AuthFooter from '../../../components/ScreenComponent/Auth/Common/AuthFooter';
-import {signupValue} from '../../../utils/config/initalValues';
-import {signUpValidationSchema} from '../../../utils/config/validationSchema';
+import {signupValue} from '../../../utils/config/initalValues/initalValues';
+import {signUpValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {
   othersAuthIcons,
   signUpInitalState,
@@ -19,35 +19,15 @@ import {
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
-import {registerUser} from '../../../store/slices/auth/userAction';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import AppActivityIndicator from '../../../components/Loaders/AppActivityIndicator';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import {useSignUp} from './useSignUp';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
-interface RegProps {
-  email: string;
-  firstName: string;
-  lastName: string;
-  zipcode: string;
-  password: string;
-  term: boolean;
-}
+
 const SignUp = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const {isLoggedIn, providerLoading, loading} = useAppSelector(
-    state => state.auth,
-  );
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigation.navigate('BottomTabNavigator');
-    }
-  }, [navigation, isLoggedIn]);
-
-  const handleSubmit = (regInfo: RegProps) => {
-    dispatch(registerUser(regInfo));
-  };
+  const {handleSubmit, providerLoading, loading} = useSignUp(navigation);
 
   return (
     <>
@@ -63,7 +43,7 @@ const SignUp = ({navigation}: Props) => {
         ]}>
         <KeyboardAvoidingView
           style={styles.container}
-          // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
           enabled={Platform.OS === 'ios' ? true : false}>
           <View

@@ -40,7 +40,6 @@ const MiddleModal = (props: {
 };
 
 const styles = StyleSheet.create({
-  //Modal
   centeredView: {
     flex: 1,
     width: '100%',
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
   iconView: {height: 80, width: 80, marginBottom: 10},
   modalView: {
     width: '90%',
-    height: '50%',
+    minHeight: '20%',
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: {

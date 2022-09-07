@@ -19,8 +19,8 @@ import TitleText from '../../common/text/TitleText';
 import { useApi } from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import AppForm from '../../common/Form/AppForm';
-import { otpValue } from '../../../utils/config/initalValues';
-import { otpValidationSchema } from '../../../utils/config/validationSchema';
+import { otpValue } from '../../../utils/config/initalValues/initalValues';
+import { otpValidationSchema } from '../../../utils/config/ValidationSchema/validationSchema';
 import { phoneNumberReg } from '../../../constants/regex';
 import { useAppSelector } from '../../../store/store';
 

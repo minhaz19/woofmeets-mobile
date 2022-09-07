@@ -1,47 +1,65 @@
 import {StyleSheet, View} from 'react-native';
-import React, {memo, useCallback} from 'react';
+import React, {memo} from 'react';
 import {medicationChecks} from '../../../../../utils/config/Data/AddPetData';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import TitleText from '../../../../common/text/TitleText';
 import Text_Size from '../../../../../constants/textScaling';
+import AppFormField from '../../../../common/Form/AppFormField';
+import {useHandleMultiCheck} from '../../../../../utils/helpers/useHandleMultiCheck';
 
 interface Props {
-  active12: number | null;
-  handleActiveCheck: (arg0: number, arg1: number) => void;
   errors: any;
   setValue: any;
   control: any;
+  getValues: any;
 }
 const AdditionalMedicationCheck = ({
   errors,
   setValue,
+  getValues,
   control,
-  active12,
-  handleActiveCheck,
 }: Props) => {
+  const {newData, handleMultipleCheck} = useHandleMultiCheck(
+    medicationChecks.pet,
+  );
+  const data = getValues();
   return (
     <View>
       <TitleText textStyle={styles.title} text={medicationChecks.title!} />
       <View style={styles.petType}>
-        {medicationChecks.pet!.map((item, index) => (
+        {newData.map((item: any, index: number) => (
           <AppCheckboxField
             title={item.type}
             key={index}
             square
-            typeKey={item.id}
-            active={item.id === active12 ? true : false}
-            name={medicationChecks.name!}
+            active={data[item.name]}
+            name={item.name}
             errors={errors}
-            setValue={setValue}
             control={control}
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            onPress={useCallback(() => {
-              handleActiveCheck(112, item.id);
-              setValue(medicationChecks.name, item.id);
-            }, [item.id])}
+            onPress={() => {
+              handleMultipleCheck(index);
+              setValue(item.name, item.active);
+            }}
           />
         ))}
       </View>
+      {medicationChecks.input.map(
+        (item, index) =>
+          data[item.id] === true && (
+            <AppFormField
+              key={index}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType={'default'}
+              placeholder={item.placeholder}
+              textContentType={'none'}
+              name={item.name}
+              label={item.title}
+              errors={errors}
+              control={control}
+            />
+          ),
+      )}
     </View>
   );
 };

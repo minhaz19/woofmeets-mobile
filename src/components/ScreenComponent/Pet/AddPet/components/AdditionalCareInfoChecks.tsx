@@ -1,30 +1,24 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import {StyleSheet, View} from 'react-native';
-import React, {memo, useCallback} from 'react';
+import React, {memo, useState} from 'react';
 import TitleText from '../../../../common/text/TitleText';
 import {careInfoChecks} from '../../../../../utils/config/Data/AddPetData';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import Text_Size from '../../../../../constants/textScaling';
+import AppFormField from '../../../../common/Form/AppFormField';
 interface Props {
-  active8: number | null;
-  active9: number | null;
-  active10: number | null;
-  active11: number | null;
-  handleActiveCheck: (arg: number, arg1: number) => void;
   errors: any;
   control: any;
   setValue: any;
+  getValues: any;
 }
 const AdditionalCareInfoChecks = ({
-  active8,
-  active9,
-  active10,
-  active11,
-  handleActiveCheck,
   errors,
   control,
   setValue,
+  getValues,
 }: Props) => {
+  const [, setRender] = useState({});
+  const data = getValues();
   return (
     <View>
       <View>
@@ -39,27 +33,37 @@ const AdditionalCareInfoChecks = ({
           <TitleText textStyle={styles.title} text={item.title} />
 
           <View style={styles.additionalTypeContainer}>
-            {item.radio.map((type, key) => (
+            {item.radio.map((type, i) => (
               <AppCheckboxField
                 title={type.type}
                 radio
-                key={key}
-                active={
-                  (type.id === active8 ? true : false) ||
-                  (type.id === active9 ? true : false) ||
-                  (type.id === active10 ? true : false) ||
-                  (type.id === active11 ? true : false)
-                }
+                key={i}
+                typeValue={type.value}
                 name={item.name}
                 errors={errors}
                 control={control}
-                onPress={useCallback(() => {
-                  handleActiveCheck(item.id, type.id);
-                  setValue(item.name, type.id);
-                }, [type.id])}
+                onPress={() => {
+                  setValue(item.name, type.value, {shouldValidate: true});
+                  setRender(Math.random());
+                }}
               />
             ))}
           </View>
+          {item.input && data[item.name] === 'Custom' && (
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType={'default'}
+              placeholder={item.input.placeholder}
+              textContentType={'none'}
+              name={item.input.name!}
+              label={item.input.title!}
+              multiline
+              numberOfLines={item.input.numberOfLines}
+              errors={errors}
+              control={control}
+            />
+          )}
         </View>
       ))}
     </View>
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   radioContainer: {
-    marginRight: 10,
+    // marginRight: 10,
   },
   header: {
     fontSize: Text_Size.Text_1,

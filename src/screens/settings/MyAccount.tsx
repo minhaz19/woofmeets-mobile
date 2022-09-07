@@ -15,7 +15,7 @@ import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
 import ProfileInfo from '../../components/ScreenComponent/profile/ProfileInfo';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileAction';
-import AppActivityIndicator from '../../components/Loaders/AppActivityIndicator';
+import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
 
 const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const dispatch = useAppDispatch();
@@ -103,6 +103,7 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 20,
   },
   profileContainer: {
     padding: 20,

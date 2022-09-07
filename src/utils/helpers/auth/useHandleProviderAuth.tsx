@@ -7,6 +7,7 @@ import {Alert} from 'react-native';
 import {LoginManager, Profile, Settings} from 'react-native-fbsdk-next';
 import {providerAuth} from '../../../store/slices/auth/userAction';
 import {useAppDispatch} from '../../../store/store';
+import {authProviderLoading} from '../../../store/slices/auth/userSlice';
 
 export const useHandleProviderAuth = () => {
   const [user, setUser] = useState({});
@@ -33,6 +34,7 @@ export const useHandleProviderAuth = () => {
           provider: 'GOOGLE',
         };
         dispatch(providerAuth(userInfos));
+        dispatch(authProviderLoading(true));
       }
     } catch (error: any) {
       Alert.alert('Login failed');
@@ -70,6 +72,7 @@ export const useHandleProviderAuth = () => {
                 facebookId: currentProfile?.userID,
               };
               dispatch(providerAuth(userInfo));
+              dispatch(authProviderLoading(true));
             }
           } catch (error) {
             console.log(error);

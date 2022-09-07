@@ -9,7 +9,7 @@ import {
   filterProviderType,
   BoardingSettingsType,
   forgotPasswordResetType,
-} from './types';
+} from '../Types/types';
 
 const loginValue: LoginType = {email: '', password: ''};
 const signupValue: SignUpType = {

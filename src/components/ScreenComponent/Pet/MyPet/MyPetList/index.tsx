@@ -2,14 +2,21 @@ import {Image, StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import React from 'react';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Text_Size from '../../../../../constants/textScaling';
-import { PlusRounded} from '../../../../../assets/svgs/SVG_LOGOS';
+import {PlusRounded} from '../../../../../assets/svgs/SVG_LOGOS';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../../constants/Colors';
 import HeaderText from '../../../../common/text/HeaderText';
-import TitleText from '../../../../common/text/TitleText';
+import ShortText from '../../../../common/text/ShortText';
 
 const width = SCREEN_WIDTH;
 interface Props {
+  name?: string;
+  type?: string;
+  weight?: number;
+  ageMonth?: number;
+  ageYear?: number;
+  gender?: string;
+  profile_image?: string;
   dataList?: [
     {
       id: string;
@@ -17,7 +24,16 @@ interface Props {
   ];
   onPress?: () => void;
 }
-const MyPetList = ({dataList, onPress}: Props) => {
+const imageUri = 'https://i.ibb.co/NTN60dD/dogcat.png';
+const MyPetList = ({
+  name,
+  type,
+  ageYear,
+  gender,
+  profile_image,
+  dataList,
+  onPress,
+}: Props) => {
   const {isDarkMode, colors} = useTheme();
 
   return (
@@ -37,7 +53,7 @@ const MyPetList = ({dataList, onPress}: Props) => {
         {dataList ? (
           <View>
             <Image
-              source={require('../../../../../assets/image/pet/mypet.png')}
+              source={{uri: profile_image ? profile_image : imageUri}}
               style={styles.image}
               resizeMode="cover"
             />
@@ -50,9 +66,24 @@ const MyPetList = ({dataList, onPress}: Props) => {
                     : colors.backgroundColor,
                 },
               ]}>
-              <HeaderText text="Snoopy" textStyle={styles.title} />
-              <TitleText textStyle={styles.subTitle} text="Cat" />
-              <TitleText textStyle={styles.description} text="2 Years - Male" />
+              <HeaderText
+                text={name![0].toUpperCase() + name?.slice(1)}
+                textStyle={styles.title}
+              />
+              <ShortText
+                textStyle={styles.subTitle}
+                text={
+                  'Type - ' +
+                  type![0].toUpperCase() +
+                  type?.slice(1).toLowerCase()
+                }
+              />
+              <ShortText
+                textStyle={styles.description}
+                text={`${ageYear + ' Year '} - ${
+                  gender![0].toUpperCase() + gender?.slice(1).toLowerCase()
+                }`}
+              />
             </View>
           </View>
         ) : (
@@ -86,11 +117,11 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     paddingHorizontal: 10,
-    paddingBottom: 20,
+    paddingBottom: 12,
     paddingTop: 10,
   },
   title: {fontSize: Text_Size.Text_9, fontWeight: '600'},
-  subTitle: {fontSize: Text_Size.Text_9, fontWeight: '500'},
+  subTitle: {fontSize: Text_Size.Text_0, fontWeight: '500', marginVertical: 2},
   description: {fontSize: Text_Size.Text_0},
   addPet: {
     flex: 1,

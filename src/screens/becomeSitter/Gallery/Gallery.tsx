@@ -26,7 +26,7 @@ import AppForm from '../../../components/common/Form/AppForm';
 import * as Yup from 'yup';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
-import AppActivityIndicator from '../../../components/Loaders/AppActivityIndicator';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 
 const Gallery = () => {
   const [photo, setPhoto] = useState<any>([]);
