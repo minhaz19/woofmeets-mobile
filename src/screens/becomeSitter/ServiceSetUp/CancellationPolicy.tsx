@@ -2,12 +2,12 @@ import {StyleSheet, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import * as Yup from 'yup';
 import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
-import AppActivityIndicator from '../../../components/Loaders/AppActivityIndicator';
 import AppForm from '../../../components/common/Form/AppForm';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import SubCancellationPolicy from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubCancellationPolicy';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 
 const getPoint = '/cancellation-policy';
 

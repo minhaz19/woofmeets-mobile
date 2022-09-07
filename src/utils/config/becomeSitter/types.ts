@@ -20,7 +20,7 @@ export interface contactType {
 
 export interface contactDetailsType {
   headline: string;
-  yearsOfExperience: number;
+  yearsOfExperience: string;
   // dogsExperience: string;
   // walkingExperience: string;
   // requestedDogInfo: string;

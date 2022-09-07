@@ -22,7 +22,7 @@ const contactValues: contactType = {
 
 const sitterDetailsValue: contactDetailsType = {
   headline: '',
-  yearsOfExperience: 0,
+  yearsOfExperience: '',
   experienceDescription: '',
   environmentDescription: '',
   scheduleDescription: '',

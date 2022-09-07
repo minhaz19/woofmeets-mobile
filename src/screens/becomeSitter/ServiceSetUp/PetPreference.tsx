@@ -6,12 +6,12 @@ import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/Ser
 import AppForm from '../../../components/common/Form/AppForm';
 import methods from '../../../api/methods';
 import {useApi} from '../../../utils/helpers/api/useApi';
-import AppActivityIndicator from '../../../components/Loaders/AppActivityIndicator';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 // import {usePetPreferenceInitialData} from './useServiceSetUpInitialState';
 import {getPetPreference} from '../../../store/slices/setUpService/petPreference/getPetPreference';
 import SubPetPreference from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubPetPreference/SubPetPreference';
 import { petPreferenceSchema } from './useServiceSetUpInitialState';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 const endPoint = '/pet-preference';
 
 const PetPreference = (props: {

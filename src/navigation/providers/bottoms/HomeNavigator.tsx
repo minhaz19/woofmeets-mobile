@@ -9,7 +9,6 @@ import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../../store/slices/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
 import ProviderAvailablity from '../../../screens/provider/ProviderAvailablity';
-import ServiceDetails from '../../../components/ScreenComponent/Service/ServiceDetails';
 
 const Stack = createStackNavigator();
 

@@ -127,7 +127,8 @@ const ServiceSelection = (props: {
         },
       ]}>
       {serviceTypes && (
-        <FlatList
+         <FlatList
+          showsVerticalScrollIndicator={false}
           columnWrapperStyle={styles.flatList}
           data={serviceTypes}
           numColumns={2}

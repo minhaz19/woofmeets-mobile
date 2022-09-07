@@ -1,4 +1,4 @@
-import {View, StyleSheet, Text, ScrollView, RefreshControl} from 'react-native';
+import {View, StyleSheet, Text, ScrollView, RefreshControl, ActivityIndicator} from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../constants/textScaling';
@@ -12,6 +12,7 @@ import { sitterDetailsValue } from '../../../utils/config/becomeSitter/initalVal
 import { sitterDetailsValidationSchema } from '../../../utils/config/becomeSitter/validationSchema';
 import SitterDetailsInput from '../../../components/ScreenComponent/becomeSitter/details/SitterDetailsInput';
 import { getSitterDetails, postSitterDetails } from '../../../store/slices/profile/details';
+import { useDetailsInitalValue } from './useDetailsInitialValue';
 
 const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
   const {colors} = useTheme();
@@ -21,8 +22,8 @@ const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; 
   };
 
   const [refreshing, setRefreshing] = useState(false);
-  const sitterInfo = useAppSelector(
-    state => state.details.sitterInfo,
+  const {sitterInfo, loading} = useAppSelector(
+    state => state.details,
   );
 
   const onRefresh = useCallback(() => {
@@ -33,10 +34,11 @@ const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; 
 
   useEffect(() => {
     onRefresh();
-  }, [onRefresh]);
+  }, []);
 
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
@@ -67,13 +69,7 @@ const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; 
               textStyle={styles.details}
             />
           <AppForm
-            initialValues={sitterInfo ? {
-              headline: sitterInfo.headline,
-              yearsOfExperience: sitterInfo.yearsOfExperience,
-              experienceDescription: sitterInfo.experienceDescription,
-              environmentDescription: sitterInfo.environmentDescription,
-              scheduleDescription: sitterInfo.scheduleDescription,
-            } : sitterDetailsValue}
+            initialValues={useDetailsInitalValue()}
             validationSchema={sitterDetailsValidationSchema}>
             <SitterDetailsInput handleSubmit={sitterDetailsSubmit} />
           </AppForm>
