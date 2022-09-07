@@ -9,8 +9,8 @@ import {
 import React from 'react';
 import Colors from '../../../constants/Colors';
 import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
-import {verifyAccountValue} from '../../../utils/config/initalValues';
-import {verifyAccountValidationSchema} from '../../../utils/config/validationSchema';
+import {verifyAccountValue} from '../../../utils/config/initalValues/initalValues';
+import {verifyAccountValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';

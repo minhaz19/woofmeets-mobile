@@ -9,19 +9,17 @@ import {
 import React from 'react';
 import Colors from '../../../../constants/Colors';
 import AuthForm from '../../../../components/ScreenComponent/Auth/Common/AuthForm';
-import {forgotPasswordValue} from '../../../../utils/config/initalValues';
-import {forgotPasswordValidationSchema} from '../../../../utils/config/validationSchema';
+import {forgotPasswordValue} from '../../../../utils/config/initalValues/initalValues';
+import {forgotPasswordValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
 import ImageAndTitle from '../../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
 import {AuthPassword} from '../../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import BottomSpacing from '../../../../components/UI/BottomSpacing';
 import AppForm from '../../../../components/common/Form/AppForm';
-import {useApi} from '../../../../utils/helpers/api/useApi';
-import api from '../../../../api/methods';
+import {useFPEmail} from './utils/useFPEmail';
 const forgotPassData = {
   title: 'Forgot Password?',
 };
-const slug = '/auth/forget-password-otp-generate';
 interface Props {
   navigation: {
     navigate: (arg0: string, arg2: any) => void;
@@ -30,15 +28,7 @@ interface Props {
 }
 const ForgotPassword = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const {request, loading} = useApi(api._post);
-  const handleSubmit = async (e: any) => {
-    const result = await request(slug, {
-      email: e.email,
-    });
-    if (result.ok) {
-      navigation.navigate('ForgotPasswordOtp', {email: e.email});
-    }
-  };
+  const {handleSubmit, loading} = useFPEmail(navigation);
   return (
     <ScrollView
       contentContainerStyle={styles.container}

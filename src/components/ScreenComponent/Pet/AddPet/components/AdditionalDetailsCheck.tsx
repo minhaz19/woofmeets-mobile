@@ -1,71 +1,67 @@
 import {StyleSheet, View} from 'react-native';
-import React, {memo, useCallback} from 'react';
+import React, {memo, useState} from 'react';
 import {additionalDetailChecks} from '../../../../../utils/config/Data/AddPetData';
 import TitleText from '../../../../common/text/TitleText';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import Text_Size from '../../../../../constants/textScaling';
+import AppFormField from '../../../../common/Form/AppFormField';
 
 interface Props {
-  active1: number | null;
-  active2: number | null;
-  active3: number | null;
-  active4: number | null;
-  active5: number | null;
-  active6: number | null;
-  active7: number | null;
-  handleActiveCheck: (arg: number, arg1: number) => void;
   errors: any;
   control: any;
   setValue: any;
+  getValues?: any;
 }
 const AdditionalDetailsCheck = ({
-  active1,
-  active2,
-  active3,
-  active4,
-  active5,
-  active6,
-  active7,
-  handleActiveCheck,
   errors,
   control,
   setValue,
+  getValues,
 }: Props) => {
-
+  const [, setRender] = useState({});
+  const data = getValues();
   return (
     <View>
-      {additionalDetailChecks.map((item, index) => (
-        <View key={index} style={styles.radioContainer}>
-          <TitleText textStyle={styles.title} text={item.title} />
+      {additionalDetailChecks.map((item, index) => {
+        return (
+          <View key={index} style={styles.radioContainer}>
+            <TitleText textStyle={styles.title} text={item.title} />
 
-          <View style={styles.additionalTypeContainer}>
-            {item.radio.map((type, key) => (
-              <AppCheckboxField
-                title={type.type}
-                radio
-                key={key}
-                active={
-                  (type.id === active1 ? true : false) ||
-                  (type.id === active2 ? true : false) ||
-                  (type.id === active3 ? true : false) ||
-                  (type.id === active4 ? true : false) ||
-                  (type.id === active5 ? true : false) ||
-                  (type.id === active6 ? true : false) ||
-                  (type.id === active7 ? true : false)
-                }
+            <View style={styles.additionalTypeContainer}>
+              {item.radio.map((type, key) => (
+                <AppCheckboxField
+                  title={type.type}
+                  radio
+                  key={key}
+                  typeValue={type.value}
+                  errors={errors}
+                  control={control}
+                  onPress={() => {
+                    setValue(item.name, type.value);
+                    setRender(Math.random());
+                  }}
+                  name={item.name}
+                />
+              ))}
+            </View>
+            {data[item.name] === 'DEPENDS' && (
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType={'default'}
+                placeholder={item?.input?.placeholder}
+                textContentType={'none'}
+                name={item.input?.name!}
+                label={item.input?.title!}
+                multiline
+                numberOfLines={item.input?.numberOfLines}
                 errors={errors}
                 control={control}
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                onPress={useCallback(() => {
-                  handleActiveCheck(item.id, type.id);
-                  setValue(item.name, type.id);
-                }, [type.id])}
-                name={item.name}
               />
-            ))}
+            )}
           </View>
-        </View>
-      ))}
+        );
+      })}
     </View>
   );
 };
@@ -85,6 +81,6 @@ const styles = StyleSheet.create({
   },
 
   radioContainer: {
-    marginRight: 10,
+    // marginRight: 10,
   },
 });

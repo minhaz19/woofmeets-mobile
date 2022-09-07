@@ -33,6 +33,23 @@ export const Finder = (props: SvgProps) => (
     </G>
   </Svg>
 );
+export const RoundedCross = (props: SvgProps) => (
+  <Svg
+    viewBox="0 0 32 32"
+    fill="none"
+    aria-hidden="true"
+    height={32}
+    width={32}
+    {...props}>
+    <Path
+      d="m13 13 6 6m0-6-6 6m15-3c0 6.627-5.373 12-12 12S4 22.627 4 16 9.373 4 16 4s12 5.373 12 12Z"
+      stroke="#CBD5E1"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
 
 export const Setting = (props: SvgProps) => (
   <Svg
@@ -2308,7 +2325,7 @@ export const Cross = (props: SvgProps) => (
       id="Vector"
       d="M4377.1,1052.708a.664.664,0,0,0-.94,0l-3.261,3.255-3.261-3.261a.665.665,0,0,0-.94.941l3.261,3.261-3.261,3.261a.665.665,0,0,0,.94.94l3.261-3.261,3.261,3.261a.665.665,0,0,0,.94-.94l-3.261-3.261,3.261-3.261a.668.668,0,0,0,0-.934Z"
       transform="translate(-4368.506 -1052.506)"
-      fill="#323232"
+      fill={props.fill ? props.fill : '#323232'}
     />
   </Svg>
 );
@@ -2754,7 +2771,7 @@ export const AddPet = (props: SvgProps) => (
   </Svg>
 );
 
-export function SendMsgIcon(props): JSX.Element {
+export function SendMsgIcon(props: SvgProps) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -2781,7 +2798,7 @@ export function SendMsgIcon(props): JSX.Element {
     </Svg>
   );
 }
-export function Reset(props): JSX.Element {
+export function Reset(props: SvgProps) {
   return (
     <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" {...props}>
       <Path d="M614.2 334.8c-3.7-9-12.5-15.7-22.2-15.7h-48V176c0-44.1-35.9-80-80-80H336c-17.67 0-32 14.31-32 32s14.33 32 32 32h128c8.8 0 16 7.2 16 16v143.1h-48a24.007 24.007 0 0 0-16.967 40.98l80 80.02C499.7 445.7 505.9 448 512 448s12.28-2.344 16.97-7.031l80-80.02c6.83-6.849 8.93-17.149 5.23-26.149zM304 352H176c-8.8 0-16-7.2-16-16V192h48a24.007 24.007 0 0 0 16.967-40.98l-80-80.02C140.3 66.34 134.1 64 128 64s-12.3 2.34-17 7.03l-80 80.02c-6.83 6.85-8.89 17.15-5.17 26.15S38.3 192 48 192h48v144c0 44.1 35.9 80 80 80h128c17.67 0 32-14.31 32-32s-14.3-32-32-32z" />
@@ -2789,7 +2806,7 @@ export function Reset(props): JSX.Element {
   );
 }
 
-export function Minus(props): JSX.Element {
+export function Minus(props: SvgProps) {
   return (
     <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" {...props}>
       <Path d="M400 288H48c-17.69 0-32-14.32-32-32.01S30.31 224 48 224h352c17.69 0 32 14.3 32 31.99S417.7 288 400 288z" />
@@ -2797,10 +2814,22 @@ export function Minus(props): JSX.Element {
   );
 }
 
-export function Plus(props): JSX.Element {
+export function Plus(props: SvgProps) {
   return (
     <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" {...props}>
       <Path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99h144v-144C192 62.32 206.33 48 224 48s32 14.32 32 32.01v144h144c17.7-.01 32 14.29 32 31.99z" />
+    </Svg>
+  );
+}
+export function Delete(props: SvgProps) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 448 512"
+      fill={Colors.primary}
+      width={19}
+      {...props}>
+      <Path d="M135.2 17.7 128 32H32C14.3 32 0 46.3 0 64s14.3 32 32 32h384c17.7 0 32-14.3 32-32s-14.3-32-32-32h-96l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32l21.2 339c1.6 25.3 22.6 45 47.9 45h245.8c25.3 0 46.3-19.7 47.9-45L416 128z" />
     </Svg>
   );
 }

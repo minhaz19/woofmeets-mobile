@@ -16,6 +16,9 @@ const userSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    authProviderLoading: (state, payload) => {
+      state.providerLoading = payload;
+    },
     signIn: (state, action) => {
       state.loading = false;
       state.success = true; // login successful
@@ -66,23 +69,23 @@ const userSlice = createSlice({
         state.error = payload;
       })
       .addCase(providerAuth.pending, state => {
-        state.providerLoading = true;
+        // state.providerLoading = true;
         state.error = null;
       })
       .addCase(providerAuth.fulfilled, (state, {payload}) => {
-        state.providerLoading = false;
+        // state.providerLoading = false;
         state.isLoggedIn = true; // provider authentication successful
         state.userInfo = payload;
         state.success = true;
         state.userToken = payload.data.access_token;
       })
       .addCase(providerAuth.rejected, (state, {payload}) => {
-        state.providerLoading = false;
+        // state.providerLoading = false;
         state.error = payload;
       });
   },
 });
 
-export const {signIn, logout} = userSlice.actions;
+export const {signIn, authProviderLoading, logout} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -20,7 +20,7 @@ const AuthOTP = ({name, auth}: Props) => {
         // handleChange={code => setValue(name, code)}
         handleChange={onChange}
         numberOfInputs={6}
-        autofillFromClipboard={false}
+        autofillFromClipboard={true}
         onBlur={onBlur}
         placeholder={'-'}
         style={[

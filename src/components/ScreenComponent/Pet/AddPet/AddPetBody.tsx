@@ -1,13 +1,9 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import AppFormField from '../../../common/Form/AppFormField';
 import SubmitButton from '../../../common/Form/SubmitButton';
-import {
-  additionalDescriptionInput,
-  petDescriptionInput,
-} from '../../../../utils/config/Data/AddPetData';
+import {petDescriptionInput} from '../../../../utils/config/Data/AddPetData';
 import AddPetImage from './AddPetImage';
-import HeaderText from '../../../common/text/HeaderText';
 import AppImagePicker from '../../../common/ImagePicker/AppImagePicker';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import {memo} from 'react';
@@ -18,70 +14,51 @@ import AdditionalDetailsCheck from './components/AdditionalDetailsCheck';
 import AdditionalMedicationCheck from './components/AdditionalMedicationCheck';
 import AdditionalButtonInputs from './components/AdditionalButtonInputs';
 import AdditionalCareInfoChecks from './components/AdditionalCareInfoChecks';
-import useHandleCheck from '../../../../utils/helpers/usehandleActiveCheck';
+import AddPetHeader from './components/AddPetHeader';
+import AddPetBreeds from './components/AddPetBreeds';
 
 interface Props {
   handleSubmit: (value: any) => void;
+  loading: boolean;
+  opk: string | null;
 }
 
-const AddPetBody = ({handleSubmit}: Props) => {
-  const [isAdditionalDetails, setIsAdditionalDetails] = useState<boolean>(true);
-  const {
-    handleActiveCheck,
-    active0,
-    active1,
-    active2,
-    active3,
-    active4,
-    active5,
-    active6,
-    active7,
-    active8,
-    active9,
-    active10,
-    active11,
-    active12,
-  } = useHandleCheck();
+const AddPetBody = ({handleSubmit, loading, opk}: Props) => {
+  const [havePets, setHavePet] = useState(0);
   const {
     control,
     setValue,
+    getValues,
     formState: {errors},
   } = useFormContext();
-
   return (
     <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.inputContainer}>
-        <AddPetImage name="petImage" />
-        <AddPetCheck
-          errors={errors}
-          setValue={setValue}
-          control={control}
-          active0={active0}
-          handleActiveCheck={handleActiveCheck}
-        />
-        <AddPetInfoInputs errors={errors} control={control} />
+        <AddPetHeader havePet={havePets} setHavePet={setHavePet} />
 
-        <TouchableOpacity
-          style={styles.spaceHeader}
-          onPress={() => setIsAdditionalDetails(!isAdditionalDetails)}>
-          <HeaderText text="Additional Details" />
-        </TouchableOpacity>
-        {isAdditionalDetails && (
+        {havePets === 0 && (
           <View>
-            <AdditionalDetailsCheck
-              active1={active1}
-              active2={active2}
-              active3={active3}
-              active4={active4}
-              active5={active5}
-              active6={active6}
-              active7={active7}
+            <AddPetImage name="profile_image" />
+            <AddPetCheck
               errors={errors}
               setValue={setValue}
               control={control}
-              handleActiveCheck={handleActiveCheck}
+            />
+            <AddPetInfoInputs errors={errors} control={control} />
+
+            <AddPetBreeds
+              setValue={setValue}
+              control={control}
+              name="breeds"
+              getValues={getValues}
+            />
+            <AdditionalDetailsCheck
+              errors={errors}
+              setValue={setValue}
+              control={control}
+              getValues={getValues}
             />
             <AppFormField
               autoCapitalize="none"
@@ -101,44 +78,29 @@ const AddPetBody = ({handleSubmit}: Props) => {
               errors={errors}
               setValue={setValue}
               control={control}
-              handleActiveCheck={handleActiveCheck}
-              active8={active8}
-              active9={active9}
-              active10={active10}
-              active11={active11}
-            />
-
-            <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType={'default'}
-              placeholder={additionalDescriptionInput.placeholder}
-              textContentType={'none'}
-              name={additionalDescriptionInput.name!}
-              label={additionalDescriptionInput.title!}
-              multiline
-              numberOfLines={additionalDescriptionInput.numberOfLines}
-              errors={errors}
-              control={control}
+              getValues={getValues}
             />
 
             <AdditionalMedicationCheck
               errors={errors}
               setValue={setValue}
               control={control}
-              active12={active12}
-              handleActiveCheck={handleActiveCheck}
+              getValues={getValues}
             />
 
             <AdditionalButtonInputs errors={errors} control={control} />
+            <AppImagePicker
+              label="Photo Gallery"
+              subTitle="Show off your pet through image gallery"
+              name="gallery"
+            />
+            <SubmitButton
+              title={opk === null ? 'Add Pet' : 'Update Pet'}
+              onPress={handleSubmit}
+              loading={loading}
+            />
           </View>
         )}
-        <AppImagePicker
-          label="Photo Gallery"
-          subTitle="Show off your pet through image gallery"
-          name="photoGallery"
-        />
-        <SubmitButton title="Add Pet" onPress={handleSubmit} />
         <BottomSpacing />
       </ScrollView>
     </View>

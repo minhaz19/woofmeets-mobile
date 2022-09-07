@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   boxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '70%',
+    width: '65%',
   },
   boxContainerEnd: {
     flexDirection: 'row',

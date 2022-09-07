@@ -19,6 +19,14 @@ const getToken = async () => {
   }
 };
 
+const getDecodedToken = async () => {
+  const token: any = await getToken();
+  if (token) {
+    const decode: any = await jwtDecode(token);
+    return decode;
+  }
+};
+
 const getUser = async () => {
   const token = await getToken();
   return token ? jwtDecode(token) : null;
@@ -32,4 +40,4 @@ const removeToken = async () => {
   }
 };
 
-export default {getToken, getUser, removeToken, storeToken};
+export default {getToken, getUser, removeToken, storeToken, getDecodedToken};

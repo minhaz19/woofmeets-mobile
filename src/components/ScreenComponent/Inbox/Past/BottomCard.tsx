@@ -18,7 +18,6 @@ import {
 } from '../utils/SvgComponent/SvgComponent';
 import DescriptionText from '../../../common/text/DescriptionText';
 import Card from '../../../UI/Card';
-import BottomSpacing from '../../../UI/BottomSpacing';
 import AppCheckbox from '../../../common/Form/AppCheckbox';
 import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../../../store/slices/openFilter';

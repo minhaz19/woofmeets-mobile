@@ -9,11 +9,11 @@ import {
 } from './utils/BoardingData/BoardingData';
 import DescriptionText from '../../common/text/DescriptionText';
 import BoardingDay from './Common/BoardingDay';
-import BoardingDropdown from './Common/BoardingDropDown';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
 import BoardingCheckbox from './Common/BoardingCheckbox';
 import ErrorMessage from '../../common/Form/ErrorMessage';
+import AppSelectField from '../../common/Form/AppSelectField';
 
 interface Props {
   handleActiveCheck: (parentId: number, key: number) => void;
@@ -54,7 +54,8 @@ const BoardingMain = ({
                 onPress={() => handleActiveCheck(100, item.id)}
                 name={availabilityInput[0].name!}
                 handleActiveMultipleCheck={() => {}}
-                control={control} setValue={setValue}
+                control={control}
+                setValue={setValue}
               />
             );
           })}
@@ -95,7 +96,8 @@ const BoardingMain = ({
                   availabilityInput[1].options,
                 )
               }
-              control={control} setValue={setValue}
+              control={control}
+              setValue={setValue}
             />
           ))}
         </View>
@@ -114,7 +116,8 @@ const BoardingMain = ({
               active={availabilityInput[2].id === 102 && active2[item.id]}
               onPress={() => handleActiveCheck(102, item.id)}
               name={availabilityInput[2].name!}
-              control={control} setValue={setValue}
+              control={control}
+              setValue={setValue}
               handleActiveMultipleCheck={() => {}}
             />
           );
@@ -127,12 +130,12 @@ const BoardingMain = ({
             text={availabilityInput[3].linkTitle}
             textStyle={styles.linkText}
           />
-          <BoardingDropdown
+          <AppSelectField
             label={availabilityInput[3].title}
             name={availabilityInput[3].name}
             placeholder={availabilityInput[3].placeholder}
             data={beforeBookingDays}
-            control={control} errors={errors} setValue={setValue}
+            control={control}
           />
         </View>
       )}

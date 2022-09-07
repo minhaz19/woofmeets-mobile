@@ -6,7 +6,6 @@ import AuthNavigator from './AuthNavigator';
 import Notifications from '../screens/notification/Notifications';
 import HeaderWithBack from '../components/common/header/HeaderWithBack';
 import Colors from '../constants/Colors';
-import HomeProfile from '../screens/becomeSitter/HomeProfile';
 import BasicInfoSitter from '../screens/becomeSitter/BasicInfo';
 import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
 import SitterInitialScreen from '../screens/becomeSitter/InitialScreen';
@@ -18,11 +17,18 @@ import ReceivePayments from '../screens/Misc/ReceivePayments';
 import Gallery from '../screens/becomeSitter/Gallery/Gallery';
 import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
 import GuestBottomTabNavigator from './GuestBottomTabNavigator';
+import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
+import HomeProfile from '../screens/becomeSitter/HomeProfile';
+import Rates from '../screens/becomeSitter/ServiceSetUp/Rates';
 import SitterLandingPage from '../screens/becomeSitter/LandingPage';
 import CreateProfileLanding from '../screens/becomeSitter/CreateProfileLanding';
 import BasicInfo from '../screens/profile/BasicInfo';
 import ContactScreen from '../screens/profile/ContactScreen';
 import PetNavigator from './bottoms/PetNavigator';
+import PetPreference from '../screens/becomeSitter/ServiceSetUp/PetPreference';
+import SitterDetails from '../screens/becomeSitter/Details';
+import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy';
+import YourHome from '../screens/becomeSitter/ServiceSetUp/YourHome';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -133,6 +139,65 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 title="Boarding Setting"
                 notification
               />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSetup"
+          component={ServiceSetUp}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Setup"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="Rates"
+          component={Rates}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="PetPreference"
+          component={PetPreference}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="CancellationPolicy"
+          component={CancellationPolicy}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="YourHome"
+          component={YourHome}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -266,8 +331,24 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
+        <Stack.Screen
+          name="SitterDetails"
+          component={SitterDetails}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Details"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
 export default MainNavigator;

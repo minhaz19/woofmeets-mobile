@@ -15,6 +15,7 @@ import Text_Size from '../constants/textScaling';
 import {SCREEN_WIDTH} from '../constants/WindowSize';
 import BigText from '../components/common/text/BigText';
 import TitleText from '../components/common/text/TitleText';
+import BottomSpacing from '../components/UI/BottomSpacing';
 
 const AfterIntroScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -76,6 +77,7 @@ const AfterIntroScreen = (props: {
             onSelect={() => props.navigation.navigate('SignUp')}
           />
         </View>
+        <BottomSpacing />
       </ScrollView>
     </View>
   );

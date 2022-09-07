@@ -105,10 +105,8 @@ const ImageUploadModal = (props: {
         } else {
           const response1 = response.assets[0];
           let formData = new FormData();
-          props?.setPetImage(response1.uri);
+          props?.setPetImage && props?.setPetImage(response1.uri);
           props.setIsImageLoading(false);
-          // @ts-ignore
-          // props?.uploadImageUri(response1.uri);
           formData.append('file', {
             uri: response1.uri,
             type: mime.getType(response1.uri),

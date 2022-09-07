@@ -2,7 +2,6 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {CountryData, InputFormData} from './utils/InputFormData';
 import AppFormField from '../../common/Form/AppFormField';
-import BoardingDropdown from '../BoardingSetting/Common/BoardingDropDown';
 import {useFormContext} from 'react-hook-form';
 import SubmitButton from '../../common/Form/SubmitButton';
 import BottomSpacing from '../../UI/BottomSpacing';
@@ -13,6 +12,7 @@ import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import ButtonCom from '../../UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
+import AppSelectField from '../../common/Form/AppSelectField';
 
 interface Props {
   handleValues: (values: any) => void;
@@ -43,7 +43,6 @@ const staticText = [
 
 const CheckoutInputForm = ({handleValues}: Props) => {
   const {
-    setValue,
     control,
     formState: {errors},
   } = useFormContext();
@@ -67,14 +66,12 @@ const CheckoutInputForm = ({handleValues}: Props) => {
                 errors={errors}
               />
             ) : (
-              <BoardingDropdown
+              <AppSelectField
                 label={InputFormData[4].title}
                 name={InputFormData[4].name}
                 placeholder={InputFormData[4].placeholder}
                 data={CountryData}
                 control={control}
-                errors={errors}
-                setValue={setValue}
               />
             )}
           </View>

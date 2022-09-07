@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-
 import {
   Alert,
   KeyboardAvoidingView,
@@ -14,14 +13,13 @@ import Colors from '../../../constants/Colors';
 import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHeader';
 import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 
-import {setPasswordValidationSchema} from '../../../utils/config/validationSchema';
+import {setPasswordValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {setPasswordInfo} from '../../../utils/config/Data/setNewPasswordDatas';
-import {setPasswordValue} from '../../../utils/config/initalValues';
+import {setPasswordValue} from '../../../utils/config/initalValues/initalValues';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
-import methods from '../../../api/methods';
-import {useApi} from '../../../utils/helpers/api/useApi';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
+import {useResetPassword} from './utils/useResetPassword';
 
 interface Props {
   navigation: {
@@ -29,17 +27,10 @@ interface Props {
     navigate: (arg0: string) => void;
   };
 }
-const slug = '/auth/update-password';
 const SetNewPassword = ({navigation}: Props) => {
   const height = SCREEN_HEIGHT;
   const isDarkMode = useColorScheme() === 'dark';
-  const {request, loading} = useApi(methods._post);
-  const handleSubmit = async ({oldPassword: password, newPassword}: any) => {
-    const result = await request(slug, {password, newPassword});
-    if (result.ok) {
-      Alert.alert('Password Updated');
-    }
-  };
+  const {handleSubmit, loading} = useResetPassword();
   return (
     <ScrollView
       contentContainerStyle={{
