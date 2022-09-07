@@ -9,16 +9,15 @@ import {
 import React from 'react';
 import Colors from '../../../../constants/Colors';
 import AuthForm from '../../../../components/ScreenComponent/Auth/Common/AuthForm';
-import {otpValue} from '../../../../utils/config/initalValues';
-import {otpValidationSchema} from '../../../../utils/config/validationSchema';
+import {otpValue} from '../../../../utils/config/initalValues/initalValues';
+import {otpValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
 import ImageAndTitle from '../../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
 import {AuthEmail} from '../../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import BottomSpacing from '../../../../components/UI/BottomSpacing';
 import AppForm from '../../../../components/common/Form/AppForm';
-import {useApi} from '../../../../utils/helpers/api/useApi';
-import methods from '../../../../api/methods';
 import {RouteProp} from '@react-navigation/native';
+import {useFPOtp} from './utils/useFPOtp';
 const forgotPassData = {
   icon: AuthEmail,
   title: 'Forgot Password?',
@@ -31,23 +30,9 @@ interface Props {
   };
   route: RouteProp<{params: {email: string}}, 'params'>;
 }
-const slug = '/auth/forget-password-otp-check';
 const ForgotPasswordOtp = ({route, navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const {email} = route.params;
-  const {request, loading} = useApi(methods._post);
-  const handleSubmit = async ({code}: any) => {
-    const result = await request(slug, {
-      email,
-      otp: code,
-    });
-
-    if (result.ok) {
-      navigation.navigate('ForgotPasswordReset', {
-        token: result?.data.data.token,
-      });
-    }
-  };
+  const {handleSubmit, loading} = useFPOtp(route, navigation);
   return (
     <ScrollView
       contentContainerStyle={styles.container}

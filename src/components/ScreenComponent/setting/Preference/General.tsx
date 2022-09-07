@@ -7,17 +7,36 @@ import DescriptionText from '../../../common/text/DescriptionText';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import ButtonCom from '../../../UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
-import Dropdown from '../../../common/dropDown/Dropdown';
 import SwitchView from '../../../common/switch/SwitchView';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {colors} from '../../../../constants/theme/textTheme';
 import Colors from '../../../../constants/Colors';
+import AppSelectField from '../../../common/Form/AppSelectField';
+import {useForm} from 'react-hook-form';
 
-const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
+const countries = [
+  {
+    value: 'Egypt',
+    label: 'Egypt',
+  },
+  {
+    value: 'Bangladesh',
+    label: 'Bangladesh',
+  },
+  {
+    value: 'India',
+    label: 'India',
+  },
+  {
+    value: 'Pakistan',
+    label: 'Pakistan',
+  },
+];
 
 const General = () => {
   const [textInput, setTextInput] = useState('');
   const [isQuickHour, setIsQuickHour] = useState(false);
+  const {control} = useForm();
   const tempData = [
     {
       id: 2,
@@ -50,10 +69,12 @@ const General = () => {
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}>
       <View style={[styles.container]}>
-        <Dropdown
+        <AppSelectField
           label="Time Zone"
           placeholder={'Select time zone'}
           data={countries}
+          name={''}
+          control={control}
         />
       </View>
       <View style={[styles.container]}>
@@ -89,7 +110,13 @@ const General = () => {
               </View>
             </View>
             {item.input && (
-              <Dropdown placeholder={'Anytime'} data={countries} />
+              <AppSelectField
+                label="Time Zone"
+                placeholder={'Select time zone'}
+                data={countries}
+                name={''}
+                control={control}
+              />
             )}
           </View>
         );
@@ -141,7 +168,7 @@ const styles = StyleSheet.create({
   input: {
     paddingTop: SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '2%' : '0%',
     color: Colors.button.blue,
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
   },
   footerContainer: {
     paddingTop:

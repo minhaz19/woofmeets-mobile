@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Lottie from 'lottie-react-native';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 
 const AppActivityIndicator = ({visible = false}) => {
   const {colors} = useTheme();
@@ -13,7 +13,7 @@ const AppActivityIndicator = ({visible = false}) => {
       <Lottie
         autoPlay
         loop
-        source={require('../../assets/loader.json')}
+        source={require('../../../assets/loader.json')}
         style={styles.loaderStyle}
       />
     </View>

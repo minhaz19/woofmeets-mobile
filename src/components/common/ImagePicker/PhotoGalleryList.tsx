@@ -10,6 +10,7 @@ interface Props {
   imageUris: [] | string[];
   onRemoveImage: (arg0: string) => void;
   onAddImage: (arg0: string) => void;
+  handlePress: (arg: string) => void;
 }
 
 const PhotoGalleryList = ({
@@ -18,6 +19,7 @@ const PhotoGalleryList = ({
   imageUris,
   onRemoveImage,
   onAddImage,
+  handlePress,
 }: Props) => {
   const scrollRef = useRef<ScrollView | null>(null);
 
@@ -36,6 +38,7 @@ const PhotoGalleryList = ({
             <View key={uri} style={styles.image}>
               <PhotoGallery
                 imageUri={uri}
+                handlePress={() => handlePress(uri)}
                 onChangeImage={() => onRemoveImage(uri)}
               />
             </View>
@@ -55,6 +58,7 @@ const styles = StyleSheet.create({
   },
   image: {
     marginRight: 10,
+    position: 'relative',
   },
   label: {
     fontSize: Text_Size.Text_1,

@@ -2,41 +2,53 @@ import {StyleSheet} from 'react-native';
 import React from 'react';
 import Screen from '../../../components/common/Screen';
 import AddPetBody from '../../../components/ScreenComponent/Pet/AddPet/AddPetBody';
-import {addPetValue} from '../../../utils/config/initalValues';
-import {addPetValidationSchema} from '../../../utils/config/validationSchema';
+import {addPetValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
-import {useDispatch} from 'react-redux';
-import {setPetValue} from '../../../store/slices/addPet';
 import AppForm from '../../../components/common/Form/AppForm';
-
-const AddPet = () => {
-  const dispatch = useDispatch();
-  const handleSubmit = (e: any) => {
-    dispatch(setPetValue(e));
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import {useAddPetInitValues} from '../../../utils/config/initalValues/useAddPetInitValue';
+import {RouteProp} from '@react-navigation/native';
+import {useAddPetUtils} from './utils/useAddPetUtils';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+interface Props {
+  navigation: {
+    navigate: (arg: string) => void;
   };
+  route: RouteProp<{params: {opk: string | null}}, 'params'>;
+}
+const AddPet = ({route, navigation}: Props) => {
   const {isDarkMode} = useTheme();
+  const {opk} = route.params;
+  const {loading, Ploading, handleSubmit} = useAddPetUtils(navigation, opk!);
   return (
-    <Screen
-      style={[
-        styles.container,
-        {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.background,
-        },
-      ]}>
-      <AppForm
-        initialValues={addPetValue}
-        validationSchema={addPetValidationSchema}>
-        <AddPetBody handleSubmit={handleSubmit} />
-      </AppForm>
-    </Screen>
+    <>
+      {loading && <AppActivityIndicator visible={true} />}
+      <Screen
+        style={[
+          styles.container,
+          {
+            backgroundColor: isDarkMode
+              ? Colors.dark.background
+              : Colors.background,
+          },
+        ]}>
+        <AppForm
+          initialValues={useAddPetInitValues(opk)}
+          validationSchema={addPetValidationSchema}>
+          <AddPetBody
+            handleSubmit={handleSubmit}
+            loading={Ploading}
+            opk={opk}
+          />
+        </AppForm>
+      </Screen>
+    </>
   );
 };
 
 export default AddPet;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, paddingBottom: 0},
+  container: {flex: 1, paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 20},
 });

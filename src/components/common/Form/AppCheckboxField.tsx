@@ -6,43 +6,48 @@ import ErrorMessage from './ErrorMessage';
 import {Controller} from 'react-hook-form';
 interface Props {
   title: string;
+  typeValue?: string | number | boolean;
   typeKey?: number | null;
-  active: boolean;
+  active?: boolean;
   name: string;
   square?: boolean;
   radio?: boolean;
   onPress: () => void;
   errors: any;
   control: any;
-  setValue?: (arg1: string, arg2: any, arg3: any) => void;
+  small?: boolean;
 }
 const AppCheckboxField = ({
   title,
-  typeKey,
-  active,
+  typeValue,
   square,
   name,
   radio,
   onPress,
   control,
   errors,
+  active,
+  typeKey,
+  small = false,
 }: Props) => {
   return (
     <View style={styles.container}>
       <View style={{marginBottom: errors[name]?.message ? 25 : 0}}>
         <Controller
           control={control}
-          render={({field: {onBlur}}) => (
-            <AppCheckbox
-              title={title}
-              key={typeKey}
-              square={square}
-              radio={radio}
-              active={active}
-              onPress={onPress}
-              onBlur={onBlur}
-            />
-          )}
+          render={({field: {onBlur, value}}) => {
+            return (
+              <AppCheckbox
+                title={title}
+                square={square}
+                radio={radio}
+                active={active ? active : typeValue === value ? true : false}
+                onPress={onPress}
+                onBlur={onBlur}
+                small={small}
+              />
+            );
+          }}
           name={name}
         />
       </View>

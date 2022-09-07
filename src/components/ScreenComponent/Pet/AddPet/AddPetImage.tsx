@@ -3,6 +3,7 @@ import {
   Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -14,24 +15,27 @@ import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
 import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
+import TitleText from '../../../common/text/TitleText';
+import ShortText from '../../../common/text/ShortText';
+import {shortText} from '../../../../constants/FontDetails';
 interface Props {
   name: string;
 }
 const AddPetImage = ({name}: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
-  const {isDarkMode} = useTheme();
+  const {isDarkMode, colors} = useTheme();
   const [petImage, setPetImage] = useState();
   const {setValue, errors, onBlur, value} = useRHFContext(name);
 
   function uploadImage(e: any) {
     setValue(name, e._parts[0][1].uri, {
-      shouldValidate: errors.name ? true : false,
+      shouldValidate: errors[name] ? true : false,
     });
   }
   return (
     <View>
-      {!petImage && (
+      {value === '' && (
         <TouchableWithoutFeedback
           onPress={() => {
             setIsModalVisible(!isModalVisible);
@@ -48,14 +52,28 @@ const AddPetImage = ({name}: Props) => {
             ]}>
             <View style={styles.uploadInfo}>
               <UploadIcon />
-              <Text style={styles.title}>Upload Pet Photo</Text>
+              <TitleText textStyle={styles.title} text={'Upload Pet Photo'} />
             </View>
           </View>
         </TouchableWithoutFeedback>
       )}
-      {petImage && (
+      {value !== '' && (
         <View style={styles.container}>
-          <Image source={{uri: petImage}} style={styles.image} />
+          <Image source={{uri: value}} style={styles.image} />
+          <TouchableOpacity
+            style={[
+              styles.editCon,
+              {
+                backgroundColor: isDarkMode
+                  ? colors.lightBackgroundColor
+                  : colors.backgroundColor,
+              },
+            ]}
+            onPress={() => {
+              setIsModalVisible(!isModalVisible);
+            }}>
+            <ShortText textStyle={styles.textStyle} text={'Edit Image'} />
+          </TouchableOpacity>
         </View>
       )}
       <View style={styles.errorContainer}>
@@ -98,5 +116,13 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_0,
     marginLeft: 10,
   },
+  editCon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    padding: 10,
+    borderRadius: 4,
+  },
+  textStyle: {fontWeight: 'bold', color: Colors.primary},
   errorContainer: {},
 });

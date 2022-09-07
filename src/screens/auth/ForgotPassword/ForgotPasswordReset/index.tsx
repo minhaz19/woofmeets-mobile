@@ -12,15 +12,13 @@ import React from 'react';
 import Colors from '../../../../constants/Colors';
 import AuthHeader from '../../../../components/ScreenComponent/Auth/Common/AuthHeader';
 import AuthForm from '../../../../components/ScreenComponent/Auth/Common/AuthForm';
-
-import {forgotPasswordResetValidationSchema} from '../../../../utils/config/validationSchema';
+import {forgotPasswordResetValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
 import {resetForgotPassword} from '../../../../utils/config/Data/setNewPasswordDatas';
-import {forgotPasswordReset} from '../../../../utils/config/initalValues';
+import {forgotPasswordReset} from '../../../../utils/config/initalValues/initalValues';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import AppForm from '../../../../components/common/Form/AppForm';
-import {useApi} from '../../../../utils/helpers/api/useApi';
-import methods from '../../../../api/methods';
 import {RouteProp} from '@react-navigation/native';
+import {useFPReset} from './utils/useFPReset';
 
 interface Props {
   navigation: {
@@ -29,26 +27,13 @@ interface Props {
   };
   route: RouteProp<{params: {token: string}}, 'params'>;
 }
-const slug = '/auth/forget-password';
 const ForgotPasswordReset = ({route, navigation}: Props) => {
   const height = SCREEN_HEIGHT;
   const isDarkMode = useColorScheme() === 'dark';
-  const {token} = route.params;
-  const {request, loading} = useApi(methods._post);
-  const handleSubmit = async ({newPassword}: any) => {
-    const result = await request(
-      slug,
-      {password: newPassword},
-      `Bearer ${token}`,
-    );
-    if (result.ok) {
-      navigation.navigate('LogIn');
-    }
-  };
+  const {handleSubmit, loading} = useFPReset(navigation, route);
   return (
     <ScrollView
       contentContainerStyle={{
-        // height: '100%',
         flex: height > 800 ? 1 : 0,
         justifyContent: height > 800 ? 'flex-end' : 'flex-start',
       }}

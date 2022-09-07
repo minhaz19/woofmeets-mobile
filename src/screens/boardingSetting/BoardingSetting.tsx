@@ -2,8 +2,8 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import BoardingSettingInfo from '../../components/ScreenComponent/BoardingSetting/BoardingSettingInfo';
-import {BoardingSettings} from '../../utils/config/initalValues';
-import {BoardingSettingsSchema} from '../../utils/config/validationSchema';
+import {BoardingSettings} from '../../utils/config/initalValues/initalValues';
+import {BoardingSettingsSchema} from '../../utils/config/ValidationSchema/validationSchema';
 import AppForm from '../../components/common/Form/AppForm';
 
 const BoardingSetting = () => {

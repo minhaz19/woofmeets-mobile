@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {memo} from 'react';
 import ErrorMessage from './ErrorMessage';
 import AppInput from './AppInput';
@@ -30,8 +29,6 @@ interface Props {
   errors: any;
   control: any;
   defaultValue?: string;
-  textInputBoxStyle?: ViewStyle;
-  inputBoxContainerStyle?: ViewStyle;
 }
 type StackParamList = {
   ForgotPasswordEmail: {foo: string; onBar: () => void} | undefined;
@@ -58,8 +55,6 @@ const AppFormField = ({
   errors,
   control,
   defaultValue,
-  textInputBoxStyle,
-  inputBoxContainerStyle,
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
   return (
@@ -72,34 +67,37 @@ const AppFormField = ({
 
         <Controller
           control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
-              autoCapitalize={autoCapitalize}
-              autoCorrect={autoCorrect}
-              icon={icon}
-              keyboardType={keyboardType}
-              placeholder={placeholder}
-              name={name}
-              textContentType={textContentType}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-              // defaultValue={defaultValue}
-              secureTextEntry={secureTextEntry}
-              error={errors[name]}
-              numberOfLines={numberOfLines && numberOfLines}
-              multiline={multiline ? true : false}
-              flex={flex}
-              email={email}
-              textInputStyle={textInputStyle}
-              textInputBoxStyle={textInputBoxStyle}
-              inputBoxContainerStyle={inputBoxContainerStyle}
-            />
-          )}
+          render={({field: {onChange, onBlur, value}, fieldState: {error}}) => {
+            return (
+              <>
+                <AppInput
+                  autoCapitalize={autoCapitalize}
+                  autoCorrect={autoCorrect}
+                  icon={icon}
+                  keyboardType={keyboardType}
+                  defaultValue={defaultValue}
+                  placeholder={placeholder}
+                  name={name}
+                  textContentType={textContentType}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value?.toString()}
+                  secureTextEntry={secureTextEntry}
+                  error={errors[name]}
+                  numberOfLines={numberOfLines && numberOfLines}
+                  multiline={multiline ? true : false}
+                  flex={flex}
+                  email={email}
+                  textInputStyle={textInputStyle}
+                />
+                {error?.message && (
+                  <ErrorMessage error={error?.message} auth={auth} />
+                )}
+              </>
+            );
+          }}
           name={name}
         />
-
-        <ErrorMessage error={errors[name]?.message} auth={auth} />
       </View>
       {forgotPassword && (
         <TouchableOpacity
@@ -114,8 +112,7 @@ const AppFormField = ({
   );
 };
 
-export default AppFormField;
-
+export default memo(AppFormField);
 const styles = StyleSheet.create({
   label: {
     fontSize: Text_Size.Text_1,

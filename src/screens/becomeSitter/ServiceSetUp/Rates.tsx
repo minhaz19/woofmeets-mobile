@@ -4,8 +4,8 @@ import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/Ser
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import AppForm from '../../../components/common/Form/AppForm';
 import SubRates from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubRates';
-import {BoardingSettingsSchema} from '../../../utils/config/validationSchema';
-import {BoardingSettings} from '../../../utils/config/initalValues';
+import {BoardingSettingsSchema} from '../../../utils/config/ValidationSchema/validationSchema';
+import {BoardingSettings} from '../../../utils/config/initalValues/initalValues';
 
 const Rates = () => {
   const {colors} = useTheme();

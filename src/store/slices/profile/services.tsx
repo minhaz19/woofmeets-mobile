@@ -1,31 +1,30 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import { ApiResponse } from 'apisauce';
+import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
 
 export const getServiceTypes = createAsyncThunk(
   'services/getServiceTypes',
-    async () => {
-        const response: ApiResponse<any> = await apiClient.get('/service-types');
-        console.log(response);
-        if (!response.ok) {
-            throw new Error(response.data.message);
-        }
-        console.log(response.data);
-        return response.data;
-    },
+  async () => {
+    const response: ApiResponse<any> = await apiClient.get('/service-types');
+    if (!response.ok) {
+      throw new Error(response.data.message);
+    }
+    return response.data;
+  },
 );
 
 export const getUserServices = createAsyncThunk(
   'services/getUserServices',
-   async () => {
-    const response: ApiResponse<any> = await apiClient.get('/provider-services');
+  async () => {
+    const response: ApiResponse<any> = await apiClient.get(
+      '/provider-services',
+    );
     if (!response.ok) {
-        throw new Error(response.data.message);
+      throw new Error(response.data.message);
     }
-    // console.log('da', response.data);
     return response.data;
-   }
-)
+  },
+);
 
 const initialState: any = {
   serviceTypes: null,
@@ -69,7 +68,7 @@ const services = createSlice({
       .addCase(getUserServices.rejected, (state, {payload}) => {
         state.userServicesLoading = false;
         state.userServicesError = payload;
-      })
+      });
   },
 });
 

@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import React, {useCallback} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
-import AppSelect from '../../common/Form/AppSelect';
 import SubmitButton from '../../common/Form/SubmitButton';
 import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../../common/text/HeaderText';
@@ -19,66 +18,24 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useFormContext} from 'react-hook-form';
 import {contries} from '../../../utils/config/Data/AddPetData';
 import {useAppSelector} from '../../../store/store';
+import AppSelectField from '../../common/Form/AppSelectField';
+import {
+  basicInfoInput,
+  locationInput,
+} from '../../../utils/config/Data/basicInfoDatas';
 
 interface Props {
   handleSubmit: (value: any) => void;
   loading: boolean;
 }
-const locationInput = [
-  {
-    title: 'Address Line 1',
-    placeholder: 'Enter Address Line 1',
-    name: 'addressLine1',
-  },
-  {
-    title: 'Address Line 2',
-    placeholder: 'Enter Address Line 2',
-    name: 'addressLine2',
-  },
-  {
-    title: 'Street',
-    placeholder: 'Enter Street or Road no. ',
-    name: 'street',
-  },
-  {
-    title: 'City',
-    placeholder: 'Enter City',
-    name: 'city',
-  },
-  {
-    title: 'State or Province',
-    placeholder: 'Enter State or Province ',
-    name: 'state',
-  },
-  {
-    title: 'Zip/ Postal/ Postcode',
-    placeholder: 'Enter Zip/ Postal/ Postcode',
-    name: 'zipCode',
-  },
-  {
-    title: 'Country',
-    placeholder: 'Enter Country',
-    select: true,
-    name: 'countryId',
-  },
-];
-const basicInfoInput = [
-  {
-    title: 'Name',
-    placeholder: 'Enter name',
-    name: 'name',
-  },
-
-  {
-    title: 'Date of Birth',
-    placeholder: 'DD / MM / YYYY',
-    name: 'dob',
-  },
-];
 
 const BasicInfoInput = ({handleSubmit, loading}: Props) => {
-  const {loading: gLoading, userInfo} = useAppSelector(state => state.userProfile);
-
+  const {loading: gLoading, userInfo} = useAppSelector(
+    state => state?.userProfile,
+  );
+  const image = userInfo?.image;
+  const firstName = userInfo?.firstName;
+  const lastName = userInfo?.lastName;
   const {
     control,
     formState: {errors},
@@ -89,8 +46,8 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
         <ProfileHeader
           name="profileImage"
           gLoading={gLoading}
-          url={userInfo?.image?.url}
-          userName={userInfo?.firstName + ' ' + userInfo?.lastName}
+          url={image?.url}
+          userName={firstName ? firstName + ' ' + lastName : ''}
         />
         <View style={styles.headerContainer}>
           <View style={styles.nameContainer}>
@@ -128,7 +85,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
         </View>
       </>
     );
-  }, [control, errors, userInfo, gLoading]);
+  }, [control, errors, firstName, gLoading, image?.url, lastName]);
 
   const renderFooter = useCallback(() => {
     return (
@@ -172,11 +129,14 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                   )}
                   {item.select && (
                     <View style={styles.selectContainer}>
-                      <AppSelect
+                      <AppSelectField
                         label={item.title}
                         name={item.name}
                         data={contries}
                         disable={true}
+                        control={control}
+                        placeholder={'USA'}
+                        defaultText="USA"
                       />
                     </View>
                   )}
@@ -201,7 +161,10 @@ const styles = StyleSheet.create({
   container: {
     marginTop: '1%',
   },
-  headerContainer: {marginHorizontal: '5%', width: '100%'},
+  headerContainer: {
+    marginHorizontal: '5%',
+    width: '90%',
+  },
   inputContainer: {marginHorizontal: '5%', width: '90%'},
   flatList: {
     flexWrap: 'wrap',

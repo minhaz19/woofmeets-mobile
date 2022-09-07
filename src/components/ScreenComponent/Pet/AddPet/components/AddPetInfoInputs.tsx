@@ -2,11 +2,11 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useCallback} from 'react';
 import AppFormField from '../../../../common/Form/AppFormField';
-import AppSelect from '../../../../common/Form/AppSelect';
 import {
   addPetInfoInputs,
   genders,
 } from '../../../../../utils/config/Data/AddPetData';
+import AppSelectField from '../../../../common/Form/AppSelectField';
 interface Props {
   errors: any;
   control: any;
@@ -22,7 +22,7 @@ const AddPetInfoInputs = ({errors, control}: Props) => {
                 <AppFormField
                   autoCapitalize="none"
                   autoCorrect={false}
-                  keyboardType={'default'}
+                  keyboardType={item.number ? 'numeric' : 'default'}
                   placeholder={item.placeholder}
                   textContentType={'none'}
                   name={item.name}
@@ -34,10 +34,12 @@ const AddPetInfoInputs = ({errors, control}: Props) => {
                 />
               ) : (
                 <View style={styles.selectContainer} key={index}>
-                  <AppSelect
+                  <AppSelectField
+                    placeholder="Select Gender"
                     label={item.title}
                     name={item.name}
                     data={genders}
+                    control={control}
                   />
                 </View>
               )}

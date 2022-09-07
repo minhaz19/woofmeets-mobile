@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import {genders} from './Data/AddPetData';
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -67,44 +66,66 @@ const verifyAccountValidationSchema = Yup.object().shape({
   code: Yup.string().required().min(6).max(6).label('OTP'),
 });
 const addPetValidationSchema = Yup.object().shape({
-  petImage: Yup.string().required('Image is required'),
-  petType: Yup.string().required('Pet type is required'),
-  petName: Yup.string().required('Pet name is required'),
+  profile_image: Yup.string().required('Image is required'),
+  type: Yup.string().required('Pet type is required'),
+  name: Yup.string().required('Pet name is required'),
   weight: Yup.number()
     .nullable(true)
+    .positive()
+    .integer()
     .required('Pet weight is required')
     .typeError('A Number is Required'),
-  ageYr: Yup.number()
+  ageYear: Yup.number()
     .nullable(true)
+    .positive()
+    .integer()
     .required('Year Required')
     .typeError('A Number is Required'),
-  ageMo: Yup.number()
+  ageMonth: Yup.number()
     .nullable(true)
+    .positive()
+    .integer()
     .required('Month Required')
     .typeError('A Number is Required'),
-  gender: Yup.string().required('Please select a gender').oneOf(genders),
-  breeds: Yup.string().required('Breed is required'),
-  microchipped: Yup.string(),
+  gender: Yup.string().required('Please select a gender'),
+
+  breeds: Yup.array()
+    .min(1, 'Pick at least one breed')
+    .of(
+      Yup.object().shape({
+        id: Yup.number().required(),
+      }),
+    ),
+
+  microchipped: Yup.boolean().nullable(true),
   houseTrained: Yup.string(),
-  spayedNeutered: Yup.string(),
-  friendlyChildren: Yup.string(),
-  friendlyDogs: Yup.string(),
-  friendlyCats: Yup.string(),
-  petDescription: Yup.string(),
-  pottyBreak: Yup.string(),
+  houseTrainedAdditionalDetails: Yup.string(),
+  spayedOrNeutered: Yup.boolean().nullable(true),
+  childFriendly: Yup.string(),
+  childFrinedlyAdditionalDetails: Yup.string(),
+  dogFriendly: Yup.string(),
+  dogFrinedlyAdditionalDetails: Yup.string(),
+  catFriendly: Yup.string(),
+  catFrinedlyAdditionalDetails: Yup.string(),
+  about: Yup.string(),
+  pottyBreakSchedule: Yup.string(),
+  pottyBreakScheduleDetails: Yup.string(),
   feedingSchedule: Yup.string(),
+  feedingScheduleDetails: Yup.string(),
   energyLevel: Yup.string(),
-  leftAlone: Yup.string(),
+  canLeftAlone: Yup.string(),
+  canLeftAloneDetails: Yup.string(),
   additionalDescription: Yup.string(),
-  medication: Yup.string(),
-  pillMedicaion: Yup.string(),
+  pill: Yup.boolean(),
+  topical: Yup.boolean(),
+  injection: Yup.boolean(),
+  pillMedication: Yup.string(),
   topicalMedication: Yup.string(),
   injectionMedication: Yup.string(),
-  additionalInfo: Yup.string(),
-  petInfo: Yup.string(),
-  photoGallery: Yup.array()
-    .required('This is required')
-    .min(1, 'Please select at least one image'),
+  sitterInstructions: Yup.string(),
+  vetInfo: Yup.string(),
+  gallery: Yup.array(),
+  // caption: Yup.string(),
 });
 const filterProviderValidationSchema = Yup.object().shape({
   priceRange: Yup.array(),
@@ -181,6 +202,13 @@ const BoardingSettingsSchema = Yup.object().shape({
   //   .required('Please Select at least one')
   //   .min(1, 'Please Select at least one'),
 });
+const safetyQuizValidationSchema = Yup.object().shape({
+  quiz_one: Yup.string(),
+  quiz_two: Yup.string(),
+  quiz_three: Yup.string(),
+  quiz_four: Yup.string(),
+  quiz_five: Yup.string(),
+});
 
 export {
   loginValidationSchema,
@@ -194,4 +222,5 @@ export {
   BoardingSettingsSchema,
   forgotPasswordResetValidationSchema,
   providerAvailablityValidationSchema,
+  safetyQuizValidationSchema,
 };

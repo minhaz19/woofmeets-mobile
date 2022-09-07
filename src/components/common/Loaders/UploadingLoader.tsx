@@ -7,7 +7,7 @@ const UploadingLoader = () => {
     <AnimatedLottieView
       autoPlay
       loop
-      source={require('../../assets/loader.json')}
+      source={require('../../../assets/loader.json')}
       style={styles.loaderStyle}
     />
   );

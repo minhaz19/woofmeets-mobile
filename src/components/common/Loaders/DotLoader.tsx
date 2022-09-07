@@ -7,7 +7,7 @@ const DotLoader = () => {
     <AnimatedLottieView
       autoPlay
       loop
-      source={require('../../assets/loadingDotStatic.json')}
+      source={require('../../../assets/loadingDotStatic.json')}
       style={styles.loaderStyle}
     />
   );
