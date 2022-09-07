@@ -45,9 +45,9 @@ const PetPreference = ({
             square
             typeKey={activePetHosting.activeItem}
             active={item.checked}
-            // onPress={() =>
-            //   handlePetHostingActiveCheck(item.id, petPreference[0].options)
-            // }
+            onPress={() =>
+              handlePetHostingActiveCheck(item.id, petPreference[0].options)
+            }
             name={petPreference[0].name!}
             control={control}
             setValue={setValue}

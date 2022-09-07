@@ -22,7 +22,7 @@ export const getUserServices = createAsyncThunk(
     if (!response.ok) {
         throw new Error(response.data.message);
     }
-    console.log('da', response.data);
+    // console.log('da', response.data);
     return response.data;
    }
 )
