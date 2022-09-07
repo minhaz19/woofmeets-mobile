@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, View} from 'react-native';
 import React, {useCallback} from 'react';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -11,16 +12,8 @@ interface Props {
   errors: any;
   control: any;
   setValue: any;
-  active0: number | null;
-  handleActiveCheck: (arg: number, arg2: number) => void;
 }
-const AddPetCheck = ({
-  errors,
-  control,
-  setValue,
-  active0,
-  handleActiveCheck,
-}: Props) => {
+const AddPetCheck = ({errors, control, setValue}: Props) => {
   return (
     <View>
       <HeaderText textStyle={styles.header} text={addPetCheck1.header!} />
@@ -30,21 +23,19 @@ const AddPetCheck = ({
       />
       <TitleText textStyle={styles.title} text={addPetCheck1.title!} />
       <View style={styles.petType}>
-        {addPetCheck1.pet!.map((item, index) => (
+        {addPetCheck1.pet.map((item, index) => (
           <AppCheckboxField
             title={item.type}
             key={index}
             typeKey={item.id}
             square
-            active={active0 === item.id ? true : false}
             name={addPetCheck1.name!}
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            onPress={useCallback(() => {
-              handleActiveCheck(addPetCheck1.id!, item.id);
-              setValue(addPetCheck1.name, item.id, {
-                shouldValidate: errors[addPetCheck1.name] ? true : false,
+            typeValue={item.value}
+            onPress={() => {
+              setValue(addPetCheck1.name, item.value, {
+                shouldValidate: true,
               });
-            }, [item.id])}
+            }}
             errors={errors}
             control={control}
           />

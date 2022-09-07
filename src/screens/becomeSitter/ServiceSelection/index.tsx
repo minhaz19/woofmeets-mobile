@@ -9,22 +9,22 @@ import ReusableServices from '../../../components/ScreenComponent/becomeSitter/s
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
-import { getServiceTypes } from '../../../store/slices/profile/services';
-import { ApiResponse } from 'apisauce';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {getServiceTypes} from '../../../store/slices/profile/services';
+import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
 
 interface Props {
   item: any;
 }
 
-const ServiceSelection = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
+const ServiceSelection = (props: {
+  navigation: {navigate: (arg0: string) => void};
+}) => {
   const {colors} = useTheme();
   const [sequence, setSequence] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const serviceTypes = useAppSelector(
-    state => state.services.serviceTypes,
-  );
+  const serviceTypes = useAppSelector(state => state.services.serviceTypes);
 
   const dispatch = useAppDispatch();
 
@@ -49,12 +49,13 @@ const ServiceSelection = (props: { navigation: { navigate: (arg0: string) => voi
   const onServicePostHandle = async () => {
     setLoading(true);
     try {
-      const response: ApiResponse<any> = await apiClient.post(`/provider-services/${sequence}`);
-      console.log(response.data);
+      const response: ApiResponse<any> = await apiClient.post(
+        `/provider-services/${sequence}`,
+      );
       if (!response.ok) {
-          setLoading(false);
-          props.navigation.navigate('HomeProfile');
-          throw new Error(response.data.message);
+        setLoading(false);
+        props.navigation.navigate('HomeProfile');
+        throw new Error(response.data.message);
       }
       if (response.ok) {
         setLoading(false);
@@ -67,21 +68,22 @@ const ServiceSelection = (props: { navigation: { navigate: (arg0: string) => voi
       }
       setLoading(false);
     }
-  }
+  };
 
   const RenderItem: FC<Props> = ({item}) => (
-    <ReusableServices data={item} noShadow onPressEvent={onPressEvent} sequence={sequence} />
+    <ReusableServices
+      data={item}
+      noShadow
+      onPressEvent={onPressEvent}
+      sequence={sequence}
+    />
   );
   const renderHeader = () => {
     return (
       <View style={styles.innerViewContainer}>
         <HeaderText text="Service Selection" />
         <View style={styles.viewQuestionStyle}>
-          <MaterialIcons
-            name="error"
-            size={14}
-            color={Colors.primary}
-          />
+          <MaterialIcons name="error" size={14} color={Colors.primary} />
           <ShortText
             textStyle={{...styles.shortText, color: Colors.primary}}
             text="Which services should I choose?"
@@ -100,8 +102,8 @@ const ServiceSelection = (props: { navigation: { navigate: (arg0: string) => voi
           text="3. After your profile is submitted for review, you can edit your selected services or add more."
         />
       </View>
-    )
-  }
+    );
+  };
   const renderFooter = () => {
     return (
       <View style={styles.footerContainer}>
@@ -114,8 +116,8 @@ const ServiceSelection = (props: { navigation: { navigate: (arg0: string) => voi
           loading={loading}
         />
       </View>
-    )
-  }
+    );
+  };
   return (
     <View
       style={[
@@ -131,7 +133,7 @@ const ServiceSelection = (props: { navigation: { navigate: (arg0: string) => voi
           data={serviceTypes}
           numColumns={2}
           renderItem={RenderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           ListFooterComponent={renderFooter}
           ListHeaderComponent={renderHeader}
         />

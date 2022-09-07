@@ -79,9 +79,9 @@ const EditCaption = ({captionImage, setIsModalVisible}: Props) => {
 export default EditCaption;
 
 const styles = StyleSheet.create({
-  // rootContainer: {
-  //   flex: 1,
-  // },
+  rootContainer: {
+    flex: 1,
+  },
 
   headerText: {
     fontSize: Text_Size.Text_2,

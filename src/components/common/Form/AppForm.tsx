@@ -1,5 +1,5 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import React, {memo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import {AnyObjectSchema} from 'yup';
 import Lazy from 'yup/lib/Lazy';
@@ -12,7 +12,7 @@ const AppForm = ({children, initialValues, validationSchema}: Props) => {
   const methods = useForm<FormData>({
     resolver: yupResolver(validationSchema),
     mode: 'onChange',
-    defaultValues: initialValues,
+    defaultValues: useMemo(() => initialValues, [initialValues]),
   });
   return (
     <FormProvider {...methods}>
@@ -21,4 +21,4 @@ const AppForm = ({children, initialValues, validationSchema}: Props) => {
   );
 };
 
-export default memo(AppForm);
+export default AppForm;

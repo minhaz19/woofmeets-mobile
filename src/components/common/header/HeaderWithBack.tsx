@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   iconContainer: {
-    marginRight: 50,
+    marginRight: 10,
     flexDirection: 'row',
     position: 'absolute',
     right: 0,

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -6,40 +7,26 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import React, {useEffect} from 'react';
 import Colors from '../../../constants/Colors';
 import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHeader';
 import AuthForm from '../../../components/ScreenComponent/Auth/Common/AuthForm';
 import AuthFooter from '../../../components/ScreenComponent/Auth/Common/AuthFooter';
-import {loginValue} from '../../../utils/config/initalValues';
+import {loginValue} from '../../../utils/config/initalValues/initalValues';
 import {
   loginInitalState,
   othersAuthIcons,
 } from '../../../utils/config/Data/loginDatas';
-import {loginValidationSchema} from '../../../utils/config/validationSchema';
+import {loginValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {userLogin} from '../../../store/slices/auth/userAction';
-import AppActivityIndicator from '../../../components/Loaders/AppActivityIndicator';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import {useLogin} from './utils/useLogin';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
 const Login = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const {isLoggedIn, loading, providerLoading} = useAppSelector(
-    state => state.auth,
-  );
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigation.navigate('BottomTabNavigator');
-    }
-  }, [isLoggedIn, navigation]);
-
-  const handleSubmit = (loginData: any) => {
-    dispatch(userLogin(loginData));
-  };
+  const {handleSubmit, providerLoading, loading} = useLogin(navigation);
   return (
     <>
       {providerLoading && <AppActivityIndicator visible={true} />}
@@ -55,7 +42,7 @@ const Login = ({navigation}: Props) => {
         ]}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          // keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
           enabled={Platform.OS === 'ios' ? true : false}>
           <View
             style={[
@@ -100,15 +87,19 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // justifyContent: 'flex-end',
+    flex: 1,
+    justifyContent: 'flex-end',
   },
   infoContainer: {
-    flexGrow: 1,
-    marginTop: 120,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
+    bottom: 0,
+    // flexGrow: 1,
+    // marginTop: 120,
+    // borderTopRightRadius: 30,
+    // borderTopLeftRadius: 30,
+    // padding: 20,
     paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {

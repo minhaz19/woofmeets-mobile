@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, useColorScheme, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Finder, Setting, Pets, InboxIcon} from '../assets/svgs/SVG_LOGOS';
@@ -22,13 +22,13 @@ function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   const [token, setToken] = useState();
   const getDecodedToken = async () => {
-    const token:any = await authStorage.getToken();
-    if (token) {
-      const decode: any = await jwtDecode(token);
+    const tok: any = await authStorage.getToken();
+    if (tok) {
+      const decode: any = await jwtDecode(tok);
       setToken(decode);
       return decode;
     }
-  }
+  };
   getDecodedToken();
   if (token && token.provider) {
     return (
@@ -49,13 +49,15 @@ function BottomTabNavigator() {
                 : Platform.OS === 'ios'
                 ? 95
                 : 75,
-  
+
             position: 'absolute',
             bottom: 0,
             elevation: 9,
             shadowOpacity: 0.9,
             shadowOffset: {width: 2, height: 8},
-            shadowColor: isDarkMode ? Colors.dark.background : Colors.background,
+            shadowColor: isDarkMode
+              ? Colors.dark.background
+              : Colors.background,
           },
         }}>
         <Tab.Screen
@@ -186,13 +188,15 @@ function BottomTabNavigator() {
                 : Platform.OS === 'ios'
                 ? 95
                 : 75,
-  
+
             position: 'absolute',
             bottom: 0,
             elevation: 9,
             shadowOpacity: 0.9,
             shadowOffset: {width: 2, height: 8},
-            shadowColor: isDarkMode ? Colors.dark.background : Colors.background,
+            shadowColor: isDarkMode
+              ? Colors.dark.background
+              : Colors.background,
           },
         }}>
         <Tab.Screen

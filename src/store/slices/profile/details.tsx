@@ -1,43 +1,57 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import { ApiResponse } from 'apisauce';
+import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
 
 export const postSitterDetails = createAsyncThunk(
-    'details/postSitterDetails',
-    async ({headline, yearsOfExperience, experienceDescription, environmentDescription, scheduleDescription}: any, {rejectWithValue}) => {
-        const body = {
-            headline: headline,
-            yearsOfExperience: yearsOfExperience,
-            experienceDescription: experienceDescription,
-            environmentDescription: environmentDescription,
-            scheduleDescription: scheduleDescription,
-        };
-      try {
-        const response: ApiResponse<any> = await apiClient.post('/user-profile/provider-details', body);
-        if (!response.ok) {
-          throw new Error(response.data.message);
-        }
-        return response.data;
-      } catch (error: any) {
-        if (error.response && error.response.data.message) {
-          return rejectWithValue(error.response.data.message);
-        } else {
-          return rejectWithValue(error.message);
-        }
+  'details/postSitterDetails',
+  async (
+    {
+      headline,
+      yearsOfExperience,
+      experienceDescription,
+      environmentDescription,
+      scheduleDescription,
+    }: any,
+    {rejectWithValue},
+  ) => {
+    const body = {
+      headline: headline,
+      yearsOfExperience: yearsOfExperience,
+      experienceDescription: experienceDescription,
+      environmentDescription: environmentDescription,
+      scheduleDescription: scheduleDescription,
+    };
+    try {
+      const response: ApiResponse<any> = await apiClient.post(
+        '/user-profile/provider-details',
+        body,
+      );
+      if (!response.ok) {
+        throw new Error(response.data.message);
       }
-    },
-  );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  },
+);
 
-  export const getSitterDetails = createAsyncThunk(
-    'details/getSitterDetails',
-    async () => {
-        const response: ApiResponse<any> = await apiClient.get('/user-profile/provider-details');
-        if (!response.ok) {
-          throw new Error(response.data.message);
-        }
-        return response.data;
-    },
-  );
+export const getSitterDetails = createAsyncThunk(
+  'details/getSitterDetails',
+  async () => {
+    const response: ApiResponse<any> = await apiClient.get(
+      '/user-profile/provider-details',
+    );
+    if (!response.ok) {
+      throw new Error(response.data.message);
+    }
+    return response.data;
+  },
+);
 
 const initialState: any = {
   sitterInfo: null,

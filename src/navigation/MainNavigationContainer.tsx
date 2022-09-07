@@ -25,7 +25,11 @@ import CreateProfileLanding from '../screens/becomeSitter/CreateProfileLanding';
 import BasicInfo from '../screens/profile/BasicInfo';
 import ContactScreen from '../screens/profile/ContactScreen';
 import PetNavigator from './bottoms/PetNavigator';
+import PetPreference from '../screens/becomeSitter/ServiceSetUp/PetPreference';
 import SitterDetails from '../screens/becomeSitter/Details';
+import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy';
+import YourHome from '../screens/becomeSitter/ServiceSetUp/YourHome';
+import SafetyQuiz from '../screens/SafetyQuiz';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -155,9 +159,42 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Rates"
           component={Rates}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="PetPreference"
+          component={PetPreference}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="CancellationPolicy"
+          component={CancellationPolicy}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="YourHome"
+          component={YourHome}
           options={({navigation}) => ({
             title: '',
             header: () => (
@@ -252,6 +289,27 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 title="Create Your Profile"
                 notification
               />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SafetyQuiz"
+          component={SafetyQuiz}
+          options={({navigation}) => ({
+            headerStyle: {
+              backgroundColor: Colors.background,
+              borderWidth: 0,
+              borderColor: Colors.primary,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: '600',
+              textAlign: 'center',
+            },
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Safety Quiz" />
             ),
             backgroundColor: Colors.primary,
           })}

@@ -30,7 +30,7 @@ const ProfileItemCard = (props: {
   const getIconType = (name: string) => {
     switch(name) {
       case 'pet':
-        if (props.userInfo[`${props.name}`].length > 0) {
+        if (props.userInfo && props.userInfo[`${props.name}`]?.length > 0) {
           return (
             <CompletedIcon />
           )
@@ -40,7 +40,7 @@ const ProfileItemCard = (props: {
           )
         }
         case 'Gallery':
-          if (props.userInfo[`${props.name}`].length > 0) {
+          if (props.userInfo && props.userInfo[`${props.name}`]?.length > 0) {
             return (
               <CompletedIcon />
             )
@@ -50,7 +50,7 @@ const ProfileItemCard = (props: {
             )
           }
         case 'basicInfo':
-          if (props.userInfo[`${props.name}`]) {
+          if (props.userInfo && props.userInfo[`${props.name}`]) {
             return (
               <CompletedIcon />
             )
@@ -60,7 +60,7 @@ const ProfileItemCard = (props: {
             )
           }
         case 'contact':
-          if (props.userInfo[`${props.name}`]) {
+          if (props.userInfo && props.userInfo[`${props.name}`]) {
             return (
               <CompletedIcon />
             )
@@ -70,7 +70,7 @@ const ProfileItemCard = (props: {
             )
           }
         case 'provider':
-          if (props.userInfo[`${props.name}`]?.providerDetails) {
+          if (props.userInfo && props.userInfo[`${props.name}`]?.providerDetails) {
             return (
               <CompletedIcon />
             )
@@ -86,7 +86,7 @@ const ProfileItemCard = (props: {
       <View style={styles.headerContainer}>
         <View style={styles.cardContainer}>
           <View style={styles.textContainer}>
-          {!props.userInfo[props.name] ?
+          {props?.userInfo && !props.userInfo[props.name] ?
           <View style={{...styles.numberViewContainerOuter, backgroundColor: Colors.primaryLight}}>
             <View style={{...styles.numberViewContainer, backgroundColor: Colors.primary}}/>
           </View> : 

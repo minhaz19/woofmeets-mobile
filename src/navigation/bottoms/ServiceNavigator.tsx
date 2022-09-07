@@ -10,6 +10,7 @@ import {setOpenFilter} from '../../store/slices/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
 import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
+import SafetyQuiz from '../../screens/SafetyQuiz';
 
 const Stack1 = createStackNavigator();
 

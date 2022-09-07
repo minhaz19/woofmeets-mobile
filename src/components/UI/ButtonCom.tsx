@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {forModalPresentationIOS} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
-import Lottie from 'lottie-react-native';
+
 import React from 'react';
 import {
   View,
@@ -14,7 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
-import DotLoader from '../Loaders/DotLoader';
+import DotLoader from '../common/Loaders/DotLoader';
 import Card from './Card';
 interface Props {
   containerStyle: any;

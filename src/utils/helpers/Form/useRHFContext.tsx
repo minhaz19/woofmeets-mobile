@@ -21,6 +21,7 @@ export const useRHFContext = (name: string) => {
     onBlur,
     onChange,
     value,
+    control,
     errors,
     setValue,
     reset,

@@ -289,6 +289,7 @@ const SettingMain = (props: {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 20,
   },
   paddingTop: {paddingTop: '2%'},
   divider: {

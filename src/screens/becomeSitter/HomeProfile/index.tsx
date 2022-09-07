@@ -11,11 +11,19 @@ import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import Colors from '../../../constants/Colors';
 import ModalBottomView from '../../../components/UI/modal/ModalBottomView';
 import IOSButton from '../../../components/UI/IOSButton';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
-import { getUserServices } from '../../../store/slices/profile/services';
-import { BoardingIcon, DoggyDayCareIcon, DogWalkingIcon, DropInVisitIcon, HouseSittingIcon } from '../../../assets/svgs/Services_SVG';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {getUserServices} from '../../../store/slices/profile/services';
+import {
+  BoardingIcon,
+  DoggyDayCareIcon,
+  DogWalkingIcon,
+  DropInVisitIcon,
+  HouseSittingIcon,
+} from '../../../assets/svgs/Services_SVG';
 
-const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
+const HomeProfile = (props: {
+  navigation: {navigate: (arg0: string) => void};
+}) => {
   const {colors} = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [isServiceModalVisible, setIsServiceModalVisible] =
@@ -34,15 +42,11 @@ const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; };
     },
   ];
 
-  const userServices = useAppSelector(
-    state => state.services.userServices,
-  );
-
-  console.log('hello', userServices)
+  const userServices = useAppSelector(state => state.services.userServices);
 
   const dispatch = useAppDispatch();
 
-  const [refreshing, setRefreshing] = useState(false);
+  const [, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -59,15 +63,15 @@ const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; };
       case 'sitter-home':
         return <BoardingIcon width={34} height={36} />;
       case 'sitter-traveling':
-        return <HouseSittingIcon width={34} height={36} />
+        return <HouseSittingIcon width={34} height={36} />;
       case 'homevists':
-        return <DropInVisitIcon width={34} height={36} />
+        return <DropInVisitIcon width={34} height={36} />;
       case 'walking':
-          return <DogWalkingIcon width={34} height={36} />
+        return <DogWalkingIcon width={34} height={36} />;
       case 'walking':
-        return <DoggyDayCareIcon width={34} height={36} />
+        return <DoggyDayCareIcon width={34} height={36} />;
     }
-  }
+  };
 
   return (
     <ScrollView
@@ -125,24 +129,33 @@ const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; };
       <View>
         <HeaderText text="Your Services" />
       </View>
-      {userServices && userServices?.map((item: { id: React.Key | null | undefined; serviceType: { name: any; icon: string; description: any; }; }) => (
-         (
-          <View key={item.id} style={{...styles.serviceContainer, borderColor: colors.borderColor}}>
-            <BetweenCom
-              data={{
-                name: item.serviceType.name,
-                image: getIcon(item.serviceType.icon),
-                description: `${item.serviceType.description} ${item.serviceType.description}`,
-                time: '3 mins',
-                icon: 'chevron-right',
-                screen: () => {
-                  props.navigation.navigate('ServiceSetup');
-                },
-              }}
-            />
-          </View>
-        )
-      ))}
+      {userServices &&
+        userServices?.map(
+          (item: {
+            id: React.Key | null | undefined;
+            serviceType: {name: any; icon: string; description: any};
+          }) => (
+            <View
+              key={item.id}
+              style={{
+                ...styles.serviceContainer,
+                borderColor: colors.borderColor,
+              }}>
+              <BetweenCom
+                data={{
+                  name: item.serviceType.name,
+                  image: getIcon(item.serviceType.icon),
+                  description: `${item.serviceType.description} ${item.serviceType.description}`,
+                  time: '3 mins',
+                  icon: 'chevron-right',
+                  screen: () => {
+                    props.navigation.navigate('ServiceSetup');
+                  },
+                }}
+              />
+            </View>
+          ),
+        )}
     </ScrollView>
   );
 };

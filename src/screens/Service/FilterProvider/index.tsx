@@ -5,8 +5,8 @@ import TitleText from '../../../components/common/text/TitleText';
 import Text_Size from '../../../constants/textScaling';
 import Colors from '../../../constants/Colors';
 import FilterProviderBody from '../../../components/ScreenComponent/Service/FilterProvider/FilterProviderBody';
-import {filterProviderValue} from '../../../utils/config/initalValues';
-import {filterProviderValidationSchema} from '../../../utils/config/validationSchema';
+import {filterProviderValue} from '../../../utils/config/initalValues/initalValues';
+import {filterProviderValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 const FilterProvider = () => {
   const handleSubmit = (e: {}) => {};
   return (

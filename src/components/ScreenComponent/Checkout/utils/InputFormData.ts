@@ -56,10 +56,27 @@ export const InputFormData = [
 ];
 
 export const CountryData = [
-  'USA',
-  'Canada',
-  'Australia',
-  'Mexico',
-  'Britain',
-  'Ireland',
+  {
+    label: 'USA',
+    value: 'USA',
+  },
+  {
+    label: 'USA',
+    value: 'USA',
+  },
+
+  {
+    label: 'USA',
+    value: 'USA',
+  },
+
+  {
+    label: 'USA',
+    value: 'USA',
+  },
+
+  {
+    label: 'USA',
+    value: 'USA',
+  },
 ];

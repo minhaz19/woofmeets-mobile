@@ -20,12 +20,12 @@ const getToken = async () => {
 };
 
 const getDecodedToken = async () => {
-  const token:any = await getToken();
+  const token: any = await getToken();
   if (token) {
     const decode: any = await jwtDecode(token);
     return decode;
   }
-}
+};
 
 const getUser = async () => {
   const token = await getToken();

@@ -13,7 +13,6 @@ import { sitterDetailsValidationSchema } from '../../../utils/config/becomeSitte
 import SitterDetailsInput from '../../../components/ScreenComponent/becomeSitter/details/SitterDetailsInput';
 import { getSitterDetails, postSitterDetails } from '../../../store/slices/profile/details';
 import { useDetailsInitalValue } from './useDetailsInitialValue';
-import AppActivityIndicator from '../../../components/Loaders/AppActivityIndicator';
 
 const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
   const {colors} = useTheme();
