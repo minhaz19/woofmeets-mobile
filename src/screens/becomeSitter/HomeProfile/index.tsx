@@ -38,7 +38,7 @@ const HomeProfile = (props: { navigation: { navigate: (arg0: string) => void; };
     state => state.services.userServices,
   );
 
-  console.log('hello', userServices)
+  // console.log('hello', userServices)
 
   const dispatch = useAppDispatch();
 

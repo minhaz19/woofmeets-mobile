@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import React, {memo} from 'react';
+import React from 'react';
 import {
   Circle_,
   CircleCheck,
@@ -39,7 +39,7 @@ const AppCheckbox = ({
     </TouchableOpacity>
   );
 };
-export default memo(AppCheckbox);
+export default AppCheckbox;
 
 const styles = StyleSheet.create({
   checkInfoContainer: {

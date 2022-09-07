@@ -25,7 +25,10 @@ import CreateProfileLanding from '../screens/becomeSitter/CreateProfileLanding';
 import BasicInfo from '../screens/profile/BasicInfo';
 import ContactScreen from '../screens/profile/ContactScreen';
 import PetNavigator from './bottoms/PetNavigator';
+import PetPreference from '../screens/becomeSitter/ServiceSetUp/PetPreference';
 import SitterDetails from '../screens/becomeSitter/Details';
+import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy';
+import YourHome from '../screens/becomeSitter/ServiceSetUp/YourHome';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -155,9 +158,42 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Rates"
           component={Rates}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="PetPreference"
+          component={PetPreference}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="CancellationPolicy"
+          component={CancellationPolicy}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="YourHome"
+          component={YourHome}
           options={({navigation}) => ({
             title: '',
             header: () => (
