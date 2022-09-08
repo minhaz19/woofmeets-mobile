@@ -18,6 +18,8 @@ target 'woofmeets' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
+
   target 'woofmeetsTests' do
     inherit! :complete
     # Pods for testing

@@ -18,6 +18,7 @@ const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => an
       id: 2,
       title: 'Set Up Services',
       isCompleted: false,
+      onPress: () => props.navigation.navigate('HomeProfile'),
     },
     {
         id: 3,
@@ -29,6 +30,7 @@ const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => an
         id: 4,
         title: 'Safety Quiz',
         isCompleted: false,
+        onPress: () => props.navigation.navigate('SafetyQuiz'),
       },
       {
         id: 5,

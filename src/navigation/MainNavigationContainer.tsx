@@ -29,6 +29,7 @@ import PetPreference from '../screens/becomeSitter/ServiceSetUp/PetPreference';
 import SitterDetails from '../screens/becomeSitter/Details';
 import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy';
 import YourHome from '../screens/becomeSitter/ServiceSetUp/YourHome';
+import SafetyQuiz from '../screens/SafetyQuiz';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -288,6 +289,27 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 title="Create Your Profile"
                 notification
               />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SafetyQuiz"
+          component={SafetyQuiz}
+          options={({navigation}) => ({
+            headerStyle: {
+              backgroundColor: Colors.background,
+              borderWidth: 0,
+              borderColor: Colors.primary,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: '600',
+              textAlign: 'center',
+            },
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Safety Quiz" />
             ),
             backgroundColor: Colors.primary,
           })}

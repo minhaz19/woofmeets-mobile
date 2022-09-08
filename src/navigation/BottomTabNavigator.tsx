@@ -12,7 +12,9 @@ import PetNavigator from './bottoms/PetNavigator';
 import authStorage from '../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
 import ProHomeNavigator from './providers/bottoms/HomeNavigator';
-import {ProHomeIcon, ProRescheduleIcon} from '../assets/svgs/Provider_Logos';
+import { ProHomeIcon, ProRescheduleIcon } from '../assets/svgs/Provider_Logos';
+import ProSettingNavigator from './providers/bottoms/SettingNavigator';
+import ProRescheduleNavigator from './providers/bottoms/RescheduleNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -84,8 +86,8 @@ function BottomTabNavigator() {
           }}
         />
         <Tab.Screen
-          name="HomeNavigator"
-          component={ProHomeNavigator}
+          name="ProRescheduleNavigator"
+          component={ProRescheduleNavigator}
           options={{
             headerShown: false,
             tabBarIcon: ({focused}) => (
@@ -140,8 +142,8 @@ function BottomTabNavigator() {
           })}
         />
         <Tab.Screen
-          name="SettingNavigator"
-          component={SettingNavigator}
+          name="ProSettingNavigator"
+          component={ProSettingNavigator}
           options={{
             headerShown: false,
             // tabBarBadge: 3,
