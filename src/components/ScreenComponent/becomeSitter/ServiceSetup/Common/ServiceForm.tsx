@@ -2,7 +2,7 @@ import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
 import React, {useState} from 'react';
 import {Controller} from 'react-hook-form';
 import TitleText from '../../../../common/text/TitleText';
-import { InfoSvg } from '../../../Inbox/utils/SvgComponent/SvgComponent';
+import {InfoSvg} from '../../../Inbox/utils/SvgComponent/SvgComponent';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
@@ -54,7 +54,6 @@ const ServiceForm = ({
   showAdditionalRates,
   control,
   errors,
-  setValue,
 }: Props) => {
   const [updateRates, setUpdateRates] = useState(true);
   return (
@@ -102,7 +101,6 @@ const ServiceForm = ({
             name={'updateRates'}
             errors={errors}
             control={control}
-            setValue={setValue}
           />
         )}
         {linkText && (

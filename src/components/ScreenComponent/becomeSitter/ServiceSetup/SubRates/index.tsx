@@ -1,9 +1,6 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
-import HeaderText from '../../../../common/text/HeaderText';
-import {InfoSvg} from '../../../Inbox/utils/SvgComponent/SvgComponent';
-import ShortText from '../../../../common/text/ShortText';
 import {
   basicRates,
   RatesInput,
@@ -33,20 +30,6 @@ const SubRates = ({handleRates}: Props) => {
   };
   return (
     <View>
-      {/* <BigText text={'Boarding Setting'} textStyle={styles.headerText} />
-      <HeaderText
-        text={'Overnight pet care on your home'}
-        textStyle={styles.subHeaderText}
-      /> */}
-      {/* <View style={styles.infoContainer}>
-        <InfoSvg height={16} width={16} />
-        <ShortText
-          text={
-            'We have suggested some default settings based on what works well for new sitters and walkers. You can edit now, or at any time in the future.'
-          }
-          textStyle={styles.infoText}
-        />
-      </View> */}
       <View style={styles.headerContainer}>
         <BigText text={'Rates'} textStyle={styles.headerText} />
         {basicRates.map((item, index) => {
