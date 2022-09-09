@@ -36,6 +36,7 @@ const AppCheckboxField = ({
         <Controller
           control={control}
           render={({field: {onBlur, value}}) => {
+            // console.log('value', name, value, active);
             return (
               <AppCheckbox
                 title={title}

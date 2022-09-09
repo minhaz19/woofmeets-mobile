@@ -10,17 +10,14 @@ import AppActivityIndicator from '../../../../components/common/Loaders/AppActiv
 import {useServiceRates} from './utils/useServiceRate';
 interface Props {
   route: {
-    params: {
-      serviceId: string;
-      providerServicesId: string;
-    };
+    params: any;
   };
 }
 
 const Rates = ({route}: Props) => {
   const {colors} = useTheme();
-  const {handleRates, loading, serviceRateFields} =
-    useServiceRates(route);
+  const {itemId, name, image, description} = route?.params;
+  const {handleRates, loading, serviceRateFields} = useServiceRates(route);
 
   return (
     <>
@@ -31,7 +28,12 @@ const Rates = ({route}: Props) => {
           {backgroundColor: colors.backgroundColor},
         ]}
         showsVerticalScrollIndicator={false}>
-        <ReusableHeader />
+        <ReusableHeader
+          itemId={itemId}
+          name={name}
+          image={image}
+          description={description}
+        />
         <AppForm
           initialValues={useServiceRateInit()}
           validationSchema={BoardingSettingsSchema}>

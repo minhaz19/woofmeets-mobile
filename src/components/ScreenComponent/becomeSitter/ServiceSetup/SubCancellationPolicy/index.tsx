@@ -1,31 +1,55 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable dot-notation */
+import * as Yup from 'yup';
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import BigText from '../../../../common/text/BigText';
 import HeaderText from '../../../../common/text/HeaderText';
-import SubmitButton from '../../../../common/Form/SubmitButton';
 import BottomSpacing from '../../../../UI/BottomSpacing';
-import DescriptionText from '../../../../common/text/DescriptionText';
 import ServiceCheckbox from '../Common/ServiceCheckbox';
 import ErrorMessage from '../../../../common/Form/ErrorMessage';
-import {useFormContext} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import ButtonCom from '../../../../UI/ButtonCom';
+import { btnStyles } from '../../../../../constants/theme/common/buttonStyles';
 
 interface props {
-  handlePetPreference: (arg1: any) => void;
-  putLoading?: boolean;
+  handlePolicy: (arg1: any) => void;
+  postLoading?: boolean;
   policy: any;
+  singlePolicy: number | null;
 }
 
 const SubCancellationPolicy = ({
-  handlePetPreference,
-  putLoading,
+  handlePolicy,
+  postLoading,
   policy,
+  singlePolicy,
 }: props) => {
+  const cancellationSchema = Yup.object().shape({
+    policyId: Yup.string()
+      .required('At least select one policy')
+      .nullable(true),
+  });
   const {
     control,
+    handleSubmit,
     setValue,
+    reset,
     formState: {errors},
-  } = useFormContext();
+  } = useForm({
+    resolver: yupResolver(cancellationSchema),
+    defaultValues: {
+      policyId: useMemo(() => singlePolicy, [singlePolicy]),
+    },
+    mode: 'onChange',
+  });
+  useEffect(() => {
+    reset({
+      policyId: singlePolicy,
+    });
+  }, [singlePolicy]);
   return (
     <View style={styles.headerContainer}>
       <BigText text={'Cancellation Policy'} textStyle={styles.headerText} />
@@ -34,7 +58,7 @@ const SubCancellationPolicy = ({
           textStyle={styles.subtitle}
           text={'What is your cancellation policy for Boarding Settings?'}
         />
-        {policy.map((item: any, index: number) => {
+        {policy?.map((item: any, index: number) => {
           return (
             <ServiceCheckbox
               title={item.title}
@@ -42,22 +66,25 @@ const SubCancellationPolicy = ({
               radio
               typeKey={item.id}
               onPress={() => {
-                setValue(item.title, item.id, {
+                setValue('policyId', item.id, {
                   shouldValidate: true,
                 });
               }}
-              name={item.title}
+              name={'policyId'}
               control={control}
             />
           );
         })}
-        {/* <ErrorMessage error={errors[petType.name!]?.message} /> */}
+        <ErrorMessage error={errors['policyId']?.message} />
       </View>
       <View style={styles.submitContainer}>
-        <SubmitButton
-          title="Save & continue"
-          onPress={handlePetPreference}
-          loading={putLoading}
+        <ButtonCom
+          title={'Save & Continue'}
+          loading={postLoading}
+          textAlignment={btnStyles.textAlignment}
+          containerStyle={btnStyles.containerStyleFullWidth}
+          titleStyle={btnStyles.titleStyle}
+          onSelect={handleSubmit(handlePolicy)}
         />
       </View>
       <BottomSpacing />

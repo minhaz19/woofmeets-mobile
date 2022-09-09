@@ -2,11 +2,16 @@ import {StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
 import * as Yup from 'yup';
 import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
+// import AppActivityIndicator from '../../../components/Loaders/AppActivityIndicator';
 import AppForm from '../../../components/common/Form/AppForm';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 
-const YourHome = () => {
+const YourHome = (props: {
+  navigation: {navigate: (arg0: string, arg1: any) => void};
+  route: {params: any};
+}) => {
   const {colors} = useTheme();
+  const {itemId, name, image, description} = props?.route?.params;
   const YouHomeSchema = Yup.object()
     .shape({
       // smallDog: Yup.boolean(),
@@ -24,7 +29,12 @@ const YourHome = () => {
           styles.rootContainer,
           {backgroundColor: colors.backgroundColor},
         ]}>
-        <ReusableHeader />
+        <ReusableHeader
+          itemId={itemId}
+          name={name}
+          image={image}
+          description={description}
+        />
         <AppForm initialValues={{}} validationSchema={YouHomeSchema}>
           {/* <SubPetPreference
           handlePetPreference={handlePetPreference}
