@@ -103,7 +103,7 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 20,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 0,
   },
   profileContainer: {
     padding: 20,

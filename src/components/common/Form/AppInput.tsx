@@ -16,7 +16,7 @@ const AppInput = ({...otherProps}) => {
         {
           borderColor: isDarkMode ? Colors.gray : Colors.border,
         },
-        inputBoxContainerStyle
+        inputBoxContainerStyle,
       ]}>
       <TextInput
         placeholderTextColor={'gray'}
@@ -28,7 +28,7 @@ const AppInput = ({...otherProps}) => {
             flex: 1,
             color: isDarkMode ? 'white' : 'black',
           },
-          textInputBoxStyle
+          textInputBoxStyle,
         ]}
         {...otherProps}
         secureTextEntry={otherProps.secureTextEntry ? show : false}

@@ -1,4 +1,4 @@
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import HeaderText from '../../../components/common/text/HeaderText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -28,7 +28,7 @@ const ServiceSelection = (props: {
 
   const dispatch = useAppDispatch();
 
-  const [refreshing, setRefreshing] = useState(false);
+  const [, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -52,6 +52,7 @@ const ServiceSelection = (props: {
       const response: ApiResponse<any> = await apiClient.post(
         `/provider-services/${sequence}`,
       );
+      console.log('response', response);
       if (!response.ok) {
         setLoading(false);
         props.navigation.navigate('HomeProfile');
@@ -127,8 +128,7 @@ const ServiceSelection = (props: {
         },
       ]}>
       {serviceTypes && (
-         <FlatList
-          showsVerticalScrollIndicator={false}
+        <FlatList
           columnWrapperStyle={styles.flatList}
           data={serviceTypes}
           numColumns={2}

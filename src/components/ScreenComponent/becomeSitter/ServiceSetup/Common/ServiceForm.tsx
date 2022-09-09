@@ -1,14 +1,15 @@
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {Controller} from 'react-hook-form';
 import TitleText from '../../../../common/text/TitleText';
-import { InfoSvg } from '../../../Inbox/utils/SvgComponent/SvgComponent';
+import {InfoSvg} from '../../../Inbox/utils/SvgComponent/SvgComponent';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import ErrorMessage from '../../../../common/Form/ErrorMessage';
-import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import Text_Size from '../../../../../constants/textScaling';
 import Colors from '../../../../../constants/Colors';
 import ServiceInput from './ServiceInput';
+import {useAppDispatch} from '../../../../../store/store';
+import {setBaseRate} from '../../../../../store/slices/onBoarding/setUpService/rates/baseRateSlice';
 
 interface Props {
   name: string;
@@ -29,10 +30,13 @@ interface Props {
   checkbox?: string;
   additionalRates?: string;
   handlePress?: () => void;
+  checkPress?: () => void;
+  editable?: boolean;
   showAdditionalRates?: boolean;
   control: any;
   errors: any;
-  setValue: (arg1: any, arg2: any, arg3: any) => void;
+  dValue?: any;
+  setValue?: (arg1: any, arg2: any, arg3: any) => void;
 }
 
 const ServiceForm = ({
@@ -46,17 +50,15 @@ const ServiceForm = ({
   subTitle,
   textInputStyle,
   auth,
-  linkText,
-  shortText,
-  checkbox,
+
   additionalRates,
   handlePress,
   showAdditionalRates,
+  editable,
   control,
   errors,
-  setValue,
 }: Props) => {
-  const [updateRates, setUpdateRates] = useState(true);
+  const dispatch = useAppDispatch();
   return (
     <>
       <View>
@@ -71,48 +73,33 @@ const ServiceForm = ({
         )}
         <Controller
           control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <ServiceInput
-              autoCapitalize={autoCapitalize}
-              autoCorrect={autoCorrect}
-              icon={icon}
-              keyboardType={keyboardType}
-              // placeholder={placeholder}
-              textContentType={textContentType}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-              error={errors[name]?.message}
-              textInputStyle={textInputStyle}
-            />
-          )}
+          render={({field: {onChange, onBlur, value}, fieldState: {error}}) => {
+            console.log('error', value);
+            return (
+              <ServiceInput
+                autoCapitalize={autoCapitalize}
+                autoCorrect={autoCorrect}
+                icon={icon}
+                editable={editable}
+                keyboardType={keyboardType}
+                textContentType={textContentType}
+                onChangeText={(e: number) => {
+                  onChange(e);
+                  if (name === 'baserate') {
+                    dispatch(setBaseRate(e));
+                  }
+                }}
+                onBlur={onBlur}
+                value={value.toString()}
+                error={error?.message}
+                textInputStyle={textInputStyle}
+              />
+            );
+          }}
           name={name}
         />
         <ErrorMessage error={errors[name]?.message} auth={auth} />
-        {checkbox && (
-          <AppCheckboxField
-            title={checkbox}
-            radio
-            typeKey={99}
-            active={updateRates}
-            onPress={() => {
-              setUpdateRates(!updateRates);
-              // setFieldValue('updateRates', updateRates);
-            }}
-            name={'updateRates'}
-            errors={errors}
-            control={control}
-            setValue={setValue}
-          />
-        )}
-        {linkText && (
-          <TouchableOpacity>
-            <DescriptionText textStyle={styles.linkText} text={linkText} />
-          </TouchableOpacity>
-        )}
-        {shortText && (
-          <DescriptionText textStyle={styles.shortText} text={shortText} />
-        )}
+
         {additionalRates && showAdditionalRates && (
           <TouchableOpacity onPress={handlePress}>
             <DescriptionText
@@ -130,8 +117,8 @@ export default ServiceForm;
 
 const styles = StyleSheet.create({
   label: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: '600',
+    fontSize: Text_Size.Text_0,
+    fontWeight: 'bold',
   },
   subTitle: {
     fontSize: Text_Size.Text_0,
@@ -154,10 +141,6 @@ const styles = StyleSheet.create({
   },
   linkText: {
     color: Colors.light.blue,
-    marginVertical: '2%',
-  },
-  shortText: {
-    color: Colors.gray,
     marginVertical: '2%',
   },
 });

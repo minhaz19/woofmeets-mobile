@@ -1,15 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, TextInput, View} from 'react-native';
-import React, { memo } from 'react';
-import { useTheme } from '../../../../../constants/theme/hooks/useTheme';
-import HeaderText from '../../../../common/text/HeaderText';
+import React, {memo} from 'react';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import ShortText from '../../../../common/text/ShortText';
-import { SCREEN_WIDTH } from '../../../../../constants/WindowSize';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Text_Size from '../../../../../constants/textScaling';
-
+import Colors from '../../../../../constants/Colors';
+import TitleText from '../../../../common/text/TitleText';
 
 const ServiceInput = ({...otherProps}) => {
-  const {colors, isDarkMode} = useTheme();
+  const {isDarkMode, colors} = useTheme();
   return (
     <View style={styles.mainContainer}>
       <View style={styles.rootContainer}>
@@ -17,22 +17,25 @@ const ServiceInput = ({...otherProps}) => {
           style={[
             styles.container,
             {
-              borderColor: colors.headerText,
+              borderColor: Colors.border,
+              backgroundColor: otherProps.editable
+                ? colors.backgroundColor
+                : colors.borderColor,
             },
           ]}>
-          <HeaderText text={'$'} textStyle={{...styles.headerText}} />
+          <TitleText text={'$'} textStyle={{...styles.headerText}} />
           <TextInput
-            //   placeholderTextColor={colors.placeholderTextColo
             style={[
               styles.text,
               {
+                flex: 1,
                 color: isDarkMode ? 'white' : 'black',
               },
             ]}
             {...otherProps}
           />
         </View>
-        <HeaderText text={'/night'} textStyle={{...styles.headerText}} />
+        <TitleText text={'/night'} textStyle={{...styles.headerText}} />
       </View>
       {!otherProps.icon ? (
         <ShortText
@@ -59,12 +62,13 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 2,
     flexDirection: 'row',
-    paddingHorizontal: 5,
+    paddingHorizontal: 8,
     marginBottom: 10,
     justifyContent: 'space-between',
     borderWidth: 1,
+    flexWrap: 'wrap',
     alignItems: 'center',
-    width: SCREEN_WIDTH <= 380 ? '50%' : SCREEN_WIDTH <= 600 ? '50%' : '30%',
+    width: SCREEN_WIDTH <= 380 ? '50%' : SCREEN_WIDTH <= 600 ? '70%' : '30%',
     overflow: 'hidden',
   },
   icon: {
@@ -74,10 +78,13 @@ const styles = StyleSheet.create({
   text: {
     fontSize: Text_Size.Text_0,
     height: 40,
+    flex: 0,
+    textAlign: 'right',
   },
   headerText: {
     paddingHorizontal: 5,
     fontWeight: '400',
+    color: Colors.gray,
   },
   label: {},
   mainContainer: {

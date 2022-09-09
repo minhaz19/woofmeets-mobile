@@ -34,7 +34,7 @@ const BasicInfo = () => {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 20,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 0,
   },
   container: {flex: 1},
 });

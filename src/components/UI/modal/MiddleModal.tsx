@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 
 const MiddleModal = (props: {
   onBlur: ((e: NativeSyntheticEvent<TargetedEvent>) => void) | undefined;
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
   iconContainer: {padding: 10, justifyContent: 'center', alignItems: 'center'},
   iconView: {height: 80, width: 80, marginBottom: 10},
   modalView: {
-    width: '90%',
+    width: SCREEN_WIDTH > 800 ? '60%' : '90%',
     minHeight: '20%',
     backgroundColor: 'white',
     shadowColor: 'black',

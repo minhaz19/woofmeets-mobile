@@ -1,5 +1,5 @@
 import {View, StyleSheet, ScrollView} from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   CallIcon,
   CardsIcon,
@@ -29,16 +29,6 @@ const SettingMain = (props: {
   const {colors} = useTheme();
   const [token, setToken] = useState();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
-  const getToken = async () => {
-    const token:any = await authStorage.getToken();
-    if (token) {
-      const decode: any = await jwtDecode(token);
-      setToken(decode);
-    }
-  }
-  useEffect(() => {
-    getToken()
-  }, [])
   const loginData = [
     {
       id: 3,
@@ -210,47 +200,43 @@ const SettingMain = (props: {
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
           />
         )}
-        {
-          token && token.provider ? (
-            <View>
-              <View style={styles.titleContainer}>
-                <TitleText text="Services" />
-              </View>
-              {
-              servicesData?.map(item => (
-                <SettingItem data={item} key={item.id} />
-              ))}
-            </View>
-          ) : (
-            <View>
+        {token && token.provider ? (
+          <View>
             <View style={styles.titleContainer}>
-              <TitleText text="Sitting" />
+              <TitleText text="Services" />
             </View>
-            {
-            sittingData?.map(item => (
+            {servicesData?.map(item => (
               <SettingItem data={item} key={item.id} />
             ))}
           </View>
-          )
-        }
-
-        {
-          token && token.provider && (
-            <View>
-              <View
-                style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-              />
-              <View style={styles.titleContainer}>
-                <TitleText text="Sitting" />
-              </View>
-              {
-              providerData?.map(item => (
-                <SettingItem data={item} key={item.id} />
-              ))}
+        ) : (
+          <View>
+            <View style={styles.titleContainer}>
+              <TitleText text="Sitting" />
             </View>
-          )
-        }
-        
+            {sittingData?.map(item => (
+              <SettingItem data={item} key={item.id} />
+            ))}
+          </View>
+        )}
+
+        {token && token.provider && (
+          <View>
+            <View
+              style={[
+                styles.divider,
+                {backgroundColor: colors.descriptionText},
+              ]}
+            />
+            <View style={styles.titleContainer}>
+              <TitleText text="Sitting" />
+            </View>
+            {providerData?.map(item => (
+              <SettingItem data={item} key={item.id} />
+            ))}
+          </View>
+        )}
+
         <View
           style={[styles.divider, {backgroundColor: colors.descriptionText}]}
         />
@@ -289,7 +275,7 @@ const SettingMain = (props: {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 20,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 0,
   },
   paddingTop: {paddingTop: '2%'},
   divider: {
