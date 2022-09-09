@@ -22,7 +22,7 @@ import {
 } from '../../../assets/svgs/Services_SVG';
 
 const HomeProfile = (props: {
-  navigation: {navigate: (arg0: string, arg2: any) => void};
+  navigation: {navigate: (arg0: string, arg1: any) => void};
 }) => {
   const {colors} = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -43,7 +43,6 @@ const HomeProfile = (props: {
   ];
 
   const userServices = useAppSelector(state => state.services.userServices);
-
   const dispatch = useAppDispatch();
 
   const [, setRefreshing] = useState(false);
@@ -152,12 +151,12 @@ const HomeProfile = (props: {
                   icon: 'chevron-right',
                   screen: () => {
                     props.navigation.navigate('ServiceSetup', {
-                      serviceData: {
-                        serviceType: item.serviceType,
-                        serviceTypeId: item.serviceTypeId,
-                        providerServicesId: item.id,
-                        icon: item.serviceType.icon,
-                      },
+                      itemId: item.id,
+                      name: item.serviceType.name,
+                      image: getIcon(item.serviceType.icon),
+                      description: item.serviceType.description,
+                      serviceTypeId: item.serviceTypeId,
+                      providerServicesId: item.id,
                     });
                   },
                 }}

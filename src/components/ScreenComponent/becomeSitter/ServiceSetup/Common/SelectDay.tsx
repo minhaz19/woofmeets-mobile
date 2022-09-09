@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {FC, memo} from 'react';
-import Text_Size from '../../../../constants/textScaling';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import Colors from '../../../../constants/Colors';
-import Card from '../../../UI/Card';
 import {Controller} from 'react-hook-form';
+import Card from '../../../../UI/Card';
+import { useTheme } from '../../../../../constants/theme/hooks/useTheme';
+import Colors from '../../../../../constants/Colors';
+import Text_Size from '../../../../../constants/textScaling';
 
 interface Props {
   title: string;
@@ -14,38 +14,18 @@ interface Props {
   onPress: () => void;
   active: boolean;
   selectDays: any;
-  control: any,
-  setValue: (name: string, value: any, shouldValidate: any) => void;
+  control: any;
 }
 
-const BoardingDay: FC<Props> = ({
+const SelectDay: FC<Props> = ({
   title,
   name,
-  typeKey,
   onPress,
   active,
   selectDays,
   control,
-  setValue,
 }) => {
   const {colors} = useTheme();
-  const handleValues = () => {
-    setValue(name, typeKey, {shouldValidate: true});
-    onPress();
-  };
-  // const filteredDays = selectDays
-  //         ?.filter((item: any) => {
-  //           return item.checked;
-  //         })
-  //         .map((item: any) => {
-  //           return item.id;
-  //         });
-  // // console.log('filteredValue', filteredDays);
-  // console.log('values', values);
-
-  // useEffect(() => {
-  //   setValue(name, filteredDays);
-  // }, [filteredDays, setValue, name]);
 
   return (
     <View style={styles.rootContainer}>
@@ -55,9 +35,7 @@ const BoardingDay: FC<Props> = ({
           <Card style={styles.cardSetting}>
             <TouchableOpacity
               activeOpacity={1}
-              onPress={() => {
-                handleValues();
-              }}
+              onPress={onPress}
               onBlur={onBlur}>
               <View
                 style={[
@@ -85,18 +63,20 @@ const BoardingDay: FC<Props> = ({
   );
 };
 
-export default memo(BoardingDay);
+export default memo(SelectDay);
 
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    paddingHorizontal: 10,
     paddingVertical: 5,
     marginRight: 10,
     borderColor: '#ccc',
+    width: 50,
+
   },
   text: {
     fontSize: Text_Size.Text_0,
+    alignSelf: 'center',
   },
   cardSetting: {
     shadowOpacity: 0.2,

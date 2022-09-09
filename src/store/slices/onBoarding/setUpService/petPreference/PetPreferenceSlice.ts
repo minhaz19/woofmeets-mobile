@@ -31,7 +31,9 @@ const petPreferenceSlice = createSlice({
       .addCase(getPetPreference.fulfilled, (state, {payload}) => {
         state.loading = false;
         state.petPreference = payload.data;
-        state.petPerDay = payload?.data?.petPerDay;
+        state.petPerDay = payload?.data?.petPerDay
+          ? payload?.data?.petPerDay
+          : 1;
       })
       .addCase(getPetPreference.rejected, (state, {payload}) => {
         state.loading = false;

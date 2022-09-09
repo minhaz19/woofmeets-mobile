@@ -11,19 +11,12 @@ interface Props {
   name: string;
   errors: any;
   control: any;
-  setValue: (arg1: string, arg2: any, arg3?: any) => void;
+  setValue: any;
 }
 
-const ServicePetQuantity: FC<Props> = ({
-  name,
-  control,
-  setValue,
-  errors,
-}) => {
+const ServicePetQuantity: FC<Props> = ({name, control, setValue, errors}) => {
   const dispatch = useAppDispatch();
-  const {petPerDay} = useAppSelector(
-    (state: any) => state?.petPreference,
-  );
+  const {petPerDay} = useAppSelector((state: any) => state?.petPreference);
   const handleIncrement = () => {
     dispatch(increment());
   };
