@@ -114,6 +114,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: SCREEN_WIDTH < 390 ? SCREEN_HEIGHT / 6 : SCREEN_HEIGHT / 7.5,
     borderWidth: 1,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   textContainer: {
     paddingHorizontal: 10,

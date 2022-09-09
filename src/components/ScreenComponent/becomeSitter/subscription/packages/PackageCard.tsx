@@ -10,7 +10,7 @@ import DescriptionText from '../../../../common/text/DescriptionText'
 const PackageCard = (props: { onPressEvent: (arg0: any) => void; item: { sequence: any; id: React.Key | null | undefined; title: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; description: string | number; price: any }; sequence: any }) => {
     const {colors} = useTheme();
   return (
-    <TouchableOpacity onPress={() => props.onPressEvent(props.item.sequence)}>
+    <TouchableOpacity onPress={() => props.onPressEvent(props.item.sequence)} key={props.item.id}>
      <View key={props.item.id} style={{...styles.contentStyle, 
         backgroundColor: colors.backgroundColor,
         borderWidth: 2,

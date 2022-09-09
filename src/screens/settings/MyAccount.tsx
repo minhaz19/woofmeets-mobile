@@ -57,7 +57,7 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 5,
       title: 'Your Pets',
       icon: PetsIcon,
-      screenName: () => props.navigation.navigate('PetNavigator'),
+      screenName: () => props.navigation.navigate('PetScreens'),
       details: 'Edit, pet, add new pet',
       opacity: 1,
     },

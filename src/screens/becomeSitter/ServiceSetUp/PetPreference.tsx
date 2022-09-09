@@ -13,10 +13,7 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 // import SmallAppForm from '../../../components/common/Form/SmallAppForm';
 const endPoint = '/pet-preference';
 
-const PetPreference = (props: {
-  navigation: {navigate: (arg0: string, arg1: any) => void};
-  route: {params: any};
-}) => {
+const PetPreference = (props: { route: { params: { itemId: any; name: any; image: any; description: any; }; }; navigation: { goBack: () => void; }; }) => {
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
   const {loading, petPreference, petPerDay} = useAppSelector(
@@ -31,12 +28,13 @@ const PetPreference = (props: {
   const handlePetPreference = async (e: any) => {
     const result = await putRequest(endPoint, e);
     if (result) {
-      props.navigation.navigate('YourHome', {
-        itemId: itemId,
-        name: name,
-        image: image,
-        description: description,
-      });
+      // props.navigation.navigate('YourHome', {
+      //   itemId: itemId,
+      //   name: name,
+      //   image: image,
+      //   description: description,
+      // });
+      props.navigation.goBack();
     }
   };
 

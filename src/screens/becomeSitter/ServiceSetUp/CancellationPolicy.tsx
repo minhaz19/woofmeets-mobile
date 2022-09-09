@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -41,6 +41,13 @@ const CancellationPolicy = (props: {
   const handlePolicy = async (e: any) => {
     const postPoint = `/cancellation-policy/provider-policy/${e.policyId}`;
     const result = await postRequest(postPoint);
+    if(!result.ok) {
+      Alert.alert(result.data.message);
+    }
+    if(result.ok) {
+      Alert.alert(result.data.message);
+      props.navigation.goBack();
+    }
   };
 
   return (
