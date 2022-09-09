@@ -1,24 +1,28 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
-import {FormikErrors, FormikTouched} from 'formik';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import Colors from '../../../constants/Colors';
 interface Props {
-  error:
-    | string
-    | string[]
-    | FormikErrors<any>
-    | FormikErrors<any>[]
-    | undefined;
-  visible: boolean | FormikTouched<any> | FormikTouched<any>[] | undefined;
+  error: string | undefined | any;
+  auth?: boolean;
 }
-const ErrorMessage = ({error, visible}: Props) => {
-  console.log('type', typeof visible);
-  if (!visible || !error) {
+const ErrorMessage = ({error, auth}: Props) => {
+  const {isDarkMode, colors} = useTheme();
+  if (!error) {
     return null;
   }
+
   return (
-    <View>
-      <Text style={styles.error}>{error}</Text>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor:
+            auth && isDarkMode ? Colors.dark.lightDark : colors.backgroundColor,
+        },
+      ]}>
+      <Text style={[styles.error, {color: colors.alert}]}>{error}</Text>
     </View>
   );
 };
@@ -26,9 +30,10 @@ const ErrorMessage = ({error, visible}: Props) => {
 export default ErrorMessage;
 
 const styles = StyleSheet.create({
+  container: {},
   error: {
-    color: 'red',
     fontSize: Text_Size.Text_0,
     marginBottom: 10,
+    marginTop: 5,
   },
 });

@@ -1,19 +1,17 @@
-import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 
 import Ant from 'react-native-vector-icons/AntDesign';
 interface Props {
   name?: string;
-  image?: any;
+  IconComp?: any;
 }
-const Icon = ({name, image}: Props) => {
+const Icon = ({name, IconComp}: Props) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <View style={styles.container}>
       {name && <Ant size={20} name={name} color={'black'} />}
-      {image && (
-        <Image source={image} style={styles.image} resizeMode="contain" />
-      )}
-    </TouchableOpacity>
+      {IconComp && <IconComp />}
+    </View>
   );
 };
 

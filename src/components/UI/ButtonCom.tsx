@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   View,
@@ -11,9 +12,9 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
+import DotLoader from '../common/Loaders/DotLoader';
 import Card from './Card';
-
-const ButtonCom = (props: {
+interface Props {
   containerStyle: any;
   progressStyle?: ViewStyle | undefined;
   onSelect: ((event: GestureResponderEvent) => void) | undefined;
@@ -22,32 +23,51 @@ const ButtonCom = (props: {
   titleStyle: TextStyle | undefined;
   title: String | undefined;
   icon?: any;
-}) => {
+  loading?: boolean;
+}
+const ButtonCom = ({
+  containerStyle,
+  progressStyle,
+  onSelect,
+  textAlignment,
+  isLeftIcon,
+  titleStyle,
+  title,
+  icon,
+  loading = false,
+}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
+
   return (
     <Card
       style={{
         ...styles.cardlist,
-        ...props.containerStyle,
         backgroundColor: isDarkMode ? Colors.button.grey : Colors.primary,
+        ...containerStyle,
       }}>
-      <View style={{...styles.progressContainer, ...props.progressStyle}} />
+      <View style={{...styles.progressContainer, ...progressStyle}} />
       <View style={{...styles.touchable}}>
-        <TouchableOpacity onPress={props.onSelect}>
-          <View style={{...styles.card, ...props.textAlignment}}>
-            <Text
-              style={{
-                ...styles.title,
-                ...props.titleStyle,
-              }}>
-              {props.title}
-            </Text>
-            {props.icon && (
-              <Icon
-                name="keyboard-arrow-right"
-                size={24}
-                color={Colors.primary}
-              />
+        <TouchableOpacity onPress={onSelect} disabled={loading}>
+          <View style={{...styles.card, ...textAlignment}}>
+            {loading ? (
+              <DotLoader />
+            ) : (
+              <>
+                <Text
+                  style={{
+                    ...styles.title,
+                    ...titleStyle,
+                  }}>
+                  {title}
+                </Text>
+                {icon && (
+                  <Icon
+                    name="keyboard-arrow-right"
+                    size={24}
+                    color={Colors.primary}
+                  />
+                )}
+              </>
             )}
           </View>
         </TouchableOpacity>
@@ -71,7 +91,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     color: 'black',
-    fontSize: 16,
   },
   card: {
     justifyContent: 'space-between',

@@ -9,7 +9,6 @@ target 'woofmeets' do
 
   # Flags change depending on the env values.
   flags = get_default_flags()
-
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
@@ -19,11 +18,14 @@ target 'woofmeets' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
+
   target 'woofmeetsTests' do
     inherit! :complete
     # Pods for testing
   end
 
+    pod 'FBSDKLoginKit'
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and

@@ -1,52 +1,72 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, TextInput, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import Text_Size from '../../../constants/textScaling';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-const screen = SCREEN_WIDTH;
+import {Check, EyeClose, EyeOpen} from '../../../assets/svgs/SVG_LOGOS';
+import Colors from '../../../constants/Colors';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
-
+  const {colors, isDarkMode} = useTheme();
+  const {numberOfLines, textInputBoxStyle, inputBoxContainerStyle} = otherProps;
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          borderColor: isDarkMode ? Colors.gray : Colors.border,
+        },
+        inputBoxContainerStyle,
+      ]}>
       <TextInput
         placeholderTextColor={'gray'}
-        style={styles.text}
+        style={[
+          styles.text,
+          {
+            alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
+            height: numberOfLines >= 10 ? 120 : 40,
+            flex: 1,
+            color: isDarkMode ? 'white' : 'black',
+          },
+          textInputBoxStyle,
+        ]}
         {...otherProps}
         secureTextEntry={otherProps.secureTextEntry ? show : false}
       />
+      {!otherProps.secureTextEntry &&
+      otherProps.error === undefined &&
+      otherProps.touch
+        ? otherProps.email && <Check size={20} />
+        : null}
       {otherProps.secureTextEntry &&
         (show ? (
-          <MIcon
-            name="eye-off"
+          <EyeClose
             size={20}
-            color={'gray'}
             onPress={() => setShow(!show)}
+            fill={colors.descriptionText}
           />
         ) : (
-          <MIcon
-            name="eye"
+          <EyeOpen
             size={20}
-            color={'gray'}
             onPress={() => setShow(!show)}
+            fill={colors.descriptionText}
           />
         ))}
     </View>
   );
 };
 
-export default AppInput;
+export default memo(AppInput);
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f8f4f4',
-    borderRadius: 5,
+    borderRadius: 2,
     flexDirection: 'row',
-    width: '100%',
-    paddingVertical: screen > 390 ? -10 : 10,
-    paddingHorizontal: 15,
-    marginVertical: 10,
+    paddingHorizontal: 8,
+    marginBottom: 10,
     justifyContent: 'space-between',
+    borderWidth: 1,
+    flexWrap: 'wrap',
     alignItems: 'center',
   },
   icon: {
@@ -54,8 +74,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
+    width: '90%',
     fontSize: Text_Size.Text_0,
     flex: 0,
-    color: 'black',
   },
+  check: {height: '100%', alignSelf: 'center'},
 });

@@ -1,12 +1,24 @@
 import React from 'react';
-import AppButton from '../AppButton';
-import {useFormikContext} from 'formik';
+import ButtonCom from '../../UI/ButtonCom';
+import {btnStyles} from '../../../constants/theme/common/buttonStyles';
+import {useFormContext} from 'react-hook-form';
 interface Props {
   title: string;
+  onPress?: any;
+  loading?: boolean;
 }
-const SubmitButton = ({title}: Props) => {
-  const {handleSubmit} = useFormikContext();
-  return <AppButton title={title} onPress={handleSubmit} />;
+const SubmitButton = ({title, onPress, loading}: Props) => {
+  const {handleSubmit} = useFormContext();
+  return (
+    <ButtonCom
+      title={title}
+      loading={loading}
+      textAlignment={btnStyles.textAlignment}
+      containerStyle={btnStyles.containerStyleFullWidth}
+      titleStyle={btnStyles.titleStyle}
+      onSelect={handleSubmit(onPress)}
+    />
+  );
 };
 
 export default SubmitButton;

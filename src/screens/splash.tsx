@@ -1,50 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {Image, StyleSheet, Text, useColorScheme, View} from 'react-native';
+import {Image, StyleSheet, useColorScheme, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import DescriptionText from '../components/common/text/DescriptionText';
+import HeaderText from '../components/common/text/HeaderText';
 import AppIntroSlider from '../components/splash/react-native-app-intro-slider/dist';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
 import MainNavigationContainer from '../navigation/MainNavigationContainer';
 import FirstScreen from './FirstScreen';
+import authStorage from '../utils/helpers/auth/storage';
+import jwt_decode from 'jwt-decode';
+import {useDispatch} from 'react-redux';
+import {slides} from '../utils/config/Data/splashDatas';
+import {signIn} from '../store/slices/auth/userSlice';
 
 const Splash = ({}) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const [isPreviousUser] = useState(false);
-
+  const [isPreviousUser, setIsPreviousUser] = useState(false);
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     showRealApp: false,
   });
-
-  const slides = [
-    {
-      key: 1,
-      title: 'Book Sitters & Walkers',
-      text: "Pick the service you need and book your pet's perfect match. Pay directly through our secured app.",
-      image: require('../assets/splash/sp-1.png'),
-      backgroundColor: '#59b2ab',
-    },
-    {
-      key: 2,
-      title: 'Useful Contents',
-      text: 'Stay update with latest content',
-      image: require('../assets/splash/sp-2.png'),
-      backgroundColor: '#febe29',
-    },
-    {
-      key: 3,
-      title: 'Best Services',
-      text: 'Give your pet the best care possible',
-      image: require('../assets/splash/sp-3.png'),
-      backgroundColor: '#22bcb5',
-    },
-    {
-      key: 4,
-      title: 'Best Services',
-      text: 'Give your pet the best care possible',
-      image: require('../assets/splash/sp-4.png'),
-      backgroundColor: '#22bcb5',
-    },
-  ];
 
   const _renderItem = ({item}: any): JSX.Element => {
     return (
@@ -59,24 +36,8 @@ const Splash = ({}) => {
         ]}>
         <Image source={item.image} style={styles.image} />
         <View style={styles.footerContainer}>
-          <Text
-            style={[
-              styles.text,
-              {
-                color: isDarkMode ? Colors.dark.text : Colors.headerText,
-              },
-            ]}>
-            {item.title}
-          </Text>
-          <Text
-            style={[
-              styles.description,
-              {
-                color: isDarkMode ? Colors.dark.text : Colors.subText,
-              },
-            ]}>
-            {item.text}
-          </Text>
+          <HeaderText text={item.title} textStyle={styles.text} />
+          <DescriptionText text={item.text} textStyle={styles.description} />
         </View>
       </View>
     );
@@ -138,6 +99,35 @@ const Splash = ({}) => {
     return () => clearTimeout(timer);
   }, [ldIcon]);
 
+  const signInHandler = async () => {
+    try {
+      const token = await authStorage.getToken();
+      if (token) {
+        const decode: any = jwt_decode(token);
+        const expiryData = decode.exp;
+        const nowDate = new Date();
+        let expDate = new Date(expiryData * 1000) > nowDate;
+        if (expDate) {
+          await dispatch(
+            signIn({
+              token: token,
+              userInfo: decode,
+            }),
+          );
+          setIsPreviousUser(true);
+        } else {
+          authStorage.removeToken();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    signInHandler();
+  }, []);
+
   const RenderIcon = () => {
     return (
       <View style={styles.logoContainer}>
@@ -152,7 +142,7 @@ const Splash = ({}) => {
     return (
       <>
         {isPreviousUser ? (
-          <MainNavigationContainer previousLoggedIn />
+          <MainNavigationContainer previousLoggedIn={true} />
         ) : state.showRealApp ? (
           <MainNavigationContainer previousLoggedIn={false} />
         ) : (
@@ -181,14 +171,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontSize: Text_Size.Text_5,
-    fontFamily: 'Arial',
+    fontSize: Text_Size.Text_4,
+    fontWeight: 'bold',
     marginHorizontal: '10%',
     textAlign: 'center',
   },
   headerText: {
-    fontSize: Text_Size.Text_4,
-    fontFamily: 'Arial',
+    fontSize: Text_Size.Text_5,
+    // fontFamily: 'Arial',
     paddingHorizontal: '5%',
     paddingVertical: '2%',
   },
@@ -204,9 +194,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   description: {
-    color: Colors.subText,
     paddingTop: 15,
-    fontSize: Text_Size.Text_1,
     marginBottom: 15,
     fontWeight: '500',
     textAlign: 'center',

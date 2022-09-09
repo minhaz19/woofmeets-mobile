@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, ViewStyle} from 'react-native';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
 
 const Card = (props: {
   style?: ViewStyle | null | undefined;
@@ -13,9 +14,12 @@ const Card = (props: {
     | null
     | undefined;
 }): JSX.Element => {
+  const {colors} = useTheme();
   return (
     <View
       style={{
+        backgroundColor: colors.backgroundColor,
+        shadowColor: colors.descriptionText,
         ...styles.card,
         ...props.style,
         ...props.containerStyle,
@@ -28,13 +32,11 @@ const Card = (props: {
 
 const styles = StyleSheet.create({
   card: {
-    shadowColor: 'grey',
     shadowOpacity: 0.3,
     shadowOffset: {width: 2, height: 2},
-    shadowRadius: 8,
-    elevation: 5,
+    shadowRadius: 4,
+    elevation: 1,
     borderRadius: 10,
-    backgroundColor: '#F5F9FE',
   },
 });
 
