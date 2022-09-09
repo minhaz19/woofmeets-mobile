@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import Screen from '../../../components/common/Screen';
 import AddPetBody from '../../../components/ScreenComponent/Pet/AddPet/AddPetBody';
@@ -50,5 +50,9 @@ const AddPet = ({route, navigation}: Props) => {
 export default AddPet;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 20},
+  container: {
+    flex: 1,
+    paddingHorizontal:
+      SCREEN_WIDTH > 800 ? '10%' : Platform.OS === 'ios' ? 20 : 10,
+  },
 });
