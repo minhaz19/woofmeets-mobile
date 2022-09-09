@@ -91,19 +91,13 @@ const ProfileItemCard = (props: {
             <View style={{...styles.numberViewContainer, backgroundColor: Colors.primary}}/>
           </View> : 
           getIconType(props.name)}
-          <TitleText text={props.title} textStyle={{...styles.textStyle, color: props.isCompleted ? Colors.primary : Colors.light.subText}} />
+          <TitleText text={props.title} textStyle={{...styles.textStyle, color: Colors.light.subText}} />
           </View>
-          {props.isCompleted ?
-          <MaterialCommunityIcons
-            name="chevron-right"
-            size={22}
-            color={Colors.primary}
-            /> :
             <MaterialCommunityIcons
             name="chevron-right"
             size={22}
             color={Colors.subText}
-            />}
+            />
         </View>
       </View>
     </TouchableOpacity>
