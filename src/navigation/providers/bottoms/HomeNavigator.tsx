@@ -6,7 +6,7 @@ import AllProvider from '../../../screens/Service/AllProvider';
 import HeaderWithBack from '../../../components/common/header/HeaderWithBack';
 import {FilterIcon} from '../../../assets/svgs/SVG_LOGOS';
 import {useDispatch} from 'react-redux';
-import {setOpenFilter} from '../../../store/slices/openFilter';
+import {setOpenFilter} from '../../../store/slices/misc/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
 import ProviderAvailablity from '../../../screens/provider/ProviderAvailablity';
 
@@ -54,7 +54,7 @@ const ProHomeNavigator = () => {
             <HeaderWithBack
               navigation={navigation}
               title="All Provider"
-              Icon={FilterIcon}
+              SecondIcon={FilterIcon}
               notification
               onPress={() => dispatch(setOpenFilter(true))}
             />

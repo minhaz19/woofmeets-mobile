@@ -1,6 +1,7 @@
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import AppFormField from '../../../../common/Form/AppFormField';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 interface Props {
   selectedImgInfo: any;
   name: string;
@@ -41,6 +42,6 @@ const styles = StyleSheet.create({
     height: 200,
   },
   inputBody: {
-    padding: 10,
+    padding: SCREEN_WIDTH > 800 ? 20 : 10,
   },
 });

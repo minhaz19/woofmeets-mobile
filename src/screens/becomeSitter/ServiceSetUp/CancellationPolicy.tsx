@@ -27,7 +27,6 @@ const CancellationPolicy = () => {
   const {request: getPolicyData, loading: policyLoader} = useApi(methods._get);
   const getAllPolicyData = async () => {
     const result = await getPolicyData(getPoint);
-    console.log('joss result', result.data.data);
     setPolicy(result?.data?.data);
   };
   useEffect(() => {

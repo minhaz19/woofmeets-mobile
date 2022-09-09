@@ -7,7 +7,7 @@ import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
 import AppInputSelect from './AppInputSelect';
 import {useDispatch} from 'react-redux';
-import {setCross} from '../../../store/slices/hittingCross';
+import {setCross} from '../../../store/slices/misc/hittingCross';
 import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
 interface Props {
   name: string;

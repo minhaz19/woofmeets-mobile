@@ -29,7 +29,7 @@ import PetPreference from '../screens/becomeSitter/ServiceSetUp/PetPreference';
 import SitterDetails from '../screens/becomeSitter/Details';
 import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy';
 import YourHome from '../screens/becomeSitter/ServiceSetUp/YourHome';
-import SafetyQuiz from '../screens/SafetyQuiz';
+import SafetyQuiz from '../screens/becomeSitter/SafetyQuiz';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {

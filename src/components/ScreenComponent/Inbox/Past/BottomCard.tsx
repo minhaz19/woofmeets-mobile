@@ -20,7 +20,7 @@ import DescriptionText from '../../../common/text/DescriptionText';
 import Card from '../../../UI/Card';
 import AppCheckbox from '../../../common/Form/AppCheckbox';
 import {useDispatch} from 'react-redux';
-import {setOpenFilter} from '../../../../store/slices/openFilter';
+import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
 
 interface Props {
   isPayment?: boolean;

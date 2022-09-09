@@ -3,7 +3,7 @@ import React from 'react';
 import {designs} from '../../../constants/theme/common/modalEndStyles';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useDispatch} from 'react-redux';
-import {setOpenFilter} from '../../../store/slices/openFilter';
+import {setOpenFilter} from '../../../store/slices/misc/openFilter';
 const ModalBottomView = (props: {
   setIsModalVisible?: (arg0: boolean) => void;
   isModalVisible?: boolean | undefined;

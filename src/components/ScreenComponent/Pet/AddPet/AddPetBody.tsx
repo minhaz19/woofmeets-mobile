@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  inputContainer: {paddingHorizontal: 20, flex: 1},
+  inputContainer: {flex: 1},
   spaceHeader: {
     paddingVertical: 10,
   },

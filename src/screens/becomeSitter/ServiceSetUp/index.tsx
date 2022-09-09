@@ -6,8 +6,13 @@ import SelectServiceTitle from '../../../components/ScreenComponent/becomeSitter
 import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 
 const ServiceSetUp = (props: {
-  navigation: {navigate: (arg0: string) => void};
-  route: {params: {serviceData: any[]}};
+  navigation: {
+    navigate: (
+      arg0: string,
+      arg1?: {serviceId: string; providerServicesId?: string},
+    ) => void;
+  };
+  route: {params: {serviceData: any; providerServicesId: any}};
 }) => {
   const {colors} = useTheme();
   const boardingSelection = [
@@ -16,7 +21,10 @@ const ServiceSetUp = (props: {
       checked: true,
       icon: <ArrowRight />,
       screen: () => {
-        props.navigation.navigate('Rates');
+        props.navigation.navigate('Rates', {
+          serviceId: props.route.params.serviceData.serviceTypeId,
+          providerServicesId: props.route.params.serviceData.providerServicesId,
+        });
       },
     },
     {
@@ -24,7 +32,9 @@ const ServiceSetUp = (props: {
       checked: false,
       icon: <ArrowRight />,
       screen: () => {
-        props.navigation.navigate('Availability');
+        props.navigation.navigate('Availability', {
+          serviceId: props.route.params.serviceData.serviceTypeId,
+        });
       },
     },
     {

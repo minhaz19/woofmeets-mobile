@@ -140,67 +140,56 @@ const providerAvailablityValidationSchema = Yup.object().shape({
 });
 
 const BoardingSettingsSchema = Yup.object().shape({
-  payPerService: Yup.number()
+  baserate: Yup.number()
     .nullable(true)
     .required('Pet per service is required')
     .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
-  holiDayRate: Yup.number()
+  sixtyMinRate: Yup.number()
+    .nullable(true)
+    // .required('holiday rate is required')
+    // .typeError('A Number is Required')
+    .max(150, 'Please enter a value less than or equal to 150.'),
+  holidayrate: Yup.number()
     .nullable(true)
     .required('holiday rate is required')
     .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
-  additionalDogRate: Yup.number()
+  additionaldog: Yup.number()
     .nullable(true)
     .required('Additional dog rate is required')
     .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
   puppyRate: Yup.number()
     .nullable(true)
-    .required('Puppy rate is required')
-    .typeError('A Number is Required')
+    // .required('Puppy rate is required')
+    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
-  catRate: Yup.number()
+  catcare: Yup.number()
     .nullable(true)
     .required('Cate rate is required')
     .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
   additionalCat: Yup.number()
     .nullable(true)
-    .required('Additional cat rate is required')
-    .typeError('A Number is Required')
+    // .required('Additional cat rate is required')
+    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
   extendedStayRate: Yup.number()
     .nullable(true)
-    .required('Extended stay rate is required')
-    .typeError('A Number is Required')
+    // .required('Extended stay rate is required')
+    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
   bathingGrooming: Yup.number()
     .nullable(true)
-    .required('Bathing grooming is required')
-    .typeError('A Number is Required')
+    // .required('Bathing grooming is required')
+    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
   pickUpDropOff: Yup.number()
     .nullable(true)
-    .required('Pick up drop off is required')
-    .typeError('A Number is Required')
+    // .required('Pick up drop off is required')
+    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
-  // homeFullTimeInWeek: Yup.string().required('Please Select at least one'),
-  // // selectDay: Yup.array().required('Please Select at least one'),
-  // homeFullTimeInDay: Yup.string().required('Please Select at least one'),
-  // advancedNotice: Yup.string().required('Please Select at least one'),
-  // homeType: Yup.string().required('Please Select at least one'),
-  // yardType: Yup.string().required('Please Select at least one'),
-  // petOwnerBoarding: Yup.array()
-  //   .required('Please Select at least one')
-  //   .min(1, 'Please Select at least one'),
-  // hosting: Yup.array()
-  //   .required('Please Select at least one')
-  //   .min(1, 'Please Select at least one'),
-  // cancellationPolicy: Yup.string().required('Please Select at least one'),
-  // petPreference: Yup.array()
-  //   .required('Please Select at least one')
-  //   .min(1, 'Please Select at least one'),
 });
 const safetyQuizValidationSchema = Yup.object().shape({
   quiz_one: Yup.string(),

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {ScrollView, StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -8,9 +7,9 @@ import methods from '../../../api/methods';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 // import {usePetPreferenceInitialData} from './useServiceSetUpInitialState';
-import {getPetPreference} from '../../../store/slices/setUpService/petPreference/getPetPreference';
+import {getPetPreference} from '../../../store/slices/onBoarding/setUpService/petPreference/getPetPreference';
 import SubPetPreference from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubPetPreference/SubPetPreference';
-import { petPreferenceSchema } from './useServiceSetUpInitialState';
+import {petPreferenceSchema} from './useServiceSetUpInitialState';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 const endPoint = '/pet-preference';
 

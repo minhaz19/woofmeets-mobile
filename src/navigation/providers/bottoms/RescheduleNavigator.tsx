@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import RescheduleMain from '../../../screens/provider/Reschedule/RescheduleMain';
 import HeaderWithBack from '../../../components/common/header/HeaderWithBack';
 import { FilterIcon } from '../../../assets/svgs/SVG_LOGOS';
-import {setOpenFilter} from '../../../store/slices/openFilter';
+import {setOpenFilter} from '../../../store/slices/misc/openFilter';
 
 const Stack = createStackNavigator();
 

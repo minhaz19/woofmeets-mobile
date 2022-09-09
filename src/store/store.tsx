@@ -11,8 +11,8 @@ import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
 import addPetReducer from './slices/pet/addPet';
 import authReducer from './slices/auth/userSlice';
-import hittingCross from './slices/hittingCross';
-import openFilter from './slices/openFilter';
+import hittingCross from './slices/misc/hittingCross';
+import openFilter from './slices/misc/openFilter';
 import userProfileSlice from './slices/userProfile/userProfileSlice';
 import contactReducer from './slices/profile/contact';
 import breedsSlice from './slices/pet/breeds/breedsSlice';
@@ -21,7 +21,10 @@ import petGallerySlice from './slices/pet/petGallery/petGallerySlice';
 import singlePetSlice from './slices/pet/singlePet/singlePetSlice';
 import servicesReducer from './slices/profile/services';
 import detailsReducer from './slices/profile/details';
-import PetPreferenceSlice from './slices/setUpService/petPreference/PetPreferenceSlice';
+import PetPreferenceSlice from './slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
+import serviceRateFieldSlice from './slices/onBoarding/setUpService/rates/Field/serviceRateFieldSlice';
+import baseRateSlice from './slices/onBoarding/setUpService/rates/baseRateSlice';
+import rateFieldValueSlice from './slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -37,6 +40,9 @@ const appReducer = combineReducers({
   petPreference: PetPreferenceSlice,
   services: servicesReducer,
   details: detailsReducer,
+  serviceRates: serviceRateFieldSlice,
+  baseRate: baseRateSlice,
+  fieldValue: rateFieldValueSlice,
 });
 
 const RootReducer = (
