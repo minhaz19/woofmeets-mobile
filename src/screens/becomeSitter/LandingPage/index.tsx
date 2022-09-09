@@ -36,6 +36,7 @@ const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => an
         id: 5,
         title: 'Choose a Subscription',
         isCompleted: false,
+        onPress: () => props.navigation.navigate('SubscriptionScreen'),
       },
   ];
   return (

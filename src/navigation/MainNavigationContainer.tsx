@@ -30,6 +30,7 @@ import SitterDetails from '../screens/becomeSitter/Details';
 import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy';
 import YourHome from '../screens/becomeSitter/ServiceSetUp/YourHome';
 import SafetyQuiz from '../screens/SafetyQuiz';
+import SubscriptionScreen from '../screens/becomeSitter/Subscription';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -362,6 +363,21 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
               <HeaderWithBack
                 navigation={navigation}
                 title="Details"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SubscriptionScreen"
+          component={SubscriptionScreen}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Subscription"
                 notification
               />
             ),

@@ -54,7 +54,7 @@ const MyPetList = ({
           <View>
             <Image
               source={{uri: profile_image ? profile_image : imageUri}}
-              style={styles.image}
+              style={{...styles.image, borderColor: colors.borderColor}}
               resizeMode="cover"
             />
             <View
@@ -107,13 +107,13 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    // elevation: 5,
     marginVertical: 10,
   },
 
   image: {
     width: '100%',
     height: SCREEN_WIDTH < 390 ? SCREEN_HEIGHT / 6 : SCREEN_HEIGHT / 7.5,
+    borderWidth: 1,
   },
   textContainer: {
     paddingHorizontal: 10,

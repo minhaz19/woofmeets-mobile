@@ -50,11 +50,11 @@ const Gallery = () => {
   const getImage = async () => {
     const result = await getRequest(endPoint);
     const imageData = [];
-    for (let i = 0; i < result.data.data.length; i++) {
+    for (let i = 0; i < result.data.data?.length; i++) {
       imageData.push({
-        key: result.data.data[i].id,
-        name: result.data.data[i].imageSrc.url,
-        caption: result.data.data[i].caption,
+        key: result.data.data[i]?.id,
+        name: result.data.data[i]?.imageSrc.url,
+        caption: result.data.data[i]?.caption,
       });
     }
     setPhoto(imageData);
@@ -72,7 +72,7 @@ const Gallery = () => {
   const handleRemove = async (id: string) => {
     const removeEndPoint = `/gallery/photo/delete/${id}`;
     const result = await deleteRequest(removeEndPoint);
-    setPhoto(photo?.filter((image: any) => image.key !== result.data.data.id));
+    setPhoto(photo?.filter((image: any) => image.key !== result.data.data?.id));
   };
 
   //Upload photo
@@ -84,9 +84,9 @@ const Gallery = () => {
     const result = await uploadRequest(uploadEndPoint, _e);
     try {
       let imageData = {
-        name: result.data.data.imageSrc.url,
-        key: result.data.data.id,
-        caption: result.data.data.caption,
+        name: result.data.data?.imageSrc?.url,
+        key: result.data.data?.id,
+        caption: result.data.data?.caption,
       };
       setPhoto([...photo, imageData]);
     } catch (err) {
