@@ -56,7 +56,6 @@ export const basicRates = [
     placeholder: 'pay per service',
     name: 'payPerService',
     checkbox: 'Update my additional rates based on my base rate',
-    linkText: 'Need help with rates?',
     shortText: 'Turn off to adjust your rates manually',
     additionalRates: 'Show additional rates',
     icon: false,

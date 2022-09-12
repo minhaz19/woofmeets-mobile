@@ -71,7 +71,7 @@ const contact = createSlice({
       .addCase(getContactInfo.fulfilled, (state, {payload}) => {
         state.loading = false;
         state.contactInfo = payload.data.emergencyContact;
-        state.phoneNumber = payload.data.contact.phone;
+        state.phoneNumber = payload.data.contact?.phone;
         state.error = null;
       })
       .addCase(getContactInfo.rejected, (state, {payload}) => {

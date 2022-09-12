@@ -1,4 +1,4 @@
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import HeaderText from '../../../components/common/text/HeaderText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -13,6 +13,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getServiceTypes} from '../../../store/slices/profile/services';
 import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 
 interface Props {
   item: any;
@@ -23,8 +24,8 @@ const ServiceSelection = (props: {
 }) => {
   const {colors} = useTheme();
   const [sequence, setSequence] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
-  const serviceTypes = useAppSelector(state => state.services.serviceTypes);
+  const [isloading, setLoading] = useState<boolean>(false);
+  const {serviceTypes, loading} = useAppSelector(state => state.services);
 
   const dispatch = useAppDispatch();
 
@@ -52,6 +53,7 @@ const ServiceSelection = (props: {
       const response: ApiResponse<any> = await apiClient.post(
         `/provider-services/${sequence}`,
       );
+      console.log('response', response);
       if (!response.ok) {
         setLoading(false);
         props.navigation.navigate('HomeProfile');
@@ -113,33 +115,41 @@ const ServiceSelection = (props: {
           containerStyle={btnStyles.containerStyleFullWidth}
           titleStyle={btnStyles.titleStyle}
           onSelect={onServicePostHandle}
-          loading={loading}
+          loading={isloading}
         />
       </View>
     );
   };
-  return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
-      {serviceTypes && (
-         <FlatList
-          showsVerticalScrollIndicator={false}
-          columnWrapperStyle={styles.flatList}
-          data={serviceTypes}
-          numColumns={2}
-          renderItem={RenderItem}
-          keyExtractor={item => item.id}
-          ListFooterComponent={renderFooter}
-          ListHeaderComponent={renderHeader}
-        />
-      )}
-    </View>
-  );
+
+  if (refreshing || loading) {
+    return(
+      <AppActivityIndicator visible={true} />
+    )
+  } else {
+    return (
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: colors.backgroundColor,
+          },
+        ]}>
+        {serviceTypes && (
+          <FlatList
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            columnWrapperStyle={styles.flatList}
+            data={serviceTypes}
+            numColumns={2}
+            renderItem={RenderItem}
+            keyExtractor={item => item.id}
+            ListFooterComponent={renderFooter}
+            ListHeaderComponent={renderHeader}
+          />
+        )}
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

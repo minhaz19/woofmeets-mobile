@@ -1,6 +1,6 @@
 import {View} from 'react-native';
 import React from 'react';
-import {Controller, useFormContext} from 'react-hook-form';
+import {Controller} from 'react-hook-form';
 import AppCheckbox from '../../../../common/Form/AppCheckbox';
 interface Props {
   title: string;
@@ -31,14 +31,13 @@ const ServiceCheckbox = ({
       <Controller
         control={control}
         render={({field: {onBlur, value}}) => {
-          // console.log(name, value);
           return (
             <AppCheckbox
               title={title}
               key={typeKey}
               square={square}
               radio={radio}
-              active={active ? active : value === typeKey ? true : false}
+              active={active ? active : typeKey === value ? true : false}
               onPress={onPress}
               onBlur={onBlur}
             />

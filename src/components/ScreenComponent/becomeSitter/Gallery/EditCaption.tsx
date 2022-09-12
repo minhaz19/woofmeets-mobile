@@ -37,7 +37,7 @@ const EditCaption = ({captionImage, setIsModalVisible}: Props) => {
     const formatCaption = {caption: e.caption};
     const editEndPoint = `/gallery/photo/update/${captionImage.id}`;
     const result = await request(editEndPoint, formatCaption);
-    if (result.data.data) {
+    if (result.data?.data) {
       setIsModalVisible(false);
     }
   };

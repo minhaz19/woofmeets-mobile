@@ -3,7 +3,7 @@ import {useMemo, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
-import {setCross} from '../../../store/slices/hittingCross';
+import {setCross} from '../../../store/slices/misc/hittingCross';
 import {compareDate} from './compareDate';
 
 export const useHandleRange = (name = 'dateRange') => {

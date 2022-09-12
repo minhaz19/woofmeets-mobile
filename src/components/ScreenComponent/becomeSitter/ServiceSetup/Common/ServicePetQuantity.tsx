@@ -5,25 +5,18 @@ import {MinusSvg, PlusSvg} from '../../../BoardingSetting/utils/BoardingSvg';
 import HeaderText from '../../../../common/text/HeaderText';
 import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import {useAppDispatch, useAppSelector} from '../../../../../store/store';
-import { decrement, increment } from '../../../../../store/slices/setUpService/petPreference/PetPreferenceSlice';
+import { decrement, increment } from '../../../../../store/slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
 
 interface Props {
   name: string;
   errors: any;
   control: any;
-  setValue: (arg1: string, arg2: any, arg3?: any) => void;
+  setValue: any;
 }
 
-const ServicePetQuantity: FC<Props> = ({
-  name,
-  control,
-  setValue,
-  errors,
-}) => {
+const ServicePetQuantity: FC<Props> = ({name, control, setValue, errors}) => {
   const dispatch = useAppDispatch();
-  const {petPerDay} = useAppSelector(
-    (state: any) => state?.petPreference,
-  );
+  const {petPerDay} = useAppSelector((state: any) => state?.petPreference);
   const handleIncrement = () => {
     dispatch(increment());
   };

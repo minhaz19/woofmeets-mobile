@@ -12,9 +12,9 @@ import PetNavigator from './bottoms/PetNavigator';
 import authStorage from '../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
 import ProHomeNavigator from './providers/bottoms/HomeNavigator';
-import { ProHomeIcon, ProRescheduleIcon } from '../assets/svgs/Provider_Logos';
-import ProSettingNavigator from './providers/bottoms/SettingNavigator';
+import {ProHomeIcon, ProRescheduleIcon} from '../assets/svgs/Provider_Logos';
 import ProRescheduleNavigator from './providers/bottoms/RescheduleNavigator';
+import ProSettingNavigator from './providers/bottoms/SettingNavigator';
 
 const Tab = createBottomTabNavigator();
 

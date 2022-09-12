@@ -29,7 +29,9 @@ import PetPreference from '../screens/becomeSitter/ServiceSetUp/PetPreference';
 import SitterDetails from '../screens/becomeSitter/Details';
 import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy';
 import YourHome from '../screens/becomeSitter/ServiceSetUp/YourHome';
-import SafetyQuiz from '../screens/SafetyQuiz';
+import Availability from '../screens/becomeSitter/ServiceSetUp/Availability/Availability';
+import SafetyQuiz from '../screens/becomeSitter/SafetyQuiz';
+import SubscriptionScreen from '../screens/becomeSitter/Subscription';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -162,6 +164,17 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="Rates"
           component={Rates}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Service Setup" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="Availability"
+          component={Availability}
           options={({navigation}) => ({
             title: '',
             header: () => (
@@ -362,6 +375,21 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
               <HeaderWithBack
                 navigation={navigation}
                 title="Details"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SubscriptionScreen"
+          component={SubscriptionScreen}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Subscription"
                 notification
               />
             ),

@@ -1,28 +1,25 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {ScrollView, StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
-import AppForm from '../../../components/common/Form/AppForm';
 import methods from '../../../api/methods';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 // import {usePetPreferenceInitialData} from './useServiceSetUpInitialState';
-import {getPetPreference} from '../../../store/slices/setUpService/petPreference/getPetPreference';
+import {getPetPreference} from '../../../store/slices/onBoarding/setUpService/petPreference/getPetPreference';
 import SubPetPreference from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubPetPreference/SubPetPreference';
-import { petPreferenceSchema } from './useServiceSetUpInitialState';
+// import {petPreferenceSchema} from './useServiceSetUpInitialState';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+// import SmallAppForm from '../../../components/common/Form/SmallAppForm';
 const endPoint = '/pet-preference';
 
-const PetPreference = (props: {
-  navigation: {navigate: (arg0: string) => void};
-  route: {params: {serviceData: any[]}};
-}) => {
+const PetPreference = (props: { route: { params: { itemId: any; name: any; image: any; description: any; }; }; navigation: { goBack: () => void; }; }) => {
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
-  const {loading, petPreference} = useAppSelector(
+  const {loading, petPreference, petPerDay} = useAppSelector(
     (state: any) => state?.petPreference,
   );
+  const {itemId, name, image, description} = props?.route?.params;
   useEffect(() => {
     petPreference === null && dispatch(getPetPreference());
   }, [petPreference, dispatch]);
@@ -31,7 +28,13 @@ const PetPreference = (props: {
   const handlePetPreference = async (e: any) => {
     const result = await putRequest(endPoint, e);
     if (result) {
-      props.navigation.navigate('YourHome');
+      // props.navigation.navigate('YourHome', {
+      //   itemId: itemId,
+      //   name: name,
+      //   image: image,
+      //   description: description,
+      // });
+      props.navigation.goBack();
     }
   };
 
@@ -43,23 +46,22 @@ const PetPreference = (props: {
           styles.rootContainer,
           {backgroundColor: colors.backgroundColor},
         ]}>
-        <ReusableHeader />
-        <AppForm
-          initialValues={{
-            smallDog: petPreference?.smallDog ? petPreference.smallDog : false,
-            mediumDog: petPreference?.mediumDog
-              ? petPreference.mediumDog
-              : false,
-            largeDog: petPreference?.largeDog ? petPreference.largeDog : false,
-            giantDog: petPreference?.giantDog ? petPreference.giantDog : false,
-            cat: petPreference?.cat ? petPreference.cat : false,
-          }}
-          validationSchema={petPreferenceSchema}>
-          <SubPetPreference
-            handlePetPreference={handlePetPreference}
-            putLoading={putLoading}
-          />
-        </AppForm>
+        <ReusableHeader
+          itemId={itemId}
+          name={name}
+          image={image}
+          description={description}
+        />
+        {/* <SmallAppForm
+          initialValues={usePetPreferenceInitialData()}
+          validationSchema={petPreferenceSchema}> */}
+        <SubPetPreference
+          handlePetPreference={handlePetPreference}
+          putLoading={putLoading}
+          petPreference={petPreference}
+          petPerDay={petPerDay}
+        />
+        {/* </SmallAppForm> */}
       </ScrollView>
     </>
   );

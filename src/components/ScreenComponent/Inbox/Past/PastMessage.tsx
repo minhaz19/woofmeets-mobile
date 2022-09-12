@@ -7,7 +7,7 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {PastSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
 import {useDispatch} from 'react-redux';
-import {setOpenFilter} from '../../../../store/slices/openFilter';
+import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
 
 const PastMessage = () => {
   const dispatch = useDispatch();

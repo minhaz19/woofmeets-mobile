@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
-import apiClient from '../../../../api/client';
+import apiClient from '../../../../../api/client';
 export const getPetPreference = createAsyncThunk(
   '/pet-preference',
   async () => {

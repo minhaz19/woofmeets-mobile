@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
-import {registerUser} from '../../../store/slices/auth/userAction';
-import {authProviderLoading} from '../../../store/slices/auth/userSlice';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {registerUser} from '../../../../store/slices/auth/userAction';
+import {authProviderLoading} from '../../../../store/slices/auth/userSlice';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
 interface RegProps {
   email: string;
   firstName: string;

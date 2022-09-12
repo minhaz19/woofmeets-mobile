@@ -5,13 +5,20 @@ import HeaderText from '../../../common/text/HeaderText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import Divider from '../../../UI/Divider';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
-import {BoardingIcon} from '../../../../assets/svgs/Services_SVG';
+// import {BoardingIcon} from '../../../../assets/svgs/Services_SVG';
 import IOSButton from '../../../UI/IOSButton';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {QuestionIcon} from '../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../constants/Colors';
 
-const ReusableHeader = () => {
+interface props {
+  itemId?: string;
+  image?: any;
+  description: string;
+  name: string;
+}
+
+const ReusableHeader = ({name, image, description}: props) => {
   const {colors} = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const modalData = [
@@ -45,11 +52,12 @@ const ReusableHeader = () => {
         />
       </ModalBottomView>
       <View style={styles.serviceDetailsContainer}>
-        <BoardingIcon width={50} height={50} />
+        {/* <BoardingIcon width={50} height={50} /> */}
+        <View style={styles.imageContainer}>{image}</View>
         <View style={styles.serviceDetails}>
-          <HeaderText text={'Boarding'} textStyle={styles.headerText} />
+          <HeaderText text={name} textStyle={styles.headerText} />
           <DescriptionText
-            text="Overnight pet care in your clients home"
+            text={description}
             textStyle={{color: colors.descriptionText}}
           />
         </View>
@@ -96,5 +104,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 10,
     alignItems: 'center',
+  },
+  imageContainer: {
+    paddingTop: 6,
   },
 });

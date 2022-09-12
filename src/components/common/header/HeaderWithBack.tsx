@@ -14,6 +14,7 @@ const HeaderWithBack = (props: {
   title: string | undefined;
   notification?: boolean;
   Icon?: any;
+  SecondIcon?: any;
   onPress?: (arg: any) => void;
 }) => {
   const {colors} = useTheme();
@@ -50,18 +51,34 @@ const HeaderWithBack = (props: {
           </View>
         )}
         {props.notification && (
-          <View style={styles.headerContainer}>
-            <TouchableOpacity
-              style={styles.bellContainer}
-              onPress={() => props.navigation.navigate('Notifications')}>
-              <BellIcon
-                height={
-                  SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
-                }
-              />
-              <View style={styles.bellView} />
-            </TouchableOpacity>
-          </View>
+          <>
+            <View style={styles.headerContainer}>
+              <TouchableOpacity
+                style={styles.bellContainer}
+                onPress={() => props.navigation.navigate('Notifications')}>
+                <BellIcon
+                  height={
+                    SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
+                  }
+                />
+                <View style={styles.bellView} />
+              </TouchableOpacity>
+            </View>
+            {props.SecondIcon && (
+              <View style={styles.secondContainer}>
+                <TouchableOpacity
+                  style={styles.touchContainer}
+                  onPress={props.onPress}>
+                  <props.SecondIcon
+                    height={
+                      SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
+                    }
+                  />
+                  {/* <View style={styles.bellView} /> */}
+                </TouchableOpacity>
+              </View>
+            )}
+          </>
         )}
       </View>
     </Screen>
@@ -93,6 +110,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
+  secondContainer: {
+    marginRight: 60,
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 0,
+  },
+  touchContainer: {},
   title: {
     fontWeight: '500',
     fontSize: Text_Size.Text_2,

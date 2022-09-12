@@ -1,8 +1,7 @@
-import {StyleSheet, ScrollView} from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+import {StyleSheet, ScrollView, Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import * as Yup from 'yup';
 import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
-import AppForm from '../../../components/common/Form/AppForm';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
@@ -10,31 +9,46 @@ import SubCancellationPolicy from '../../../components/ScreenComponent/becomeSit
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 
 const getPoint = '/cancellation-policy';
+const getSingleData = '/cancellation-policy/povider-policy';
 
-const CancellationPolicy = () => {
+const CancellationPolicy = (props: {
+  navigation: {navigate: (arg0: string) => void};
+  route: {params: any};
+}) => {
   const [policy, setPolicy] = useState([]);
+  const [singlePolicy, setSinglePolicy] = useState(null);
   const {colors} = useTheme();
-  const cancellationSchema = Yup.object()
-    .shape({
-      // smallDog: Yup.boolean(),
-      // mediumDog: Yup.boolean(),
-      // largeDog: Yup.boolean(),
-      // giantDog: Yup.boolean(),
-      // cat: Yup.boolean(),
-    })
-    .required('select at least one');
-
+  const {itemId, name, image, description} = props?.route?.params;
+  // getAll policy Data
   const {request: getPolicyData, loading: policyLoader} = useApi(methods._get);
   const getAllPolicyData = async () => {
     const result = await getPolicyData(getPoint);
-    console.log('joss result', result.data.data);
     setPolicy(result?.data?.data);
+  };
+
+  // get singlePolicy data
+  const handleGetSingleData = async () => {
+    const result = await getPolicyData(getSingleData);
+    setSinglePolicy(result?.data?.data?.id);
   };
   useEffect(() => {
     getAllPolicyData();
+    handleGetSingleData();
   }, []);
 
-  const handlePolicy = () => {};
+  // post policy id
+  const {request: postRequest, loading: postLoading} = useApi(methods._post);
+  const handlePolicy = async (e: any) => {
+    const postPoint = `/cancellation-policy/provider-policy/${e.policyId}`;
+    const result = await postRequest(postPoint);
+    if(!result.ok) {
+      Alert.alert(result.data.message);
+    }
+    if(result.ok) {
+      Alert.alert(result.data.message);
+      props.navigation.goBack();
+    }
+  };
 
   return (
     <>
@@ -44,21 +58,24 @@ const CancellationPolicy = () => {
           styles.rootContainer,
           {backgroundColor: colors.backgroundColor},
         ]}>
-        <ReusableHeader />
-        <AppForm
+        <ReusableHeader
+          itemId={itemId}
+          name={name}
+          image={image}
+          description={description}
+        />
+        {/* <SmallAppForm
           initialValues={{
-            same_day: false,
-            one_day: false,
-            three_day: false,
-            seven_day: false,
+            policyId: singlePolicy ? singlePolicy : '',
           }}
-          validationSchema={cancellationSchema}>
-          <SubCancellationPolicy
-            handlePetPreference={handlePolicy}
-            // putLoading={putLoading}
-            policy={policy}
-          />
-        </AppForm>
+          validationSchema={cancellationSchema}> */}
+        <SubCancellationPolicy
+          handlePolicy={handlePolicy}
+          postLoading={postLoading}
+          policy={policy}
+          singlePolicy={singlePolicy}
+        />
+        {/* </SmallAppForm> */}
       </ScrollView>
     </>
   );

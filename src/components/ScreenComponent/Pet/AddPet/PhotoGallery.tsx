@@ -48,7 +48,7 @@ const PhotoGallery = ({imageUri, handlePress, onChangeImage}: Props) => {
     <>
       <TouchableOpacity onPress={handlePress} style={styles.galleryContainer}>
         {imageUri ? (
-          <View style={styles.imageCon}>
+          <View style={{...styles.imageCon, borderColor: Colors.primary}}>
             <Image source={{uri: imageUri}} style={styles.image} />
             <TouchableOpacity
               style={[
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 10,
     overflow: 'hidden',
+    borderWidth: 1,
   },
   image: {width: '100%', height: '100%'},
   imageContainer: {

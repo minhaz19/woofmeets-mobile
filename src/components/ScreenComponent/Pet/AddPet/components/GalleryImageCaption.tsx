@@ -24,9 +24,9 @@ const GalleryImageCaptionModal = ({
   } = useForm({
     defaultValues: {
       caption: selectedImgInfo.caption,
-      mode: 'onChange',
-      reValidateMode: 'onChange',
     },
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
   return (

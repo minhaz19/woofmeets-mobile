@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {memo, useCallback, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
-
 import {MultiSelect} from 'react-native-element-dropdown';
 import Text_Size from '../../../constants/textScaling';
 import Colors from '../../../constants/Colors';
@@ -18,18 +17,21 @@ interface Props {
 const AppMultiSelect = ({data, onChange, placeholder, value}: Props) => {
   const [selected, setSelected] = useState(value);
   const {isDarkMode, colors} = useTheme();
-  const renderItem = useCallback((item: any, index) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.selectedTextStyle}>{item.label}</Text>
-        {index === true ? (
-          <Minus fill={Colors.primary} width={20} height={20} />
-        ) : (
-          <Plus fill={Colors.primary} width={20} height={20} />
-        )}
-      </View>
-    );
-  }, []);
+  const renderItem = useCallback(
+    (item: any, index) => {
+      return (
+        <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
+          <Text style={styles.selectedTextStyle}>{item.label}</Text>
+          {index === true ? (
+            <Minus fill={Colors.primary} width={20} height={20} />
+          ) : (
+            <Plus fill={Colors.primary} width={20} height={20} />
+          )}
+        </View>
+      );
+    },
+    [colors.backgroundColor],
+  );
 
   return (
     <View style={styles.container}>

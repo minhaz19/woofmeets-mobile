@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React  from 'react';
+import React from 'react';
 import {petType} from '../../../../../utils/config/Data/serviceSetUpData/petPreference';
 import HeaderText from '../../../../common/text/HeaderText';
 import DescriptionText from '../../../../common/text/DescriptionText';
@@ -10,10 +10,11 @@ import useHandleMultipleActiveCheck from '../handleCheck/HandleCheck';
 interface Props {
   errors: any;
   control: any;
-  setValue: (arg1: string, arg2: any, arg3: any) => void;
+  setValue: any;
+  data: any;
 }
 
-const PetType = ({control, errors, setValue}: Props) => {
+const PetType = ({control, errors, setValue, data}: Props) => {
   const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
     petType.options,
   );
@@ -28,7 +29,7 @@ const PetType = ({control, errors, setValue}: Props) => {
             key={index}
             square
             typeKey={item.id}
-            // active={item.value}
+            active={data[item.name]}
             onPress={() => {
               handleMultipleCheck(item.id);
               setValue(item.name, item.value, {
@@ -37,11 +38,10 @@ const PetType = ({control, errors, setValue}: Props) => {
             }}
             name={item.name}
             control={control}
-            setValue={setValue}
           />
         );
       })}
-      <ErrorMessage error={errors[petType.name]?.message} />
+      {/* <ErrorMessage error={errors[petType.name]?.message} /> */}
     </View>
   );
 };

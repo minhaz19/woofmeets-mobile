@@ -36,12 +36,20 @@ const AppCheckboxField = ({
         <Controller
           control={control}
           render={({field: {onBlur, value}}) => {
+            // console.log('value', name, value, active);
             return (
               <AppCheckbox
                 title={title}
                 square={square}
                 radio={radio}
-                active={active ? active : typeValue === value ? true : false}
+                active={
+                  typeof active === 'boolean'
+                    ? active
+                    : typeValue === value
+                    ? true
+                    : false
+                }
+                // active={active}
                 onPress={onPress}
                 onBlur={onBlur}
                 small={small}
