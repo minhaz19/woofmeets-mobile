@@ -18,7 +18,21 @@ const SubscriptionScreen = (props: { navigation: { navigate: (arg0: string) => a
         title: 'Basic',
         description: 'Only 5% Service Fee For All Unlimited Appointments',
         price: '0',
-        onPress: () => props.navigation.navigate('')
+        onPress: () => props.navigation.navigate(''),
+        details: [
+          {
+            id: 1,
+            description: 'Unlimited appointments only at 5% service charge for each appointment.',
+          },
+          {
+            id: 2,
+            description: 'Free Service tracking for better sitters and owners engagement.',
+          },
+          {
+            id: 3,
+            description: 'Unlimited Text Messaging with owners.',
+          },
+        ]
     },
     {
         id: 2,
@@ -26,7 +40,29 @@ const SubscriptionScreen = (props: { navigation: { navigate: (arg0: string) => a
         title: 'Gold',
         description: 'Only 5% Service Fee For All Unlimited Appointments',
         price: '75',
-        onPress: () => props.navigation.navigate('')
+        onPress: () => props.navigation.navigate(''),
+        details: [
+          {
+            id: 1,
+            description: 'Unlimited appointments only at 5% service charge for each appointment.',
+          },
+          {
+            id: 2,
+            description: 'Free Service tracking for better sitters and owners engagement.',
+          },
+          {
+            id: 3,
+            description: 'Unlimited Text Messaging with owners.',
+          },
+          {
+            id: 4,
+            description: 'Unlimited appointments only at 5% service charge for each appointment.',
+          },
+          {
+            id: 5,
+            description: 'Free Service tracking for better sitters and owners engagement.',
+          },
+        ]
     },
     {
         id: 3,
@@ -34,7 +70,38 @@ const SubscriptionScreen = (props: { navigation: { navigate: (arg0: string) => a
         title: 'Platinum',
         description: 'Only 5% Service Fee For All Unlimited Appointments',
         price: '149',
-        onPress: () => props.navigation.navigate('')
+        onPress: () => props.navigation.navigate(''),
+        details: [
+          {
+            id: 1,
+            description: 'Unlimited appointments only at 5% service charge for each appointment.',
+          },
+          {
+            id: 2,
+            description: 'Free Service tracking for better sitters and owners engagement.',
+          },
+          {
+            id: 3,
+            description: 'Unlimited Text Messaging with owners.',
+          },
+          {
+            id: 4,
+            description: 'Unlimited appointments only at 5% service charge for each appointment.',
+          },
+          {
+            id: 5,
+            description: 'Free Service tracking for better sitters and owners engagement.',
+          },
+          {
+            id: 6,
+            description: 'Unlimited Text Messaging with owners.',
+          },
+          {
+            id: 7,
+            description: 'Unlimited appointments only at 5% service charge for each appointment.',
+          },
+          
+        ]
     },
   ]
 
@@ -54,7 +121,9 @@ const SubscriptionScreen = (props: { navigation: { navigate: (arg0: string) => a
         <HeaderText text="Choose a subscription that works for you" textStyle={styles.textStyle} />
         <TitleText text="Lorem ipsum description about the subscription packs" textStyle={{...styles.textStyle, paddingBottom: 10}} />
       {packageData.map(item => (
-        <PackageCard item={item} onPressEvent={onPressEvent} sequence={sequence} />
+        <PackageCard item={item} onPressEvent={onPressEvent} sequence={sequence} key={item.id} navigation={{
+          goBack: () => {}
+        }} />
       ))}
       <View style={styles.footerContainer}>
         <ButtonCom
