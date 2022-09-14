@@ -8,20 +8,24 @@ import ContactInput from '../../components/ScreenComponent/setting/ContactInput'
 import {contactValues} from '../../utils/config/setting/initalValues';
 import {contactValidationSchema} from '../../utils/config/setting/validationSchema';
 import BottomSpacing from '../../components/UI/BottomSpacing';
-import AppForm from '../../components/common/Form/AppForm';
 import { getContactInfo, postContactInfo } from '../../store/slices/profile/contact';
 import { useAppDispatch, useAppSelector } from '../../store/store';
+import { setProfileData } from '../../store/slices/onBoarding/initial';
+import AppFormReset from '../../components/common/Form/AppFormReset';
 
 const ContactScreen = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
   const emergencyContactSubmit = (contactData: any) => {
     dispatch(postContactInfo(contactData));
+    dispatch(setProfileData({pass:1}))
   };
   const [refreshing, setRefreshing] = useState(false);
   const contact = useAppSelector(
     state => state.contact,
   );
+
+  console.log(contact);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -47,14 +51,14 @@ const ContactScreen = (props: { navigation: { navigate: (arg0: string) => void; 
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <AppForm
+      <AppFormReset
         initialValues={contact.contactInfo ? {  emergencyContactName: contact.contactInfo.name,
         email: contact.contactInfo.email,
         phone: contact.contactInfo.phone,
         emergencyPhone: contact.contactInfo.phone} : contactValues}
         validationSchema={contactValidationSchema}>
         <ContactInput handleSubmit={emergencyContactSubmit} navigation={props.navigation} />
-      </AppForm>
+      </AppFormReset>
       <View style={styles.footerContainer}>
         <View style={styles.termsContainer}>
           <Text style={[styles.details, {color: colors.lightText}]}>

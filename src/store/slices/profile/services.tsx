@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
+import { Alert } from 'react-native';
 import apiClient from '../../../api/client';
 
 export const getServiceTypes = createAsyncThunk(
@@ -19,10 +20,15 @@ export const getUserServices = createAsyncThunk(
     const response: ApiResponse<any> = await apiClient.get(
       '/provider-services',
     );
+    console.log(response.data.message)
     if (!response.ok) {
+      Alert.alert(response.data.message);
       throw new Error(response.data.message);
     }
-    return response.data;
+    if (response.ok) {
+      console.log('res', response.data)
+      return response.data;
+    }
   },
 );
 

@@ -25,9 +25,11 @@ import PetPreferenceSlice from './slices/onBoarding/setUpService/petPreference/P
 import serviceRateFieldSlice from './slices/onBoarding/setUpService/rates/Field/serviceRateFieldSlice';
 import baseRateSlice from './slices/onBoarding/setUpService/rates/baseRateSlice';
 import rateFieldValueSlice from './slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueSlice';
+import initial from './slices/onBoarding/initial';
 
 const appReducer = combineReducers({
   auth: authReducer,
+  initial: initial,
   contact: contactReducer,
   addPet: addPetReducer,
   filter: openFilter,

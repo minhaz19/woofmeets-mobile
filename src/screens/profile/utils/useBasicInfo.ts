@@ -1,5 +1,6 @@
 import {Alert} from 'react-native';
 import methods from '../../../api/methods';
+import { setProfileData } from '../../../store/slices/onBoarding/initial';
 import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {useApi} from '../../../utils/helpers/api/useApi';
@@ -26,6 +27,7 @@ export const useBasicInfo = () => {
     if (result.ok) {
       Alert.alert('Information Updated!');
       dispatch(getUserProfileInfo());
+      dispatch(setProfileData({pass: 0}));
     }
   };
 

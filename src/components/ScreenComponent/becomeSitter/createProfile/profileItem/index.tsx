@@ -4,6 +4,7 @@ import TitleText from '../../../../common/text/TitleText';
 import Colors from '../../../../../constants/Colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ShortText from '../../../../common/text/ShortText';
 
 const ProfileItemCard = (props: {
   userInfo: any;title: string; id: number; isCompleted: boolean, handleClick: ((event: GestureResponderEvent) => void) | undefined; name: string 
@@ -30,7 +31,7 @@ const ProfileItemCard = (props: {
   const getIconType = (name: string) => {
     switch(name) {
       case 'pet':
-        if (props.userInfo && props.userInfo[`${props.name}`]?.length > 0) {
+        if (props.isCompleted) {
           return (
             <CompletedIcon />
           )
@@ -40,7 +41,7 @@ const ProfileItemCard = (props: {
           )
         }
         case 'Gallery':
-          if (props.userInfo && props.userInfo[`${props.name}`]?.length > 0) {
+          if (props.isCompleted) {
             return (
               <CompletedIcon />
             )
@@ -50,7 +51,7 @@ const ProfileItemCard = (props: {
             )
           }
         case 'basicInfo':
-          if (props.userInfo && props.userInfo[`${props.name}`]) {
+          if (props.isCompleted) {
             return (
               <CompletedIcon />
             )
@@ -60,7 +61,7 @@ const ProfileItemCard = (props: {
             )
           }
         case 'contact':
-          if (props.userInfo && props.userInfo[`${props.name}`]) {
+          if (props.isCompleted) {
             return (
               <CompletedIcon />
             )
@@ -70,7 +71,7 @@ const ProfileItemCard = (props: {
             )
           }
         case 'provider':
-          if (props.userInfo && props.userInfo[`${props.name}`]?.providerDetails) {
+          if (props.isCompleted) {
             return (
               <CompletedIcon />
             )
@@ -82,25 +83,15 @@ const ProfileItemCard = (props: {
     }
   }
   return (
-    <TouchableOpacity onPress={props.handleClick}>
       <View style={styles.headerContainer}>
-        <View style={styles.cardContainer}>
-          <View style={styles.textContainer}>
-          {props?.userInfo && !props.userInfo[props.name] ?
+        {props?.userInfo && !props.userInfo[props.name] ?
           <View style={{...styles.numberViewContainerOuter, backgroundColor: Colors.primaryLight}}>
             <View style={{...styles.numberViewContainer, backgroundColor: Colors.primary}}/>
           </View> : 
-          getIconType(props.name)}
-          <TitleText text={props.title} textStyle={{...styles.textStyle, color: Colors.light.subText}} />
-          </View>
-            <MaterialCommunityIcons
-            name="chevron-right"
-            size={22}
-            color={Colors.subText}
-            />
-        </View>
+          getIconType(props.name)
+        }
+        <ShortText text={props.title} textStyle={{...styles.textStyle, color: Colors.light.subText}} />
       </View>
-    </TouchableOpacity>
   );
 };
 
@@ -110,24 +101,21 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 10,
     elevation: 1,
-    width: '90%',
-    paddingLeft: '5%',
-    marginLeft: '5%',
     marginVertical: '1%',
   },
-  headerContainer: {
-    width: '100%',
-    borderRadius: 0,
-    paddingVertical: 12,
+  headerContainer: { 
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cardContainer: {
-    width: '90%',
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   textStyle: {
     fontWeight: '500',
+    paddingTop: 5,
   },
   numberStyle: {
     fontWeight: '500',
