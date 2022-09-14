@@ -5,6 +5,7 @@ import apiClient from '../../../api/client';
 export const postContactInfo = createAsyncThunk(
     'contact/postContactInfo',
     async ({emergencyContactName, email, emergencyPhone}: any, {rejectWithValue}) => {
+      console.log('------------------------',emergencyContactName, email)
       try {
         const response: ApiResponse<any> = await apiClient.post('/user-profile/add-emergency-contact-info', {
           name: emergencyContactName,
@@ -12,8 +13,10 @@ export const postContactInfo = createAsyncThunk(
           phone: emergencyPhone,
         });
         if (!response.ok) {
+          console.log('not ok',response.data.message)
           throw new Error(response.data.message);
         }
+        console.log('ok',response.data)
         return response.data;
       } catch (error: any) {
         if (error.response && error.response.data.message) {
@@ -32,6 +35,7 @@ export const postContactInfo = createAsyncThunk(
         if (!response.ok) {
           throw new Error(response.data.message);
         }
+        console.log(response.data)
         return response.data;
     },
   );

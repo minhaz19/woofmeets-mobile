@@ -14,18 +14,20 @@ import {getServiceTypes} from '../../../store/slices/profile/services';
 import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import { setSitterData } from '../../../store/slices/onBoarding/initial';
 
 interface Props {
   item: any;
 }
 
-const ServiceSelection = (props: {
-  navigation: {navigate: (arg0: string) => void};
-}) => {
+const ServiceSelection = (props) => {
   const {colors} = useTheme();
   const [sequence, setSequence] = useState<number>(0);
   const [isloading, setLoading] = useState<boolean>(false);
   const {serviceTypes, loading} = useAppSelector(state => state.services);
+  const sitter = useAppSelector(state => state.initial.sitterData)
+  // const [sitterData, setThisSitterData] = useState([...sitter]);
+  let sitterData = [...sitter];
 
   const dispatch = useAppDispatch();
 
@@ -61,6 +63,7 @@ const ServiceSelection = (props: {
       }
       if (response.ok) {
         setLoading(false);
+        dispatch(setSitterData({pass: 0}));
         props.navigation.navigate('HomeProfile');
       }
       // return response.data;

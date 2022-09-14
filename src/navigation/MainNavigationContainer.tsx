@@ -32,9 +32,14 @@ import YourHome from '../screens/becomeSitter/ServiceSetUp/YourHome';
 import Availability from '../screens/becomeSitter/ServiceSetUp/Availability/Availability';
 import SafetyQuiz from '../screens/becomeSitter/SafetyQuiz';
 import SubscriptionScreen from '../screens/becomeSitter/Subscription';
+import { _deleteSinglePet } from '../utils/helpers/HeaderWithBack/_deleteSinglePet';
+import AddPet from '../screens/pet/AddPet';
+import { Delete } from '../assets/svgs/SVG_LOGOS';
+import { useAppDispatch } from '../store/store';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
+  const dispatch = useAppDispatch();
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -391,6 +396,24 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 navigation={navigation}
                 title="Subscription"
                 notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AddPet"
+          component={AddPet}
+          options={({navigation, route}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Add pet"
+                Icon={route.params!.opk && Delete}
+                onPress={() => {
+                  _deleteSinglePet(dispatch, navigation, route);
+                }}
               />
             ),
             backgroundColor: Colors.primary,

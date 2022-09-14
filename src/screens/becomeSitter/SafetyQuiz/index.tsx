@@ -7,11 +7,16 @@ import {useSafetyQuizInitValues} from './utils/useSafetyQuizInitValues';
 import {safetyQuizValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import { setSitterData } from '../../../store/slices/onBoarding/initial';
+import { useAppDispatch } from '../../../store/store';
 
 const SafetyQuiz = () => {
   const {colors} = useTheme();
+  const dispatch = useAppDispatch();
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    dispatch(setSitterData({pass: 3}));
+  };
   return (
     <>
       <Screen

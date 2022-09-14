@@ -27,8 +27,11 @@ import * as Yup from 'yup';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import { setProfileData } from '../../../store/slices/onBoarding/initial';
+import { useAppDispatch } from '../../../store/store';
 
 const Gallery = () => {
+  const dispatch = useAppDispatch();
   const [photo, setPhoto] = useState<any>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
@@ -40,6 +43,10 @@ const Gallery = () => {
   const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
   const [scrolling, setScrolling] = useState<boolean>(true);
   const {colors, isDarkMode} = useTheme();
+
+  const onHandleGallery = () => {
+    dispatch(setProfileData({pass: 3}))
+  }
 
   // Get all image
   const endPoint = '/gallery/photo/get-all';
@@ -233,7 +240,7 @@ const Gallery = () => {
               textAlignment={btnStyles.textAlignment}
               containerStyle={btnStyles.containerStyleFullWidth}
               titleStyle={btnStyles.titleStyle}
-              onSelect={() => {}}
+              onSelect={onHandleGallery}
             />
           </View>
           <BottomSpacing />
@@ -249,6 +256,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   photoContainer: {
     flexDirection: 'row',
