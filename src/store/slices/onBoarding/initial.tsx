@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import { ApiResponse } from 'apisauce';
 import React from 'react';
-import apiClient from '../../../api/client';
+import { ArrowRight } from '../../../assets/svgs/Services_SVG';
 import CreateProfileLanding from '../../../screens/becomeSitter/CreateProfileLanding';
 import Details from '../../../screens/becomeSitter/Details';
 import Gallery from '../../../screens/becomeSitter/Gallery/Gallery';
@@ -9,8 +8,12 @@ import HomeProfile from '../../../screens/becomeSitter/HomeProfile';
 import OnboardingMyPetScreen from '../../../screens/becomeSitter/MyPet';
 import SafetyQuiz from '../../../screens/becomeSitter/SafetyQuiz';
 import ServiceSelection from '../../../screens/becomeSitter/ServiceSelection';
+import Availability from '../../../screens/becomeSitter/ServiceSetUp/Availability/Availability';
+import CancellationPolicy from '../../../screens/becomeSitter/ServiceSetUp/CancellationPolicy/CancellationPolicy';
+import PetPreference from '../../../screens/becomeSitter/ServiceSetUp/PetPreference/PetPreference';
+import Rates from '../../../screens/becomeSitter/ServiceSetUp/Rates';
+import YourHome from '../../../screens/becomeSitter/ServiceSetUp/YourHome/YourHome';
 import SubscriptionScreen from '../../../screens/becomeSitter/Subscription';
-import MyPet from '../../../screens/pet/MyPet';
 import BasicInfo from '../../../screens/profile/BasicInfo';
 import ContactScreen from '../../../screens/profile/ContactScreen';
 
@@ -100,6 +103,73 @@ const initialState: any = {
         screen: <OnboardingMyPetScreen />,
       },
   ],
+  boardingSelection: [
+    {
+      title: 'Rates',
+      checked: true,
+      isCompleted: false,
+      inProgress: true,
+      icon: <ArrowRight />,
+      screen: Rates
+      // screen: () => {
+      //   props.navigation.navigate('Rates');
+      // },
+    },
+    {
+      title: 'Availability',
+      checked: false,
+      isCompleted: false,
+      inProgress: false,
+      icon: <ArrowRight />,
+      screen: Availability,
+      // screen: () => {
+      //   props.navigation.navigate('Availability', {availabilityLoader});
+      // },
+    },
+    {
+      title: 'Pet Preference',
+      checked: false,
+      isCompleted: false,
+      inProgress: false,
+      icon: <ArrowRight />,
+      screen: PetPreference,
+      // screen: () => {
+      //   props.navigation.navigate('PetPreference', {petPreferenceLoader});
+      // },
+    },
+    {
+      title: 'Your Home',
+      checked: false,
+      isCompleted: false,
+      inProgress: false,
+      icon: <ArrowRight />,
+      screen: YourHome
+      // screen: () => {
+      //   props.navigation.navigate('YourHome', {
+      //     itemId: itemId,
+      //     name: name,
+      //     image: image,
+      //     description: description,
+      //   });
+      // },
+    },
+    {
+      title: 'Cancellation Policy',
+      checked: false,
+      isCompleted: false,
+      inProgress: false,
+      icon: <ArrowRight />,
+      screen: <CancellationPolicy />
+      // screen: () => {
+      //   props.navigation.navigate('CancellationPolicy', {
+      //     itemId: itemId,
+      //     name: name,
+      //     image: image,
+      //     description: description,
+      //   });
+      // },
+    },
+  ],
   error: null,
   loading: false,
   success: false,
@@ -127,20 +197,7 @@ const contact = createSlice({
           newArray[action.payload.pass].inProgress = false;
           newArray[action.payload.pass+1].inProgress = true;
         }
-        
         state.sitterData = newArray;
-        // switch (action.payload.pass) {
-        //     case 0:
-        //         const newArray = [...state.sitterData];
-        //         newArray[action.payload.pass].isCompleted = true;
-        //         newArray[action.payload.pass].inProgress = false;
-        //         newArray[action.payload.pass+1].inProgress = true;
-        //         return {
-        //             ...state,
-        //             sitterData: newArray
-        //         }
-        // }
-        // state.sitterData = action.payload.sitterData;
     },
     setProfileData: (state, action) => {
         const newArray1 = [...state.profileData];
@@ -160,6 +217,25 @@ const contact = createSlice({
           newArray1[action.payload.pass+1].inProgress = true;
         }
         state.profileData = newArray1;
+    },
+    setBoardingSelection: (state, action) => {
+      const newArray = [...state.boardingSelection];
+        let val = newArray.length;
+        while (val <= 0) {
+          newArray[val].isCompleted = false;
+          newArray[val].inProgress = false;
+          val--;
+        }
+        state.oldUser = true;
+        if (action.payload.pass === newArray.length-1) {
+          newArray[action.payload.pass].isCompleted = true;
+          newArray[action.payload.pass].inProgress = false;
+        } else {
+          newArray[action.payload.pass].isCompleted = true;
+          newArray[action.payload.pass].inProgress = false;
+          newArray[action.payload.pass+1].inProgress = true;
+        }
+        state.boardingSelection = newArray;
     }
   },
 });

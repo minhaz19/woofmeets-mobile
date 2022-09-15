@@ -12,7 +12,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ShortText from '../../../../common/text/ShortText';
 
 const ProfileItemCard = (props: {
-  userInfo: any;
   title: string;
   id: number;
   isCompleted: boolean;
@@ -56,16 +55,13 @@ const ProfileItemCard = (props: {
           return <UnCompletedIcon />;
         }
       case 'contact':
-        if (props.userInfo && props.userInfo[`${props.name}`]) {
+        if (props.isCompleted) {
           return <CompletedIcon />;
         } else {
           return <UnCompletedIcon />;
         }
       case 'provider':
-        if (
-          props.userInfo &&
-          props.userInfo[`${props.name}`]?.providerDetails
-        ) {
+        if (props.isCompleted) {
           return <CompletedIcon />;
         } else {
           return <UnCompletedIcon />;
@@ -98,7 +94,7 @@ const ProfileItemCard = (props: {
   };
   return (
     <View style={styles.headerContainer}>
-      {props?.userInfo && !props.userInfo[props.name] ? (
+      {!props.isCompleted ? (
         <View
           style={{
             ...styles.numberViewContainerOuter,

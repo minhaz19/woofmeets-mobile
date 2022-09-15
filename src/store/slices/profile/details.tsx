@@ -2,7 +2,6 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
 import { useAppDispatch } from '../../store';
-import { setProfileData } from '../onBoarding/initial';
 
 export const postSitterDetails = createAsyncThunk(
   'details/postSitterDetails',

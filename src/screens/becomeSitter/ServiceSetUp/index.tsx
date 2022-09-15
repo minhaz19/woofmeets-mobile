@@ -7,6 +7,7 @@ import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/Ser
 import {useServiceSetup} from './useServiceSetup';
 import {useAppSelector} from '../../../store/store';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
 
 const ServiceSetUp = (props: {
   navigation: {navigate: (arg0: string, arg1?: any) => void};
@@ -16,63 +17,8 @@ const ServiceSetUp = (props: {
   const {itemId, name, image, description, service} = serviceSetup.routeData;
   const serviceId = service.map((data: {id: any}) => data.id);
   const {petPreferenceLoader, availabilityLoader} = useServiceSetup(serviceId);
-  // console.log(
-  //   'petPreferenceLoader, availabilityLoader',
-  //   petPreferenceLoader,
-  //   availabilityLoader,
-  // );
-  const boardingSelection = [
-    {
-      title: 'Rates',
-      checked: true,
-      icon: <ArrowRight />,
-      screen: () => {
-        props.navigation.navigate('Rates');
-      },
-    },
-    {
-      title: 'Availability',
-      checked: false,
-      icon: <ArrowRight />,
-      screen: () => {
-        props.navigation.navigate('Availability', {availabilityLoader});
-      },
-    },
-    {
-      title: 'Pet Preference',
-      checked: false,
-      icon: <ArrowRight />,
-      screen: () => {
-        props.navigation.navigate('PetPreference', {petPreferenceLoader});
-      },
-    },
-    {
-      title: 'Your Home',
-      checked: false,
-      icon: <ArrowRight />,
-      screen: () => {
-        props.navigation.navigate('YourHome', {
-          itemId: itemId,
-          name: name,
-          image: image,
-          description: description,
-        });
-      },
-    },
-    {
-      title: 'Cancellation Policy',
-      checked: false,
-      icon: <ArrowRight />,
-      screen: () => {
-        props.navigation.navigate('CancellationPolicy', {
-          itemId: itemId,
-          name: name,
-          image: image,
-          description: description,
-        });
-      },
-    },
-  ];
+  const boardingSelection = useAppSelector(state => state.initial.boardingSelection)
+
   return (
     <>
       {availabilityLoader && <AppActivityIndicator visible={true} />}
@@ -82,13 +28,32 @@ const ServiceSetUp = (props: {
           styles.rootContainer,
           {backgroundColor: colors.backgroundColor},
         ]}>
-        <ReusableHeader
+        <View style={styles.innerContainer}>
+          {/* completed */}
+          {boardingSelection.map(item => (
+              item.isCompleted && <ProfileItemCard key={item.id} name={item.name} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} />
+          ))}
+          {/* not completed */}
+          {boardingSelection.map(item => (
+            !item.isCompleted && <ProfileItemCard key={item.id} name={item.name} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} />
+          ))}
+        </View>
+        {/* {boardingSelection.map(item => {
+          if(item.inProgress) {
+            return (
+              <View key={item.id} style={{flex: 1}}>
+                <item.screen />
+              </View>
+            );
+          }
+        })} */}
+        {/* <ReusableHeader
           itemId={itemId}
           name={name}
           image={image}
           description={description}
-        />
-        <View>
+        /> */}
+        {/* <View>
           {boardingSelection?.map((item, index) => (
             <SelectServiceTitle
               key={index}
@@ -98,7 +63,7 @@ const ServiceSetUp = (props: {
               screen={item.screen}
             />
           ))}
-        </View>
+        </View> */}
       </View>
     </>
   );
@@ -110,5 +75,10 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     paddingHorizontal: 20,
+  },
+  innerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20
   },
 });

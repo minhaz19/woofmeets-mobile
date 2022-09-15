@@ -13,16 +13,16 @@ interface HandleProps {
   catcare: string;
   holidayrate: string;
 }
-const ratePostEndpoint = '/service-rates';
-const ratePutEndpoint = '/service-rates/';
-export const useServiceRates = (route: any) => {
-  const {serviceId, providerServicesId} = route;
+// const ratePostEndpoint = '/service-rates';
+// const ratePutEndpoint = '/service-rates/';
+// export const useServiceRates = (route: any) => {
+//   const {serviceId, providerServicesId} = route;
 // =======
 
-// const ratePostEndpoint = '/service-rates/multiple/create';
-// const ratePutEndpoint = '/service-rates/muptiple/update';
-// export const useServiceRates = (route: any, navigation: any) => {
-//   const {serviceId, providerServicesId} = route.params;
+const ratePostEndpoint = '/service-rates/multiple/create';
+const ratePutEndpoint = '/service-rates/muptiple/update';
+export const useServiceRates = (route: any, navigation: any) => {
+  const {serviceId, providerServicesId} = route.params;
 // >>>>>>> src/screens/becomeSitter/ServiceSetUp/Rates/utils/useServiceRate.ts
   const dispatch = useAppDispatch();
   const {loading, serviceRateFields} = useAppSelector(
