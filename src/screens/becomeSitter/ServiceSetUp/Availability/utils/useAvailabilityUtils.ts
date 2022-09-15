@@ -1,23 +1,37 @@
 import {ApiResponse} from 'apisauce';
-import {useState} from 'react';
-import { Alert } from 'react-native';
 import methods from '../../../../../api/methods';
+import {setAvailability} from '../../../../../store/slices/onBoarding/setUpService/availability/availabilitySlice';
+import {useAppDispatch} from '../../../../../store/store';
 import {useApi} from '../../../../../utils/helpers/api/useApi';
 
-const postEndPoint = '/availability';
 export const useAvailabilityUtils = (id: string, navigation: any) => {
-  const [serviceid, setServiceId] = useState();
+  const dispatch = useAppDispatch();
 
-  const {request: PService, loading: PLoading} = useApi(methods._post);
+  const postEndPoint = `/availability${id ? `/${id}` : ''}`;
+
+  const {request: PService, loading: isLoading} = useApi(
+    id ? methods._put : methods._post,
+  );
   const handlePost = async (data: any) => {
-    // console.log('data', data);
-    const response: ApiResponse<any> = await PService(postEndPoint, data);
-    if(!response.ok) {
-      Alert.alert(response.data.message);
-    }
+    const putFormattedData = {
+      sat: data.sat,
+      sun: data.sun,
+      mon: data.mon,
+      tue: data.tue,
+      wed: data.wed,
+      thu: data.thu,
+      fri: data.fri,
+      pottyBreak: data.pottyBreak,
+      fulltime: data.fulltime,
+    };
+    const response: ApiResponse<any> = await PService(
+      postEndPoint,
+      id ? putFormattedData : data,
+    );
     if (response) {
-      navigation.goBack();
+      dispatch(setAvailability(response?.data?.data));
+      navigation.navigate('ServiceSetup', {});
     }
   };
-  return {handlePost, PLoading};
+  return {handlePost, isLoading};
 };

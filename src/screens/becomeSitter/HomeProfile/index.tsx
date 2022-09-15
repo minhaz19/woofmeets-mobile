@@ -20,14 +20,13 @@ import {
   DropInVisitIcon,
   HouseSittingIcon,
 } from '../../../assets/svgs/Services_SVG';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonCom from '../../../components/UI/ButtonCom';
-import { setSitterData } from '../../../store/slices/onBoarding/initial';
+import {setSitterData} from '../../../store/slices/onBoarding/initial';
+import { setServiceSetup } from '../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 
-type StackParamList = {
-
-};
+type StackParamList = {};
 type NavigationProps = StackNavigationProp<StackParamList>;
 
 const HomeProfile = () => {
@@ -58,7 +57,6 @@ const HomeProfile = () => {
   ];
 
   const userServices = useAppSelector(state => state.services.userServices);
-  console.log('user service', userServices);
   const dispatch = useAppDispatch();
 
   const [, setRefreshing] = useState(false);
@@ -147,6 +145,7 @@ const HomeProfile = () => {
       {userServices &&
         userServices?.map(
           (item: {
+            AvailableDay: any;
             id: React.Key | null | undefined;
             serviceType: {name: any; icon: string; description: any};
             serviceTypeId: React.Key | null | undefined;
@@ -166,30 +165,36 @@ const HomeProfile = () => {
                   time: '3 mins',
                   icon: 'chevron-right',
                   screen: () => {
-                    navigation.navigate('ServiceSetup', {
-                      itemId: item.id,
-                      name: item.serviceType.name,
-                      image: getIcon(item.serviceType.icon),
-                      description: item.serviceType.description,
-                      serviceTypeId: item.serviceTypeId,
-                      providerServicesId: item.id,
-                    });
+                    navigation.navigate('ServiceSetup');
+                    dispatch(
+                      setServiceSetup({
+                        routeData: {
+                          itemId: item.id,
+                          name: item.serviceType.name,
+                          image: getIcon(item.serviceType.icon),
+                          description: item.serviceType.description,
+                          serviceTypeId: item.serviceTypeId,
+                          providerServicesId: item.id,
+                          service: item?.AvailableDay,
+                        },
+                      }),
+                    );
                   },
                 }}
               />
             </View>
           ),
         )}
-        <View style={styles.footerContainer}>
-          <ButtonCom
-            title="Save and Continue"
-            textAlignment={btnStyles.textAlignment}
-            containerStyle={btnStyles.containerStyleFullWidth}
-            titleStyle={btnStyles.titleStyle}
-            onSelect={onServicePostHandle}
-            // loading={isloading}
-          />
-        </View>
+      <View style={styles.footerContainer}>
+        <ButtonCom
+          title="Save and Continue"
+          textAlignment={btnStyles.textAlignment}
+          containerStyle={btnStyles.containerStyleFullWidth}
+          titleStyle={btnStyles.titleStyle}
+          onSelect={onServicePostHandle}
+          // loading={isloading}
+        />
+      </View>
     </ScrollView>
   );
 };

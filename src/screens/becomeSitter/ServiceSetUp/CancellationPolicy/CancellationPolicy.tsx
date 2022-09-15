@@ -1,24 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {StyleSheet, ScrollView, Alert} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {useApi} from '../../../utils/helpers/api/useApi';
-import methods from '../../../api/methods';
-import SubCancellationPolicy from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubCancellationPolicy';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
+import SubCancellationPolicy from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubCancellationPolicy';
+import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
+import {useAppSelector} from '../../../../store/store';
 
 const getPoint = '/cancellation-policy';
 const getSingleData = '/cancellation-policy/povider-policy';
 
 const CancellationPolicy = (props: {
   navigation: {navigate: (arg0: string) => void};
-  route: {params: any};
 }) => {
   const [policy, setPolicy] = useState([]);
   const [singlePolicy, setSinglePolicy] = useState(null);
   const {colors} = useTheme();
-  const {itemId, name, image, description} = props?.route?.params;
+  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  const {itemId, name, image, description} = serviceSetup.routeData;
+
   // getAll policy Data
   const {request: getPolicyData, loading: policyLoader} = useApi(methods._get);
   const getAllPolicyData = async () => {
@@ -41,12 +43,8 @@ const CancellationPolicy = (props: {
   const handlePolicy = async (e: any) => {
     const postPoint = `/cancellation-policy/provider-policy/${e.policyId}`;
     const result = await postRequest(postPoint);
-    if(!result.ok) {
-      Alert.alert(result.data.message);
-    }
-    if(result.ok) {
-      Alert.alert(result.data.message);
-      props.navigation.goBack();
+    if (result?.data?.data) {
+      props.navigation.navigate('ServiceSetup');
     }
   };
 
