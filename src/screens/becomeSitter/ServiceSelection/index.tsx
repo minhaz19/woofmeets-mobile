@@ -55,7 +55,6 @@ const ServiceSelection = (props) => {
       const response: ApiResponse<any> = await apiClient.post(
         `/provider-services/${sequence}`,
       );
-      console.log('response', response);
       if (!response.ok) {
         setLoading(false);
         props.navigation.navigate('HomeProfile');

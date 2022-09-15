@@ -2,28 +2,16 @@
 
 import {useEffect} from 'react';
 import methods from '../../../../../api/methods';
+import {setBoardingSelection} from '../../../../../store/slices/onBoarding/initial';
 import {getServiceRateFields} from '../../../../../store/slices/onBoarding/setUpService/rates/Field/serviceRateFieldAction';
 import {getRateFieldValue} from '../../../../../store/slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueAction';
 import {useAppDispatch, useAppSelector} from '../../../../../store/store';
 import {useApi} from '../../../../../utils/helpers/api/useApi';
-// <<<<<<< src/screens/becomeSitter/ServiceSetUp/Rates/utils/useServiceRate.ts
-interface HandleProps {
-  baserate: string;
-  additionaldog: string;
-  catcare: string;
-  holidayrate: string;
-}
-// const ratePostEndpoint = '/service-rates';
-// const ratePutEndpoint = '/service-rates/';
-// export const useServiceRates = (route: any) => {
-//   const {serviceId, providerServicesId} = route;
-// =======
 
 const ratePostEndpoint = '/service-rates/multiple/create';
-const ratePutEndpoint = '/service-rates/muptiple/update';
-export const useServiceRates = (route: any, navigation: any) => {
-  const {serviceId, providerServicesId} = route.params;
-// >>>>>>> src/screens/becomeSitter/ServiceSetUp/Rates/utils/useServiceRate.ts
+const ratePutEndpoint = '/service-rates/multiple/update';
+export const useServiceRates = (serviceSetup: any) => {
+  const {serviceId, providerServicesId} = serviceSetup?.routeData;
   const dispatch = useAppDispatch();
   const {loading, serviceRateFields} = useAppSelector(
     state => state.serviceRates,
@@ -69,12 +57,11 @@ export const useServiceRates = (route: any, navigation: any) => {
           });
         },
       );
-    console.log('r', payload);
-    // const result = await request(payload);
-    // if (result) {
-    //   navigation.goBack();
-    //   dispatch(getRateFieldValue(providerServicesId));
-    // }
+    const result = await request(payload);
+    if (result) {
+      dispatch(setBoardingSelection({pass: 0}));
+      dispatch(getRateFieldValue(providerServicesId));
+    }
   };
   useEffect(() => {
     dispatch(getServiceRateFields(serviceId));

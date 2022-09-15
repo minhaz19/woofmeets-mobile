@@ -20,13 +20,11 @@ export const getUserServices = createAsyncThunk(
     const response: ApiResponse<any> = await apiClient.get(
       '/provider-services',
     );
-    console.log(response.data.message)
     if (!response.ok) {
       Alert.alert(response.data.message);
       throw new Error(response.data.message);
     }
     if (response.ok) {
-      console.log('res', response.data)
       return response.data;
     }
   },

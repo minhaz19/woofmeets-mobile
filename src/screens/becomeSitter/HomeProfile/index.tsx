@@ -24,7 +24,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {setSitterData} from '../../../store/slices/onBoarding/initial';
-import { setServiceSetup } from '../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
+import {setServiceSetup} from '../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 
 type StackParamList = {};
 type NavigationProps = StackNavigationProp<StackParamList>;
@@ -173,7 +173,7 @@ const HomeProfile = () => {
                           name: item.serviceType.name,
                           image: getIcon(item.serviceType.icon),
                           description: item.serviceType.description,
-                          serviceTypeId: item.serviceTypeId,
+                          serviceId: item.serviceTypeId,
                           providerServicesId: item.id,
                           service: item?.AvailableDay,
                         },

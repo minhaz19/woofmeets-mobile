@@ -15,7 +15,7 @@ export const useAddPetUtils = (navigation: any, opk: string) => {
   const handleSubmit = async (data: any) => {
     const result = await request(data, opk);
     if (result.ok) {
-      navigation.navigate('MyPet');
+      navigation.goBack();
       dispatch(getAllPets());
     }
   };

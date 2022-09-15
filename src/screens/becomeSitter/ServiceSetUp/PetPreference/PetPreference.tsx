@@ -8,12 +8,11 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import SubPetPreference from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubPetPreference/SubPetPreference';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {setPetPreference} from '../../../../store/slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
+import {setBoardingSelection} from '../../../../store/slices/onBoarding/initial';
 
 const endPoint = '/pet-preference';
 
-const PetPreference = (props: {
-  navigation: {navigate: (arg0: string) => void};
-}) => {
+const PetPreference = () => {
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
   const {loading, petPreference, petPerDay} = useAppSelector(
@@ -35,7 +34,7 @@ const PetPreference = (props: {
     const result = await putRequest(endPoint, formattedData);
     if (result?.data?.data) {
       dispatch(setPetPreference(result?.data?.data));
-      props.navigation.navigate('ServiceSetup');
+      dispatch(setBoardingSelection({pass: 2}));
     }
   };
 

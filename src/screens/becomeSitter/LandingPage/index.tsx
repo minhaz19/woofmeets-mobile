@@ -9,7 +9,6 @@ import { getUserServices } from '../../../store/slices/profile/services';
 const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => any; }; }) => {
   const {colors} = useTheme();
   const sitterData = useAppSelector(state => state.initial.sitterData);
-  console.log('si da', sitterData);
   const dispatch = useAppDispatch();
 
   const [, setRefreshing] = useState(false);

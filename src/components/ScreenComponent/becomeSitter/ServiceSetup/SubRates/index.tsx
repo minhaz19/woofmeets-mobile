@@ -52,29 +52,26 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
     const validateCheck =
       checkFields &&
       checkFields?.filter((item: boolean) => item === false).length >= 2;
-
-    // if (updateRates === true) {
-    if (validateCheck) {
+    if (validateCheck === true) {
       setChecked(true);
       setUpdateRates(true);
-    } else {
+    } else if (validateCheck === false) {
       setChecked(false);
       setUpdateRates(false);
     }
-    // if (checked === true) {
-    //   if (updateRates === false) {
-    //     setChecked(false);
-    //   }
-    // }
-    // }
-    // if (updateRates === false) {
-    //   setChecked(false);
-    // }
-    console.log('as', validateCheck, fieldValue);
   }, [fieldValue]);
-  // useMemo(() => {
-  //   if()
-  // }, []);
+
+  useMemo(() => {
+    if (checked === true) {
+      if (updateRates === false) {
+        setChecked(false);
+      }
+    } else if (checked === false) {
+      if (updateRates === true) {
+        setChecked(true);
+      }
+    }
+  }, [checked, updateRates]);
   return (
     <View>
       <View style={styles.headerContainer}>

@@ -8,20 +8,14 @@ import {BoardingSettingsSchema} from '../../../../utils/config/ValidationSchema/
 import {useServiceRateInit} from './utils/useServiceRateInit';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {useServiceRates} from './utils/useServiceRate';
-import { useAppSelector } from '../../../../store/store';
-interface Props {
-  route: {
-    params: any;
-  };
-  navigation: any;
-}
+import {useAppSelector} from '../../../../store/store';
 
-const Rates = ({route, navigation}: Props) => {
+const Rates = () => {
   const {colors} = useTheme();
-  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
-  const {itemId, name, image, description} = route?.params;
+  const {serviceSetup} = useAppSelector(state => state?.serviceSetup);
+  const {itemId, name, image, description} = serviceSetup.routeData;
   const {handleRates, loading, btnLoading, fLoading, serviceRateFields} =
-    useServiceRates(route, navigation);
+    useServiceRates(serviceSetup);
 
   return (
     <>

@@ -10,14 +10,16 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
 
 const ServiceSetUp = (props: {
-  navigation: {navigate: (arg0: string, arg1?: any) => void};
+  navigation: {navigate: (arg0: string) => void};
 }) => {
   const {colors} = useTheme();
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {itemId, name, image, description, service} = serviceSetup.routeData;
   const serviceId = service.map((data: {id: any}) => data.id);
   const {petPreferenceLoader, availabilityLoader} = useServiceSetup(serviceId);
-  const boardingSelection = useAppSelector(state => state.initial.boardingSelection)
+  const boardingSelection = useAppSelector(
+    state => state.initial.boardingSelection,
+  );
 
   return (
     <>
@@ -30,23 +32,43 @@ const ServiceSetUp = (props: {
         ]}>
         <View style={styles.innerContainer}>
           {/* completed */}
-          {boardingSelection.map(item => (
-              item.isCompleted && <ProfileItemCard key={item.id} name={item.name} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} />
-          ))}
+          {boardingSelection.map(
+            item =>
+              item.isCompleted && (
+                <ProfileItemCard
+                  key={item.id}
+                  name={item.name}
+                  title={item.title}
+                  id={item.id}
+                  isCompleted={item.isCompleted}
+                  handleClick={item.onPress}
+                />
+              ),
+          )}
           {/* not completed */}
-          {boardingSelection.map(item => (
-            !item.isCompleted && <ProfileItemCard key={item.id} name={item.name} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} />
-          ))}
+          {boardingSelection.map(
+            item =>
+              !item.isCompleted && (
+                <ProfileItemCard
+                  key={item.id}
+                  name={item.name}
+                  title={item.title}
+                  id={item.id}
+                  isCompleted={item.isCompleted}
+                  handleClick={item.onPress}
+                />
+              ),
+          )}
         </View>
-        {/* {boardingSelection.map(item => {
-          if(item.inProgress) {
+        {boardingSelection.map(item => {
+          if (item.inProgress) {
             return (
               <View key={item.id} style={{flex: 1}}>
                 <item.screen />
               </View>
             );
           }
-        })} */}
+        })}
         {/* <ReusableHeader
           itemId={itemId}
           name={name}
@@ -74,11 +96,11 @@ export default ServiceSetUp;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
   },
   innerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
 });
