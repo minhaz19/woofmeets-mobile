@@ -12,16 +12,18 @@ interface Props {
   route: {
     params: any;
   };
+  navigation: any;
 }
 
-const Rates = ({route}: Props) => {
+const Rates = ({route, navigation}: Props) => {
   const {colors} = useTheme();
   const {itemId, name, image, description} = route?.params;
-  const {handleRates, loading, serviceRateFields} = useServiceRates(route);
+  const {handleRates, loading, btnLoading, fLoading, serviceRateFields} =
+    useServiceRates(route, navigation);
 
   return (
     <>
-      {loading && <AppActivityIndicator visible={true} />}
+      {(loading || fLoading) && <AppActivityIndicator visible={true} />}
       <ScrollView
         style={[
           styles.rootContainer,
@@ -36,11 +38,12 @@ const Rates = ({route}: Props) => {
         />
         <AppForm
           initialValues={useServiceRateInit()}
-          validationSchema={BoardingSettingsSchema}>
+          validationSchema={BoardingSettingsSchema}
+          enableReset>
           <SubRates
             handleRates={handleRates}
             rateFields={serviceRateFields}
-            loading={false}
+            loading={btnLoading}
           />
         </AppForm>
       </ScrollView>

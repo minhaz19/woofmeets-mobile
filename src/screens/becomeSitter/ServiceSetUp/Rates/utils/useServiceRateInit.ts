@@ -2,7 +2,6 @@ import {useAppSelector} from '../../../../../store/store';
 
 export const useServiceRateInit = () => {
   const {fieldValue} = useAppSelector(state => state.fieldValue);
-
   return {
     baserate: fieldValue && fieldValue[0]?.amount ? fieldValue[0].amount : 0,
     sixtyMinRate: 0,

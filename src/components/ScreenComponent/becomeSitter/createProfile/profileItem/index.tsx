@@ -1,4 +1,9 @@
-import {View, StyleSheet, TouchableOpacity, GestureResponderEvent} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  GestureResponderEvent,
+} from 'react-native';
 import React from 'react';
 import TitleText from '../../../../common/text/TitleText';
 import Colors from '../../../../../constants/Colors';
@@ -7,7 +12,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ShortText from '../../../../common/text/ShortText';
 
 const ProfileItemCard = (props: {
-  userInfo: any;title: string; id: number; isCompleted: boolean, handleClick: ((event: GestureResponderEvent) => void) | undefined; name: string 
+  userInfo: any;
+  title: string;
+  id: number;
+  isCompleted: boolean;
+  handleClick: ((event: GestureResponderEvent) => void) | undefined;
+  name: string;
 }) => {
   const CompletedIcon = () => {
     return (
@@ -19,79 +29,96 @@ const ProfileItemCard = (props: {
           style={styles.iconStyle}
         />
       </View>
-    )
-  }
+    );
+  };
   const UnCompletedIcon = () => {
     return (
-      <View style={{...styles.numberViewContainerOuter, backgroundColor: Colors.primaryLight}}>
-        <View style={{...styles.numberViewContainer, backgroundColor: Colors.primary}}/>
+      <View
+        style={{
+          ...styles.numberViewContainerOuter,
+          backgroundColor: Colors.primaryLight,
+        }}>
+        <View
+          style={{
+            ...styles.numberViewContainer,
+            backgroundColor: Colors.primary,
+          }}
+        />
       </View>
-    )
-  }
+    );
+  };
   const getIconType = (name: string) => {
-    switch(name) {
+    switch (name) {
       case 'pet':
         if (props.isCompleted) {
-          return (
-            <CompletedIcon />
-          )
+          return <CompletedIcon />;
         } else {
-          return (
-            <UnCompletedIcon />
-          )
+          return <UnCompletedIcon />;
         }
-        case 'Gallery':
-          if (props.isCompleted) {
-            return (
-              <CompletedIcon />
-            )
-          } else {
-            return (
-              <UnCompletedIcon />
-            )
-          }
-        case 'basicInfo':
-          if (props.isCompleted) {
-            return (
-              <CompletedIcon />
-            )
-          } else {
-            return (
-              <UnCompletedIcon />
-            )
-          }
-        case 'contact':
-          if (props.isCompleted) {
-            return (
-              <CompletedIcon />
-            )
-          } else {
-            return (
-              <UnCompletedIcon />
-            )
-          }
-        case 'provider':
-          if (props.isCompleted) {
-            return (
-              <CompletedIcon />
-            )
-          } else {
-            return (
-              <UnCompletedIcon />
-            )
-          }
+      case 'contact':
+        if (props.userInfo && props.userInfo[`${props.name}`]) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
+      case 'provider':
+        if (
+          props.userInfo &&
+          props.userInfo[`${props.name}`]?.providerDetails
+        ) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
+      case 'Gallery':
+        if (props.isCompleted) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
+      case 'basicInfo':
+        if (props.isCompleted) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
+      case 'contact':
+        if (props.isCompleted) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
+      case 'provider':
+        if (props.isCompleted) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
     }
-  }
+  };
   return (
-      <View style={styles.headerContainer}>
-        {props?.userInfo && !props.userInfo[props.name] ?
-          <View style={{...styles.numberViewContainerOuter, backgroundColor: Colors.primaryLight}}>
-            <View style={{...styles.numberViewContainer, backgroundColor: Colors.primary}}/>
-          </View> : 
-          getIconType(props.name)
-        }
-        <ShortText text={props.title} textStyle={{...styles.textStyle, color: Colors.light.subText}} />
-      </View>
+    <View style={styles.headerContainer}>
+      {props?.userInfo && !props.userInfo[props.name] ? (
+        <View
+          style={{
+            ...styles.numberViewContainerOuter,
+            backgroundColor: Colors.primaryLight,
+          }}>
+          <View
+            style={{
+              ...styles.numberViewContainer,
+              backgroundColor: Colors.primary,
+            }}
+          />
+        </View>
+      ) : (
+        getIconType(props.name)
+      )}
+      <ShortText
+        text={props.title}
+        textStyle={{...styles.textStyle, color: Colors.light.subText}}
+      />
+    </View>
   );
 };
 
@@ -103,7 +130,7 @@ const styles = StyleSheet.create({
     elevation: 1,
     marginVertical: '1%',
   },
-  headerContainer: { 
+  headerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
   },

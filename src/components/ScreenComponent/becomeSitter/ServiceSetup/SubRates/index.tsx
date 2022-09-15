@@ -10,6 +10,7 @@ import SubmitButton from '../../../../common/Form/SubmitButton';
 import BottomSpacing from '../../../../UI/BottomSpacing';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import {useFormContext} from 'react-hook-form';
+import {useAppSelector} from '../../../../../store/store';
 
 interface Props {
   handleRates: (arg: any) => void;
@@ -20,28 +21,72 @@ interface Props {
 const SubRates = ({handleRates, rateFields, loading}: Props) => {
   const [showAdditionalRates, setShowAdditionalRates] = useState(true);
   const [updateRates, setUpdateRates] = useState(false);
-  const handlePress = () => {
-    setShowAdditionalRates(!showAdditionalRates);
-  };
+  const [rates, setRates] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const {fieldValue} = useAppSelector(state => state.fieldValue);
+
   const {
     formState: {errors},
     control,
     setValue,
     watch,
   } = useFormContext();
+
   const baseRateWatch = watch('baserate');
+  const handlePress = () => {
+    setShowAdditionalRates(!showAdditionalRates);
+  };
   useMemo(() => {
-    setValue('catcare', baseRateWatch);
-    setValue('additionaldog', baseRateWatch);
-    setValue('holidayrate', baseRateWatch);
-  }, [baseRateWatch, setValue]);
+    const modRates = rateFields?.map((item: any, index: number) => ({
+      ...item,
+      percentage: 5 * index,
+    }));
+    setRates(modRates);
+  }, [rateFields]);
+
+  useMemo(() => {
+    const checkFields = fieldValue?.map(
+      (_: any, index: number) =>
+        (fieldValue[0].amount / 100) * (index * 5) === fieldValue[index].amount,
+    );
+    const validateCheck =
+      checkFields &&
+      checkFields?.filter((item: boolean) => item === false).length >= 2;
+
+    // if (updateRates === true) {
+    if (validateCheck) {
+      setChecked(true);
+      setUpdateRates(true);
+    } else {
+      setChecked(false);
+      setUpdateRates(false);
+    }
+    // if (checked === true) {
+    //   if (updateRates === false) {
+    //     setChecked(false);
+    //   }
+    // }
+    // }
+    // if (updateRates === false) {
+    //   setChecked(false);
+    // }
+    console.log('as', validateCheck, fieldValue);
+  }, [fieldValue]);
+  // useMemo(() => {
+  //   if()
+  // }, []);
   return (
     <View>
       <View style={styles.headerContainer}>
         <BigText text={'Rates'} textStyle={styles.headerText} />
-        {rateFields?.map(
+        {rates?.map(
           (
-            item: {slug: string; name: string; unitLabel: string},
+            item: {
+              slug: string;
+              name: string;
+              unitLabel: string;
+              percentage: number;
+            },
             index: number,
           ) => {
             return (
@@ -57,6 +102,7 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                       keyboardType={'numeric'}
                       textContentType={'none'}
                       name={item.slug.replace('-', '')}
+                      percentage={item.percentage}
                       label={item.name}
                       handlePress={handlePress}
                       showAdditionalRates={showAdditionalRates}
@@ -95,10 +141,16 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                     name={item.slug.replace('-', '')}
                     label={item.name}
                     handlePress={handlePress}
+                    percentage={item.percentage}
                     showAdditionalRates={showAdditionalRates}
                     editable={updateRates}
                     control={control}
                     errors={errors}
+                    baseRateWatch={baseRateWatch}
+                    convertedValue={(baseRateWatch / 100) * item.percentage}
+                    setValue={setValue}
+                    updateRates={updateRates}
+                    checked={checked}
                   />
                 )}
               </View>

@@ -2,20 +2,25 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import ImageContainer from '../../../AllProvider/ImageContainer';
 import ProviderInfo from '../../../AllProvider/ProviderInfo';
+import {useAppSelector} from '../../../../../../store/store';
 
 const ProviderProfileInfo = () => {
+  const {profileInfo} = useAppSelector(state => state.providerProfile);
   return (
     <View style={styles.container}>
-      <ImageContainer
-        image="https://images.unsplash.com/photo-1559416847-9e26f5889a20?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80"
-        rounded
-      />
+      <ImageContainer image={profileInfo?.avatar.url} rounded />
       <View style={styles.infoContainer}>
         <ProviderInfo
-          name="Snoop Dogg"
+          name={`${profileInfo?.firstName + ' ' + profileInfo?.lastName}`}
           nature="Caring and attentive animal lover"
-          rating={5}
-          distance={'1.5 miles away'}
+          rating={profileInfo?.rating ? profileInfo?.rating : 0}
+          distance={`${
+            profileInfo?.address?.addressLine1 +
+            ' ' +
+            profileInfo?.address?.city
+            // ' ' +
+            // profileInfo?.address?.state
+          }`}
         />
       </View>
     </View>

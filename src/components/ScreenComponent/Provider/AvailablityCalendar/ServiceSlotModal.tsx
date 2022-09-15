@@ -3,6 +3,7 @@ import React from 'react';
 import MiddleModal from '../../../UI/modal/MiddleModal';
 import ServiceSlot from './ServiceSlot';
 import TitleText from '../../../common/text/TitleText';
+import Colors from '../../../../constants/Colors';
 interface Props {
   isVisible: boolean;
   setIsVisible: (arg: boolean) => void;
@@ -35,7 +36,7 @@ export default ServiceSlotModal;
 
 const styles = StyleSheet.create({
   btnContainer: {flexDirection: 'row'},
-  cancelBtn: {backgroundColor: 'black', flex: 1, padding: 10},
-  saveBtn: {backgroundColor: 'black', flex: 1, padding: 10},
+  cancelBtn: {backgroundColor: Colors.primary, flex: 1, padding: 10},
+  saveBtn: {backgroundColor: Colors.primary, flex: 1, padding: 10},
   text: {color: 'white', textAlign: 'center'},
 });

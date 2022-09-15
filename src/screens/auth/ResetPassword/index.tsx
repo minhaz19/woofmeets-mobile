@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,

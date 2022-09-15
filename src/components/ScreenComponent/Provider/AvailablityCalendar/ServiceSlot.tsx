@@ -70,7 +70,7 @@ const ServiceSlot = () => {
 export default ServiceSlot;
 
 const styles = StyleSheet.create({
-  parent: {width: '100%'},
+  parent: {width: '100%', padding: 10},
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
