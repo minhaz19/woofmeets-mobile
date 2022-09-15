@@ -1,20 +1,15 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {ArrowRight} from '../../../assets/svgs/Services_SVG';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import SelectServiceTitle from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/SelectServiceTitle';
-import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import {useServiceSetup} from './useServiceSetup';
 import {useAppSelector} from '../../../store/store';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
 
-const ServiceSetUp = (props: {
-  navigation: {navigate: (arg0: string) => void};
-}) => {
+const ServiceSetUp = () => {
   const {colors} = useTheme();
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
-  const {itemId, name, image, description, service} = serviceSetup.routeData;
+  const {service} = serviceSetup.routeData;
   const serviceId = service.map((data: {id: any}) => data.id);
   const {petPreferenceLoader, availabilityLoader} = useServiceSetup(serviceId);
   const boardingSelection = useAppSelector(
@@ -102,5 +97,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 5,
   },
 });

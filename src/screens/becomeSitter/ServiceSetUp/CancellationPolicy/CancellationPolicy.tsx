@@ -49,7 +49,7 @@ const CancellationPolicy = () => {
     const result = await postRequest(postPoint);
     if (result?.data?.data) {
       dispatch(setBoardingSelection({pass: 4}));
-      navigation.goBack();
+      // navigation.goBack();
       dispatch(setSitterData({pass: 1}));
     }
   };

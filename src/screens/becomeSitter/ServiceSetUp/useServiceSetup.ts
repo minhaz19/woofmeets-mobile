@@ -12,6 +12,7 @@ export const useServiceSetup = (serviceId: any) => {
   const {availability, loading: availabilityLoader} = useAppSelector(
     (state: any) => state?.availability,
   );
+  console.log(serviceId[0]);
   useEffect(() => {
     petPreference === null && dispatch(getPetPreference());
   }, [petPreference, dispatch]);

@@ -23,11 +23,11 @@ const SitterInitialScreen = (props: {
   const oldUser = useAppSelector(state => state.initial.oldUser)
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
-  useEffect(() => {
-    if (userServices && !oldUser) {
-      dispatch(setSitterData({pass: 0}));
-    }
-  }, [userServices])
+  // useEffect(() => {
+  //   if (userServices && !oldUser) {
+  //     dispatch(setSitterData({pass: 0}));
+  //   }
+  // }, [userServices])
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}

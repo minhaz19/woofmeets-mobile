@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import React from 'react';
 import {ArrowRight} from '../../../assets/svgs/Services_SVG';
 import CreateProfileLanding from '../../../screens/becomeSitter/CreateProfileLanding';
@@ -110,9 +110,6 @@ const initialState: any = {
       inProgress: true,
       icon: <ArrowRight />,
       screen: Rates,
-      // screen: () => {
-      //   props.navigation.navigate('Rates');
-      // },
     },
     {
       title: 'Availability',
@@ -121,9 +118,6 @@ const initialState: any = {
       inProgress: false,
       icon: <ArrowRight />,
       screen: Availability,
-      // screen: () => {
-      //   props.navigation.navigate('Availability', {availabilityLoader});
-      // },
     },
     {
       title: 'Pet Preference',
@@ -132,9 +126,6 @@ const initialState: any = {
       inProgress: false,
       icon: <ArrowRight />,
       screen: PetPreference,
-      // screen: () => {
-      //   props.navigation.navigate('PetPreference', {petPreferenceLoader});
-      // },
     },
     {
       title: 'Your Home',
@@ -143,14 +134,6 @@ const initialState: any = {
       inProgress: false,
       icon: <ArrowRight />,
       screen: YourHome,
-      // screen: () => {
-      //   props.navigation.navigate('YourHome', {
-      //     itemId: itemId,
-      //     name: name,
-      //     image: image,
-      //     description: description,
-      //   });
-      // },
     },
     {
       title: 'Cancellation Policy',
@@ -159,14 +142,6 @@ const initialState: any = {
       inProgress: false,
       icon: <ArrowRight />,
       screen: CancellationPolicy,
-      // screen: () => {
-      //   props.navigation.navigate('CancellationPolicy', {
-      //     itemId: itemId,
-      //     name: name,
-      //     image: image,
-      //     description: description,
-      //   });
-      // },
     },
   ],
   error: null,
