@@ -1,17 +1,19 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {petType} from '../../../../../utils/config/Data/serviceSetUpData/petPreference';
+import {
+  petType,
+} from '../../../../../utils/config/Data/serviceSetUpData/petPreference';
 import HeaderText from '../../../../common/text/HeaderText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import ServiceCheckbox from '../Common/ServiceCheckbox';
-import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import useHandleMultipleActiveCheck from '../handleCheck/HandleCheck';
+import ErrorMessage from '../../../../common/Form/ErrorMessage';
 
 interface Props {
   errors: any;
   control: any;
   setValue: any;
-  data: any;
+  data?: any;
 }
 
 const PetType = ({control, errors, setValue, data}: Props) => {
@@ -35,13 +37,16 @@ const PetType = ({control, errors, setValue, data}: Props) => {
               setValue(item.name, item.value, {
                 shouldValidate: true,
               });
+              // setValue('petSize', data[item.name] === true ? true : false, {
+              //   shouldValidate: data[item.name] === true ? true : false,
+              // });
             }}
             name={item.name}
             control={control}
           />
         );
       })}
-      {/* <ErrorMessage error={errors[petType.name]?.message} /> */}
+      <ErrorMessage error={errors['petSize']?.message} />
     </View>
   );
 };

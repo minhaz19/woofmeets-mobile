@@ -24,6 +24,8 @@ import detailsReducer from './slices/profile/details';
 import PetPreferenceSlice from './slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
 import serviceRateFieldSlice from './slices/onBoarding/setUpService/rates/Field/serviceRateFieldSlice';
 import rateFieldValueSlice from './slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueSlice';
+import availabilitySlice from './slices/onBoarding/setUpService/availability/availabilitySlice';
+import serviceSetUpSlice from './slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 import providerProfileSlice from './slices/Provider/ProviderProfile/singlePet/providerProfileSlice';
 import initial from './slices/onBoarding/initial';
 
@@ -44,6 +46,8 @@ const appReducer = combineReducers({
   details: detailsReducer,
   serviceRates: serviceRateFieldSlice,
   fieldValue: rateFieldValueSlice,
+  availability: availabilitySlice,
+  serviceSetup: serviceSetUpSlice,
   providerProfile: providerProfileSlice,
 });
 

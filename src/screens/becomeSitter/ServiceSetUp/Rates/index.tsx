@@ -8,6 +8,7 @@ import {BoardingSettingsSchema} from '../../../../utils/config/ValidationSchema/
 import {useServiceRateInit} from './utils/useServiceRateInit';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {useServiceRates} from './utils/useServiceRate';
+import { useAppSelector } from '../../../../store/store';
 interface Props {
   route: {
     params: any;
@@ -17,9 +18,20 @@ interface Props {
 
 const Rates = ({route, navigation}: Props) => {
   const {colors} = useTheme();
-  const {itemId, name, image, description} = route?.params;
-  const {handleRates, loading, btnLoading, fLoading, serviceRateFields} =
-    useServiceRates(route, navigation);
+// <<<<<<< src/screens/becomeSitter/ServiceSetUp/Rates/index.tsx
+  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  const {
+    itemId,
+    name,
+    image,
+    description,
+  } = serviceSetup.routeData;
+  const {handleRates, loading, serviceRateFields} = useServiceRates(serviceSetup.routeData);
+// =======
+//   const {itemId, name, image, description} = route?.params;
+//   const {handleRates, loading, btnLoading, fLoading, serviceRateFields} =
+//     useServiceRates(route, navigation);
+// >>>>>>> src/screens/becomeSitter/ServiceSetUp/Rates/index.tsx
 
   return (
     <>

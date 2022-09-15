@@ -1,26 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect, memo} from 'react';
-// import {useFormContext} from 'react-hook-form';
 import BigText from '../../../../common/text/BigText';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import HeaderText from '../../../../common/text/HeaderText';
 import ServicePetQuantity from '../Common/ServicePetQuantity';
-// import SubmitButton from '../../../../common/Form/SubmitButton';
 import BottomSpacing from '../../../../UI/BottomSpacing';
-import PetType from '../PetType/PetType';
+import PetType from './PetType';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {
-  petPreferenceSchema,
-} from '../../../../../screens/becomeSitter/ServiceSetUp/useServiceSetUpInitialState';
+import {petPreferenceSchema} from '../../../../../screens/becomeSitter/ServiceSetUp/PetPreference/utils/useServiceSetUpInitialState';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
-// import DescriptionText from '../../../../common/text/DescriptionText';
-// import ServiceCheckbox from '../Common/ServiceCheckbox';
-// import {petType} from '../../../../../utils/config/Data/serviceSetUpData/petPreference';
-// import useHandleMultipleActiveCheck from '../handleCheck/HandleCheck';
-
 interface Props {
   handlePetPreference: (arg1: any) => void;
   putLoading: boolean;
@@ -33,14 +24,6 @@ const SubPetPreference = ({
   petPreference,
   petPerDay,
 }: Props) => {
-  // const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
-  //   petType.options,
-  // );
-  // const {
-  //   control,
-  //   setValue,
-  //   formState: {errors},
-  // } = useFormContext();
   const {
     control,
     handleSubmit,
@@ -49,27 +32,30 @@ const SubPetPreference = ({
     reset,
     formState: {errors},
   } = useForm({
-    resolver: yupResolver(petPreferenceSchema),
+    // resolver: yupResolver(petPreferenceSchema),
+    mode: 'onChange',
     defaultValues: {
-      smallDog: false ,
+      smallDog: false,
       mediumDog: false,
       largeDog: false,
       giantDog: false,
       cat: false,
       petPerDay: petPerDay,
     },
-    mode: 'onChange',
   });
   useEffect(() => {
     reset({
-      smallDog: petPreference?.smallDog ,
-      mediumDog: petPreference?.mediumDog,
-      largeDog: petPreference?.largeDog,
-      giantDog: petPreference?.giantDog,
-      cat: petPreference?.cat,
+      smallDog: petPreference?.smallDog ? petPreference?.smallDog : false,
+      mediumDog: petPreference?.mediumDog ? petPreference?.mediumDog : false,
+      largeDog: petPreference?.largeDog ? petPreference?.largeDog : false,
+      giantDog: petPreference?.giantDog ? petPreference?.giantDog : false,
+      cat: petPreference?.cat ? petPreference?.cat : false,
+      petPerDay: petPerDay,
     });
   }, [petPreference]);
+
   const data = getValues();
+
   return (
     <View style={styles.headerContainer}>
       <BigText text={'Pet Preference'} textStyle={styles.headerText} />
@@ -85,31 +71,12 @@ const SubPetPreference = ({
           setValue={setValue}
         />
       </View>
-      <PetType control={control} errors={errors} setValue={setValue}  data={data}/>
-      {/* <View>
-        <HeaderText textStyle={styles.subtitle} text={petType.title!} />
-        <DescriptionText text={petType.subtitle} textStyle={styles.subtitle} />
-        {newData?.map((item: any, index: number) => {
-          return (
-            <ServiceCheckbox
-              title={item.type}
-              key={index}
-              square
-              typeKey={item.id}
-              active={data[item.name]}
-              onPress={() => {
-                handleMultipleCheck(item.id);
-                setValue(item.name, item.value, {
-                  shouldValidate: true,
-                });
-              }}
-              name={item.name}
-              control={control}
-            />
-          );
-        })}
-        <ErrorMessage error={errors[petType.name]?.message} />
-      </View> */}
+      <PetType
+        control={control}
+        errors={errors}
+        setValue={setValue}
+        data={data}
+      />
       <View style={styles.submitContainer}>
         <ButtonCom
           title={'Save & Continue'}

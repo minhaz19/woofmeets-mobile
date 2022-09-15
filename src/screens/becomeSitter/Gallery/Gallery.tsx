@@ -260,6 +260,7 @@ const styles = StyleSheet.create({
   },
   photoContainer: {
     flexDirection: 'row',
+    padding: 10,
   },
   uploadContainer: {
     width: '100%',
@@ -287,8 +288,8 @@ const styles = StyleSheet.create({
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 160,
-    height: 160,
+    width: 140,
+    height: 140,
     borderWidth: 1,
     borderStyle: 'dashed',
     marginTop: 10,

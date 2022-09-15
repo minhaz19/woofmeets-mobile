@@ -4,27 +4,30 @@ import {ArrowRight} from '../../../assets/svgs/Services_SVG';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import SelectServiceTitle from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/SelectServiceTitle';
 import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
+import {useServiceSetup} from './useServiceSetup';
+import {useAppSelector} from '../../../store/store';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 
 const ServiceSetUp = (props: {
-  navigation: {navigate: (arg0: string, arg1: any) => void};
-  route: {params: any};
+  navigation: {navigate: (arg0: string, arg1?: any) => void};
 }) => {
   const {colors} = useTheme();
-  const {itemId, name, image, description, serviceTypeId, providerServicesId} = props?.route?.params;
+  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  const {itemId, name, image, description, service} = serviceSetup.routeData;
+  const serviceId = service.map((data: {id: any}) => data.id);
+  const {petPreferenceLoader, availabilityLoader} = useServiceSetup(serviceId);
+  // console.log(
+  //   'petPreferenceLoader, availabilityLoader',
+  //   petPreferenceLoader,
+  //   availabilityLoader,
+  // );
   const boardingSelection = [
     {
       title: 'Rates',
       checked: true,
       icon: <ArrowRight />,
       screen: () => {
-        props.navigation.navigate('Rates', {
-          itemId: itemId,
-          name: name,
-          image: image,
-          description: description,
-          serviceId: serviceTypeId,
-          providerServicesId: providerServicesId,
-        });
+        props.navigation.navigate('Rates');
       },
     },
     {
@@ -32,12 +35,7 @@ const ServiceSetUp = (props: {
       checked: false,
       icon: <ArrowRight />,
       screen: () => {
-        props.navigation.navigate('Availability', {
-          itemId: itemId,
-          name: name,
-          image: image,
-          description: description,
-        });
+        props.navigation.navigate('Availability', {availabilityLoader});
       },
     },
     {
@@ -45,12 +43,7 @@ const ServiceSetUp = (props: {
       checked: false,
       icon: <ArrowRight />,
       screen: () => {
-        props.navigation.navigate('PetPreference', {
-          itemId: itemId,
-          name: name,
-          image: image,
-          description: description,
-        });
+        props.navigation.navigate('PetPreference', {petPreferenceLoader});
       },
     },
     {
@@ -81,26 +74,33 @@ const ServiceSetUp = (props: {
     },
   ];
   return (
-    <View
-      style={[styles.rootContainer, {backgroundColor: colors.backgroundColor}]}>
-      <ReusableHeader
-        itemId={itemId}
-        name={name}
-        image={image}
-        description={description}
-      />
-      <View>
-        {boardingSelection?.map((item, index) => (
-          <SelectServiceTitle
-            key={index}
-            title={item.title}
-            icon={item.icon}
-            checked={item.checked}
-            screen={item.screen}
-          />
-        ))}
+    <>
+      {availabilityLoader && <AppActivityIndicator visible={true} />}
+      {petPreferenceLoader && <AppActivityIndicator visible={true} />}
+      <View
+        style={[
+          styles.rootContainer,
+          {backgroundColor: colors.backgroundColor},
+        ]}>
+        <ReusableHeader
+          itemId={itemId}
+          name={name}
+          image={image}
+          description={description}
+        />
+        <View>
+          {boardingSelection?.map((item, index) => (
+            <SelectServiceTitle
+              key={index}
+              title={item.title}
+              icon={item.icon}
+              checked={item.checked}
+              screen={item.screen}
+            />
+          ))}
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 

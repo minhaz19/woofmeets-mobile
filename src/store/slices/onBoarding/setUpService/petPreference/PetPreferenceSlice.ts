@@ -20,6 +20,9 @@ const petPreferenceSlice = createSlice({
         state.petPerDay -= 1;
       }
     },
+    setPetPreference: (state, {payload}) => {
+      state.petPreference = payload;
+    },
   },
 
   extraReducers(builder) {
@@ -41,5 +44,6 @@ const petPreferenceSlice = createSlice({
       });
   },
 });
-export const {increment, decrement} = petPreferenceSlice.actions;
+export const {increment, decrement, setPetPreference} =
+  petPreferenceSlice.actions;
 export default petPreferenceSlice.reducer;

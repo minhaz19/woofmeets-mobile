@@ -6,11 +6,24 @@ import {getServiceRateFields} from '../../../../../store/slices/onBoarding/setUp
 import {getRateFieldValue} from '../../../../../store/slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueAction';
 import {useAppDispatch, useAppSelector} from '../../../../../store/store';
 import {useApi} from '../../../../../utils/helpers/api/useApi';
+// <<<<<<< src/screens/becomeSitter/ServiceSetUp/Rates/utils/useServiceRate.ts
+interface HandleProps {
+  baserate: string;
+  additionaldog: string;
+  catcare: string;
+  holidayrate: string;
+}
+const ratePostEndpoint = '/service-rates';
+const ratePutEndpoint = '/service-rates/';
+export const useServiceRates = (route: any) => {
+  const {serviceId, providerServicesId} = route;
+// =======
 
-const ratePostEndpoint = '/service-rates/multiple/create';
-const ratePutEndpoint = '/service-rates/muptiple/update';
-export const useServiceRates = (route: any, navigation: any) => {
-  const {serviceId, providerServicesId} = route.params;
+// const ratePostEndpoint = '/service-rates/multiple/create';
+// const ratePutEndpoint = '/service-rates/muptiple/update';
+// export const useServiceRates = (route: any, navigation: any) => {
+//   const {serviceId, providerServicesId} = route.params;
+// >>>>>>> src/screens/becomeSitter/ServiceSetUp/Rates/utils/useServiceRate.ts
   const dispatch = useAppDispatch();
   const {loading, serviceRateFields} = useAppSelector(
     state => state.serviceRates,
