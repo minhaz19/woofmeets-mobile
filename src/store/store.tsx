@@ -28,6 +28,8 @@ import availabilitySlice from './slices/onBoarding/setUpService/availability/ava
 import serviceSetUpSlice from './slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 import providerProfileSlice from './slices/Provider/ProviderProfile/singlePet/providerProfileSlice';
 import initial from './slices/onBoarding/initial';
+import safetyQuizSlice from './slices/onBoarding/safetyQuiz/safetyQuizSlice';
+import whoAmISlice from './slices/common/whoAmI/whoAmISlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -46,9 +48,11 @@ const appReducer = combineReducers({
   details: detailsReducer,
   serviceRates: serviceRateFieldSlice,
   fieldValue: rateFieldValueSlice,
+  providerProfile: providerProfileSlice,
+  safetyQuiz: safetyQuizSlice,
+  whoAmI: whoAmISlice,
   availability: availabilitySlice,
   serviceSetup: serviceSetUpSlice,
-  providerProfile: providerProfileSlice,
 });
 
 const RootReducer = (

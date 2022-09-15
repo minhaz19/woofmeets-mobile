@@ -30,7 +30,6 @@ const SettingMain = (props: {
   const [token, setToken] = useState();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const userInfo = useAppSelector(state => state.auth.userInfo);
-  console.log(userInfo)
   const loginData = [
     {
       id: 3,

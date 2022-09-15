@@ -19,7 +19,6 @@ export const getProviderProfile = createAsyncThunk(
         }
         throw new Error(response.data.message);
       }
-      console.log('provider profile data', response.data);
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {

@@ -1,5 +1,6 @@
 import {ApiResponse} from 'apisauce';
 import methods from '../../../../../api/methods';
+import {setBoardingSelection} from '../../../../../store/slices/onBoarding/initial';
 import {setAvailability} from '../../../../../store/slices/onBoarding/setUpService/availability/availabilitySlice';
 import {useAppDispatch} from '../../../../../store/store';
 import {useApi} from '../../../../../utils/helpers/api/useApi';
@@ -30,7 +31,7 @@ export const useAvailabilityUtils = (id: string, navigation: any) => {
     );
     if (response) {
       dispatch(setAvailability(response?.data?.data));
-      navigation.navigate('ServiceSetup', {});
+      dispatch(setBoardingSelection({pass: 1}));
     }
   };
   return {handlePost, isLoading};

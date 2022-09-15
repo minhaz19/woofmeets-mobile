@@ -47,7 +47,7 @@ export default {
   success: '#69e4a6',
   green: '#187d48',
   shadow: '#0000000A',
-
+  red: 'red',
   darkShadow: '#000',
   none: 'transparent',
   yellow: '#FBC12CC2',

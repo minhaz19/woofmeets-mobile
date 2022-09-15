@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
-import React, { useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {Controller} from 'react-hook-form';
 import TitleText from '../../../../common/text/TitleText';
 import {InfoSvg} from '../../../Inbox/utils/SvgComponent/SvgComponent';
@@ -71,9 +71,8 @@ const ServiceForm = ({
     name !== 'baserate' &&
       updateRates === false &&
       checked === false &&
-      setValue!(name, convertedValue);
+      setValue!(name, convertedValue?.toFixed(2));
   }, [name, updateRates, checked, setValue, convertedValue]);
-  console.log('check', checked);
   return (
     <>
       <View>
@@ -103,7 +102,9 @@ const ServiceForm = ({
                   name === 'baserate'
                     ? value.toString()
                     : updateRates === false
-                    ? ((baseRateWatch! / 100) * percentage).toString()
+                    ? ((baseRateWatch! / 100) * percentage)
+                        .toFixed(2)
+                        .toString()
                     : value.toString()
                 }
                 error={error?.message}

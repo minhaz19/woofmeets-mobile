@@ -192,11 +192,14 @@ const BoardingSettingsSchema = Yup.object().shape({
     .max(150, 'Please enter a value less than or equal to 150.'),
 });
 const safetyQuizValidationSchema = Yup.object().shape({
-  quiz_one: Yup.string(),
-  quiz_two: Yup.string(),
-  quiz_three: Yup.string(),
-  quiz_four: Yup.string(),
-  quiz_five: Yup.string(),
+  '1': Yup.string().required('Please choose the corrent answer'),
+  '2': Yup.string().required('Please choose the corrent answer'),
+  '3': Yup.string().required('Please choose the corrent answer'),
+  '4': Yup.string().required('Please choose the corrent answer'),
+  '5': Yup.string().required('Please choose the corrent answer'),
+  '6': Yup.string().required('Please choose the corrent answer'),
+  '7': Yup.string().required('Please choose the corrent answer'),
+  '8': Yup.string().required('Please choose the corrent answer'),
 });
 
 export {

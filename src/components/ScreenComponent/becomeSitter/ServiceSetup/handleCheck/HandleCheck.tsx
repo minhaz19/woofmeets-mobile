@@ -3,7 +3,6 @@ import {useState} from 'react';
 const useHandleMultipleActiveCheck = (data: any) => {
   const [newData, setData] = useState(data);
   const handleMultipleCheck = (id: number) => {
-    console.log(id);
     const newArray = [...data];
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].value = !newArray[index]?.value;

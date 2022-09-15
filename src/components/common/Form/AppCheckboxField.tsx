@@ -59,7 +59,7 @@ const AppCheckboxField = ({
           name={name}
         />
       </View>
-      {typeKey === 1 && (
+      {errors !== false && typeKey === 1 && (
         <View style={styles.errorContainer}>
           <ErrorMessage error={errors[name]?.message} />
         </View>

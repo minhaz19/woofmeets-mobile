@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import React from 'react';
-import { ArrowRight } from '../../../assets/svgs/Services_SVG';
+import {ArrowRight} from '../../../assets/svgs/Services_SVG';
 import CreateProfileLanding from '../../../screens/becomeSitter/CreateProfileLanding';
 import Details from '../../../screens/becomeSitter/Details';
 import Gallery from '../../../screens/becomeSitter/Gallery/Gallery';
@@ -16,7 +16,6 @@ import YourHome from '../../../screens/becomeSitter/ServiceSetUp/YourHome/YourHo
 import SubscriptionScreen from '../../../screens/becomeSitter/Subscription';
 import BasicInfo from '../../../screens/profile/BasicInfo';
 import ContactScreen from '../../../screens/profile/ContactScreen';
-
 
 const initialState: any = {
   sitterData: [
@@ -79,29 +78,29 @@ const initialState: any = {
       screen: <ContactScreen />,
     },
     {
-        id: 3,
-        name: 'provider',
-        title: 'Details',
-        isCompleted: false,
-        inProgress: false,
-        screen: <Details />,
-      },
-      {
-        id: 4,
-        name: 'Gallery',
-        title: 'Photos',
-        isCompleted: false,
-        inProgress: false,
-        screen: <Gallery />,
-      },
-      {
-        id: 5,
-        name: 'pet',
-        title: 'Your Pets',
-        isCompleted: false,
-        inProgress: false,
-        screen: <OnboardingMyPetScreen />,
-      },
+      id: 3,
+      name: 'provider',
+      title: 'Details',
+      isCompleted: false,
+      inProgress: false,
+      screen: <Details />,
+    },
+    {
+      id: 4,
+      name: 'Gallery',
+      title: 'Photos',
+      isCompleted: false,
+      inProgress: false,
+      screen: <Gallery />,
+    },
+    {
+      id: 5,
+      name: 'pet',
+      title: 'Your Pets',
+      isCompleted: false,
+      inProgress: false,
+      screen: <OnboardingMyPetScreen />,
+    },
   ],
   boardingSelection: [
     {
@@ -110,7 +109,7 @@ const initialState: any = {
       isCompleted: false,
       inProgress: true,
       icon: <ArrowRight />,
-      screen: Rates
+      screen: Rates,
       // screen: () => {
       //   props.navigation.navigate('Rates');
       // },
@@ -143,7 +142,7 @@ const initialState: any = {
       isCompleted: false,
       inProgress: false,
       icon: <ArrowRight />,
-      screen: YourHome
+      screen: YourHome,
       // screen: () => {
       //   props.navigation.navigate('YourHome', {
       //     itemId: itemId,
@@ -159,7 +158,7 @@ const initialState: any = {
       isCompleted: false,
       inProgress: false,
       icon: <ArrowRight />,
-      screen: <CancellationPolicy />
+      screen: CancellationPolicy,
       // screen: () => {
       //   props.navigation.navigate('CancellationPolicy', {
       //     itemId: itemId,
@@ -181,65 +180,66 @@ const contact = createSlice({
   initialState,
   reducers: {
     setSitterData: (state, action) => {
-        const newArray = [...state.sitterData];
-        let val = newArray.length;
-        while (val <= 0) {
-          newArray[val].isCompleted = false;
-          newArray[val].inProgress = false;
-          val--;
-        }
-        state.oldUser = true;
-        if (action.payload.pass === newArray.length-1) {
-          newArray[action.payload.pass].isCompleted = true;
-          newArray[action.payload.pass].inProgress = false;
-        } else {
-          newArray[action.payload.pass].isCompleted = true;
-          newArray[action.payload.pass].inProgress = false;
-          newArray[action.payload.pass+1].inProgress = true;
-        }
-        state.sitterData = newArray;
+      const newArray = [...state.sitterData];
+      let val = newArray.length;
+      while (val <= 0) {
+        newArray[val].isCompleted = false;
+        newArray[val].inProgress = false;
+        val--;
+      }
+      state.oldUser = true;
+      if (action.payload.pass === newArray.length - 1) {
+        newArray[action.payload.pass].isCompleted = true;
+        newArray[action.payload.pass].inProgress = false;
+      } else {
+        newArray[action.payload.pass].isCompleted = true;
+        newArray[action.payload.pass].inProgress = false;
+        newArray[action.payload.pass + 1].inProgress = true;
+      }
+      state.sitterData = newArray;
     },
     setProfileData: (state, action) => {
-        const newArray1 = [...state.profileData];
-        let val = newArray1.length;
-        while (val <= 0) {
-          newArray1[val].isCompleted = false;
-          newArray1[val].inProgress = false;
-          val--;
-        }
-        state.oldUser = true;
-        if (action.payload.pass === newArray1.length-1) {
-          newArray1[action.payload.pass].isCompleted = true;
-          newArray1[action.payload.pass].inProgress = false;
-        } else {
-          newArray1[action.payload.pass].isCompleted = true;
-          newArray1[action.payload.pass].inProgress = false;
-          newArray1[action.payload.pass+1].inProgress = true;
-        }
-        state.profileData = newArray1;
+      const newArray1 = [...state.profileData];
+      let val = newArray1.length;
+      while (val <= 0) {
+        newArray1[val].isCompleted = false;
+        newArray1[val].inProgress = false;
+        val--;
+      }
+      state.oldUser = true;
+      if (action.payload.pass === newArray1.length - 1) {
+        newArray1[action.payload.pass].isCompleted = true;
+        newArray1[action.payload.pass].inProgress = false;
+      } else {
+        newArray1[action.payload.pass].isCompleted = true;
+        newArray1[action.payload.pass].inProgress = false;
+        newArray1[action.payload.pass + 1].inProgress = true;
+      }
+      state.profileData = newArray1;
     },
     setBoardingSelection: (state, action) => {
       const newArray = [...state.boardingSelection];
-        let val = newArray.length;
-        while (val <= 0) {
-          newArray[val].isCompleted = false;
-          newArray[val].inProgress = false;
-          val--;
-        }
-        state.oldUser = true;
-        if (action.payload.pass === newArray.length-1) {
-          newArray[action.payload.pass].isCompleted = true;
-          newArray[action.payload.pass].inProgress = false;
-        } else {
-          newArray[action.payload.pass].isCompleted = true;
-          newArray[action.payload.pass].inProgress = false;
-          newArray[action.payload.pass+1].inProgress = true;
-        }
-        state.boardingSelection = newArray;
-    }
+      let val = newArray.length;
+      while (val <= 0) {
+        newArray[val].isCompleted = false;
+        newArray[val].inProgress = false;
+        val--;
+      }
+      state.oldUser = true;
+      if (action.payload.pass === newArray.length - 1) {
+        newArray[action.payload.pass].isCompleted = true;
+        newArray[action.payload.pass].inProgress = false;
+      } else {
+        newArray[action.payload.pass].isCompleted = true;
+        newArray[action.payload.pass].inProgress = false;
+        newArray[action.payload.pass + 1].inProgress = true;
+      }
+      state.boardingSelection = newArray;
+    },
   },
 });
 
-export const {setSitterData, setProfileData} = contact.actions;
+export const {setSitterData, setProfileData, setBoardingSelection} =
+  contact.actions;
 
 export default contact.reducer;

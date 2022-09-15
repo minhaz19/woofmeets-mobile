@@ -1,20 +1,21 @@
 import {View, StyleSheet} from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
-import { getUserProfileInfo } from '../../../store/slices/userProfile/userProfileAction';
-import { getContactInfo } from '../../../store/slices/profile/contact';
-import { getSitterDetails } from '../../../store/slices/profile/details';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
+import {getContactInfo} from '../../../store/slices/profile/contact';
+import {getSitterDetails} from '../../../store/slices/profile/details';
 
-const CreateProfileLanding = (props: { navigation: { navigate: (arg0: string) => any; }; }) => {
+const CreateProfileLanding = (props: {
+  navigation: {navigate: (arg0: string) => any};
+}) => {
   const {colors} = useTheme();
-  const profileData = useAppSelector(state => state.initial.profileData)
+  const profileData = useAppSelector(state => state.initial.profileData);
   const userInfo = useAppSelector(state => state.userProfile.userInfo);
-  const [refreshing, setRefreshing] = useState(false);
+  const [, setRefreshing] = useState(false);
   const dispatch = useAppDispatch();
 
-  console.log(profileData)
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -37,16 +38,38 @@ const CreateProfileLanding = (props: { navigation: { navigate: (arg0: string) =>
       ]}>
       <View style={styles.innerContainer}>
         {/* completed */}
-        {profileData.map(item => (
-            item.isCompleted && <ProfileItemCard key={item.id} name={item.name} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} userInfo={userInfo} />
-        ))}
+        {profileData.map(
+          item =>
+            item.isCompleted && (
+              <ProfileItemCard
+                key={item.id}
+                name={item.name}
+                title={item.title}
+                id={item.id}
+                isCompleted={item.isCompleted}
+                handleClick={item.onPress}
+                userInfo={userInfo}
+              />
+            ),
+        )}
         {/* not completed */}
-        {profileData.map(item => (
-          !item.isCompleted && <ProfileItemCard key={item.id} name={item.name} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} userInfo={userInfo} />
-        ))}
+        {profileData.map(
+          item =>
+            !item.isCompleted && (
+              <ProfileItemCard
+                key={item.id}
+                name={item.name}
+                title={item.title}
+                id={item.id}
+                isCompleted={item.isCompleted}
+                handleClick={item.onPress}
+                userInfo={userInfo}
+              />
+            ),
+        )}
       </View>
       {profileData.map(item => {
-        if(item.inProgress) {
+        if (item.inProgress) {
           return (
             <View key={item.id} style={{flex: 1}}>
               {item.screen}
@@ -72,7 +95,7 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
 });
 

@@ -80,7 +80,6 @@ const AddPetBody = ({handleSubmit, loading, opk}: Props) => {
               control={control}
               getValues={getValues}
             />
-
             <AdditionalMedicationCheck
               errors={errors}
               setValue={setValue}

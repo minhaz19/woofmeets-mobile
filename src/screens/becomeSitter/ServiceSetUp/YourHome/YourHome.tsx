@@ -7,15 +7,17 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import SubYourHome from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubYourHome';
 import {useYourHomeUtils} from './utils/useYourHomeUtils';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {setBoardingSelection} from '../../../../store/slices/onBoarding/initial';
 
-const YourHome = (props: {
-  navigation: {navigate: (arg0: string, arg1: any) => void};
-  route: {params: any};
-}) => {
+const YourHome = () => {
   const {colors} = useTheme();
-  const {itemId, name, image, description} = props?.route?.params;
+  // const {itemId, name, image, description} = props?.route?.params;
 
-  const {homeData, getLoading, attributes} = useYourHomeUtils();
+  const {serviceSetup} = useAppSelector(state => state?.serviceSetup);
+  const {itemId, name, image, description} = serviceSetup.routeData;
+  const {getLoading, attributes} = useYourHomeUtils();
+  const dispatch = useAppDispatch();
   const YouHomeSchema = Yup.object().shape({
     homeType: Yup.string().required('Please select one'),
     yardType: Yup.string().required('Please select one'),
@@ -28,8 +30,8 @@ const YourHome = (props: {
     expect: [],
     host: [],
   };
-  const handlePost = (e: any) => {
-    console.log(e);
+  const handlePost = () => {
+    dispatch(setBoardingSelection({pass: 3}));
   };
   return (
     <>

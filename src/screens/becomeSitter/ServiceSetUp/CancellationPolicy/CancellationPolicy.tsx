@@ -7,20 +7,24 @@ import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
 import SubCancellationPolicy from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubCancellationPolicy';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
-import {useAppSelector} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {
+  setBoardingSelection,
+  setSitterData,
+} from '../../../../store/slices/onBoarding/initial';
+import {useNavigation} from '@react-navigation/native';
 
 const getPoint = '/cancellation-policy';
 const getSingleData = '/cancellation-policy/povider-policy';
 
-const CancellationPolicy = (props: {
-  navigation: {navigate: (arg0: string) => void};
-}) => {
+const CancellationPolicy = () => {
   const [policy, setPolicy] = useState([]);
   const [singlePolicy, setSinglePolicy] = useState(null);
   const {colors} = useTheme();
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {itemId, name, image, description} = serviceSetup.routeData;
-
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
   // getAll policy Data
   const {request: getPolicyData, loading: policyLoader} = useApi(methods._get);
   const getAllPolicyData = async () => {
@@ -44,7 +48,9 @@ const CancellationPolicy = (props: {
     const postPoint = `/cancellation-policy/provider-policy/${e.policyId}`;
     const result = await postRequest(postPoint);
     if (result?.data?.data) {
-      props.navigation.navigate('ServiceSetup');
+      dispatch(setBoardingSelection({pass: 4}));
+      navigation.goBack();
+      dispatch(setSitterData({pass: 1}));
     }
   };
 

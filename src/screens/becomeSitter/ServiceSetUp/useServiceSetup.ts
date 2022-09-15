@@ -18,7 +18,6 @@ export const useServiceSetup = (serviceId: any) => {
   useEffect(() => {
     availability === null && dispatch(getAvailability(serviceId[0]));
   }, [availability, dispatch]);
-  
 
   return {petPreferenceLoader, availabilityLoader};
 };
