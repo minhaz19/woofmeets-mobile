@@ -20,14 +20,13 @@ interface Props {
   item: any;
 }
 
-const ServiceSelection = (props) => {
+const ServiceSelection = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
   const {colors} = useTheme();
   const [sequence, setSequence] = useState<number>(0);
   const [isloading, setLoading] = useState<boolean>(false);
   const {serviceTypes, loading} = useAppSelector(state => state.services);
-  const sitter = useAppSelector(state => state.initial.sitterData)
-  // const [sitterData, setThisSitterData] = useState([...sitter]);
-  let sitterData = [...sitter];
+  const oldUser = useAppSelector(state => state.initial.oldUser)
+  const userServices = useAppSelector(state => state.services.userServices);
 
   const dispatch = useAppDispatch();
 
@@ -36,12 +35,15 @@ const ServiceSelection = (props) => {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     dispatch(getServiceTypes());
+    if (!oldUser) {
+      dispatch(setSitterData({pass: 0}));
+    }
     setRefreshing(false);
   }, [dispatch]);
 
   useEffect(() => {
     onRefresh();
-  }, [onRefresh]);
+  }, []);
 
   const onPressEvent = (id: number) => {
     setSequence(id);

@@ -1,14 +1,11 @@
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
   GestureResponderEvent,
 } from 'react-native';
 import React from 'react';
-import TitleText from '../../../../common/text/TitleText';
 import Colors from '../../../../../constants/Colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ShortText from '../../../../common/text/ShortText';
 
 const ProfileItemCard = (props: {
@@ -20,7 +17,7 @@ const ProfileItemCard = (props: {
 }) => {
   const CompletedIcon = () => {
     return (
-      <View style={styles.iconContainer}>
+      <View style={styles.iconContainer} key={props.id}>
         <AntDesign
           name="checkcircle"
           size={12}

@@ -5,6 +5,7 @@ import LandingCard from '../../../components/ScreenComponent/becomeSitter/landin
 import Colors from '../../../constants/Colors';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { getUserServices } from '../../../store/slices/profile/services';
+import { setSitterData } from '../../../store/slices/onBoarding/initial';
 
 const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => any; }; }) => {
   const {colors} = useTheme();

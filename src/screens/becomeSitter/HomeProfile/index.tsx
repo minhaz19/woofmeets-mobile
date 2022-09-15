@@ -25,6 +25,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {setSitterData} from '../../../store/slices/onBoarding/initial';
 import {setServiceSetup} from '../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
+import ServiceSetUp from '../ServiceSetUp';
 
 type StackParamList = {};
 type NavigationProps = StackNavigationProp<StackParamList>;
@@ -36,6 +37,8 @@ const HomeProfile = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [isServiceModalVisible, setIsServiceModalVisible] =
     useState<boolean>(false);
+
+  const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
 
   const onServicePostHandle = async () => {
     setLoading(true);
@@ -85,6 +88,12 @@ const HomeProfile = () => {
         return <DoggyDayCareIcon width={34} height={36} />;
     }
   };
+
+  if(isBoardingSelected) {
+    return (
+      <ServiceSetUp />
+    )
+  }
 
   return (
     <ScrollView
@@ -165,7 +174,7 @@ const HomeProfile = () => {
                   time: '3 mins',
                   icon: 'chevron-right',
                   screen: () => {
-                    navigation.navigate('ServiceSetup');
+                    // navigation.navigate('ServiceSetup');
                     dispatch(
                       setServiceSetup({
                         routeData: {
@@ -179,6 +188,7 @@ const HomeProfile = () => {
                         },
                       }),
                     );
+                    setIsBoardingSelected(true);
                   },
                 }}
               />
