@@ -20,14 +20,28 @@ import {
   DropInVisitIcon,
   HouseSittingIcon,
 } from '../../../assets/svgs/Services_SVG';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import ButtonCom from '../../../components/UI/ButtonCom';
+import {setSitterData} from '../../../store/slices/onBoarding/initial';
+import {setServiceSetup} from '../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 
-const HomeProfile = (props: {
-  navigation: {navigate: (arg0: string, arg1: any) => void};
-}) => {
+type StackParamList = {};
+type NavigationProps = StackNavigationProp<StackParamList>;
+
+const HomeProfile = () => {
+  const navigation = useNavigation<NavigationProps>();
+  const [isloading, setLoading] = useState<boolean>(false);
   const {colors} = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [isServiceModalVisible, setIsServiceModalVisible] =
     useState<boolean>(false);
+
+  const onServicePostHandle = async () => {
+    setLoading(true);
+    dispatch(setSitterData({pass: 1}));
+    setLoading(false);
+  };
 
   const modalData = [
     {
@@ -131,6 +145,7 @@ const HomeProfile = (props: {
       {userServices &&
         userServices?.map(
           (item: {
+            AvailableDay: any;
             id: React.Key | null | undefined;
             serviceType: {name: any; icon: string; description: any};
             serviceTypeId: React.Key | null | undefined;
@@ -150,20 +165,36 @@ const HomeProfile = (props: {
                   time: '3 mins',
                   icon: 'chevron-right',
                   screen: () => {
-                    props.navigation.navigate('ServiceSetup', {
-                      itemId: item.id,
-                      name: item.serviceType.name,
-                      image: getIcon(item.serviceType.icon),
-                      description: item.serviceType.description,
-                      serviceTypeId: item.serviceTypeId,
-                      providerServicesId: item.id,
-                    });
+                    navigation.navigate('ServiceSetup');
+                    dispatch(
+                      setServiceSetup({
+                        routeData: {
+                          itemId: item.id,
+                          name: item.serviceType.name,
+                          image: getIcon(item.serviceType.icon),
+                          description: item.serviceType.description,
+                          serviceId: item.serviceTypeId,
+                          providerServicesId: item.id,
+                          service: item?.AvailableDay,
+                        },
+                      }),
+                    );
                   },
                 }}
               />
             </View>
           ),
         )}
+      <View style={styles.footerContainer}>
+        <ButtonCom
+          title="Save and Continue"
+          textAlignment={btnStyles.textAlignment}
+          containerStyle={btnStyles.containerStyleFullWidth}
+          titleStyle={btnStyles.titleStyle}
+          onSelect={onServicePostHandle}
+          // loading={isloading}
+        />
+      </View>
     </ScrollView>
   );
 };

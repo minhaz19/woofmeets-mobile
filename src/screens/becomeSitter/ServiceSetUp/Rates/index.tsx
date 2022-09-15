@@ -8,20 +8,18 @@ import {BoardingSettingsSchema} from '../../../../utils/config/ValidationSchema/
 import {useServiceRateInit} from './utils/useServiceRateInit';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {useServiceRates} from './utils/useServiceRate';
-interface Props {
-  route: {
-    params: any;
-  };
-}
+import {useAppSelector} from '../../../../store/store';
 
-const Rates = ({route}: Props) => {
+const Rates = () => {
   const {colors} = useTheme();
-  const {itemId, name, image, description} = route?.params;
-  const {handleRates, loading, serviceRateFields} = useServiceRates(route);
+  const {serviceSetup} = useAppSelector(state => state?.serviceSetup);
+  const {itemId, name, image, description} = serviceSetup.routeData;
+  const {handleRates, loading, btnLoading, fLoading, serviceRateFields} =
+    useServiceRates(serviceSetup);
 
   return (
     <>
-      {loading && <AppActivityIndicator visible={true} />}
+      {(loading || fLoading) && <AppActivityIndicator visible={true} />}
       <ScrollView
         style={[
           styles.rootContainer,
@@ -36,11 +34,12 @@ const Rates = ({route}: Props) => {
         />
         <AppForm
           initialValues={useServiceRateInit()}
-          validationSchema={BoardingSettingsSchema}>
+          validationSchema={BoardingSettingsSchema}
+          enableReset>
           <SubRates
             handleRates={handleRates}
             rateFields={serviceRateFields}
-            loading={false}
+            loading={btnLoading}
           />
         </AppForm>
       </ScrollView>

@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Controller} from 'react-hook-form';
 import TitleText from '../../../../common/text/TitleText';
 import {InfoSvg} from '../../../Inbox/utils/SvgComponent/SvgComponent';
@@ -8,8 +8,6 @@ import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import Text_Size from '../../../../../constants/textScaling';
 import Colors from '../../../../../constants/Colors';
 import ServiceInput from './ServiceInput';
-import {useAppDispatch} from '../../../../../store/store';
-import {setBaseRate} from '../../../../../store/slices/onBoarding/setUpService/rates/baseRateSlice';
 
 interface Props {
   name: string;
@@ -36,7 +34,13 @@ interface Props {
   control: any;
   errors: any;
   dValue?: any;
-  setValue?: (arg1: any, arg2: any, arg3: any) => void;
+  setValue?: (arg1: any, arg2: any, arg3?: any) => void;
+  percentage: number;
+  baseRateWatch?: number;
+  convertedValue?: number;
+  onChange?: () => void;
+  updateRates?: boolean;
+  checked?: boolean;
 }
 
 const ServiceForm = ({
@@ -50,15 +54,25 @@ const ServiceForm = ({
   subTitle,
   textInputStyle,
   auth,
-
+  percentage,
   additionalRates,
   handlePress,
   showAdditionalRates,
   editable,
   control,
   errors,
+  baseRateWatch,
+  convertedValue,
+  setValue,
+  updateRates,
+  checked,
 }: Props) => {
-  const dispatch = useAppDispatch();
+  useMemo(() => {
+    name !== 'baserate' &&
+      updateRates === false &&
+      checked === false &&
+      setValue!(name, convertedValue?.toFixed(2));
+  }, [name, updateRates, checked, setValue, convertedValue]);
   return (
     <>
       <View>
@@ -74,7 +88,6 @@ const ServiceForm = ({
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}, fieldState: {error}}) => {
-            console.log('error', value);
             return (
               <ServiceInput
                 autoCapitalize={autoCapitalize}
@@ -83,14 +96,17 @@ const ServiceForm = ({
                 editable={editable}
                 keyboardType={keyboardType}
                 textContentType={textContentType}
-                onChangeText={(e: number) => {
-                  onChange(e);
-                  if (name === 'baserate') {
-                    dispatch(setBaseRate(e));
-                  }
-                }}
+                onChangeText={onChange}
                 onBlur={onBlur}
-                value={value.toString()}
+                value={
+                  name === 'baserate'
+                    ? value.toString()
+                    : updateRates === false
+                    ? ((baseRateWatch! / 100) * percentage)
+                        .toFixed(2)
+                        .toString()
+                    : value.toString()
+                }
                 error={error?.message}
                 textInputStyle={textInputStyle}
               />

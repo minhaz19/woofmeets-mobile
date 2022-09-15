@@ -13,12 +13,15 @@ import { sitterDetailsValidationSchema } from '../../../utils/config/becomeSitte
 import SitterDetailsInput from '../../../components/ScreenComponent/becomeSitter/details/SitterDetailsInput';
 import { getSitterDetails, postSitterDetails } from '../../../store/slices/profile/details';
 import { useDetailsInitalValue } from './useDetailsInitialValue';
+import { setProfileData } from '../../../store/slices/onBoarding/initial';
+import AppFormReset from '../../../components/common/Form/AppFormReset';
 
 const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
   const sitterDetailsSubmit = (sitterData: any) => {
     dispatch(postSitterDetails(sitterData));
+    dispatch(setProfileData({pass:2}))
   };
 
   const [refreshing, setRefreshing] = useState(false);
@@ -68,11 +71,11 @@ const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; 
               text="Quick tips:"
               textStyle={styles.details}
             />
-          <AppForm
+          <AppFormReset
             initialValues={useDetailsInitalValue()}
             validationSchema={sitterDetailsValidationSchema}>
             <SitterDetailsInput handleSubmit={sitterDetailsSubmit} />
-          </AppForm>
+          </AppFormReset>
           </View>
       <BottomSpacing />
     </ScrollView>

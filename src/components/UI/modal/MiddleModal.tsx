@@ -30,7 +30,7 @@ const MiddleModal = (props: {
         animationType="fade"
         transparent={true}
         visible={props.isModalVisible}>
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => props.setIsModalVisible(false)}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>{props.children}</View>
           </View>

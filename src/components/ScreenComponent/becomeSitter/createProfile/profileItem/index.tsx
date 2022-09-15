@@ -1,12 +1,22 @@
-import {View, StyleSheet, TouchableOpacity, GestureResponderEvent} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  GestureResponderEvent,
+} from 'react-native';
 import React from 'react';
 import TitleText from '../../../../common/text/TitleText';
 import Colors from '../../../../../constants/Colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ShortText from '../../../../common/text/ShortText';
 
 const ProfileItemCard = (props: {
-  userInfo: any;title: string; id: number; isCompleted: boolean, handleClick: ((event: GestureResponderEvent) => void) | undefined; name: string 
+  title: string;
+  id: number;
+  isCompleted: boolean;
+  handleClick: ((event: GestureResponderEvent) => void) | undefined;
+  name: string;
 }) => {
   const CompletedIcon = () => {
     return (
@@ -18,89 +28,93 @@ const ProfileItemCard = (props: {
           style={styles.iconStyle}
         />
       </View>
-    )
-  }
+    );
+  };
   const UnCompletedIcon = () => {
     return (
-      <View style={{...styles.numberViewContainerOuter, backgroundColor: Colors.primaryLight}}>
-        <View style={{...styles.numberViewContainer, backgroundColor: Colors.primary}}/>
+      <View
+        style={{
+          ...styles.numberViewContainerOuter,
+          backgroundColor: Colors.primaryLight,
+        }}>
+        <View
+          style={{
+            ...styles.numberViewContainer,
+            backgroundColor: Colors.primary,
+          }}
+        />
       </View>
-    )
-  }
+    );
+  };
   const getIconType = (name: string) => {
-    switch(name) {
+    switch (name) {
       case 'pet':
-        if (props.userInfo && props.userInfo[`${props.name}`]?.length > 0) {
-          return (
-            <CompletedIcon />
-          )
+        if (props.isCompleted) {
+          return <CompletedIcon />;
         } else {
-          return (
-            <UnCompletedIcon />
-          )
+          return <UnCompletedIcon />;
         }
-        case 'Gallery':
-          if (props.userInfo && props.userInfo[`${props.name}`]?.length > 0) {
-            return (
-              <CompletedIcon />
-            )
-          } else {
-            return (
-              <UnCompletedIcon />
-            )
-          }
-        case 'basicInfo':
-          if (props.userInfo && props.userInfo[`${props.name}`]) {
-            return (
-              <CompletedIcon />
-            )
-          } else {
-            return (
-              <UnCompletedIcon />
-            )
-          }
-        case 'contact':
-          if (props.userInfo && props.userInfo[`${props.name}`]) {
-            return (
-              <CompletedIcon />
-            )
-          } else {
-            return (
-              <UnCompletedIcon />
-            )
-          }
-        case 'provider':
-          if (props.userInfo && props.userInfo[`${props.name}`]?.providerDetails) {
-            return (
-              <CompletedIcon />
-            )
-          } else {
-            return (
-              <UnCompletedIcon />
-            )
-          }
+      case 'contact':
+        if (props.isCompleted) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
+      case 'provider':
+        if (props.isCompleted) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
+      case 'Gallery':
+        if (props.isCompleted) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
+      case 'basicInfo':
+        if (props.isCompleted) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
+      case 'contact':
+        if (props.isCompleted) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
+      case 'provider':
+        if (props.isCompleted) {
+          return <CompletedIcon />;
+        } else {
+          return <UnCompletedIcon />;
+        }
     }
-  }
+  };
   return (
-    <TouchableOpacity onPress={props.handleClick}>
-      <View style={styles.headerContainer}>
-        <View style={styles.cardContainer}>
-          <View style={styles.textContainer}>
-          {props?.userInfo && !props.userInfo[props.name] ?
-          <View style={{...styles.numberViewContainerOuter, backgroundColor: Colors.primaryLight}}>
-            <View style={{...styles.numberViewContainer, backgroundColor: Colors.primary}}/>
-          </View> : 
-          getIconType(props.name)}
-          <TitleText text={props.title} textStyle={{...styles.textStyle, color: Colors.light.subText}} />
-          </View>
-            <MaterialCommunityIcons
-            name="chevron-right"
-            size={22}
-            color={Colors.subText}
-            />
+    <View style={styles.headerContainer}>
+      {!props.isCompleted ? (
+        <View
+          style={{
+            ...styles.numberViewContainerOuter,
+            backgroundColor: Colors.primaryLight,
+          }}>
+          <View
+            style={{
+              ...styles.numberViewContainer,
+              backgroundColor: Colors.primary,
+            }}
+          />
         </View>
-      </View>
-    </TouchableOpacity>
+      ) : (
+        getIconType(props.name)
+      )}
+      <ShortText
+        text={props.title}
+        textStyle={{...styles.textStyle, color: Colors.light.subText}}
+      />
+    </View>
   );
 };
 
@@ -110,24 +124,21 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 10,
     elevation: 1,
-    width: '90%',
-    paddingLeft: '5%',
-    marginLeft: '5%',
     marginVertical: '1%',
   },
   headerContainer: {
-    width: '100%',
-    borderRadius: 0,
-    paddingVertical: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cardContainer: {
-    width: '90%',
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   textStyle: {
     fontWeight: '500',
+    paddingTop: 5,
   },
   numberStyle: {
     fontWeight: '500',

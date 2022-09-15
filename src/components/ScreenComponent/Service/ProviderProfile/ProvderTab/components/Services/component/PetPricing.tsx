@@ -25,7 +25,7 @@ const PetPricing = ({pricingD}: Props) => {
   return (
     <View>
       <View style={styles.titleContainer}>
-        <pricingD.Icon fill="black" style={styles.icon} />
+        <pricingD.Icon width={25} height={25} style={styles.icon} />
         <View style={styles.sittingType}>
           <TitleText
             textStyle={styles.sittingTypeTitle}
@@ -34,23 +34,34 @@ const PetPricing = ({pricingD}: Props) => {
           <ShortText text={pricingD.sittingType} />
         </View>
         <View>
-          <TitleText textStyle={styles.pricingDPrice} text={pricingD.price} />
+          <TitleText
+            textStyle={styles.pricingDPrice}
+            text={`$${pricingD.price}`}
+          />
           <ShortText text={pricingD.perNight} />
         </View>
       </View>
       <View>
-        {pricingD.pricingInfo.map((pInfo, indexx) => (
-          <View style={styles.pInfoContainer} key={indexx}>
-            <TitleText
-              textStyle={styles.pInfoTitle}
-              text={pInfo.pricingInfoTitle}
-            />
-            <View>
-              <TitleText textStyle={styles.pInfoPrice} text={pInfo.price} />
-              <ShortText text={pInfo.perNight} />
-            </View>
-          </View>
-        ))}
+        {pricingD?.pricingInfo &&
+          pricingD?.pricingInfo.map(
+            (pInfo, indexx) =>
+              //@ts-ignore
+              pInfo !== '' && (
+                <View style={styles.pInfoContainer} key={indexx}>
+                  <TitleText
+                    textStyle={styles.pInfoTitle}
+                    text={pInfo.pricingInfoTitle}
+                  />
+                  <View>
+                    <TitleText
+                      textStyle={styles.pInfoPrice}
+                      text={`$${pInfo.price}`}
+                    />
+                    <ShortText text={pInfo.perNight} />
+                  </View>
+                </View>
+              ),
+          )}
       </View>
     </View>
   );

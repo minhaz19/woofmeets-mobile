@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import HeaderText from '../../../../common/text/HeaderText';
 import {
@@ -13,23 +13,35 @@ import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import {useFormContext} from 'react-hook-form';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
-import useHandleMultipleActiveCheck from '../handleCheck/HandleCheck';
+// import useHandleMultipleActiveCheck from '../handleCheck/HandleCheck';
 import SubmitButton from '../../../../common/Form/SubmitButton';
+import BottomSpacing from '../../../../UI/BottomSpacing';
 
 interface Props {
   handlePost: (arg1: any) => void;
   loading: boolean;
 }
 const SubAvailability = ({handlePost, loading}: Props) => {
-  const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
-    availabilitySelectDay.options,
-  );
+  // const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
+  //   availabilitySelectDay.options,
+  // );
+  const [newData, setNewData] = useState(availabilitySelectDay.options);
   const {
     control,
     setValue,
     getValues,
     formState: {errors},
   } = useFormContext();
+  const handleSetValue = (id: number, name: string) => {
+    const newArray = [...availabilitySelectDay.options];
+    const index = newArray.findIndex(item => item.id === id);
+    newArray[index].value = !newArray[index]?.value;
+    setNewData(newArray);
+    const updatedActiveId = newArray
+      .filter((item: any) => item.id === id)
+      .map((item: any) => item.value);
+    setValue(name, updatedActiveId[0]);
+  };
   const data = getValues();
 
   return (
@@ -82,10 +94,11 @@ const SubAvailability = ({handlePost, loading}: Props) => {
                 typeKey={item.id}
                 active={data[item.name]}
                 onPress={() => {
-                  handleMultipleCheck(item.id);
-                  setValue(item.name, item.value, {
-                    shouldValidate: true,
-                  });
+                  // handleMultipleCheck(item.id);
+                  // setValue(item.name, !item.value, {
+                  //   shouldValidate: true,
+                  // });
+                  handleSetValue(item.id, item.name);
                 }}
                 name={item.name}
                 control={control}
@@ -125,6 +138,7 @@ const SubAvailability = ({handlePost, loading}: Props) => {
           loading={loading}
         />
       </View>
+      <BottomSpacing />
     </View>
   );
 };

@@ -23,11 +23,17 @@ import servicesReducer from './slices/profile/services';
 import detailsReducer from './slices/profile/details';
 import PetPreferenceSlice from './slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
 import serviceRateFieldSlice from './slices/onBoarding/setUpService/rates/Field/serviceRateFieldSlice';
-import baseRateSlice from './slices/onBoarding/setUpService/rates/baseRateSlice';
 import rateFieldValueSlice from './slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueSlice';
+import availabilitySlice from './slices/onBoarding/setUpService/availability/availabilitySlice';
+import serviceSetUpSlice from './slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
+import providerProfileSlice from './slices/Provider/ProviderProfile/singlePet/providerProfileSlice';
+import initial from './slices/onBoarding/initial';
+import safetyQuizSlice from './slices/onBoarding/safetyQuiz/safetyQuizSlice';
+import whoAmISlice from './slices/common/whoAmI/whoAmISlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
+  initial: initial,
   contact: contactReducer,
   addPet: addPetReducer,
   filter: openFilter,
@@ -41,8 +47,12 @@ const appReducer = combineReducers({
   services: servicesReducer,
   details: detailsReducer,
   serviceRates: serviceRateFieldSlice,
-  baseRate: baseRateSlice,
   fieldValue: rateFieldValueSlice,
+  providerProfile: providerProfileSlice,
+  safetyQuiz: safetyQuizSlice,
+  whoAmI: whoAmISlice,
+  availability: availabilitySlice,
+  serviceSetup: serviceSetUpSlice,
 });
 
 const RootReducer = (

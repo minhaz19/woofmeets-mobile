@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
+import { useAppDispatch } from '../../store';
 
 export const postSitterDetails = createAsyncThunk(
   'details/postSitterDetails',
@@ -29,7 +30,11 @@ export const postSitterDetails = createAsyncThunk(
       if (!response.ok) {
         throw new Error(response.data.message);
       }
-      return response.data;
+      if (response.ok) {
+        const dispatch = useAppDispatch();
+        // dispatch(setProfileData({pass:2}));
+        return response.data;
+      }
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);

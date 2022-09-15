@@ -5,7 +5,9 @@ import TitleText from '../../../../../../../common/text/TitleText';
 import ShortText from '../../../../../../../common/text/ShortText';
 import {MapMarker} from '../../../../../../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../../../../../../../constants/WindowSize';
+import {useAppSelector} from '../../../../../../../../store/store';
 const SitterMap = () => {
+  const {location} = useAppSelector(state => state.providerProfile);
   return (
     <>
       <TitleText textStyle={styles.titleText} text="Location" />
@@ -17,8 +19,8 @@ const SitterMap = () => {
         <MapView
           style={styles.map}
           region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: location?.latitude,
+            longitude: location?.longitude,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}>
