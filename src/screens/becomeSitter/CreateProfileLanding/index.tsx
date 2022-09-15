@@ -9,13 +9,12 @@ import { getSitterDetails } from '../../../store/slices/profile/details';
 
 const CreateProfileLanding = (props: { navigation: { navigate: (arg0: string) => any; }; }) => {
   const {colors} = useTheme();
-  const profile = useAppSelector(state => state.initial.profileData)
-  let profileData = [...profile];
+  const profileData = useAppSelector(state => state.initial.profileData)
   const userInfo = useAppSelector(state => state.userProfile.userInfo);
   const [refreshing, setRefreshing] = useState(false);
   const dispatch = useAppDispatch();
 
-  console.log(profile)
+  console.log(profileData)
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -41,18 +40,10 @@ const CreateProfileLanding = (props: { navigation: { navigate: (arg0: string) =>
         {profileData.map(item => (
             item.isCompleted && <ProfileItemCard key={item.id} name={item.name} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} userInfo={userInfo} />
         ))}
-        {/* in progress */}
-        {/* {profileData.map(item => (
-          item.inProgress && <ProfileItemCard key={item.id} name={item.name} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} userInfo={userInfo} />
-        ))} */}
         {/* not completed */}
         {profileData.map(item => (
           !item.isCompleted && <ProfileItemCard key={item.id} name={item.name} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} userInfo={userInfo} />
         ))}
-        {/* total */}
-        {/* {profileData.map(item => (
-          <ProfileItemCard key={item.id} name={item.name} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} userInfo={userInfo} />
-        ))} */}
       </View>
       {profileData.map(item => {
         if(item.inProgress) {

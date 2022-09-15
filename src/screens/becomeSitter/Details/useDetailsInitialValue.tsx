@@ -9,7 +9,7 @@ export const useDetailsInitalValue = () => {
   }, [sitterInfo]);
   const detailsInitalValue = {
     headline: sitterInfo ? sitterInfo.headline : '',
-    yearsOfExperience: sitterInfo ? sitterInfo.yearsOfExperience.toString() : '',
+    yearsOfExperience: sitterInfo ? sitterInfo.yearsOfExperience?.toString() : '',
     experienceDescription: sitterInfo ? sitterInfo.experienceDescription : '',
     environmentDescription: sitterInfo ? sitterInfo.environmentDescription : '',
     scheduleDescription: sitterInfo ? sitterInfo.scheduleDescription : '',
