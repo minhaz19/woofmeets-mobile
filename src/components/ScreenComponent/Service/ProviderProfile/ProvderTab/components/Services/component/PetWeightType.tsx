@@ -13,24 +13,12 @@ interface Props {
     weight: string;
     weightType: string;
   };
-  activeDog: number;
-  setActiveDog: (arg0: number) => void;
 }
-const PetWeightType = ({item, activeDog, setActiveDog}: Props) => {
+const PetWeightType = ({item}: Props) => {
   const {isDarkMode} = useTheme();
   return (
-    <TouchableOpacity
-      style={styles.petTypeTextContainer}
-      onPress={() => setActiveDog(item.id)}>
-      <item.Icon
-        fill={
-          item.id === activeDog
-            ? Colors.primary
-            : isDarkMode
-            ? Colors.background
-            : Colors.black
-        }
-      />
+    <TouchableOpacity style={styles.petTypeTextContainer}>
+      <item.Icon fill={Colors.black} />
       <ShortText
         textStyle={{
           fontSize: Text_Size.Text_0,

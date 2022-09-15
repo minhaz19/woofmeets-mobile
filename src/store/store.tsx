@@ -23,8 +23,8 @@ import servicesReducer from './slices/profile/services';
 import detailsReducer from './slices/profile/details';
 import PetPreferenceSlice from './slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
 import serviceRateFieldSlice from './slices/onBoarding/setUpService/rates/Field/serviceRateFieldSlice';
-import baseRateSlice from './slices/onBoarding/setUpService/rates/baseRateSlice';
 import rateFieldValueSlice from './slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueSlice';
+import providerProfileSlice from './slices/Provider/ProviderProfile/singlePet/providerProfileSlice';
 import initial from './slices/onBoarding/initial';
 
 const appReducer = combineReducers({
@@ -43,8 +43,8 @@ const appReducer = combineReducers({
   services: servicesReducer,
   details: detailsReducer,
   serviceRates: serviceRateFieldSlice,
-  baseRate: baseRateSlice,
   fieldValue: rateFieldValueSlice,
+  providerProfile: providerProfileSlice,
 });
 
 const RootReducer = (

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {ReactElement} from 'react';
 import ShortText from '../../../../../../../common/text/ShortText';
@@ -36,20 +37,31 @@ const SitterInfo = ({item}: Props) => {
         )}
       </View>
       <View>
-        {item.subInfo.map(inf => (
-          <View key={Math.random()} style={styles.info}>
-            {inf.info && (
-              <TitleText
-                textStyle={{
-                  color: isDarkMode ? Colors.background : Colors.text,
-                  fontSize: Text_Size.Text_0,
-                }}
-                text={inf.info}
-              />
-            )}
-            {inf?.description && <ShortText text={inf.description} />}
-          </View>
-        ))}
+        {item.subInfo.length === 0 ? (
+          <TitleText
+            textStyle={{
+              color: isDarkMode ? Colors.background : Colors.text,
+              fontSize: Text_Size.Text_0,
+              marginTop: 10,
+            }}
+            text={'No skills found'}
+          />
+        ) : (
+          item.subInfo.map(inf => (
+            <View key={Math.random()} style={styles.info}>
+              {inf.info && (
+                <TitleText
+                  textStyle={{
+                    color: isDarkMode ? Colors.background : Colors.text,
+                    fontSize: Text_Size.Text_0,
+                  }}
+                  text={inf.info}
+                />
+              )}
+              {inf?.description && <ShortText text={inf.description} />}
+            </View>
+          ))
+        )}
       </View>
     </View>
   );

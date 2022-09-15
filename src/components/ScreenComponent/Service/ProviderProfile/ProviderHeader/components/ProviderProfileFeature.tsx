@@ -12,28 +12,30 @@ import ShortText from '../../../../../common/text/ShortText';
 import Text_Size from '../../../../../../constants/textScaling';
 import Colors from '../../../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
+import {useAppSelector} from '../../../../../../store/store';
 
 const ProviderProfileFeature = () => {
+  const {featured} = useAppSelector(state => state.providerProfile);
   const infos = [
     {
       Icon: MapDistance,
       title: 'Distance',
-      value: '1.2 km',
+      value: `${featured?.distance} km`,
     },
     {
       Icon: Experience,
       title: 'Experience',
-      value: '2 years',
+      value: `${featured?.experience} years`,
     },
     {
       Icon: PetHandled,
       title: 'Pet Handled',
-      value: '12',
+      value: `${featured?.petHandled ? featured?.petHandled : 0} `,
     },
     {
       Icon: Reviews,
       title: 'Reviews',
-      value: '110',
+      value: `${featured?.reviewsCount ? featured?.reviewsCount : 0} `,
     },
   ];
   return (

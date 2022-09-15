@@ -10,46 +10,63 @@ import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {providers} from '../../../utils/config/Data/providers';
 import BottomHalfModal from '../../../components/UI/modal/BottomHalfModal';
 import FilterProvider from '../FilterProvider';
-import {useSelector} from 'react-redux';
-
-const AllProvider = () => {
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+interface Props {
+  navigation: {
+    navigate: (arg: string, arg1: {providerOpk: string}) => void;
+  };
+}
+const AllProvider = ({navigation}: Props) => {
   const {colors} = useTheme();
-  const filter = useSelector((state: any) => state.filter.isOpen);
+  const filter = useAppSelector((state: any) => state.filter.isOpen);
+  const {loading} = useAppSelector(state => state.providerProfile);
+  const dispatch = useAppDispatch();
 
   return (
-    <Screen
-      style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
-      <ShortText
-        textStyle={{
-          paddingVertical: Platform.OS === 'ios' ? 10 : 0,
-          color: Colors.gray,
-        }}
-        text="20 Result"
-      />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={providers}
-        keyExtractor={(_, i) => i.toString()}
-        renderItem={({item}) => {
-          return (
-            <ProviderList
-              image={item.image}
-              pricing={item.pricing}
-              rating={item.rating}
-              distance={item.distance}
-              nature={item.nature}
-              name={item.name}
-              availablity={item.availablity}
-              repeatClient={item.repeatClient}
-            />
-          );
-        }}
-        ListFooterComponent={<BottomSpacing />}
-      />
-      <BottomHalfModal isModalVisible={filter}>
-        <FilterProvider />
-      </BottomHalfModal>
-    </Screen>
+    <>
+      {loading && <AppActivityIndicator visible={true} />}
+      <Screen
+        style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
+        <ShortText
+          textStyle={{
+            paddingVertical: Platform.OS === 'ios' ? 10 : 0,
+            color: Colors.gray,
+          }}
+          text="20 Result"
+        />
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={providers}
+          keyExtractor={(_, i) => i.toString()}
+          renderItem={({item}) => {
+            return (
+              <ProviderList
+                image={item.image}
+                pricing={item.pricing}
+                rating={item.rating}
+                distance={item.distance}
+                nature={item.nature}
+                name={item.name}
+                availablity={item.availablity}
+                repeatClient={item.repeatClient}
+                onPress={async () => {
+                  await dispatch(getProviderProfile('gzwnCRsg'));
+                  navigation.navigate('ProviderNavigator', {
+                    providerOpk: 'gzwnCRsg',
+                  });
+                }}
+              />
+            );
+          }}
+          ListFooterComponent={<BottomSpacing />}
+        />
+        <BottomHalfModal isModalVisible={filter}>
+          <FilterProvider />
+        </BottomHalfModal>
+      </Screen>
+    </>
   );
 };
 

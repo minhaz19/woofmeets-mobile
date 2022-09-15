@@ -1,35 +1,29 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
-import {serivesData} from '../../../../../../../utils/config/Data/ProviderProfileDatas';
+import React from 'react';
+import {petSizeType} from '../../../../../../../utils/config/Data/ProviderProfileDatas';
 import ServicesCalendar from './component/ServicesCalendar';
 import PetWeightType from './component/PetWeightType';
 import PetPricing from './component/PetPricing';
+import {useServices} from './utils/useServices';
 
 const Services = () => {
-  const [activeDog, setActiveDog] = useState(0);
+  const {formattedServices, atHome} = useServices();
   return (
     <View style={styles.container}>
-      {serivesData.map((d, index) => (
-        <View key={index}>
-          <View style={styles.petTypeContainer}>
-            {d.petType.map((item, key) => (
-              <PetWeightType
-                key={key}
-                item={item}
-                activeDog={activeDog}
-                setActiveDog={setActiveDog}
-              />
-            ))}
-          </View>
+      <View style={styles.petTypeContainer}>
+        {petSizeType.map(
+          (item, key) =>
+            atHome[item.size] === true && (
+              <PetWeightType key={key} item={item} />
+            ),
+        )}
+      </View>
 
-          <View>
-            {d.petPricing.map((pricingD, inde) => (
-              //@ts-ignore
-              <PetPricing key={inde} pricingD={pricingD} />
-            ))}
-          </View>
-        </View>
-      ))}
+      <View>
+        {formattedServices?.map((pricingD: any, inde: number) => (
+          <PetPricing key={inde} pricingD={pricingD} />
+        ))}
+      </View>
       <View style={styles.calendar}>
         <ServicesCalendar />
       </View>

@@ -1,17 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  GestureResponderEvent,
-} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import React, {FC} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import HeaderText from '../../../common/text/HeaderText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import {getIconType} from '@rneui/base';
 import {
   BoardingIcon,
   DoggyDayCareIcon,
