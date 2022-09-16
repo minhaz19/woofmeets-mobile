@@ -10,18 +10,13 @@ import {
   availabilityValidation,
 } from './utils/AvailabilityInitialValues';
 import {useAppSelector} from '../../../../store/store';
-// import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 
 const Availability = (props: {
   navigation: {navigate: (arg0: string, arg1: any) => void};
   route: {params: any};
 }) => {
   const {colors} = useTheme();
-  const {serviceSetup} = useAppSelector(
-    (state: any) => state?.serviceSetup,
-  );
-  // const {availabilityLoader} = props.route.params;
-  // console.log('availabilityLoader', availabilityLoader);
+  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {itemId, name, image, description, service} = serviceSetup.routeData;
   const serviceId = service.map((data: {id: any}) => data.id);
 
@@ -34,12 +29,12 @@ const Availability = (props: {
   );
   return (
     <>
-      {/* {availabilityLoader && <AppActivityIndicator visible={true} />} */}
       <ScrollView
         style={[
           styles.rootContainer,
           {backgroundColor: colors.backgroundColor},
-        ]}>
+        ]}
+        showsVerticalScrollIndicator={false}>
         <ReusableHeader
           itemId={itemId}
           name={name}

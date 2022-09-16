@@ -1,28 +1,22 @@
 import {useState} from 'react';
-import {useFormContext} from 'react-hook-form';
 
-export const useHandleMultipleActiveCheck = (data: any) => {
-  const {getValues} = useFormContext();
-  const {sat, sun, mon, tue, thu, wed, fri} = getValues();
+export const usePetPreferenceHandleCheck = (data: any, contextValue: any) => {
+  const {smallDog, mediumDog, largeDog, giantDog, cat} = contextValue;
   const [newData, setData] = useState(data);
   const handleMultipleCheck = (id: any) => {
     const newArray = [...data];
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].value =
       index === 0
-        ? !sat
+        ? !smallDog
         : index === 1
-        ? !sun
+        ? !mediumDog
         : index === 2
-        ? !mon
+        ? !largeDog
         : index === 3
-        ? !tue
+        ? !giantDog
         : index === 4
-        ? !wed
-        : index === 5
-        ? !thu
-        : index === 6
-        ? !fri
+        ? !cat
         : null;
     setData(newArray);
   };

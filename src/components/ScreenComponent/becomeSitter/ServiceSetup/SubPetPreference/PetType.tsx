@@ -1,13 +1,11 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {
-  petType,
-} from '../../../../../utils/config/Data/serviceSetUpData/petPreference';
+import {petType} from '../../../../../utils/config/Data/serviceSetUpData/petPreference';
 import HeaderText from '../../../../common/text/HeaderText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import ServiceCheckbox from '../Common/ServiceCheckbox';
-import useHandleMultipleActiveCheck from '../handleCheck/HandleCheck';
 import ErrorMessage from '../../../../common/Form/ErrorMessage';
+import {usePetPreferenceHandleCheck} from '../handleCheck/usePetPreferenceHandleCheck';
 
 interface Props {
   errors: any;
@@ -17,11 +15,12 @@ interface Props {
 }
 
 const PetType = ({control, errors, setValue, data}: Props) => {
-  const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
+  const {newData, handleMultipleCheck} = usePetPreferenceHandleCheck(
     petType.options,
+    data,
   );
   return (
-    <View>
+    <View style={styles.container}>
       <HeaderText textStyle={styles.subtitle} text={petType.title!} />
       <DescriptionText text={petType.subtitle} textStyle={styles.subtitle} />
       {newData?.map((item: any, index: number) => {
@@ -37,9 +36,6 @@ const PetType = ({control, errors, setValue, data}: Props) => {
               setValue(item.name, item.value, {
                 shouldValidate: true,
               });
-              // setValue('petSize', data[item.name] === true ? true : false, {
-              //   shouldValidate: data[item.name] === true ? true : false,
-              // });
             }}
             name={item.name}
             control={control}
@@ -57,5 +53,8 @@ const styles = StyleSheet.create({
   subtitle: {
     paddingBottom: '1%',
     lineHeight: 20,
+  },
+  container: {
+    paddingTop: 6,
   },
 });

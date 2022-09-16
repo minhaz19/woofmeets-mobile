@@ -5,7 +5,10 @@ import {MinusSvg, PlusSvg} from '../../../BoardingSetting/utils/BoardingSvg';
 import HeaderText from '../../../../common/text/HeaderText';
 import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import {useAppDispatch, useAppSelector} from '../../../../../store/store';
-import { decrement, increment } from '../../../../../store/slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
+import {
+  decrement,
+  increment,
+} from '../../../../../store/slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
 
 interface Props {
   name: string;
@@ -62,9 +65,10 @@ const styles = StyleSheet.create({
   flexContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 6,
   },
   headerText: {
     fontWeight: '500',
-    paddingHorizontal: 10,
+    paddingHorizontal: 16,
   },
 });
