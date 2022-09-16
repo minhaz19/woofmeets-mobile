@@ -1,7 +1,7 @@
 import {
   View,
   StyleSheet,
-  TextInput,
+  
   Platform,
   PermissionsAndroid,
   Text,
