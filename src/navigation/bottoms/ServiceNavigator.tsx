@@ -22,6 +22,7 @@ const ServiceNavigator = () => {
         component={PetCareZipSearch}
         options={{headerShown: false}}
       />
+
       <Stack1.Screen
         name="ProviderAvailablity"
         component={ProviderAvailablity}

@@ -1,114 +1,151 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import React, { useState } from 'react'
-import BigText from '../../../../common/text/BigText'
-import TitleText from '../../../../common/text/TitleText'
-import Colors from '../../../../../constants/Colors'
-import { useTheme } from '../../../../../constants/theme/hooks/useTheme'
-import Text_Size from '../../../../../constants/textScaling'
-import DescriptionText from '../../../../common/text/DescriptionText'
-import BottomHalfModal from '../../../../UI/modal/BottomHalfModal'
-import MiddleModal from '../../../../UI/modal/MiddleModal'
-import HeaderText from '../../../../common/text/HeaderText'
-import BulletPoints from '../../../../UI/Points/BulletPoints'
-import ButtonCom from '../../../../UI/ButtonCom'
-import { btnStyles } from '../../../../../constants/theme/common/buttonStyles'
-import { textStyle } from '../../../../../constants/theme/common/textStyle'
-import { SCREEN_WIDTH } from '../../../../../constants/WindowSize'
+/* eslint-disable react-native/no-inline-styles */
+import {View,  StyleSheet, TouchableOpacity, Image} from 'react-native';
+import React, {useState} from 'react';
+import BigText from '../../../../common/text/BigText';
+import TitleText from '../../../../common/text/TitleText';
+import Colors from '../../../../../constants/Colors';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+import Text_Size from '../../../../../constants/textScaling';
+import DescriptionText from '../../../../common/text/DescriptionText';
+import MiddleModal from '../../../../UI/modal/MiddleModal';
+import HeaderText from '../../../../common/text/HeaderText';
+import BulletPoints from '../../../../UI/Points/BulletPoints';
+import ButtonCom from '../../../../UI/ButtonCom';
+import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 
-const PackageCard = (props: { onPressEvent: (arg0: any) => void; item: { sequence: any; id: React.Key | null | undefined; title: {} | null | undefined; price: any; details: { description: string; id: number }[]; description: string | number }; navigation: { goBack: () => void }; sequence: any }) => {
+const PackageCard = (props: {
+  onPressEvent: (arg0: any) => void;
+  item: {
+    sequence: any;
+    id: React.Key | null | undefined;
+    title: {} | null | undefined;
+    price: any;
+    details: {description: string; id: number}[];
+    description: string | number;
+  };
+  navigation: {goBack: () => void};
+  sequence: any;
+}) => {
   const {colors} = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
-    <TouchableOpacity onPress={() => props.onPressEvent(props.item.sequence)} key={props.item.id}>
-      <MiddleModal 
-        isModalVisible={isModalVisible} 
+    <TouchableOpacity
+      onPress={() => props.onPressEvent(props.item.sequence)}
+      key={props.item.id}>
+      <MiddleModal
+        isModalVisible={isModalVisible}
         setIsModalVisible={() => {
-          setIsModalVisible(!isModalVisible)
-        } } 
+          setIsModalVisible(!isModalVisible);
+        }}
         onBlur={() => console.log('')}>
-          <Image
-            source={require('../../../../../assets/image/subscription/subscription.png')}
+        <Image
+          source={require('../../../../../assets/image/subscription/subscription.png')}
+        />
+        <View style={styles.headerContainer}>
+          <BigText text={props.item.title} textStyle={styles.textHeaderStyle} />
+          <View style={styles.divider} />
+          <HeaderText
+            text={`Everything in ${props.item.title}`}
+            textStyle={styles.textEveryStyle}
           />
-          <View style={styles.headerContainer}>
-            <BigText text={props.item.title} textStyle={styles.textHeaderStyle} />
-            <View style={styles.divider} />
-            <HeaderText text={`Everything in ${props.item.title}`} textStyle={styles.textEveryStyle} />
-            <View style={styles.textPortion2}>
-              <BigText text={`$${props.item.price}`} textStyle={styles.headerText}/>
-              <View style={styles.textPortion3}>
-                <DescriptionText text="/month" textStyle={styles.textHeaderStyle}/>
-              </View>
-            </View>
-          </View>
-          <View style={styles.modalContainer}>
-            {props.item.details?.map((item: { description: string; id: number}) => (
-              <BulletPoints text={item.description} key={item.id} />
-            ))}
-            <View style={styles.footerContainer}>
-              <ButtonCom
-                title="Choose Plan"
-                textAlignment={btnStyles.textAlignment}
-                containerStyle={btnStyles.containerStyleFullWidth}
-                titleStyle={btnStyles.titleStyle}
-                onSelect={() => {
-                  setIsModalVisible(!isModalVisible)
-                  props.navigation.goBack()
-                }}
-              //   loading={loading}
+          <View style={styles.textPortion2}>
+            <BigText
+              text={`$${props.item.price}`}
+              textStyle={styles.headerText}
+            />
+            <View style={styles.textPortion3}>
+              <DescriptionText
+                text="/month"
+                textStyle={styles.textHeaderStyle}
               />
             </View>
           </View>
-      </MiddleModal>
-     <View key={props.item.id} style={{...styles.contentStyle, 
-        backgroundColor: colors.backgroundColor,
-        borderWidth: 2,
-        borderColor: props.sequence === props.item.sequence ? Colors.primary : colors.borderColor,
-        }}>
-       <View style={styles.textPortion}>
-        <BigText text={props.item.title} textStyle={styles.biggerText}/>
-        <TouchableOpacity style={styles.detailsWrap} onPress={() => setIsModalVisible(!isModalVisible)}>
-          <View style={styles.detailsContainer}>
-            <DescriptionText text="Details" textStyle={styles.detailsText} />
-          </View>
-        </TouchableOpacity>
-        <TitleText text={props.item.description} />
-       </View>
-       <View style={styles.textPortion2}>
-        <BigText text={`$${props.item.price}`} textStyle={styles.biggerText}/>
-        <View style={styles.textPortion3}>
-          <DescriptionText text="/month"/>
         </View>
-       </View>
-      {props.sequence === props.item.sequence && <View style={styles.rightSelection} />}
-     </View>
+        <View style={styles.modalContainer}>
+          {props.item.details?.map(
+            (item: {description: string; id: number}) => (
+              <BulletPoints text={item.description} key={item.id} />
+            ),
+          )}
+          <View style={styles.footerContainer}>
+            <ButtonCom
+              title="Choose Plan"
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={btnStyles.containerStyleFullWidth}
+              titleStyle={btnStyles.titleStyle}
+              onSelect={() => {
+                setIsModalVisible(!isModalVisible);
+                props.navigation.goBack();
+              }}
+              //   loading={loading}
+            />
+          </View>
+        </View>
+      </MiddleModal>
+      <View
+        key={props.item.id}
+        style={{
+          ...styles.contentStyle,
+          backgroundColor: colors.backgroundColor,
+          borderWidth: 2,
+          borderColor:
+            props.sequence === props.item.sequence
+              ? Colors.primary
+              : colors.borderColor,
+        }}>
+        <View style={styles.textPortion}>
+          <BigText text={props.item.title} textStyle={styles.biggerText} />
+          <TouchableOpacity
+            style={styles.detailsWrap}
+            onPress={() => setIsModalVisible(!isModalVisible)}>
+            <View style={styles.detailsContainer}>
+              <DescriptionText text="Details" textStyle={styles.detailsText} />
+            </View>
+          </TouchableOpacity>
+          <TitleText text={props.item.description} />
+        </View>
+        <View style={styles.textPortion2}>
+          <BigText
+            text={`$${props.item.price}`}
+            textStyle={styles.biggerText}
+          />
+          <View style={styles.textPortion3}>
+            <DescriptionText text="(per month)" />
+          </View>
+        </View>
+        {props.sequence === props.item.sequence && (
+          <View style={styles.rightSelection} />
+        )}
+      </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   contentStyle: {
-      borderColor: Colors.subText,
-      marginBottom: 10,
-      marginRight: 10,
-      borderRadius: 5,
-      padding: 10,
-      minHeight: 100,
-      marginTop: 5,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+    borderColor: Colors.subText,
+    marginBottom: 10,
+    marginRight: 10,
+    borderRadius: 5,
+    padding: 10,
+    minHeight: 100,
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   rightSelection: {
-      height: 12,
-      width: 12,
-      borderRadius: 10,
-      borderColor: Colors.primary,
-      borderWidth: 3,
-      position: 'absolute',
-      right: 10,
-      top: 10,
+    height: 12,
+    width: 12,
+    borderRadius: 10,
+    borderColor: Colors.primary,
+    borderWidth: 3,
+    position: 'absolute',
+    right: 10,
+    top: 10,
   },
   biggerText: {
-      fontSize: Text_Size.Text_4,
+    fontSize: Text_Size.Text_2,
   },
   headerText: {
     fontSize: Text_Size.Text_4,
@@ -116,23 +153,21 @@ const styles = StyleSheet.create({
     color: Colors.background,
   },
   textPortion: {
-      justifyContent: 'center',
-      width: '70%',
+    justifyContent: 'center',
+    width: '70%',
   },
   textPortion2: {
-      alignItems: 'flex-end',
-      flexDirection: 'row',
-      justifyContent: 'center',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
   },
   textPortion3: {
-      paddingBottom: 4,
+    paddingBottom: 4,
   },
   detailsContainer: {
     borderRadius: 10,
     paddingHorizontal: 10,
     marginVertical: 10,
     paddingVertical: 2,
-    // width: '30%',
     backgroundColor: '#FFF2E6',
   },
   detailsWrap: {
@@ -172,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PackageCard
+export default PackageCard;
