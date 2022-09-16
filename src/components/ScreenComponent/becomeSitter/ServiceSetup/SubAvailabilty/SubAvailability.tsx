@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -13,132 +13,141 @@ import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import {useFormContext} from 'react-hook-form';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
-// import useHandleMultipleActiveCheck from '../handleCheck/HandleCheck';
+
 import SubmitButton from '../../../../common/Form/SubmitButton';
 import BottomSpacing from '../../../../UI/BottomSpacing';
+import {useHandleMultipleActiveCheck} from '../handleCheck/HandleCheck';
+import Colors from '../../../../../constants/Colors';
+import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
+import ServiceReusableModal from '../Common/ServiceReusableModal';
 
 interface Props {
   handlePost: (arg1: any) => void;
   loading: boolean;
 }
 const SubAvailability = ({handlePost, loading}: Props) => {
-  // const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
-  //   availabilitySelectDay.options,
-  // );
-  const [newData, setNewData] = useState(availabilitySelectDay.options);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
+    availabilitySelectDay.options,
+  );
   const {
     control,
     setValue,
     getValues,
     formState: {errors},
   } = useFormContext();
-  const handleSetValue = (id: number, name: string) => {
-    const newArray = [...availabilitySelectDay.options];
-    const index = newArray.findIndex(item => item.id === id);
-    newArray[index].value = !newArray[index]?.value;
-    setNewData(newArray);
-    const updatedActiveId = newArray
-      .filter((item: any) => item.id === id)
-      .map((item: any) => item.value);
-    setValue(name, updatedActiveId[0]);
-  };
   const data = getValues();
-
   return (
     <View>
-      <BigText text={'Availability'} textStyle={styles.headerText} />
-      <View>
-        <HeaderText text={availabilityInput.title} />
-        <View style={styles.fullTimeContainer}>
-          {availabilityInput.options?.map((item, index) => {
+      <ServiceReusableModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
+      <View style={styles.headerContainer}>
+        <View style={styles.flexContainer}>
+          <BigText text={'Availability'} textStyle={styles.headerText} />
+          <View style={styles.textContainer}>
+            <View style={styles.iconContainer}>
+              <QuestionIcon fill={Colors.primary} />
+            </View>
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+              <DescriptionText
+                text="Why is availability important"
+                textStyle={{color: Colors.primary}}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View>
+          <HeaderText text={availabilityInput.title} />
+          <View style={styles.fullTimeContainer}>
+            {availabilityInput.options?.map((item, index) => {
+              return (
+                <ServiceCheckbox
+                  title={item.type}
+                  key={index}
+                  radio
+                  typeKey={item.checked}
+                  onPress={() => {
+                    setValue(availabilityInput.name, item.checked, {
+                      shouldValidate: true,
+                    });
+                  }}
+                  name={availabilityInput.name}
+                  control={control}
+                />
+              );
+            })}
+          </View>
+          <ErrorMessage error={errors[availabilityInput.name!]?.message} />
+        </View>
+        <View style={{marginTop: '2%'}}>
+          <HeaderText
+            text={availabilitySelectDay.title}
+            textStyle={styles.subHeaderText}
+          />
+          {availabilitySelectDay.subtitle && (
+            <DescriptionText
+              text={availabilitySelectDay.subtitle}
+              textStyle={styles.subHeaderText}
+            />
+          )}
+          <View style={styles.dayBoxContainer}>
+            {newData?.map(
+              (
+                item: {type: string; id: number; value: boolean; name: string},
+                index: React.Key | null | undefined,
+              ) => (
+                <ServiceCheckbox
+                  title={item.type}
+                  key={index}
+                  square
+                  typeKey={item.id}
+                  active={data[item.name]}
+                  onPress={() => {
+                    handleMultipleCheck(item.id);
+                    setValue(item.name, item.value);
+                  }}
+                  name={item.name}
+                  control={control}
+                />
+              ),
+            )}
+          </View>
+          <ErrorMessage error={errors[availabilitySelectDay.name!]?.message} />
+        </View>
+        <View style={styles.headerContainer}>
+          <HeaderText text={availabilityHomeFullTimeInDay.title} />
+          {availabilityHomeFullTimeInDay.options?.map((item, index) => {
             return (
               <ServiceCheckbox
                 title={item.type}
                 key={index}
                 radio
-                typeKey={item.checked}
+                typeKey={item.type}
                 onPress={() => {
-                  setValue(availabilityInput.name, item.checked, {
+                  setValue(availabilityHomeFullTimeInDay.name, item.type, {
                     shouldValidate: true,
                   });
                 }}
-                name={availabilityInput.name}
+                name={availabilityHomeFullTimeInDay.name}
                 control={control}
               />
             );
           })}
         </View>
-        <ErrorMessage error={errors[availabilityInput.name!]?.message} />
-      </View>
-      <View style={{marginTop: '2%'}}>
-        <HeaderText
-          text={availabilitySelectDay.title}
-          textStyle={styles.subHeaderText}
+        <ErrorMessage
+          error={errors[availabilityHomeFullTimeInDay.name!]?.message}
         />
-        {availabilitySelectDay.subtitle && (
-          <DescriptionText
-            text={availabilitySelectDay.subtitle}
-            textStyle={styles.subHeaderText}
+        <View style={styles.submitContainer}>
+          <SubmitButton
+            title={'Save & Continue'}
+            onPress={handlePost}
+            loading={loading}
           />
-        )}
-        <View style={styles.dayBoxContainer}>
-          {newData?.map(
-            (
-              item: {type: string; id: number; value: boolean; name: string},
-              index: React.Key | null | undefined,
-            ) => (
-              <ServiceCheckbox
-                title={item.type}
-                key={index}
-                square
-                typeKey={item.id}
-                active={data[item.name]}
-                onPress={() => {
-                  // handleMultipleCheck(item.id);
-                  // setValue(item.name, !item.value, {
-                  //   shouldValidate: true,
-                  // });
-                  handleSetValue(item.id, item.name);
-                }}
-                name={item.name}
-                control={control}
-              />
-            ),
-          )}
         </View>
-        <ErrorMessage error={errors[availabilitySelectDay.name!]?.message} />
+        <BottomSpacing />
       </View>
-      <View style={styles.headerContainer}>
-        <HeaderText text={availabilityHomeFullTimeInDay.title} />
-        {availabilityHomeFullTimeInDay.options?.map((item, index) => {
-          return (
-            <ServiceCheckbox
-              title={item.type}
-              key={index}
-              radio
-              typeKey={item.type}
-              onPress={() => {
-                setValue(availabilityHomeFullTimeInDay.name, item.type, {
-                  shouldValidate: true,
-                });
-              }}
-              name={availabilityHomeFullTimeInDay.name}
-              control={control}
-            />
-          );
-        })}
-      </View>
-      <ErrorMessage
-        error={errors[availabilityHomeFullTimeInDay.name!]?.message}
-      />
-      <View style={styles.submitContainer}>
-        <SubmitButton
-          title={'Save & Continue'}
-          onPress={handlePost}
-          loading={loading}
-        />
-      </View>
-      <BottomSpacing />
     </View>
   );
 };
@@ -151,8 +160,6 @@ const styles = StyleSheet.create({
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   headerText: {
-    paddingBottom:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
     lineHeight: 20,
   },
   subHeaderText: {
@@ -175,5 +182,19 @@ const styles = StyleSheet.create({
   },
   submitContainer: {
     marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '6%' : '3%',
+  },
+  flexContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom:
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+  },
+  iconContainer: {
+    paddingRight: 10,
+  },
+  textContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

@@ -1,25 +1,23 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useServiceSetup} from './useServiceSetup';
 import {useAppSelector} from '../../../store/store';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
 
 const ServiceSetUp = () => {
   const {colors} = useTheme();
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
-  const {service} = serviceSetup.routeData;
+  const {service} = serviceSetup?.routeData;
   const serviceId = service.map((data: {id: any}) => data.id);
-  const {petPreferenceLoader, availabilityLoader} = useServiceSetup(serviceId);
+  useServiceSetup(serviceId);
   const boardingSelection = useAppSelector(
     state => state.initial.boardingSelection,
   );
 
   return (
     <>
-      {availabilityLoader && <AppActivityIndicator visible={true} />}
-      {petPreferenceLoader && <AppActivityIndicator visible={true} />}
       <View
         style={[
           styles.rootContainer,

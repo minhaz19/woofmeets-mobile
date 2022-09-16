@@ -9,29 +9,30 @@ import {useYourHomeUtils} from './utils/useYourHomeUtils';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {setBoardingSelection} from '../../../../store/slices/onBoarding/initial';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
+import {useYourHomeInitialData} from './utils/useYourHomeInitialData';
+
+const postEndPoint = '/provider-home';
 
 const YourHome = () => {
   const {colors} = useTheme();
-  // const {itemId, name, image, description} = props?.route?.params;
-
-  const {serviceSetup} = useAppSelector(state => state?.serviceSetup);
+  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  const {yourHome} = useAppSelector((state: any) => state?.yourHome);
   const {itemId, name, image, description} = serviceSetup.routeData;
   const {getLoading, attributes} = useYourHomeUtils();
   const dispatch = useAppDispatch();
   const YouHomeSchema = Yup.object().shape({
     homeType: Yup.string().required('Please select one'),
     yardType: Yup.string().required('Please select one'),
-    expect: Yup.array().required('Please select one').nullable(),
-    host: Yup.array().required('Please select one').nullable(),
+    homeAttributes: Yup.array().min(1).required('Please select one').nullable(),
   });
-  const YourHomeInitialValue = {
-    homeType: '',
-    yardType: '',
-    expect: [],
-    host: [],
-  };
-  const handlePost = () => {
-    dispatch(setBoardingSelection({pass: 3}));
+  const {request, loading} = useApi(methods._post);
+  const handlePost = async (e: any) => {
+    const result = await request(postEndPoint, e);
+    if (result?.data.data) {
+      dispatch(setBoardingSelection({pass: 3}));
+    }
   };
   return (
     <>
@@ -48,11 +49,11 @@ const YourHome = () => {
           description={description}
         />
         <AppForm
-          initialValues={YourHomeInitialValue}
+          initialValues={useYourHomeInitialData(yourHome)}
           validationSchema={YouHomeSchema}>
           <SubYourHome
             handlePost={handlePost}
-            // postLoading={undefined}
+            postLoading={loading}
             attributes={attributes}
           />
         </AppForm>

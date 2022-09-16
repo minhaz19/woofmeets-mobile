@@ -32,7 +32,7 @@ type NavigationProps = StackNavigationProp<StackParamList>;
 
 const HomeProfile = () => {
   const navigation = useNavigation<NavigationProps>();
-  const [isloading, setLoading] = useState<boolean>(false);
+  const [, setLoading] = useState<boolean>(false);
   const {colors} = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [isServiceModalVisible, setIsServiceModalVisible] =

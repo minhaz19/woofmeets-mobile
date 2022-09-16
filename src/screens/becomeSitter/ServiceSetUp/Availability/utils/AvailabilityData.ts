@@ -26,13 +26,13 @@ export const availabilitySelectDay = {
     'Select the days you are typically available. You can update your calendar at any time.',
   id: 101,
   options: [
-    {id: 29, type: 'Sat', value: false, name: 'sat'},
-    {id: 30, type: 'Sun', value: false, name: 'sun'},
-    {id: 31, type: 'Mon', value: false, name: 'mon'},
-    {id: 32, type: 'Tue', value: false, name: 'tue'},
-    {id: 33, type: 'Wed', value: false, name: 'wed'},
-    {id: 34, type: 'Thu', value: false, name: 'thu'},
-    {id: 35, type: 'Fri', value: false, name: 'fri'},
+    {id: 29, type: 'Sat', value: null, name: 'sat'},
+    {id: 30, type: 'Sun', value: null, name: 'sun'},
+    {id: 31, type: 'Mon', value: null, name: 'mon'},
+    {id: 32, type: 'Tue', value: null, name: 'tue'},
+    {id: 33, type: 'Wed', value: null, name: 'wed'},
+    {id: 34, type: 'Thu', value: null, name: 'thu'},
+    {id: 35, type: 'Fri', value: null, name: 'fri'},
   ],
 };
 export const availabilityHomeFullTimeInDay = {

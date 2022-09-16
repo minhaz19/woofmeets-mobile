@@ -11,6 +11,8 @@ import BottomSpacing from '../../../../UI/BottomSpacing';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import {useFormContext} from 'react-hook-form';
 import {useAppSelector} from '../../../../../store/store';
+import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
+import ServiceReusableModal from '../Common/ServiceReusableModal';
 
 interface Props {
   handleRates: (arg: any) => void;
@@ -23,6 +25,7 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
   const [updateRates, setUpdateRates] = useState(false);
   const [rates, setRates] = useState([]);
   const [checked, setChecked] = useState(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {fieldValue} = useAppSelector(state => state.fieldValue);
 
   const {
@@ -74,8 +77,25 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
   }, [checked, updateRates]);
   return (
     <View>
+      <ServiceReusableModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
       <View style={styles.headerContainer}>
-        <BigText text={'Rates'} textStyle={styles.headerText} />
+        <View style={styles.flexContainer}>
+          <BigText text={'Rates'} textStyle={styles.headerText} />
+          <View style={styles.textContainer}>
+            <View style={styles.iconContainer}>
+              <QuestionIcon fill={Colors.primary} />
+            </View>
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+              <DescriptionText
+                text="Need help with rates"
+                textStyle={{color: Colors.primary}}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
         {rates?.map(
           (
             item: {
@@ -192,8 +212,6 @@ const styles = StyleSheet.create({
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   headerText: {
-    paddingBottom:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
     lineHeight: 20,
   },
   subHeaderText: {
@@ -221,5 +239,19 @@ const styles = StyleSheet.create({
   shortText: {
     color: Colors.gray,
     marginVertical: '2%',
+  },
+  flexContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom:
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+  },
+  iconContainer: {
+    paddingRight: 10,
+  },
+  textContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

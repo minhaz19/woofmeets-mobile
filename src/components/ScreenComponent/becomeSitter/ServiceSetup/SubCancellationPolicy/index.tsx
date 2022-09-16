@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable dot-notation */
 import * as Yup from 'yup';
-import {StyleSheet, View} from 'react-native';
-import React, {useEffect, useMemo} from 'react';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import React, {useEffect, useMemo, useState} from 'react';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import BigText from '../../../../common/text/BigText';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -12,7 +12,11 @@ import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import ButtonCom from '../../../../UI/ButtonCom';
-import { btnStyles } from '../../../../../constants/theme/common/buttonStyles';
+import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
+// import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
+// import DescriptionText from '../../../../common/text/DescriptionText';
+// import Colors from '../../../../../constants/Colors';
+import ServiceReusableModal from '../Common/ServiceReusableModal';
 
 interface props {
   handlePolicy: (arg1: any) => void;
@@ -27,6 +31,7 @@ const SubCancellationPolicy = ({
   policy,
   singlePolicy,
 }: props) => {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const cancellationSchema = Yup.object().shape({
     policyId: Yup.string()
       .required('At least select one policy')
@@ -52,7 +57,24 @@ const SubCancellationPolicy = ({
   }, [singlePolicy]);
   return (
     <View style={styles.headerContainer}>
-      <BigText text={'Cancellation Policy'} textStyle={styles.headerText} />
+      <ServiceReusableModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
+      <View style={styles.flexContainer}>
+        <BigText text={'Cancellation Policy'} textStyle={styles.headerText} />
+        <View style={styles.textContainer}>
+          {/* <View style={styles.iconContainer}>
+            <QuestionIcon fill={Colors.primary} />
+          </View> */}
+          {/* <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+            <DescriptionText
+              text="Why Cancellation Policy is important?"
+              textStyle={{color: Colors.primary}}
+            />
+          </TouchableOpacity> */}
+        </View>
+      </View>
       <View>
         <HeaderText
           textStyle={styles.subtitle}
@@ -100,8 +122,6 @@ const styles = StyleSheet.create({
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   headerText: {
-    paddingBottom:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
     lineHeight: 20,
   },
   submitContainer: {
@@ -110,5 +130,19 @@ const styles = StyleSheet.create({
   subtitle: {
     paddingBottom: '1%',
     lineHeight: 20,
+  },
+  flexContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom:
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+  },
+  iconContainer: {
+    paddingRight: 10,
+  },
+  textContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

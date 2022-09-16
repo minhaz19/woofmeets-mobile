@@ -1,6 +1,6 @@
 /* eslint-disable dot-notation */
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -14,6 +14,8 @@ import DescriptionText from '../../../../common/text/DescriptionText';
 import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../../UI/BottomSpacing';
+import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
+import ServiceReusableModal from '../Common/ServiceReusableModal';
 
 interface Props {
   postLoading?: boolean;
@@ -22,145 +24,167 @@ interface Props {
 }
 
 const SubYourHome = ({handlePost, postLoading, attributes}: Props) => {
-  // const [newData, setNewData] = useState<any>([]);
-  // console.log('newData', newData);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+
   const {
     control,
     setValue,
+    getValues,
     formState: {errors},
   } = useFormContext();
   const {colors} = useTheme();
-  // const handleSetValue = (id: number, name: string) => {
-  //   const newArray: any[] | ((prevState: never[]) => never[]) = [];
-  //   const index = newArray.findIndex(item => item.id === id);
-  //   newArray[index].value = !newArray[index]?.value;
-  //   setNewData(newArray);
-  //   const updatedActiveId = newArray
-  //     .filter((item: any) => item.id === id)
-  //     .map((item: any) => item.value);
-  //   console.log('updatedActiveId', updatedActiveId);
-  //   setValue(name, updatedActiveId[0]);
-  // };
+  const selectData = getValues();
+  const [newData, setNewData] = useState<any>(
+    selectData.homeAttributes ? selectData.homeAttributes : [],
+  );
+
+  // check the select and deselect value
+  const handleMultipleCheck = (id: number) => {
+    const newArray = [...selectData.homeAttributes];
+    const tempData = newArray.includes(id);
+    if (tempData) {
+      const deleteId = newArray.filter(item => item !== id);
+      setNewData(deleteId);
+      setValue('homeAttributes', deleteId, {shouldValidate: true});
+    } else {
+      const addId = newArray;
+      addId.push(id);
+      setNewData(addId);
+      setValue('homeAttributes', addId, {shouldValidate: true});
+    }
+  };
+
   return (
     <View>
-      <BigText text={'Availability'} textStyle={styles.headerText} />
-      <View>
-        {YourHomeData.map((data: any, index: number) => {
-          return (
-            <View key={index} style={{marginTop: 10}}>
-              <HeaderText text={data?.title} />
-              <View style={styles.fullTimeContainer}>
-                {data.options?.map(
-                  (
-                    item: {type: string; value: any},
-                    i: React.Key | null | undefined,
-                  ) => {
-                    return (
-                      <ServiceCheckbox
-                        title={item.type}
-                        key={i}
-                        radio
-                        typeKey={item.value}
-                        onPress={() => {
-                          setValue(data.name, item.value, {
-                            shouldValidate: true,
-                          });
-                        }}
-                        name={data.name}
-                        control={control}
-                      />
-                    );
-                  },
-                )}
-              </View>
-              <ErrorMessage error={errors[data.name]?.message} />
+      <ServiceReusableModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
+      <View style={styles.headerContainer}>
+        <View style={styles.flexContainer}>
+          <BigText text={'Home'} textStyle={styles.headerText} />
+          <View style={styles.textContainer}>
+            <View style={styles.iconContainer}>
+              <QuestionIcon fill={Colors.primary} />
             </View>
-          );
-        })}
-      </View>
-      {attributes.length > 0 && (
-        <View>
-          <HeaderText
-            text={attributes[0].displayName}
-            textStyle={styles.subTex}
-          />
-          <DescriptionText
-            text={'(Check All That Apply)'}
-            textStyle={{
-              ...styles.subHeaderText,
-              color: colors.descriptionText,
-            }}
-          />
-
-          {attributes[0]?.homeAttributeType?.map(
-            (item: any, i: React.Key | null | undefined) => {
-              return (
-                <ServiceCheckbox
-                  title={item?.displayName}
-                  key={i}
-                  square
-                  typeKey={item?.id}
-                  active={true}
-                  onPress={() => {
-                    // handleMultipleCheck(item.id);
-                    // setValue(item.name, !item.value, {
-                    //   shouldValidate: true,
-                    // });
-                    // handleSetValue(item.id, item.name);
-                  }}
-                  name={'expect'}
-                  control={control}
-                />
-              );
-            },
-          )}
-          <ErrorMessage error={errors['expect']?.message} />
-
-          <HeaderText
-            text={attributes[1].displayName}
-            textStyle={styles.subTex}
-          />
-          <DescriptionText
-            text={'(Check All That Apply)'}
-            textStyle={{
-              ...styles.subHeaderText,
-              color: colors.descriptionText,
-            }}
-          />
-
-          {attributes[1]?.homeAttributeType?.map(
-            (item: any, i: React.Key | null | undefined) => {
-              return (
-                <ServiceCheckbox
-                  title={item?.displayName}
-                  key={i}
-                  square
-                  typeKey={item?.id}
-                  active={true}
-                  onPress={() => {
-                    // handleMultipleCheck(item.id);
-                    // setValue(item.name, !item.value, {
-                    //   shouldValidate: true,
-                    // });
-                    // handleSetValue(item.id, item.name);
-                  }}
-                  name={'host'}
-                  control={control}
-                />
-              );
-            },
-          )}
-          <ErrorMessage error={errors['host']?.message} />
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+              <DescriptionText
+                text="Why your Home data is important?"
+                textStyle={{color: Colors.primary}}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      )}
-      <View style={styles.submitContainer}>
-        <SubmitButton
-          title={'Save & Continue'}
-          onPress={handlePost}
-          loading={postLoading}
-        />
+        <View>
+          {YourHomeData.map((data: any, index: number) => {
+            return (
+              <View key={index} style={{marginTop: 10}}>
+                <HeaderText text={data?.title} />
+                <View style={styles.fullTimeContainer}>
+                  {data.options?.map(
+                    (
+                      item: {type: string; value: any},
+                      i: React.Key | null | undefined,
+                    ) => {
+                      return (
+                        <ServiceCheckbox
+                          title={item.type}
+                          key={i}
+                          radio
+                          typeKey={item.value}
+                          onPress={() => {
+                            setValue(data.name, item.value, {
+                              shouldValidate: true,
+                            });
+                          }}
+                          name={data.name}
+                          control={control}
+                        />
+                      );
+                    },
+                  )}
+                </View>
+                <ErrorMessage error={errors[data.name]?.message} />
+              </View>
+            );
+          })}
+        </View>
+        {attributes.length > 0 && (
+          <View>
+            <HeaderText
+              text={attributes[0].displayName}
+              textStyle={styles.subTex}
+            />
+            <DescriptionText
+              text={'(Check All That Apply)'}
+              textStyle={{
+                ...styles.subHeaderText,
+                color: colors.descriptionText,
+              }}
+            />
+
+            {attributes[0]?.homeAttributeType?.map(
+              (item: any, i: React.Key | null | undefined) => {
+                return (
+                  <ServiceCheckbox
+                    title={item?.displayName}
+                    key={i}
+                    square
+                    typeKey={item?.id}
+                    active={newData !== null && newData.includes(item?.id)}
+                    onPress={() => {
+                      handleMultipleCheck(item.id);
+                    }}
+                    name={'homeAttributes'}
+                    control={control}
+                  />
+                );
+              },
+            )}
+            <ErrorMessage error={errors['homeAttributes']?.message} />
+
+            <HeaderText
+              text={attributes[1].displayName}
+              textStyle={styles.subTex}
+            />
+            <DescriptionText
+              text={'(Check All That Apply)'}
+              textStyle={{
+                ...styles.subHeaderText,
+                color: colors.descriptionText,
+              }}
+            />
+
+            {attributes[1]?.homeAttributeType?.map(
+              (item: any, i: React.Key | null | undefined) => {
+                return (
+                  <ServiceCheckbox
+                    title={item?.displayName}
+                    key={i}
+                    square
+                    typeKey={item?.id}
+                    active={newData !== null && newData.includes(item?.id)}
+                    onPress={() => {
+                      handleMultipleCheck(item.id);
+                    }}
+                    name={'homeAttributes'}
+                    control={control}
+                  />
+                );
+              },
+            )}
+            <ErrorMessage error={errors['homeAttributes']?.message} />
+          </View>
+        )}
+        <View style={styles.submitContainer}>
+          <SubmitButton
+            title={'Save & Continue'}
+            onPress={handlePost}
+            loading={postLoading}
+          />
+        </View>
+        <BottomSpacing />
       </View>
-      <BottomSpacing />
     </View>
   );
 };
@@ -173,8 +197,6 @@ const styles = StyleSheet.create({
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   headerText: {
-    paddingBottom:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
     lineHeight: 20,
   },
   subHeaderText: {
@@ -198,8 +220,23 @@ const styles = StyleSheet.create({
   fullTimeContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    flexWrap: 'wrap',
   },
   submitContainer: {
     marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '6%' : '3%',
+  },
+  flexContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom:
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+  },
+  iconContainer: {
+    paddingRight: 10,
+  },
+  textContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
