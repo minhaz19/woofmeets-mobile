@@ -13,21 +13,17 @@ import ServicesCom from '../../../components/ScreenComponent/becomeSitter/works/
 import HowItWorks from '../../../components/ScreenComponent/becomeSitter/works/HowItWorks';
 import { bulletData1, bulletData2, bulletData3 } from './data';
 import { styles } from './styles';
-import { setSitterData } from '../../../store/slices/onBoarding/initial';
+import { getOnboardingProgress } from '../../../store/slices/onBoarding/initial';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 const SitterInitialScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
 }) => {
-  const userServices = useAppSelector(state => state.services.userServices);
-  const oldUser = useAppSelector(state => state.initial.oldUser)
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
-  // useEffect(() => {
-  //   if (userServices && !oldUser) {
-  //     dispatch(setSitterData({pass: 0}));
-  //   }
-  // }, [userServices])
+  useEffect(() => {
+    dispatch(getOnboardingProgress());
+  }, [])
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}

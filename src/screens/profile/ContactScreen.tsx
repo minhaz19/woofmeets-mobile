@@ -16,9 +16,7 @@ import {useAppDispatch, useAppSelector} from '../../store/store';
 import {setProfileData} from '../../store/slices/onBoarding/initial';
 import AppFormReset from '../../components/common/Form/AppFormReset';
 
-const ContactScreen = (props: {
-  navigation: {navigate: (arg0: string) => void};
-}) => {
+const ContactScreen = () => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
   const emergencyContactSubmit = (contactData: any) => {
@@ -66,7 +64,6 @@ const ContactScreen = (props: {
         validationSchema={contactValidationSchema}>
         <ContactInput
           handleSubmit={emergencyContactSubmit}
-          navigation={props.navigation}
         />
       </AppFormReset>
       <View style={styles.footerContainer}>

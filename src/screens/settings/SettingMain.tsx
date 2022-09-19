@@ -27,9 +27,23 @@ const SettingMain = (props: {
   navigation: {navigate: (arg0: string) => any};
 }) => {
   const {colors} = useTheme();
-  const [token, setToken] = useState();
+  const [token, setToken] = useState<any>();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const userInfo = useAppSelector(state => state.auth.userInfo);
+  console.log(userInfo);
+
+  const getDecodedToken = async () => {
+    const tok: any = await authStorage.getToken();
+    if (tok) {
+      const decode: any = await jwtDecode(tok);
+      setToken(decode);
+      return decode;
+    }
+  };
+  useEffect(() => {
+      getDecodedToken();
+  }, [])
+  
   const loginData = [
     {
       id: 3,
@@ -221,7 +235,7 @@ const SettingMain = (props: {
           </View>
         )}
 
-        {token && token.provider && (
+        {token && !token.provider && (
           <View>
             <View
               style={[

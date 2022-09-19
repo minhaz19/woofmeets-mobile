@@ -2,11 +2,14 @@ import {
   View,
   StyleSheet,
   GestureResponderEvent,
+  TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import Colors from '../../../../../constants/Colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ShortText from '../../../../common/text/ShortText';
+import { useAppDispatch } from '../../../../../store/store';
+import { setBoardingScreen, setProfileScreen } from '../../../../../store/slices/onBoarding/initial';
 
 const ProfileItemCard = (props: {
   title: string;
@@ -14,7 +17,19 @@ const ProfileItemCard = (props: {
   isCompleted: boolean;
   handleClick: ((event: GestureResponderEvent) => void) | undefined;
   name: string;
+  isBoarding: boolean;
 }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const handleSubmit = async() => {
+    setLoading(true);
+    if (props.isBoarding) {
+      dispatch(setBoardingScreen({pass: props.id-1}));
+    } else {
+      dispatch(setProfileScreen({pass: props.id-1}));
+    }
+    setLoading(false);
+}
   const CompletedIcon = () => {
     return (
       <View style={styles.iconContainer} key={props.id}>
@@ -45,52 +60,17 @@ const ProfileItemCard = (props: {
   };
   const getIconType = (name: string) => {
     switch (name) {
-      case 'pet':
+      default:
         if (props.isCompleted) {
           return <CompletedIcon />;
         } else {
           return <UnCompletedIcon />;
         }
-      case 'contact':
-        if (props.isCompleted) {
-          return <CompletedIcon />;
-        } else {
-          return <UnCompletedIcon />;
-        }
-      case 'provider':
-        if (props.isCompleted) {
-          return <CompletedIcon />;
-        } else {
-          return <UnCompletedIcon />;
-        }
-      case 'Gallery':
-        if (props.isCompleted) {
-          return <CompletedIcon />;
-        } else {
-          return <UnCompletedIcon />;
-        }
-      case 'basicInfo':
-        if (props.isCompleted) {
-          return <CompletedIcon />;
-        } else {
-          return <UnCompletedIcon />;
-        }
-      case 'contact':
-        if (props.isCompleted) {
-          return <CompletedIcon />;
-        } else {
-          return <UnCompletedIcon />;
-        }
-      case 'provider':
-        if (props.isCompleted) {
-          return <CompletedIcon />;
-        } else {
-          return <UnCompletedIcon />;
-        }
+        
     }
   };
   return (
-    <View style={styles.headerContainer}>
+    <TouchableOpacity style={styles.headerContainer} onPress={handleSubmit}>
       {!props.isCompleted ? (
         <View
           style={{
@@ -111,7 +91,7 @@ const ProfileItemCard = (props: {
         text={props.title}
         textStyle={{...styles.textStyle, color: Colors.light.subText}}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 

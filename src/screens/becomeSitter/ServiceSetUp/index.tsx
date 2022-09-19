@@ -21,7 +21,7 @@ const ServiceSetUp = () => {
         <View style={styles.innerContainer}>
           {/* completed */}
           {boardingSelection.map(
-            item =>
+            (item: any) =>
               item.isCompleted && (
                 <ProfileItemCard
                   key={item.id}
@@ -30,12 +30,13 @@ const ServiceSetUp = () => {
                   id={item.id}
                   isCompleted={item.isCompleted}
                   handleClick={item.onPress}
+                  isBoarding={true}
                 />
               ),
           )}
           {/* not completed */}
           {boardingSelection.map(
-            item =>
+            (item: any) =>
               !item.isCompleted && (
                 <ProfileItemCard
                   key={item.id}
@@ -44,11 +45,12 @@ const ServiceSetUp = () => {
                   id={item.id}
                   isCompleted={item.isCompleted}
                   handleClick={item.onPress}
+                  isBoarding={true}
                 />
               ),
           )}
         </View>
-        {boardingSelection.map(item => {
+        {boardingSelection.map((item: any) => {
           if (item.inProgress) {
             return (
               <View key={item.id} style={{flex: 1}}>
@@ -57,23 +59,6 @@ const ServiceSetUp = () => {
             );
           }
         })}
-        {/* <ReusableHeader
-          itemId={itemId}
-          name={name}
-          image={image}
-          description={description}
-        /> */}
-        {/* <View>
-          {boardingSelection?.map((item, index) => (
-            <SelectServiceTitle
-              key={index}
-              title={item.title}
-              icon={item.icon}
-              checked={item.checked}
-              screen={item.screen}
-            />
-          ))}
-        </View> */}
       </View>
     </>
   );

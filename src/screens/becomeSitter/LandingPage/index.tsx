@@ -5,7 +5,6 @@ import LandingCard from '../../../components/ScreenComponent/becomeSitter/landin
 import Colors from '../../../constants/Colors';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { getUserServices } from '../../../store/slices/profile/services';
-import { setSitterData } from '../../../store/slices/onBoarding/initial';
 
 const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => any; }; }) => {
   const {colors} = useTheme();
@@ -35,30 +34,26 @@ const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => an
       <View style={{...styles.innerContainer, borderBottomColor: colors.borderColor}}>
         <View style={styles.leftContainer}>
           {/* completed */}
-          {sitterData.map(item => (
-            item.isCompleted && <LandingCard key={item.id} item={item} />
+          {sitterData.map((item: any) => (
+            item.isCompleted && !item.inProgress && <LandingCard key={item.id} item={item} />
           ))}
           {/* in progress */}
           <View style={styles.inProgressContainer}>
-            {/* {sitterData.map(item => (
-              item.inProgress && <LandingCard key={item.id} item={item} handleClick={item.onPress} />
-            ))} */}
-            {/* or simplified */}
-            <LandingCard item={sitterData.find(item => {
+            <LandingCard item={sitterData.find((item: any) => {
               return item.inProgress === true && item.screen;
             })} />
           </View>
         </View>
         <View style={styles.rightContainer}>
           {/* not completed */}
-          {sitterData.map(item => (
+          {sitterData.map((item: any) => (
             !item.isCompleted && !item.inProgress && <LandingCard key={item.id} item={item} />
           ))}
         </View>
       </View>
       {/* main component screen render */}
       <View style={{flex: 1}}>
-        {sitterData.find(item => {
+        {sitterData.find((item: any) => {
             return item.inProgress === true && item.screen;
         })?.screen}
       </View>

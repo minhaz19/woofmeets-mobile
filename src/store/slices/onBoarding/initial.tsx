@@ -1,5 +1,7 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import { ApiResponse } from 'apisauce';
 import React from 'react';
+import apiClient from '../../../api/client';
 import {ArrowRight} from '../../../assets/svgs/Services_SVG';
 import CreateProfileLanding from '../../../screens/becomeSitter/CreateProfileLanding';
 import Details from '../../../screens/becomeSitter/Details';
@@ -17,12 +19,25 @@ import SubscriptionScreen from '../../../screens/becomeSitter/Subscription';
 import BasicInfo from '../../../screens/profile/BasicInfo';
 import ContactScreen from '../../../screens/profile/ContactScreen';
 
+export const getOnboardingProgress = createAsyncThunk(
+  'progress/getOnboardingProgress',
+  async () => {
+    const response: ApiResponse<any> = await apiClient.get('/user-profile/onboarding-progress');
+    if (!response.ok) {
+      throw new Error(response.data.message);
+    }
+    return response.data;
+  },
+);
+
 const initialState: any = {
+  progressData: null,
   sitterData: [
     {
       id: 1,
       sequence: 0,
       title: 'Select Service',
+      name: 'serviceSelection',
       isCompleted: false,
       inProgress: true,
       screen: <ServiceSelection />,
@@ -31,6 +46,7 @@ const initialState: any = {
       id: 2,
       sequence: 1,
       title: 'Set Up Services',
+      name: 'serviceSelection',
       isCompleted: false,
       inProgress: false,
       screen: <HomeProfile />,
@@ -39,6 +55,7 @@ const initialState: any = {
       id: 3,
       sequence: 2,
       title: 'Create Your Profile',
+      name: 'profileSetup',
       isCompleted: false,
       inProgress: false,
       screen: <CreateProfileLanding />,
@@ -47,6 +64,7 @@ const initialState: any = {
       id: 4,
       sequence: 3,
       title: 'Safety Quiz',
+      name: 'safetyQuiz',
       isCompleted: false,
       inProgress: false,
       screen: <SafetyQuiz />,
@@ -55,6 +73,7 @@ const initialState: any = {
       id: 5,
       sequence: 4,
       title: 'Choose a Subscription',
+      name: 'subscription',
       isCompleted: false,
       inProgress: false,
       screen: <SubscriptionScreen />,
@@ -63,7 +82,7 @@ const initialState: any = {
   profileData: [
     {
       id: 1,
-      name: 'basicInfo',
+      name: 'BASIC_INFO',
       title: 'Basic Info',
       isCompleted: false,
       inProgress: true,
@@ -71,7 +90,7 @@ const initialState: any = {
     },
     {
       id: 2,
-      name: 'contact',
+      name: 'CONTACT',
       title: 'Phone Numbers',
       isCompleted: false,
       inProgress: false,
@@ -79,7 +98,7 @@ const initialState: any = {
     },
     {
       id: 3,
-      name: 'provider',
+      name: 'DETAILS',
       title: 'Details',
       isCompleted: false,
       inProgress: false,
@@ -87,7 +106,7 @@ const initialState: any = {
     },
     {
       id: 4,
-      name: 'Gallery',
+      name: 'GALLERY',
       title: 'Photos',
       isCompleted: false,
       inProgress: false,
@@ -95,7 +114,7 @@ const initialState: any = {
     },
     {
       id: 5,
-      name: 'pet',
+      name: 'PET_MANAGEMENT',
       title: 'Your Pets',
       isCompleted: false,
       inProgress: false,
@@ -104,7 +123,9 @@ const initialState: any = {
   ],
   boardingSelection: [
     {
+      id: 1,
       title: 'Rates',
+      name: 'rates',
       checked: true,
       isCompleted: false,
       inProgress: true,
@@ -112,7 +133,9 @@ const initialState: any = {
       screen: Rates,
     },
     {
+      id: 2,
       title: 'Availability',
+      name: 'availability',
       checked: false,
       isCompleted: false,
       inProgress: false,
@@ -120,7 +143,9 @@ const initialState: any = {
       screen: Availability,
     },
     {
+      id: 3,
       title: 'Pet Preference',
+      name: 'PROVIDER_PET_PREFERANCE',
       checked: false,
       isCompleted: false,
       inProgress: false,
@@ -128,7 +153,9 @@ const initialState: any = {
       screen: PetPreference,
     },
     {
+      id: 4,
       title: 'Your Home',
+      name: 'HOME_ATTRIBUTES',
       checked: false,
       isCompleted: false,
       inProgress: false,
@@ -136,7 +163,9 @@ const initialState: any = {
       screen: YourHome,
     },
     {
+      id: 5,
       title: 'Cancellation Policy',
+      name: 'CANCELLATION_POLICY',
       checked: false,
       isCompleted: false,
       inProgress: false,
@@ -156,12 +185,10 @@ const contact = createSlice({
   reducers: {
     setSitterData: (state, action) => {
       const newArray = [...state.sitterData];
-      let val = newArray.length;
-      while (val <= 0) {
-        newArray[val].isCompleted = false;
-        newArray[val].inProgress = false;
-        val--;
-      }
+      newArray.map(v => {
+        v.inProgress = false;
+        return v;
+      })
       state.oldUser = true;
       if (action.payload.pass === newArray.length - 1) {
         newArray[action.payload.pass].isCompleted = true;
@@ -173,14 +200,25 @@ const contact = createSlice({
       }
       state.sitterData = newArray;
     },
+    setCurrentScreen: (state, action) => {
+      const newArray = [...state.sitterData];
+      if (action.payload.pass === 0) {
+        //do nothing
+      } else {
+        newArray.map(v => {
+          v.inProgress = false;
+          return v;
+        })
+        newArray[action.payload.pass].inProgress = true;
+      }
+      state.sitterData = newArray;
+    },
     setProfileData: (state, action) => {
       const newArray1 = [...state.profileData];
-      let val = newArray1.length;
-      while (val <= 0) {
-        newArray1[val].isCompleted = false;
-        newArray1[val].inProgress = false;
-        val--;
-      }
+      newArray1.map(v => {
+        v.inProgress = false;
+        return v;
+      })
       state.oldUser = true;
       if (action.payload.pass === newArray1.length - 1) {
         newArray1[action.payload.pass].isCompleted = true;
@@ -192,14 +230,30 @@ const contact = createSlice({
       }
       state.profileData = newArray1;
     },
+    setProfileScreen: (state, action) => {
+      const newArray1 = [...state.profileData];
+      newArray1.map(v => {
+        v.inProgress = false;
+        return v;
+      })
+      state.oldUser = true;
+      newArray1[action.payload.pass].inProgress = true;
+    },
+    setBoardingScreen: (state, action) => {
+      const newArray1 = [...state.boardingSelection];
+      newArray1.map(v => {
+        v.inProgress = false;
+        return v;
+      })
+      state.oldUser = true;
+      newArray1[action.payload.pass].inProgress = true;
+    },
     setBoardingSelection: (state, action) => {
       const newArray = [...state.boardingSelection];
-      let val = newArray.length;
-      while (val <= 0) {
-        newArray[val].isCompleted = false;
-        newArray[val].inProgress = false;
-        val--;
-      }
+      newArray.map(v => {
+        v.inProgress = false;
+        return v;
+      })
       state.oldUser = true;
       if (action.payload.pass === newArray.length - 1) {
         newArray[action.payload.pass].isCompleted = true;
@@ -212,9 +266,75 @@ const contact = createSlice({
       state.boardingSelection = newArray;
     },
   },
+  extraReducers(builder) {
+    builder
+      .addCase(getOnboardingProgress.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getOnboardingProgress.fulfilled, (state, {payload}) => {
+        state.loading = false;
+        state.progressData = payload.data;
+        const sitterDataTemp = [...state.sitterData];
+        sitterDataTemp.map(v => {
+          switch (v.name) {
+            case 'serviceSelection':
+              return v.isCompleted = payload.data.serviceSelection;
+            case 'serviceSetup':
+              return v.isCompleted = payload.data.serviceSetup;
+            case 'profileSetup':
+              return v.isCompleted = payload.data.profileSetup;
+            case 'safetyQuiz':
+              return v.isCompleted = payload.data.safetyQuiz;
+            case 'subscription':
+              return v.isCompleted = payload.data.subscription;
+            case 'BASIC_INFO':
+              return v.isCompleted = payload.data.profileSetupSublist.BASIC_INFO.complete;
+          }
+          return v;
+        })
+        // create profile screen progress
+        const profileDataTemp = [...state.profileData];
+        const profileSubList = payload.data.profileSetupSublist;
+        profileDataTemp.map(v => {
+          switch (v.name) {
+            case 'BASIC_INFO':
+              return v.isCompleted = profileSubList.BASIC_INFO.complete;
+            case 'DETAILS':
+              return v.isCompleted = profileSubList.DETAILS.complete;
+            case 'CONTACT':
+              return v.isCompleted = profileSubList.CONTACT.complete;
+            case 'GALLERY':
+              return v.isCompleted = profileSubList.GALLERY.complete;
+            case 'PET_MANAGEMENT':
+              return v.isCompleted = profileSubList.PET_MANAGEMENT.complete;
+          }
+          return v;
+        })
+        // service setup screen progress
+        const serviceSetupTemp = [...state.boardingSelection];
+        const serviceSubList = payload.data.serviceSetupSublist;
+        serviceSetupTemp.map(v => {
+          switch (v.name) {
+            case 'PROVIDER_PET_PREFERANCE':
+              return v.isCompleted = serviceSubList.PROVIDER_PET_PREFERANCE.complete;
+            case 'CANCELLATION_POLICY':
+              return v.isCompleted = serviceSubList.CANCELLATION_POLICY.complete;
+            case 'HOME_ATTRIBUTES':
+              return v.isCompleted = serviceSubList.HOME_ATTRIBUTES.complete;
+          }
+          return v;
+        })
+        state.error = null;
+      })
+      .addCase(getOnboardingProgress.rejected, (state, {payload}) => {
+        state.loading = false;
+        state.error = payload;
+      })
+  },
 });
 
-export const {setSitterData, setProfileData, setBoardingSelection} =
+export const {setSitterData, setProfileData, setBoardingSelection, setCurrentScreen, setProfileScreen, setBoardingScreen} =
   contact.actions;
 
 export default contact.reducer;
