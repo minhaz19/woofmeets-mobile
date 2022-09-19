@@ -31,6 +31,7 @@ import initial from './slices/onBoarding/initial';
 import safetyQuizSlice from './slices/onBoarding/safetyQuiz/safetyQuizSlice';
 import whoAmISlice from './slices/common/whoAmI/whoAmISlice';
 import yourHomeSlice from './slices/onBoarding/setUpService/yourHome/yourHomeSlice';
+import CancellationPolicySlice from './slices/onBoarding/setUpService/cancellationPolicy/CancellationPolicySlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -55,6 +56,7 @@ const appReducer = combineReducers({
   availability: availabilitySlice,
   serviceSetup: serviceSetUpSlice,
   yourHome: yourHomeSlice,
+  cancellationPolicy: CancellationPolicySlice,
 });
 
 const RootReducer = (

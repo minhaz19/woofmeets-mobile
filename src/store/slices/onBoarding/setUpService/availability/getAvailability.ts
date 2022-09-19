@@ -9,7 +9,6 @@ export const getAvailability = createAsyncThunk(
         `/availability/service/${id}`,
       );
       if (!response.ok) {
-        console.log('getAvailability----', response.data?.message);
         throw new Error(response.data?.message);
       }
       return response.data;
