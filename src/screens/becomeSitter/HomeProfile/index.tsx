@@ -20,18 +20,12 @@ import {
   DropInVisitIcon,
   HouseSittingIcon,
 } from '../../../assets/svgs/Services_SVG';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {setSitterData} from '../../../store/slices/onBoarding/initial';
 import {setServiceSetup} from '../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 import ServiceSetUp from '../ServiceSetUp';
 
-type StackParamList = {};
-type NavigationProps = StackNavigationProp<StackParamList>;
-
 const HomeProfile = () => {
-  const navigation = useNavigation<NavigationProps>();
   const [, setLoading] = useState<boolean>(false);
   const {colors} = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -84,7 +78,7 @@ const HomeProfile = () => {
         return <DropInVisitIcon width={34} height={36} />;
       case 'walking':
         return <DogWalkingIcon width={34} height={36} />;
-      case 'walking':
+      case 'daycare':
         return <DoggyDayCareIcon width={34} height={36} />;
     }
   };
@@ -172,7 +166,6 @@ const HomeProfile = () => {
                   time: '3 mins',
                   icon: 'chevron-right',
                   screen: () => {
-                    // navigation.navigate('ServiceSetup');
                     dispatch(
                       setServiceSetup({
                         routeData: {

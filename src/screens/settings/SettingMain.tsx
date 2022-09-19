@@ -40,7 +40,9 @@ const SettingMain = (props: {
       return decode;
     }
   };
-  getDecodedToken();
+  useEffect(() => {
+      getDecodedToken();
+  }, [])
   
   const loginData = [
     {
@@ -233,7 +235,7 @@ const SettingMain = (props: {
           </View>
         )}
 
-        {token && token.provider && (
+        {token && !token.provider && (
           <View>
             <View
               style={[

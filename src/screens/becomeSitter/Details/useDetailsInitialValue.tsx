@@ -1,9 +1,7 @@
-import {useEffect} from 'react';
 import {useAppSelector} from '../../../store/store';
 
 export const useDetailsInitalValue = () => {
-  const sitterInfo = useAppSelector(state => state.details.sitterInfo);
-  useEffect(() => {}, [sitterInfo]);
+  const sitterInfo = useAppSelector(state => state.details.sitterInfo?.providerDetails);
   const detailsInitalValue = {
     headline: sitterInfo ? sitterInfo.headline : '',
     yearsOfExperience: sitterInfo

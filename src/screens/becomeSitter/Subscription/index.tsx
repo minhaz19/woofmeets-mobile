@@ -7,10 +7,12 @@ import BigText from '../../../components/common/text/BigText';
 import HeaderText from '../../../components/common/text/HeaderText';
 import { btnStyles } from '../../../constants/theme/common/buttonStyles';
 import ButtonCom from '../../../components/UI/ButtonCom';
+import { useNavigation } from '@react-navigation/native';
 
-const SubscriptionScreen = (props: { navigation: { navigate: (arg0: string) => any; goBack: () => void; }; }) => {
+const SubscriptionScreen = () => {
   const {colors} = useTheme();
   const [sequence, setSequence] = useState<number>(0);
+  const navigation = useNavigation<any>();
   const packageData = [
     {
         id: 1,
@@ -18,7 +20,7 @@ const SubscriptionScreen = (props: { navigation: { navigate: (arg0: string) => a
         title: 'Basic',
         description: 'Only 5% Service Fee For All Unlimited Appointments',
         price: '0',
-        onPress: () => props.navigation.navigate(''),
+        onPress: () => navigation.navigate(''),
         details: [
           {
             id: 1,
@@ -40,7 +42,7 @@ const SubscriptionScreen = (props: { navigation: { navigate: (arg0: string) => a
         title: 'Gold',
         description: 'Only 5% Service Fee For All Unlimited Appointments',
         price: '75',
-        onPress: () => props.navigation.navigate(''),
+        onPress: () => navigation.navigate(''),
         details: [
           {
             id: 1,
@@ -70,7 +72,7 @@ const SubscriptionScreen = (props: { navigation: { navigate: (arg0: string) => a
         title: 'Platinum',
         description: 'Only 5% Service Fee For All Unlimited Appointments',
         price: '149',
-        onPress: () => props.navigation.navigate(''),
+        onPress: () => navigation.navigate(''),
         details: [
           {
             id: 1,
@@ -131,7 +133,7 @@ const SubscriptionScreen = (props: { navigation: { navigate: (arg0: string) => a
           textAlignment={btnStyles.textAlignment}
           containerStyle={btnStyles.containerStyleFullWidth}
           titleStyle={btnStyles.titleStyle}
-          onSelect={() => props.navigation.goBack()}
+          onSelect={() => navigation.goBack()}
         //   loading={loading}
         />
       </View>

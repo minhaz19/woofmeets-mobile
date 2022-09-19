@@ -7,12 +7,9 @@ import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileA
 import {getContactInfo} from '../../../store/slices/profile/contact';
 import {getSitterDetails} from '../../../store/slices/profile/details';
 
-const CreateProfileLanding = (props: {
-  navigation: {navigate: (arg0: string) => any};
-}) => {
+const CreateProfileLanding = () => {
   const {colors} = useTheme();
   const profileData = useAppSelector(state => state.initial.profileData);
-  const userInfo = useAppSelector(state => state.userProfile.userInfo);
   const [, setRefreshing] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -39,7 +36,7 @@ const CreateProfileLanding = (props: {
       <View style={styles.innerContainer}>
         {/* completed */}
         {profileData.map(
-          item =>
+          (item: any) =>
             item.isCompleted && (
               <ProfileItemCard
                 key={item.id}
@@ -47,14 +44,13 @@ const CreateProfileLanding = (props: {
                 title={item.title}
                 id={item.id}
                 isCompleted={item.isCompleted}
-                handleClick={item.onPress}
-                userInfo={userInfo}
-              />
+                handleClick={item.onPress} 
+                isBoarding={false} />
             ),
         )}
         {/* not completed */}
         {profileData.map(
-          item =>
+          (item: any) =>
             !item.isCompleted && (
               <ProfileItemCard
                 key={item.id}
@@ -62,13 +58,11 @@ const CreateProfileLanding = (props: {
                 title={item.title}
                 id={item.id}
                 isCompleted={item.isCompleted}
-                handleClick={item.onPress}
-                userInfo={userInfo}
-              />
+                handleClick={item.onPress} isBoarding={false} />
             ),
         )}
       </View>
-      {profileData.map(item => {
+      {profileData.map((item: any) => {
         if (item.inProgress) {
           return (
             <View key={item.id} style={{flex: 1}}>
