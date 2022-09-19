@@ -3,12 +3,13 @@ import * as Yup from 'yup';
 export const AvailabilityInitialValues = (
   serviceAvailabilityId: number,
   availability: any,
+  itemId: any,
 ) => {
   const dates =
     availability !== null && availability;
   const methods = availability !== null && availability?.service;
   return {
-    providerServiceId: serviceAvailabilityId,
+    providerServiceId: itemId,
     fri: dates?.fri ? dates?.fri : false,
     mon: dates?.mon ? dates?.mon : false,
     sat: dates?.sat ? dates?.sat : false,

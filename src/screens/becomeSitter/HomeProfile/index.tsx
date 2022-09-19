@@ -89,10 +89,8 @@ const HomeProfile = () => {
     }
   };
 
-  if(isBoardingSelected) {
-    return (
-      <ServiceSetUp />
-    )
+  if (isBoardingSelected) {
+    return <ServiceSetUp />;
   }
 
   return (

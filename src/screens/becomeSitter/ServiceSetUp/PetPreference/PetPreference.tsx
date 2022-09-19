@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet} from 'react-native';
-import React, {memo} from 'react';
+import React, {memo, useEffect} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import methods from '../../../../api/methods';
@@ -9,6 +9,7 @@ import SubPetPreference from '../../../../components/ScreenComponent/becomeSitte
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {setPetPreference} from '../../../../store/slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
 import {setBoardingSelection} from '../../../../store/slices/onBoarding/initial';
+import {getYourHome} from '../../../../store/slices/onBoarding/setUpService/yourHome/getYourHome';
 
 const endPoint = '/pet-preference';
 
@@ -19,6 +20,7 @@ const PetPreference = () => {
     (state: any) => state?.petPreference,
   );
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  const {yourHome} = useAppSelector((state: any) => state?.yourHome);
   const {itemId, name, image, description} = serviceSetup.routeData;
 
   const {request: putRequest, loading: putLoading} = useApi(methods._put);
@@ -37,6 +39,9 @@ const PetPreference = () => {
       dispatch(setBoardingSelection({pass: 2}));
     }
   };
+  useEffect(() => {
+    yourHome === null && dispatch(getYourHome());
+  }, [dispatch, yourHome]);
 
   return (
     <>
