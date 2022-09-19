@@ -3,6 +3,7 @@
 import {useEffect} from 'react';
 import methods from '../../../../../api/methods';
 import {setBoardingSelection} from '../../../../../store/slices/onBoarding/initial';
+import {getAvailability} from '../../../../../store/slices/onBoarding/setUpService/availability/getAvailability';
 import {getServiceRateFields} from '../../../../../store/slices/onBoarding/setUpService/rates/Field/serviceRateFieldAction';
 import {getRateFieldValue} from '../../../../../store/slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueAction';
 import {useAppDispatch, useAppSelector} from '../../../../../store/store';
@@ -10,12 +11,13 @@ import {useApi} from '../../../../../utils/helpers/api/useApi';
 
 const ratePostEndpoint = '/service-rates/multiple/create';
 const ratePutEndpoint = '/service-rates/multiple/update';
-export const useServiceRates = (serviceSetup: any) => {
+export const useServiceRates = (serviceSetup: any, providerServiceId: any) => {
   const {serviceId, providerServicesId} = serviceSetup?.routeData;
   const dispatch = useAppDispatch();
   const {loading, serviceRateFields} = useAppSelector(
     state => state.serviceRates,
   );
+  const {availability} = useAppSelector(state => state?.availability);
   const {loading: fLoading, fieldValue} = useAppSelector(
     state => state.fieldValue,
   );
@@ -66,6 +68,7 @@ export const useServiceRates = (serviceSetup: any) => {
   useEffect(() => {
     dispatch(getServiceRateFields(serviceId));
     dispatch(getRateFieldValue(providerServicesId));
+    availability === null && dispatch(getAvailability(providerServiceId[0]));
   }, []);
   return {
     handleRates,

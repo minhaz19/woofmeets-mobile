@@ -13,9 +13,15 @@ import {useAppSelector} from '../../../../store/store';
 const Rates = () => {
   const {colors} = useTheme();
   const {serviceSetup} = useAppSelector(state => state?.serviceSetup);
-  const {itemId, name, image, description} = serviceSetup.routeData;
-  const {handleRates, loading, btnLoading, fLoading, serviceRateFields} =
-    useServiceRates(serviceSetup);
+  const {itemId, name, image, description, service} = serviceSetup.routeData;
+  const providerServiceId = service.map((data: {id: any}) => data.id);
+  const {
+    handleRates,
+    loading,
+    btnLoading,
+    fLoading,
+    serviceRateFields,
+  } = useServiceRates(serviceSetup, providerServiceId);
 
   return (
     <>

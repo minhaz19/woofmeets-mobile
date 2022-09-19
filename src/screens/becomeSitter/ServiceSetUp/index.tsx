@@ -2,16 +2,11 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {useServiceSetup} from './useServiceSetup';
 import {useAppSelector} from '../../../store/store';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
 
 const ServiceSetUp = () => {
   const {colors} = useTheme();
-  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
-  const {service} = serviceSetup?.routeData;
-  const serviceId = service.map((data: {id: any}) => data.id);
-  useServiceSetup(serviceId);
   const boardingSelection = useAppSelector(
     state => state.initial.boardingSelection,
   );
