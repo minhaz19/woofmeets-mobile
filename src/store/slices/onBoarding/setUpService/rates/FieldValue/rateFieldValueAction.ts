@@ -11,7 +11,7 @@ export const getRateFieldValue = createAsyncThunk(
       );
       if (!response.ok) {
         if (response.data) {
-          Alert.alert(response.data.message);
+          console.log('');
         } else if (response.problem === 'TIMEOUT_ERROR') {
           return response;
         } else {

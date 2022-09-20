@@ -35,7 +35,7 @@ export const orderAndStyleRange = (range: any, color: string) => {
     }));
   let styledMarkedRange: any = {};
 
-  styledRange !== false &&
+  styledRange &&
     styledRange?.map(
       (item: any) =>
         // @ts-ignore

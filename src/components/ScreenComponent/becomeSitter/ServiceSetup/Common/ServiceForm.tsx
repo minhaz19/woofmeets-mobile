@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
-import React, {useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {Controller} from 'react-hook-form';
 import TitleText from '../../../../common/text/TitleText';
 import {InfoSvg} from '../../../Inbox/utils/SvgComponent/SvgComponent';
@@ -67,12 +67,15 @@ const ServiceForm = ({
   updateRates,
   checked,
 }: Props) => {
-  useMemo(() => {
+  useCallback(() => {
     name !== 'baserate' &&
       updateRates === false &&
       checked === false &&
-      setValue!(name, convertedValue?.toFixed(2));
-  }, [name, updateRates, checked, setValue, convertedValue]);
+      setValue!(name, convertedValue?.toFixed(2), {
+        shouldValidate: errors[name] ? true : false,
+      });
+  }, [name, updateRates, checked, setValue, convertedValue, errors]);
+  console.log('servcie form');
   return (
     <>
       <View>
@@ -88,6 +91,7 @@ const ServiceForm = ({
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}, fieldState: {error}}) => {
+            console.log('value false', value, baseRateWatch);
             return (
               <ServiceInput
                 autoCapitalize={autoCapitalize}
@@ -99,13 +103,13 @@ const ServiceForm = ({
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={
-                  name === 'baserate'
+                  name === 'baserate' && value !== null
                     ? value.toString()
-                    : updateRates === false
+                    : updateRates === false && baseRateWatch !== undefined
                     ? ((baseRateWatch! / 100) * percentage)
                         .toFixed(2)
                         .toString()
-                    : value.toString()
+                    : value !== null && value.toString()
                 }
                 error={error?.message}
                 textInputStyle={textInputStyle}

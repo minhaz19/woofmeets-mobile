@@ -20,12 +20,12 @@ const ProviderProfileFeature = () => {
     {
       Icon: MapDistance,
       title: 'Distance',
-      value: `${featured?.distance} km`,
+      value: `${featured?.distance ? featured.distance : 0} km`,
     },
     {
       Icon: Experience,
       title: 'Experience',
-      value: `${featured?.experience} years`,
+      value: `${featured?.experience ? featured.experience : 0} years`,
     },
     {
       Icon: PetHandled,
@@ -38,11 +38,12 @@ const ProviderProfileFeature = () => {
       value: `${featured?.reviewsCount ? featured?.reviewsCount : 0} `,
     },
   ];
+  console.log('featured', featured);
   return (
     <View style={styles.container}>
       <ProviderProfileFeaturedSVG
         width={'100%'}
-        height={SCREEN_WIDTH > 800 ? 290 : 194}
+        height={SCREEN_WIDTH > 800 ? 290 : 216}
       />
       <View style={styles.textContainer}>
         <TitleText textStyle={styles.title} text="Featured" />
