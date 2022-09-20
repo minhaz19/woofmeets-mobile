@@ -15,11 +15,9 @@ const ProviderProfileInfo = () => {
           nature="Caring and attentive animal lover"
           rating={profileInfo?.rating ? profileInfo?.rating : 0}
           distance={`${
-            profileInfo?.address?.addressLine1 +
-            ' ' +
-            profileInfo?.address?.city
-            // ' ' +
-            // profileInfo?.address?.state
+            profileInfo?.address?.state +
+            ', ' +
+            profileInfo?.address?.country.name
           }`}
         />
       </View>

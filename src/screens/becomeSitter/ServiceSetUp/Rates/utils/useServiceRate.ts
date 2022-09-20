@@ -22,7 +22,8 @@ export const useServiceRates = (serviceSetup: any, providerServiceId: any) => {
     state => state.fieldValue,
   );
   const addRateApi = (data: any) => {
-    return fieldValue === null
+    console.log('field value', data, fieldValue);
+    return fieldValue === null || fieldValue === undefined
       ? methods._post(ratePostEndpoint, data)
       : methods._put(ratePutEndpoint, data);
   };
@@ -52,7 +53,10 @@ export const useServiceRates = (serviceSetup: any, providerServiceId: any) => {
             if (item === element.name) {
               payload.serviceRate.push({
                 serviceId: providerServicesId,
-                rateId: fieldValue === null ? element.postId : element.putId,
+                rateId:
+                  fieldValue === null || fieldValue === undefined
+                    ? element.postId
+                    : element.putId,
                 amount: e[element.name],
               });
             }
@@ -60,7 +64,9 @@ export const useServiceRates = (serviceSetup: any, providerServiceId: any) => {
         },
       );
     const result = await request(payload);
-    if (result) {
+
+    console.log('getting post result', result);
+    if (result.ok) {
       dispatch(setBoardingSelection({pass: 0}));
       dispatch(getRateFieldValue(providerServicesId));
     }

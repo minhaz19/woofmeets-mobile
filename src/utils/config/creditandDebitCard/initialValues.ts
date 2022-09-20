@@ -1,16 +1,17 @@
-import {debitAndCreditCardTypes} from './types';
-
-const debitAndCreditCard: debitAndCreditCardTypes = {
-  cardName: '',
-  cardNumber: '',
-  expiration: '',
-  cvc: '',
-  country: '',
-  addressLine1: '',
+const debitAndCreditCard = {
+  name: '',
+  cardInfo: {
+    last4: '',
+    expiryMonth: '',
+    expiryYear: '',
+    country: '',
+    postalCode: '',
+  },
+  line1: '',
+  line2: '',
+  state: '',
   aptState: '',
   city: '',
-  stateOrProvince: '',
-  zip: '',
 };
 
 export {debitAndCreditCard};

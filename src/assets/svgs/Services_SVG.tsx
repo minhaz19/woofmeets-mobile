@@ -1,5 +1,13 @@
 import * as React from 'react';
-import Svg, {Defs, ClipPath, Path, G, SvgProps, Circle, Ellipse} from 'react-native-svg';
+import Svg, {
+  Defs,
+  ClipPath,
+  Path,
+  G,
+  SvgProps,
+  Circle,
+  Ellipse,
+} from 'react-native-svg';
 
 export const Dog = (props: SvgProps) => (
   <Svg
@@ -967,8 +975,7 @@ export const HouseSittingIcon = (props: SvgProps) => (
     width={38.328}
     height={37.268}
     {...props}
-    viewBox="0 0 38.3 37.3"
-  >
+    viewBox="0 0 38.3 37.3">
     <Path
       data-name="Path 18706"
       d="M19.164 2.959 4.192 13.328v21.7h29.944v-21.7Zm0 0"
@@ -1075,8 +1082,7 @@ export const DoggyDayCareIcon = (props: SvgProps) => (
     width={42.157}
     height={31.975}
     {...props}
-    viewBox="0 0 42 32"
-  >
+    viewBox="0 0 42 32">
     <Path
       data-name="Path 18675"
       d="M22.313 3.513V0h-1.235L20.2 1.757l.878 1.757Z"
@@ -1147,8 +1153,7 @@ export const DogWalkingIcon = (props: SvgProps) => (
     width={45.745}
     height={47.434}
     {...props}
-    viewBox="0 0 46 47"
-  >
+    viewBox="0 0 46 47">
     <Path
       data-name="Path 18688"
       d="M8.132 37.043c-.316 0-.6-.333-.37-.791l1.078-.431a36.3 36.3 0 0 0 13.773-9.755l.933-1.1c.6-.078.8.491.545.787l-.8.911a37.207 37.207 0 0 1-14.118 10l-.876.35a.451.451 0 0 1-.165.029Z"
@@ -1305,8 +1310,7 @@ export const BoardingIcon = (props: SvgProps) => (
     width={44.257}
     height={37.688}
     {...props}
-    viewBox="0 0 44 37"
-  >
+    viewBox="0 0 44 37">
     <G data-name="Group 36891">
       <Path
         data-name="Path 18750"
@@ -1404,7 +1408,12 @@ export const BoardingIcon = (props: SvgProps) => (
 );
 
 export const DropInVisitIcon = (props: SvgProps) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={33.736} height={55} {...props} viewBox="0 0 34 55">
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={33.736}
+    height={55}
+    {...props}
+    viewBox="0 0 34 55">
     <Path
       data-name="Path 18729"
       d="M16.868-.002A16.707 16.707 0 0 0 0 16.539c0 8.012 12.977 30.146 16.166 35.465a.822.822 0 0 0 1.4 0c3.19-5.319 16.166-27.453 16.166-35.465A16.707 16.707 0 0 0 16.868-.002Zm0 29.663A13.254 13.254 0 0 1 3.486 16.539a13.385 13.385 0 0 1 26.764 0 13.254 13.254 0 0 1-13.382 13.124Z"
@@ -1531,5 +1540,3 @@ export const DropInVisitIcon = (props: SvgProps) => (
     </G>
   </Svg>
 );
-
-

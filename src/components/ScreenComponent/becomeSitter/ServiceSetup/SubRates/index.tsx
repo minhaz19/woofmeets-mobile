@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Colors from '../../../../../constants/Colors';
@@ -10,7 +10,7 @@ import SubmitButton from '../../../../common/Form/SubmitButton';
 import BottomSpacing from '../../../../UI/BottomSpacing';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import {useFormContext} from 'react-hook-form';
-import {useAppSelector} from '../../../../../store/store';
+import {useSubRates} from './ulils/useSubRates';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
 
@@ -21,12 +21,7 @@ interface Props {
 }
 
 const SubRates = ({handleRates, rateFields, loading}: Props) => {
-  const [showAdditionalRates, setShowAdditionalRates] = useState(true);
-  const [updateRates, setUpdateRates] = useState(false);
-  const [rates, setRates] = useState([]);
-  const [checked, setChecked] = useState(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const {fieldValue} = useAppSelector(state => state.fieldValue);
 
   const {
     formState: {errors},
@@ -34,47 +29,15 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
     setValue,
     watch,
   } = useFormContext();
-
-  const baseRateWatch = watch('baserate');
-  const handlePress = () => {
-    setShowAdditionalRates(!showAdditionalRates);
-  };
-  useMemo(() => {
-    const modRates = rateFields?.map((item: any, index: number) => ({
-      ...item,
-      percentage: 5 * index,
-    }));
-    setRates(modRates);
-  }, [rateFields]);
-
-  useMemo(() => {
-    const checkFields = fieldValue?.map(
-      (_: any, index: number) =>
-        (fieldValue[0].amount / 100) * (index * 5) === fieldValue[index].amount,
-    );
-    const validateCheck =
-      checkFields &&
-      checkFields?.filter((item: boolean) => item === false).length >= 2;
-    if (validateCheck === true) {
-      setChecked(true);
-      setUpdateRates(true);
-    } else if (validateCheck === false) {
-      setChecked(false);
-      setUpdateRates(false);
-    }
-  }, [fieldValue]);
-
-  useMemo(() => {
-    if (checked === true) {
-      if (updateRates === false) {
-        setChecked(false);
-      }
-    } else if (checked === false) {
-      if (updateRates === true) {
-        setChecked(true);
-      }
-    }
-  }, [checked, updateRates]);
+  const {
+    baseRateWatch,
+    handlePress,
+    rates,
+    showAdditionalRates,
+    updateRates,
+    setUpdateRates,
+    checked,
+  } = useSubRates(rateFields, watch);
   return (
     <View>
       <ServiceReusableModal

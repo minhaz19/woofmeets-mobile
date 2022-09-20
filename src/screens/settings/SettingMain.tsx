@@ -1,5 +1,5 @@
 import {View, StyleSheet, ScrollView} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CallIcon,
   CardsIcon,
@@ -41,9 +41,9 @@ const SettingMain = (props: {
     }
   };
   useEffect(() => {
-      getDecodedToken();
-  }, [])
-  
+    getDecodedToken();
+  }, []);
+
   const loginData = [
     {
       id: 3,
@@ -215,7 +215,7 @@ const SettingMain = (props: {
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
           />
         )}
-        {token && token.provider ? (
+        {token && !token.provider ? (
           <View>
             <View style={styles.titleContainer}>
               <TitleText text="Services" />
