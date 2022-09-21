@@ -7949,6 +7949,13 @@ react-native-codegen@^0.0.17:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-date-picker@^4.2.5:
+  version "4.2.5"
+  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.2.5.tgz#d2e3ff6c8616313bdd75c48ac56a84a57d8a27a3"
+  integrity sha512-YjwiMpZEnVVS+ymLvmJDicVZ3pSR+nJHgtAhctMl6fO8f7iRNcYhY427gemlTBf2Ji+XIAK0Agyl255DhaemFw==
+  dependencies:
+    prop-types "^15.8.1"
+
 react-native-draggable-grid@^2.1.6:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/react-native-draggable-grid/-/react-native-draggable-grid-2.1.6.tgz#87a6c40797b15e874dbd305c3bca6d08bb2b1f5d"

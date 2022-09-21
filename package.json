@@ -36,6 +36,7 @@
     "react-native": "0.68.2",
     "react-native-calendario": "^4.0.0-beta.0",
     "react-native-calendars": "^1.1285.0",
+    "react-native-date-picker": "^4.2.5",
     "react-native-draggable-grid": "^2.1.6",
     "react-native-element-dropdown": "^2.2.0",
     "react-native-fbsdk-next": "^10.1.0",

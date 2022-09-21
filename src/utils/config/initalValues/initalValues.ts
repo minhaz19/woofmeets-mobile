@@ -67,6 +67,21 @@ const filterProviderValue: filterProviderType = {
   priceRange: [],
   homeType: '',
 };
+const backgroundCheckInit = {
+  dob: '',
+  state: '',
+  dlld: '',
+  stateId: '',
+  imageGallery: [],
+};
+const planCheckoutInit = {
+  email: '',
+  phone: '',
+  cardInfo: {
+    country: '',
+    postalCode: '',
+  },
+};
 
 export {
   loginValue,
@@ -78,4 +93,6 @@ export {
   addPetValue,
   filterProviderValue,
   forgotPasswordReset,
+  backgroundCheckInit,
+  planCheckoutInit,
 };

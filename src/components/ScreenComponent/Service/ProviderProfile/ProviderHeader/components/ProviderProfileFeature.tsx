@@ -38,7 +38,6 @@ const ProviderProfileFeature = () => {
       value: `${featured?.reviewsCount ? featured?.reviewsCount : 0} `,
     },
   ];
-  console.log('featured', featured);
   return (
     <View style={styles.container}>
       <ProviderProfileFeaturedSVG

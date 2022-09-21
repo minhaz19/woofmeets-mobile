@@ -4,7 +4,8 @@ import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
 import {getBreeds} from '../../../../store/slices/pet/breeds/breedsAction';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
-
+import methods from '../../../../api/methods';
+const endpoint = '/user-profile/check-have-pets';
 export const useAddPetUtils = (navigation: any, opk: string) => {
   const dispatch = useAppDispatch();
   const {loading, dogBreeds, catBreeds} = useAppSelector(
@@ -17,6 +18,8 @@ export const useAddPetUtils = (navigation: any, opk: string) => {
     if (result.ok) {
       navigation.goBack();
       dispatch(getAllPets());
+      const checkPetPayload = {havePets: 'YES'};
+      await methods._post(endpoint, checkPetPayload);
     }
   };
 

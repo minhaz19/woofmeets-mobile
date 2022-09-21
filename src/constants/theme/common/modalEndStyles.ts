@@ -23,6 +23,13 @@ export const designs = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(52, 52, 52, 0.6)',
   },
+  centeredViewBgLite: {
+    flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 32 : 0,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.2)',
+  },
   modalCancel: {
     paddingRight: '5%',
     top: -18,
@@ -46,10 +53,26 @@ export const designs = StyleSheet.create({
     minHeight: '40%',
     maxHeight: '90%',
     width: '100%',
-
     shadowColor: 'black',
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.75,
+    shadowRadius: 3.84,
+    elevation: 9,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
+    paddingTop: 20,
+  },
+  modalViewRoundedless: {
+    // minHeight: '40%',
+    // maxHeight: '100%',
+    width: '100%',
+    shadowColor: 'black',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
     shadowOffset: {
       width: 2,
       height: 2,

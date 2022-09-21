@@ -29,6 +29,9 @@ interface Props {
   errors: any;
   control: any;
   defaultValue?: string;
+  onPressIn?: () => void;
+  onPressOut?: () => void;
+  editable?: boolean;
 }
 type StackParamList = {
   ForgotPasswordEmail: {foo: string; onBar: () => void} | undefined;
@@ -55,6 +58,9 @@ const AppFormField = ({
   errors,
   control,
   defaultValue,
+  onPressIn,
+  onPressOut,
+  editable = true,
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
   return (
@@ -80,6 +86,9 @@ const AppFormField = ({
                   name={name}
                   textContentType={textContentType}
                   onChangeText={onChange}
+                  onPressIn={onPressIn}
+                  onPressOut={onPressOut}
+                  editable={editable}
                   onBlur={onBlur}
                   value={value?.toString()}
                   secureTextEntry={secureTextEntry}

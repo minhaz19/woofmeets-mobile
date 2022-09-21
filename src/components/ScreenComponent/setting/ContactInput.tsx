@@ -77,7 +77,6 @@ const ContactInput = (props: { handleSubmit: any; }) => {
         const response: ApiResponse<any> = await apiClient.post('/user-profile/generate-phone-otp', {
           phoneNumber: textInput,
         });
-        console.log(response);
         if (!response.ok) {
           setPhoneNumberError(response.data.message);
           throw new Error(response.data.message);

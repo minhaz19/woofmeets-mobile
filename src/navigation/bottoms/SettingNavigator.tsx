@@ -10,6 +10,9 @@ import Preference from '../../screens/settings/Preference';
 import AccountSetting from '../../components/ScreenComponent/setting/Preference/AccountSetting';
 import CreditAndDebitCard from '../../screens/checkout/CreditAndDebitCard';
 import SetNewPassword from '../../screens/auth/ResetPassword';
+import PlanCheckout from '../../components/ScreenComponent/becomeSitter/subscription/PlanCheckout';
+import BasicBackgroundCheck from '../../components/ScreenComponent/becomeSitter/subscription/BasicBackgroundCheck';
+import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 
 const Stack1 = createStackNavigator();
 
@@ -25,6 +28,53 @@ const SettingNavigator = () => {
             <HeaderWithBack
               navigation={navigation}
               title="Settings"
+              notification
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+
+      <Stack1.Screen
+        name="PlanCheckout"
+        component={PlanCheckout}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="Checkout"
+              notification
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="BasicBackgroundCheck"
+        component={BasicBackgroundCheck}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="Background Check"
+              notification
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+
+      <Stack1.Screen
+        name="ProviderAvailablity"
+        component={ProviderAvailablity}
+        options={({navigation}) => ({
+          title: 'Provider Availability',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="Provider Availability"
               notification
             />
           ),
