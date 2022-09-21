@@ -32,7 +32,6 @@ const ServiceSetUp = () => {
     (state: any) => state?.petPreference,
   );
 
-  console.log('----- service setup', providerServiceId[0]);
   useEffect(() => {
     dispatch(getAvailability(providerServiceId[0]));
     yourHome === null && dispatch(getYourHome());

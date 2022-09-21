@@ -7,7 +7,6 @@ export const getPetPreference = createAsyncThunk(
     try {
       const response: ApiResponse<any> = await apiClient.get('/pet-preference');
       if (!response.ok) {
-        console.log('getPetPreference----', response.data?.message);
         throw new Error(response.data?.message);
       }
       return response.data;

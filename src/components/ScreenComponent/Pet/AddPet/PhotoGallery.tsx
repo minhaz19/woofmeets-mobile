@@ -40,7 +40,9 @@ const PhotoGallery = ({imageUri, handlePress, onChangeImage}: Props) => {
       ]);
     }
   };
+
   const uploadImage = (e: any) => {
+    // onChangeImage(e);
     onChangeImage(e._parts[0][1].uri);
   };
 

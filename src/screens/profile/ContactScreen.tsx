@@ -14,7 +14,7 @@ import {
 } from '../../store/slices/profile/contact';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {setProfileData} from '../../store/slices/onBoarding/initial';
-import AppFormReset from '../../components/common/Form/AppFormReset';
+import AppForm from '../../components/common/Form/AppForm';
 
 const ContactScreen = () => {
   const {colors} = useTheme();
@@ -25,7 +25,6 @@ const ContactScreen = () => {
   };
   const [refreshing, setRefreshing] = useState(false);
   const contact = useAppSelector(state => state.contact);
-
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -50,7 +49,7 @@ const ContactScreen = () => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <AppFormReset
+      <AppForm
         initialValues={
           contact.contactInfo
             ? {
@@ -61,11 +60,10 @@ const ContactScreen = () => {
               }
             : contactValues
         }
-        validationSchema={contactValidationSchema}>
-        <ContactInput
-          handleSubmit={emergencyContactSubmit}
-        />
-      </AppFormReset>
+        validationSchema={contactValidationSchema}
+        enableReset>
+        <ContactInput handleSubmit={emergencyContactSubmit} />
+      </AppForm>
       <View style={styles.footerContainer}>
         <View style={styles.termsContainer}>
           <Text style={[styles.details, {color: colors.lightText}]}>

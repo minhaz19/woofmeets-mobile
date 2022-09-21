@@ -147,8 +147,6 @@ const BoardingSettingsSchema = Yup.object().shape({
     .max(150, 'Please enter a value less than or equal to 150.'),
   sixtyMinRate: Yup.number()
     .nullable(true)
-    // .required('holiday rate is required')
-    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
   holidayrate: Yup.number()
     .nullable(true)
@@ -162,8 +160,6 @@ const BoardingSettingsSchema = Yup.object().shape({
     .max(150, 'Please enter a value less than or equal to 150.'),
   puppyRate: Yup.number()
     .nullable(true)
-    // .required('Puppy rate is required')
-    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
   catcare: Yup.number()
     .nullable(true)
@@ -172,23 +168,15 @@ const BoardingSettingsSchema = Yup.object().shape({
     .max(150, 'Please enter a value less than or equal to 150.'),
   additionalCat: Yup.number()
     .nullable(true)
-    // .required('Additional cat rate is required')
-    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
   extendedStayRate: Yup.number()
     .nullable(true)
-    // .required('Extended stay rate is required')
-    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
   bathingGrooming: Yup.number()
     .nullable(true)
-    // .required('Bathing grooming is required')
-    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
   pickUpDropOff: Yup.number()
     .nullable(true)
-    // .required('Pick up drop off is required')
-    // .typeError('A Number is Required')
     .max(150, 'Please enter a value less than or equal to 150.'),
 });
 const safetyQuizValidationSchema = Yup.object().shape({
@@ -200,6 +188,21 @@ const safetyQuizValidationSchema = Yup.object().shape({
   '6': Yup.string().required('Please choose the corrent answer'),
   '7': Yup.string().required('Please choose the corrent answer'),
   '8': Yup.string().required('Please choose the corrent answer'),
+});
+const backgroundCheckValidationSchema = Yup.object().shape({
+  dob: Yup.string().required('Please choose the corrent answer'),
+  state: Yup.string().required('Please choose the corrent answer'),
+  dlld: Yup.string().required('Please choose the corrent answer'),
+  stateId: Yup.string().required('Please choose the corrent answer'),
+  imageGallery: Yup.array(),
+});
+const planCheckoutValidationSchema = Yup.object().shape({
+  email: Yup.string().email().required('Email is a required field'),
+  phone: Yup.string().required('Provide your number'),
+  cardInfo: Yup.object().shape({
+    country: Yup.string().required('country is required'),
+    postalCode: Yup.string().required('postalCode is required'),
+  }),
 });
 
 export {
@@ -215,4 +218,6 @@ export {
   forgotPasswordResetValidationSchema,
   providerAvailablityValidationSchema,
   safetyQuizValidationSchema,
+  backgroundCheckValidationSchema,
+  planCheckoutValidationSchema,
 };

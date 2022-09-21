@@ -21,7 +21,6 @@ const Availability = () => {
   const {availability, loading} = useAppSelector(
     (state: any) => state?.availability,
   );
-  console.log('availability-----------', availability);
   // hook for post/put
   const {handlePost, isLoading} = useAvailabilityUtils(serviceId[0]);
   return (

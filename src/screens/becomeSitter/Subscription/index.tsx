@@ -6,19 +6,24 @@ import PackageCard from '../../../components/ScreenComponent/becomeSitter/subscr
 import TitleText from '../../../components/common/text/TitleText';
 import BigText from '../../../components/common/text/BigText';
 import HeaderText from '../../../components/common/text/HeaderText';
-import {btnStyles} from '../../../constants/theme/common/buttonStyles';
-import ButtonCom from '../../../components/UI/ButtonCom';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {useSubscription} from './utils/useSubscription';
-const SubscriptionScreen = (props: {
-  navigation: {navigate: (arg0: string) => any; goBack: () => void};
-}) => {
+import {btnStyles} from '../../../constants/theme/common/buttonStyles';
+import ButtonCom from '../../../components/UI/ButtonCom';
+import Screen from '../../../components/common/Screen';
+const SubscriptionScreen = () => {
   const {colors} = useTheme();
-  const {onPressEvent, loading, formattedPackageRate, sequence} =
-    useSubscription();
+  const {
+    onPressEvent,
+    loading,
+    pLoading,
+    formattedPackageRate,
+    sequence,
+    handleSubmit,
+  } = useSubscription();
   return (
-    <>
-      {loading && <AppActivityIndicator />}
+    <Screen style={{flex: 1}}>
+      {loading && <AppActivityIndicator visible={true} />}
       <ScrollView
         style={[
           styles.container,
@@ -48,16 +53,16 @@ const SubscriptionScreen = (props: {
         ))}
         <View style={styles.footerContainer}>
           <ButtonCom
-            title="Choose Plan"
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => props.navigation.goBack()}
-            //   loading={loading}
+            title="Choose Plan"
+            onSelect={handleSubmit}
+            loading={pLoading}
           />
         </View>
       </ScrollView>
-    </>
+    </Screen>
   );
 };
 

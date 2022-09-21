@@ -9,18 +9,18 @@ import {debitAndCreditCard} from '../../utils/config/creditandDebitCard/initialV
 import Text_Size from '../../constants/textScaling';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import CheckoutInputForm from '../../components/ScreenComponent/Checkout/components/CheckoutInputForm';
-import {Token, createToken} from '@stripe/stripe-react-native';
+import CheckoutInputForm from '../../components/ScreenComponent/Checkout/CheckoutInputForm';
+import {createToken} from '@stripe/stripe-react-native';
 import AppStripe from '../../components/common/Stripe/AppStripe';
 import {useApi} from '../../utils/helpers/api/useApi';
 import methods from '../../api/methods';
 const endpoint = '/stripe-payment-method/add-card';
 const CreditAndDebitCard = () => {
   const {colors} = useTheme();
-  const {loading, request} = useApi(methods._post);
+  const {request} = useApi(methods._post);
   const handleValues = async (cardData: any) => {
     // : Token.CreateParams
-    const tokenPayload = {
+    const tokenPayload: any = {
       type: 'Card',
       address: {
         city: cardData.city,
@@ -51,7 +51,7 @@ const CreditAndDebitCard = () => {
       countryId: 0,
       token: token?.id,
     };
-    const result = await request(endpoint, reqPayload);
+    await request(endpoint, reqPayload);
   };
 
   return (
@@ -91,6 +91,11 @@ const styles = StyleSheet.create({
   rootContainer: {
     paddingTop: 20,
     flex: 1,
+  },
+  label: {
+    fontSize: Text_Size.Text_1,
+    fontWeight: '600',
+    marginBottom: 10,
   },
   inputContainer: {
     paddingHorizontal: 20,

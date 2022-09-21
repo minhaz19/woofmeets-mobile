@@ -30,7 +30,6 @@ const SettingMain = (props: {
   const [token, setToken] = useState<any>();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const userInfo = useAppSelector(state => state.auth.userInfo);
-  console.log(userInfo);
 
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
@@ -160,7 +159,7 @@ const SettingMain = (props: {
       title: 'Availability Calendar',
       icon: CallIcon,
       rightIcon: true,
-      screenName: () => {},
+      screenName: () => props.navigation.navigate('ProviderAvailablity'),
       opacity: 1,
     },
     {
