@@ -8,7 +8,7 @@ import {useApi} from '../../../../../utils/helpers/api/useApi';
 
 export const useAvailabilityUtils = (id: string) => {
   const dispatch = useAppDispatch();
-  const {petPreference} = useAppSelector((state: any) => state?.petPreference);
+  // const {petPreference} = useAppSelector((state: any) => state?.petPreference);
   const postEndPoint = `/availability${id ? `/${id}` : ''}`;
 
   const {request: PService, loading: isLoading} = useApi(
@@ -34,7 +34,7 @@ export const useAvailabilityUtils = (id: string) => {
     if (response?.data?.data) {
       dispatch(setAvailability(response?.data?.data));
       dispatch(setBoardingSelection({pass: 1}));
-      petPreference === null && dispatch(getPetPreference());
+      // petPreference === null && dispatch(getPetPreference());
     }
   };
   return {handlePost, isLoading};

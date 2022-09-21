@@ -33,6 +33,7 @@ import whoAmISlice from './slices/common/whoAmI/whoAmISlice';
 import subscriptionSlice from './slices/onBoarding/Subscriptions/subscriptionSlice';
 import yourHomeSlice from './slices/onBoarding/setUpService/yourHome/yourHomeSlice';
 import CancellationPolicySlice from './slices/onBoarding/setUpService/cancellationPolicy/CancellationPolicySlice';
+import rescheduleSlice from './slices/Provider/reschedule/rescheduleSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -59,6 +60,7 @@ const appReducer = combineReducers({
   subscription: subscriptionSlice,
   yourHome: yourHomeSlice,
   cancellationPolicy: CancellationPolicySlice,
+  reschedule: rescheduleSlice,
 });
 
 const RootReducer = (

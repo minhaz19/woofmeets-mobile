@@ -68,7 +68,6 @@ const AvailablityCalendar = () => {
       );
     b && setPremarked(preStyledMarkedRange);
   }, []);
-  console.log('pre', preMarked);
   return (
     <View style={styles.container}>
       <CalendarList

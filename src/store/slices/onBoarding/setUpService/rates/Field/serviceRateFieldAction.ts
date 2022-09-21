@@ -19,7 +19,6 @@ export const getServiceRateFields = createAsyncThunk(
         }
         throw new Error(response.data.message);
       }
-      console.log('rates', response);
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {

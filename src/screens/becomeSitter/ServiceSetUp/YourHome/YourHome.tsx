@@ -12,6 +12,7 @@ import {setBoardingSelection} from '../../../../store/slices/onBoarding/initial'
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
 import {useYourHomeInitialData} from './utils/useYourHomeInitialData';
+import {setYourHome} from '../../../../store/slices/onBoarding/setUpService/yourHome/yourHomeSlice';
 
 const postEndPoint = '/provider-home';
 
@@ -30,7 +31,8 @@ const YourHome = () => {
   const {request, loading} = useApi(methods._post);
   const handlePost = async (e: any) => {
     const result = await request(postEndPoint, e);
-    if (result?.data.data) {
+    if (result?.ok) {
+      dispatch(setYourHome(result?.data?.data));
       dispatch(setBoardingSelection({pass: 3}));
     }
   };

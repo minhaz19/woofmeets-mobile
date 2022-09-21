@@ -36,7 +36,6 @@ const CheckoutMethod = ({handleValues}: Props) => {
       //   last4: '4242',
     };
     const {error, token} = await createToken(objTyep);
-    console.log('error token', error, token);
     // if (error) {
     //   Alert.alert(`Error code: ${error.code}`, error.message);
     //   console.log(`Error: ${JSON.stringify(error)}`);
@@ -53,7 +52,6 @@ const CheckoutMethod = ({handleValues}: Props) => {
       <AppStripe>
         <CardForm
           onFormComplete={cardDetails => {
-            console.log('card details', cardDetails);
             // setCard(cardDetails);
           }}
           style={{height: 200}}
