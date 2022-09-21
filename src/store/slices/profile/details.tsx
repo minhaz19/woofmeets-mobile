@@ -28,6 +28,7 @@ export const postSitterDetails = createAsyncThunk(
         '/user-profile/provider-details',
         body,
       );
+      console.log('details post',response.data.message);
       if (!response.ok) {
         throw new Error(response.data.message);
       }

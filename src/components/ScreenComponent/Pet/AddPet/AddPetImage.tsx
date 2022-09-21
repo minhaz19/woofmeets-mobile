@@ -17,7 +17,6 @@ import ErrorMessage from '../../../common/Form/ErrorMessage';
 import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
 import TitleText from '../../../common/text/TitleText';
 import ShortText from '../../../common/text/ShortText';
-import {shortText} from '../../../../constants/FontDetails';
 interface Props {
   name: string;
 }

@@ -15,6 +15,7 @@
 		6523C05E28AC1D2F00599D01 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523C05D28AC1D2F00599D01 /* File.swift */; };
 		7699B88040F8A987B510C191 /* libPods-woofmeets-woofmeetsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-woofmeets-woofmeetsTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		824181B089D9453D8AE16DA3 /* BogartRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 97C14388C2294E23894AC08E /* BogartRegular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		65DF9ADF28AC1A720010FB8F /* woofmeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "woofmeets-Bridging-Header.h"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = woofmeets/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-woofmeets-woofmeetsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-woofmeets-woofmeetsTests.release.xcconfig"; path = "Target Support Files/Pods-woofmeets-woofmeetsTests/Pods-woofmeets-woofmeetsTests.release.xcconfig"; sourceTree = "<group>"; };
+		97C14388C2294E23894AC08E /* BogartRegular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = BogartRegular.ttf; path = ../src/assets/fonts/BogartRegular.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -103,6 +105,15 @@
 			name = woofmeets;
 			sourceTree = "<group>";
 		};
+		13BD5394A1744E648770EE73 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				97C14388C2294E23894AC08E /* BogartRegular.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +140,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				13BD5394A1744E648770EE73 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -251,6 +263,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				824181B089D9453D8AE16DA3 /* BogartRegular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

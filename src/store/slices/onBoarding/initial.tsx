@@ -318,10 +318,10 @@ const contact = createSlice({
           switch (v.name) {
             case 'PROVIDER_PET_PREFERANCE':
               return v.isCompleted = serviceSubList.PROVIDER_PET_PREFERANCE.complete;
-            case 'CANCELLATION_POLICY':
-              return v.isCompleted = serviceSubList.CANCELLATION_POLICY.complete;
             case 'HOME_ATTRIBUTES':
               return v.isCompleted = serviceSubList.HOME_ATTRIBUTES.complete;
+            case 'CANCELLATION_POLICY':
+              return v.isCompleted = serviceSubList.CANCELLATION_POLICY.complete;
           }
           return v;
         })

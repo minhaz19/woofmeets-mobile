@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet} from 'react-native';
-import React, {memo} from 'react';
+import React, {memo, useEffect} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import methods from '../../../../api/methods';
@@ -9,6 +9,9 @@ import SubPetPreference from '../../../../components/ScreenComponent/becomeSitte
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {setPetPreference} from '../../../../store/slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
 import {setBoardingSelection} from '../../../../store/slices/onBoarding/initial';
+import {getYourHome} from '../../../../store/slices/onBoarding/setUpService/yourHome/getYourHome';
+import { getPetPreference } from '../../../../store/slices/onBoarding/setUpService/petPreference/getPetPreference';
+
 const endPoint = '/pet-preference';
 
 const PetPreference = () => {
@@ -17,6 +20,7 @@ const PetPreference = () => {
   const {loading, petPreference, petPerDay} = useAppSelector(
     (state: any) => state?.petPreference,
   );
+
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {itemId, name, image, description} = serviceSetup.routeData;
 
@@ -36,6 +40,9 @@ const PetPreference = () => {
       dispatch(setBoardingSelection({pass: 2}));
     }
   };
+  useEffect(() => {
+    dispatch(getPetPreference());
+  }, [dispatch]);
 
   return (
     <>
