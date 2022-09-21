@@ -215,7 +215,7 @@ const SettingMain = (props: {
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
           />
         )}
-        {token && !token.provider ? (
+        {token && token.provider ? (
           <View>
             <View style={styles.titleContainer}>
               <TitleText text="Services" />
@@ -235,7 +235,7 @@ const SettingMain = (props: {
           </View>
         )}
 
-        {token && !token.provider && (
+        {token && token.provider && (
           <View>
             <View
               style={[

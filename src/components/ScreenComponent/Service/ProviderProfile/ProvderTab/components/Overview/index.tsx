@@ -10,7 +10,6 @@ const Overview = () => {
   const {overview, profileInfo} = useAppSelector(
     state => state.providerProfile,
   );
-  console.log('overview', overview);
   const providerDatas = [
     {
       title: `${profileInfo?.firstName + ' ' + profileInfo?.lastName} home 🏡`,

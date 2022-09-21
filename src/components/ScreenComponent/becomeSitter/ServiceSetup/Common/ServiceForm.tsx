@@ -75,7 +75,6 @@ const ServiceForm = ({
         shouldValidate: errors[name] ? true : false,
       });
   }, [name, updateRates, checked, setValue, convertedValue, errors]);
-  console.log('servcie form');
   return (
     <>
       <View>
@@ -91,7 +90,6 @@ const ServiceForm = ({
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}, fieldState: {error}}) => {
-            console.log('value false', value, baseRateWatch);
             return (
               <ServiceInput
                 autoCapitalize={autoCapitalize}

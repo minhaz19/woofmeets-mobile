@@ -1,18 +1,49 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
+import {getAvailability} from '../../../store/slices/onBoarding/setUpService/availability/getAvailability';
+import {getOnboardingProgress} from '../../../store/slices/onBoarding/initial';
+import {getYourHome} from '../../../store/slices/onBoarding/setUpService/yourHome/getYourHome';
+import {getPetPreference} from '../../../store/slices/onBoarding/setUpService/petPreference/getPetPreference';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 
 const ServiceSetUp = () => {
   const {colors} = useTheme();
+  const dispatch = useAppDispatch();
   const boardingSelection = useAppSelector(
-    state => state.initial.boardingSelection,
+    (state: any) => state.initial.boardingSelection,
   );
+  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  const servicesData = serviceSetup ? serviceSetup.routeData : '';
+  const {service} = servicesData;
+  const providerServiceId =
+    service && service.map((data: {id: string}) => data.id);
+  const {availability, loading: availabilityLoader} = useAppSelector(
+    (state: any) => state?.availability,
+  );
+  const {yourHome, loading: yourHomeLoader} = useAppSelector(
+    (state: any) => state?.yourHome,
+  );
+  const {petPreference, loading: petPreferenceLoader} = useAppSelector(
+    (state: any) => state?.petPreference,
+  );
+
+  console.log('----- service setup', providerServiceId[0]);
+  useEffect(() => {
+    dispatch(getAvailability(providerServiceId[0]));
+    yourHome === null && dispatch(getYourHome());
+    petPreference === null && dispatch(getPetPreference());
+  }, [dispatch, petPreference, yourHome]);
 
   return (
     <>
+      {/* {(availabilityLoader || yourHomeLoader || petPreferenceLoader) && (
+        <AppActivityIndicator visible={true} />
+      )} */}
       <View
         style={[
           styles.rootContainer,

@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
   itemContainer: {
     padding: '3%',
     borderRadius: 4,
-    marginHorizontal: 2,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
     shadowOpacity: 0.3,

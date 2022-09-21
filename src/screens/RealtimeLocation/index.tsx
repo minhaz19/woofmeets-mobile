@@ -59,10 +59,8 @@ const RealtimeLocation = () => {
             longitude: position.coords.longitude,
           }),
         });
-        console.log('getting post', position);
       },
       error => {
-        console.log('error', error);
       },
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000},
     );
@@ -79,7 +77,6 @@ const RealtimeLocation = () => {
             longitude: position.coords.longitude,
           }),
         });
-        console.log(position);
       },
       (error: any) => {
         // See error code charts below.
@@ -92,7 +89,6 @@ const RealtimeLocation = () => {
         fastestInterval: 2000,
       },
     );
-    console.log('_Wat', _watchId);
 
     return () => {
       if (_watchId) {

@@ -48,7 +48,6 @@ const CheckoutInputForm = ({handleValues}: Props) => {
     control,
     formState: {errors},
   } = useFormContext();
-  console.log('errors', errors);
   return (
     <View>
       {InputFormData.map((item, index) => {
@@ -59,7 +58,6 @@ const CheckoutInputForm = ({handleValues}: Props) => {
                 <TitleText textStyle={styles.label} text={item.title} />
                 <CardForm
                   onFormComplete={cardDetails => {
-                    console.log('card details', cardDetails);
                     setValue(item.name, cardDetails, {
                       shouldValidate: errors[item.name] ? true : false,
                     });

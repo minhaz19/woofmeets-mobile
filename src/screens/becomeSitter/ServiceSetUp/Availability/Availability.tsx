@@ -21,7 +21,7 @@ const Availability = () => {
   const {availability, loading} = useAppSelector(
     (state: any) => state?.availability,
   );
-
+  console.log('availability-----------', availability);
   // hook for post/put
   const {handlePost, isLoading} = useAvailabilityUtils(serviceId[0]);
   return (
@@ -45,7 +45,8 @@ const Availability = () => {
             availability,
             itemId,
           )}
-          validationSchema={availabilityValidation}>
+          validationSchema={availabilityValidation}
+          enableReset>
           <SubAvailability handlePost={handlePost} loading={isLoading} />
         </AppForm>
       </ScrollView>

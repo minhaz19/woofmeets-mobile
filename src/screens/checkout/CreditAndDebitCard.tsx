@@ -38,10 +38,8 @@ const CreditAndDebitCard = () => {
       cvc: '412',
     };
     const {error, token} = await createToken(tokenPayload);
-    console.log('error token', error, token);
     if (error) {
       Alert.alert(`Error code: ${error.code}`, error.message);
-      console.log(`Error: ${JSON.stringify(error)}`);
     } else if (token) {
       Alert.alert(
         'Success',
@@ -54,7 +52,6 @@ const CreditAndDebitCard = () => {
       token: token?.id,
     };
     const result = await request(endpoint, reqPayload);
-    console.log('reslult', result);
   };
 
   return (
