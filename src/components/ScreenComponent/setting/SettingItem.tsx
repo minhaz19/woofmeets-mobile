@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal:
+    paddingHorizontal:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
     alignItems: 'center',
     paddingVertical: '2%',

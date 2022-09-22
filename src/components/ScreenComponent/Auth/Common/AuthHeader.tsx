@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
   },
-  image: {width: 100, height: 100, marginTop: '0%'},
+  image: {width: 100, height: 100, marginTop: '0%', borderRadius: 50,},
   title: {
     fontSize: Text_Size.Text_2,
     fontWeight: '600',

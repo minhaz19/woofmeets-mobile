@@ -24,12 +24,12 @@ const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
 }) => {
   const {image} = {
-    image: 'https://picsum.photos/200/200',
+    image: 'https://via.placeholder.com/40x40.png?',
   };
   const currentUser = {
     id: 1,
     name: 'Tanvir',
-    image: 'https://picsum.photos/200',
+    image: 'https://via.placeholder.com/40x40.png?',
   };
   const [message, setMessage] = useState('');
   const [paddingHeight, setPaddingHeight] = useState(0);
@@ -99,7 +99,7 @@ const ActivityScreen = (props: {
                     <View style={styles.userIconView}>
                       <Image
                         source={{uri: currentUser.image}}
-                        style={styles.imageStyle}
+                        style={[styles.imageStyle, {borderColor: colors.borderColor}]}
                       />
                     </View>
                   </View>
@@ -107,7 +107,7 @@ const ActivityScreen = (props: {
                   // Receiver
                   <View key={i} style={styles.receiverContainer}>
                     <View style={styles.userIconViewReceiver}>
-                      <Image source={{uri: image}} style={styles.imageStyle} />
+                      <Image source={{uri: image}} style={[styles.imageStyle, {borderColor: colors.borderColor}]} />
                     </View>
                     <View
                       style={[
@@ -121,7 +121,7 @@ const ActivityScreen = (props: {
                           <View style={styles.detailsImage}>
                             <Image
                               source={{uri: image}}
-                              style={styles.imageStyle}
+                              style={[styles.imageStyle, {borderColor: colors.borderColor}]}
                             />
                           </View>
                           <TouchableOpacity
@@ -189,12 +189,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginLeft: 15,
+    // marginLeft: 15,
   },
   receiverContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 15,
+    // marginRight: 15,
   },
   textDetailsStyle: {
     color: Colors.primary,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderBottomLeftRadius: 0,
     margin: 15,
-    marginLeft: 10,
+    marginLeft: 5,
     maxWidth: '80%',
     position: 'relative',
   },
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 15,
     marginBottom: 15,
-    marginRight: 10,
+    marginRight: 5,
     maxWidth: '80%',
     position: 'relative',
     color: 'white',
@@ -235,9 +235,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   imageStyle: {
-    height: SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 36 : 40,
-    width: SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 36 : 40,
+    height: SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32,
+    width: SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32,
     borderRadius: 20,
+    borderWidth: 1,
   },
   userIconViewReceiver: {
     alignSelf: 'flex-end',

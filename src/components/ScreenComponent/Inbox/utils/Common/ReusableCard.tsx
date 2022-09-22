@@ -91,9 +91,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.2,
     shadowOffset: {width: 1, height: 1},
-    shadowRadius: 3,
+    shadowRadius: 1,
     elevation: Platform.OS === 'android' ? 8 : 1,
     marginHorizontal: '3%',
   },

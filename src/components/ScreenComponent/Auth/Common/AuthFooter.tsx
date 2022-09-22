@@ -15,7 +15,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {useHandleProviderAuth} from '../../../../utils/helpers/auth/useHandleProviderAuth';
 import {useAppSelector} from '../../../../store/store';
 interface Props {
-  icons: {image: any; icon: any}[];
+  icons: {icon: any}[];
   title: string;
   accountType: string;
   authType: string;
