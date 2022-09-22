@@ -35,7 +35,7 @@ const SitterInitialScreen = (props: {
       ]}>
       <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://picsum.photos/800'}}
+          source={{uri: 'https://via.placeholder.com/400x200.png?'}}
           style={styles.image}
         />
       </View>
@@ -74,7 +74,7 @@ const SitterInitialScreen = (props: {
       {/* Image Quotes 1 */}
       <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://picsum.photos/800'}}
+          source={{uri: 'https://via.placeholder.com/400x200.png?'}}
           style={styles.image}
         />
       </View>
@@ -96,7 +96,7 @@ const SitterInitialScreen = (props: {
       {/* Image Quotes 2 */}
       <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://picsum.photos/800'}}
+          source={{uri: 'https://via.placeholder.com/400x200.png?'}}
           style={styles.image}
         />
       </View>

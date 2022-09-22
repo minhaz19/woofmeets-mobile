@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
     maxWidth: '18%',
-    flexWrap: 'wrap',
   },
   cardContainer: {
     width: '100%',

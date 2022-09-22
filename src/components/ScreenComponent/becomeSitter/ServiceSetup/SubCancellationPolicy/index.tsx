@@ -13,9 +13,6 @@ import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
-// import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
-// import DescriptionText from '../../../../common/text/DescriptionText';
-// import Colors from '../../../../../constants/Colors';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
 
 interface props {

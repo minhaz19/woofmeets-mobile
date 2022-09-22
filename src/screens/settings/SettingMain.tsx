@@ -210,31 +210,30 @@ const SettingMain = (props: {
       <View>
         <View style={styles.boxContainer}>
           <View style={styles.boxTextContainer}>
-            <ShortText textStyle={{color: Colors.alter}} text={'Get $20'} />
+            <ShortText textStyle={{color: Colors.alter}} text={'Get $100'} />
             <ShortText text={' when friends join Woofmeets'} />
           </View>
           <ShortText text={'Share Now'} />
         </View>
         {!isLoggedIn &&
-          loginData?.map(item => <SettingItem data={item} key={item.id} />)}
-        {!isLoggedIn && (
-          <View
-            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-          />
-        )}
+          <View>
+            {loginData?.map(item => <SettingItem data={item} key={item.id} />)}
+            <View
+              style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+            />
+          </View>
+        }
         {isLoggedIn &&
           <View>
             <View style={styles.titleContainer}>
             <TitleText text="Account" />
           </View>
           {profileData?.map(item => <SettingItem data={item} key={item.id} />)}
-          </View>
-        }
-        {isLoggedIn && (
           <View
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
           />
-        )}
+          </View>
+        }
         {token && token.provider ? (
           <View>
             <View style={styles.titleContainer}>

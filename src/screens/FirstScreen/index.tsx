@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   roundContainer: {
-    borderRadius: 100,
+    borderRadius: 200,
     width: SCREEN_WIDTH <= 380 ? 80 : SCREEN_WIDTH <= 600 ? 140 : 150,
     height: SCREEN_WIDTH <= 380 ? 80 : SCREEN_WIDTH <= 600 ? 140 : 150,
-    // backgroundColor: 'white',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
     // borderColor: 'white',

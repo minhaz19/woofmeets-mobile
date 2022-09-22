@@ -13,7 +13,6 @@ import AuthFooter from '../../../components/ScreenComponent/Auth/Common/AuthFoot
 import {signupValue} from '../../../utils/config/initalValues/initalValues';
 import {signUpValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {
-  othersAuthIcons,
   signUpInitalState,
 } from '../../../utils/config/Data/signUpDatas';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -21,6 +20,7 @@ import AppForm from '../../../components/common/Form/AppForm';
 import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {useSignUp} from './utils/useSignUp';
+import { othersAuthIcons } from '../../../utils/config/Data/loginDatas';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }

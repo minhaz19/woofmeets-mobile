@@ -47,7 +47,7 @@ const AfterIntroScreen = (props: {
           />
         </View>
         <View style={styles.middleContainer}>
-          <BigText text="Woofmeets" />
+          {/* <BigText text="Woofmeets" /> */}
           <TitleText
             text="Loving pet care in your neighbourhood"
             textStyle={styles.description}
@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
     height: 80,
   },
   roundContainer: {
-    borderRadius: 100,
-    width: '60%',
+    borderRadius: 200,
+    width: '70%',
     height: SCREEN_WIDTH <= 380 ? 160 : 260,
     alignItems: 'center',
     justifyContent: 'center',

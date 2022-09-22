@@ -20,7 +20,7 @@ const CardQuotes = (props: {comment: string; writter: string}) => {
 
 const styles = StyleSheet.create({
   contentStyle: {
-    shadowOpacity: 1,
+    shadowOpacity: 0.4,
     shadowOffset: {width: 2, height: 2},
     shadowRadius: 10,
     elevation: 2,

@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 0,
     borderRadius: 0,
-    borderBottomWidth: 5,
+    borderBottomWidth: 1,
     borderBottomColor: '#FFF0F6',
   },
   touchable: {
