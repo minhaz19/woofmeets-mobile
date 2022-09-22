@@ -1,17 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   View,
   StyleSheet,
-  
   Platform,
   PermissionsAndroid,
   Text,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 
-
-
 import MapView, {Marker, Polyline, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
+import Text_Size from '../../constants/textScaling';
+import {SCREEN_WIDTH} from '../../constants/WindowSize';
+import Colors from '../../constants/Colors';
 
 const RealtimeLocation = () => {
   const [mapInfo, setMapInfo] = useState<any>({
@@ -23,8 +25,6 @@ const RealtimeLocation = () => {
   async function requestLocationPermission() {
     if (Platform.OS === 'ios') {
       const c = await Geolocation.requestAuthorization('whenInUse');
-
-      console.log('c', c);
       return null;
     } else if (Platform.OS === 'android') {
       try {
@@ -49,27 +49,7 @@ const RealtimeLocation = () => {
       return;
     }
 
-    // Geolocation.getCurrentPosition(
-    //   position => {
-    //     setMapInfo({
-    //       latitude: position.coords.latitude,
-    //       longitude: position.coords.longitude,
-    //       coordinates: mapInfo.coordinates.concat({
-    //         latitude: position.coords.latitude,
-    //         longitude: position.coords.longitude,
-    //       }),
-    //     });
-    //     console.log('getting post', position);
-    //   },
-    //   error => {
-    //     console.log('error', error);
-    //   },
-    //   {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000},
-    // );
-  }
-  useEffect(() => {
-    // getCurrentPosition();
-    const _watchId = Geolocation.watchPosition(
+    Geolocation.getCurrentPosition(
       position => {
         setMapInfo({
           latitude: position.coords.latitude,
@@ -79,9 +59,26 @@ const RealtimeLocation = () => {
             longitude: position.coords.longitude,
           }),
         });
-        console.log(position);
       },
       error => {
+      },
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000},
+    );
+  }
+  useEffect(() => {
+    getCurrentPosition();
+    const _watchId = Geolocation.watchPosition(
+      (position: any) => {
+        setMapInfo({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          coordinates: mapInfo.coordinates.concat({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          }),
+        });
+      },
+      (error: any) => {
         // See error code charts below.
         console.log(error.code, error.message);
       },
@@ -92,7 +89,6 @@ const RealtimeLocation = () => {
         fastestInterval: 2000,
       },
     );
-    console.log('_Wat', _watchId);
 
     return () => {
       if (_watchId) {

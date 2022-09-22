@@ -1,30 +1,48 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
-import {ArrowRight} from '../../../assets/svgs/Services_SVG';
+import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import SelectServiceTitle from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/SelectServiceTitle';
-import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
-import {useServiceSetup} from './useServiceSetup';
-import {useAppSelector} from '../../../store/store';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
+import {getAvailability} from '../../../store/slices/onBoarding/setUpService/availability/getAvailability';
+import {getOnboardingProgress} from '../../../store/slices/onBoarding/initial';
+import {getYourHome} from '../../../store/slices/onBoarding/setUpService/yourHome/getYourHome';
+import {getPetPreference} from '../../../store/slices/onBoarding/setUpService/petPreference/getPetPreference';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 
-const ServiceSetUp = (props: {
-  navigation: {navigate: (arg0: string) => void};
-}) => {
+const ServiceSetUp = () => {
   const {colors} = useTheme();
-  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
-  const {itemId, name, image, description, service} = serviceSetup.routeData;
-  const serviceId = service.map((data: {id: any}) => data.id);
-  const {petPreferenceLoader, availabilityLoader} = useServiceSetup(serviceId);
+  const dispatch = useAppDispatch();
   const boardingSelection = useAppSelector(
-    state => state.initial.boardingSelection,
+    (state: any) => state.initial.boardingSelection,
   );
+  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  const servicesData = serviceSetup ? serviceSetup.routeData : '';
+  const {service} = servicesData;
+  const providerServiceId =
+    service && service.map((data: {id: string}) => data.id);
+  const {availability, loading: availabilityLoader} = useAppSelector(
+    (state: any) => state?.availability,
+  );
+  const {yourHome, loading: yourHomeLoader} = useAppSelector(
+    (state: any) => state?.yourHome,
+  );
+  const {petPreference, loading: petPreferenceLoader} = useAppSelector(
+    (state: any) => state?.petPreference,
+  );
+
+  useEffect(() => {
+    dispatch(getAvailability(providerServiceId[0]));
+    yourHome === null && dispatch(getYourHome());
+    petPreference === null && dispatch(getPetPreference());
+  }, [dispatch, petPreference, yourHome]);
 
   return (
     <>
-      {availabilityLoader && <AppActivityIndicator visible={true} />}
-      {petPreferenceLoader && <AppActivityIndicator visible={true} />}
+      {/* {(availabilityLoader || yourHomeLoader || petPreferenceLoader) && (
+        <AppActivityIndicator visible={true} />
+      )} */}
       <View
         style={[
           styles.rootContainer,
@@ -33,7 +51,7 @@ const ServiceSetUp = (props: {
         <View style={styles.innerContainer}>
           {/* completed */}
           {boardingSelection.map(
-            item =>
+            (item: any) =>
               item.isCompleted && (
                 <ProfileItemCard
                   key={item.id}
@@ -42,12 +60,13 @@ const ServiceSetUp = (props: {
                   id={item.id}
                   isCompleted={item.isCompleted}
                   handleClick={item.onPress}
+                  isBoarding={true}
                 />
               ),
           )}
           {/* not completed */}
           {boardingSelection.map(
-            item =>
+            (item: any) =>
               !item.isCompleted && (
                 <ProfileItemCard
                   key={item.id}
@@ -56,11 +75,12 @@ const ServiceSetUp = (props: {
                   id={item.id}
                   isCompleted={item.isCompleted}
                   handleClick={item.onPress}
+                  isBoarding={true}
                 />
               ),
           )}
         </View>
-        {boardingSelection.map(item => {
+        {boardingSelection.map((item: any) => {
           if (item.inProgress) {
             return (
               <View key={item.id} style={{flex: 1}}>
@@ -69,23 +89,6 @@ const ServiceSetUp = (props: {
             );
           }
         })}
-        {/* <ReusableHeader
-          itemId={itemId}
-          name={name}
-          image={image}
-          description={description}
-        /> */}
-        {/* <View>
-          {boardingSelection?.map((item, index) => (
-            <SelectServiceTitle
-              key={index}
-              title={item.title}
-              icon={item.icon}
-              checked={item.checked}
-              screen={item.screen}
-            />
-          ))}
-        </View> */}
       </View>
     </>
   );
@@ -102,5 +105,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 5,
   },
 });

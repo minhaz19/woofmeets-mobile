@@ -3,21 +3,22 @@ import * as Yup from 'yup';
 export const AvailabilityInitialValues = (
   serviceAvailabilityId: number,
   availability: any,
+  itemId: any,
 ) => {
-  const {sat, sun, mon, tue, wed, thu, fri} =
+  const dates =
     availability !== null && availability;
-  const {fulltime, pottyBreak} = availability !== null && availability?.service;
+  const methods = availability !== null && availability?.service;
   return {
-    providerServiceId: serviceAvailabilityId,
-    fri: fri ? fri : false,
-    mon: mon ? mon : false,
-    sat: sat ? sat : false,
-    sun: sun ? sun : false,
-    thu: thu ? thu : false,
-    tue: tue ? tue : false,
-    wed: wed ? wed : false,
-    fulltime: fulltime ? fulltime : false,
-    pottyBreak: pottyBreak ? pottyBreak : '',
+    providerServiceId: itemId,
+    fri: dates?.fri ? dates?.fri : false,
+    mon: dates?.mon ? dates?.mon : false,
+    sat: dates?.sat ? dates?.sat : false,
+    sun: dates?.sun ? dates?.sun : false,
+    thu: dates?.thu ? dates?.thu : false,
+    tue: dates?.tue ? dates?.tue : false,
+    wed: dates?.wed ? dates?.wed : false,
+    fulltime: methods?.fulltime ? methods?.fulltime : false,
+    pottyBreak: methods?.pottyBreak ? methods?.pottyBreak : '',
   };
 };
 

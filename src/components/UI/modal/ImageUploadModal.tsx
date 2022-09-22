@@ -16,6 +16,7 @@ interface OptionType {
   maxWidth: number;
   maxHeight: number;
   title: string;
+  includeBase64?: boolean;
   storageOptions: {
     skipBackup: boolean;
     path: string;
@@ -43,6 +44,7 @@ const ImageUploadModal = (props: {
       maxWidth: 1080,
       maxHeight: 720,
       quality: 0.4,
+      includeBase64: true,
       title: 'Select Photo',
       storageOptions: {
         skipBackup: true,

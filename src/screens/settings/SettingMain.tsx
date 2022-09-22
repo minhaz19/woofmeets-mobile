@@ -1,5 +1,5 @@
 import {View, StyleSheet, ScrollView} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CallIcon,
   CardsIcon,
@@ -12,24 +12,40 @@ import {
   SitterIcon,
 } from '../../assets/svgs/Setting_SVG';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import HeaderText from '../../components/common/text/HeaderText';
 import TitleText from '../../components/common/text/TitleText';
 import Colors from '../../constants/Colors';
 import ShortText from '../../components/common/text/ShortText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
-import BottomSpacingNav from '../../components/UI/BottomSpacingNav';
-import {useAppSelector} from '../../store/store';
+import {useAppDispatch, useAppSelector} from '../../store/store';
 import jwtDecode from 'jwt-decode';
 import authStorage from '../../utils/helpers/auth/storage';
+import BottomSpacing from '../../components/UI/BottomSpacing';
+import { logout } from '../../store/slices/auth/userSlice';
+import methods from '../../api/methods';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const SettingMain = (props: {
   navigation: {navigate: (arg0: string) => any};
 }) => {
+  const dispatch = useAppDispatch();
   const {colors} = useTheme();
-  const [token, setToken] = useState();
+  const [token, setToken] = useState<any>();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const userInfo = useAppSelector(state => state.auth.userInfo);
+
+  const getDecodedToken = async () => {
+    const tok: any = await authStorage.getToken();
+    if (tok) {
+      const decode: any = await jwtDecode(tok);
+      setToken(decode);
+      return decode;
+    }
+  };
+  useEffect(() => {
+    getDecodedToken();
+  }, []);
+
   const loginData = [
     {
       id: 3,
@@ -138,6 +154,22 @@ const SettingMain = (props: {
       opacity: 1,
       isGuest: true,
     },
+    {
+      id: 2,
+      title: 'Logout',
+      vectorIcon: <MaterialCommunityIcons
+      name="logout"
+      size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+      style={styles.iconStyle}
+      color={Colors.primary}
+    />,
+      screenName: () => {
+        dispatch(logout());
+        methods._get('/auth/logout');
+        props.navigation.navigate('AuthNavigator');
+      },
+      opacity: 1,
+    },
   ];
 
   const providerData = [
@@ -146,7 +178,7 @@ const SettingMain = (props: {
       title: 'Availability Calendar',
       icon: CallIcon,
       rightIcon: true,
-      screenName: () => {},
+      screenName: () => props.navigation.navigate('ProviderAvailablity'),
       opacity: 1,
     },
     {
@@ -176,31 +208,32 @@ const SettingMain = (props: {
         },
       ]}>
       <View>
-        <View style={[styles.titleContainer, styles.paddingTop]}>
-          <HeaderText text="More" />
-        </View>
-
         <View style={styles.boxContainer}>
           <View style={styles.boxTextContainer}>
-            <ShortText textStyle={{color: Colors.alter}} text={'Get $20'} />
+            <ShortText textStyle={{color: Colors.alter}} text={'Get $100'} />
             <ShortText text={' when friends join Woofmeets'} />
           </View>
           <ShortText text={'Share Now'} />
         </View>
         {!isLoggedIn &&
-          loginData?.map(item => <SettingItem data={item} key={item.id} />)}
-        {!isLoggedIn && (
-          <View
-            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-          />
-        )}
+          <View>
+            {loginData?.map(item => <SettingItem data={item} key={item.id} />)}
+            <View
+              style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+            />
+          </View>
+        }
         {isLoggedIn &&
-          profileData?.map(item => <SettingItem data={item} key={item.id} />)}
-        {isLoggedIn && (
+          <View>
+            <View style={styles.titleContainer}>
+            <TitleText text="Account" />
+          </View>
+          {profileData?.map(item => <SettingItem data={item} key={item.id} />)}
           <View
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
           />
-        )}
+          </View>
+        }
         {token && token.provider ? (
           <View>
             <View style={styles.titleContainer}>
@@ -264,11 +297,12 @@ const SettingMain = (props: {
           <SettingItem data={item} key={item.id} />
         ))}
         {isLoggedIn &&
-          preferenceData?.map(item => (
+          preferenceData?.map((item: any) => (
             <SettingItem data={item} key={item.id} />
           ))}
       </View>
-      <BottomSpacingNav />
+      <BottomSpacing />
+      <BottomSpacing />
     </ScrollView>
   );
 };
@@ -306,6 +340,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingBottom: '0.8%',
   },
+  iconStyle: {paddingRight: 0},
 });
 
 export default SettingMain;

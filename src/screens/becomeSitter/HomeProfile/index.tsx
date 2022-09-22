@@ -20,22 +20,24 @@ import {
   DropInVisitIcon,
   HouseSittingIcon,
 } from '../../../assets/svgs/Services_SVG';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonCom from '../../../components/UI/ButtonCom';
-import {setSitterData} from '../../../store/slices/onBoarding/initial';
+import {
+  getOnboardingProgress,
+  setSitterData,
+} from '../../../store/slices/onBoarding/initial';
 import {setServiceSetup} from '../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
-
-type StackParamList = {};
-type NavigationProps = StackNavigationProp<StackParamList>;
+import ServiceSetUp from '../ServiceSetUp';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 
 const HomeProfile = () => {
-  const navigation = useNavigation<NavigationProps>();
-  const [isloading, setLoading] = useState<boolean>(false);
+  const [, setLoading] = useState<boolean>(false);
   const {colors} = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [isServiceModalVisible, setIsServiceModalVisible] =
     useState<boolean>(false);
+  const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
 
   const onServicePostHandle = async () => {
     setLoading(true);
@@ -56,9 +58,7 @@ const HomeProfile = () => {
     },
   ];
 
-  const userServices = useAppSelector(state => state.services.userServices);
-  const dispatch = useAppDispatch();
-
+  const {userServices, loading} = useAppSelector(state => state.services);
   const [, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -69,7 +69,8 @@ const HomeProfile = () => {
 
   useEffect(() => {
     onRefresh();
-  }, [onRefresh]);
+    dispatch(getOnboardingProgress());
+  }, [dispatch, onRefresh]);
 
   const getIcon = (icon: string) => {
     switch (icon) {
@@ -81,121 +82,131 @@ const HomeProfile = () => {
         return <DropInVisitIcon width={34} height={36} />;
       case 'walking':
         return <DogWalkingIcon width={34} height={36} />;
-      case 'walking':
+      case 'daycare':
         return <DoggyDayCareIcon width={34} height={36} />;
     }
   };
 
+  if (isBoardingSelected) {
+    return <ServiceSetUp />;
+  }
+
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={[
-        styles.container,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
-      <ModalBottomView
-        isModalVisible={modalVisible}
-        setIsModalVisible={setModalVisible}>
-        <HeaderText text={modalData[0].title} />
-        <Divider />
-        <DescriptionText text={modalData[0].text} />
-        <IOSButton
-          title={'Close'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={styles.titleStyle}
-          onSelect={() => {
-            setModalVisible(!modalVisible);
-          }}
-        />
-      </ModalBottomView>
-      <ModalBottomView
-        isModalVisible={isServiceModalVisible}
-        setIsModalVisible={setIsServiceModalVisible}>
-        <HeaderText text={modalData[0].title} />
-        <Divider />
-        <DescriptionText text={modalData[0].text} />
-        <IOSButton
-          title={'Close'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={styles.titleStyle}
-          onSelect={() => {
-            setIsServiceModalVisible(!isServiceModalVisible);
-          }}
-        />
-      </ModalBottomView>
-      <BigText text="Set Up Services" />
-      <View style={styles.textContainer}>
-        <View style={styles.iconContainer}>
-          <QuestionIcon fill={Colors.primary} />
-        </View>
-        <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-          <DescriptionText
-            text="Where are the rest of my services?"
-            textStyle={{color: Colors.primary}}
-          />
-        </TouchableOpacity>
-      </View>
-      <View>
-        <HeaderText text="Your Services" />
-      </View>
-      {userServices &&
-        userServices?.map(
-          (item: {
-            AvailableDay: any;
-            id: React.Key | null | undefined;
-            serviceType: {name: any; icon: string; description: any};
-            serviceTypeId: React.Key | null | undefined;
-            providerServicesId: React.Key | null | undefined;
-          }) => (
-            <View
-              key={item.id}
-              style={{
-                ...styles.serviceContainer,
-                borderColor: colors.borderColor,
-              }}>
-              <BetweenCom
-                data={{
-                  name: item.serviceType.name,
-                  image: getIcon(item.serviceType.icon),
-                  description: `${item.serviceType.description} ${item.serviceType.description}`,
-                  time: '3 mins',
-                  icon: 'chevron-right',
-                  screen: () => {
-                    navigation.navigate('ServiceSetup');
-                    dispatch(
-                      setServiceSetup({
-                        routeData: {
-                          itemId: item.id,
-                          name: item.serviceType.name,
-                          image: getIcon(item.serviceType.icon),
-                          description: item.serviceType.description,
-                          serviceId: item.serviceTypeId,
-                          providerServicesId: item.id,
-                          service: item?.AvailableDay,
-                        },
-                      }),
-                    );
-                  },
-                }}
-              />
+    <>
+      {loading ? (
+        <AppActivityIndicator visible={true} />
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={[
+            styles.container,
+            {
+              backgroundColor: colors.backgroundColor,
+            },
+          ]}>
+          <ModalBottomView
+            isModalVisible={modalVisible}
+            setIsModalVisible={setModalVisible}>
+            <HeaderText text={modalData[0].title} />
+            <Divider />
+            <DescriptionText text={modalData[0].text} />
+            <IOSButton
+              title={'Close'}
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={btnStyles.containerStyleFullWidth}
+              titleStyle={styles.titleStyle}
+              onSelect={() => {
+                setModalVisible(!modalVisible);
+              }}
+            />
+          </ModalBottomView>
+          <ModalBottomView
+            isModalVisible={isServiceModalVisible}
+            setIsModalVisible={setIsServiceModalVisible}>
+            <HeaderText text={modalData[0].title} />
+            <Divider />
+            <DescriptionText text={modalData[0].text} />
+            <IOSButton
+              title={'Close'}
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={btnStyles.containerStyleFullWidth}
+              titleStyle={styles.titleStyle}
+              onSelect={() => {
+                setIsServiceModalVisible(!isServiceModalVisible);
+              }}
+            />
+          </ModalBottomView>
+          <BigText text="Set Up Services" />
+          <View style={styles.textContainer}>
+            <View style={styles.iconContainer}>
+              <QuestionIcon fill={Colors.primary} />
             </View>
-          ),
-        )}
-      <View style={styles.footerContainer}>
-        <ButtonCom
-          title="Save and Continue"
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={onServicePostHandle}
-          // loading={isloading}
-        />
-      </View>
-    </ScrollView>
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+              <DescriptionText
+                text="Where are the rest of my services?"
+                textStyle={{color: Colors.primary}}
+              />
+            </TouchableOpacity>
+          </View>
+          <View>
+            <HeaderText text="Your Services" />
+          </View>
+          {userServices &&
+            userServices?.map(
+              (item: {
+                AvailableDay: any;
+                id: React.Key | null | undefined;
+                serviceType: {name: any; icon: string; description: any};
+                serviceTypeId: React.Key | null | undefined;
+                providerServicesId: React.Key | null | undefined;
+              }) => (
+                <View
+                  key={item.id}
+                  style={{
+                    ...styles.serviceContainer,
+                    borderColor: colors.borderColor,
+                  }}>
+                  <BetweenCom
+                    data={{
+                      name: item.serviceType.name,
+                      image: getIcon(item.serviceType.icon),
+                      description: `${item.serviceType.description}`,
+                      time: '3 mins',
+                      icon: 'chevron-right',
+                      screen: () => {
+                        dispatch(
+                          setServiceSetup({
+                            routeData: {
+                              itemId: item.id,
+                              name: item.serviceType.name,
+                              image: getIcon(item.serviceType.icon),
+                              description: item.serviceType.description,
+                              serviceId: item.serviceTypeId,
+                              providerServicesId: item.id,
+                              service: item?.AvailableDay,
+                            },
+                          }),
+                        );
+                        setIsBoardingSelected(true);
+                      },
+                    }}
+                  />
+                </View>
+              ),
+            )}
+          <View style={styles.footerContainer}>
+            <ButtonCom
+              title="Save and Continue"
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={btnStyles.containerStyleFullWidth}
+              titleStyle={btnStyles.titleStyle}
+              onSelect={onServicePostHandle}
+              // loading={isloading}
+            />
+          </View>
+        </ScrollView>
+      )}
+    </>
   );
 };
 

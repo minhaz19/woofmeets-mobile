@@ -9,7 +9,7 @@ import {useBasicInfo} from './utils/useBasicInfo';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileAction';
 import {useAppDispatch} from '../../store/store';
-import AppFormReset from '../../components/common/Form/AppFormReset';
+import AppForm from '../../components/common/Form/AppForm';
 
 const BasicInfo = () => {
   const {colors} = useTheme();
@@ -36,11 +36,12 @@ const BasicInfo = () => {
             backgroundColor: colors.backgroundColor,
           },
         ]}>
-        <AppFormReset
+        <AppForm
           initialValues={useBasicInitalState()}
-          validationSchema={basicInfoValidationSchema}>
+          validationSchema={basicInfoValidationSchema}
+          enableReset>
           <BasicInfoInput handleSubmit={handleSubmit} loading={loading} />
-        </AppFormReset>
+        </AppForm>
       </View>
     </>
   );

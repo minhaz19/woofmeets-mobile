@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* woofmeetsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* woofmeetsTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-woofmeets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-woofmeets.a */; };
+		0FCF0E8E28DC2EE10077D256 /* Icon-App.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FCF0E8D28DC2EE10077D256 /* Icon-App.png */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		6523C05E28AC1D2F00599D01 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523C05D28AC1D2F00599D01 /* File.swift */; };
 		7699B88040F8A987B510C191 /* libPods-woofmeets-woofmeetsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-woofmeets-woofmeetsTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		824181B089D9453D8AE16DA3 /* BogartRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 97C14388C2294E23894AC08E /* BogartRegular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +33,7 @@
 		00E356EE1AD99517003FC87E /* woofmeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = woofmeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* woofmeetsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = woofmeetsTests.m; sourceTree = "<group>"; };
+		0FCF0E8D28DC2EE10077D256 /* Icon-App.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App.png"; path = "../../../../Downloads/ic_launcher-632bdb6c48e31/ios/AppIcon.appiconset/Icon-App.png"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* woofmeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = woofmeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = woofmeets/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = woofmeets/AppDelegate.mm; sourceTree = "<group>"; };
@@ -47,6 +50,7 @@
 		65DF9ADF28AC1A720010FB8F /* woofmeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "woofmeets-Bridging-Header.h"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = woofmeets/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-woofmeets-woofmeetsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-woofmeets-woofmeetsTests.release.xcconfig"; path = "Target Support Files/Pods-woofmeets-woofmeetsTests/Pods-woofmeets-woofmeetsTests.release.xcconfig"; sourceTree = "<group>"; };
+		97C14388C2294E23894AC08E /* BogartRegular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = BogartRegular.ttf; path = ../src/assets/fonts/BogartRegular.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -96,11 +100,20 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				0FCF0E8D28DC2EE10077D256 /* Icon-App.png */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				65DF9ADF28AC1A720010FB8F /* woofmeets-Bridging-Header.h */,
 			);
 			name = woofmeets;
+			sourceTree = "<group>";
+		};
+		13BD5394A1744E648770EE73 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				97C14388C2294E23894AC08E /* BogartRegular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -129,6 +142,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				13BD5394A1744E648770EE73 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -251,6 +265,8 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				824181B089D9453D8AE16DA3 /* BogartRegular.ttf in Resources */,
+				0FCF0E8E28DC2EE10077D256 /* Icon-App.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,13 +515,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = woofmeets/woofmeets.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Z88T9AD5MC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = woofmeets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -527,13 +544,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = woofmeets/woofmeets.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z88T9AD5MC;
 				INFOPLIST_FILE = woofmeets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -541,6 +563,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.woofmeets.customer;
 				PRODUCT_NAME = woofmeets;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = WoofmeetsProvision;
 				SWIFT_OBJC_BRIDGING_HEADER = "woofmeets-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {CountryData, InputFormData} from './utils/InputFormData';
+import {InputFormData} from './utils/InputFormData';
 import AppFormField from '../../common/Form/AppFormField';
 import {useFormContext} from 'react-hook-form';
 import SubmitButton from '../../common/Form/SubmitButton';
@@ -12,8 +13,9 @@ import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import ButtonCom from '../../UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
-import AppSelectField from '../../common/Form/AppSelectField';
-
+import {CardForm} from '@stripe/stripe-react-native';
+import TitleText from '../../common/text/TitleText';
+// import ErrorMessage from '../../common/Form/ErrorMessage';
 interface Props {
   handleValues: (values: any) => void;
 }
@@ -43,6 +45,7 @@ const staticText = [
 
 const CheckoutInputForm = ({handleValues}: Props) => {
   const {
+    setValue,
     control,
     formState: {errors},
   } = useFormContext();
@@ -51,7 +54,20 @@ const CheckoutInputForm = ({handleValues}: Props) => {
       {InputFormData.map((item, index) => {
         return (
           <View key={index}>
-            {!item.select ? (
+            {item.name === 'cardInfo' ? (
+              <>
+                <TitleText textStyle={styles.label} text={item.title} />
+                <CardForm
+                  onFormComplete={cardDetails => {
+                    setValue(item.name, cardDetails, {
+                      shouldValidate: errors[item.name] ? true : false,
+                    });
+                  }}
+                  style={{height: 200}}
+                />
+                {/* <ErrorMessage error={errors?.cardInfo?.postalCode.message} /> */}
+              </>
+            ) : (
               <AppFormField
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -60,18 +76,10 @@ const CheckoutInputForm = ({handleValues}: Props) => {
                 textContentType={'none'}
                 name={item.name}
                 label={item.title}
-                flex={item.flex}
+                // flex={item.flex}
                 key={index}
                 control={control}
                 errors={errors}
-              />
-            ) : (
-              <AppSelectField
-                label={InputFormData[4].title}
-                name={InputFormData[4].name}
-                placeholder={InputFormData[4].placeholder}
-                data={CountryData}
-                control={control}
               />
             )}
           </View>
@@ -121,6 +129,11 @@ const styles = StyleSheet.create({
   textContainer: {
     marginVertical:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+  },
+  label: {
+    fontSize: Text_Size.Text_1,
+    fontWeight: '600',
+    marginBottom: 10,
   },
   flexContainer: {
     flexDirection: 'row',

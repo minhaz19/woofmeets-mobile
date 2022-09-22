@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, ScrollView} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useApi} from '../../../../utils/helpers/api/useApi';
@@ -12,35 +11,24 @@ import {
   setBoardingSelection,
   setSitterData,
 } from '../../../../store/slices/onBoarding/initial';
-import {useNavigation} from '@react-navigation/native';
-
-const getPoint = '/cancellation-policy';
-const getSingleData = '/cancellation-policy/povider-policy';
+import {
+  getCancellationPolicy,
+  getSingleCancellationPolicy,
+} from '../../../../store/slices/onBoarding/setUpService/cancellationPolicy/getCancellationPolicy';
 
 const CancellationPolicy = () => {
-  const [policy, setPolicy] = useState([]);
-  const [singlePolicy, setSinglePolicy] = useState(null);
   const {colors} = useTheme();
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  const {policy, singleProviderPolicy, loading} = useAppSelector(
+    (state: any) => state?.cancellationPolicy,
+  );
   const {itemId, name, image, description} = serviceSetup.routeData;
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
-  // getAll policy Data
-  const {request: getPolicyData, loading: policyLoader} = useApi(methods._get);
-  const getAllPolicyData = async () => {
-    const result = await getPolicyData(getPoint);
-    setPolicy(result?.data?.data);
-  };
 
-  // get singlePolicy data
-  const handleGetSingleData = async () => {
-    const result = await getPolicyData(getSingleData);
-    setSinglePolicy(result?.data?.data?.id);
-  };
   useEffect(() => {
-    getAllPolicyData();
-    handleGetSingleData();
-  }, []);
+    policy === null && dispatch(getCancellationPolicy());
+    singleProviderPolicy === null && dispatch(getSingleCancellationPolicy());
+  }, [dispatch, policy, singleProviderPolicy]);
 
   // post policy id
   const {request: postRequest, loading: postLoading} = useApi(methods._post);
@@ -49,14 +37,13 @@ const CancellationPolicy = () => {
     const result = await postRequest(postPoint);
     if (result?.data?.data) {
       dispatch(setBoardingSelection({pass: 4}));
-      navigation.goBack();
       dispatch(setSitterData({pass: 1}));
     }
   };
 
   return (
     <>
-      {policyLoader && <AppActivityIndicator visible={true} />}
+      {loading && <AppActivityIndicator visible={true} />}
       <ScrollView
         style={[
           styles.rootContainer,
@@ -68,18 +55,12 @@ const CancellationPolicy = () => {
           image={image}
           description={description}
         />
-        {/* <SmallAppForm
-          initialValues={{
-            policyId: singlePolicy ? singlePolicy : '',
-          }}
-          validationSchema={cancellationSchema}> */}
         <SubCancellationPolicy
           handlePolicy={handlePolicy}
           postLoading={postLoading}
           policy={policy}
-          singlePolicy={singlePolicy}
+          singlePolicy={singleProviderPolicy}
         />
-        {/* </SmallAppForm> */}
       </ScrollView>
     </>
   );

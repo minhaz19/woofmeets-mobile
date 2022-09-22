@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {
   View,
@@ -13,6 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
 import DotLoader from '../common/Loaders/DotLoader';
+import SuccessANI from '../common/LottieAnimations/SuccessANI';
 import Card from './Card';
 interface Props {
   containerStyle: any;
@@ -24,6 +25,7 @@ interface Props {
   title: String | undefined;
   icon?: any;
   loading?: boolean;
+  success?: boolean;
 }
 const ButtonCom = ({
   containerStyle,
@@ -31,6 +33,7 @@ const ButtonCom = ({
   onSelect,
   textAlignment,
   isLeftIcon,
+  success,
   titleStyle,
   title,
   icon,
@@ -42,14 +45,20 @@ const ButtonCom = ({
     <Card
       style={{
         ...styles.cardlist,
-        backgroundColor: isDarkMode ? Colors.button.grey : Colors.primary,
+        backgroundColor: success
+          ? Colors.success
+          : isDarkMode
+          ? Colors.button.grey
+          : Colors.primary,
         ...containerStyle,
       }}>
       <View style={{...styles.progressContainer, ...progressStyle}} />
       <View style={{...styles.touchable}}>
         <TouchableOpacity onPress={onSelect} disabled={loading}>
           <View style={{...styles.card, ...textAlignment}}>
-            {loading ? (
+            {success ? (
+              <SuccessANI />
+            ) : loading ? (
               <DotLoader />
             ) : (
               <>

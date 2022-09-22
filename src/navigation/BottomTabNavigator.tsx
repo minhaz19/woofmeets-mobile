@@ -20,7 +20,7 @@ const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
-  const [token, setToken] = useState();
+  const [token, setToken] = useState<any>();
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {

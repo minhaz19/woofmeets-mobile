@@ -1,14 +1,17 @@
 import * as Yup from 'yup';
 
 export const CreditAndDebitCardSchema = Yup.object().shape({
-  cardName: Yup.string().required('Card Name required'),
-  cardNumber: Yup.string().required('Card Number required'),
-  expiration: Yup.string().required('Card expiration date required'),
-  cvc: Yup.string().required('CVC required'),
-  country: Yup.string().required('Country Name required'),
-  addressLine1: Yup.string().required('addressLine1 required'),
-  aptState: Yup.string(),
-  city: Yup.string().required('City Name required'),
-  stateOrProvince: Yup.string().required('State or Province Name required'),
-  zip: Yup.string().required('Zip/Postal code required'),
+  name: Yup.string().required('Card Name required'),
+  cardInfo: Yup.object().shape({
+    last4: Yup.string().required('Card info is required'),
+    expiryMonth: Yup.string().required('Card info is required'),
+    expiryYear: Yup.string().required('Card info is required'),
+    country: Yup.string().required('Card info is required'),
+    postalCode: Yup.string().required('Card info is required'),
+  }),
+  line1: Yup.string().required('Address is required'),
+  line2: Yup.string(),
+  state: Yup.string().required('State is required'),
+  // aptState: Yup.string().required('Cae required'),
+  city: Yup.string().required('city is required'),
 });

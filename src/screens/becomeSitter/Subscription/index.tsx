@@ -1,46 +1,29 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet, ScrollView} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import PackageCard from '../../../components/ScreenComponent/becomeSitter/subscription/packages/PackageCard';
 import TitleText from '../../../components/common/text/TitleText';
 import BigText from '../../../components/common/text/BigText';
 import HeaderText from '../../../components/common/text/HeaderText';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import {useSubscription} from './utils/useSubscription';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import ButtonCom from '../../../components/UI/ButtonCom';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
-import {getSubscription} from '../../../store/slices/onBoarding/Subscriptions/subscriptionAction';
-const SubscriptionScreen = (props: {
-  navigation: {navigate: (arg0: string) => any; goBack: () => void};
-}) => {
+import Screen from '../../../components/common/Screen';
+const SubscriptionScreen = () => {
   const {colors} = useTheme();
-  const [sequence, setSequence] = useState<number>(0);
-  const dispatch = useAppDispatch();
-  const {loading, plans} = useAppSelector(state => state.subscription);
-  const formattedPackageRate = plans?.map((item: any) => ({
-    id: item.id,
-    sequence: item.id,
-    title: item.displayName,
-    description: 'Only 5% Service Fee For All Unlimited Appointments',
-    price: item.monthlyRate,
-    annualRate: item.annualRate,
-    details: item.features?.map((des: any, i: number) => ({
-      id: i + 1,
-      description: des,
-    })),
-  }));
-
-  const onPressEvent = (id: number) => {
-    setSequence(id);
-  };
-  useEffect(() => {
-    dispatch(getSubscription());
-  }, []);
-
+  const {
+    onPressEvent,
+    loading,
+    pLoading,
+    formattedPackageRate,
+    sequence,
+    handleSubmit,
+  } = useSubscription();
   return (
-    <>
-      {loading && <AppActivityIndicator />}
+    <Screen style={{flex: 1}}>
+      {loading && <AppActivityIndicator visible={true} />}
       <ScrollView
         style={[
           styles.container,
@@ -70,16 +53,16 @@ const SubscriptionScreen = (props: {
         ))}
         <View style={styles.footerContainer}>
           <ButtonCom
-            title="Choose Plan"
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => props.navigation.goBack()}
-            //   loading={loading}
+            title="Choose Plan"
+            onSelect={handleSubmit}
+            loading={pLoading}
           />
         </View>
       </ScrollView>
-    </>
+    </Screen>
   );
 };
 

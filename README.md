@@ -110,26 +110,22 @@ For more info please go to https://reactnative.dev/docs/signed-apk-android
 For more info please go to https://reactnative.dev/docs/publishing-to-app-store
 
 
-# Deployment Debug version 0.0.1
+# Deployment Debug version v1.0.3.2
 
-## Features
+### Features
 
-### UI Implementation
-
-1. Authentication Module with Validation
-2. Services Menu and Corresponding Services Listing for Provider Listing
-3. My Pets and Add, Modify Pets UI with Validation
-4. Main Navigation Bottom Panel
-5. Drawer Menu Navigation and Thier Items
-6. Setting Navigation and Profile Navigation and Preferences
-7. Profile, Contact Information for Customer Add with Validation
-8. Sitter Intro And Profile
-9. Provider Listing and Filtering
+1. Onboarding final new layout
+2. Provider Profile
+3. Stripe implementation for iOS and android
+4. My account
+5. My Pets CRUD
+6. Reschedule UI
+7. Inbox UI
+8. Settings New UI
+9. Specific UI for pet owner and sitter
 
 ## APK Install
 
-APK install link: https://portal.testapp.io/apps/install/DNm9PabPGy8mz
-
-Apk download link: https://drive.google.com/file/d/1hkPguEcIqCWuSxlnU0NW96WmEJ2kX0O3/view?usp=drivesdk
+APK install link: https://portal.testapp.io/apps/install/MkZ9zq3vgNy57
 
 

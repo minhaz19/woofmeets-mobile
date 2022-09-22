@@ -42,7 +42,7 @@ const contactInput = [
   },
 ];
 
-const ContactInput = (props: { navigation: { navigate: (arg0: string) => void; }; handleSubmit: any; }) => {
+const ContactInput = (props: { handleSubmit: any; }) => {
   const {
     control,
     formState: {errors},

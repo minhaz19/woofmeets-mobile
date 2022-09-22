@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import { useTheme } from '../../../constants/theme/hooks/useTheme';
 
 const MiddleModal = (props: {
   onBlur: ((e: NativeSyntheticEvent<TargetedEvent>) => void) | undefined;
@@ -22,6 +23,7 @@ const MiddleModal = (props: {
     | null
     | undefined;
 }) => {
+  const {colors} = useTheme();
   return (
     <TouchableWithoutFeedback
       onBlur={props.onBlur}
@@ -32,7 +34,9 @@ const MiddleModal = (props: {
         visible={props.isModalVisible}>
         <TouchableWithoutFeedback onPress={() => props.setIsModalVisible(false)}>
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>{props.children}</View>
+            <View style={[styles.modalView, {
+              backgroundColor: colors.backgroundColor,
+            }]}>{props.children}</View>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -41,6 +45,9 @@ const MiddleModal = (props: {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   centeredView: {
     flex: 1,
     width: '100%',

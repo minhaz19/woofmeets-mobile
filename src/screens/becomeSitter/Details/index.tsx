@@ -1,22 +1,20 @@
-import {View, StyleSheet, Text, ScrollView, RefreshControl, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../constants/textScaling';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { useAppDispatch } from '../../../store/store';
 import HeaderText from '../../../components/common/text/HeaderText';
 import TitleText from '../../../components/common/text/TitleText';
 import DescriptionText from '../../../components/common/text/DescriptionText';
-import AppForm from '../../../components/common/Form/AppForm';
-import { sitterDetailsValue } from '../../../utils/config/becomeSitter/initalValues';
 import { sitterDetailsValidationSchema } from '../../../utils/config/becomeSitter/validationSchema';
 import SitterDetailsInput from '../../../components/ScreenComponent/becomeSitter/details/SitterDetailsInput';
 import { getSitterDetails, postSitterDetails } from '../../../store/slices/profile/details';
 import { useDetailsInitalValue } from './useDetailsInitialValue';
 import { setProfileData } from '../../../store/slices/onBoarding/initial';
-import AppFormReset from '../../../components/common/Form/AppFormReset';
+import AppForm from '../../../components/common/Form/AppForm';
 
-const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
+const SitterDetails = () => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
   const sitterDetailsSubmit = (sitterData: any) => {
@@ -25,9 +23,6 @@ const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; 
   };
 
   const [refreshing, setRefreshing] = useState(false);
-  const {sitterInfo, loading} = useAppSelector(
-    state => state.details,
-  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -71,11 +66,11 @@ const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; 
               text="Quick tips:"
               textStyle={styles.details}
             />
-          <AppFormReset
+          <AppForm
             initialValues={useDetailsInitalValue()}
             validationSchema={sitterDetailsValidationSchema}>
             <SitterDetailsInput handleSubmit={sitterDetailsSubmit} />
-          </AppFormReset>
+          </AppForm>
           </View>
       <BottomSpacing />
     </ScrollView>

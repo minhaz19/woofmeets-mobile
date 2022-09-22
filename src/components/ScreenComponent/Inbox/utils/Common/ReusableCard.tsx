@@ -89,12 +89,11 @@ const styles = StyleSheet.create({
   itemContainer: {
     padding: '3%',
     borderRadius: 4,
-    marginHorizontal: 2,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.2,
     shadowOffset: {width: 1, height: 1},
-    shadowRadius: 3,
+    shadowRadius: 1,
     elevation: Platform.OS === 'android' ? 8 : 1,
     marginHorizontal: '3%',
   },

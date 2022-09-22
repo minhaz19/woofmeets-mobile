@@ -37,7 +37,7 @@ const ServiceCheckbox = ({
               key={typeKey}
               square={square}
               radio={radio}
-              active={active ? active : typeKey === value ? true : false}
+              active={active ? true : typeKey === value ? true : false}
               onPress={onPress}
               onBlur={onBlur}
             />

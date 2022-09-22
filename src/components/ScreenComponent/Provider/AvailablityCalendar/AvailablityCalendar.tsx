@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, Text, TextStyle, View} from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {CalendarList} from 'react-native-calendars';
 import {orderAndStyleRange} from '../../../../utils/helpers/CalendarRange/orderAndStyleRange';
 import {_dateRange} from '../../../../utils/helpers/datesArray';
@@ -10,7 +12,29 @@ import EditCart from './EditCart';
 const RANGE = 12;
 const initialDate = '2022-08-17';
 const AvailablityCalendar = () => {
+  const dateArray = [
+    '2022-09-20',
+    '2022-09-22',
+    '2022-09-23',
+    '2022-09-24',
+    '2022-09-25',
+    '2022-09-26',
+    '2022-09-27',
+    '2022-09-29',
+    '2022-10-01',
+    '2022-10-02',
+    '2022-10-03',
+    '2022-10-04',
+    '2022-10-05',
+    '2022-10-06',
+    '2022-10-10',
+    '2022-10-12',
+    '2022-10-13',
+    '2022-10-15',
+    '2022-10-16',
+  ];
   const [_markedStyle, setMarkedStyle] = useState({});
+  const [preMarked, setPremarked] = useState({});
 
   const {startingDate, endingDate, resetRange, handleDayPress} =
     useHandleRange('range');
@@ -25,6 +49,25 @@ const AvailablityCalendar = () => {
 
     setMarkedStyle(styledMarkedRange);
   }, [startingDate, endingDate]);
+  useMemo(() => {
+    const preStyled = dateArray.map((_: string, i: number) => ({
+      [dateArray[i]]: {
+        // startingDay: i === 0,
+        color: Colors.primary,
+        textColor: 'white',
+        // endingDay: i === dateArray.length - 1,
+      },
+    }));
+    let preStyledMarkedRange: any = {};
+    const b =
+      preStyled &&
+      preStyled?.map(
+        (item: any) =>
+          // @ts-ignore
+          (preStyledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
+      );
+    b && setPremarked(preStyledMarkedRange);
+  }, []);
   return (
     <View style={styles.container}>
       <CalendarList
@@ -33,7 +76,10 @@ const AvailablityCalendar = () => {
         futureScrollRange={RANGE}
         onDayPress={handleDayPress}
         markingType={'period'}
-        markedDates={_markedStyle}
+        markedDates={{
+          ..._markedStyle,
+          ...preMarked,
+        }}
         renderHeader={renderCustomHeader}
         calendarHeight={390}
         theme={theme}

@@ -8,6 +8,7 @@ import Upcoming from '../../components/ScreenComponent/Inbox/Upcoming';
 import Pending from '../../components/ScreenComponent/Inbox/Pending';
 import Past from '../../components/ScreenComponent/Inbox/Past';
 import Archived from '../../components/ScreenComponent/Inbox/Archived';
+import BottomSpacing from '../../components/UI/BottomSpacing';
 
 const data = [
   {
@@ -64,6 +65,7 @@ const Inbox = () => {
         {showInbox === 2 && <Pending />}
         {showInbox === 3 && <Past />}
         {showInbox === 4 && <Archived />}
+        <BottomSpacing />
       </View>
     </View>
   );

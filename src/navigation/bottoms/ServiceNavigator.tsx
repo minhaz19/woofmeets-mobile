@@ -8,8 +8,8 @@ import {FilterIcon} from '../../assets/svgs/SVG_LOGOS';
 import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../store/slices/misc/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
-import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
+import RealtimeLocation from '../../screens/RealtimeLocation';
 
 const Stack1 = createStackNavigator();
 
@@ -24,8 +24,8 @@ const ServiceNavigator = () => {
       />
 
       <Stack1.Screen
-        name="ProviderAvailablity"
-        component={ProviderAvailablity}
+        name="RealtimeLocation"
+        component={RealtimeLocation}
         options={{headerShown: false}}
       />
       <Stack1.Screen
