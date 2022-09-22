@@ -6,10 +6,10 @@ const Text_Size_Type = {
       SCREEN_WIDTH <= 380
         ? 9
         : SCREEN_WIDTH <= 600
-        ? SCREEN_WIDTH * 0.03 <= 14
+        ? SCREEN_WIDTH * 0.03 <= 12
           ? SCREEN_WIDTH * 0.03
-          : 14
-        : 14,
+          : 13
+        : 13,
     Text_1:
       SCREEN_WIDTH <= 380
         ? 11
@@ -28,7 +28,15 @@ const Text_Size_Type = {
           ? SCREEN_WIDTH * 0.044
           : 22
         : 22,
-    Text_3: SCREEN_WIDTH * 0.055,
+    Text_3: SCREEN_WIDTH <= 380
+    ? 13
+    : SCREEN_WIDTH <= 600
+    ? SCREEN_WIDTH * 0.05 <= 17
+      ? SCREEN_WIDTH * 0.05
+      : SCREEN_WIDTH * 0.055 <= 20
+      ? SCREEN_WIDTH * 0.055
+      : 22
+    : 22,
     Text_4:
       SCREEN_WIDTH <= 380
         ? SCREEN_WIDTH * 0.045

@@ -12,20 +12,23 @@ import {
   SitterIcon,
 } from '../../assets/svgs/Setting_SVG';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import HeaderText from '../../components/common/text/HeaderText';
 import TitleText from '../../components/common/text/TitleText';
 import Colors from '../../constants/Colors';
 import ShortText from '../../components/common/text/ShortText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
-import BottomSpacingNav from '../../components/UI/BottomSpacingNav';
-import {useAppSelector} from '../../store/store';
+import {useAppDispatch, useAppSelector} from '../../store/store';
 import jwtDecode from 'jwt-decode';
 import authStorage from '../../utils/helpers/auth/storage';
+import BottomSpacing from '../../components/UI/BottomSpacing';
+import { logout } from '../../store/slices/auth/userSlice';
+import methods from '../../api/methods';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const SettingMain = (props: {
   navigation: {navigate: (arg0: string) => any};
 }) => {
+  const dispatch = useAppDispatch();
   const {colors} = useTheme();
   const [token, setToken] = useState<any>();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -151,6 +154,22 @@ const SettingMain = (props: {
       opacity: 1,
       isGuest: true,
     },
+    {
+      id: 2,
+      title: 'Logout',
+      vectorIcon: <MaterialCommunityIcons
+      name="logout"
+      size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+      style={styles.iconStyle}
+      color={Colors.primary}
+    />,
+      screenName: () => {
+        dispatch(logout());
+        methods._get('/auth/logout');
+        props.navigation.navigate('AuthNavigator');
+      },
+      opacity: 1,
+    },
   ];
 
   const providerData = [
@@ -189,10 +208,6 @@ const SettingMain = (props: {
         },
       ]}>
       <View>
-        <View style={[styles.titleContainer, styles.paddingTop]}>
-          <HeaderText text="More" />
-        </View>
-
         <View style={styles.boxContainer}>
           <View style={styles.boxTextContainer}>
             <ShortText textStyle={{color: Colors.alter}} text={'Get $20'} />
@@ -208,7 +223,13 @@ const SettingMain = (props: {
           />
         )}
         {isLoggedIn &&
-          profileData?.map(item => <SettingItem data={item} key={item.id} />)}
+          <View>
+            <View style={styles.titleContainer}>
+            <TitleText text="Account" />
+          </View>
+          {profileData?.map(item => <SettingItem data={item} key={item.id} />)}
+          </View>
+        }
         {isLoggedIn && (
           <View
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
@@ -277,11 +298,12 @@ const SettingMain = (props: {
           <SettingItem data={item} key={item.id} />
         ))}
         {isLoggedIn &&
-          preferenceData?.map(item => (
+          preferenceData?.map((item: any) => (
             <SettingItem data={item} key={item.id} />
           ))}
       </View>
-      <BottomSpacingNav />
+      <BottomSpacing />
+      <BottomSpacing />
     </ScrollView>
   );
 };
@@ -319,6 +341,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingBottom: '0.8%',
   },
+  iconStyle: {paddingRight: 0},
 });
 
 export default SettingMain;

@@ -1,7 +1,8 @@
 import {Platform, StyleSheet} from 'react-native';
 import Colors from '../../Colors';
-import {descriptionDarkText, titleDarkText} from '../../FontDetails';
+import Text_Size from '../../textScaling';
 import {SCREEN_WIDTH} from '../../WindowSize';
+import { textStyle } from './textStyle';
 // import {SCREEN_WIDTH} from '../../WindowSize';
 
 export const designs = StyleSheet.create({
@@ -121,7 +122,7 @@ export const designs = StyleSheet.create({
   },
   textSuccess: {
     fontWeight: '500',
-    fontSize: titleDarkText.fontSize,
+    fontSize: Text_Size.Text_3,
     maxWidth: '70%',
     marginLeft: '15%',
     textAlign: 'center',
@@ -144,7 +145,7 @@ export const designs = StyleSheet.create({
     textAlign: 'center',
     width: '80%',
     fontWeight: '700',
-    fontSize: descriptionDarkText.fontSize,
+    fontSize: Text_Size.Text_3,
     color: 'black',
   },
 });

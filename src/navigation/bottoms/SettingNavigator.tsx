@@ -34,38 +34,6 @@ const SettingNavigator = () => {
           backgroundColor: Colors.primary,
         })}
       />
-
-      <Stack1.Screen
-        name="PlanCheckout"
-        component={PlanCheckout}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Checkout"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
-        name="BasicBackgroundCheck"
-        component={BasicBackgroundCheck}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Background Check"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-
       <Stack1.Screen
         name="ProviderAvailablity"
         component={ProviderAvailablity}

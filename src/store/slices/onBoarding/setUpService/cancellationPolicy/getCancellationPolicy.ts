@@ -1,5 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
+import { Alert } from 'react-native';
 import apiClient from '../../../../../api/client';
 export const getCancellationPolicy = createAsyncThunk(
   '/cancellation-policy',
@@ -30,6 +31,7 @@ export const getSingleCancellationPolicy = createAsyncThunk(
         '/cancellation-policy/povider-policy',
       );
       if (!response.ok) {
+        // Alert.alert(response.data.message)
         throw new Error(response.data?.message);
       }
       return response.data;

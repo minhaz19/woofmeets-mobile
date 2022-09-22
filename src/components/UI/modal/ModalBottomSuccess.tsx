@@ -12,8 +12,8 @@ import {Success} from '../../../assets/svgs/SVG_LOGOS';
 import {designs} from '../../../constants/theme/common/modalEndStyles';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import Colors from '../../../constants/Colors';
-import {descriptionDarkText} from '../../../constants/FontDetails';
 import ButtonCom from '../ButtonCom';
+import TitleText from '../../common/text/TitleText';
 
 const ModalBottomView = (props: {
   modalVisible: boolean | undefined;
@@ -56,7 +56,7 @@ const ModalBottomView = (props: {
               )}
               {props.isOffer && (
                 <View style={styles.offerContainer}>
-                  <Text style={styles.offerText}>{props.isOffer}</Text>
+                  <TitleText textStyle={styles.offerText} text={props.isOffer?.toString()} />
                 </View>
               )}
             </View>
@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
   },
   offerText: {
     color: Colors.primary,
-    fontSize: descriptionDarkText.fontSize,
     textAlign: 'center',
   },
   textAlignment: {

@@ -25,7 +25,7 @@ const ServiceSelection = () => {
   const {colors} = useTheme();
   const [sequence, setSequence] = useState<number>(0);
   const [isloading, setLoading] = useState<boolean>(false);
-  const {serviceTypes, loading} = useAppSelector(state => state.services);
+  const {serviceTypes, loading, userServices} = useAppSelector(state => state.services);
   const oldUser = useAppSelector(state => state.initial.oldUser)
   const navigation = useNavigation<any>();
 
@@ -36,7 +36,7 @@ const ServiceSelection = () => {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     dispatch(getServiceTypes());
-    if (!oldUser) {
+    if (oldUser) {
       dispatch(setSitterData({pass: 0}));
     }
     setRefreshing(false);
@@ -45,6 +45,12 @@ const ServiceSelection = () => {
   useEffect(() => {
     onRefresh();
   }, []);
+
+  useEffect(() => {
+    if (userServices) {
+      dispatch(setSitterData({pass: 0}));
+    }
+  }, [userServices])
 
   const onPressEvent = (id: number) => {
     setSequence(id);
@@ -60,13 +66,11 @@ const ServiceSelection = () => {
       );
       if (!response.ok) {
         setLoading(false);
-        navigation.navigate('HomeProfile');
         throw new Error(response.data.message);
       }
       if (response.ok) {
         setLoading(false);
         dispatch(setSitterData({pass: 0}));
-        navigation.navigate('HomeProfile');
       }
       // return response.data;
     } catch (error: any) {

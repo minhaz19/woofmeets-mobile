@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet} from 'react-native';
+import {Alert, Platform, ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import AppForm from '../../../../common/Form/AppForm';
 import PlanCheckoutBody from './components/PlanCheckoutBody';
@@ -16,6 +16,20 @@ interface Props {
 const PlanCheckout = ({route}: Props) => {
   const {colors} = useTheme();
   const {loading, handleSubmit,saveCard, setSaveCard} = usePlanCheckout(route);
+
+  if (Platform.OS === 'android') {
+    return (
+      <View
+      style={[
+        styles.rootContainer,
+        {
+          backgroundColor: colors.backgroundColor,
+        },
+      ]}>
+        {Alert.alert('Android Stripe functionality is not added.. Try IOS')}
+      </View>
+    )
+  }
   return (
     <Screen style={styles.screen}>
       <ScrollView

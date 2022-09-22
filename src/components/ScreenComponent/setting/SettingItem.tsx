@@ -16,12 +16,13 @@ import {NumberProp} from 'react-native-svg';
 
 const SettingItem = (props: {
   data: {
-    icon: any;
+    icon?: any;
     screenName: ((event: GestureResponderEvent) => void) | undefined;
     opacity: NumberProp | undefined;
     title: string;
     details?: string;
     rightIcon?: any;
+    vectorIcon?: any;
   };
   descriptionStyle?: TextStyle;
 }) => {
@@ -29,10 +30,11 @@ const SettingItem = (props: {
     <TouchableOpacity onPress={props.data.screenName}>
       <View style={styles.rootContainer}>
         <View style={styles.titleContainer}>
-          <props.data.icon
+          {props.data.icon && <props.data.icon
             height={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 24 : 28}
             opacity={props.data.opacity}
-          />
+          />}
+          {props.data.vectorIcon && props.data.vectorIcon}
           <View style={styles.detailsContainer}>
             <HeaderText text={props.data.title} />
             {props.data.details && (

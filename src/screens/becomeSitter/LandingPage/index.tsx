@@ -5,10 +5,12 @@ import LandingCard from '../../../components/ScreenComponent/becomeSitter/landin
 import Colors from '../../../constants/Colors';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import { getUserServices } from '../../../store/slices/profile/services';
+import { setSitterData } from '../../../store/slices/onBoarding/initial';
 
 const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => any; }; }) => {
   const {colors} = useTheme();
   const sitterData = useAppSelector(state => state.initial.sitterData);
+  const {serviceTypes, loading, userServices} = useAppSelector(state => state.services);
   const dispatch = useAppDispatch();
 
   const [, setRefreshing] = useState(false);
@@ -21,7 +23,7 @@ const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => an
 
   useEffect(() => {
     onRefresh();
-  }, [onRefresh]);
+  }, []); 
 
   return (
     <View
