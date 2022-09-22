@@ -5,6 +5,8 @@ import Colors from '../../../../constants/Colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { setCurrentScreen, setSitterData } from '../../../../store/slices/onBoarding/initial';
 import { useAppDispatch } from '../../../../store/store';
+import { SCREEN_WIDTH } from '../../../../constants/WindowSize';
+import Text_Size from '../../../../constants/textScaling';
 
 const LandingCard = (props: { item: { inProgress: any; isCompleted: any; title: any; id: any; }; }) => {
   const {inProgress, isCompleted, title, id} = props.item;
@@ -57,12 +59,13 @@ const styles = StyleSheet.create({
   },
   numberStyle: {
     fontWeight: '500',
+    fontSize: Text_Size.Text_8,
   },
   numberViewContainer: {
     justifyContent: 'center',
     textAlign: 'center',
     alignItems: 'center',
-    height: 22,
+    height: SCREEN_WIDTH < 380 ? 20 : SCREEN_WIDTH < 600 ? 24 : 28,
     width: 22,
     borderRadius: 100,
     flexDirection: 'row',

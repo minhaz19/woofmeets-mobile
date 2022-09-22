@@ -35,7 +35,7 @@ const BetweenCom = (props: {
           <HeaderText text={props.data.name} />
           <DescriptionText
             text={props.data.description}
-            textStyle={{color: colors.descriptionText}}
+            textStyle={{color: colors.descriptionText, paddingVertical: 2,}}
           />
         </View>
       </View>
@@ -64,11 +64,12 @@ const styles = StyleSheet.create({
   boxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '65%',
+    width: '50%',
   },
   boxContainerEnd: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingLeft: 10,
   },
   imageContainer: {
     marginRight: 10,
@@ -77,7 +78,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  textContainer: {},
+  textContainer: {
+    // width: '70%',
+  },
   iconStyle: {paddingRight: 0},
 });
 

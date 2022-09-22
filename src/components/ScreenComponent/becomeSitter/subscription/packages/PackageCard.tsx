@@ -13,6 +13,7 @@ import BulletPoints from '../../../../UI/Points/BulletPoints';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
+import { useNavigation } from '@react-navigation/native';
 
 const PackageCard = (props: {
   onPressEvent: (arg0: any) => void;
@@ -24,11 +25,22 @@ const PackageCard = (props: {
     details: {description: string; id: number}[];
     description: string | number;
   };
-  navigation: {goBack: () => void};
   sequence: any;
 }) => {
   const {colors} = useTheme();
+  const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleSubmit = () => {
+    if (props.item.sequence === 3) {
+      // @ts-ignore
+      navigation.navigate('BasicBackgroundCheck', {sequence: props.item.sequence});
+      setIsModalVisible(!isModalVisible);
+    } else {
+      // @ts-ignore
+      navigation.navigate('PlanCheckout', {sequence: props.item.sequence});
+      setIsModalVisible(!isModalVisible);
+    }
+  };
   return (
     <TouchableOpacity
       onPress={() => props.onPressEvent(props.item.sequence)}
@@ -41,6 +53,7 @@ const PackageCard = (props: {
         onBlur={() => console.log('')}>
         <Image
           source={require('../../../../../assets/image/subscription/subscription.png')}
+          style={styles.imageStyle}
         />
         <View style={styles.headerContainer}>
           <BigText text={props.item.title} textStyle={styles.textHeaderStyle} />
@@ -74,10 +87,7 @@ const PackageCard = (props: {
               textAlignment={btnStyles.textAlignment}
               containerStyle={btnStyles.containerStyleFullWidth}
               titleStyle={btnStyles.titleStyle}
-              onSelect={() => {
-                setIsModalVisible(!isModalVisible);
-                props.navigation.goBack();
-              }}
+              onSelect={handleSubmit}
               //   loading={loading}
             />
           </View>
@@ -149,7 +159,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: Text_Size.Text_4,
-    paddingBottom: 10,
     color: Colors.background,
   },
   textPortion: {
@@ -157,8 +166,6 @@ const styles = StyleSheet.create({
     width: '70%',
   },
   textPortion2: {
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
   },
   textPortion3: {
     paddingBottom: 4,
@@ -189,7 +196,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    paddingTop: 20,
+    paddingTop: 14,
   },
   textHeaderStyle: {
     paddingBottom: 10,
@@ -202,8 +209,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textEveryStyle: {
-    paddingBottom: 20,
+    paddingBottom: 12,
     color: Colors.background,
+  },
+  imageStyle: {
+    width: '100%',
+    marginTop: 0,
   },
 });
 

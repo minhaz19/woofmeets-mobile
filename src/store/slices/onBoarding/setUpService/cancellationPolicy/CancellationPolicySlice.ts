@@ -37,7 +37,7 @@ const cancellationPolicySlice = createSlice({
       })
       .addCase(getSingleCancellationPolicy.fulfilled, (state, {payload}) => {
         state.loading = false;
-        state.singleProviderPolicy = payload.data.id;
+        state.singleProviderPolicy = payload.data?.id;
       })
       .addCase(getSingleCancellationPolicy.rejected, (state, {payload}) => {
         state.loading = false;

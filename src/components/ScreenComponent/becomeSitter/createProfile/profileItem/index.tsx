@@ -96,16 +96,10 @@ const ProfileItemCard = (props: {
 };
 
 const styles = StyleSheet.create({
-  contentStyle: {
-    shadowOpacity: 0.3,
-    shadowOffset: {width: 0, height: 2},
-    shadowRadius: 10,
-    elevation: 1,
-    marginVertical: '1%',
-  },
   headerContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
+    maxWidth: '18%',
+    flexWrap: 'wrap',
   },
   cardContainer: {
     width: '100%',
@@ -116,6 +110,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontWeight: '500',
     paddingTop: 5,
+    textAlign: 'center',
   },
   numberStyle: {
     fontWeight: '500',

@@ -125,7 +125,7 @@ const initialState: any = {
     {
       id: 1,
       title: 'Rates',
-      name: 'rates',
+      name: 'SERVICE_RATES',
       checked: true,
       isCompleted: false,
       inProgress: true,
@@ -135,7 +135,7 @@ const initialState: any = {
     {
       id: 2,
       title: 'Availability',
-      name: 'availability',
+      name: 'AVAILABILITY',
       checked: false,
       isCompleted: false,
       inProgress: false,
@@ -288,8 +288,6 @@ const contact = createSlice({
               return v.isCompleted = payload.data.safetyQuiz;
             case 'subscription':
               return v.isCompleted = payload.data.subscription;
-            case 'BASIC_INFO':
-              return v.isCompleted = payload.data.profileSetupSublist.BASIC_INFO.complete;
           }
           return v;
         })
@@ -314,6 +312,8 @@ const contact = createSlice({
         // service setup screen progress
         const serviceSetupTemp = [...state.boardingSelection];
         const serviceSubList = payload.data.serviceSetupSublist;
+        const individualServiceSetupSublistTemp = payload.data.individualServiceSetupSublist.boarding;
+
         serviceSetupTemp.map(v => {
           switch (v.name) {
             case 'PROVIDER_PET_PREFERANCE':
@@ -322,9 +322,15 @@ const contact = createSlice({
               return v.isCompleted = serviceSubList.HOME_ATTRIBUTES.complete;
             case 'CANCELLATION_POLICY':
               return v.isCompleted = serviceSubList.CANCELLATION_POLICY.complete;
+            case 'SERVICE_RATES':
+              return v.isCompleted = individualServiceSetupSublistTemp.SERVICE_RATES.complete;
+            case 'AVAILABILITY':
+              return v.isCompleted = individualServiceSetupSublistTemp.AVAILABILITY.complete;
           }
           return v;
         })
+        // service setup sublist
+
         state.error = null;
       })
       .addCase(getOnboardingProgress.rejected, (state, {payload}) => {
