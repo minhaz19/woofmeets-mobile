@@ -10,6 +10,7 @@ import Preference from '../../screens/settings/Preference';
 import AccountSetting from '../../components/ScreenComponent/setting/Preference/AccountSetting';
 import CreditAndDebitCard from '../../screens/checkout/CreditAndDebitCard';
 import SetNewPassword from '../../screens/auth/ResetPassword';
+import Profile from '../../screens/settings/Profile';
 import PlanCheckout from '../../components/ScreenComponent/becomeSitter/subscription/PlanCheckout';
 import BasicBackgroundCheck from '../../components/ScreenComponent/becomeSitter/subscription/BasicBackgroundCheck';
 import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
@@ -143,6 +144,21 @@ const SettingNavigator = () => {
       <Stack1.Screen
         name="CreditAndDebitCard"
         component={CreditAndDebitCard}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="Checkout"
+              notification
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="Profile"
+        component={Profile}
         options={({navigation}) => ({
           title: '',
           header: () => (
