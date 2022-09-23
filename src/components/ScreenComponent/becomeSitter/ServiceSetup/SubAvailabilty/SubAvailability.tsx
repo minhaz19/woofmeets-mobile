@@ -20,6 +20,8 @@ import {useHandleMultipleActiveCheck} from '../handleCheck/HandleCheck';
 import Colors from '../../../../../constants/Colors';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
+import ShortText from '../../../../common/text/ShortText';
+import { useTheme } from '../../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   handlePost: (arg1: any) => void;
@@ -37,6 +39,7 @@ const SubAvailability = ({handlePost, loading}: Props) => {
     formState: {errors},
   } = useFormContext();
   const data = getValues();
+  const {colors} = useTheme();
   return (
     <View>
       <ServiceReusableModal
@@ -81,7 +84,7 @@ const SubAvailability = ({handlePost, loading}: Props) => {
           </View>
           <ErrorMessage error={errors[availabilityInput.name!]?.message} />
         </View>
-        <View style={{marginTop: '2%'}}>
+        <View style={{marginTop: '3%'}}>
           <HeaderText
             text={availabilitySelectDay.title}
             textStyle={styles.subHeaderText}
@@ -89,7 +92,7 @@ const SubAvailability = ({handlePost, loading}: Props) => {
           {availabilitySelectDay.subtitle && (
             <DescriptionText
               text={availabilitySelectDay.subtitle}
-              textStyle={styles.subHeaderText}
+              textStyle={{...styles.subHeaderText, color: colors.descriptionText}}
             />
           )}
           <View style={styles.dayBoxContainer}>

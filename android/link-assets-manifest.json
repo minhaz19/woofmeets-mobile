@@ -1,0 +1,49 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/AlbraSemi.otf",
+      "sha1": "75c0512499a7563ac0b360fd037f1a2f4aa30630"
+    },
+    {
+      "path": "src/assets/fonts/AlbraText-Black.otf",
+      "sha1": "5a52c1c9787a891024fafa5b05565adaa3f20ace"
+    },
+    {
+      "path": "src/assets/fonts/AlbraText-Bold.otf",
+      "sha1": "d165cefc59cbdcebb6bf81f07186e4e84f5b7d3f"
+    },
+    {
+      "path": "src/assets/fonts/AlbraText-Light.otf",
+      "sha1": "9a6459eba83b89a4e73f593ba17154c76cd1905d"
+    },
+    {
+      "path": "src/assets/fonts/AlbraText-Medium.otf",
+      "sha1": "f7ca0fac36034731cfcfa4c334f09467f144d7b4"
+    },
+    {
+      "path": "src/assets/fonts/AlbraText-Regular.otf",
+      "sha1": "318788488e061b0b1a90272831c75806eb6ea200"
+    },
+    {
+      "path": "src/assets/fonts/AlbraTextSemi.otf",
+      "sha1": "51fa518c048402aaa14abc637c00f71c88efa0fc"
+    },
+    {
+      "path": "src/assets/fonts/OpenSans-Bold.ttf",
+      "sha1": "c23ede86996d8239865bcd04c806e3789aaa0b94"
+    },
+    {
+      "path": "src/assets/fonts/OpenSans-Light.ttf",
+      "sha1": "448dbc1e8add1538f788c9e34cdb701ed25ac993"
+    },
+    {
+      "path": "src/assets/fonts/OpenSans-Medium.ttf",
+      "sha1": "f886dd439250f2a8a7326f3f6b433adf34c96fe8"
+    },
+    {
+      "path": "src/assets/fonts/OpenSans-Regular.ttf",
+      "sha1": "9a19a459ca7bca15d2de8269b80411f2b4a71ccf"
+    }
+  ]
+}

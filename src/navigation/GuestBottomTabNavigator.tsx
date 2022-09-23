@@ -54,6 +54,7 @@ function GuestBottomTabNavigator() {
                 width={SCREEN_WIDTH <= 380 ? 26 : 33}
               />
               <Text
+                allowFontScaling={false}
                 style={[
                   focused
                     ? {color: Colors.primary}
@@ -80,6 +81,7 @@ function GuestBottomTabNavigator() {
                 width={SCREEN_WIDTH <= 380 ? 26 : 33}
               />
               <Text
+                allowFontScaling={false}
                 style={[
                   focused
                     ? {color: Colors.primary}

@@ -16,7 +16,17 @@
 		6523C05E28AC1D2F00599D01 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523C05D28AC1D2F00599D01 /* File.swift */; };
 		7699B88040F8A987B510C191 /* libPods-woofmeets-woofmeetsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-woofmeets-woofmeetsTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		824181B089D9453D8AE16DA3 /* BogartRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 97C14388C2294E23894AC08E /* BogartRegular.ttf */; };
+		8821E50E744449B897FCDBDA /* AlbraTextSemi.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0623C487D01B4DEE9669D23A /* AlbraTextSemi.otf */; };
+		960235830108463C8F04BB0F /* AlbraSemi.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84296757FADF4A57AB7D4558 /* AlbraSemi.otf */; };
+		9EB82883C1114E0C88B67445 /* AlbraText-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 43CDE02A60DA4C9194E8EA75 /* AlbraText-Bold.otf */; };
+		DF8CA01E97B94CE399CB74D5 /* AlbraText-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = A22FD27AEFFA46AAAED9C3A5 /* AlbraText-Black.otf */; };
+		E2CC4AD86C5F44E58E73D62F /* AlbraText-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = FC45E2F08276427382E55C34 /* AlbraText-Light.otf */; };
+		EAC4610572E444F080F74C6B /* AlbraText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C007B6B35B12496DB37EF3ED /* AlbraText-Regular.otf */; };
+		EEEB2FFDC0DA49B9A6F3BEAD /* AlbraText-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = F3D709E302D249CDB3EC625D /* AlbraText-Medium.otf */; };
+		A39C1CFC88BA4273A2C3A5A4 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BEB8F680F8A446CA1DBAC6E /* OpenSans-Bold.ttf */; };
+		143F3E3EE4954696A41DD770 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE268747348C47E5B2D82BE7 /* OpenSans-Light.ttf */; };
+		43B593166F964B9E8F1C915B /* OpenSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E12D905013724BA9B51E31CF /* OpenSans-Medium.ttf */; };
+		49DD7470D976437F8869DA1F /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37FC5E5145004A5B910F784D /* OpenSans-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +43,7 @@
 		00E356EE1AD99517003FC87E /* woofmeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = woofmeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* woofmeetsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = woofmeetsTests.m; sourceTree = "<group>"; };
+		0623C487D01B4DEE9669D23A /* AlbraTextSemi.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AlbraTextSemi.otf; path = ../src/assets/fonts/AlbraTextSemi.otf; sourceTree = "<group>"; };
 		0FD670FB28DD64F100AAA2E4 /* Icon-App.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App.png"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* woofmeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = woofmeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = woofmeets/AppDelegate.h; sourceTree = "<group>"; };
@@ -42,6 +53,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = woofmeets/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-woofmeets-woofmeetsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-woofmeets-woofmeetsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-woofmeets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-woofmeets.debug.xcconfig"; path = "Target Support Files/Pods-woofmeets/Pods-woofmeets.debug.xcconfig"; sourceTree = "<group>"; };
+		43CDE02A60DA4C9194E8EA75 /* AlbraText-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AlbraText-Bold.otf"; path = "../src/assets/fonts/AlbraText-Bold.otf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-woofmeets.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-woofmeets.release.xcconfig"; path = "Target Support Files/Pods-woofmeets/Pods-woofmeets.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-woofmeets-woofmeetsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-woofmeets-woofmeetsTests.debug.xcconfig"; path = "Target Support Files/Pods-woofmeets-woofmeetsTests/Pods-woofmeets-woofmeetsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-woofmeets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-woofmeets.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,9 +61,17 @@
 		65DF9ADE28AC16C70010FB8F /* woofmeets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = woofmeets.entitlements; path = woofmeets/woofmeets.entitlements; sourceTree = "<group>"; };
 		65DF9ADF28AC1A720010FB8F /* woofmeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "woofmeets-Bridging-Header.h"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = woofmeets/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		84296757FADF4A57AB7D4558 /* AlbraSemi.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AlbraSemi.otf; path = ../src/assets/fonts/AlbraSemi.otf; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-woofmeets-woofmeetsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-woofmeets-woofmeetsTests.release.xcconfig"; path = "Target Support Files/Pods-woofmeets-woofmeetsTests/Pods-woofmeets-woofmeetsTests.release.xcconfig"; sourceTree = "<group>"; };
-		97C14388C2294E23894AC08E /* BogartRegular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = BogartRegular.ttf; path = ../src/assets/fonts/BogartRegular.ttf; sourceTree = "<group>"; };
+		A22FD27AEFFA46AAAED9C3A5 /* AlbraText-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AlbraText-Black.otf"; path = "../src/assets/fonts/AlbraText-Black.otf"; sourceTree = "<group>"; };
+		C007B6B35B12496DB37EF3ED /* AlbraText-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AlbraText-Regular.otf"; path = "../src/assets/fonts/AlbraText-Regular.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F3D709E302D249CDB3EC625D /* AlbraText-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AlbraText-Medium.otf"; path = "../src/assets/fonts/AlbraText-Medium.otf"; sourceTree = "<group>"; };
+		FC45E2F08276427382E55C34 /* AlbraText-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AlbraText-Light.otf"; path = "../src/assets/fonts/AlbraText-Light.otf"; sourceTree = "<group>"; };
+		9BEB8F680F8A446CA1DBAC6E /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; name = "OpenSans-Bold.ttf"; path = "../src/assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BE268747348C47E5B2D82BE7 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; name = "OpenSans-Light.ttf"; path = "../src/assets/fonts/OpenSans-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E12D905013724BA9B51E31CF /* OpenSans-Medium.ttf */ = {isa = PBXFileReference; name = "OpenSans-Medium.ttf"; path = "../src/assets/fonts/OpenSans-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		37FC5E5145004A5B910F784D /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; name = "OpenSans-Regular.ttf"; path = "../src/assets/fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +131,17 @@
 		13BD5394A1744E648770EE73 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				97C14388C2294E23894AC08E /* BogartRegular.ttf */,
+				84296757FADF4A57AB7D4558 /* AlbraSemi.otf */,
+				A22FD27AEFFA46AAAED9C3A5 /* AlbraText-Black.otf */,
+				43CDE02A60DA4C9194E8EA75 /* AlbraText-Bold.otf */,
+				FC45E2F08276427382E55C34 /* AlbraText-Light.otf */,
+				F3D709E302D249CDB3EC625D /* AlbraText-Medium.otf */,
+				C007B6B35B12496DB37EF3ED /* AlbraText-Regular.otf */,
+				0623C487D01B4DEE9669D23A /* AlbraTextSemi.otf */,
+				9BEB8F680F8A446CA1DBAC6E /* OpenSans-Bold.ttf */,
+				BE268747348C47E5B2D82BE7 /* OpenSans-Light.ttf */,
+				E12D905013724BA9B51E31CF /* OpenSans-Medium.ttf */,
+				37FC5E5145004A5B910F784D /* OpenSans-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -265,8 +295,18 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				824181B089D9453D8AE16DA3 /* BogartRegular.ttf in Resources */,
 				0FD670FC28DD64F100AAA2E4 /* Icon-App.png in Resources */,
+				960235830108463C8F04BB0F /* AlbraSemi.otf in Resources */,
+				DF8CA01E97B94CE399CB74D5 /* AlbraText-Black.otf in Resources */,
+				9EB82883C1114E0C88B67445 /* AlbraText-Bold.otf in Resources */,
+				E2CC4AD86C5F44E58E73D62F /* AlbraText-Light.otf in Resources */,
+				EEEB2FFDC0DA49B9A6F3BEAD /* AlbraText-Medium.otf in Resources */,
+				EAC4610572E444F080F74C6B /* AlbraText-Regular.otf in Resources */,
+				8821E50E744449B897FCDBDA /* AlbraTextSemi.otf in Resources */,
+				A39C1CFC88BA4273A2C3A5A4 /* OpenSans-Bold.ttf in Resources */,
+				143F3E3EE4954696A41DD770 /* OpenSans-Light.ttf in Resources */,
+				43B593166F964B9E8F1C915B /* OpenSans-Medium.ttf in Resources */,
+				49DD7470D976437F8869DA1F /* OpenSans-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
