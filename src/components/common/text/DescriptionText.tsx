@@ -30,7 +30,7 @@ const DescriptionText = (props: {
 
 const styles = StyleSheet.create({
   details: {
-    fontSize: Text_Size.Text_9,
+    fontSize: Text_Size.Text_0,
   },
 });
 

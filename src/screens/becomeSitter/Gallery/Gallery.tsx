@@ -69,6 +69,8 @@ const Gallery = () => {
         });
       }
       setPhoto(imageData);
+    } else {
+      setGetLoading(false);
     }
   };
 
