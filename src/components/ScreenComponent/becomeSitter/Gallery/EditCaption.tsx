@@ -3,6 +3,7 @@ import {
   Image,
   View,
   TouchableOpacity,
+  useColorScheme,
 } from 'react-native';
 import React from 'react';
 import AppFormField from '../../../common/Form/AppFormField';
@@ -23,6 +24,7 @@ interface Props {
 }
 
 const EditCaption = ({captionImage, setIsModalVisible}: Props) => {
+  const isDarkMode = useColorScheme() === 'dark';
   const {
     control,
     handleSubmit,
@@ -61,11 +63,19 @@ const EditCaption = ({captionImage, setIsModalVisible}: Props) => {
       </View>
       <View style={styles.btnContainer}>
         <TouchableOpacity
-          style={styles.cancelBtn}
+          style={[
+            styles.cancelBtn,
+            {backgroundColor: isDarkMode ? Colors.button.grey : Colors.primary},
+          ]}
           onPress={() => setIsModalVisible(false)}>
           <TitleText text="Cancel" textStyle={styles.text} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.saveBtn} onPress={handleSubmit(handleEdit)}>
+        <TouchableOpacity
+          style={[
+            styles.saveBtn,
+            {backgroundColor: isDarkMode ? Colors.button.grey : Colors.primary},
+          ]}
+          onPress={handleSubmit(handleEdit)}>
           <TitleText
             text={loading ? 'Loading...' : 'Save'}
             textStyle={styles.text}
@@ -80,8 +90,20 @@ export default EditCaption;
 
 const styles = StyleSheet.create({
   btnContainer: {flexDirection: 'row'},
-  cancelBtn: {backgroundColor: Colors.primary, flex: 1, padding: 10},
-  saveBtn: {backgroundColor: Colors.primary, flex: 1, padding: 10},
+  cancelBtn: {
+    backgroundColor: Colors.primary,
+    flex: 1,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.light.borderColor,
+  },
+  saveBtn: {
+    backgroundColor: Colors.primary,
+    flex: 1,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.light.borderColor,
+  },
   text: {color: 'white', textAlign: 'center'},
   CaptionBody: {width: '100%'},
   image: {

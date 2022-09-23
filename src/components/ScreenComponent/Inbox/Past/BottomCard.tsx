@@ -21,6 +21,7 @@ import Card from '../../../UI/Card';
 import AppCheckbox from '../../../common/Form/AppCheckbox';
 import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
+import BottomSpacing from '../../../UI/BottomSpacing';
 
 interface Props {
   isPayment?: boolean;
@@ -196,12 +197,12 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
         <Card style={styles.cardSetting}>
           {dropDownData.map((item, index) => {
             return (
-              <View key={index}>
+              <View key={index} style={{marginVertical: 4}}>
                 <AppCheckbox
-                  title={item.title}
+                  title={item?.title}
                   radio
-                  active={item.active}
-                  onPress={item.onPress}
+                  active={item?.active}
+                  onPress={item?.onPress}
                 />
               </View>
             );
@@ -213,6 +214,7 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
           <HeaderText text={'Cancel'} textStyle={styles.cancelText} />
         </TouchableOpacity>
       )}
+      <BottomSpacing />
     </View>
   );
 };

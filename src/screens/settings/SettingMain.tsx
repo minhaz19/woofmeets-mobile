@@ -82,6 +82,14 @@ const SettingMain = (props: {
       rightIcon: true,
       opacity: 1,
     },
+    {
+      id: 4,
+      title: 'Profile',
+      icon: CardsIcon,
+      screenName: () => props.navigation.navigate('Profile'),
+      rightIcon: true,
+      opacity: 1,
+    },
   ];
 
   const sittingData = [
