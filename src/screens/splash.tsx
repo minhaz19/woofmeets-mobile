@@ -171,13 +171,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontSize: Text_Size.Text_4,
+    fontSize: Text_Size.Text_5,
     fontWeight: 'bold',
     marginHorizontal: '10%',
     textAlign: 'center',
   },
   headerText: {
-    fontSize: Text_Size.Text_5,
+    fontSize: Text_Size.Text_1,
     // fontFamily: 'Arial',
     paddingHorizontal: '5%',
     paddingVertical: '2%',
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footerContainer: {
-    height: '60%',
+    height: '50%',
     paddingTop: '20%',
     width: '100%',
   },

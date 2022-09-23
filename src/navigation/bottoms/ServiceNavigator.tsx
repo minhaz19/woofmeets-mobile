@@ -16,7 +16,7 @@ const Stack1 = createStackNavigator();
 const ServiceNavigator = () => {
   const dispatch = useDispatch();
   return (
-    <Stack1.Navigator initialRouteName="PetCareZipSearch">
+    <Stack1.Navigator initialRouteName="AllProvider">
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
@@ -70,16 +70,16 @@ const ServiceNavigator = () => {
         name="AllProvider"
         component={AllProvider}
         options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="All Provider"
-              SecondIcon={FilterIcon}
-              notification
-              onPress={() => dispatch(setOpenFilter(true))}
-            />
-          ),
+          title: 'All Provider',
+          // header: () => (
+          //   <HeaderWithBack
+          //     navigation={navigation}
+          //     title="All Provider"
+          //     SecondIcon={FilterIcon}
+          //     notification
+          //     onPress={() => dispatch(setOpenFilter(true))}
+          //   />
+          // ),
           backgroundColor: Colors.primary,
         })}
       />

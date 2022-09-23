@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   lineContainer: {
-    height: 70,
-    width: 1,
-    position: 'absolute',
-    top: SCREEN_WIDTH <= 380 ? 40 : 50,
-    marginLeft: SCREEN_WIDTH <= 380 ? 19 : 24,
+    // height: 70,
+    // width: 1,
+    // position: 'absolute',
+    // top: SCREEN_WIDTH <= 380 ? 40 : 50,
+    // marginLeft: SCREEN_WIDTH <= 380 ? 19 : 24,
   },
 });
 

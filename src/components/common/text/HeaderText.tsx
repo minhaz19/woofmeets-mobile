@@ -18,7 +18,6 @@ const HeaderText = (props: {
     <View>
       <Text
         allowFontScaling={false}
-        adjustsFontSizeToFit={true}
         style={[
           styles.title,
           {color: colors.headerText},

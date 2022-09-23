@@ -128,5 +128,5 @@ const styles = StyleSheet.create({
     paddingTop: '5%',
   },
 });
-
+ 
 export default PetCareZipSearch;

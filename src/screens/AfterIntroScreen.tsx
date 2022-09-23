@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
   },
   roundContainer: {
     borderRadius: 200,
-    width: '70%',
-    height: SCREEN_WIDTH <= 380 ? 160 : 260,
+    width: '60%',
+    height: SCREEN_WIDTH <= 380 ? 160 : 240,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -118,25 +118,25 @@ const styles = StyleSheet.create({
     paddingTop: '10%',
   },
   footerContainer: {
-    paddingTop: '18%',
+    paddingTop: '12%',
     paddingHorizontal: SCREEN_WIDTH <= 800 ? '5%' : '10%',
   },
   titleStyle: {
     color: Colors.primary,
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: Text_Size.Text_1,
+    fontSize: Text_Size.Text_2,
     flex: 1,
   },
   signTitleStyle: {
     color: Colors.primary,
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: Text_Size.Text_1,
+    fontSize: Text_Size.Text_2,
     flex: 1,
     marginTop: 15,
   },
   description: {
-    marginTop: '3%',
+    marginTop: '0%',
   },
 });

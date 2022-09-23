@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 const ProHomeNavigator = () => {
   const dispatch = useDispatch();
   return (
-    <Stack.Navigator initialRouteName="PetCareZipSearch">
+    <Stack.Navigator initialRouteName="AllProvider">
       <Stack.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
@@ -43,16 +43,16 @@ const ProHomeNavigator = () => {
         name="AllProvider"
         component={AllProvider}
         options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="All Provider"
-              SecondIcon={FilterIcon}
-              notification
-              onPress={() => dispatch(setOpenFilter(true))}
-            />
-          ),
+          title: 'All Provider',
+          // header: () => (
+          //   <HeaderWithBack
+          //     navigation={navigation}
+          //     title="All Provider"
+          //     SecondIcon={FilterIcon}
+          //     notification
+          //     onPress={() => dispatch(setOpenFilter(true))}
+          //   />
+          // ),
           backgroundColor: Colors.primary,
         })}
       />
