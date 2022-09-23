@@ -18,7 +18,6 @@ target 'woofmeets' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"

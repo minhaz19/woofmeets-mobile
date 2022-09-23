@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useHandleProviderAuth} from '../../../../utils/helpers/auth/useHandleProviderAuth';
 import {useAppSelector} from '../../../../store/store';
+import ShortText from '../../../common/text/ShortText';
 interface Props {
   icons: {icon: any}[];
   title: string;
@@ -70,9 +71,9 @@ const AuthFooter = ({
         ))}
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.haveAccount}>{accountType}</Text>
+        <ShortText textStyle={styles.haveAccount} text={accountType} />
         <TouchableOpacity onPress={() => navigation.navigate(navigateScreen)}>
-          <Text style={styles.screenRoute}>{authType}</Text>
+          <ShortText textStyle={styles.screenRoute} text={authType} />
         </TouchableOpacity>
       </View>
     </View>
