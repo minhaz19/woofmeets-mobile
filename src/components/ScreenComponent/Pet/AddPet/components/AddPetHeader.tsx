@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   shortText: {
-    fontWeight: 'bold',
     marginBottom: 10,
   },
   title: {

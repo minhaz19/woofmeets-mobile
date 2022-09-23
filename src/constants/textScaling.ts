@@ -1,25 +1,16 @@
 import { Dimensions, PixelRatio, Platform } from 'react-native';
 import {SCREEN_WIDTH} from './WindowSize';
 
-const scale = SCREEN_WIDTH / 320;
+const scale = SCREEN_WIDTH / 280;
 
 export function normalize(size: number) {
   const newSize = size * scale 
   if (Platform.OS === 'ios') {
     return Math.round(PixelRatio.roundToNearestPixel(newSize))
   } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 0
   }
 }
-
-
-// SCREEN_WIDTH <= 380
-// ? 9
-// : SCREEN_WIDTH <= 600
-// ? SCREEN_WIDTH * 0.030 <= 14
-//   ? SCREEN_WIDTH * 0.032
-//   : 13
-// : 13,
 
 const Text_Size_Type = {
   Scale: {
@@ -28,19 +19,12 @@ const Text_Size_Type = {
       normalize(14),
     Text_2:
       normalize(14),
-    Text_3: normalize(17),
+    Text_3: normalize(16),
     Text_4:
-      normalize(18),
-    Text_5:
-      SCREEN_WIDTH <= 380
-        ? SCREEN_WIDTH * 0.045
-        : SCREEN_WIDTH <= 600
-        ? SCREEN_WIDTH * 0.065 <= 32
-          ? SCREEN_WIDTH * 0.065
-          : 38
-        : 38,
-    Text_6: SCREEN_WIDTH * 0.07,
-    Text_7: SCREEN_WIDTH * 0.075,
+      normalize(17),
+    Text_5: normalize(18),
+    Text_6: normalize(20),
+    Text_7: normalize(22),
     Text_8:
       normalize(11),
     Text_9:
