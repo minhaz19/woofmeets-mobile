@@ -37,7 +37,7 @@ const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => an
         <View style={styles.leftContainer}>
           {/* completed */}
           {sitterData.map((item: any) => (
-            item.isCompleted && !item.inProgress && <LandingCard key={item.id} item={item} />
+            item.isCompleted && !item.inProgress && item.id !=1 &&<LandingCard key={item.id} item={item} />
           ))}
           {/* in progress */}
           <View style={styles.inProgressContainer}>

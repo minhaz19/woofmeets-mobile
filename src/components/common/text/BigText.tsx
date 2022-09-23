@@ -17,6 +17,8 @@ const BigText = (props: {
   return (
     <View>
       <Text
+        allowFontScaling={false}
+        adjustsFontSizeToFit={true}
         style={[
           styles.title,
           {color: colors.headerText},
@@ -32,6 +34,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: Text_Size.Text_2,
     fontWeight: '600',
+    // fontFamily: 'AlbraTextBold',
   },
 });
 

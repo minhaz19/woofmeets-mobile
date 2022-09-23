@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
 import DotLoader from '../common/Loaders/DotLoader';
 import SuccessANI from '../common/LottieAnimations/SuccessANI';
+import TitleText from '../common/text/TitleText';
 import Card from './Card';
 interface Props {
   containerStyle: any;
@@ -62,13 +63,12 @@ const ButtonCom = ({
               <DotLoader />
             ) : (
               <>
-                <Text
-                  style={{
+                <TitleText
+                  textStyle={{
                     ...styles.title,
                     ...titleStyle,
-                  }}>
-                  {title}
-                </Text>
+                  }}
+                  text={title} />
                 {icon && (
                   <Icon
                     name="keyboard-arrow-right"

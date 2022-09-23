@@ -7,6 +7,8 @@ const TitleText = (props: {text: string | number; textStyle?: TextStyle}) => {
   const {colors} = useTheme();
   return (
       <Text
+        allowFontScaling={false}
+        adjustsFontSizeToFit={true}
         style={[
           styles.title,
           {color: colors.headerText},
@@ -20,7 +22,7 @@ const TitleText = (props: {text: string | number; textStyle?: TextStyle}) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: Text_Size.Text_9,
-    fontWeight: '400',
+    // fontFamily: 'AlbraTextBold',
   },
 });
 

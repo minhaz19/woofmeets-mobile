@@ -13,6 +13,7 @@ import SetNewPassword from '../../../screens/auth/ResetPassword';
 import Profile from '../../../screens/settings/Profile';
 import BasicBackgroundCheck from '../../../components/ScreenComponent/becomeSitter/subscription/BasicBackgroundCheck';
 import PlanCheckout from '../../../components/ScreenComponent/becomeSitter/subscription/PlanCheckout';
+import ProviderAvailablity from '../../../screens/provider/ProviderAvailablity';
 
 const Stack1 = createStackNavigator();
 
@@ -179,6 +180,21 @@ const ProSettingNavigator = () => {
             <HeaderWithBack
               navigation={navigation}
               title="Checkout"
+              notification
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="ProviderAvailablity"
+        component={ProviderAvailablity}
+        options={({navigation}) => ({
+          title: 'Provider Availability',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="Provider Availability"
               notification
             />
           ),

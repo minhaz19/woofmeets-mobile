@@ -12,6 +12,8 @@ const ShortText = (props: {
   return (
     <View>
       <Text
+        allowFontScaling={false}
+        adjustsFontSizeToFit={true}
         style={[
           styles.details,
           {color: colors.lightText},
@@ -28,6 +30,7 @@ const styles = StyleSheet.create({
   details: {
     fontSize: Text_Size.Text_8,
     fontWeight: '500',
+    // fontFamily: 'AlbraTextSemi',
   },
 });
 

@@ -98,7 +98,7 @@ const ProfileItemCard = (props: {
 const styles = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
-    maxWidth: '18%',
+    maxWidth: '22%',
   },
   cardContainer: {
     width: '100%',
@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   numberViewContainerOuter: {
-    marginRight: 10,
     justifyContent: 'center',
     alignItems: 'center',
     height: 12,
@@ -135,7 +134,6 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     alignSelf: 'flex-end',
-    marginRight: 10,
   },
   textContainer: {
     flexDirection: 'row',

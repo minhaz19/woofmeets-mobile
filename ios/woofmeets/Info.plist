@@ -92,6 +92,17 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>BogartRegular.ttf</string>
+		<string>AlbraSemi.otf</string>
+		<string>AlbraText-Black.otf</string>
+		<string>AlbraText-Bold.otf</string>
+		<string>AlbraText-Light.otf</string>
+		<string>AlbraText-Medium.otf</string>
+		<string>AlbraText-Regular.otf</string>
+		<string>AlbraTextSemi.otf</string>
+		<string>OpenSans-Bold.ttf</string>
+		<string>OpenSans-Light.ttf</string>
+		<string>OpenSans-Medium.ttf</string>
+		<string>OpenSans-Regular.ttf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Woofmeets needs to access the your photo library to upload photos.</string>

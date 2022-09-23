@@ -94,6 +94,7 @@ const ContactScreen = () => {
         </View>
       </View>
       <BottomSpacing />
+      <BottomSpacing />
     </ScrollView>
   );
 };

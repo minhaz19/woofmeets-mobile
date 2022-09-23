@@ -59,14 +59,6 @@ const SettingMain = (props: {
   ];
   const profileData = [
     {
-      id: 1,
-      title: 'My Account',
-      icon: ProfileIcon,
-      screenName: () => props.navigation.navigate('MyAccount'),
-      rightIcon: true,
-      opacity: 1,
-    },
-    {
       id: 2,
       title: 'Payments and Payout',
       icon: PaymentIcon,
@@ -82,15 +74,25 @@ const SettingMain = (props: {
       rightIcon: true,
       opacity: 1,
     },
-    {
-      id: 4,
-      title: 'Profile',
-      icon: CardsIcon,
-      screenName: () => props.navigation.navigate('Profile'),
-      rightIcon: true,
-      opacity: 1,
-    },
   ];
+
+  const customerProfile =     {
+    id: 1,
+    title: 'My Account',
+    icon: ProfileIcon,
+    screenName: () => props.navigation.navigate('MyAccount'),
+    rightIcon: true,
+    opacity: 1,
+  };
+
+  const sitterProfile =     {
+    id: 4,
+    title: 'Profile',
+    icon: ProfileIcon,
+    screenName: () => props.navigation.navigate('Profile'),
+    rightIcon: true,
+    opacity: 1,
+  };
 
   const sittingData = [
     {
@@ -108,7 +110,7 @@ const SettingMain = (props: {
       id: 1,
       title: 'Book a service',
       icon: SitterIcon,
-      screenName: () => props.navigation.navigate('PetCareZipSearch'),
+      screenName: () => props.navigation.navigate('ProHomeNavigator'),
       rightIcon: true,
       opacity: 1,
     },
@@ -236,6 +238,7 @@ const SettingMain = (props: {
             <View style={styles.titleContainer}>
             <TitleText text="Account" />
           </View>
+          {token && token.provider ? <SettingItem data={sitterProfile} key={sitterProfile.id} /> : <SettingItem data={customerProfile} key={customerProfile.id} />}
           {profileData?.map(item => <SettingItem data={item} key={item.id} />)}
           <View
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
