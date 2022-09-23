@@ -170,7 +170,7 @@ const HomeProfile = () => {
                     data={{
                       name: item.serviceType.name,
                       image: getIcon(item.serviceType.icon),
-                      description: `${item.serviceType.description}`,
+                      description: `${item.serviceType.description} ${item.serviceType.description}`,
                       time: '3 mins',
                       icon: 'chevron-right',
                       screen: () => {

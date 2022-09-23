@@ -1,4 +1,4 @@
-import {Alert, Platform, ScrollView, StyleSheet, View} from 'react-native';
+import {Alert,  ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import HeaderText from '../../components/common/text/HeaderText';
 import ShortText from '../../components/common/text/ShortText';
@@ -53,20 +53,6 @@ const CreditAndDebitCard = () => {
     };
     await request(endpoint, reqPayload);
   };
-
-  if (Platform.OS === 'android') {
-    return (
-      <View
-      style={[
-        styles.rootContainer,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
-        {Alert.alert('Android Stripe functionality is not added.. Try IOS')}
-      </View>
-    )
-  }
 
   return (
     <View

@@ -13,8 +13,9 @@ export const useApi = (apiFunc: any) => {
     const response = await apiFunc(...args);
     setLoading(false);
     if (!response.ok) {
-      if (response.status === 400) {
-        Alert.alert(response.data.message);
+      if (response.status === 400 || response.status === 404) {
+        // Alert.alert(response.data.message);
+        console.log('');
       } else if (response.status === 500) {
         Alert.alert('Something went wrong! please try again later');
       } else if (response.problem === 'TIMEOUT_ERROR') {

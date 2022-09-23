@@ -11,7 +11,17 @@ export const useServices = () => {
   const {services, canHost, atHome} = useAppSelector(
     state => state.providerProfile,
   );
+  const calServiceData = services.map((item: any) => ({
+    id: item.id,
+    value: item.serviceType.displayName.toUpperCase(),
+    label: item.serviceType.displayName,
+  }));
+  const availabilityData = {
+    selectData: calServiceData,
+    providerOpk: '',
+  };
 
+  console.log('formateded servies', services);
   const getIcon = (iconId: string) => {
     switch (iconId) {
       case 'boarding':
@@ -58,5 +68,6 @@ export const useServices = () => {
     formattedServices,
     canHost,
     atHome,
+    availabilityData,
   };
 };

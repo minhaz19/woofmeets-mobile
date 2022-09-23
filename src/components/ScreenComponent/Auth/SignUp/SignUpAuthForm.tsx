@@ -83,6 +83,7 @@ const SignUpAuthForm = ({
             secureTextEntry={item.name === 'password' ? true : false}
             errors={errors}
             control={control}
+            auth
           />
         </View>
       ))}

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {Alert} from 'react-native';
 import methods from '../../../../../../api/methods';
 import {useApi} from '../../../../../../utils/helpers/api/useApi';
 
@@ -26,12 +28,15 @@ export const useBasicBackgroundCheck = (route: any, navigation: any) => {
       stateId: data.stateId,
       file: [],
     };
+    Alert.alert(
+      'Basic Plan subscription is paused of maintainance, consider subscription through gold and platinum plans.Thanks!',
+    );
 
-    const result = await request(endpoint, reqPayload);
+    // const result = await request(endpoint, reqPayload);
 
-    if (result.ok) {
-      navigation.navigate('PlanCheckout', {sequence: sequence});
-    }
+    // if (result.ok) {
+    //   navigation.navigate('PlanCheckout', {sequence: sequence});
+    // }
   };
   return {loading, handleSubmit};
 };
