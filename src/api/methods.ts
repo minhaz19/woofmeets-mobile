@@ -1,6 +1,6 @@
 import client from './client';
 
-const _get = (slug: string) => client.get(slug);
+const _get = (slug: string, payload?: any) => client.get(slug, payload);
 const _post = (slug: string, payload: any, value?: string) => {
   return client.post(slug, payload, {
     headers: {

@@ -1,4 +1,4 @@
-import {Alert, Platform, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import React from 'react';
 import AppForm from '../../../../common/Form/AppForm';
 import PlanCheckoutBody from './components/PlanCheckoutBody';
@@ -14,29 +14,17 @@ interface Props {
   route: any;
 }
 const PlanCheckout = ({route}: Props) => {
-  const {colors} = useTheme();
-  const {loading, handleSubmit,saveCard, setSaveCard} = usePlanCheckout(route);
-
-  if (Platform.OS === 'android') {
-    return (
-      <View
-      style={[
-        styles.rootContainer,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
-        {Alert.alert('Android Stripe functionality is not added.. Try IOS')}
-      </View>
-    )
-  }
+  const {isDarkMode, colors} = useTheme();
+  const {loading, handleSubmit, saveCard, setSaveCard} = usePlanCheckout(route);
   return (
     <Screen style={styles.screen}>
       <ScrollView
         style={[
           styles.rootContainer,
           {
-            backgroundColor: colors.backgroundColor,
+            backgroundColor: isDarkMode
+              ? colors.lightBackgroundColor
+              : colors.backgroundColor,
           },
         ]}>
         <CheckoutANI />
@@ -52,29 +40,6 @@ const PlanCheckout = ({route}: Props) => {
           </AppStripe>
         </AppForm>
       </ScrollView>
-      {/* {true && (
-        <BottomHalfModalLite>
-          <ScrollView
-            style={[
-              styles.rootContainer,
-              {
-                backgroundColor: colors.backgroundColor,
-              },
-            ]}>
-            <AppForm
-              initialValues={planCheckoutInit}
-              validationSchema={planCheckoutValidationSchema}>
-              <AppStripe>
-                <PlanCheckoutBody
-                  handleSubmit={handleSubmit}
-                  loading={loading}
-                  handleCheck={() => setSaveCard(!saveCard)}
-                />
-              </AppStripe>
-            </AppForm>
-          </ScrollView>
-        </BottomHalfModalLite>
-      )} */}
     </Screen>
   );
 };

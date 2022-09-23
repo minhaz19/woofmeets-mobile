@@ -12,6 +12,8 @@ export const colors = {
   blueText: Colors.light.blue,
   borderColor: Colors.light.borderColor,
   inputBackground: Colors.light.inputBackground,
+  primaryLight: Colors.primaryLight,
+  primary: Colors.primary,
 };
 
 export const themedColors = {

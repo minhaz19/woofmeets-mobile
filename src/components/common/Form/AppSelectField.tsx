@@ -14,6 +14,7 @@ interface Props {
   placeholder: any;
   disable?: boolean;
   defaultText?: string;
+  setSelectedService?: (arg: any) => void;
 }
 const AppSelectField = ({
   name,
@@ -23,6 +24,7 @@ const AppSelectField = ({
   placeholder,
   disable,
   defaultText,
+  setSelectedService,
 }: Props) => {
   return (
     <View>
@@ -36,9 +38,12 @@ const AppSelectField = ({
                 placeholder={placeholder}
                 name={name}
                 data={data}
-                defaultText={value !== '' ? value : defaultText}
+                defaultText={
+                  value !== '' && value !== undefined ? value : defaultText
+                }
                 disable={disable}
                 onChange={onChange}
+                setSelectedService={setSelectedService}
               />
               <ErrorMessage error={error?.message} />
             </>

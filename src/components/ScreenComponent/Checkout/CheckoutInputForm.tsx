@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {InputFormData} from './utils/InputFormData';
 import AppFormField from '../../common/Form/AppFormField';
@@ -15,6 +15,7 @@ import ButtonCom from '../../UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import {CardForm} from '@stripe/stripe-react-native';
 import TitleText from '../../common/text/TitleText';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 // import ErrorMessage from '../../common/Form/ErrorMessage';
 interface Props {
   handleValues: (values: any) => void;
@@ -44,6 +45,7 @@ const staticText = [
 ];
 
 const CheckoutInputForm = ({handleValues}: Props) => {
+  const {isDarkMode, colors} = useTheme();
   const {
     setValue,
     control,
@@ -63,7 +65,13 @@ const CheckoutInputForm = ({handleValues}: Props) => {
                       shouldValidate: errors[item.name] ? true : false,
                     });
                   }}
-                  style={{height: 200}}
+                  style={styles.cardField}
+                  cardStyle={{
+                    borderWidth: 1,
+                    backgroundColor: colors.backgroundColor,
+                    borderRadius: 2,
+                    borderColor: isDarkMode ? Colors.gray : Colors.border,
+                  }}
                 />
                 {/* <ErrorMessage error={errors?.cardInfo?.postalCode.message} /> */}
               </>
@@ -156,5 +164,10 @@ const styles = StyleSheet.create({
   buttonWidth: {
     width: '30%',
     marginTop: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+  },
+  cardField: {
+    width: '100%',
+    height: Platform.OS === 'ios' ? 200 : 300,
+    marginBottom: 10,
   },
 });

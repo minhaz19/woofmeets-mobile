@@ -1,8 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import {KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
 import React from 'react';
 import TitleText from '../../../../../common/text/TitleText';
 import {planCheckoutData} from '../../../../../../utils/config/Data/planCheckoutData';
-import {CardFieldInput, CardForm} from '@stripe/stripe-react-native';
+import {CardForm} from '@stripe/stripe-react-native';
 import {useFormContext} from 'react-hook-form';
 import ErrorMessage from '../../../../../common/Form/ErrorMessage';
 import AppFormField from '../../../../../common/Form/AppFormField';
@@ -10,12 +11,15 @@ import SubmitButton from '../../../../../common/Form/SubmitButton';
 import Text_Size from '../../../../../../constants/textScaling';
 import AppCheckbox from '../../../../../common/Form/AppCheckbox';
 import BottomSpacing from '../../../../../UI/BottomSpacing';
+import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
+import Colors from '../../../../../../constants/Colors';
 interface Props {
   handleSubmit: (arg: any) => void;
   loading: boolean;
   handleCheck: () => void;
 }
 const PlanCheckoutBody = ({handleSubmit, loading, handleCheck}: Props) => {
+  const {isDarkMode, colors} = useTheme();
   const {
     setValue,
     control,
@@ -23,7 +27,7 @@ const PlanCheckoutBody = ({handleSubmit, loading, handleCheck}: Props) => {
   } = useFormContext();
   return (
     <KeyboardAvoidingView
-      style={{marginTop: '1%'}}
+      style={{marginTop: '1%', flex: 1}}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View>
         {planCheckoutData.map((item, index) => {
@@ -33,13 +37,21 @@ const PlanCheckoutBody = ({handleSubmit, loading, handleCheck}: Props) => {
                 <>
                   <TitleText textStyle={styles.label} text={item.title} />
                   <CardForm
+                    dangerouslyGetFullCardDetails
                     onFormComplete={cardDetails => {
                       setValue(item.name, cardDetails, {
                         shouldValidate: errors[item.name] ? true : false,
                       });
                     }}
                     style={styles.cardField}
+                    cardStyle={{
+                      borderWidth: 1,
+                      backgroundColor: colors.backgroundColor,
+                      borderRadius: 2,
+                      borderColor: isDarkMode ? Colors.gray : Colors.border,
+                    }}
                   />
+
                   <ErrorMessage error={errors?.cardInfo?.postalCode.message} />
                 </>
               ) : (
@@ -93,14 +105,7 @@ const styles = StyleSheet.create({
   },
   cardField: {
     width: '100%',
-    height: 200,
+    height: Platform.OS === 'ios' ? 200 : 300,
     marginBottom: 10,
-    // borderWidth: 1,
-    // backgroundColor: '#FFFFFF',
-    // borderColor: '#000000',
-    // borderRadius: 8,
-    // fontSize: 14,
-    // placeholderColor: '#A020F0',
-    // textColor: '#0000ff',
   },
 });

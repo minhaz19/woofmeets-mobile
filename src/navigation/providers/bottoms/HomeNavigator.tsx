@@ -7,8 +7,7 @@ import HeaderWithBack from '../../../components/common/header/HeaderWithBack';
 import {FilterIcon} from '../../../assets/svgs/SVG_LOGOS';
 import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../../store/slices/misc/openFilter';
-import {createStackNavigator} from '@react-navigation/stack';
-import ProviderAvailablity from '../../../screens/provider/ProviderAvailablity';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
@@ -19,11 +18,6 @@ const ProHomeNavigator = () => {
       <Stack.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="ProviderAvailablity"
-        component={ProviderAvailablity}
         options={{headerShown: false}}
       />
       <Stack.Screen

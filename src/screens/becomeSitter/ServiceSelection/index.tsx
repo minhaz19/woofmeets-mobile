@@ -14,9 +14,7 @@ import {getServiceTypes} from '../../../store/slices/profile/services';
 import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
-import { setSitterData } from '../../../store/slices/onBoarding/initial';
-import { useNavigation } from '@react-navigation/native';
-
+import {setSitterData} from '../../../store/slices/onBoarding/initial';
 interface Props {
   item: any;
 }
@@ -25,9 +23,10 @@ const ServiceSelection = () => {
   const {colors} = useTheme();
   const [sequence, setSequence] = useState<number>(0);
   const [isloading, setLoading] = useState<boolean>(false);
-  const {serviceTypes, loading, userServices} = useAppSelector(state => state.services);
-  const oldUser = useAppSelector(state => state.initial.oldUser)
-  const navigation = useNavigation<any>();
+  const {serviceTypes, loading, userServices} = useAppSelector(
+    state => state.services,
+  );
+  const oldUser = useAppSelector(state => state.initial.oldUser);
 
   const dispatch = useAppDispatch();
 
@@ -50,7 +49,7 @@ const ServiceSelection = () => {
     if (userServices) {
       dispatch(setSitterData({pass: 0}));
     }
-  }, [userServices])
+  }, [userServices]);
 
   const onPressEvent = (id: number) => {
     setSequence(id);
@@ -131,9 +130,7 @@ const ServiceSelection = () => {
   };
 
   if (refreshing || loading) {
-    return(
-      <AppActivityIndicator visible={true} />
-    )
+    return <AppActivityIndicator visible={true} />;
   } else {
     return (
       <View

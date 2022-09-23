@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
-import React, {useCallback} from 'react';
+import React, {useMemo} from 'react';
 import {Controller} from 'react-hook-form';
 import TitleText from '../../../../common/text/TitleText';
 import {InfoSvg} from '../../../Inbox/utils/SvgComponent/SvgComponent';
@@ -67,13 +67,15 @@ const ServiceForm = ({
   updateRates,
   checked,
 }: Props) => {
-  useCallback(() => {
+  useMemo(() => {
     name !== 'baserate' &&
       updateRates === false &&
       checked === false &&
       setValue!(name, convertedValue?.toFixed(2), {
         shouldValidate: errors[name] ? true : false,
       });
+
+    console.log('errors', name, errors[name]);
   }, [name, updateRates, checked, setValue, convertedValue, errors]);
   return (
     <>
