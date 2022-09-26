@@ -21,7 +21,7 @@ const Services = () => {
 
       <View>
         {formattedServices?.map((pricingD: any, inde: number) => (
-          <PetPricing key={inde} pricingD={pricingD} />
+          <PetPricing key={inde} pricingD={pricingD} index={inde} />
         ))}
       </View>
       <View style={styles.calendar}>

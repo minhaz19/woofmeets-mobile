@@ -71,7 +71,7 @@ const AvailablityCalendar = () => {
   return (
     <View style={styles.container}>
       <CalendarList
-        current={initialDate}
+        current={new Date().toString()}
         pastScrollRange={0}
         futureScrollRange={RANGE}
         onDayPress={handleDayPress}
@@ -81,11 +81,10 @@ const AvailablityCalendar = () => {
           ...preMarked,
         }}
         renderHeader={renderCustomHeader}
-        calendarHeight={390}
         theme={theme}
-        horizontal={false}
-        pagingEnabled={true}
-        staticHeader={false}
+        // horizontal={false}
+        // pagingEnabled={true}
+        // staticHeader={true}
       />
       <EditCart startingDate={startingDate} resetRange={resetRange} />
     </View>

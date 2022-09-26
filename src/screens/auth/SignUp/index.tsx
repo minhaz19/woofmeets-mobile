@@ -3,7 +3,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  useColorScheme,
   View,
 } from 'react-native';
 import React from 'react';
@@ -12,21 +11,20 @@ import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHead
 import AuthFooter from '../../../components/ScreenComponent/Auth/Common/AuthFooter';
 import {signupValue} from '../../../utils/config/initalValues/initalValues';
 import {signUpValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
-import {
-  signUpInitalState,
-} from '../../../utils/config/Data/signUpDatas';
+import {signUpInitalState} from '../../../utils/config/Data/signUpDatas';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {useSignUp} from './utils/useSignUp';
-import { othersAuthIcons } from '../../../utils/config/Data/loginDatas';
+import {othersAuthIcons} from '../../../utils/config/Data/loginDatas';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
 
 const SignUp = ({navigation}: Props) => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const {isDarkMode, colors} = useTheme();
   const {handleSubmit, providerLoading, loading} = useSignUp(navigation);
 
   return (
@@ -36,9 +34,7 @@ const SignUp = ({navigation}: Props) => {
         showsVerticalScrollIndicator={false}
         style={[
           {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.secondary,
+            backgroundColor: colors.backgroundColor,
           },
         ]}>
         <KeyboardAvoidingView
@@ -90,10 +86,11 @@ export default SignUp;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 25,
   },
   infoContainer: {
     flexGrow: 1,
-    marginTop: 120,
+
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,

@@ -176,7 +176,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '70%',
   },
-  textPortion2: {},
+  textPortion2: {
+    alignItems: 'flex-end',
+  },
   textPortion3: {
     paddingBottom: 4,
   },
