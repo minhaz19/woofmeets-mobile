@@ -98,7 +98,7 @@ const ProfileItemCard = (props: {
 const styles = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
-    maxWidth: '22%',
+    paddingHorizontal: 10,
   },
   cardContainer: {
     width: '100%',
@@ -119,14 +119,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     height: 6,
     width: 6,
-    borderRadius: 100,
+    borderRadius: 10,
   },
   numberViewContainerOuter: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 12,
     width: 12,
-    borderRadius: 100,
+    borderRadius: 10,
   },
   iconContainer: {
     justifyContent: 'center',

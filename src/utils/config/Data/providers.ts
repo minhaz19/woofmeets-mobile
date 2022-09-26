@@ -5,7 +5,7 @@ export const providers = [
     rating: 5.0,
     distance: '1.5 miles away',
     nature: 'Caring and attentive animal lover',
-    availablity: 'Confirmded availablity: Jun 14 - Jun 17',
+    availablity: 'Availablity: Jun 14 - Jun 17',
     repeatClient: '11 repeat clients',
     pricing: '$9.0',
   },
