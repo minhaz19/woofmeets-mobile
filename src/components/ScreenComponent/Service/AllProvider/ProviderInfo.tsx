@@ -37,7 +37,6 @@ const ProviderInfo = ({
         {/* <ShortIconTitle Icon={Star} text={rating} /> */}
         <ShortIconTitle Icon={MapMarker} text={distance} />
       </View>
-      <ShortText text={nature} />
       {availablity && (
         <View style={styles.availableTime}>
           <ShortIconTitle
@@ -48,8 +47,10 @@ const ProviderInfo = ({
         </View>
       )}
       {repeatClient && (
-        <View style={styles.repeat}>
+        <View style={styles.repeatContainer}>
+          <View style={styles.repeat}>
           <ShortText text={repeatClient} />
+        </View>
         </View>
       )}
     </View>
@@ -61,6 +62,7 @@ export default ProviderInfo;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
+    width: '100%'
   },
   title: {
     fontWeight: '600',
@@ -74,12 +76,15 @@ const styles = StyleSheet.create({
   },
   availableTime: {
     marginVertical: 5,
+    maxWidth: '75%'
   },
   rating: {marginRight: 5},
   repeat: {
-    padding: 3,
+    paddingVertical: 3,
+    paddingHorizontal: 5,
     backgroundColor: Colors.shadow,
-    width: '50%',
-    justifyContent: 'center',
+  },
+  repeatContainer: {
+    flexDirection: 'row'
   },
 });

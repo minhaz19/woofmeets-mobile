@@ -9,6 +9,14 @@ export function normalize(size: number) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 0;
   }
 }
+export function normalizeInput(size: number) {
+  const newSize = size * scale;
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) + 2;
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 const Text_Size_Type = {
   Scale: {
     Text_0: normalize(13),
@@ -21,6 +29,8 @@ const Text_Size_Type = {
     Text_7: normalize(22),
     Text_8: normalize(11),
     Text_9: normalize(12),
+    Text_10: normalize(9),
+    Text_11: normalize(12),
   },
 };
 const Text_Size = Text_Size_Type.Scale;
