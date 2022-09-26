@@ -11,6 +11,10 @@ import Svg, {
   Circle,
   Rect,
   Image,
+  LinearGradient,
+  Stop,
+  Text,
+  TSpan,
 } from 'react-native-svg';
 import Colors from '../../constants/Colors';
 
@@ -2109,6 +2113,88 @@ export function Delete(props: SvgProps) {
     </Svg>
   );
 }
+export const AuthPassword = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={223.502}
+    height={207.672}
+    viewBox="0 0 223.502 207.672"
+    {...props}>
+    <Defs>
+      <LinearGradient
+        id="a"
+        x1={0.145}
+        y1={0.045}
+        x2={0.831}
+        y2={0.953}
+        gradientUnits="objectBoundingBox">
+        <Stop offset={0} stopColor="#e68b5c" />
+        <Stop offset={1} stopColor="#ff6e24" />
+      </LinearGradient>
+    </Defs>
+    <G data-name="Group 18083">
+      <Path
+        data-name="Rectangle 20"
+        d="M33.737 12.343h163.751c10.907 0 19.749 10.288 19.749 22.98v149.37c0 12.691-8.842 22.98-19.749 22.98H33.737c-10.907-.001-19.749-10.289-19.749-22.98V35.323c0-12.692 8.842-22.98 19.749-22.98Z"
+        fill="#f5f4f6"
+        opacity={0.4}
+      />
+      <G data-name="Group 1626">
+        <Path
+          data-name="Rectangle 18"
+          d="M91.035 89.082h51.841a30.035 30.035 0 0 1 30.035 30.035v37.03a30.035 30.035 0 0 1-30.035 30.035H91.035A30.035 30.035 0 0 1 61 156.147v-37.03a30.035 30.035 0 0 1 30.035-30.035Z"
+          fill="#ff8341"
+        />
+        <G data-name="Group 18082">
+          <Path
+            data-name="Path 15"
+            d="M85.006 96.152V75.714A31.714 31.714 0 0 1 116.72 44a31.714 31.714 0 0 1 31.713 31.714v20.438"
+            fill="none"
+            stroke="#ff7c38"
+            strokeWidth={16.458}
+            opacity={0.17}
+          />
+          <Path
+            data-name="Rectangle 19"
+            d="M32.092 0h44.436a32.092 32.092 0 0 1 32.092 32.092v32.915A32.092 32.092 0 0 1 76.528 97.1H32.092A32.092 32.092 0 0 1 0 65.007V32.092A32.092 32.092 0 0 1 32.092 0Z"
+            transform="translate(61 89.082)"
+            fill="url(#a)"
+          />
+        </G>
+        <Path
+          data-name="Path 17"
+          d="M132.93 131.39a15.975 15.975 0 1 0-21.571 14.965l-.512 11.187a2.4 2.4 0 0 0 2.349 2.509h8.457a2.4 2.4 0 0 0 2.391-2.509l-.576-11.586a15.974 15.974 0 0 0 9.458-14.565Z"
+          fill="#fff"
+        />
+      </G>
+      <Text
+        data-name="**"
+        transform="translate(0 43.612)"
+        fill="#ff942c"
+        fontSize={38.675}
+        // fontFamily="Roboto-Regular, Roboto"
+        letterSpacing=".078em">
+        <TSpan x={0} y={37}>
+          {'**'}
+        </TSpan>
+      </Text>
+      <Text
+        data-name="**"
+        transform="translate(183.502)"
+        fill="#ff942c"
+        fontSize={38.675}
+        // fontFamily="Roboto-Regular, Roboto"
+        letterSpacing=".129em">
+        <TSpan x={0} y={37}>
+          {'*'}
+        </TSpan>
+        <TSpan x={0} y={84}>
+          {'*'}
+        </TSpan>
+      </Text>
+    </G>
+  </Svg>
+);
 
 export const EditPen = (props: SvgProps) => (
   <Svg
@@ -2183,5 +2269,249 @@ export const CalendarSvg = (props: SvgProps) => (
     {...props}>
     <Path d="M11.322 13.777h4.596v4.088h-4.596zM17.458 13.777h4.595v4.088h-4.595zM23.591 13.777h4.596v4.088h-4.596zM5.187 19.234h4.596v4.086H5.187zM11.322 19.234h4.596v4.086h-4.596zM17.458 19.234h4.595v4.086h-4.595zM23.591 19.234h4.596v4.086h-4.596zM5.187 24.691h4.596v4.086H5.187zM11.322 24.691h4.596v4.086h-4.596zM17.458 24.691h4.595v4.086h-4.595zM23.591 24.691h4.596v4.086h-4.596z" />
     <Path d="M27.96 1.375h-.682V1a1 1 0 1 0-2 0v.375h-1.837V1a1 1 0 0 0-2 0v.375h-1.837V1a1 1 0 1 0-2 0v.375h-1.837V1a1 1 0 0 0-2 0v.375H11.93V1a1 1 0 0 0-2 0v.375H8.094V1a1 1 0 0 0-2 0v.375h-.682A4.731 4.731 0 0 0 .687 6.101v22.547a4.733 4.733 0 0 0 4.727 4.727H27.96a4.733 4.733 0 0 0 4.728-4.727V6.101a4.733 4.733 0 0 0-4.728-4.726zM25.78 1a.5.5 0 0 1 1 0v6.482a.5.5 0 0 1-1 0V1zm-3.837 0a.5.5 0 0 1 1 0v6.482a.5.5 0 0 1-1 0V1zm-3.837 0a.5.5 0 0 1 1 0v6.482a.5.5 0 0 1-1 0V1zm-3.837 0a.5.5 0 0 1 1 0v6.482a.5.5 0 0 1-1 0V1zm-3.837 0a.5.5 0 0 1 1 0v6.482a.5.5 0 0 1-1 0V1zM6.595 1a.5.5 0 0 1 1 0v6.482a.5.5 0 0 1-1 0V1zm23.684 27.648a2.32 2.32 0 0 1-2.318 2.317H5.414a2.32 2.32 0 0 1-2.318-2.317V6.101a2.32 2.32 0 0 1 2.318-2.318h.682v2.513a1.55 1.55 0 0 0-.56 1.187 1.56 1.56 0 0 0 3.12 0c0-.478-.221-.9-.56-1.187V3.783h1.837v2.513a1.55 1.55 0 0 0-.56 1.187 1.56 1.56 0 0 0 3.12 0c0-.478-.221-.9-.56-1.187V3.783h1.837v2.513a1.55 1.55 0 0 0-.56 1.187 1.56 1.56 0 0 0 3.12 0c0-.478-.221-.9-.56-1.187V3.783h1.837v2.513a1.55 1.55 0 0 0-.56 1.187 1.561 1.561 0 0 0 3.121 0c0-.478-.222-.9-.561-1.187V3.783h1.837v2.513a1.55 1.55 0 0 0-.56 1.187 1.56 1.56 0 0 0 3.12 0c0-.478-.221-.9-.56-1.187V3.783h1.837v2.513a1.55 1.55 0 0 0-.56 1.187 1.56 1.56 0 0 0 3.121 0c0-.478-.221-.9-.561-1.187V3.783h.682a2.32 2.32 0 0 1 2.317 2.318l-.001 22.547z" />
+  </Svg>
+);
+
+export const AuthEmail = (props: SvgProps) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="201.329"
+    height="190.786"
+    viewBox="0 0 201.329 190.786">
+    <G
+      id="Group_5116"
+      data-name="Group 5116"
+      transform="translate(-5181 -1842)"
+      style="mix-blend-mode: normal;isolation: isolate">
+      <Path
+        id="Rectangle_20"
+        data-name="Rectangle 20"
+        d="M19.562,0h162.2c10.8,0,19.562,10.049,19.562,22.445V168.34c0,12.4-8.758,22.445-19.562,22.445H19.562C8.758,190.786,0,180.736,0,168.34V22.445C0,10.049,8.758,0,19.562,0Z"
+        transform="translate(5181 1842)"
+        fill="#f5f4f6"
+        opacity="0.4"
+      />
+      <G id="email" transform="translate(5093.8 1716.571)">
+        <G id="Group_1627" data-name="Group 1627">
+          <Path
+            id="Path_22"
+            data-name="Path 22"
+            d="M0,0,24.462,51.8H0Z"
+            transform="translate(122.729 237.837)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_23"
+            data-name="Path 23"
+            d="M0,0,29.877,63.276H24.462L0,11.471Z"
+            transform="translate(122.729 226.366)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_24"
+            data-name="Path 24"
+            d="M0,0,35.292,74.743H29.877L0,11.467Z"
+            transform="translate(122.729 214.899)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_25"
+            data-name="Path 25"
+            d="M0,0,40.707,86.211H35.292L0,11.467Z"
+            transform="translate(122.729 203.433)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_26"
+            data-name="Path 26"
+            d="M3.106,0,46.123,91.1H40.707L0,4.89V0Z"
+            transform="translate(122.729 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_27"
+            data-name="Path 27"
+            d="M5.415,0,48.431,91.1H43.016L0,0Z"
+            transform="translate(125.835 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_28"
+            data-name="Path 28"
+            d="M5.415,0,48.431,91.1H43.016L0,0Z"
+            transform="translate(131.25 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_29"
+            data-name="Path 29"
+            d="M5.415,0,48.427,91.1H43.016L0,0Z"
+            transform="translate(136.664 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_30"
+            data-name="Path 30"
+            d="M5.415,0,48.431,91.1H43.016L0,0Z"
+            transform="translate(142.08 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_31"
+            data-name="Path 31"
+            d="M5.415,0,48.431,91.1H43.018L0,0Z"
+            transform="translate(147.495 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_32"
+            data-name="Path 32"
+            d="M5.415,0,48.431,91.1H43.016L0,0Z"
+            transform="translate(152.91 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_33"
+            data-name="Path 33"
+            d="M5.415,0,48.431,91.1H43.016L0,0Z"
+            transform="translate(158.325 198.542)"
+            fill="#fdc440"
+          />
+          <Path
+            id="Path_34"
+            data-name="Path 34"
+            d="M5.415,0,48.431,91.1H43.016L0,0Z"
+            transform="translate(163.74 198.542)"
+            fill="#fdc541"
+          />
+          <Path
+            id="Path_35"
+            data-name="Path 35"
+            d="M5.415,0,48.431,91.1H43.016L0,0Z"
+            transform="translate(169.155 198.542)"
+            fill="#fdc641"
+          />
+          <Path
+            id="Path_36"
+            data-name="Path 36"
+            d="M5.419,0,48.435,91.1H43.02L0,0Z"
+            transform="translate(174.571 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_37"
+            data-name="Path 37"
+            d="M5.415,0,48.431,91.1H43.016L0,0Z"
+            transform="translate(179.985 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_38"
+            data-name="Path 38"
+            d="M5.415,0,48.431,91.1H43.016L0,0Z"
+            transform="translate(185.4 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_39"
+            data-name="Path 39"
+            d="M5.415,0,48.427,91.1H43.013L0,0Z"
+            transform="translate(190.816 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_40"
+            data-name="Path 40"
+            d="M5.415,0,48.427,91.1H43.016L0,0Z"
+            transform="translate(196.23 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_41"
+            data-name="Path 41"
+            d="M5.415,0,48.431,91.1H43.013L0,0Z"
+            transform="translate(201.646 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_42"
+            data-name="Path 42"
+            d="M5.415,0,45.742,85.409V91.1H43.018L0,0Z"
+            transform="translate(207.061 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_43"
+            data-name="Path 43"
+            d="M5.415,0,40.327,73.942V85.409L0,0Z"
+            transform="translate(212.476 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_44"
+            data-name="Path 44"
+            d="M5.415,0l29.5,62.471V73.942L0,0Z"
+            transform="translate(217.891 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_45"
+            data-name="Path 45"
+            d="M5.415,0,29.5,51V62.47L0,0Z"
+            transform="translate(223.306 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_46"
+            data-name="Path 46"
+            d="M5.419,0,24.085,39.537V51L0,0Z"
+            transform="translate(228.721 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_47"
+            data-name="Path 47"
+            d="M5.415,0,18.667,28.066V39.537L0,0Z"
+            transform="translate(234.137 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_48"
+            data-name="Path 48"
+            d="M5.415,0l7.836,16.6V28.066L0,0Z"
+            transform="translate(239.552 198.542)"
+            fill="#ff7c38"
+          />
+          <Path
+            id="Path_49"
+            data-name="Path 49"
+            d="M7.836,16.6,0,0H7.836Z"
+            transform="translate(244.966 198.542)"
+            fill="#ff7c38"
+          />
+        </G>
+        <Path
+          id="Path_51"
+          data-name="Path 51"
+          d="M0,0,64.633,52.7,129.678,0"
+          transform="translate(122.929 198.542)"
+          fill="#fff"
+        />
+        <Path
+          id="Path_52"
+          data-name="Path 52"
+          d="M0,52.087,64.837,0l65.238,52.087Z"
+          transform="translate(122.729 237.352)"
+          fill="#ff7c38"
+        />
+        <Path
+          id="Path_54"
+          data-name="Path 54"
+          d="M.055,47.523,66.92.026a.13.13,0,0,1,.156,0l62.86,47.5a.135.135,0,0,1,.045.068.138.138,0,0,1,0,.082.135.135,0,0,1-.047.066.131.131,0,0,1-.076.026H.132a.131.131,0,0,1-.078-.026.135.135,0,0,1-.048-.068.138.138,0,0,1,0-.084.135.135,0,0,1,.049-.067Z"
+          transform="translate(123.013 152)"
+          fill="#ff7c38"
+        />
+      </G>
+    </G>
   </Svg>
 );

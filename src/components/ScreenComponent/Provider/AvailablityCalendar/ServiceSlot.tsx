@@ -1,10 +1,10 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import AppCheckbox from '../../../common/Form/AppCheckbox';
-import IncreDecreButton from '../../../common/IncreDecreButton';
 import TitleText from '../../../common/text/TitleText';
 import ShortText from '../../../common/text/ShortText';
 import Text_Size from '../../../../constants/textScaling';
+import {Text} from '@rneui/base';
 const serviceData = [
   {
     serivce: 'Boarding',
@@ -58,8 +58,11 @@ const ServiceSlot = () => {
               )}
             />
           </View>
-          <View>
+          {/* <View>
             <IncreDecreButton />
+          </View> */}
+          <View>
+            {item.active ? <Text>Available</Text> : <Text>Unavailable</Text>}
           </View>
         </View>
       ))}

@@ -3,7 +3,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  useColorScheme,
   View,
 } from 'react-native';
 import React from 'react';
@@ -12,11 +11,12 @@ import AuthForm from '../../../../components/ScreenComponent/Auth/Common/AuthFor
 import {forgotPasswordValue} from '../../../../utils/config/initalValues/initalValues';
 import {forgotPasswordValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
 import ImageAndTitle from '../../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
-import {AuthPassword} from '../../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import BottomSpacing from '../../../../components/UI/BottomSpacing';
 import AppForm from '../../../../components/common/Form/AppForm';
 import {useFPEmail} from './utils/useFPEmail';
+import {AuthPassword} from '../../../../assets/svgs/SVG_LOGOS';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 const forgotPassData = {
   title: 'Forgot Password?',
 };
@@ -27,7 +27,7 @@ interface Props {
   };
 }
 const ForgotPassword = ({navigation}: Props) => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const {isDarkMode, colors} = useTheme();
   const {handleSubmit, loading} = useFPEmail(navigation);
   return (
     <ScrollView
@@ -35,9 +35,7 @@ const ForgotPassword = ({navigation}: Props) => {
       showsVerticalScrollIndicator={false}
       style={[
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
+          backgroundColor: colors.backgroundColor,
         },
       ]}>
       <KeyboardAvoidingView
@@ -78,7 +76,7 @@ export default ForgotPassword;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   infoContainer: {
     borderTopRightRadius: 30,

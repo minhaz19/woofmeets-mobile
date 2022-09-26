@@ -5,7 +5,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  useColorScheme,
   View,
 } from 'react-native';
 import React from 'react';
@@ -19,6 +18,7 @@ import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import AppForm from '../../../../components/common/Form/AppForm';
 import {RouteProp} from '@react-navigation/native';
 import {useFPReset} from './utils/useFPReset';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   navigation: {
@@ -29,21 +29,20 @@ interface Props {
 }
 const ForgotPasswordReset = ({route, navigation}: Props) => {
   const height = SCREEN_HEIGHT;
-  const isDarkMode = useColorScheme() === 'dark';
+  const {isDarkMode, colors} = useTheme();
   const {handleSubmit, loading} = useFPReset(navigation, route);
+
   return (
     <ScrollView
       contentContainerStyle={{
         flex: height > 800 ? 1 : 0,
-        justifyContent: height > 800 ? 'flex-end' : 'flex-start',
+        justifyContent: 'center',
       }}
       showsVerticalScrollIndicator={false}
       style={[
         styles.container,
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
+          backgroundColor: colors.backgroundColor,
         },
       ]}>
       <KeyboardAvoidingView
@@ -86,11 +85,11 @@ export default ForgotPasswordReset;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
   },
   infoContainer: {
     flexGrow: 1,
-    marginTop: 120,
+
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,

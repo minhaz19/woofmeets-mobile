@@ -144,7 +144,7 @@ const AuthForm = ({
             onPress={handleSubmit}
             loading={loading}
           />
-          {(forgotPassword || forgotPasswordOpt) && (
+          {(forgotPassword || forgotPasswordOpt || forgotPasswordReset) && (
             <AppButton
               title={btn2Title ? btn2Title : 'Cancel'}
               onPress={onPress}

@@ -10,6 +10,7 @@ import {setOpenFilter} from '../../store/slices/misc/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
 import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
 import RealtimeLocation from '../../screens/RealtimeLocation';
+import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 
 const Stack1 = createStackNavigator();
 
@@ -20,6 +21,11 @@ const ServiceNavigator = () => {
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
+        options={{headerShown: false}}
+      />
+      <Stack1.Screen
+        name="ProviderAvailablity"
+        component={ProviderAvailablity}
         options={{headerShown: false}}
       />
 
