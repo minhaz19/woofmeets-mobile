@@ -13,8 +13,15 @@ interface Props {
   onChange: (arg0: any) => void;
   placeholder: string;
   value?: [];
+  search?: boolean;
 }
-const AppMultiSelect = ({data, onChange, placeholder, value}: Props) => {
+const AppMultiSelect = ({
+  data,
+  onChange,
+  placeholder,
+  value,
+  search = true,
+}: Props) => {
   const [selected, setSelected] = useState(value);
   const {isDarkMode, colors} = useTheme();
   const renderItem = useCallback(
@@ -52,7 +59,7 @@ const AppMultiSelect = ({data, onChange, placeholder, value}: Props) => {
         valueField="value"
         placeholder={placeholder}
         value={selected}
-        search
+        search={search}
         searchPlaceholder="Search..."
         containerStyle={{
           backgroundColor: colors.backgroundColor,
@@ -93,11 +100,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   placeholderStyle: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_12,
     color: 'gray',
   },
   selectedTextStyle: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_12,
   },
   iconStyle: {
     width: 20,
@@ -105,7 +112,7 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_12,
   },
   icon: {
     marginRight: 5,

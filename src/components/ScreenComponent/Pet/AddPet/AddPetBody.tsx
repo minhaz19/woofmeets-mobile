@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import AppFormField from '../../../common/Form/AppFormField';
 import SubmitButton from '../../../common/Form/SubmitButton';
@@ -24,7 +24,6 @@ interface Props {
 }
 
 const AddPetBody = ({handleSubmit, loading, opk}: Props) => {
-  const [havePets, setHavePet] = useState(0);
   const {
     control,
     setValue,
@@ -36,70 +35,65 @@ const AddPetBody = ({handleSubmit, loading, opk}: Props) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.inputContainer}>
-        <AddPetHeader havePet={havePets} setHavePet={setHavePet} />
+        <AddPetHeader />
 
-        {havePets === 0 && (
-          <View>
-            <AddPetImage name="profile_image" />
-            <AddPetCheck
-              errors={errors}
-              setValue={setValue}
-              control={control}
-            />
-            <AddPetInfoInputs errors={errors} control={control} />
+        <View>
+          <AddPetImage name="profile_image" />
+          <AddPetCheck errors={errors} setValue={setValue} control={control} />
+          <AddPetInfoInputs errors={errors} control={control} />
 
-            <AddPetBreeds
-              setValue={setValue}
-              control={control}
-              name="breeds"
-              getValues={getValues}
-            />
-            <AdditionalDetailsCheck
-              errors={errors}
-              setValue={setValue}
-              control={control}
-              getValues={getValues}
-            />
-            <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType={'default'}
-              placeholder={petDescriptionInput.placeholder}
-              textContentType={'none'}
-              name={petDescriptionInput.name!}
-              label={petDescriptionInput.title!}
-              multiline
-              numberOfLines={petDescriptionInput.numberOfLines}
-              errors={errors}
-              control={control}
-            />
+          <AddPetBreeds
+            setValue={setValue}
+            control={control}
+            name="breeds"
+            getValues={getValues}
+          />
+          <AdditionalDetailsCheck
+            errors={errors}
+            setValue={setValue}
+            control={control}
+            getValues={getValues}
+          />
+          <AppFormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType={'default'}
+            placeholder={petDescriptionInput.placeholder}
+            textContentType={'none'}
+            name={petDescriptionInput.name!}
+            label={petDescriptionInput.title!}
+            multiline
+            numberOfLines={petDescriptionInput.numberOfLines}
+            errors={errors}
+            control={control}
+          />
 
-            <AdditionalCareInfoChecks
-              errors={errors}
-              setValue={setValue}
-              control={control}
-              getValues={getValues}
-            />
-            <AdditionalMedicationCheck
-              errors={errors}
-              setValue={setValue}
-              control={control}
-              getValues={getValues}
-            />
+          <AdditionalCareInfoChecks
+            errors={errors}
+            setValue={setValue}
+            control={control}
+            getValues={getValues}
+          />
+          <AdditionalMedicationCheck
+            errors={errors}
+            setValue={setValue}
+            control={control}
+            getValues={getValues}
+          />
 
-            <AdditionalButtonInputs errors={errors} control={control} />
-            <AppImagePicker
-              label="Photo Gallery"
-              subTitle="Show off your pet through image gallery"
-              name="gallery"
-            />
-            <SubmitButton
-              title={opk === null ? 'Add Pet' : 'Update Pet'}
-              onPress={handleSubmit}
-              loading={loading}
-            />
-          </View>
-        )}
+          <AdditionalButtonInputs errors={errors} control={control} />
+          <AppImagePicker
+            label="Photo Gallery"
+            subTitle="Show off your pet through image gallery"
+            name="gallery"
+          />
+          <SubmitButton
+            title={opk === null ? 'Add Pet' : 'Update Pet'}
+            onPress={handleSubmit}
+            loading={loading}
+          />
+        </View>
+
         <BottomSpacing />
       </ScrollView>
     </View>

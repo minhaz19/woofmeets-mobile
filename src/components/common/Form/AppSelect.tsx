@@ -93,11 +93,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   placeholderStyle: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_12,
     color: 'gray',
   },
   selectedTextStyle: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_12,
   },
   iconStyle: {
     width: 20,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_12,
   },
   icon: {
     marginRight: 5,

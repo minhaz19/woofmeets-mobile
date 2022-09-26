@@ -11,6 +11,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
 import RealtimeLocation from '../../screens/RealtimeLocation';
 import Header from '../../components/common/header/Header';
+import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 
 const Stack1 = createStackNavigator();
 
@@ -33,6 +34,11 @@ const ServiceNavigator = () => {
           ),
           backgroundColor: Colors.primary,
         })}
+      />
+      <Stack1.Screen
+        name="ProviderAvailablity"
+        component={ProviderAvailablity}
+        options={{headerShown: false}}
       />
 
       <Stack1.Screen

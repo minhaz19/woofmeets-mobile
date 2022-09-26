@@ -17,6 +17,14 @@ export const useHandleRange = (name = 'dateRange') => {
   const handleDayPress = (day: any) => {
     const {end} = compareDate(day.dateString, step, setPrevDate);
 
+    // if (step === 1) {
+    //   setStartingDate(day.dateString);
+    //   setSteps(2);
+    // } else if (step === 2) {
+    //   setEndingDate(day.dateString);
+    // }
+
+    // console.log('start', startingDate, 'end', endingDate);
     if (step === 1) {
       setSteps(2);
       setStartingDate(day.dateString);

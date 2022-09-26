@@ -36,6 +36,7 @@ export const useServices = () => {
         return DogWalkingIcon;
     }
   };
+  console.log('serivices', services);
   const formattedServices = services?.map((item: any) => {
     const ccc =
       item.ServiceHasRates &&
@@ -45,6 +46,7 @@ export const useServices = () => {
       )[0];
 
     return {
+      id: item.id,
       Icon: getIcon(item.serviceType.slug),
       sittingType: item.serviceType.displayName,
       price: ccc?.amount ? ccc.amount : 0,
@@ -63,6 +65,7 @@ export const useServices = () => {
         }),
     };
   });
+  console.log('formated', formattedServices);
 
   return {
     formattedServices,

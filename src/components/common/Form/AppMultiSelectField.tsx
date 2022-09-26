@@ -12,6 +12,7 @@ interface Props {
   data: any;
   title: string;
   placeholder: string;
+  search?: boolean;
 }
 const AppMultiSelectField = ({
   title,
@@ -20,6 +21,7 @@ const AppMultiSelectField = ({
   setValue,
   data,
   placeholder,
+  search,
 }: Props) => {
   return (
     <View>
@@ -35,6 +37,7 @@ const AppMultiSelectField = ({
               <AppMultiSelect
                 value={value?.map((item: any) => item.id)}
                 data={data}
+                search={search}
                 placeholder={placeholder}
                 onChange={selectedItem => {
                   const modBreeds = selectedItem?.map((item: number) => {

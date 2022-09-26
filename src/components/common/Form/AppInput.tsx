@@ -20,6 +20,7 @@ const AppInput = ({...otherProps}) => {
       ]}>
       <TextInput
         placeholderTextColor={'gray'}
+        allowFontScaling={false}
         style={[
           styles.text,
           {
@@ -27,6 +28,7 @@ const AppInput = ({...otherProps}) => {
             height: numberOfLines >= 10 ? 120 : 45,
             flex: 1,
             color: isDarkMode ? 'white' : 'black',
+            fontSize: Text_Size.Text_11,
           },
           textInputBoxStyle,
         ]}

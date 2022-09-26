@@ -32,7 +32,7 @@ const ShortText = (props: {
 const styles = StyleSheet.create({
   details: {
     fontSize: Text_Size.Text_8,
-    // fontFamily: 'AlbraTextSemi',
+    fontFamily: 'Muli',
   },
 });
 

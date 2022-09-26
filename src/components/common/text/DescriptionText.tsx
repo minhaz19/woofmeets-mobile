@@ -14,7 +14,6 @@ const DescriptionText = (props: {
     <View>
       <Text
         allowFontScaling={false}
-        // adjustsFontSizeToFit={true}
         numberOfLines={props.numberOfLines}
         ellipsizeMode={props.ellipsizeMode}
         style={[
@@ -31,6 +30,7 @@ const DescriptionText = (props: {
 const styles = StyleSheet.create({
   details: {
     fontSize: Text_Size.Text_0,
+      fontFamily: 'Muli',
   },
 });
 

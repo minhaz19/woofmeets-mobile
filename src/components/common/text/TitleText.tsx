@@ -23,7 +23,7 @@ const TitleText = (props: {text: string | number; textStyle?: TextStyle; ellipsi
 const styles = StyleSheet.create({
   title: {
     fontSize: Text_Size.Text_9,
-    // fontFamily: 'AlbraTextBold',
+    fontFamily: 'Muli',
   },
 });
 

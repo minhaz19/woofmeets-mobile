@@ -9,16 +9,17 @@ import React, {FC} from 'react';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Card from '../../../../UI/Card';
 import HeaderText from '../../../../common/text/HeaderText';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import TitleText from '../../../../common/text/TitleText';
 import ShortText from '../../../../common/text/ShortText';
+import Text_Size from '../../../../../constants/textScaling';
 
 interface Props {
   item: {
     name: string;
-    image: any;
+    image: string;
     description: string;
     boardingTime: string;
     status: string;
@@ -41,16 +42,16 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
         <View style={styles.flexContainer}>
           <View style={styles.imageContainer}>
             <Image
-              source={item?.image}
+              source={{uri: item?.image}}
               style={styles.image}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           </View>
           <View style={styles.detailsContainer}>
             <HeaderText text={item.name} textStyle={styles.textHeader} />
             <ShortText
               text={item.boardingTime}
-              textStyle={styles.textDescription}
+              textStyle={styles.textDescriptionOne}
             />
             <ShortText
               text={item.description}
@@ -72,6 +73,17 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
               text={item.status}
               textStyle={{color: Colors.light.background, fontWeight: '600'}}
             />
+
+            <View
+              style={[styles.buttonStyles, {backgroundColor: buttonStyles}]}>
+              <DescriptionText
+                text={item.status}
+                textStyle={{
+                  fontSize: Text_Size.Text_10,
+                  color: Colors.light.background,
+                }}
+              />
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -83,13 +95,12 @@ export default ReusableCard;
 
 const styles = StyleSheet.create({
   image: {
-    borderRadius: 100,
-    width: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
-    height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
-    marginRight: 10,
+    width: '100%',
+    height: '100%',
   },
   itemContainer: {
     padding: '3%',
+
     borderRadius: 4,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
@@ -104,32 +115,43 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flex: 1,
   },
-  imageContainer: {marginRight: 10},
+  imageContainer: {
+    marginRight: 10,
+    width: '15%',
+    borderRadius: 30,
+    overflow: 'hidden',
+  },
   detailsContainer: {
     flex: 1,
   },
   timeContainer: {
-    width: '20%',
-    alignItems: 'center',
+    width: '25%',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
   },
   buttonStyles: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 100,
-    paddingVertical: '2%',
-    paddingHorizontal: '3%',
+    borderRadius: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
   },
   buttonContainer: {
     alignItems: 'flex-end',
     width: '100%',
   },
   textDescription: {
-    lineHeight: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.02 : 20,
+    fontSize: Text_Size.Text_9,
   },
   textHeader: {
     marginTop: 0,
   },
+  textDescriptionOne: {
+    fontSize: Text_Size.Text_9,
+    fontFamily: 'Muli',
+  },
   textTimeDescription: {
     color: Colors.gray,
+    fontSize: Text_Size.Text_12,
   },
 });

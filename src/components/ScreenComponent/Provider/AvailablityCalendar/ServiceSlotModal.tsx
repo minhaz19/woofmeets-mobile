@@ -16,6 +16,16 @@ const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
         isModalVisible={isVisible}
         setIsModalVisible={setIsVisible}
         onBlur={() => console.log('')}>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+            style={styles.cancelBtn}
+            onPress={() => setIsVisible(false)}>
+            <TitleText text="10-12-2022" textStyle={styles.text} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.saveBtn} onPress={onPress}>
+            <TitleText text="10-01-2023" textStyle={styles.text} />
+          </TouchableOpacity>
+        </View>
         <ServiceSlot />
         <View style={styles.btnContainer}>
           <TouchableOpacity

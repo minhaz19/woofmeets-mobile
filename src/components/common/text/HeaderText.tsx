@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: Text_Size.Text_1,
     fontWeight: '600',
-    // fontFamily: 'AlbraTextBold',
+    fontFamily: 'Muli',
   },
 });
 
