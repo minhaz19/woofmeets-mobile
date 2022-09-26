@@ -12,8 +12,6 @@ import HeaderText from '../../../../common/text/HeaderText';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
-import TitleText from '../../../../common/text/TitleText';
-import ShortText from '../../../../common/text/ShortText';
 import Text_Size from '../../../../../constants/textScaling';
 
 interface Props {
@@ -49,29 +47,21 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
           </View>
           <View style={styles.detailsContainer}>
             <HeaderText text={item.name} textStyle={styles.textHeader} />
-            <ShortText
+            <DescriptionText
               text={item.boardingTime}
               textStyle={styles.textDescriptionOne}
             />
-            <ShortText
+            <DescriptionText
               text={item.description}
               textStyle={styles.textDescription}
               numberOfLines={1}
-              ellipsizeMode='tail'
+              ellipsizeMode="tail"
             />
           </View>
           <View style={styles.timeContainer}>
             <DescriptionText
               text="9:00 AM"
               textStyle={styles.textTimeDescription}
-            />
-          </View>
-        </View>
-        <View style={styles.buttonContainer}>
-          <View style={[styles.buttonStyles, {backgroundColor: buttonStyles}]}>
-            <ShortText
-              text={item.status}
-              textStyle={{color: Colors.light.background, fontWeight: '600'}}
             />
 
             <View
@@ -148,7 +138,6 @@ const styles = StyleSheet.create({
   },
   textDescriptionOne: {
     fontSize: Text_Size.Text_9,
-    fontFamily: 'Muli',
   },
   textTimeDescription: {
     color: Colors.gray,

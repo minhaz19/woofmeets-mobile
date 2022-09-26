@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
   },
   text: {
     width: '90%',
-    fontSize: Text_Size.Text_11,
     flex: 0,
   },
   check: {height: '100%', alignSelf: 'center'},
