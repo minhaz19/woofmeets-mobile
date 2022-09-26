@@ -21,7 +21,7 @@ export const useServices = () => {
     providerOpk: '',
   };
 
-  console.log('formateded servies', services);
+  // console.log('formateded servies', services);
   const getIcon = (iconId: string) => {
     switch (iconId) {
       case 'boarding':

@@ -3,6 +3,7 @@ import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
+import ShortText from '../text/ShortText';
 interface Props {
   error: string | undefined | any;
   auth?: boolean;
@@ -22,7 +23,7 @@ const ErrorMessage = ({error, auth}: Props) => {
             auth && isDarkMode ? Colors.dark.lightDark : colors.backgroundColor,
         },
       ]}>
-      <Text style={[styles.error, {color: colors.alert}]}>{error}</Text>
+      <ShortText textStyle={{...styles.error, color: colors.alert}} text={error} />
     </View>
   );
 };
@@ -32,7 +33,6 @@ export default ErrorMessage;
 const styles = StyleSheet.create({
   container: {},
   error: {
-    fontSize: Text_Size.Text_0,
     marginBottom: 10,
     marginTop: 5,
   },

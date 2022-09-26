@@ -24,7 +24,7 @@ const AppInput = ({...otherProps}) => {
           styles.text,
           {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
-            height: numberOfLines >= 10 ? 120 : 40,
+            height: numberOfLines >= 10 ? 120 : 45,
             flex: 1,
             color: isDarkMode ? 'white' : 'black',
           },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   text: {
     width: '90%',
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_11,
     flex: 0,
   },
   check: {height: '100%', alignSelf: 'center'},

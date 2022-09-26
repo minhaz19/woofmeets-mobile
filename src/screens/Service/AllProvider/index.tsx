@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // paddingHorizontal: 20,
-    paddingHorizontal: Platform.OS === 'ios' ? 20 : 10,
+    paddingHorizontal: Platform.OS === 'ios' ? 10 : 5,
   },
 });

@@ -12,6 +12,8 @@ import HeaderText from '../../../../common/text/HeaderText';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+import TitleText from '../../../../common/text/TitleText';
+import ShortText from '../../../../common/text/ShortText';
 
 interface Props {
   item: {
@@ -46,15 +48,15 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
           </View>
           <View style={styles.detailsContainer}>
             <HeaderText text={item.name} textStyle={styles.textHeader} />
-            <DescriptionText
+            <ShortText
               text={item.boardingTime}
               textStyle={styles.textDescription}
             />
-            <DescriptionText
+            <ShortText
               text={item.description}
               textStyle={styles.textDescription}
               numberOfLines={1}
-              ellipsizeMode={'tail'}
+              ellipsizeMode='tail'
             />
           </View>
           <View style={styles.timeContainer}>
@@ -66,9 +68,9 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
         </View>
         <View style={styles.buttonContainer}>
           <View style={[styles.buttonStyles, {backgroundColor: buttonStyles}]}>
-            <DescriptionText
+            <ShortText
               text={item.status}
-              textStyle={{color: Colors.light.background}}
+              textStyle={{color: Colors.light.background, fontWeight: '600'}}
             />
           </View>
         </View>
@@ -92,9 +94,9 @@ const styles = StyleSheet.create({
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
     shadowOpacity: 0.2,
-    shadowOffset: {width: 1, height: 1},
+    shadowOffset: {width: 0, height: 0},
     shadowRadius: 1,
-    elevation: Platform.OS === 'android' ? 8 : 1,
+    elevation: Platform.OS === 'android' ? 1 : 1,
     marginHorizontal: '3%',
   },
   flexContainer: {

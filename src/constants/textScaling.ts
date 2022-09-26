@@ -30,7 +30,7 @@ const Text_Size_Type = {
     Text_8: normalize(11),
     Text_9: normalize(12),
     Text_10: normalize(9),
-    Text_11: normalizeInput(12),
+    Text_11: normalize(12),
   },
 };
 const Text_Size = Text_Size_Type.Scale;

@@ -7,13 +7,16 @@ const ShortText = (props: {
   children?: ReactNode;
   textStyle?: TextStyle;
   text: string | number;
+  numberOfLines?: number;
+  ellipsizeMode?: string;
 }) => {
   const {colors} = useTheme();
   return (
     <View>
       <Text
         allowFontScaling={false}
-        adjustsFontSizeToFit={true}
+        ellipsizeMode={props.ellipsizeMode}
+        numberOfLines={props.numberOfLines}
         style={[
           styles.details,
           {color: colors.lightText},

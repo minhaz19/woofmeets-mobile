@@ -78,11 +78,11 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   text: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_8,
     flex: 1,
   },
   zipText: {
-    fontSize: Text_Size.Text_1,
+    fontSize: Text_Size.Text_8,
   },
   zipContainer: {
     paddingTop: '2%',

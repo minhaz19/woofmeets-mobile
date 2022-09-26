@@ -75,7 +75,7 @@ const ServiceForm = ({
         shouldValidate: errors[name] ? true : false,
       });
 
-    console.log('errors', name, errors[name]);
+    // console.log('errors', name, errors[name]);
   }, [name, updateRates, checked, setValue, convertedValue, errors]);
   return (
     <>

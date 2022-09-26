@@ -1,7 +1,7 @@
 import React from 'react';
 import Colors from '../../constants/Colors';
 import ServiceMain from '../../screens/Service/SelectService';
-import PetCareZipSearch from '../../screens/PetCareZipSearch';
+import PetCareZipSearch from '../../screens/search/PetCareZipSearch';
 import AllProvider from '../../screens/Service/AllProvider';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import {FilterIcon} from '../../assets/svgs/SVG_LOGOS';
@@ -10,17 +10,29 @@ import {setOpenFilter} from '../../store/slices/misc/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
 import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
 import RealtimeLocation from '../../screens/RealtimeLocation';
+import Header from '../../components/common/header/Header';
 
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
   const dispatch = useDispatch();
   return (
-    <Stack1.Navigator initialRouteName="AllProvider">
+    <Stack1.Navigator initialRouteName="PetCareZipSearch">
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
-        options={{headerShown: false}}
+        options={({navigation}) => ({
+          header: () => (
+            <Header
+              navigation={navigation}
+              title="Home"
+              SecondIcon={FilterIcon}
+              notification
+              onPress={() => dispatch(setOpenFilter(true))}
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
       />
 
       <Stack1.Screen
@@ -71,15 +83,15 @@ const ServiceNavigator = () => {
         component={AllProvider}
         options={({navigation}) => ({
           title: 'All Provider',
-          // header: () => (
-          //   <HeaderWithBack
-          //     navigation={navigation}
-          //     title="All Provider"
-          //     SecondIcon={FilterIcon}
-          //     notification
-          //     onPress={() => dispatch(setOpenFilter(true))}
-          //   />
-          // ),
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="All Provider"
+              SecondIcon={FilterIcon}
+              notification
+              onPress={() => dispatch(setOpenFilter(true))}
+            />
+          ),
           backgroundColor: Colors.primary,
         })}
       />
