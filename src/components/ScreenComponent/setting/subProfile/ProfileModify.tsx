@@ -2,8 +2,6 @@ import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {
   CallSvg,
-  CheckList,
-  FeedBackSvg,
   FileTextSvg,
   ImageStackSvg,
   PetSvg,
@@ -11,6 +9,7 @@ import {
 import HeaderText from '../../../common/text/HeaderText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {ProfileIcon} from '../../../../assets/svgs/Setting_SVG';
+import { useTheme } from '../../../../constants/theme/hooks/useTheme';
 
 const modifyProfileData = [
   {
@@ -20,7 +19,7 @@ const modifyProfileData = [
   },
   {
     id: 2,
-    name: 'Phone Numbers',
+    name: 'Phone Number',
     icon: <CallSvg height={20} width={20} />,
   },
   {
@@ -30,7 +29,7 @@ const modifyProfileData = [
   },
   {
     id: 4,
-    name: 'Photos',
+    name: 'Gallery',
     icon: <ImageStackSvg height={20} width={20} />,
   },
   {
@@ -38,21 +37,18 @@ const modifyProfileData = [
     name: 'Your Pets',
     icon: <PetSvg height={20} width={20} />,
   },
-  {
-    id: 6,
-    name: 'Final Details',
-    icon: <CheckList height={20} width={20} />,
-  },
-  {
-    id: 7,
-    name: 'Request Testimonials',
-    icon: <FeedBackSvg height={20} width={20} />,
-  },
 ];
 
 const ProfileModify = () => {
+  const {colors} = useTheme();
   return (
-    <>
+    <View
+        style={[
+          styles.rootContainer,
+          {
+            backgroundColor: colors.backgroundColor,
+          },
+        ]}>
       {modifyProfileData.map(
         (item: {id: number; icon: JSX.Element; name: string}) => {
           return (
@@ -65,13 +61,18 @@ const ProfileModify = () => {
           );
         },
       )}
-    </>
+    </View>
   );
 };
 
 export default ProfileModify;
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    paddingHorizontal:
+      SCREEN_WIDTH <= 380 ? '3%' : SCREEN_WIDTH <= 600 ? '5%' : '6%',
+  },
   flexContainer: {
     flexDirection: 'row',
     alignItems: 'center',

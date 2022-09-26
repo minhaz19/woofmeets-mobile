@@ -13,13 +13,16 @@ import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import {useAppSelector} from '../../../../store/store';
+import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 
-interface Props {
-  serviceData: any;
-}
-
-const ServiceSetting = ({serviceData}: Props) => {
+const ServiceSetting = () => {
   const {colors} = useTheme();
+  const {userServices, userServicesLoading} = useAppSelector(
+    (state: any) => state.services,
+  );
+
+  const serviceData = userServices !== null && userServices;
   const getIcon = (icon: string) => {
     switch (icon) {
       case 'sitter-home':
@@ -35,52 +38,66 @@ const ServiceSetting = ({serviceData}: Props) => {
     }
   };
   return (
-    <View>
-      {serviceData &&
-        serviceData.map((item: any, index: number) => {
-          return (
-            <TouchableOpacity key={index}>
-              <View style={styles.flexContainer}>
-                <View style={styles.serviceContainer}>
-                  <View>{getIcon(item.serviceType.icon)}</View>
-                  <View style={styles.textContainer}>
-                    <HeaderText
-                      text={item.serviceType.name}
-                      textStyle={styles.titleStyle}
-                    />
-                    <DescriptionText
-                      text={'active'}
-                      textStyle={styles.shortText}
+    <>
+      {userServicesLoading && <AppActivityIndicator visible={true} />}
+      <View
+        style={[
+          styles.rootContainer,
+          {
+            backgroundColor: colors.backgroundColor,
+          },
+        ]}>
+        {serviceData &&
+          serviceData.map((item: any, index: number) => {
+            return (
+              <TouchableOpacity key={index}>
+                <View style={styles.flexContainer}>
+                  <View style={styles.serviceContainer}>
+                    <View>{getIcon(item.serviceType.icon)}</View>
+                    <View style={styles.textContainer}>
+                      <HeaderText
+                        text={item.serviceType.name}
+                        textStyle={styles.titleStyle}
+                      />
+                      <DescriptionText
+                        text={'active'}
+                        textStyle={styles.shortText}
+                      />
+                    </View>
+                  </View>
+                  <View>
+                    <MaterialCommunityIcons
+                      name={'chevron-right'}
+                      size={
+                        SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 28
+                      }
+                      style={styles.iconStyle}
+                      color={Colors.subText}
                     />
                   </View>
                 </View>
-                <View>
-                  <MaterialCommunityIcons
-                    name={'chevron-right'}
-                    size={
-                      SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 28
-                    }
-                    style={styles.iconStyle}
-                    color={Colors.subText}
-                  />
-                </View>
-              </View>
-              <View
-                style={[
-                  styles.divider,
-                  {backgroundColor: colors.descriptionText},
-                ]}
-              />
-            </TouchableOpacity>
-          );
-        })}
-    </View>
+                <View
+                  style={[
+                    styles.divider,
+                    {backgroundColor: colors.descriptionText},
+                  ]}
+                />
+              </TouchableOpacity>
+            );
+          })}
+      </View>
+    </>
   );
 };
 
 export default ServiceSetting;
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    paddingHorizontal:
+      SCREEN_WIDTH <= 380 ? '3%' : SCREEN_WIDTH <= 600 ? '5%' : '6%',
+  },
   flexContainer: {
     flexDirection: 'row',
     alignItems: 'center',

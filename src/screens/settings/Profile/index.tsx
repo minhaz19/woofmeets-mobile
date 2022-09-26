@@ -1,33 +1,24 @@
-/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View, TouchableOpacity, useColorScheme} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import ProfileInfo from '../../../components/ScreenComponent/profile/ProfileInfo';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 import Colors from '../../../constants/Colors';
-import Text_Size from '../../../constants/textScaling';
 import {useAppSelector} from '../../../store/store';
 import {useProfileData} from './utils/useProfileData';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
-import ServiceSetting from '../../../components/ScreenComponent/setting/subProfile/ServiceSetting';
-import ProfileModify from '../../../components/ScreenComponent/setting/subProfile/ProfileModify';
 import HeaderText from '../../../components/common/text/HeaderText';
+import {ArrowRight} from '../../../assets/svgs/Services_SVG';
 
-const Profile = () => {
-  const [activeService, setActiveService] = useState<string>('service');
+const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();
   const isDarkMode = useColorScheme() === 'dark';
-  const {userServices, userServicesLoading} = useAppSelector(
-    (state: any) => state.services,
-  );
-
-  const serviceData = userServices !== null && userServices;
-
+  const {loading} = useAppSelector(state => state.userProfile);
   useProfileData();
   return (
     <>
-      {userServicesLoading && <AppActivityIndicator visible={true} />}
+      {loading && <AppActivityIndicator visible={true} />}
       <View
         style={[
           styles.rootContainer,
@@ -53,45 +44,45 @@ const Profile = () => {
                 },
               ]}
               onPress={() => {}}>
-              <HeaderText text="View Profile" textStyle={styles.text} />
+              <DescriptionText text="View Profile" textStyle={styles.text} />
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.serviceContainer}>
           <TouchableOpacity
-            onPress={() => setActiveService('service')}
-            style={[
-              styles.buttonStyles,
-              {
-                backgroundColor:
-                  activeService === 'service' ? Colors.primary : 'white',
-              },
-            ]}>
-            <DescriptionText
+            onPress={() => props.navigation.navigate('ServiceSetting')}
+            style={styles.flexContainer}>
+            <HeaderText
               text={'Service Settings'}
               textStyle={styles.descriptionStyle}
             />
+            <View>
+              <ArrowRight width={24} height={24} fill={Colors.primary}/>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => setActiveService('modify')}
-            style={[
-              styles.buttonStyles,
-              {
-                backgroundColor:
-                  activeService === 'modify' ? Colors.primary : 'white',
-              },
-            ]}>
-            <DescriptionText
+            onPress={() => props.navigation.navigate('ProfileModify')}
+            style={styles.flexContainer}>
+            <HeaderText
               text={'Modify Your Accounts'}
               textStyle={styles.descriptionStyle}
             />
+            <View>
+              <ArrowRight width={24} height={24} fill={Colors.primary}/>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('ManageBusiness')}
+            style={styles.flexContainer}>
+            <HeaderText
+              text={'Manage Business'}
+              textStyle={styles.descriptionStyle}
+            />
+            <View>
+              <ArrowRight width={24} height={24} fill={Colors.primary}/>
+            </View>
           </TouchableOpacity>
         </View>
-        {activeService === 'service' ? (
-          <ServiceSetting serviceData={serviceData} />
-        ) : (
-          <ProfileModify />
-        )}
       </View>
     </>
   );
@@ -114,8 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   serviceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     marginVertical:
       SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
@@ -128,18 +117,19 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   descriptionStyle: {
-    alignSelf: 'center',
-    fontSize: Text_Size.Text_1,
     paddingVertical: 6,
-    color: Colors.black,
   },
 
-  text: {color: 'white', textAlign: 'center'},
+  text: {color: 'white', textAlign: 'center', paddingHorizontal: 4},
   button: {
     backgroundColor: Colors.primary,
     paddingVertical: 4,
     borderWidth: 1,
-    // borderColor: Colors.light.borderColor,
     borderRadius: 50,
+  },
+  flexContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
