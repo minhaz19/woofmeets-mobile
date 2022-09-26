@@ -9,25 +9,28 @@ import MessageNotSend from '../utils/Common/MessageNotSend';
 export const data = [
   {
     id: 1,
-    image: require('../../../../assets/image/pet/mypet.png'),
+    image:
+      'https://images.unsplash.com/photo-1591946614720-90a587da4a36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
     name: 'Bobby',
-    boardingTime: 'Boarding on Jun 14 - Jun 16',
+    boardingTime: 'From Jun 14 to Jun 16',
     description: 'Bobby is a 2 year old dog who is looking for a home.',
     status: 'Pending',
   },
   {
     id: 2,
-    image: require('../../../../assets/image/pet/mypet.png'),
+    image:
+      'https://images.unsplash.com/photo-1591946614720-90a587da4a36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
     name: 'Bobby',
-    boardingTime: 'Boarding on Jun 14 - Jun 16',
+    boardingTime: 'From Jun 14 to Jun 16',
     description: 'Bobby is a 2 year old dog who is looking for a home.',
     status: 'Pending',
   },
   {
     id: 3,
-    image: require('../../../../assets/image/pet/mypet.png'),
+    image:
+      'https://images.unsplash.com/photo-1591946614720-90a587da4a36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
     name: 'Bobby',
-    boardingTime: 'Boarding on Jun 14 - Jun 16',
+    boardingTime: 'From Jun 14 to Jun 16',
     description: 'Bobby is a 2 year old dog who is looking for a home.',
     status: 'Pending',
   },

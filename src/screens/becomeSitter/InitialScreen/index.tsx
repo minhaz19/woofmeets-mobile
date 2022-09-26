@@ -1,5 +1,5 @@
 import {View, Image, ScrollView} from 'react-native';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BigText from '../../../components/common/text/BigText';
 import TitleText from '../../../components/common/text/TitleText';
@@ -11,10 +11,10 @@ import BottomSpacing from '../../../components/UI/BottomSpacing';
 import CardQuotes from '../../../components/ScreenComponent/becomeSitter/Card/CardQuotes';
 import ServicesCom from '../../../components/ScreenComponent/becomeSitter/works/ServicesCom';
 import HowItWorks from '../../../components/ScreenComponent/becomeSitter/works/HowItWorks';
-import { bulletData1, bulletData2, bulletData3 } from './data';
-import { styles } from './styles';
-import { getOnboardingProgress } from '../../../store/slices/onBoarding/initial';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import {bulletData1, bulletData2, bulletData3} from './data';
+import {styles} from './styles';
+import {getOnboardingProgress} from '../../../store/slices/onBoarding/initial';
+import {useAppDispatch} from '../../../store/store';
 
 const SitterInitialScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -23,7 +23,7 @@ const SitterInitialScreen = (props: {
   const {colors} = useTheme();
   useEffect(() => {
     dispatch(getOnboardingProgress());
-  }, [])
+  }, []);
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -35,7 +35,7 @@ const SitterInitialScreen = (props: {
       ]}>
       <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://via.placeholder.com/400x200.png?'}}
+          source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
           style={styles.image}
         />
       </View>
@@ -74,7 +74,7 @@ const SitterInitialScreen = (props: {
       {/* Image Quotes 1 */}
       <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://via.placeholder.com/400x200.png?'}}
+          source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
           style={styles.image}
         />
       </View>
@@ -96,7 +96,7 @@ const SitterInitialScreen = (props: {
       {/* Image Quotes 2 */}
       <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://via.placeholder.com/400x200.png?'}}
+          source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
           style={styles.image}
         />
       </View>

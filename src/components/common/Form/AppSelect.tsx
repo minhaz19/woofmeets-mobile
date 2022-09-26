@@ -12,6 +12,7 @@ interface Props {
   defaultText?: string;
   placeholder: string;
   onChange: (arg: any) => void;
+  setSelectedService?: (arg: any) => void;
 }
 const AppSelect = ({
   data,
@@ -19,17 +20,21 @@ const AppSelect = ({
   placeholder,
   disable = false,
   onChange,
+  setSelectedService,
 }: Props) => {
   const {isDarkMode, colors} = useTheme();
   const [value, setValuee] = useState(defaultText);
   const [isFocus, setIsFocus] = useState(false);
-  const renderItem = useCallback((item: any) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.selectedTextStyle}>{item.label}</Text>
-      </View>
-    );
-  }, []);
+  const renderItem = useCallback(
+    (item: any) => {
+      return (
+        <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
+          <Text style={styles.selectedTextStyle}>{item.label}</Text>
+        </View>
+      );
+    },
+    [colors.backgroundColor],
+  );
   return (
     <View>
       <Dropdown
@@ -60,8 +65,11 @@ const AppSelect = ({
         renderItem={renderItem}
         onChange={item => {
           setValuee(item.value);
+          console.log('item.value', item.value);
           setIsFocus(false);
           onChange(item.value);
+          setSelectedService && setSelectedService(item.id);
+          console.log('item.id', item);
         }}
       />
     </View>
@@ -85,11 +93,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   placeholderStyle: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_12,
     color: 'gray',
   },
   selectedTextStyle: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_12,
   },
   iconStyle: {
     width: 20,
@@ -97,7 +105,7 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_12,
   },
   icon: {
     marginRight: 5,
@@ -108,6 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    // backgroundColor: 'red',
   },
   selectedStyle: {
     backgroundColor: Colors.primary,

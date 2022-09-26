@@ -143,41 +143,25 @@ const BoardingSettingsSchema = Yup.object().shape({
   baserate: Yup.number()
     .nullable(true)
     .required('Pet per service is required')
-    .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  sixtyMinRate: Yup.number()
-    .nullable(true)
-    .max(150, 'Please enter a value less than or equal to 150.'),
+    .typeError('A Number is Required'),
+  sixtyMinRate: Yup.number().nullable(true),
   holidayrate: Yup.number()
     .nullable(true)
     .required('holiday rate is required')
-    .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
+    .typeError('A Number is Required'),
   additionaldog: Yup.number()
     .nullable(true)
     .required('Additional dog rate is required')
-    .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  puppyRate: Yup.number()
-    .nullable(true)
-    .max(150, 'Please enter a value less than or equal to 150.'),
+    .typeError('A Number is Required'),
+  puppyRate: Yup.number().nullable(true),
   catcare: Yup.number()
     .nullable(true)
     .required('Cate rate is required')
-    .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  additionalCat: Yup.number()
-    .nullable(true)
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  extendedStayRate: Yup.number()
-    .nullable(true)
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  bathingGrooming: Yup.number()
-    .nullable(true)
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  pickUpDropOff: Yup.number()
-    .nullable(true)
-    .max(150, 'Please enter a value less than or equal to 150.'),
+    .typeError('A Number is Required'),
+  additionalCat: Yup.number().nullable(true),
+  extendedStayRate: Yup.number().nullable(true),
+  bathingGrooming: Yup.number().nullable(true),
+  pickUpDropOff: Yup.number().nullable(true),
 });
 const safetyQuizValidationSchema = Yup.object().shape({
   '1': Yup.string().required('Please choose the corrent answer'),
@@ -190,10 +174,11 @@ const safetyQuizValidationSchema = Yup.object().shape({
   '8': Yup.string().required('Please choose the corrent answer'),
 });
 const backgroundCheckValidationSchema = Yup.object().shape({
-  dob: Yup.string().required('Please choose the corrent answer'),
-  state: Yup.string().required('Please choose the corrent answer'),
-  dlld: Yup.string().required('Please choose the corrent answer'),
-  stateId: Yup.string().required('Please choose the corrent answer'),
+  dob: Yup.string(),
+  // dob: Yup.string().required('Please provide date of birth'),
+  state: Yup.string(),
+  dlld: Yup.string(),
+  stateId: Yup.string(),
   imageGallery: Yup.array(),
 });
 const planCheckoutValidationSchema = Yup.object().shape({

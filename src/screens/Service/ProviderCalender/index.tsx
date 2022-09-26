@@ -2,13 +2,24 @@ import {View} from 'react-native';
 import React from 'react';
 import FullCalendar from '../../../components/ScreenComponent/Service/ProviderFullCalendar/FullCalendar';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-
-const ProviderCalendar = () => {
+interface Props {
+  route: {
+    params: {
+      availability: [string];
+      loading: boolean;
+    };
+  };
+}
+const ProviderCalendar = ({route}: Props) => {
   const {colors} = useTheme();
+  const {availability} = route?.params;
   return (
-    <View style={{backgroundColor: colors.backgroundColor}}>
-      <FullCalendar />
-    </View>
+    <>
+      {/* {loading && <AppActivityIndicator visible={true} />} */}
+      <View style={{backgroundColor: colors.backgroundColor}}>
+        <FullCalendar availability={availability} />
+      </View>
+    </>
   );
 };
 

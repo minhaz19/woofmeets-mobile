@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: Text_Size.Text_5,
-    // fontFamily: 'Arial',
+    fontFamily: 'Muli',
     paddingHorizontal: '5%',
     paddingVertical: '2%',
   },

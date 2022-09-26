@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {
@@ -27,12 +26,15 @@ import * as Yup from 'yup';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
-import { setProfileData } from '../../../store/slices/onBoarding/initial';
-import { useAppDispatch } from '../../../store/store';
+import {setProfileData} from '../../../store/slices/onBoarding/initial';
+import {useAppDispatch} from '../../../store/store';
+import apiClient from '../../../api/client';
+import {ApiResponse} from 'apisauce';
 
 const Gallery = () => {
   const dispatch = useAppDispatch();
   const [photo, setPhoto] = useState<any>([]);
+  const [getLoading, setGetLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
   const [captionImage, setCaptionImage] = useState({
@@ -40,37 +42,37 @@ const Gallery = () => {
     caption: '',
     uri: '',
   });
-  const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
+  const [, setIsImageLoading] = useState<boolean>(false);
   const [scrolling, setScrolling] = useState<boolean>(true);
   const {colors, isDarkMode} = useTheme();
 
   const onHandleGallery = () => {
-    dispatch(setProfileData({pass: 3}))
-  }
+    dispatch(setProfileData({pass: 3}));
+  };
 
   // Get all image
   const endPoint = '/gallery/photo/get-all';
-  const {request: getRequest, loading: getLoading} = useApi(methods._get);
   useEffect(() => {
     getImage();
   }, []);
   const getImage = async () => {
-    const result = await getRequest(endPoint);
-    const imageData = [];
-    for (let i = 0; i < result.data.data?.length; i++) {
-      imageData.push({
-        key: result.data.data[i]?.id,
-        name: result.data.data[i]?.imageSrc.url,
-        caption: result.data.data[i]?.caption,
-      });
+    setGetLoading(true);
+    const result: ApiResponse<any> = await apiClient.get(endPoint);
+    if (result.ok) {
+      setGetLoading(false);
+      const imageData = [];
+      for (let i = 0; i < result.data.data?.length; i++) {
+        imageData.push({
+          key: result.data.data[i]?.id,
+          name: result.data.data[i]?.imageSrc.url,
+          caption: result.data.data[i]?.caption,
+        });
+      }
+      setPhoto(imageData);
+    } else {
+      setGetLoading(false);
     }
-    setPhoto(imageData);
   };
-  // const uid = () =>
-  //   String(Date.now().toString(32) + Math.random().toString(16)).replace(
-  //     /\./g,
-  //     '',
-  //   );
 
   //Remove photo
   const {request: deleteRequest, loading: deleteLoading} = useApi(
@@ -112,7 +114,7 @@ const Gallery = () => {
     const data = {
       photos: formattedPhotos,
     };
-    const result = await dragRequest(dragEndpoint, data);
+    await dragRequest(dragEndpoint, data);
   };
 
   const handlePress = (id: string) => {

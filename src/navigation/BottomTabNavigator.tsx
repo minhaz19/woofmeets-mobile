@@ -155,6 +155,7 @@ function BottomTabNavigator() {
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
                 <Text
+                  allowFontScaling={false}
                   style={[
                     focused
                       ? {color: Colors.primary}
@@ -214,6 +215,7 @@ function BottomTabNavigator() {
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
                 <Text
+                  allowFontScaling={false}
                   style={[
                     focused
                       ? {color: Colors.primary}
@@ -239,6 +241,7 @@ function BottomTabNavigator() {
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
                 <Text
+                  allowFontScaling={false}
                   style={[
                     focused
                       ? {color: Colors.primary}
@@ -270,6 +273,7 @@ function BottomTabNavigator() {
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
                 <Text
+                  allowFontScaling={false}
                   style={[
                     focused
                       ? {color: Colors.primary}
@@ -296,6 +300,7 @@ function BottomTabNavigator() {
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
                 <Text
+                  allowFontScaling={false}
                   style={[
                     focused
                       ? {color: Colors.primary}

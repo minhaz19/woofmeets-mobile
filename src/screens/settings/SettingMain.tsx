@@ -2,7 +2,6 @@ import {View, StyleSheet, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   CallIcon,
-  CardsIcon,
   CuponIcon,
   HelpIcon,
   InviteIcon,
@@ -21,7 +20,7 @@ import {useAppDispatch, useAppSelector} from '../../store/store';
 import jwtDecode from 'jwt-decode';
 import authStorage from '../../utils/helpers/auth/storage';
 import BottomSpacing from '../../components/UI/BottomSpacing';
-import { logout } from '../../store/slices/auth/userSlice';
+import {logout} from '../../store/slices/auth/userSlice';
 import methods from '../../api/methods';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -32,7 +31,7 @@ const SettingMain = (props: {
   const {colors} = useTheme();
   const [token, setToken] = useState<any>();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
-  const userInfo = useAppSelector(state => state.auth.userInfo);
+  // const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
@@ -59,14 +58,6 @@ const SettingMain = (props: {
   ];
   const profileData = [
     {
-      id: 1,
-      title: 'My Account',
-      icon: ProfileIcon,
-      screenName: () => props.navigation.navigate('MyAccount'),
-      rightIcon: true,
-      opacity: 1,
-    },
-    {
       id: 2,
       title: 'Payments and Payout',
       icon: PaymentIcon,
@@ -74,15 +65,33 @@ const SettingMain = (props: {
       rightIcon: true,
       opacity: 1,
     },
-    {
-      id: 3,
-      title: 'Cards',
-      icon: CardsIcon,
-      screenName: () => props.navigation.navigate('CreditAndDebitCard'),
-      rightIcon: true,
-      opacity: 1,
-    },
+    // {
+    //   id: 3,
+    //   title: 'Cards',
+    //   icon: CardsIcon,
+    //   screenName: () => props.navigation.navigate('CreditAndDebitCard'),
+    //   rightIcon: true,
+    //   opacity: 1,
+    // },
   ];
+
+  const customerProfile = {
+    id: 1,
+    title: 'My Account',
+    icon: ProfileIcon,
+    screenName: () => props.navigation.navigate('MyAccount'),
+    rightIcon: true,
+    opacity: 1,
+  };
+
+  const sitterProfile = {
+    id: 4,
+    title: 'Profile',
+    icon: ProfileIcon,
+    screenName: () => props.navigation.navigate('Profile'),
+    rightIcon: true,
+    opacity: 1,
+  };
 
   const sittingData = [
     {
@@ -100,7 +109,7 @@ const SettingMain = (props: {
       id: 1,
       title: 'Book a service',
       icon: SitterIcon,
-      screenName: () => props.navigation.navigate('PetCareZipSearch'),
+      screenName: () => props.navigation.navigate('ProHomeNavigator'),
       rightIcon: true,
       opacity: 1,
     },
@@ -157,12 +166,14 @@ const SettingMain = (props: {
     {
       id: 2,
       title: 'Logout',
-      vectorIcon: <MaterialCommunityIcons
-      name="logout"
-      size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
-      style={styles.iconStyle}
-      color={Colors.primary}
-    />,
+      vectorIcon: (
+        <MaterialCommunityIcons
+          name="logout"
+          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+          style={styles.iconStyle}
+          color={Colors.primary}
+        />
+      ),
       screenName: () => {
         dispatch(logout());
         methods._get('/auth/logout');
@@ -215,25 +226,40 @@ const SettingMain = (props: {
           </View>
           <ShortText text={'Share Now'} />
         </View>
-        {!isLoggedIn &&
+        {!isLoggedIn && (
           <View>
-            {loginData?.map(item => <SettingItem data={item} key={item.id} />)}
+            {loginData?.map(item => (
+              <SettingItem data={item} key={item.id} />
+            ))}
             <View
-              style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+              style={[
+                styles.divider,
+                {backgroundColor: colors.descriptionText},
+              ]}
             />
           </View>
-        }
-        {isLoggedIn &&
+        )}
+        {isLoggedIn && (
           <View>
             <View style={styles.titleContainer}>
-            <TitleText text="Account" />
+              <TitleText text="Account" />
+            </View>
+            {token && token.provider ? (
+              <SettingItem data={sitterProfile} key={sitterProfile.id} />
+            ) : (
+              <SettingItem data={customerProfile} key={customerProfile.id} />
+            )}
+            {profileData?.map(item => (
+              <SettingItem data={item} key={item.id} />
+            ))}
+            <View
+              style={[
+                styles.divider,
+                {backgroundColor: colors.descriptionText},
+              ]}
+            />
           </View>
-          {profileData?.map(item => <SettingItem data={item} key={item.id} />)}
-          <View
-            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-          />
-          </View>
-        }
+        )}
         {token && token.provider ? (
           <View>
             <View style={styles.titleContainer}>

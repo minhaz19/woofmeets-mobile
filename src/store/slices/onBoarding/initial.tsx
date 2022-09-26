@@ -46,7 +46,7 @@ const initialState: any = {
       id: 2,
       sequence: 1,
       title: 'Set Up Services',
-      name: 'serviceSelection',
+      name: 'serviceSetup',
       isCompleted: false,
       inProgress: false,
       screen: <HomeProfile />,
@@ -275,6 +275,8 @@ const contact = createSlice({
       .addCase(getOnboardingProgress.fulfilled, (state, {payload}) => {
         state.loading = false;
         state.progressData = payload.data;
+        const serviceSubList = payload.data.serviceSetupSublist;
+        const individualServiceSetupSublistTemp = payload.data.individualServiceSetupSublist.boarding;
         const sitterDataTemp = [...state.sitterData];
         sitterDataTemp.map(v => {
           switch (v.name) {
@@ -311,9 +313,6 @@ const contact = createSlice({
         })
         // service setup screen progress
         const serviceSetupTemp = [...state.boardingSelection];
-        const serviceSubList = payload.data.serviceSetupSublist;
-        const individualServiceSetupSublistTemp = payload.data.individualServiceSetupSublist.boarding;
-
         serviceSetupTemp.map(v => {
           switch (v.name) {
             case 'PROVIDER_PET_PREFERANCE':

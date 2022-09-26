@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View,  StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import TitleText from '../../../../common/text/TitleText';
@@ -13,7 +13,7 @@ import BulletPoints from '../../../../UI/Points/BulletPoints';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const PackageCard = (props: {
   onPressEvent: (arg0: any) => void;
@@ -26,14 +26,17 @@ const PackageCard = (props: {
     description: string | number;
   };
   sequence: any;
+  navigation: any;
 }) => {
-  const {colors} = useTheme();
+  const {colors, isDarkMode} = useTheme();
   const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleSubmit = () => {
     if (props.item.sequence === 3) {
       // @ts-ignore
-      navigation.navigate('BasicBackgroundCheck', {sequence: props.item.sequence});
+      navigation.navigate('BasicBackgroundCheck', {
+        sequence: props.item.sequence,
+      });
       setIsModalVisible(!isModalVisible);
     } else {
       // @ts-ignore
@@ -109,7 +112,15 @@ const PackageCard = (props: {
           <TouchableOpacity
             style={styles.detailsWrap}
             onPress={() => setIsModalVisible(!isModalVisible)}>
-            <View style={styles.detailsContainer}>
+            <View
+              style={[
+                styles.detailsContainer,
+                {
+                  backgroundColor: isDarkMode
+                    ? colors.lightBackgroundColor
+                    : colors.primaryLight,
+                },
+              ]}>
               <DescriptionText text="Details" textStyle={styles.detailsText} />
             </View>
           </TouchableOpacity>
@@ -166,6 +177,7 @@ const styles = StyleSheet.create({
     width: '70%',
   },
   textPortion2: {
+    alignItems: 'flex-end',
   },
   textPortion3: {
     paddingBottom: 4,
@@ -174,14 +186,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     marginVertical: 10,
-    paddingVertical: 2,
-    backgroundColor: '#FFF2E6',
+    paddingVertical: 4,
   },
   detailsWrap: {
     flexDirection: 'row',
   },
   detailsText: {
     color: Colors.primary,
+    fontWeight: 'bold',
   },
   footerContainer: {
     paddingHorizontal: '20%',

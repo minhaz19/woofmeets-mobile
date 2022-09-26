@@ -4,6 +4,7 @@ import {btnStyles} from '../../constants/theme/common/buttonStyles';
 import Text_Size from '../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
+import TitleText from './text/TitleText';
 interface Props {
   title: string;
   onPress?: () => void;
@@ -14,7 +15,7 @@ const AppButton = ({title, onPress}: Props) => {
     <TouchableOpacity
       onPress={onPress}
       style={btnStyles.containerStyleFullWidth}>
-      <Text style={styles.title}>{title}</Text>
+      <TitleText textStyle={styles.title} text={title} />
     </TouchableOpacity>
   );
 };

@@ -4,7 +4,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  useColorScheme,
   View,
 } from 'react-native';
 import Colors from '../../../constants/Colors';
@@ -21,11 +20,12 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {useLogin} from './utils/useLogin';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
 const Login = ({navigation}: Props) => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const {isDarkMode, colors} = useTheme();
   const {handleSubmit, providerLoading, loading} = useLogin(navigation);
   return (
     <>
@@ -35,9 +35,7 @@ const Login = ({navigation}: Props) => {
         contentContainerStyle={styles.container}
         style={[
           {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.secondary,
+            backgroundColor: colors.backgroundColor,
           },
         ]}>
         <KeyboardAvoidingView
@@ -88,7 +86,7 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   infoContainer: {
     borderTopRightRadius: 30,

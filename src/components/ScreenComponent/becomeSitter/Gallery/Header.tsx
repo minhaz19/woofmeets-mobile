@@ -2,28 +2,29 @@
 import React from 'react';
 import {StyleSheet, View, Image} from 'react-native';
 import Text_Size from '../../../../constants/textScaling';
+import { useTheme } from '../../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import BigText from '../../../common/text/BigText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import HeaderText from '../../../common/text/HeaderText';
-import TitleText from '../../../common/text/TitleText';
 
 const Header = () => {
+  const {colors} = useTheme();
   return (
     <View style={styles.container}>
       <BigText text="Create Your Profile" textStyle={styles.bigText} />
       <HeaderText text="Photos" textStyle={styles.headerText} />
-      <TitleText
+      <DescriptionText
         text={'Share more about you with pet parents'}
         textStyle={styles.titleText}
       />
       <DescriptionText
         text="Show pet parents you'll love their pets like they do by uploading welcoming and professional photos of yourself. The more photos the better! We recommend five to ten. Here's some guidelines for appropriate photos."
-        textStyle={styles.descriptionText}
+        textStyle={{...styles.descriptionText, color: colors.descriptionText}}
       />
       <DescriptionText
         text="Examples"
-        textStyle={{fontSize: Text_Size.Text_9}}
+        textStyle={{fontSize: Text_Size.Text_9, color: colors.descriptionText}}
       />
       <View style={styles.imageContainer}>
         {imageData?.map((image: any) => {
@@ -43,7 +44,7 @@ const Header = () => {
               <HeaderText text={'\u2022'} />
               <DescriptionText
                 text={data.text}
-                textStyle={{flex: 1, paddingLeft: 5}}
+                textStyle={{flex: 1, paddingLeft: 5, color: colors.descriptionText}}
               />
             </View>
           );

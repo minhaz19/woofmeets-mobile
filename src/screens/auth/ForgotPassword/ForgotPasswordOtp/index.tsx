@@ -3,7 +3,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  useColorScheme,
   View,
 } from 'react-native';
 import React from 'react';
@@ -18,6 +17,7 @@ import BottomSpacing from '../../../../components/UI/BottomSpacing';
 import AppForm from '../../../../components/common/Form/AppForm';
 import {RouteProp} from '@react-navigation/native';
 import {useFPOtp} from './utils/useFPOtp';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 const forgotPassData = {
   icon: AuthEmail,
   title: 'Forgot Password?',
@@ -31,17 +31,16 @@ interface Props {
   route: RouteProp<{params: {email: string}}, 'params'>;
 }
 const ForgotPasswordOtp = ({route, navigation}: Props) => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const {isDarkMode, colors} = useTheme();
   const {handleSubmit, loading} = useFPOtp(route, navigation);
+
   return (
     <ScrollView
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
       style={[
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
+          backgroundColor: colors.backgroundColor,
         },
       ]}>
       <KeyboardAvoidingView
@@ -68,7 +67,7 @@ const ForgotPasswordOtp = ({route, navigation}: Props) => {
             <AuthForm
               handleSubmit={handleSubmit}
               btnTitle="Continue"
-              btn2Title="Resend Code"
+              btn2Title="Cancel"
               forgotPasswordOpt
               loading={loading}
             />
@@ -85,7 +84,7 @@ export default ForgotPasswordOtp;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   infoContainer: {
     borderTopRightRadius: 30,

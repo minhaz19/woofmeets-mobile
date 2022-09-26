@@ -19,6 +19,7 @@ interface Props {
   };
 }
 const SitterInfo = ({item}: Props) => {
+  console.log('item', item);
   const {isDarkMode} = useTheme();
   return (
     <View>

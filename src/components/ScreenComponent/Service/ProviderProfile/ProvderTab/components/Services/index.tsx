@@ -7,7 +7,7 @@ import PetPricing from './component/PetPricing';
 import {useServices} from './utils/useServices';
 
 const Services = () => {
-  const {formattedServices, atHome} = useServices();
+  const {formattedServices, availabilityData, atHome} = useServices();
   return (
     <View style={styles.container}>
       <View style={styles.petTypeContainer}>
@@ -21,11 +21,11 @@ const Services = () => {
 
       <View>
         {formattedServices?.map((pricingD: any, inde: number) => (
-          <PetPricing key={inde} pricingD={pricingD} />
+          <PetPricing key={inde} pricingD={pricingD} index={inde} />
         ))}
       </View>
       <View style={styles.calendar}>
-        <ServicesCalendar />
+        <ServicesCalendar availabilityData={availabilityData} />
       </View>
     </View>
   );

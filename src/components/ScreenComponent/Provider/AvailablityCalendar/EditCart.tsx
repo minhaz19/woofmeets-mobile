@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import Animated, {
@@ -6,15 +7,18 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import Text_Size from '../../../../constants/textScaling';
-import {Reset} from '../../../../assets/svgs/SVG_LOGOS';
+import {Reset, Setting} from '../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../constants/Colors';
 import ServiceSlotModal from './ServiceSlotModal';
+import ServiceDaySlotModal from './ServiceDaySlotModal';
+import TitleText from '../../../common/text/TitleText';
 interface Props {
   startingDate: string;
   resetRange: () => void;
 }
 const EditCart = ({startingDate, resetRange}: Props) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isDayVisible, setIsDayVisible] = useState(false);
   const offset = useSharedValue(0);
   const animatedStyles = useAnimatedStyle(() => {
     return {
@@ -30,20 +34,29 @@ const EditCart = ({startingDate, resetRange}: Props) => {
     <Animated.View style={[styles.editContainer, animatedStyles]}>
       <View style={styles.availablity}>
         <TouchableOpacity style={styles.markContainer}>
-          <Text style={styles.mark}>Mark as unavailable</Text>
+          <TitleText textStyle={styles.mark} text={'Mark as unavailable'} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.editBtnContainer}
           onPress={() => setIsVisible(true)}>
-          <Text style={styles.edit}>Edit</Text>
+          {/* <Text style={styles.edit}>Edit</Text> */}
+          <TitleText textStyle={styles.edit} text={'Edit'} />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.icon} onPress={resetRange}>
-        <Reset width={30} height={20} fill={'white'} />
+      <TouchableOpacity
+        style={styles.icon}
+        onPress={() => setIsDayVisible(true)}>
+        {/* <Reset width={30} height={20} fill={'white'} /> */}
+        <Setting fill="white" width={20} height={20} />
       </TouchableOpacity>
       <ServiceSlotModal
         isVisible={isVisible}
         setIsVisible={setIsVisible}
+        onPress={handlePress}
+      />
+      <ServiceDaySlotModal
+        isVisible={isDayVisible}
+        setIsVisible={setIsDayVisible}
         onPress={handlePress}
       />
     </Animated.View>
@@ -56,7 +69,7 @@ const styles = StyleSheet.create({
   editContainer: {
     position: 'absolute',
     bottom: '10%',
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.black,
     width: '90%',
     marginHorizontal: 20,
     borderRadius: 10,

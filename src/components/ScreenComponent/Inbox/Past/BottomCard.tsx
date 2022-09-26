@@ -21,6 +21,7 @@ import Card from '../../../UI/Card';
 import AppCheckbox from '../../../common/Form/AppCheckbox';
 import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
+import BottomSpacing from '../../../UI/BottomSpacing';
 
 interface Props {
   isPayment?: boolean;
@@ -136,7 +137,7 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
             <View style={styles.flexContainer}>
               <View style={styles.flexInnerContainer}>
                 {item.icon}
-                <HeaderText text={item.title} textStyle={styles._text} />
+                <DescriptionText text={item.title} textStyle={styles._text} />
               </View>
               {item.editSvg && item.editSvg}
             </View>
@@ -145,7 +146,7 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
           <View key={index} style={styles.flexContainer}>
             <View style={styles.flexInnerContainer}>
               {item.icon}
-              <HeaderText text={item.title} textStyle={styles._text} />
+              <DescriptionText text={item.title} textStyle={styles._text} />
             </View>
           </View>
         );
@@ -177,9 +178,9 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
           }}>
           <HeaderText text={'Call Setting'} textStyle={styles.newTextHeader} />
           <View style={[styles.flexInnerContainer, {paddingTop: 5}]}>
-            <HeaderText
+            <DescriptionText
               text={'Call Steve may call your Pet Number'}
-              textStyle={{paddingRight: 10}}
+              textStyle={{paddingRight: 10, fontWeight: '600'}}
             />
             {showDropDown && <FeatherSvg height={16} width={16} />}
           </View>
@@ -196,13 +197,14 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
         <Card style={styles.cardSetting}>
           {dropDownData.map((item, index) => {
             return (
-              <View key={index}>
+              <View key={index} style={{marginVertical: 4}}>
                 <AppCheckbox
-                  title={item.title}
+                  title={item?.title}
                   radio
-                  active={item.active}
-                  onPress={item.onPress}
+                  active={item?.active}
+                  onPress={item?.onPress}
                 />
+                <DescriptionText text={item.title} />
               </View>
             );
           })}
@@ -213,6 +215,7 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
           <HeaderText text={'Cancel'} textStyle={styles.cancelText} />
         </TouchableOpacity>
       )}
+      <BottomSpacing />
     </View>
   );
 };
@@ -270,6 +273,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '12%' : '8%',
     marginBottom:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '10%' : '6%',
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '8%' : '6%',
   },
 });

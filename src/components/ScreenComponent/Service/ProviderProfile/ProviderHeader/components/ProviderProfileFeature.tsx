@@ -20,7 +20,7 @@ const ProviderProfileFeature = () => {
     {
       Icon: MapDistance,
       title: 'Distance',
-      value: `${featured?.distance ? featured.distance : 0} km`,
+      value: `${featured?.distance ? featured.distance : 0} Miles`,
     },
     {
       Icon: Experience,

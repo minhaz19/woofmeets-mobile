@@ -1,4 +1,4 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
@@ -33,39 +33,41 @@ const CreateProfileLanding = () => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <View style={styles.innerContainer}>
-        {/* completed */}
-        {profileData.map(
-          (item: any) =>
-            item.isCompleted && (
-              <ProfileItemCard
-                key={item.id}
-                name={item.name}
-                title={item.title}
-                id={item.id}
-                isCompleted={item.isCompleted}
-                handleClick={item.onPress} 
-                isBoarding={false} />
-            ),
-        )}
-        {/* not completed */}
-        {profileData.map(
-          (item: any) =>
-            !item.isCompleted && (
-              <ProfileItemCard
-                key={item.id}
-                name={item.name}
-                title={item.title}
-                id={item.id}
-                isCompleted={item.isCompleted}
-                handleClick={item.onPress} isBoarding={false} />
-            ),
-        )}
-      </View>
+      <ScrollView horizontal={true}>
+        <View style={styles.innerContainer}>
+          {/* completed */}
+          {profileData.map(
+            (item: any) =>
+              item.isCompleted && (
+                <ProfileItemCard
+                  key={item.id}
+                  name={item.name}
+                  title={item.title}
+                  id={item.id}
+                  isCompleted={item.isCompleted}
+                  handleClick={item.onPress} 
+                  isBoarding={false} />
+              ),
+          )}
+          {/* not completed */}
+          {profileData.map(
+            (item: any) =>
+              !item.isCompleted && (
+                <ProfileItemCard
+                  key={item.id}
+                  name={item.name}
+                  title={item.title}
+                  id={item.id}
+                  isCompleted={item.isCompleted}
+                  handleClick={item.onPress} isBoarding={false} />
+              ),
+          )}
+        </View>
+      </ScrollView>
       {profileData.map((item: any) => {
         if (item.inProgress) {
           return (
-            <View key={item.id} style={{flex: 1}}>
+            <View key={item.id} style={{flex: 32}}>
               {item.screen}
             </View>
           );
@@ -82,14 +84,10 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     width: '90%',
-    paddingTop: 20,
-    paddingBottom: 100,
     paddingLeft: '10%',
   },
   innerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
   },
 });
 
