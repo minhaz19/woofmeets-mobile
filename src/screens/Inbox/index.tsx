@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import HeaderText from '../../components/common/text/HeaderText';
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   text1: {
     fontWeight: '600',
