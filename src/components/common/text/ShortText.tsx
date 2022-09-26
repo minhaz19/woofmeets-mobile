@@ -6,7 +6,7 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const ShortText = (props: {
   children?: ReactNode;
   textStyle?: TextStyle;
-  text: string | number;
+  text: string | number | undefined;
   numberOfLines?: number;
   ellipsizeMode?: string;
 }) => {

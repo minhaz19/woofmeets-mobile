@@ -1,10 +1,4 @@
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useTheme} from '../constants/theme/hooks/useTheme';
 import ButtonCom from '../components/UI/ButtonCom';
@@ -13,23 +7,21 @@ import IOSButton from '../components/UI/IOSButton';
 import Colors from '../constants/Colors';
 import Text_Size from '../constants/textScaling';
 import {SCREEN_WIDTH} from '../constants/WindowSize';
-import BigText from '../components/common/text/BigText';
 import TitleText from '../components/common/text/TitleText';
 import BottomSpacing from '../components/UI/BottomSpacing';
 
 const AfterIntroScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
 }) => {
-  const {colors} = useTheme();
-  const isDarkMode = useColorScheme() === 'dark';
+  const {colors, isDarkMode} = useTheme();
   return (
     <View
       style={[
         styles.container,
         {
           backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
+            ? Colors.dark.lightDark
+            : colors.backgroundColor,
         },
       ]}>
       <ScrollView

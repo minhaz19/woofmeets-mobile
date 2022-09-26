@@ -29,7 +29,7 @@ interface Props {
 }
 const ForgotPasswordReset = ({route, navigation}: Props) => {
   const height = SCREEN_HEIGHT;
-  const {isDarkMode, colors} = useTheme();
+  const {isDarkMode} = useTheme();
   const {handleSubmit, loading} = useFPReset(navigation, route);
 
   return (
@@ -42,7 +42,9 @@ const ForgotPasswordReset = ({route, navigation}: Props) => {
       style={[
         styles.container,
         {
-          backgroundColor: colors.backgroundColor,
+          backgroundColor: isDarkMode
+            ? Colors.dark.lightDark
+            : Colors.background,
         },
       ]}>
       <KeyboardAvoidingView

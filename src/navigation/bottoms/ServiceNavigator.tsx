@@ -35,6 +35,7 @@ const ServiceNavigator = () => {
           backgroundColor: Colors.primary,
         })}
       />
+
       <Stack1.Screen
         name="ProviderAvailablity"
         component={ProviderAvailablity}

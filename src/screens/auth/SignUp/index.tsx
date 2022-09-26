@@ -24,7 +24,7 @@ interface Props {
 }
 
 const SignUp = ({navigation}: Props) => {
-  const {isDarkMode, colors} = useTheme();
+  const {isDarkMode} = useTheme();
   const {handleSubmit, providerLoading, loading} = useSignUp(navigation);
 
   return (
@@ -34,7 +34,9 @@ const SignUp = ({navigation}: Props) => {
         showsVerticalScrollIndicator={false}
         style={[
           {
-            backgroundColor: colors.backgroundColor,
+            backgroundColor: isDarkMode
+              ? Colors.dark.lightDark
+              : Colors.background,
           },
         ]}>
         <KeyboardAvoidingView
