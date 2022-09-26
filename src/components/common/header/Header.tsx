@@ -1,9 +1,7 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {BellIcon} from '../../../assets/svgs/SVG_LOGOS';
-import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import Ion from 'react-native-vector-icons/Ionicons';
 import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../text/HeaderText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -114,7 +112,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingRight: SCREEN_WIDTH * 0.25,
   },
   bellContainer: {paddingRight: 5, paddingTop: 5},
   bellView: {

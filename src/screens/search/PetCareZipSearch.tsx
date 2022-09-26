@@ -190,6 +190,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     paddingLeft: 5,
+    paddingTop: 25,
   },
   scrollContainer: {
     // paddingHorizontal: '5%',

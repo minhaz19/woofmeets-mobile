@@ -25,7 +25,7 @@ const ServiceNavigator = () => {
           header: () => (
             <Header
               navigation={navigation}
-              title="Home"
+              title="Services"
               SecondIcon={FilterIcon}
               notification
               onPress={() => dispatch(setOpenFilter(true))}

@@ -1,12 +1,13 @@
 import {Dimensions, PixelRatio, Platform} from 'react-native';
 import {SCREEN_WIDTH} from './WindowSize';
-const scale = SCREEN_WIDTH / 280;
+const scale = SCREEN_WIDTH / 250;
+const scale2 = SCREEN_WIDTH / 330;
 export function normalize(size: number) {
   const newSize = size * scale;
   if (Platform.OS === 'ios') {
     return Math.round(PixelRatio.roundToNearestPixel(newSize));
   } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 0;
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
   }
 }
 export function normalizeInput(size: number) {
@@ -14,7 +15,7 @@ export function normalizeInput(size: number) {
   if (Platform.OS === 'ios') {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) + 2;
   } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 4;
   }
 }
 const Text_Size_Type = {
@@ -30,7 +31,7 @@ const Text_Size_Type = {
     Text_8: normalize(11),
     Text_9: normalize(12),
     Text_10: normalize(9),
-    Text_11: normalize(12),
+    Text_11: normalizeInput(12),
   },
 };
 const Text_Size = Text_Size_Type.Scale;
