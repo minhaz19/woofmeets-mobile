@@ -35,7 +35,7 @@ const SettingItem = (props: {
             opacity={props.data.opacity}
           />}
           {props.data.vectorIcon && props.data.vectorIcon}
-          <View style={styles.detailsContainer}>
+          <View style={[styles.detailsContainer, {width: props.rightIcon ? '82%' : '85%'}]}>
             <HeaderText text={props.data.title} />
             {props.data.details && (
               <DescriptionText

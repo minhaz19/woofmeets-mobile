@@ -6,7 +6,6 @@ import AuthNavigator from './AuthNavigator';
 import Notifications from '../screens/notification/Notifications';
 import HeaderWithBack from '../components/common/header/HeaderWithBack';
 import Colors from '../constants/Colors';
-import BasicInfoSitter from '../screens/becomeSitter/BasicInfo';
 import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
 import SitterInitialScreen from '../screens/becomeSitter/InitialScreen';
 import ProviderNavigator from './ProviderNavigator';
@@ -135,17 +134,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 title="Background Check"
                 notification
               />
-            ),
-            backgroundColor: Colors.primary,
-          })}
-        />
-        <Stack.Screen
-          name="BasicInfoSitter"
-          component={BasicInfoSitter}
-          options={({navigation}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack navigation={navigation} title="Profile" />
             ),
             backgroundColor: Colors.primary,
           })}

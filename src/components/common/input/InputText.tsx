@@ -42,6 +42,7 @@ const InputText = (props: {
         style={[styles._input, {backgroundColor: colors.lightBackgroundColor}]}>
         <View style={styles.iconView}>{props.leftIcon}</View>
         <TextInput
+          allowFontScaling={false}
           onChangeText={props.onChangeText ? props.onChangeText : pCode => props.setValue(pCode)}
           style={[styles.text, {color: colors.headerText}]}
           placeholderTextColor={colors.placeholderTextColor}
@@ -78,11 +79,8 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   text: {
-    fontSize: Text_Size.Text_8,
+    fontSize: Text_Size.Text_11,
     flex: 1,
-  },
-  zipText: {
-    fontSize: Text_Size.Text_8,
   },
   zipContainer: {
     paddingTop: '2%',

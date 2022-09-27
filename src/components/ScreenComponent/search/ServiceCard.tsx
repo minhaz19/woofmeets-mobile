@@ -2,8 +2,6 @@
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import React, {FC} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import HeaderText from '../../common/text/HeaderText';
-import DescriptionText from '../../common/text/DescriptionText';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {
@@ -13,7 +11,6 @@ import {
   DropInVisitIcon,
   HouseSittingIcon,
 } from '../../../assets/svgs/Services_SVG';
-import TitleText from '../../common/text/TitleText';
 import ShortText from '../../common/text/ShortText';
 
 interface Props {
@@ -56,7 +53,8 @@ const ServiceCard: FC<Props> = props => {
               props.sequence === props.data.sequence
                 ? Colors.primary
                 : colors.borderColor,
-            width: props.divide ? SCREEN_WIDTH / 2  - 20 : SCREEN_WIDTH / 3  - 20,
+            width: props.divide ? SCREEN_WIDTH / 2  - 24 : SCREEN_WIDTH / 3  - 20,
+            height: 'auto'
           },
         ]}>
         <View style={[styles.boxContainer, props.divide ? styles.pet : {}]}>
@@ -84,24 +82,21 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 5,
     paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   boxContainer: {
     alignItems: 'center',
-    width: '100%',
-    height: '100%'
   },
   imageContainer: {
     paddingBottom: 10,
   },
   image: {
-    width: '100%',
-    height: '100%',
   },
   textContainer: {
     alignItems: 'center',
     paddingHorizontal: 10,
+    flexWrap: 'wrap',
+    minHeight: 40,
+    justifyContent: 'center'
   },
   description: {
     paddingVertical: 6,
@@ -124,5 +119,6 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontWeight: '500',
+    textAlign: 'center',
   },
 });
