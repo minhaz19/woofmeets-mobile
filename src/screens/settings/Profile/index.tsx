@@ -3,13 +3,13 @@ import React from 'react';
 import ProfileInfo from '../../../components/ScreenComponent/profile/ProfileInfo';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import DescriptionText from '../../../components/common/text/DescriptionText';
 import Colors from '../../../constants/Colors';
 import {useAppSelector} from '../../../store/store';
 import {useProfileData} from './utils/useProfileData';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import HeaderText from '../../../components/common/text/HeaderText';
-import {ArrowRight} from '../../../assets/svgs/Services_SVG';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ShortText from '../../../components/common/text/ShortText';
 
 const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();
@@ -44,7 +44,7 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
                 },
               ]}
               onPress={() => {}}>
-              <DescriptionText text="View Profile" textStyle={styles.text} />
+              <ShortText text="View Profile" textStyle={styles.text} />
             </TouchableOpacity>
           </View>
         </View>
@@ -57,7 +57,11 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
               textStyle={styles.descriptionStyle}
             />
             <View>
-              <ArrowRight width={24} height={24} fill={Colors.primary}/>
+              <MaterialCommunityIcons
+                name={'chevron-right'}
+                size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 28}
+                color={Colors.primary}
+              />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -68,7 +72,11 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
               textStyle={styles.descriptionStyle}
             />
             <View>
-              <ArrowRight width={24} height={24} fill={Colors.primary}/>
+              <MaterialCommunityIcons
+                name={'chevron-right'}
+                size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 28}
+                color={Colors.primary}
+              />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -79,7 +87,11 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
               textStyle={styles.descriptionStyle}
             />
             <View>
-              <ArrowRight width={24} height={24} fill={Colors.primary}/>
+              <MaterialCommunityIcons
+                name={'chevron-right'}
+                size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 28}
+                color={Colors.primary}
+              />
             </View>
           </TouchableOpacity>
         </View>
@@ -120,7 +132,11 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
 
-  text: {color: 'white', textAlign: 'center', paddingHorizontal: 4},
+  text: {
+    color: 'white',
+    textAlign: 'center',
+    padding: 4,
+  },
   button: {
     backgroundColor: Colors.primary,
     paddingVertical: 4,
@@ -128,6 +144,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   flexContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  tabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -1,5 +1,5 @@
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   BoardingIcon,
   DoggyDayCareIcon,
@@ -13,11 +13,15 @@ import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import {useAppSelector} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
+import ServiceSetUp from '../../../../screens/becomeSitter/ServiceSetUp';
+import {setServiceSetup} from '../../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 
 const ServiceSetting = () => {
+  const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
   const {colors} = useTheme();
+  const dispatch = useAppDispatch();
   const {userServices, userServicesLoading} = useAppSelector(
     (state: any) => state.services,
   );
@@ -37,6 +41,9 @@ const ServiceSetting = () => {
         return <DoggyDayCareIcon width={34} height={36} />;
     }
   };
+  if (isBoardingSelected) {
+    return <ServiceSetUp />;
+  }
   return (
     <>
       {userServicesLoading && <AppActivityIndicator visible={true} />}
@@ -50,7 +57,24 @@ const ServiceSetting = () => {
         {serviceData &&
           serviceData.map((item: any, index: number) => {
             return (
-              <TouchableOpacity key={index}>
+              <TouchableOpacity
+                key={index}
+                onPress={() => {
+                  dispatch(
+                    setServiceSetup({
+                      routeData: {
+                        itemId: item.id,
+                        name: item.serviceType.name,
+                        image: getIcon(item.serviceType.icon),
+                        description: item.serviceType.description,
+                        serviceId: item.serviceTypeId,
+                        providerServicesId: item.id,
+                        service: item?.AvailableDay,
+                      },
+                    }),
+                  );
+                  setIsBoardingSelected(true);
+                }}>
                 <View style={styles.flexContainer}>
                   <View style={styles.serviceContainer}>
                     <View>{getIcon(item.serviceType.icon)}</View>
@@ -72,7 +96,7 @@ const ServiceSetting = () => {
                         SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 28
                       }
                       style={styles.iconStyle}
-                      color={Colors.subText}
+                      color={Colors.primary}
                     />
                   </View>
                 </View>
