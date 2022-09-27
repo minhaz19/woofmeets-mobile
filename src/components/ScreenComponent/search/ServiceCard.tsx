@@ -42,7 +42,7 @@ const ServiceCard: FC<Props> = props => {
     }
   };
   return (
-    <TouchableOpacity onPress={() => props.onPressEvent(props.data.sequence)}>
+    <TouchableOpacity onPress={() => props.onPressEvent(props.data.sequence)} key={props.data.id}>
       <View
         style={[
           styles.container,

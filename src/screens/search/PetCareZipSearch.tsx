@@ -137,7 +137,7 @@ const PetCareZipSearch = (props: { navigation: { navigate: (arg0: string) => voi
   }
 
   return (
-    <ScreenRapper>
+    <ScreenRapper rapperStyle={styles.rapperStyle}>
       <ScrollView keyboardShouldPersistTaps="always" keyboardDismissMode="on-drag">
       <KeyboardAvoidingView
         keyboardVerticalOffset={20}
@@ -193,6 +193,9 @@ const PetCareZipSearch = (props: { navigation: { navigate: (arg0: string) => voi
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+  },
+  rapperStyle:{
+    paddingTop: 20,
   },
   scrollContainer: {
     // paddingHorizontal: '5%',
