@@ -27,7 +27,7 @@ interface Props {
   };
 }
 const ForgotPassword = ({navigation}: Props) => {
-  const {isDarkMode, colors} = useTheme();
+  const {isDarkMode} = useTheme();
   const {handleSubmit, loading} = useFPEmail(navigation);
   return (
     <ScrollView
@@ -35,7 +35,9 @@ const ForgotPassword = ({navigation}: Props) => {
       showsVerticalScrollIndicator={false}
       style={[
         {
-          backgroundColor: colors.backgroundColor,
+          backgroundColor: isDarkMode
+            ? Colors.dark.lightDark
+            : Colors.background,
         },
       ]}>
       <KeyboardAvoidingView

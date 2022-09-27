@@ -3,6 +3,7 @@ import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
+import ShortText from '../text/ShortText';
 interface Props {
   error: string | undefined | any;
   auth?: boolean;

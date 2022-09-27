@@ -5,6 +5,7 @@ import ShortText from '../../../common/text/ShortText';
 import {DogFeet} from '../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import Text_Size from '../../../../constants/textScaling';
 interface Props {
   image: string;
   rounded?: Boolean;
@@ -29,7 +30,7 @@ const ImageContainer = ({image, rounded}: Props) => {
       />
       <View style={styles.batchContainer}>
         <DogFeet />
-        <ShortText textStyle={{color: Colors.text}} text="Verified" />
+        <ShortText textStyle={{color: Colors.text, fontSize: Text_Size.Text_10}} text="Verified" />
       </View>
     </View>
   );

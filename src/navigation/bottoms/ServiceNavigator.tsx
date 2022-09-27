@@ -1,15 +1,14 @@
 import React from 'react';
 import Colors from '../../constants/Colors';
-import ServiceMain from '../../screens/Service/SelectService';
-import PetCareZipSearch from '../../screens/PetCareZipSearch';
+import PetCareZipSearch from '../../screens/search/PetCareZipSearch';
 import AllProvider from '../../screens/Service/AllProvider';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import {FilterIcon} from '../../assets/svgs/SVG_LOGOS';
 import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../store/slices/misc/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
-import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
 import RealtimeLocation from '../../screens/RealtimeLocation';
+import Header from '../../components/common/header/Header';
 import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 
 const Stack1 = createStackNavigator();
@@ -21,8 +20,20 @@ const ServiceNavigator = () => {
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
-        options={{headerShown: false}}
+        options={({navigation}) => ({
+          header: () => (
+            <Header
+              navigation={navigation}
+              title="Services"
+              SecondIcon={FilterIcon}
+              notification
+              onPress={() => dispatch(setOpenFilter(true))}
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
       />
+
       <Stack1.Screen
         name="ProviderAvailablity"
         component={ProviderAvailablity}
@@ -35,48 +46,10 @@ const ServiceNavigator = () => {
         options={{headerShown: false}}
       />
       <Stack1.Screen
-        name="ServiceMain"
-        component={ServiceMain}
-        options={() => ({
-          headerStyle: {
-            backgroundColor: Colors.background,
-            borderWidth: 0,
-            borderColor: Colors.primary,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: '600',
-            textAlign: 'center',
-          },
-          headerShown: false,
-          title: '',
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
-        name="ServiceDetails"
-        component={ServiceDetails}
-        options={() => ({
-          headerStyle: {
-            backgroundColor: Colors.background,
-            borderWidth: 0,
-            borderColor: Colors.primary,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: '600',
-            textAlign: 'center',
-          },
-          headerShown: false,
-          title: '',
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
         name="AllProvider"
         component={AllProvider}
         options={({navigation}) => ({
-          title: '',
+          title: 'All Provider',
           header: () => (
             <HeaderWithBack
               navigation={navigation}

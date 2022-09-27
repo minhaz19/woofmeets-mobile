@@ -34,6 +34,22 @@ export const data = [
     description: 'Bobby is a 2 year old dog who is looking for a home.',
     status: 'Pending',
   },
+  // {
+  //   id: 4,
+  //   image: require('../../../../assets/image/pet/mypet.png'),
+  //   name: 'Bobby',
+  //   boardingTime: 'Boarding on Jun 14 - Jun 16',
+  //   description: 'Bobby is a 2 year old dog who is looking for a home.',
+  //   status: 'Pending',
+  // },
+  // {
+  //   id: 5,
+  //   image: require('../../../../assets/image/pet/mypet.png'),
+  //   name: 'Bobby',
+  //   boardingTime: 'Boarding on Jun 14 - Jun 16',
+  //   description: 'Bobby is a 2 year old dog who is looking for a home.',
+  //   status: 'Pending',
+  // },
 ];
 
 const PendingMessage = () => {

@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowOffset: {width: 1, height: 1},
     shadowRadius: 3,
-    elevation: Platform.OS === 'android' ? 8 : 1,
+    elevation: Platform.OS === 'android' ? 2 : 1,
     padding: 10,
   },
   itemContainer: {

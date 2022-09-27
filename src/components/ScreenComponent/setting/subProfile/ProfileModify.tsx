@@ -1,9 +1,12 @@
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  GestureResponderEvent,
+} from 'react-native';
 import React from 'react';
 import {
   CallSvg,
-  CheckList,
-  FeedBackSvg,
   FileTextSvg,
   ImageStackSvg,
   PetSvg,
@@ -11,67 +14,95 @@ import {
 import HeaderText from '../../../common/text/HeaderText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {ProfileIcon} from '../../../../assets/svgs/Setting_SVG';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Colors from '../../../../constants/Colors';
 
-const modifyProfileData = [
-  {
-    id: 1,
-    name: 'Basic Info',
-    icon: <ProfileIcon height={20} width={20} />,
-  },
-  {
-    id: 2,
-    name: 'Phone Numbers',
-    icon: <CallSvg height={20} width={20} />,
-  },
-  {
-    id: 3,
-    name: 'Details',
-    icon: <FileTextSvg height={20} width={20} />,
-  },
-  {
-    id: 4,
-    name: 'Photos',
-    icon: <ImageStackSvg height={20} width={20} />,
-  },
-  {
-    id: 5,
-    name: 'Your Pets',
-    icon: <PetSvg height={20} width={20} />,
-  },
-  {
-    id: 6,
-    name: 'Final Details',
-    icon: <CheckList height={20} width={20} />,
-  },
-  {
-    id: 7,
-    name: 'Request Testimonials',
-    icon: <FeedBackSvg height={20} width={20} />,
-  },
-];
-
-const ProfileModify = () => {
+const ProfileModify = (props: {
+  navigation: {navigate: (arg0: string) => any};
+}) => {
+  const {colors} = useTheme();
+  const modifyProfileData = [
+    {
+      id: 1,
+      name: 'Basic Info',
+      icon: <ProfileIcon height={20} width={20} />,
+      screen: () => props.navigation.navigate('BasicInfoSitter'),
+    },
+    {
+      id: 2,
+      name: 'Phone Number',
+      icon: <CallSvg height={20} width={20} />,
+      screen: () => props.navigation.navigate('PhoneNumberSitter'),
+    },
+    {
+      id: 3,
+      name: 'Details',
+      icon: <FileTextSvg height={20} width={20} />,
+      screen: () => props.navigation.navigate(''),
+    },
+    {
+      id: 4,
+      name: 'Gallery',
+      icon: <ImageStackSvg height={20} width={20} />,
+      screen: () => props.navigation.navigate('GallerySitter'),
+    },
+    {
+      id: 5,
+      name: 'Your Pets',
+      icon: <PetSvg height={20} width={20} />,
+      screen: () => props.navigation.navigate('PetScreens'),
+    },
+  ];
   return (
-    <>
+    <View
+      style={[
+        styles.rootContainer,
+        {
+          backgroundColor: colors.backgroundColor,
+        },
+      ]}>
       {modifyProfileData.map(
-        (item: {id: number; icon: JSX.Element; name: string}) => {
+        (item: {
+          id: number;
+          icon: JSX.Element;
+          name: string;
+          screen: ((event: GestureResponderEvent) => void) | undefined;
+        }) => {
           return (
-            <TouchableOpacity key={item.id}>
+            <TouchableOpacity
+              style={styles.tabContainer}
+              key={item.id}
+              onPress={item.screen}>
               <View style={styles.flexContainer}>
                 <View>{item.icon}</View>
                 <HeaderText text={item.name} textStyle={styles.headerText} />
+              </View>
+              <View>
+                <MaterialCommunityIcons
+                  name={'chevron-right'}
+                  size={
+                    SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 28
+                  }
+                  color={Colors.primary}
+                />
               </View>
             </TouchableOpacity>
           );
         },
       )}
-    </>
+    </View>
   );
 };
 
 export default ProfileModify;
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    paddingHorizontal:
+      SCREEN_WIDTH <= 380 ? '3%' : SCREEN_WIDTH <= 600 ? '5%' : '6%',
+  },
   flexContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -80,5 +111,10 @@ const styles = StyleSheet.create({
   },
   headerText: {
     paddingLeft: 10,
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

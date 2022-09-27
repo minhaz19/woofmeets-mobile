@@ -6,7 +6,6 @@ import AuthNavigator from './AuthNavigator';
 import Notifications from '../screens/notification/Notifications';
 import HeaderWithBack from '../components/common/header/HeaderWithBack';
 import Colors from '../constants/Colors';
-import BasicInfoSitter from '../screens/becomeSitter/BasicInfo';
 import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
 import SitterInitialScreen from '../screens/becomeSitter/InitialScreen';
 import ProviderNavigator from './ProviderNavigator';
@@ -17,13 +16,16 @@ import Gallery from '../screens/becomeSitter/Gallery/Gallery';
 import GuestBottomTabNavigator from './GuestBottomTabNavigator';
 import HomeProfile from '../screens/becomeSitter/HomeProfile';
 import PetNavigator from './bottoms/PetNavigator';
-import { _deleteSinglePet } from '../utils/helpers/HeaderWithBack/_deleteSinglePet';
+import {_deleteSinglePet} from '../utils/helpers/HeaderWithBack/_deleteSinglePet';
 import AddPet from '../screens/pet/AddPet';
-import { Delete } from '../assets/svgs/SVG_LOGOS';
-import { useAppDispatch } from '../store/store';
+import {Delete} from '../assets/svgs/SVG_LOGOS';
+import {useAppDispatch} from '../store/store';
 import SitterLandingPage from '../screens/becomeSitter/LandingPage';
 import PlanCheckout from '../components/ScreenComponent/becomeSitter/subscription/PlanCheckout';
 import BasicBackgroundCheck from '../components/ScreenComponent/becomeSitter/subscription/BasicBackgroundCheck';
+import ServiceSetting from '../components/ScreenComponent/setting/subProfile/ServiceSetting';
+import ProfileModify from '../components/ScreenComponent/setting/subProfile/ProfileModify';
+import ManageBusiness from '../components/ScreenComponent/setting/subProfile/ManageBusiness';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -90,7 +92,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             ),
             backgroundColor: Colors.primary,
           })}
-        />        
+        />
         <Stack.Screen
           name="SitterLandingPage"
           component={SitterLandingPage}
@@ -107,42 +109,31 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           })}
         />
         <Stack.Screen
-        name="PlanCheckout"
-        component={PlanCheckout}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Checkout"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack.Screen
-        name="BasicBackgroundCheck"
-        component={BasicBackgroundCheck}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Background Check"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-        <Stack.Screen
-          name="BasicInfoSitter"
-          component={BasicInfoSitter}
+          name="PlanCheckout"
+          component={PlanCheckout}
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Profile" />
+              <HeaderWithBack
+                navigation={navigation}
+                title="Checkout"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="BasicBackgroundCheck"
+          component={BasicBackgroundCheck}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Background Check"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -236,6 +227,51 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 onPress={() => {
                   _deleteSinglePet(dispatch, navigation, route);
                 }}
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSetting"
+          component={ServiceSetting}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Settings"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ProfileModify"
+          component={ProfileModify}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Modify Accounts"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ManageBusiness"
+          component={ManageBusiness}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Manage Business"
+                notification
               />
             ),
             backgroundColor: Colors.primary,
