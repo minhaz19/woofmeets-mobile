@@ -10,7 +10,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import RealtimeLocation from '../../screens/RealtimeLocation';
 import Header from '../../components/common/header/Header';
 import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
-
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
