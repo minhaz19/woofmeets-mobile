@@ -15,6 +15,7 @@ import ProHomeNavigator from './providers/bottoms/HomeNavigator';
 import {ProHomeIcon, ProRescheduleIcon} from '../assets/svgs/Provider_Logos';
 import ProRescheduleNavigator from './providers/bottoms/RescheduleNavigator';
 import ProSettingNavigator from './providers/bottoms/SettingNavigator';
+import BottomTabText from '../components/common/text/BottomTabText';
 
 const Tab = createBottomTabNavigator();
 
@@ -72,15 +73,7 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 24 : 28}
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
-                <Text
-                  style={[
-                    focused
-                      ? {color: Colors.primary}
-                      : {color: Colors.light.lightText},
-                    styles.textStyle,
-                  ]}>
-                  Home
-                </Text>
+                <BottomTabText text="Home" focused={focused} textStyle={styles.textStyle} />
               </View>
             ),
           }}
@@ -97,15 +90,7 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 24 : 28}
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
-                <Text
-                  style={[
-                    focused
-                      ? {color: Colors.primary}
-                      : {color: Colors.light.lightText},
-                    styles.textStyle,
-                  ]}>
-                  Reschedule
-                </Text>
+                <BottomTabText text="Reschedule" focused={focused} textStyle={styles.textStyle} />
               </View>
             ),
           }}
@@ -128,15 +113,7 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 24 : 28}
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
-                <Text
-                  style={[
-                    focused
-                      ? {color: Colors.primary}
-                      : {color: Colors.light.lightText},
-                    styles.textStyle,
-                  ]}>
-                  Inbox
-                </Text>
+                <BottomTabText text="Inbox" focused={focused} textStyle={styles.textStyle} />
               </View>
             ),
           })}
@@ -154,16 +131,7 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 24 : 28}
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
-                <Text
-                  allowFontScaling={false}
-                  style={[
-                    focused
-                      ? {color: Colors.primary}
-                      : {color: Colors.light.lightText},
-                    styles.textStyle,
-                  ]}>
-                  Setting
-                </Text>
+                <BottomTabText text="Setting" focused={focused} textStyle={styles.textStyle} />
               </View>
             ),
           }}
@@ -214,16 +182,7 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 24 : 28}
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
-                <Text
-                  allowFontScaling={false}
-                  style={[
-                    focused
-                      ? {color: Colors.primary}
-                      : {color: Colors.light.lightText},
-                    styles.textStyle,
-                  ]}>
-                  Services
-                </Text>
+                <BottomTabText text="Services" focused={focused} textStyle={styles.textStyle} />
               </View>
             ),
           }}
@@ -240,16 +199,7 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 24 : 28}
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
-                <Text
-                  allowFontScaling={false}
-                  style={[
-                    focused
-                      ? {color: Colors.primary}
-                      : {color: Colors.light.lightText},
-                    styles.textStyle,
-                  ]}>
-                  Inbox
-                </Text>
+                <BottomTabText text="Inbox" focused={focused} textStyle={styles.textStyle} />
               </View>
             ),
           }}
@@ -272,16 +222,7 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 24 : 28}
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
-                <Text
-                  allowFontScaling={false}
-                  style={[
-                    focused
-                      ? {color: Colors.primary}
-                      : {color: Colors.light.lightText},
-                    styles.textStyle,
-                  ]}>
-                  My Pets
-                </Text>
+                <BottomTabText text="My Pets" focused={focused} textStyle={styles.textStyle} />
               </View>
             ),
           })}
@@ -299,16 +240,7 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 24 : 28}
                   width={SCREEN_WIDTH <= 380 ? 26 : 33}
                 />
-                <Text
-                  allowFontScaling={false}
-                  style={[
-                    focused
-                      ? {color: Colors.primary}
-                      : {color: Colors.light.lightText},
-                    styles.textStyle,
-                  ]}>
-                  Setting
-                </Text>
+                <BottomTabText text="Setting" focused={focused} textStyle={styles.textStyle} />
               </View>
             ),
           }}
@@ -326,9 +258,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH / 4,
   },
   textStyle: {
-    fontSize: Text_Size.Text_0,
-    fontWeight: '500',
-    paddingVertical: 5,
+    paddingVertical: 2,
   },
 });
 

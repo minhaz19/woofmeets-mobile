@@ -1,24 +1,4 @@
-import {basicInfoType, contactDetailsType, contactType} from './types';
-
-const basicInfoValue: basicInfoType = {
-  addressLineOne: '',
-  addressLineTwo: '',
-  city: '',
-  state: '',
-  street: '',
-  postalCode: '',
-  name: '',
-  emailAddress: '',
-  dob: '',
-  newPassword: '',
-};
-
-const contactValues: contactType = {
-  phone: '',
-  emergencyContactName: '',
-  email: '',
-  emergencyPhone: '',
-};
+import {contactDetailsType} from './types';
 
 const sitterDetailsValue: contactDetailsType = {
   headline: '',
@@ -31,4 +11,4 @@ const sitterDetailsValue: contactDetailsType = {
   // requestedDogInfo: '',
 }
 
-export {basicInfoValue, contactValues, sitterDetailsValue};
+export {sitterDetailsValue};

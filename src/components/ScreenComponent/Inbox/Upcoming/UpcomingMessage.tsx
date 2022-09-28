@@ -12,7 +12,6 @@ const UpcomingMessage = () => {
   let navigation = useNavigation();
   return (
     <ScrollView
-      showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         {data.length > 0 ? (

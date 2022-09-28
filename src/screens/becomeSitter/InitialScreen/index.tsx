@@ -118,11 +118,6 @@ const SitterInitialScreen = (props: {
           />
         </View>
       </View>
-      {/* Services */}
-      <View style={styles.innerContainer}>
-        <HeaderText textStyle={styles.titleStylePadding2} text="Services" />
-        <ServicesCom />
-      </View>
       {/* Safety First */}
       <View style={styles.innerContainer}>
         <HeaderText

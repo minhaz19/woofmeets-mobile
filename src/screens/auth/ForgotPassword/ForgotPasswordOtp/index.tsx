@@ -31,7 +31,7 @@ interface Props {
   route: RouteProp<{params: {email: string}}, 'params'>;
 }
 const ForgotPasswordOtp = ({route, navigation}: Props) => {
-  const {isDarkMode, colors} = useTheme();
+  const {isDarkMode} = useTheme();
   const {handleSubmit, loading} = useFPOtp(route, navigation);
 
   return (
@@ -40,7 +40,9 @@ const ForgotPasswordOtp = ({route, navigation}: Props) => {
       showsVerticalScrollIndicator={false}
       style={[
         {
-          backgroundColor: colors.backgroundColor,
+          backgroundColor: isDarkMode
+            ? Colors.dark.lightDark
+            : Colors.background,
         },
       ]}>
       <KeyboardAvoidingView

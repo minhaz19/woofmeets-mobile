@@ -244,7 +244,7 @@ const SettingMain = (props: {
             <View style={styles.titleContainer}>
               <TitleText text="Account" />
             </View>
-            {token && token.provider ? (
+            {token && !token.provider ? (
               <SettingItem data={sitterProfile} key={sitterProfile.id} />
             ) : (
               <SettingItem data={customerProfile} key={customerProfile.id} />

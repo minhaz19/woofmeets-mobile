@@ -35,7 +35,9 @@ const Login = ({navigation}: Props) => {
         contentContainerStyle={styles.container}
         style={[
           {
-            backgroundColor: colors.backgroundColor,
+            backgroundColor: isDarkMode
+              ? Colors.dark.lightDark
+              : colors.backgroundColor,
           },
         ]}>
         <KeyboardAvoidingView

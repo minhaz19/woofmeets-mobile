@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import HeaderText from '../../../common/text/HeaderText';
@@ -35,7 +36,7 @@ const BetweenCom = (props: {
           <HeaderText text={props.data.name} />
           <DescriptionText
             text={props.data.description}
-            textStyle={{color: colors.descriptionText, paddingVertical: 2,}}
+            textStyle={{color: colors.descriptionText, paddingVertical: 2}}
           />
         </View>
       </View>

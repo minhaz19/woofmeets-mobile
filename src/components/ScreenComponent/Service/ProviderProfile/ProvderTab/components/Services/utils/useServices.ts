@@ -20,8 +20,6 @@ export const useServices = () => {
     selectData: calServiceData,
     providerOpk: '',
   };
-
-  console.log('formateded servies', services);
   const getIcon = (iconId: string) => {
     switch (iconId) {
       case 'boarding':
@@ -36,7 +34,6 @@ export const useServices = () => {
         return DogWalkingIcon;
     }
   };
-  console.log('serivices', services);
   const formattedServices = services?.map((item: any) => {
     const ccc =
       item.ServiceHasRates &&
@@ -65,7 +62,6 @@ export const useServices = () => {
         }),
     };
   });
-  console.log('formated', formattedServices);
 
   return {
     formattedServices,

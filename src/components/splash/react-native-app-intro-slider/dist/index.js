@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: windowWidth * 0.04,
+    fontSize: Text_Size.Text_0,
     fontWeight: 'bold',
   },
   skipContainerView: {
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
   skipText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: Text_Size.Text_1,
+    fontSize: Text_Size.Text_0,
   },
   containerStyleFullWidth: {
     height:
