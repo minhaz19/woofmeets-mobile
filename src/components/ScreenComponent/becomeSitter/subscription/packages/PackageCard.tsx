@@ -53,7 +53,7 @@ const PackageCard = (props: {
         setIsModalVisible={() => {
           setIsModalVisible(!isModalVisible);
         }}
-        onBlur={() => console.log('')}>
+        onBlur={() => null}>
         <Image
           source={require('../../../../../assets/image/subscription/subscription.png')}
           style={styles.imageStyle}

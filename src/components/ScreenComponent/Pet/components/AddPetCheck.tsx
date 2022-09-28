@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, View} from 'react-native';
 import React, {useCallback} from 'react';
-import HeaderText from '../../../../common/text/HeaderText';
-import DescriptionText from '../../../../common/text/DescriptionText';
-import TitleText from '../../../../common/text/TitleText';
-import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
-import Text_Size from '../../../../../constants/textScaling';
-import {addPetCheck1} from '../../../../../utils/config/Data/AddPetData';
+import HeaderText from '../../../common/text/HeaderText';
+import DescriptionText from '../../../common/text/DescriptionText';
+import TitleText from '../../../common/text/TitleText';
+import AppCheckboxField from '../../../common/Form/AppCheckboxField';
+import Text_Size from '../../../../constants/textScaling';
+import {addPetCheck1} from '../../../../utils/config/Data/AddPetData';
 
 interface Props {
   errors: any;

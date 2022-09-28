@@ -1,23 +1,8 @@
-import {useAppSelector} from '../../../store/store';
+import {useAppSelector} from '../../../../../store/store';
 
-export const useAddPetInitValues = (opk: string | null) => {
+export const useCheckInfiValue = (opk: string | null) => {
   const {singlePet} = useAppSelector(state => state.singlePet);
   return {
-    profile_image:
-      opk !== null && singlePet?.profile_image
-        ? singlePet.profile_image.url
-        : '',
-    type: opk !== null && singlePet?.type ? singlePet.type : '',
-    name: opk !== null && singlePet?.name ? singlePet.name : '',
-    weight: opk !== null && singlePet?.weight ? singlePet.weight : null,
-    ageYear: opk !== null && singlePet?.ageYear ? singlePet.ageYear : null,
-    ageMonth: opk !== null && singlePet?.ageMonth ? singlePet.ageMonth : null,
-    dob: opk !== null && singlePet?.dob ? singlePet.dob : '',
-    gender: opk !== null && singlePet?.gender ? singlePet.gender : '',
-    breeds:
-      opk !== null && singlePet?.petBreed
-        ? singlePet.petBreed.map((item: any) => item.breed)
-        : [],
     microchipped:
       opk !== null && singlePet?.microchipped ? singlePet.microchipped : null,
     spayedOrNeutered:
@@ -74,39 +59,39 @@ export const useAddPetInitValues = (opk: string | null) => {
       opk !== null && singlePet?.canLeftAloneDetails
         ? singlePet.canLeftAloneDetails
         : '',
-    pill: opk !== null && singlePet?.pill ? singlePet.pill : false,
-    pillMedication:
-      opk !== null && singlePet?.pillMedication ? singlePet.pillMedication : '',
-    topical: opk !== null && singlePet?.topical ? singlePet.topical : false,
-    topicalMedication:
-      opk !== null && singlePet?.topicalMedication
-        ? singlePet.topicalMedication
-        : '',
-    injection:
-      opk !== null && singlePet?.injection ? singlePet.injection : false,
-    injectionMedication:
-      opk !== null && singlePet?.injectionMedication
-        ? singlePet.injectionMedication
-        : '',
-    sitterInstructions:
-      opk !== null && singlePet?.sitterInstructions
-        ? singlePet.sitterInstructions
-        : '',
-    vetInfo: opk !== null && singlePet?.vetInfo ? singlePet.vetInfo : '',
-    gallery:
-      opk !== null && singlePet?.petGallery
-        ? singlePet.petGallery.map((item: any) => item.imageSrc.url)
-        : [],
+    // pill: opk !== null && singlePet?.pill ? singlePet.pill : false,
+    // pillMedication:
+    //   opk !== null && singlePet?.pillMedication ? singlePet.pillMedication : '',
+    // topical: opk !== null && singlePet?.topical ? singlePet.topical : false,
+    // topicalMedication:
+    //   opk !== null && singlePet?.topicalMedication
+    //     ? singlePet.topicalMedication
+    //     : '',
+    // injection:
+    //   opk !== null && singlePet?.injection ? singlePet.injection : false,
+    // injectionMedication:
+    //   opk !== null && singlePet?.injectionMedication
+    //     ? singlePet.injectionMedication
+    //     : '',
+    // sitterInstructions:
+    //   opk !== null && singlePet?.sitterInstructions
+    //     ? singlePet.sitterInstructions
+    //     : '',
+    // vetInfo: opk !== null && singlePet?.vetInfo ? singlePet.vetInfo : '',
+    // gallery:
+    //   opk !== null && singlePet?.petGallery
+    //     ? singlePet.petGallery.map((item: any) => item.imageSrc.url)
+    //     : [],
 
-    imageInfo:
-      opk !== null &&
-      singlePet?.petGallery.map((item: any) => {
-        return {
-          id: item.id,
-          url: item.imageSrc.url,
-          caption: item.caption,
-        };
-      }),
-    petOpk: opk !== null && singlePet?.opk && singlePet.opk,
+    // imageInfo:
+    //   opk !== null &&
+    //   singlePet?.petGallery.map((item: any) => {
+    //     return {
+    //       id: item.id,
+    //       url: item.imageSrc.url,
+    //       caption: item.caption,
+    //     };
+    //   }),
+    // petOpk: opk !== null && singlePet?.opk && singlePet.opk,
   };
 };

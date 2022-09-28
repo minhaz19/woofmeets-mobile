@@ -3,7 +3,6 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ArrowLeft} from '../../../../../../assets/svgs/Services_SVG';
-
 interface Props {
   image: string;
 }
@@ -25,7 +24,7 @@ const StoryContainer = ({image}: Props) => {
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={styles.backButton}>
-        <ArrowLeft />
+        <ArrowLeft width={15} height={15} fill="white" />
       </TouchableOpacity>
     </View>
   );
@@ -43,15 +42,13 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    padding: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    marginLeft: 20,
     top: '12%',
     left: '0%',
+    borderRadius: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    // backgroundColor: false ? 'rgba(255, 255, 255, .1)' : 'rgba(0, 0, 0, 0.5)',
   },
 });
-// onPress={() =>
-//       navigation.push('ProviderStoryStatus', {
-//         name: 'meer',
-//         image:
-//           'https://images.unsplash.com/photo-1523480717984-24cba35ae1ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80',
-//       })
-//     }

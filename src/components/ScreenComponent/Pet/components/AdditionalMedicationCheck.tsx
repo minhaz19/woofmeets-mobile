@@ -1,11 +1,11 @@
 import {StyleSheet, View} from 'react-native';
 import React, {memo} from 'react';
-import {medicationChecks} from '../../../../../utils/config/Data/AddPetData';
-import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
-import TitleText from '../../../../common/text/TitleText';
-import Text_Size from '../../../../../constants/textScaling';
-import AppFormField from '../../../../common/Form/AppFormField';
-import {useHandleMultiCheck} from '../../../../../utils/helpers/useHandleMultiCheck';
+import {medicationChecks} from '../../../../utils/config/Data/AddPetData';
+import AppCheckboxField from '../../../common/Form/AppCheckboxField';
+import TitleText from '../../../common/text/TitleText';
+import Text_Size from '../../../../constants/textScaling';
+import AppFormField from '../../../common/Form/AppFormField';
+import {useHandleMultiCheck} from '../../../../utils/helpers/useHandleMultiCheck';
 
 interface Props {
   errors: any;

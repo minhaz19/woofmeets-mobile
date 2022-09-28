@@ -1,4 +1,4 @@
-import methods from '../../../../api/methods';
+import methods from '../../../../../api/methods';
 const postEndpoint = '/pet/create';
 const putEndpoint = '/pet/update/';
 

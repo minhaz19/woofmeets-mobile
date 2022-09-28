@@ -81,7 +81,7 @@ const ProfileHeader = ({name, gLoading, url, userName}: Props) => {
       <ImageUploadModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
-        onBlur={() => console.log()}
+        onBlur={() => null}
         uploadImage={handleUpload}
         setIsImageLoading={setIsImageLoading}
       />

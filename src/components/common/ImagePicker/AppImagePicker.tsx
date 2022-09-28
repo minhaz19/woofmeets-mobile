@@ -1,7 +1,7 @@
 import React from 'react';
 import ErrorMessage from '../Form/ErrorMessage';
 import PhotoGalleryList from './PhotoGalleryList';
-import GalleryImageCaptionModal from '../../ScreenComponent/Pet/AddPet/components/GalleryImageCaption';
+import GalleryImageCaptionModal from '../../ScreenComponent/Pet/components/GalleryImageCaption';
 import {useImagePicker} from './utils/useImagePicker';
 
 interface Props {

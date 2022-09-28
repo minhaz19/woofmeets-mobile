@@ -52,9 +52,9 @@ const AllProvider = ({navigation}: Props) => {
                 availablity={item.availablity}
                 repeatClient={item.repeatClient}
                 onPress={async () => {
-                  await dispatch(getProviderProfile('gzwnCRsg'));
+                  await dispatch(getProviderProfile('xCMyOqAm'));
                   navigation.navigate('ProviderNavigator', {
-                    providerOpk: 'gzwnCRsg',
+                    providerOpk: 'xCMyOqAm',
                   });
                 }}
               />
