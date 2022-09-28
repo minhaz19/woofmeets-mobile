@@ -24,6 +24,7 @@ const SafetyQuiz = () => {
   const {loading: BtnLoading, request} = useApi(methods._post);
   const handleSubmit = async () => {
     const result = await request(`/quiz/complete/${userId}`);
+
     result.ok && dispatch(setSitterData({pass: 3}));
   };
   useEffect(() => {

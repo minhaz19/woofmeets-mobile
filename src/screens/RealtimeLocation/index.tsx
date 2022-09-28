@@ -60,8 +60,7 @@ const RealtimeLocation = () => {
           }),
         });
       },
-      error => {
-      },
+      error => {},
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000},
     );
   }
@@ -80,7 +79,7 @@ const RealtimeLocation = () => {
       },
       (error: any) => {
         // See error code charts below.
-        console.log(error.code, error.message);
+        // console.log(error.code, error.message);
       },
       {
         enableHighAccuracy: true,

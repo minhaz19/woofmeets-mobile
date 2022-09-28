@@ -17,7 +17,6 @@ import GuestBottomTabNavigator from './GuestBottomTabNavigator';
 import HomeProfile from '../screens/becomeSitter/HomeProfile';
 import PetNavigator from './bottoms/PetNavigator';
 import {_deleteSinglePet} from '../utils/helpers/HeaderWithBack/_deleteSinglePet';
-import AddPet from '../screens/pet/AddPet';
 import {Delete} from '../assets/svgs/SVG_LOGOS';
 import {useAppDispatch} from '../store/store';
 import SitterLandingPage from '../screens/becomeSitter/LandingPage';
@@ -26,6 +25,14 @@ import BasicBackgroundCheck from '../components/ScreenComponent/becomeSitter/sub
 import ServiceSetting from '../components/ScreenComponent/setting/subProfile/ServiceSetting';
 import ProfileModify from '../components/ScreenComponent/setting/subProfile/ProfileModify';
 import ManageBusiness from '../components/ScreenComponent/setting/subProfile/ManageBusiness';
+import SchedulePetSettings from '../components/ScreenComponent/search/SchedulePetSettings';
+import SafetyScreen from '../components/ScreenComponent/search/SafetyScreen';
+import AddPetCheckScreen from '../screens/pet/AddPet/AddPetCheck';
+import AddPetSubmit from '../screens/pet/AddPet/AddPetSubmit';
+import AddPetHome from '../screens/pet/AddPet/AddPetHome';
+import SitterDetails from '../screens/becomeSitter/Details';
+import BasicInfo from '../screens/profile/BasicInfo';
+// import PetNavigatorFC from './PetNavigatorFS';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -123,6 +130,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
+
         <Stack.Screen
           name="BasicBackgroundCheck"
           component={BasicBackgroundCheck}
@@ -145,6 +153,28 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             title: '',
             header: () => (
               <HeaderWithBack navigation={navigation} title="Profile" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SitterBasicInfo"
+          component={BasicInfo}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Basic Info" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SitterDetails"
+          component={SitterDetails}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Details" />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -214,9 +244,63 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
+        {/* <Stack.Screen
+          name="PetNavigatorFC"
+          component={PetNavigatorFC}
+          options={({navigation, route}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Add pet"
+                Icon={route.params!.opk && Delete}
+                onPress={() => {
+                  _deleteSinglePet(dispatch, navigation, route);
+                }}
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        /> */}
         <Stack.Screen
-          name="AddPet"
-          component={AddPet}
+          name="AddPetHome"
+          component={AddPetHome}
+          options={({navigation, route}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Add pet"
+                Icon={route.params!.opk && Delete}
+                onPress={() => {
+                  _deleteSinglePet(dispatch, navigation, route);
+                }}
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AddPetCheck"
+          component={AddPetCheckScreen}
+          options={({navigation, route}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Add pet"
+                Icon={route.params!.opk && Delete}
+                onPress={() => {
+                  _deleteSinglePet(dispatch, navigation, route);
+                }}
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AddPetSubmit"
+          component={AddPetSubmit}
           options={({navigation, route}) => ({
             title: '',
             header: () => (
@@ -276,6 +360,16 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             ),
             backgroundColor: Colors.primary,
           })}
+        />
+        <Stack.Screen
+          name="SchedulePetSettings"
+          component={SchedulePetSettings}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SafetyScreen"
+          component={SafetyScreen}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

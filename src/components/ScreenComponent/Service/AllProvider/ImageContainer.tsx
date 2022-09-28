@@ -42,7 +42,12 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH > 800 ? SCREEN_WIDTH / 10 : SCREEN_WIDTH / 6,
   },
-  image: {width: '100%', height: '100%'},
+  image: {
+    width: '100%',
+    height: '100%',
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
   batchContainer: {
     marginTop: -10,
     flexDirection: 'row',

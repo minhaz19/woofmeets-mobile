@@ -35,7 +35,7 @@ const ManageBusiness = () => {
     },
     {
       id: 3,
-      name: 'Add or modify a payment method',
+      name: 'Add or modify a payment',
       icon: (
         <FontAwesome
           name="credit-card-alt"
@@ -105,6 +105,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical:
       SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '2%',
+    width: '90%',
+    paddingRight: 10,
   },
   headerText: {
     paddingLeft: 6,
@@ -114,6 +116,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     width: 24,
+    paddingHorizontal: 5,
   },
   tabContainer: {
     flexDirection: 'row',

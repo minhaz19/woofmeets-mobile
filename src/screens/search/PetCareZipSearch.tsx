@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   StyleSheet,
@@ -11,22 +12,31 @@ import Text_Size from '../../constants/textScaling';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import TitleText from '../../components/common/text/TitleText';
 import ButtonCom from '../../components/UI/ButtonCom';
-import { btnStyles } from '../../constants/theme/common/buttonStyles';
-import { BriefCaseSvg, HomeSvgICon, LocationSvg, PetFootSvg, WeatherSvg } from '../../assets/svgs/SVG_LOGOS';
+import {btnStyles} from '../../constants/theme/common/buttonStyles';
+import {
+  BriefCaseSvg,
+  HomeSvgICon,
+  LocationSvg,
+  PetFootSvg,
+  WeatherSvg,
+} from '../../assets/svgs/SVG_LOGOS';
 import DescriptionText from '../../components/common/text/DescriptionText';
-import { SCREEN_WIDTH } from '../../constants/WindowSize';
+import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
 import ScreenRapper from '../../components/common/ScreenRapper';
 import ErrorMessage from '../../components/common/Form/ErrorMessage';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import ServiceCard from '../../components/ScreenComponent/search/ServiceCard';
+import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
 
 interface Props {
   item: any;
 }
 
-const PetCareZipSearch = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
+const PetCareZipSearch = (props: {
+  navigation: {navigate: (arg0: string) => void};
+}) => {
   const [postCode, setPostCode] = useState<number>();
   const [errorMessage, setErrorMessage] = useState<string>();
   const petData = [
@@ -86,8 +96,8 @@ const PetCareZipSearch = (props: { navigation: { navigate: (arg0: string) => voi
   ];
   const {colors} = useTheme();
   const handleSubmit = () => {
-    props.navigation.navigate('AllProvider')
-  }
+    props.navigation.navigate('AllProvider');
+  };
   const [sequence, setSequence] = useState<number>(0);
   const [petSequence, setPetSequence] = useState<number>(0);
 
@@ -99,7 +109,6 @@ const PetCareZipSearch = (props: { navigation: { navigate: (arg0: string) => voi
   };
 
   const handleZipCode = (code: number) => {
-    console.log(postCode)
     let reg = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
     setPostCode(code);
     if (reg.test(code) === false) {
@@ -107,8 +116,7 @@ const PetCareZipSearch = (props: { navigation: { navigate: (arg0: string) => voi
     } else {
       setErrorMessage(null);
     }
-  }
-  
+  };
 
   const RenderHeader = () => {
     return (
@@ -118,73 +126,77 @@ const PetCareZipSearch = (props: { navigation: { navigate: (arg0: string) => voi
           textStyle={styles.textHeader}
         />
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-        {petData.map(item => (
-          <ServiceCard
+          {petData.map(item => (
+            <ServiceCard
+              key={item.id}
               data={item}
               noShadow
               onPressEvent={onPressPet}
               sequence={petSequence}
               divide={2}
-          />
-        ))}
+            />
+          ))}
         </View>
-        <TitleText
-          text="I want"
-          textStyle={styles.textHeader}
-        />
+        <TitleText text="I want" textStyle={styles.textHeader} />
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <ScreenRapper rapperStyle={styles.rapperStyle}>
-      <ScrollView keyboardShouldPersistTaps="always" keyboardDismissMode="on-drag">
-      <KeyboardAvoidingView
-        keyboardVerticalOffset={20}
-      //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.rootContainer}>
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        keyboardDismissMode="on-drag">
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={20}
+          //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.rootContainer}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.boxContainer}>
-            <RenderHeader />
-            <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
-            {selectData.map(item => (
-              <ServiceCard
-                  data={item}
-                  noShadow
-                  onPressEvent={onPressService}
-                  sequence={sequence}
-              />
-            ))}
-            </View>
-            <View style={styles.zipContainer}>
-              <DescriptionText text="Near" textStyle={styles.zipText} />
-              <TextInput
+            <View style={styles.boxContainer}>
+              <RenderHeader />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                }}>
+                {selectData.map(item => (
+                  <ServiceCard
+                    key={item.id}
+                    data={item}
+                    noShadow
+                    onPressEvent={onPressService}
+                    sequence={sequence}
+                  />
+                ))}
+              </View>
+              <SearchSlider navigation={props.navigation} />
+              <View style={styles.zipContainer}>
+                <DescriptionText text="Near" textStyle={styles.zipText} />
+                <TextInput
                   placeholder="Enter zip code"
                   keyboardType="number-pad"
                   value={postCode}
                   allowFontScaling={false}
-                  onChangeText={(code) => handleZipCode(code)}
+                  onChangeText={code => handleZipCode(code)}
                   style={[styles._input, {color: colors.headerText}]}
-              />
-              {errorMessage && (
-                  <ErrorMessage error={errorMessage} />
-                  )}
-              <View style={styles.footerContainer}>
+                />
+                {errorMessage && <ErrorMessage error={errorMessage} />}
+                <View style={styles.footerContainer}>
                   <ButtonCom
-                  title="Search"
-                  // loading={loading}
-                  textAlignment={btnStyles.textAlignment}
-                  containerStyle={btnStyles.containerStyleFullWidth}
-                  titleStyle={btnStyles.titleStyle}
-                  onSelect={handleSubmit}
+                    title="Search"
+                    // loading={loading}
+                    textAlignment={btnStyles.textAlignment}
+                    containerStyle={btnStyles.containerStyleFullWidth}
+                    titleStyle={btnStyles.titleStyle}
+                    onSelect={handleSubmit}
                   />
+                </View>
               </View>
             </View>
-          </View>
-          
           </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-      <BottomSpacing />
+        </KeyboardAvoidingView>
+        <BottomSpacing />
       </ScrollView>
     </ScreenRapper>
   );
@@ -194,7 +206,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
   },
-  rapperStyle:{
+  rapperStyle: {
     paddingTop: 20,
   },
   scrollContainer: {
@@ -212,7 +224,7 @@ const styles = StyleSheet.create({
   footerContainer: {
     paddingHorizontal: '10%',
     paddingTop: 20,
-    paddingBottom: 40
+    paddingBottom: 40,
   },
   flatList: {
     flex: 1,
@@ -239,7 +251,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
     paddingLeft: '3%',
   },
-
 });
- 
+
 export default PetCareZipSearch;

@@ -8,7 +8,7 @@ const ShortText = (props: {
   textStyle?: TextStyle;
   text: string | number | undefined;
   numberOfLines?: number;
-  ellipsizeMode?: string;
+  ellipsizeMode?: any;
 }) => {
   const {colors} = useTheme();
   return (

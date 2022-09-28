@@ -15,31 +15,5 @@ apiClient.addAsyncRequestTransform(async request => {
   // request.headers.Authorization = 'Bearer ' + authToken;
 });
 
-// apiClient.addAsyncResponseTransform(async response => {
-//   console.log('responsesss', response);
-//   if (response.problem === 'TIMEOUT_ERROR') {
-//     console.log('its in');
-//     Alert.alert(
-//       'Response Timeout',
-//       'would you like to retry?',
-//       [
-//         {
-//           text: 'No',
-//           onPress: () => console.log(''),
-//         },
-//         {
-//           text: 'Yes',
-//           onPress: async () => {
-//             console.log('is caliing');
-
-//             const r = await apiClient.get(response.config!.url!);
-//             console.log('r', r);
-//           },
-//         },
-//       ],
-//       {cancelable: false},
-//     );
-//   }
-// });
 
 export default apiClient;

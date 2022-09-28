@@ -179,7 +179,7 @@ const ProSettingNavigator = () => {
           header: () => (
             <HeaderWithBack
               navigation={navigation}
-              title="Checkout"
+              title="Profile"
               notification
             />
           ),

@@ -1,14 +1,14 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import ProviderProfileInfo from './components/ProviderProfileInfo';
-// import VerifiedSitter from './components/VerifiedSitter';
 import ProviderProfileFeature from './components/ProviderProfileFeature';
+import VerifiedSitter from './components/VerifiedSitter';
 
 const ProviderHeader = () => {
   return (
     <View style={styles.container}>
       <ProviderProfileInfo />
-      {/* <VerifiedSitter /> */}
+      <VerifiedSitter />
       <ProviderProfileFeature />
     </View>
   );

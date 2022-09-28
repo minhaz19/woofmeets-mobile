@@ -20,9 +20,7 @@ const FullCalendar = ({availability}: Props) => {
       <CalendarList
         // Callback which gets executed when visible months change in scroll view. Default = undefined
         calendarStyle={styles.calenderStyles}
-        onVisibleMonthsChange={months => {
-          // console.log('now these months are visible', months);
-        }}
+        onVisibleMonthsChange={months => {}}
         // Max amount of months allowed to scroll to the past. Default = 50
         pastScrollRange={0}
         // Max amount of months allowed to scroll to the future. Default = 50

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {View, Image, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -9,7 +10,6 @@ import HeaderText from '../../../components/common/text/HeaderText';
 import BulletPoints from '../../../components/UI/Points/BulletPoints';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import CardQuotes from '../../../components/ScreenComponent/becomeSitter/Card/CardQuotes';
-import ServicesCom from '../../../components/ScreenComponent/becomeSitter/works/ServicesCom';
 import HowItWorks from '../../../components/ScreenComponent/becomeSitter/works/HowItWorks';
 import {bulletData1, bulletData2, bulletData3} from './data';
 import {styles} from './styles';

@@ -1,6 +1,6 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useRef} from 'react';
-import PhotoGallery from '../../ScreenComponent/Pet/AddPet/PhotoGallery';
+import PhotoGallery from '../../ScreenComponent/Pet/components/PhotoGallery';
 import Text_Size from '../../../constants/textScaling';
 import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';

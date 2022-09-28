@@ -18,9 +18,9 @@ export const useMyPetUtils = (navigation: any) => {
       timeoutAlert(data, getSinglePet, opk);
       data.payload.ok === false || data === undefined
         ? null
-        : navigation.navigate('AddPet', {opk: opk!});
+        : navigation.navigate('AddPetHome', {opk: opk!});
     } else {
-      navigation.navigate('AddPet', {opk: null});
+      navigation.navigate('AddPetHome', {opk: null});
     }
   };
   const callApi = async () => {

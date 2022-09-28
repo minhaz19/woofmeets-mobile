@@ -8,7 +8,7 @@ const ProviderProfileInfo = () => {
   const {profileInfo} = useAppSelector(state => state.providerProfile);
   return (
     <View style={styles.container}>
-      <ImageContainer image={profileInfo?.avatar.url} rounded />
+      <ImageContainer image={profileInfo?.avatar?.url} rounded />
       <View style={styles.infoContainer}>
         <ProviderInfo
           name={`${profileInfo?.firstName + ' ' + profileInfo?.lastName}`}
