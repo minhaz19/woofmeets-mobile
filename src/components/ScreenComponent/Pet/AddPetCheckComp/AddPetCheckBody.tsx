@@ -3,27 +3,19 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import AppFormField from '../../../common/Form/AppFormField';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import {petDescriptionInput} from '../../../../utils/config/Data/AddPetData';
-import AddPetImage from './AddPetImage';
-import AppImagePicker from '../../../common/ImagePicker/AppImagePicker';
-import BottomSpacing from '../../../UI/BottomSpacing';
 import {memo} from 'react';
 import {useFormContext} from 'react-hook-form';
-import AddPetCheck from './components/AddPetCheck';
-import AddPetInfoInputs from './components/AddPetInfoInputs';
-import AdditionalDetailsCheck from './components/AdditionalDetailsCheck';
-import AdditionalMedicationCheck from './components/AdditionalMedicationCheck';
-import AdditionalButtonInputs from './components/AdditionalButtonInputs';
-import AdditionalCareInfoChecks from './components/AdditionalCareInfoChecks';
-import AddPetHeader from './components/AddPetHeader';
-import AddPetBreeds from './components/AddPetBreeds';
+import BottomSpacing from '../../../UI/BottomSpacing';
+import AdditionalCareInfoChecks from '../components/AdditionalCareInfoChecks';
+import AdditionalDetailsCheck from '../components/AdditionalDetailsCheck';
 
 interface Props {
   handleSubmit: (value: any) => void;
-  loading: boolean;
+
   opk: string | null;
 }
 
-const AddPetBody = ({handleSubmit, loading, opk}: Props) => {
+const AddPetCheckBody = ({handleSubmit, opk}: Props) => {
   const {
     control,
     setValue,
@@ -35,19 +27,7 @@ const AddPetBody = ({handleSubmit, loading, opk}: Props) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.inputContainer}>
-        <AddPetHeader />
-
         <View>
-          <AddPetImage name="profile_image" />
-          <AddPetCheck errors={errors} setValue={setValue} control={control} />
-          <AddPetInfoInputs errors={errors} control={control} />
-
-          <AddPetBreeds
-            setValue={setValue}
-            control={control}
-            name="breeds"
-            getValues={getValues}
-          />
           <AdditionalDetailsCheck
             errors={errors}
             setValue={setValue}
@@ -74,23 +54,10 @@ const AddPetBody = ({handleSubmit, loading, opk}: Props) => {
             control={control}
             getValues={getValues}
           />
-          <AdditionalMedicationCheck
-            errors={errors}
-            setValue={setValue}
-            control={control}
-            getValues={getValues}
-          />
 
-          <AdditionalButtonInputs errors={errors} control={control} />
-          <AppImagePicker
-            label="Photo Gallery"
-            subTitle="Show off your pet through image gallery"
-            name="gallery"
-          />
           <SubmitButton
-            title={opk === null ? 'Add Pet' : 'Update Pet'}
+            title={opk === null ? 'Next' : 'Update & Go next'}
             onPress={handleSubmit}
-            loading={loading}
           />
         </View>
 
@@ -100,7 +67,7 @@ const AddPetBody = ({handleSubmit, loading, opk}: Props) => {
   );
 };
 
-export default memo(AddPetBody);
+export default memo(AddPetCheckBody);
 
 const styles = StyleSheet.create({
   container: {

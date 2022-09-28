@@ -17,7 +17,7 @@ const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
       <MiddleModal
         isModalVisible={isVisible}
         setIsModalVisible={setIsVisible}
-        onBlur={() => console.log('')}>
+        onBlur={() => null}>
         <ServiceDaySlot />
         <View style={styles.btnContainer}>
           <TouchableOpacity

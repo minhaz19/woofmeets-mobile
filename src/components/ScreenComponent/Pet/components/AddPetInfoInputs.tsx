@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
 import React, {useCallback} from 'react';
-import AppFormField from '../../../../common/Form/AppFormField';
+import AppFormField from '../../../common/Form/AppFormField';
 import {
   addPetInfoInputs,
   genders,
-} from '../../../../../utils/config/Data/AddPetData';
-import AppSelectField from '../../../../common/Form/AppSelectField';
+} from '../../../../utils/config/Data/AddPetData';
+import AppSelectField from '../../../common/Form/AppSelectField';
 interface Props {
   errors: any;
   control: any;

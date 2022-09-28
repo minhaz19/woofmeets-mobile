@@ -65,11 +65,10 @@ const AppSelect = ({
         renderItem={renderItem}
         onChange={item => {
           setValuee(item.value);
-          // console.log('item.value', item.value);
+
           setIsFocus(false);
           onChange(item.value);
           setSelectedService && setSelectedService(item.id);
-          // console.log('item.id', item);
         }}
       />
     </View>

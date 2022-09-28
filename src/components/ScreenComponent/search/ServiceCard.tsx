@@ -42,7 +42,9 @@ const ServiceCard: FC<Props> = props => {
     }
   };
   return (
-    <TouchableOpacity onPress={() => props.onPressEvent(props.data.sequence)} key={props.data.id}>
+    <TouchableOpacity
+      onPress={() => props.onPressEvent(props.data.sequence)}
+      key={props.data.id}>
       <View
         style={[
           styles.container,
@@ -53,8 +55,8 @@ const ServiceCard: FC<Props> = props => {
               props.sequence === props.data.sequence
                 ? Colors.primary
                 : colors.borderColor,
-            width: props.divide ? SCREEN_WIDTH / 2  - 24 : SCREEN_WIDTH / 3  - 20,
-            height: 'auto'
+            width: props.divide ? SCREEN_WIDTH / 2 - 24 : SCREEN_WIDTH / 3 - 20,
+            height: 'auto',
           },
         ]}>
         <View style={[styles.boxContainer, props.divide ? styles.pet : {}]}>
@@ -89,14 +91,13 @@ const styles = StyleSheet.create({
   imageContainer: {
     paddingBottom: 10,
   },
-  image: {
-  },
+  image: {},
   textContainer: {
     alignItems: 'center',
     paddingHorizontal: 10,
     flexWrap: 'wrap',
     minHeight: 40,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   description: {
     paddingVertical: 6,
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   pet: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textStyle: {
     fontWeight: '500',

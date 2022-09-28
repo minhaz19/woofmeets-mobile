@@ -17,7 +17,7 @@ interface Props {
 const SafetyQuizCheckbox = ({control, setValue, errors}: Props) => {
   const {quiz} = useAppSelector(state => state.safetyQuiz);
   const bb = quiz?.map((item: any, index: number) => ({
-    id: item.id,
+    id: index + 1,
     title: item.question,
     answer: item.answer,
     checkbox: item.options,

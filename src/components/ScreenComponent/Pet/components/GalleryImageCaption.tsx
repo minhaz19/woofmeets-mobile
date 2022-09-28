@@ -1,10 +1,10 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import MiddleModal from '../../../../UI/modal/MiddleModal';
-import TitleText from '../../../../common/text/TitleText';
+import MiddleModal from '../../../UI/modal/MiddleModal';
+import TitleText from '../../../common/text/TitleText';
 import CaptionBody from './CaptionBody';
 import {useForm} from 'react-hook-form';
-import Colors from '../../../../../constants/Colors';
+import Colors from '../../../../constants/Colors';
 interface Props {
   isVisible: boolean;
   setIsVisible: (arg: boolean) => void;
@@ -34,7 +34,7 @@ const GalleryImageCaptionModal = ({
       <MiddleModal
         isModalVisible={isVisible}
         setIsModalVisible={setIsVisible}
-        onBlur={() => console.log('')}>
+        onBlur={() => null}>
         <View style={styles.CaptionBody}>
           <CaptionBody
             selectedImgInfo={selectedImgInfo}

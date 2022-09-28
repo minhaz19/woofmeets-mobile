@@ -1,7 +1,7 @@
 import {View} from 'react-native';
 import React from 'react';
-import {useAppSelector} from '../../../../../store/store';
-import AppMultiSelectField from '../../../../common/Form/AppMultiSelectField';
+import {useAppSelector} from '../../../../store/store';
+import AppMultiSelectField from '../../../common/Form/AppMultiSelectField';
 interface Props {
   name: string;
   control: any;

@@ -1,7 +1,7 @@
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
-import AppFormField from '../../../../common/Form/AppFormField';
-import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
+import AppFormField from '../../../common/Form/AppFormField';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 interface Props {
   selectedImgInfo: any;
   name: string;

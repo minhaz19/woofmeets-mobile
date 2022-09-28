@@ -99,7 +99,7 @@ const Gallery = () => {
       };
       setPhoto([...photo, imageData]);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

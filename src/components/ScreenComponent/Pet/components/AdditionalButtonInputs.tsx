@@ -1,7 +1,7 @@
 import {View} from 'react-native';
 import React, {memo, useCallback} from 'react';
-import AppFormField from '../../../../common/Form/AppFormField';
-import {additionalDetailsBottomInputs} from '../../../../../utils/config/Data/AddPetData';
+import AppFormField from '../../../common/Form/AppFormField';
+import {additionalDetailsBottomInputs} from '../../../../utils/config/Data/AddPetData';
 
 interface Props {
   errors: any;

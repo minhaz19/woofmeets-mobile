@@ -24,7 +24,6 @@ export const useHandleRange = (name = 'dateRange') => {
     //   setEndingDate(day.dateString);
     // }
 
-    // console.log('start', startingDate, 'end', endingDate);
     if (step === 1) {
       setSteps(2);
       setStartingDate(day.dateString);

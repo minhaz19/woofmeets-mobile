@@ -7,6 +7,5 @@ export const useSafetyQuizInitValues = () => {
     '5': '',
     '6': '',
     '7': '',
-    '8': '',
   };
 };

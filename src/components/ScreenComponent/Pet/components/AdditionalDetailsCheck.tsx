@@ -1,10 +1,10 @@
 import {StyleSheet, View} from 'react-native';
 import React, {memo, useState} from 'react';
-import {additionalDetailChecks} from '../../../../../utils/config/Data/AddPetData';
-import TitleText from '../../../../common/text/TitleText';
-import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
-import Text_Size from '../../../../../constants/textScaling';
-import AppFormField from '../../../../common/Form/AppFormField';
+import {additionalDetailChecks} from '../../../../utils/config/Data/AddPetData';
+import TitleText from '../../../common/text/TitleText';
+import AppCheckboxField from '../../../common/Form/AppCheckboxField';
+import Text_Size from '../../../../constants/textScaling';
+import AppFormField from '../../../common/Form/AppFormField';
 
 interface Props {
   errors: any;

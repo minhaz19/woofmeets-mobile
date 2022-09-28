@@ -1,9 +1,9 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import HeaderText from '../../../../common/text/HeaderText';
-import TitleText from '../../../../common/text/TitleText';
-import DescriptionText from '../../../../common/text/DescriptionText';
-import Text_Size from '../../../../../constants/textScaling';
+import HeaderText from '../../../common/text/HeaderText';
+import TitleText from '../../../common/text/TitleText';
+import DescriptionText from '../../../common/text/DescriptionText';
+import Text_Size from '../../../../constants/textScaling';
 
 const AddPetHeader = () => {
   return (

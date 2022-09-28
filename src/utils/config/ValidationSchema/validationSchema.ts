@@ -65,7 +65,7 @@ const otpValidationSchema = Yup.object().shape({
 const verifyAccountValidationSchema = Yup.object().shape({
   code: Yup.string().required().min(6).max(6).label('OTP'),
 });
-const addPetValidationSchema = Yup.object().shape({
+const addPetHomeValidationSchema = Yup.object().shape({
   profile_image: Yup.string().required('Image is required'),
   type: Yup.string().required('Pet type is required'),
   name: Yup.string().required('Pet name is required'),
@@ -96,7 +96,8 @@ const addPetValidationSchema = Yup.object().shape({
         id: Yup.number().required(),
       }),
     ),
-
+});
+const addPetCheckValidationSchema = Yup.object().shape({
   microchipped: Yup.boolean().nullable(true),
   houseTrained: Yup.string(),
   houseTrainedAdditionalDetails: Yup.string(),
@@ -116,6 +117,8 @@ const addPetValidationSchema = Yup.object().shape({
   canLeftAlone: Yup.string(),
   canLeftAloneDetails: Yup.string(),
   additionalDescription: Yup.string(),
+});
+const addPetSubmitValidationSchema = Yup.object().shape({
   pill: Yup.boolean(),
   topical: Yup.boolean(),
   injection: Yup.boolean(),
@@ -171,7 +174,6 @@ const safetyQuizValidationSchema = Yup.object().shape({
   '5': Yup.string().required('Please choose the corrent answer'),
   '6': Yup.string().required('Please choose the corrent answer'),
   '7': Yup.string().required('Please choose the corrent answer'),
-  '8': Yup.string().required('Please choose the corrent answer'),
 });
 const backgroundCheckValidationSchema = Yup.object().shape({
   dob: Yup.string(),
@@ -197,7 +199,9 @@ export {
   forgotPasswordValidationSchema,
   otpValidationSchema,
   verifyAccountValidationSchema,
-  addPetValidationSchema,
+  addPetHomeValidationSchema,
+  addPetCheckValidationSchema,
+  addPetSubmitValidationSchema,
   filterProviderValidationSchema,
   BoardingSettingsSchema,
   forgotPasswordResetValidationSchema,
