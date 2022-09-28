@@ -1,4 +1,4 @@
-import {confirmPayment} from '@stripe/stripe-react-native';
+// import {confirmPayment} from '@stripe/stripe-react-native';
 import {useState} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../../../../api/methods';
@@ -28,27 +28,27 @@ export const usePlanCheckout = (route: any) => {
           postalCode: data?.cardInfo.postalCode,
         },
       }; // mocked data for tests
-      const {error, paymentIntent} = await confirmPayment(
-        clientSecreet,
-        {
-          paymentMethodType: 'Card',
-          paymentMethodData: {
-            billingDetails,
-          },
-        },
-        {
-          setupFutureUsage: saveCard ? 'OffSession' : undefined,
-        },
-      );
+      // const {error, paymentIntent} = await confirmPayment(
+      //   clientSecreet,
+      //   {
+      //     paymentMethodType: 'Card',
+      //     paymentMethodData: {
+      //       billingDetails,
+      //     },
+      //   },
+      //   {
+      //     setupFutureUsage: saveCard ? 'OffSession' : undefined,
+      //   },
+      // );
 
-      if (error) {
-        Alert.alert(`Error code: ${error.code}`, error.message);
-      } else if (paymentIntent) {
-        Alert.alert(
-          'Success',
-          `The payment was confirmed successfully! currency: ${paymentIntent.currency}`,
-        );
-      }
+      // if (error) {
+      //   Alert.alert(`Error code: ${error.code}`, error.message);
+      // } else if (paymentIntent) {
+      //   Alert.alert(
+      //     'Success',
+      //     `The payment was confirmed successfully! currency: ${paymentIntent.currency}`,
+      //   );
+      // }
     }
   };
   return {loading, handleSubmit, saveCard, setSaveCard};

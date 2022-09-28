@@ -1,4 +1,4 @@
-import {createToken} from '@stripe/stripe-react-native';
+// import {createToken} from '@stripe/stripe-react-native';
 import {useState} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../api/methods';
@@ -24,24 +24,24 @@ export const useCreditDebitCard = () => {
       currency: 'USD',
       name: cardData.name,
     };
-    const {error, token} = await createToken(tokenPayload);
-    setTokenLoading(false);
-    if (error) {
-      Alert.alert(`Error code: ${error.code}`, error.message);
-    } else if (token) {
-      Alert.alert(
-        'Success',
-        `The token was created successfully! token: ${token.id}`,
-      );
-    }
-    const reqPayload = {
-      customerId: 'cus_MW1QbAZnzwBnWu',
-      countryId: 1,
-      token: token?.id,
-    };
-    console.log('card', token);
-    const result = await request(endpoint, reqPayload);
-    console.log('result', result);
+    // const {error, token} = await createToken(tokenPayload);
+    // setTokenLoading(false);
+    // if (error) {
+    //   Alert.alert(`Error code: ${error.code}`, error.message);
+    // } else if (token) {
+    //   Alert.alert(
+    //     'Success',
+    //     `The token was created successfully! token: ${token.id}`,
+    //   );
+    // }
+    // const reqPayload = {
+    //   customerId: 'cus_MW1QbAZnzwBnWu',
+    //   countryId: 1,
+    //   token: token?.id,
+    // };
+    // console.log('card', token);
+    // const result = await request(endpoint, reqPayload);
+    // console.log('result', result);
   };
   return {handleValues, tokenLoading, loading};
 };

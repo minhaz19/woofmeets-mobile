@@ -9,7 +9,7 @@ import BottomSpacing from '../../UI/BottomSpacing';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import {CardForm} from '@stripe/stripe-react-native';
+// import {CardForm} from '@stripe/stripe-react-native';
 import TitleText from '../../common/text/TitleText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 // import ErrorMessage from '../../common/Form/ErrorMessage';
@@ -33,7 +33,7 @@ const CheckoutInputForm = ({handleValues, loading}: Props) => {
             {item.name === 'cardInfo' ? (
               <>
                 <TitleText textStyle={styles.label} text={item.title} />
-                <CardForm
+                {/* <CardForm
                   onFormComplete={cardDetails => {
                     setValue(item.name, cardDetails, {
                       shouldValidate: errors[item.name] ? true : false,
@@ -46,7 +46,7 @@ const CheckoutInputForm = ({handleValues, loading}: Props) => {
                     borderRadius: 2,
                     borderColor: isDarkMode ? Colors.gray : Colors.border,
                   }}
-                />
+                /> */}
                 {/* <ErrorMessage error={errors?.cardInfo?.postalCode.message} /> */}
               </>
             ) : (
