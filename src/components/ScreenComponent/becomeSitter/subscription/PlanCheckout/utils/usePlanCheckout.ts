@@ -1,4 +1,4 @@
-import {confirmPayment} from '@stripe/stripe-react-native';
+// import {confirmPayment} from '@stripe/stripe-react-native';
 import {useState} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../../../../api/methods';

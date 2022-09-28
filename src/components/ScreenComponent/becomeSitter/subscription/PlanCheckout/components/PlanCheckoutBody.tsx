@@ -3,7 +3,7 @@ import {KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
 import React from 'react';
 import TitleText from '../../../../../common/text/TitleText';
 import {planCheckoutData} from '../../../../../../utils/config/Data/planCheckoutData';
-import {CardForm} from '@stripe/stripe-react-native';
+// import {CardForm} from '@stripe/stripe-react-native';
 import {useFormContext} from 'react-hook-form';
 import ErrorMessage from '../../../../../common/Form/ErrorMessage';
 import AppFormField from '../../../../../common/Form/AppFormField';
@@ -36,7 +36,7 @@ const PlanCheckoutBody = ({handleSubmit, loading, handleCheck}: Props) => {
               {item.name === 'cardInfo' ? (
                 <>
                   <TitleText textStyle={styles.label} text={item.title} />
-                  <CardForm
+                  {/* <CardForm
                     dangerouslyGetFullCardDetails
                     onFormComplete={cardDetails => {
                       setValue(item.name, cardDetails, {
@@ -52,7 +52,7 @@ const PlanCheckoutBody = ({handleSubmit, loading, handleCheck}: Props) => {
                     }}
                   />
 
-                  <ErrorMessage error={errors?.cardInfo?.postalCode.message} />
+                  <ErrorMessage error={errors?.cardInfo?.postalCode.message} /> */}
                 </>
               ) : (
                 <AppFormField
