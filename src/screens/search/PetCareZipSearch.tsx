@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   StyleSheet,
@@ -27,6 +28,7 @@ import ErrorMessage from '../../components/common/Form/ErrorMessage';
 import {ScrollView} from 'react-native-gesture-handler';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import ServiceCard from '../../components/ScreenComponent/search/ServiceCard';
+import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
 
 interface Props {
   item: any;
@@ -126,6 +128,7 @@ const PetCareZipSearch = (props: {
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           {petData.map(item => (
             <ServiceCard
+              key={item.id}
               data={item}
               noShadow
               onPressEvent={onPressPet}
@@ -159,6 +162,7 @@ const PetCareZipSearch = (props: {
                 }}>
                 {selectData.map(item => (
                   <ServiceCard
+                    key={item.id}
                     data={item}
                     noShadow
                     onPressEvent={onPressService}
@@ -166,6 +170,7 @@ const PetCareZipSearch = (props: {
                   />
                 ))}
               </View>
+              <SearchSlider navigation={props.navigation} />
               <View style={styles.zipContainer}>
                 <DescriptionText text="Near" textStyle={styles.zipText} />
                 <TextInput

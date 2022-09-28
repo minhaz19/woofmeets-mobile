@@ -25,6 +25,8 @@ import BasicBackgroundCheck from '../components/ScreenComponent/becomeSitter/sub
 import ServiceSetting from '../components/ScreenComponent/setting/subProfile/ServiceSetting';
 import ProfileModify from '../components/ScreenComponent/setting/subProfile/ProfileModify';
 import ManageBusiness from '../components/ScreenComponent/setting/subProfile/ManageBusiness';
+import SchedulePetSettings from '../components/ScreenComponent/search/SchedulePetSettings';
+import SafetyScreen from '../components/ScreenComponent/search/SafetyScreen';
 import AddPetCheckScreen from '../screens/pet/AddPet/AddPetCheck';
 import AddPetSubmit from '../screens/pet/AddPet/AddPetSubmit';
 import AddPetHome from '../screens/pet/AddPet/AddPetHome';
@@ -358,6 +360,16 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             ),
             backgroundColor: Colors.primary,
           })}
+        />
+        <Stack.Screen
+          name="SchedulePetSettings"
+          component={SchedulePetSettings}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SafetyScreen"
+          component={SafetyScreen}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
