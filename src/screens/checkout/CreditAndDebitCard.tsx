@@ -1,4 +1,4 @@
-import {Alert,  ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import HeaderText from '../../components/common/text/HeaderText';
 import ShortText from '../../components/common/text/ShortText';
@@ -10,50 +10,12 @@ import Text_Size from '../../constants/textScaling';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import CheckoutInputForm from '../../components/ScreenComponent/Checkout/CheckoutInputForm';
-import {createToken} from '@stripe/stripe-react-native';
 import AppStripe from '../../components/common/Stripe/AppStripe';
-import {useApi} from '../../utils/helpers/api/useApi';
-import methods from '../../api/methods';
-const endpoint = '/stripe-payment-method/add-card';
+import {useCreditDebitCard} from './utils/useCreditDebitCard';
 const CreditAndDebitCard = () => {
   const {colors} = useTheme();
-  const {request} = useApi(methods._post);
-  const handleValues = async (cardData: any) => {
-    // : Token.CreateParams
-    const tokenPayload: any = {
-      type: 'Card',
-      address: {
-        city: cardData.city,
-        country: cardData.cardInfo.city,
-        state: cardData.state,
-        postalCode: cardData.cardInfo.city,
-        line1: cardData.line1,
-        line2: cardData.line2,
-      },
-      currency: 'USD',
-      name: cardData.name,
-      exp_month: 8,
-      exp_year: 2023,
-      last4: '4242',
-      cvc: '412',
-    };
-    const {error, token} = await createToken(tokenPayload);
-    if (error) {
-      Alert.alert(`Error code: ${error.code}`, error.message);
-    } else if (token) {
-      Alert.alert(
-        'Success',
-        `The token was created successfully! token: ${token.id}`,
-      );
-    }
-    const reqPayload = {
-      customerId: 'cus_MShSRbPwuM9ohF',
-      countryId: 0,
-      token: token?.id,
-    };
-    await request(endpoint, reqPayload);
-  };
 
+  const {loading, tokenLoading, handleValues} = useCreditDebitCard();
   return (
     <View
       style={[
@@ -77,7 +39,10 @@ const CreditAndDebitCard = () => {
           initialValues={debitAndCreditCard}
           validationSchema={CreditAndDebitCardSchema}>
           <AppStripe>
-            <CheckoutInputForm handleValues={handleValues} />
+            <CheckoutInputForm
+              handleValues={handleValues}
+              loading={loading || tokenLoading}
+            />
           </AppStripe>
         </AppForm>
       </ScrollView>

@@ -70,6 +70,7 @@ const SearchSlider = ({navigation}: Props) => {
     <View style={styles.container}>
       <View style={styles.tabContainer}>
         <ScrollView
+          style={{flex: 1}}
           showsHorizontalScrollIndicator={false}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
@@ -81,7 +82,7 @@ const SearchSlider = ({navigation}: Props) => {
           horizontal
           bounces={false}
           ref={slideRef}
-          scrollEventThrottle={32}>
+          scrollEventThrottle={100}>
           {slidesData.map((item: any) => {
             return (
               <View

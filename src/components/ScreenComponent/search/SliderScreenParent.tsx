@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -27,11 +28,14 @@ const SliderScreenParent = ({children}: Props) => {
           source={require('../../../assets/image/pet/searchBackground.png')}
           resizeMode="cover"
           style={StyleSheet.absoluteFillObject}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <View style={styles.crossContainer}>
+          {/* <TouchableHighlight onPress={() => {
+            console.log('pressed')
+            navigation.goBack()}}
+            style={styles.crossContainer}>
+            <View >
               <Cross height={20} width={20} fill={Colors.light.background} />
             </View>
-          </TouchableOpacity>
+          </TouchableHighlight> */}
           <View style={styles.childrenContainer}>{children}</View>
         </ImageBackground>
       </View>
@@ -75,8 +79,11 @@ const styles = StyleSheet.create({
   },
   crossContainer: {
     right: 20,
-    top: 30,
+    top: 50,
     position: 'absolute',
+    flex: 2,
+    backgroundColor: 'black',
+    padding: 10,
   },
   childrenContainer: {
     margin: '5%',
