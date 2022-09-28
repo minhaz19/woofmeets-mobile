@@ -4,17 +4,21 @@ import ProfileInfo from '../../../components/ScreenComponent/profile/ProfileInfo
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {useProfileData} from './utils/useProfileData';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import HeaderText from '../../../components/common/text/HeaderText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ShortText from '../../../components/common/text/ShortText';
+import { getProviderProfile } from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
+import { useNavigation } from '@react-navigation/native';
 
 const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();
   const isDarkMode = useColorScheme() === 'dark';
   const {loading} = useAppSelector(state => state.userProfile);
+  const navigation = useNavigation();
+  const dispatch = useAppDispatch();
   useProfileData();
   return (
     <>
@@ -43,7 +47,12 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
                   borderColor: colors.borderColor,
                 },
               ]}
-              onPress={() => {}}>
+              onPress={async () => {
+                await dispatch(getProviderProfile('xCMyOqAm'));
+                navigation.navigate('ProviderNavigator', {
+                  providerOpk: 'xCMyOqAm',
+                });
+              }}>
               <ShortText text="View Profile" textStyle={styles.text} />
             </TouchableOpacity>
           </View>
@@ -107,6 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal:
       SCREEN_WIDTH <= 380 ? '3%' : SCREEN_WIDTH <= 600 ? '5%' : '6%',
+    paddingTop: 10,
   },
   profileContainer: {
     width: '70%',
@@ -147,6 +157,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingVertical: 5,
   },
   tabContainer: {
     flexDirection: 'row',

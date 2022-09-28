@@ -28,6 +28,8 @@ import ManageBusiness from '../components/ScreenComponent/setting/subProfile/Man
 import AddPetCheckScreen from '../screens/pet/AddPet/AddPetCheck';
 import AddPetSubmit from '../screens/pet/AddPet/AddPetSubmit';
 import AddPetHome from '../screens/pet/AddPet/AddPetHome';
+import SitterDetails from '../screens/becomeSitter/Details';
+import BasicInfo from '../screens/profile/BasicInfo';
 // import PetNavigatorFC from './PetNavigatorFS';
 const Stack = createStackNavigator();
 
@@ -149,6 +151,28 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             title: '',
             header: () => (
               <HeaderWithBack navigation={navigation} title="Profile" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SitterBasicInfo"
+          component={BasicInfo}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Basic Info" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SitterDetails"
+          component={SitterDetails}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Details" />
             ),
             backgroundColor: Colors.primary,
           })}

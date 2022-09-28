@@ -27,7 +27,7 @@ const ProfileModify = (props: {
       id: 1,
       name: 'Basic Info',
       icon: <ProfileIcon height={20} width={20} />,
-      screen: () => props.navigation.navigate('BasicInfoSitter'),
+      screen: () => props.navigation.navigate('SitterBasicInfo'),
     },
     {
       id: 2,
@@ -39,7 +39,7 @@ const ProfileModify = (props: {
       id: 3,
       name: 'Details',
       icon: <FileTextSvg height={20} width={20} />,
-      screen: () => props.navigation.navigate(''),
+      screen: () => props.navigation.navigate('SitterDetails'),
     },
     {
       id: 4,
