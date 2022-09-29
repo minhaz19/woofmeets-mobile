@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     color: 'black',
-    fontSize: Text_Size.Text_1,
+    fontSize: Text_Size.Text_9,
   },
   iconContainer: {padding: 10, justifyContent: 'center', alignItems: 'center'},
   iconView: {height: 80, width: 80, marginBottom: 10},

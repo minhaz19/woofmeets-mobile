@@ -5,6 +5,7 @@ import ReusableCard from '../utils/Common/ReusableCard';
 import Colors from '../../../../constants/Colors';
 import {PendingSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
+import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 
 export const data = [
   {
@@ -58,6 +59,10 @@ const PendingMessage = () => {
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
+        <FilterByDateAndActivity
+          handleActivity={() => {}}
+          handleDate={() => {}}
+        />
         {data.length > 0 ? (
           data?.map((item, index) => {
             return (

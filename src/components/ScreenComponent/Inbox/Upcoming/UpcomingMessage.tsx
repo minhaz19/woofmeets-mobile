@@ -7,6 +7,7 @@ import {UpcomingSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
 import Colors from '../../../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
+import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 
 const UpcomingMessage = () => {
   let navigation = useNavigation();
@@ -14,6 +15,10 @@ const UpcomingMessage = () => {
     <ScrollView
       showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
+      <FilterByDateAndActivity
+        handleActivity={() => {}}
+        handleDate={() => {}}
+      />
         {data.length > 0 ? (
           data?.map((item, index) => {
             return (
