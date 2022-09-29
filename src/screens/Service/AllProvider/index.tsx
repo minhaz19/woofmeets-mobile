@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {FlatList, Platform, StyleSheet} from 'react-native';
+import {FlatList, Platform, StyleSheet, useColorScheme} from 'react-native';
 import React from 'react';
 import Screen from '../../../components/common/Screen';
 import ShortText from '../../../components/common/text/ShortText';
@@ -13,29 +13,35 @@ import FilterProvider from '../FilterProvider';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 interface Props {
   navigation: {
     navigate: (arg: string, arg1: {providerOpk: string}) => void;
   };
 }
 const AllProvider = ({navigation}: Props) => {
-  const {colors} = useTheme();
   const filter = useAppSelector((state: any) => state.filter.isOpen);
   const {loading} = useAppSelector(state => state.providerProfile);
   const dispatch = useAppDispatch();
+  const isDarkMode = useColorScheme() === 'dark';
 
-  return (
-    <>
-      {loading && <AppActivityIndicator visible={true} />}
-      <Screen
-        style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
-        <ShortText
+  const renderHeader = () => {
+    return (
+      <ShortText
           textStyle={{
             paddingVertical: Platform.OS === 'ios' ? 10 : 0,
             color: Colors.gray,
           }}
           text="20 Result"
         />
+    )
+  }
+
+  return (
+    <ScreenRapperGrey>
+      {loading && <AppActivityIndicator visible={true} />}
+      <Screen
+        style={styles.container}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={providers}
@@ -61,12 +67,13 @@ const AllProvider = ({navigation}: Props) => {
             );
           }}
           ListFooterComponent={<BottomSpacing />}
+          ListHeaderComponent={renderHeader}
         />
         <BottomHalfModal isModalVisible={filter}>
           <FilterProvider />
         </BottomHalfModal>
       </Screen>
-    </>
+    </ScreenRapperGrey>
   );
 };
 
@@ -77,5 +84,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // paddingHorizontal: 20,
     paddingHorizontal: Platform.OS === 'ios' ? 10 : 5,
+    paddingTop: 5,
   },
 });

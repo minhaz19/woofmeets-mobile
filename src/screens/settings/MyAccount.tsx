@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ScrollView, useColorScheme} from 'react-native';
 import React, {useEffect} from 'react';
 import {
   CallIcon,
@@ -16,6 +16,7 @@ import ProfileInfo from '../../components/ScreenComponent/profile/ProfileInfo';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileAction';
 import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
+import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 
 const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const dispatch = useAppDispatch();
@@ -67,23 +68,20 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     userInfo === null ? dispatch(getUserProfileInfo()) : false;
   }, []);
   return (
-    <>
+    <ScreenRapperGrey>
       {loading && <AppActivityIndicator visible={true} />}
 
       <ScrollView
-        style={[
-          styles.rootContainer,
-          {
-            backgroundColor: colors.backgroundColor,
-          },
-        ]}>
+        style={
+          styles.rootContainer
+        }>
         <SafeAreaView>
           <View style={styles.profileContainer}>
             <ProfileInfo />
           </View>
-          <View
+          {/* <View
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-          />
+          /> */}
           {supportData?.map(item => (
             <SettingItem
               data={item}
@@ -96,7 +94,7 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
           ))}
         </SafeAreaView>
       </ScrollView>
-    </>
+    </ScreenRapperGrey>
   );
 };
 

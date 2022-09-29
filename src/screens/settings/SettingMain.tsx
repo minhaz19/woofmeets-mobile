@@ -1,4 +1,4 @@
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, useColorScheme} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   CallIcon,
@@ -23,11 +23,13 @@ import BottomSpacing from '../../components/UI/BottomSpacing';
 import {logout} from '../../store/slices/auth/userSlice';
 import methods from '../../api/methods';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 
 const SettingMain = (props: {
   navigation: {navigate: (arg0: string) => any};
 }) => {
   const dispatch = useAppDispatch();
+  const isDarkMode = useColorScheme() === 'dark';
   const {colors} = useTheme();
   const [token, setToken] = useState<any>();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -65,14 +67,6 @@ const SettingMain = (props: {
       rightIcon: true,
       opacity: 1,
     },
-    // {
-    //   id: 3,
-    //   title: 'Cards',
-    //   icon: CardsIcon,
-    //   screenName: () => props.navigation.navigate('CreditAndDebitCard'),
-    //   rightIcon: true,
-    //   opacity: 1,
-    // },
   ];
 
   const customerProfile = {
@@ -163,25 +157,27 @@ const SettingMain = (props: {
       opacity: 1,
       isGuest: true,
     },
-    {
-      id: 2,
-      title: 'Logout',
-      vectorIcon: (
-        <MaterialCommunityIcons
-          name="logout"
-          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
-          style={styles.iconStyle}
-          color={Colors.primary}
-        />
-      ),
-      screenName: () => {
-        dispatch(logout());
-        methods._get('/auth/logout');
-        props.navigation.navigate('AuthNavigator');
-      },
-      opacity: 1,
-    },
   ];
+
+  const logOut = {
+    id: 1,
+    title: 'Sign Out',
+    vectorIcon: (
+      <MaterialCommunityIcons
+        name="logout"
+        size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+        style={styles.iconStyle}
+        color={Colors.alert}
+      />
+    ),
+    screenName: () => {
+      dispatch(logout());
+      methods._get('/auth/logout');
+      props.navigation.navigate('AuthNavigator');
+    },
+    opacity: 1,
+    color: Colors.alert,
+  };
 
   const providerData = [
     {
@@ -210,33 +206,37 @@ const SettingMain = (props: {
     },
   ];
 
+  const backgroundStyle = {   backgroundColor: isDarkMode
+    ? colors.lightBackgroundColor
+    : colors.backgroundColor}
+
   return (
+    <ScreenRapperGrey>
     <ScrollView
       style={[
-        styles.rootContainer,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
+        styles.rootContainer
       ]}>
       <View>
-        <View style={styles.boxContainer}>
+        <View style={[styles.boxContainer, backgroundStyle]}>
           <View style={styles.boxTextContainer}>
-            <ShortText textStyle={{color: Colors.alter}} text={'Get $100'} />
+            <ShortText textStyle={{color: Colors.blue}} text={'Get $100 '} />
             <ShortText text={' when friends join Woofmeets'} />
           </View>
           <ShortText text={'Share Now'} />
         </View>
         {!isLoggedIn && (
-          <View>
+          <View style={{backgroundColor: isDarkMode
+            ? Colors.dark.background
+            : Colors.light.inputBackground}}>
             {loginData?.map(item => (
               <SettingItem data={item} key={item.id} />
             ))}
-            <View
+            {/* <View
               style={[
                 styles.divider,
                 {backgroundColor: colors.descriptionText},
               ]}
-            />
+            /> */}
           </View>
         )}
         {isLoggedIn && (
@@ -244,14 +244,18 @@ const SettingMain = (props: {
             <View style={styles.titleContainer}>
               <TitleText text="Account" />
             </View>
-            {token && token.provider ? (
-              <SettingItem data={sitterProfile} key={sitterProfile.id} />
-            ) : (
-              <SettingItem data={customerProfile} key={customerProfile.id} />
-            )}
-            {profileData?.map(item => (
-              <SettingItem data={item} key={item.id} />
-            ))}
+            <View style={{backgroundColor: isDarkMode
+            ? Colors.dark.background
+            : Colors.light.inputBackground}}>
+              {token && token.provider ? (
+                <SettingItem data={sitterProfile} key={sitterProfile.id} />
+              ) : (
+                <SettingItem data={customerProfile} key={customerProfile.id} />
+              )}
+              {profileData?.map(item => (
+                <SettingItem data={item} key={item.id} />
+              ))}
+            </View>
             <View
               style={[
                 styles.divider,
@@ -326,10 +330,22 @@ const SettingMain = (props: {
           preferenceData?.map((item: any) => (
             <SettingItem data={item} key={item.id} />
           ))}
+        <View
+              style={[
+                styles.divider,
+                {backgroundColor: colors.descriptionText},
+              ]}
+            />
+        {
+          isLoggedIn && (
+            <SettingItem data={logOut} key={logOut.id} />
+          )
+        }
       </View>
       <BottomSpacing />
       <BottomSpacing />
     </ScrollView>
+    </ScreenRapperGrey>
   );
 };
 
@@ -340,13 +356,13 @@ const styles = StyleSheet.create({
   },
   paddingTop: {paddingTop: '2%'},
   divider: {
-    height: 1,
+    // height: 1,
     opacity: 0.3,
-    marginLeft: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
-    marginRight:
-      SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '8%' : '10%',
+    // marginLeft: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
+    // marginRight:
+    //   SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '8%' : '10%',
     marginVertical:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '2%',
+      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '2%',
   },
   titleContainer: {
     marginHorizontal:

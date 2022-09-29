@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   GestureResponderEvent,
   TextStyle,
+  useColorScheme,
 } from 'react-native';
 import React from 'react';
 import Colors from '../../../constants/Colors';
@@ -13,6 +14,7 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import HeaderText from '../../common/text/HeaderText';
 import DescriptionText from '../../common/text/DescriptionText';
 import {NumberProp} from 'react-native-svg';
+import { useTheme } from '../../../constants/theme/hooks/useTheme';
 
 const SettingItem = (props: {
   data: {
@@ -23,11 +25,26 @@ const SettingItem = (props: {
     details?: string;
     rightIcon?: any;
     vectorIcon?: any;
+    id: any;
+    color?: string;
   };
   descriptionStyle?: TextStyle;
+  key?: number;
 }) => {
+  const {colors} = useTheme();
+  const isDarkMode = useColorScheme() === 'dark';
+  const backgroundStyle = {
+    backgroundColor: isDarkMode
+      ? colors.lightBackgroundColor
+      : colors.backgroundColor
+  }
   return (
-    <TouchableOpacity onPress={props.data.screenName}>
+    <TouchableOpacity onPress={props.data.screenName} style={{
+      backgroundColor: backgroundStyle.backgroundColor,
+      borderBottomWidth: 1,
+      borderTopWidth: props.data.id === 1 ? 1 : 0,
+      borderColor: colors.borderColor,
+    }}>
       <View style={styles.rootContainer}>
         <View style={styles.titleContainer}>
           {props.data.icon && <props.data.icon
@@ -36,7 +53,7 @@ const SettingItem = (props: {
           />}
           {props.data.vectorIcon && props.data.vectorIcon}
           <View style={[styles.detailsContainer, {width: props.rightIcon ? '82%' : '85%'}]}>
-            <HeaderText text={props.data.title} />
+            <HeaderText text={props.data.title} textStyle={props.data.color && {color: props.data.color}}/>
             {props.data.details && (
               <DescriptionText
                 text={props.data.details}

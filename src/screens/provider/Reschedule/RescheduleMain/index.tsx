@@ -7,19 +7,16 @@ import {rescheduleData} from '../utils/rescheduleData';
 import BottomHalfModal from '../../../../components/UI/modal/BottomHalfModal';
 import ServiceSelection from '../../../../components/ScreenComponent/Provider/Reschedule/ServiceSelection';
 import EditSchedule from '../../../../components/ScreenComponent/Provider/Reschedule/EditSchedule';
+import ScreenRapperGrey from '../../../../components/common/ScreenRapperGrey';
 
 const RescheduleMain = () => {
-  const {colors} = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [viewDetails, setViewDetails] = useState<boolean>(true);
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
+    <ScreenRapperGrey
+      rapperStyle={
+        styles.container
+      }>
       <View>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -50,7 +47,7 @@ const RescheduleMain = () => {
           <EditSchedule setViewDetails={setViewDetails}/>
         )}
       </BottomHalfModal>
-    </View>
+    </ScreenRapperGrey>
   );
 };
 

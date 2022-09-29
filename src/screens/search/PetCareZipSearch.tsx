@@ -172,7 +172,7 @@ const PetCareZipSearch = (props: {
               </View>
               <SearchSlider navigation={props.navigation} />
               <View style={styles.zipContainer}>
-                <DescriptionText text="Near" textStyle={styles.zipText} />
+                <TitleText text="Near" textStyle={styles.zipText} />
                 <TextInput
                   placeholder="Enter zip code"
                   keyboardType="number-pad"
