@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, useColorScheme, Platform} from 'react-native';
+import {View,  StyleSheet, useColorScheme, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Finder, Setting, Pets, InboxIcon} from '../assets/svgs/SVG_LOGOS';
 import Colors from '../constants/Colors';
 import {SCREEN_WIDTH} from '../constants/WindowSize';
 import InboxNavigator from './bottoms/InboxNavigator';
-import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
 import PetNavigator from './bottoms/PetNavigator';

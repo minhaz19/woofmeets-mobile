@@ -52,10 +52,14 @@ const AllProvider = ({navigation}: Props) => {
                 availablity={item.availablity}
                 repeatClient={item.repeatClient}
                 onPress={async () => {
-                  await dispatch(getProviderProfile('xCMyOqAm'));
+                  await dispatch(getProviderProfile('eLNRnJ04'));
                   navigation.navigate('ProviderNavigator', {
-                    providerOpk: 'xCMyOqAm',
+                    providerOpk: 'eLNRnJ04',
                   });
+                  // await dispatch(getProviderProfile('xCMyOqAm'));
+                  // navigation.navigate('ProviderNavigator', {
+                  //   providerOpk: 'xCMyOqAm',
+                  // });
                 }}
               />
             );

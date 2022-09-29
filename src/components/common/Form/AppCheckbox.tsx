@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Pressable, StyleSheet,  View} from 'react-native';
 import React from 'react';
 import {
   Circle_,
@@ -30,8 +30,7 @@ const AppCheckbox = ({
   small,
 }: Props) => {
   return (
-    <TouchableOpacity
-      activeOpacity={1}
+    <Pressable
       onPress={onPress}
       onBlur={onBlur}
       style={[
@@ -50,7 +49,7 @@ const AppCheckbox = ({
         )}
       </View>
       {Comp && <Comp />}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 export default AppCheckbox;

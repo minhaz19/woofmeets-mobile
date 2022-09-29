@@ -5,11 +5,11 @@ import ProviderFooter from '../../../components/ScreenComponent/Service/Provider
 import ProviderTab from '../../../components/ScreenComponent/Service/ProviderProfile/ProvderTab';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import ProviderStory from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderStoryStatus/ProviderStory';
+// import ProviderStory from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderStoryStatus/ProviderStory';
 
 const ProviderProfile = () => {
   const {colors} = useTheme();
-  const _renderHeader = () => <ProviderStory />;
+  const _renderHeader = () => null;
   const _renderFooter = () => (
     <View
       style={[

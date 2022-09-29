@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {ReactElement} from 'react';
-import ShortText from '../../../../../../../common/text/ShortText';
 import TitleText from '../../../../../../../common/text/TitleText';
 import Colors from '../../../../../../../../constants/Colors';
 import {SvgProps} from 'react-native-svg';
 import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../../../../../constants/textScaling';
+import DescriptionText from '../../../../../../../common/text/DescriptionText';
 interface Props {
   item: {
     title: string;
@@ -27,21 +27,13 @@ const SitterInfo = ({item}: Props) => {
           <TitleText textStyle={styles.title} text={item.title} />
           {item.Icon && <item.Icon fill={'black'} />}
         </View>
-        {item.viewAll && (
-          <TouchableOpacity>
-            <ShortText
-              textStyle={{color: Colors.primary}}
-              text={item.viewAll}
-            />
-          </TouchableOpacity>
-        )}
       </View>
       <View>
         {item.subInfo.length === 0 ? (
-          <TitleText
+          <DescriptionText
             textStyle={{
               color: isDarkMode ? Colors.background : Colors.text,
-              fontSize: Text_Size.Text_0,
+              fontSize: Text_Size.Text_9,
               marginTop: 10,
             }}
             text={'No skills found'}
@@ -50,15 +42,23 @@ const SitterInfo = ({item}: Props) => {
           item.subInfo.map(inf => (
             <View key={Math.random()} style={styles.info}>
               {inf.info && (
-                <TitleText
+                <DescriptionText
                   textStyle={{
                     color: isDarkMode ? Colors.background : Colors.text,
-                    fontSize: Text_Size.Text_0,
+                    fontSize: Text_Size.Text_9,
                   }}
                   text={inf.info}
                 />
               )}
-              {inf?.description && <ShortText text={inf.description} />}
+              {inf?.description && (
+                <DescriptionText
+                  textStyle={{
+                    color: isDarkMode ? Colors.background : Colors.text,
+                    fontSize: Text_Size.Text_9,
+                  }}
+                  text={inf.description}
+                />
+              )}
             </View>
           ))
         )}
@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   headerContent: {flexDirection: 'row'},
-  title: {marginRight: 5, fontWeight: 'bold'},
+  title: {marginRight: 5, fontWeight: 'bold', fontSize: Text_Size.Text_0},
   info: {marginVertical: 8},
 });

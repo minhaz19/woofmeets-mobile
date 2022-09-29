@@ -1,12 +1,13 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import TitleText from '../../../../../../../common/text/TitleText';
 import ShortText from '../../../../../../../common/text/ShortText';
 import {SvgProps} from 'react-native-svg';
 import Colors from '../../../../../../../../constants/Colors';
 
 interface Props {
-  index: number;
+  onPress: () => void;
+  showRate: boolean;
   pricingD: {
     Icon: (props: SvgProps) => JSX.Element;
     sittingType: string;
@@ -22,55 +23,34 @@ interface Props {
     ];
   };
 }
-interface useActiveIndex {
-  0: boolean;
-  1: boolean;
-  2: boolean;
-  3: boolean;
-  4: boolean;
-}
-const PetPricing = ({pricingD, index}: Props) => {
-  const [activeIndex, setActiveIndex] = useState<useActiveIndex | any>({
-    0: true,
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-  });
-  const [activeIndexTemp, setActiveIndexTemp] = useState(0);
+
+const PetPricing = ({pricingD, showRate, onPress}: Props) => {
   return (
     <View>
-      <TouchableOpacity
-        style={styles.titleContainer}
-        onPress={() => {
-          const c = Object.keys(activeIndex).map(
-            item => item === index.toString(),
-          );
-          const b = c.map(item => ({i: item}));
-          var object = b.reduce(
-            (obj, item, i) => Object.assign(obj, {[i]: item.i}),
-            {},
-          );
-          setActiveIndex(object);
-          setActiveIndexTemp(index);
-        }}>
+      <TouchableOpacity style={styles.titleContainer} onPress={onPress}>
         <pricingD.Icon width={25} height={25} style={styles.icon} />
         <View style={styles.sittingType}>
           <TitleText
             textStyle={styles.sittingTypeTitle}
             text={pricingD.sittingType}
           />
-          <ShortText text={pricingD.sittingType} />
+          <ShortText
+            text={pricingD.sittingType}
+            textStyle={{color: Colors.text}}
+          />
         </View>
         <View>
           <TitleText
             textStyle={styles.pricingDPrice}
             text={`$${pricingD.price}`}
           />
-          <ShortText text={pricingD.perNight} />
+          <ShortText
+            text={pricingD.perNight}
+            textStyle={{color: Colors.text}}
+          />
         </View>
       </TouchableOpacity>
-      {activeIndexTemp === index && (
+      {showRate ? (
         <View style={styles.priceContainer}>
           {pricingD?.pricingInfo ? (
             pricingD?.pricingInfo.map(
@@ -99,7 +79,7 @@ const PetPricing = ({pricingD, index}: Props) => {
             />
           )}
         </View>
-      )}
+      ) : null}
     </View>
   );
 };

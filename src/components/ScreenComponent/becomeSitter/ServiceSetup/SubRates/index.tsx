@@ -114,7 +114,7 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                     autoCorrect={false}
                     keyboardType={'numeric'}
                     textContentType={'none'}
-                    name={item.slug.replace('-', '')}
+                    name={item.slug.replace('-', '').replace('-', '')}
                     label={item.name}
                     handlePress={handlePress}
                     percentage={item.percentage}
