@@ -2,8 +2,8 @@ import {View, Modal, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import React from 'react';
 import {designs} from '../../../constants/theme/common/modalEndStyles';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../../store/slices/misc/openFilter';
+import { useAppDispatch } from '../../../store/store';
 const BottomHalfModalLite = (props: {
   setIsModalVisible?: (arg0: boolean) => void;
   isModalVisible?: boolean | undefined;
@@ -16,7 +16,7 @@ const BottomHalfModalLite = (props: {
     | undefined;
 }) => {
   const {colors} = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <TouchableWithoutFeedback
       onPress={() => {

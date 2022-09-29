@@ -61,10 +61,10 @@ const ReusableServices: FC<Props> = props => {
               text={props.data.description}
               textStyle={styles.description}
             />
-            <DescriptionText
+            {/* <DescriptionText
               text={props.data.price}
               textStyle={styles.description}
-            />
+            /> */}
           </View>
         </View>
         {props.sequence === props.data.sequence && (
@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 5,
     paddingVertical: 10,
-    minHeight: 160,
+    minHeight: 180,
+    // height: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -19,9 +19,9 @@ import {
 import DescriptionText from '../../../common/text/DescriptionText';
 import Card from '../../../UI/Card';
 import AppCheckbox from '../../../common/Form/AppCheckbox';
-import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
 import BottomSpacing from '../../../UI/BottomSpacing';
+import { useAppDispatch } from '../../../../store/store';
 
 interface Props {
   isPayment?: boolean;
@@ -39,7 +39,7 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
   const [selectData, setSelectData] = useState(
     'Once you have booked a stay or walk',
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const tempData = [
     {

@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700',
     marginBottom: '5%',
+    color: Colors.light.text,
   },
   flexContainer: {
     flexDirection: 'row',
@@ -128,5 +129,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     paddingVertical: 4,
+    color: Colors.light.text,
   },
 });

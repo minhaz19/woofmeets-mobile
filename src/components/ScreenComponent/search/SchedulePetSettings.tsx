@@ -1,10 +1,11 @@
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import SliderScreenParent from './SliderScreenParent';
 import BigText from '../../common/text/BigText';
 import ShortText from '../../common/text/ShortText';
 import {
   CustomerServiceSvg,
+  GirlWithCatsSvg,
   TwentyFourBySevenSvg,
 } from './utils/SearchBoxCardSvg';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -39,13 +40,7 @@ const SchedulePetSettings = () => {
     <>
       <SliderScreenParent>
         <View style={styles.imageContainer}>
-          <Image
-            source={{
-              uri: 'https://images.unsplash.com/photo-1505628346881-b72b27e84530?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-            }}
-            resizeMode="cover"
-            style={styles.image}
-          />
+          <GirlWithCatsSvg style={styles.image} />
         </View>
         <BigText
           text={'Schedule Pet Sittings \nAnd More.'}
@@ -94,6 +89,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: '5%',
     fontWeight: '700',
+    color: Colors.light.text,
   },
   iconContainer: {
     width: '25%',
