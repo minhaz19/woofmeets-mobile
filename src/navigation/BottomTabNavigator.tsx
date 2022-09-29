@@ -37,8 +37,8 @@ function BottomTabNavigator() {
       ? 70
       : 60
     : Platform.OS === 'ios'
-    ? 80
-    : 75;
+    ? 90
+    : 80;
   getDecodedToken();
   if (token && token.provider) {
     return (
