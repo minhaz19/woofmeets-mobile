@@ -19,8 +19,8 @@ const SitterMap = () => {
         <MapView
           style={styles.map}
           region={{
-            latitude: location?.latitude,
-            longitude: location?.longitude,
+            latitude: location?.latitude ? location?.latitude : 18.476223,
+            longitude: location?.longitude ? location?.longitude : -77.89389,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}>

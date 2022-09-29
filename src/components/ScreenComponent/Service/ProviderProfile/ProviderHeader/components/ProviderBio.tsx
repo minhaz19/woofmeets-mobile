@@ -1,19 +1,23 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {MapMarker, RoundedCheckbox} from '../../../../assets/svgs/SVG_LOGOS';
-import ShortIconTitle from '../../../common/ShortIconTitle';
-import ShortText from '../../../common/text/ShortText';
-import Colors from '../../../../constants/Colors';
-import HeaderText from '../../../common/text/HeaderText';
 import {AirbnbRating} from 'react-native-ratings';
+import HeaderText from '../../../../../common/text/HeaderText';
+import ShortIconTitle from '../../../../../common/ShortIconTitle';
+import {
+  MapMarker,
+  RoundedCheckbox,
+} from '../../../../../../assets/svgs/SVG_LOGOS';
+import Colors from '../../../../../../constants/Colors';
+import ShortText from '../../../../../common/text/ShortText';
 interface Props {
   name: string;
+  nature?: string;
   rating: number;
   distance: string;
   availablity?: string;
   repeatClient?: string;
 }
-const ProviderInfo = ({
+const ProviderBio = ({
   name,
 
   rating,
@@ -34,7 +38,11 @@ const ProviderInfo = ({
           />
         </View>
         {/* <ShortIconTitle Icon={Star} text={rating} /> */}
-        <ShortIconTitle Icon={MapMarker} text={distance} />
+        {distance !== '' ? (
+          <ShortIconTitle Icon={MapMarker} text={distance} jCenter={true} />
+        ) : (
+          <View />
+        )}
       </View>
       {availablity && (
         <View style={styles.availableTime}>
@@ -56,7 +64,7 @@ const ProviderInfo = ({
   );
 };
 
-export default ProviderInfo;
+export default ProviderBio;
 
 const styles = StyleSheet.create({
   container: {
@@ -65,17 +73,17 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '600',
-    width: '60%',
+    textAlign: 'center',
+    marginTop: 10,
   },
   shortInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 5,
-    width: '60%',
+    // width: '60%',
   },
   availableTime: {
     marginVertical: 5,
-    maxWidth: '75%',
   },
   rating: {marginRight: 5},
   repeat: {

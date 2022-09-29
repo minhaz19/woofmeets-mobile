@@ -114,7 +114,7 @@ const RealtimeLocation = () => {
           showsCompass
           userLocationPriority="high"
           zoomEnabled
-          onUserLocationChange={e => console.log('e', e)}>
+          onUserLocationChange={e => null}>
           <Polyline
             coordinates={mapInfo.coordinates}
             strokeColor="#bf8221"

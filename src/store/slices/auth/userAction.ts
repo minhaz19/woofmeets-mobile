@@ -94,6 +94,7 @@ export const providerAuth = createAsyncThunk(
       if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
       }
+
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {
