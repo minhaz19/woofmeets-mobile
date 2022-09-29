@@ -146,11 +146,14 @@ const PetCareZipSearch = (props: {
     <ScreenRapper rapperStyle={styles.rapperStyle}>
       <ScrollView
         keyboardShouldPersistTaps="always"
-        keyboardDismissMode="on-drag">
+        keyboardDismissMode="on-drag"
+        showsVerticalScrollIndicator={false}
+        >
         <KeyboardAvoidingView
           keyboardVerticalOffset={20}
           //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.rootContainer}>
+          <SearchSlider navigation={props.navigation} />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.boxContainer}>
               <RenderHeader />
@@ -170,7 +173,6 @@ const PetCareZipSearch = (props: {
                   />
                 ))}
               </View>
-              <SearchSlider navigation={props.navigation} />
               <View style={styles.zipContainer}>
                 <DescriptionText text="Near" textStyle={styles.zipText} />
                 <TextInput

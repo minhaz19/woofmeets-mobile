@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   StyleSheet,
   View,
@@ -80,9 +81,10 @@ const SearchSlider = ({navigation}: Props) => {
           )}
           pagingEnabled
           horizontal
+          nestedScrollEnabled={true}
           bounces={false}
           ref={slideRef}
-          scrollEventThrottle={100}>
+          scrollEventThrottle={32}>
           {slidesData.map((item: any) => {
             return (
               <View
@@ -105,7 +107,10 @@ const SearchSlider = ({navigation}: Props) => {
                   <TouchableOpacity
                     style={styles.linkContainer}
                     onPress={item.screen}>
-                    <TitleText text={item.linkTitle} />
+                    <TitleText
+                      text={item.linkTitle}
+                      textStyle={styles.linkTitleStyle}
+                    />
                     <View>
                       <MaterialCommunityIcons
                         name={'chevron-right'}
@@ -138,6 +143,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: '5%',
+    paddingBottom: '5%',
   },
   tabContainer: {
     marginVertical: '2%',
@@ -146,7 +152,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
     borderRadius: 6,
     width: SCREEN_WIDTH * 0.9,
     // height: SCREEN_HEIGHT * 0.2,
@@ -165,5 +172,10 @@ const styles = StyleSheet.create({
     color: Colors.light.text,
     paddingTop: 4,
   },
-  bigTextStyle: {},
+  bigTextStyle: {
+    color: Colors.light.text,
+  },
+  linkTitleStyle: {
+    color: Colors.light.text,
+  },
 });

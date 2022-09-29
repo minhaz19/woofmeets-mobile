@@ -3,10 +3,7 @@
   package="com.woofmeets.customer">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
@@ -47,6 +44,6 @@
 
        <meta-data
      android:name="com.google.android.geo.API_KEY"
-     android:value="AIzaSyBfNC-SGgbvOOFj9FqoA6HQhrCh_hq5Zo0"/>
+     android:value="AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo"/>
     </application>
 </manifest>

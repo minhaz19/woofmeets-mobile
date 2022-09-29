@@ -2,8 +2,8 @@ import {
   ImageBackground,
   StyleSheet,
   View,
-  TouchableOpacity,
-  TouchableHighlight,
+  Platform,
+  Pressable,
 } from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -23,19 +23,26 @@ const SliderScreenParent = ({children}: Props) => {
   const navigation = useNavigation();
   return (
     <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
-      <View style={styles.rootContainer}>
+      <View
+        style={[
+          styles.rootContainer,
+          {
+            backgroundColor: Colors.primary,
+          },
+        ]}>
         <ImageBackground
           source={require('../../../assets/image/pet/searchBackground.png')}
           resizeMode="cover"
           style={StyleSheet.absoluteFillObject}>
-          {/* <TouchableHighlight onPress={() => {
-            console.log('pressed')
-            navigation.goBack()}}
+          <Pressable
+            onPress={() => {
+              navigation.goBack();
+            }}
             style={styles.crossContainer}>
-            <View >
+            <View>
               <Cross height={20} width={20} fill={Colors.light.background} />
             </View>
-          </TouchableHighlight> */}
+          </Pressable>
           <View style={styles.childrenContainer}>{children}</View>
         </ImageBackground>
       </View>
@@ -45,9 +52,9 @@ const SliderScreenParent = ({children}: Props) => {
           styles.buttonContainer,
           {backgroundColor: isDarkMode ? Colors.subText : Colors.primary},
         ]}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Pressable onPress={() => navigation.goBack()}>
           <DescriptionText text={'Book Now'} textStyle={styles.description} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );
@@ -60,7 +67,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   rootContainer: {
-    backgroundColor: Colors.primary,
     height: '80%',
     width: '100%',
     justifyContent: 'center',
@@ -78,11 +84,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   crossContainer: {
-    right: 20,
-    top: 50,
+    right: 10,
+    top: Platform.OS === 'ios' ? 50 : 30,
     position: 'absolute',
     flex: 2,
-    backgroundColor: 'black',
+    // backgroundColor: Colors.light.background,
     padding: 10,
   },
   childrenContainer: {

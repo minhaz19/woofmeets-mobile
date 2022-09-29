@@ -8,6 +8,7 @@ import TitleText from '../../../common/text/TitleText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Colors from '../../../../constants/Colors';
+import ShortText from '../../../common/text/ShortText';
 
 const BetweenCom = (props: {
   data: {
@@ -34,7 +35,7 @@ const BetweenCom = (props: {
         )}
         <View style={styles.textContainer}>
           <HeaderText text={props.data.name} />
-          <DescriptionText
+          <ShortText
             text={props.data.description}
             textStyle={{color: colors.descriptionText, paddingVertical: 2}}
           />

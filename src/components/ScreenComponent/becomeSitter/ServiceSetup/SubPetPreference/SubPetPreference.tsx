@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import React, {useEffect, memo, useState} from 'react';
+import React, {useEffect, memo} from 'react';
 import BigText from '../../../../common/text/BigText';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -13,9 +13,10 @@ import {useForm} from 'react-hook-form';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
-import DescriptionText from '../../../../common/text/DescriptionText';
 import Colors from '../../../../../constants/Colors';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
+import {useAppDispatch, useAppSelector} from '../../../../../store/store';
+import {setOpenFilter} from '../../../../../store/slices/misc/openFilter';
 interface Props {
   handlePetPreference: (arg1: any) => void;
   putLoading: boolean;
@@ -28,7 +29,8 @@ const SubPetPreference = ({
   petPreference,
   petPerDay,
 }: Props) => {
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const filter = useAppSelector((state: any) => state.filter.isOpen);
+  const dispatch = useAppDispatch();
   const {
     control,
     handleSubmit,
@@ -64,23 +66,16 @@ const SubPetPreference = ({
   return (
     <>
       <ServiceReusableModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
+        modalVisible={filter}
       />
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
           <BigText text={'Pet Preference'} textStyle={styles.headerText} />
-          <View style={styles.textContainer}>
-            <View style={styles.iconContainer}>
-              <QuestionIcon fill={Colors.primary} />
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-              <DescriptionText
-                text="Why Pet Preference is important?"
-                textStyle={{color: Colors.primary}}
-              />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() => dispatch(setOpenFilter(true))}
+            style={styles.iconContainer}>
+            <QuestionIcon fill={Colors.primary} />
+          </TouchableOpacity>
         </View>
         <View>
           <HeaderText
@@ -135,13 +130,12 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   iconContainer: {
-    paddingRight: 10,
+    paddingLeft: 10,
   },
   textContainer: {
     flexDirection: 'row',

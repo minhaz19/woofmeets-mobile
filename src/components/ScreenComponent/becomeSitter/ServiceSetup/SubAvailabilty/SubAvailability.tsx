@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import BigText from '../../../../common/text/BigText';
 import HeaderText from '../../../../common/text/HeaderText';
 import {
@@ -20,15 +20,17 @@ import {useHandleMultipleActiveCheck} from '../handleCheck/HandleCheck';
 import Colors from '../../../../../constants/Colors';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
-import ShortText from '../../../../common/text/ShortText';
-import { useTheme } from '../../../../../constants/theme/hooks/useTheme';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+import {useAppDispatch, useAppSelector} from '../../../../../store/store';
+import {setOpenFilter} from '../../../../../store/slices/misc/openFilter';
 
 interface Props {
   handlePost: (arg1: any) => void;
   loading: boolean;
 }
 const SubAvailability = ({handlePost, loading}: Props) => {
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const filter = useAppSelector((state: any) => state.filter.isOpen);
+  const dispatch = useAppDispatch();
   const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
     availabilitySelectDay.options,
   );
@@ -42,24 +44,15 @@ const SubAvailability = ({handlePost, loading}: Props) => {
   const {colors} = useTheme();
   return (
     <View>
-      <ServiceReusableModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
+      <ServiceReusableModal modalVisible={filter} />
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
-          <BigText text={'Availability'} textStyle={styles.headerText} />
-          <View style={styles.textContainer}>
-            <View style={styles.iconContainer}>
-              <QuestionIcon fill={Colors.primary} />
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-              <DescriptionText
-                text="Why is availability important"
-                textStyle={{color: Colors.primary}}
-              />
-            </TouchableOpacity>
-          </View>
+          <BigText text={'Pet Preference'} textStyle={styles.headerText} />
+          <TouchableOpacity
+            onPress={() => dispatch(setOpenFilter(true))}
+            style={styles.iconContainer}>
+            <QuestionIcon fill={Colors.primary} />
+          </TouchableOpacity>
         </View>
         <View>
           <HeaderText text={availabilityInput.title} />
@@ -92,7 +85,10 @@ const SubAvailability = ({handlePost, loading}: Props) => {
           {availabilitySelectDay.subtitle && (
             <DescriptionText
               text={availabilitySelectDay.subtitle}
-              textStyle={{...styles.subHeaderText, color: colors.descriptionText}}
+              textStyle={{
+                ...styles.subHeaderText,
+                color: colors.descriptionText,
+              }}
             />
           )}
           <View style={styles.dayBoxContainer}>
@@ -188,13 +184,12 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   iconContainer: {
-    paddingRight: 10,
+    paddingLeft: 10,
   },
   textContainer: {
     flexDirection: 'row',

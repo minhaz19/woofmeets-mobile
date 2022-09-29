@@ -1,16 +1,16 @@
 import React from 'react';
 import Colors from '../../../constants/Colors';
-import {useDispatch} from 'react-redux';
 import {createStackNavigator} from '@react-navigation/stack';
 import RescheduleMain from '../../../screens/provider/Reschedule/RescheduleMain';
 import HeaderWithBack from '../../../components/common/header/HeaderWithBack';
 import { FilterIcon } from '../../../assets/svgs/SVG_LOGOS';
 import {setOpenFilter} from '../../../store/slices/misc/openFilter';
+import { useAppDispatch } from '../../../store/store';
 
 const Stack = createStackNavigator();
 
 const ProRescheduleNavigator = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <Stack.Navigator initialRouteName="RescheduleMain">
       <Stack.Screen
