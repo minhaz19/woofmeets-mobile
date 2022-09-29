@@ -29,6 +29,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import ServiceCard from '../../components/ScreenComponent/search/ServiceCard';
 import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
+import BottomSpacingNav from '../../components/UI/BottomSpacingNav';
 
 interface Props {
   item: any;
@@ -151,7 +152,7 @@ const PetCareZipSearch = (props: {
         >
         <KeyboardAvoidingView
           keyboardVerticalOffset={20}
-          //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.rootContainer}>
           <SearchSlider navigation={props.navigation} />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -198,7 +199,7 @@ const PetCareZipSearch = (props: {
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
-        <BottomSpacing />
+        <BottomSpacingNav />
       </ScrollView>
     </ScreenRapper>
   );

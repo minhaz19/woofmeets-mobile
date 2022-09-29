@@ -38,7 +38,7 @@ const BasicInfo = () => {
         ]}>
         <AppForm
           initialValues={useBasicInitalState()}
-          validationSchema={basicInfoValidationSchema}>
+          validationSchema={basicInfoValidationSchema} enableReset>
           <BasicInfoInput handleSubmit={handleSubmit} loading={loading} />
         </AppForm>
       </View>

@@ -103,7 +103,7 @@ const SettingMain = (props: {
       id: 1,
       title: 'Book a service',
       icon: SitterIcon,
-      screenName: () => props.navigation.navigate('ProHomeNavigator'),
+      screenName: () => props.navigation.navigate('SitterServiceNavigator'),
       rightIcon: true,
       opacity: 1,
     },
