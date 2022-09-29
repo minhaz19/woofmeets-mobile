@@ -13,10 +13,6 @@ const Past = () => {
   const filter = useAppSelector((state: any) => state.filter.isOpen);
   return (
     <View>
-      <FilterByDateAndActivity
-        handleActivity={() => {}}
-        handleDate={() => {}}
-      />
       <PastMessage />
       <BottomHalfModal isModalVisible={filter}>
         {isPayment === false ? (

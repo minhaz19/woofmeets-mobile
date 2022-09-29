@@ -8,6 +8,7 @@ import {PastSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
 import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
 import { useAppDispatch } from '../../../../store/store';
+import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 
 const PastMessage = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,10 @@ const PastMessage = () => {
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
+         <FilterByDateAndActivity
+          handleActivity={() => {}}
+          handleDate={() => {}}
+        />
         {data.length > 0 ? (
           data?.map((item, index) => {
             return (

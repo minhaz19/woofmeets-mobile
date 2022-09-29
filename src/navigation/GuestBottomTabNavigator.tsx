@@ -7,11 +7,20 @@ import {SCREEN_WIDTH} from '../constants/WindowSize';
 import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
+import BottomTabText from '../components/common/text/BottomTabText';
 
 const Tab = createBottomTabNavigator();
 
 function GuestBottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
+  const height =
+  SCREEN_WIDTH <= 380
+    ? Platform.OS === 'ios'
+      ? 70
+      : 60
+    : Platform.OS === 'ios'
+    ? 80
+    : 75;
   return (
     <Tab.Navigator
       initialRouteName="ServiceNavigator"
@@ -22,15 +31,7 @@ function GuestBottomTabNavigator() {
           backgroundColor: isDarkMode
             ? Colors.dark.background
             : Colors.background,
-          height:
-            SCREEN_WIDTH <= 380
-              ? Platform.OS === 'ios'
-                ? 70
-                : 60
-              : Platform.OS === 'ios'
-              ? 95
-              : 75,
-
+          height: height,
           position: 'absolute',
           bottom: 0,
           elevation: 9,
@@ -50,19 +51,10 @@ function GuestBottomTabNavigator() {
             <View style={styles.bottomContainer}>
               <Finder
                 fill={focused ? Colors.primary : Colors.light.lightText}
-                height={SCREEN_WIDTH <= 380 ? 24 : 28}
-                width={SCREEN_WIDTH <= 380 ? 26 : 33}
+                height={SCREEN_WIDTH <= 380 ? 20 : 24}
+                width={SCREEN_WIDTH <= 380 ? 20 : 26}
               />
-              <Text
-                allowFontScaling={false}
-                style={[
-                  focused
-                    ? {color: Colors.primary}
-                    : {color: Colors.light.lightText},
-                  styles.textStyle,
-                ]}>
-                Services
-              </Text>
+              <BottomTabText text="Services" focused={focused} textStyle={styles.textStyle} />
             </View>
           ),
         }}
@@ -77,19 +69,10 @@ function GuestBottomTabNavigator() {
             <View style={styles.bottomContainer}>
               <Setting
                 fill={focused ? Colors.primary : Colors.subText}
-                height={SCREEN_WIDTH <= 380 ? 24 : 28}
-                width={SCREEN_WIDTH <= 380 ? 26 : 33}
+                height={SCREEN_WIDTH <= 380 ? 20 : 24}
+                width={SCREEN_WIDTH <= 380 ? 20 : 26}
               />
-              <Text
-                allowFontScaling={false}
-                style={[
-                  focused
-                    ? {color: Colors.primary}
-                    : {color: Colors.light.lightText},
-                  styles.textStyle,
-                ]}>
-                Setting
-              </Text>
+               <BottomTabText text="Setting" focused={focused} textStyle={styles.textStyle} />
             </View>
           ),
         }}
@@ -106,9 +89,8 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH / 4,
   },
   textStyle: {
-    fontSize: Text_Size.Text_0,
-    fontWeight: '500',
-    paddingVertical: 5,
+    paddingVertical: 2,
+    paddingTop: 4,
   },
 });
 

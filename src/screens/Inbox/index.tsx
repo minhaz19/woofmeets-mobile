@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, useColorScheme, View} from 'react-native';
 import React, {useState} from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import HeaderText from '../../components/common/text/HeaderText';
@@ -7,6 +7,7 @@ import Upcoming from '../../components/ScreenComponent/Inbox/Upcoming';
 import Pending from '../../components/ScreenComponent/Inbox/Pending';
 import Past from '../../components/ScreenComponent/Inbox/Past';
 import BottomSpacing from '../../components/UI/BottomSpacing';
+import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 
 const data = [
   {
@@ -28,9 +29,8 @@ const data = [
 
 const Inbox = () => {
   const [showInbox, setShowInbox] = useState(1);
-  const {colors} = useTheme();
   return (
-    <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
+    <ScreenRapperGrey rapperStyle={styles.container}>
       <View style={styles.tabContainer}>
         {data.map((item, index) => {
           return (
@@ -54,7 +54,7 @@ const Inbox = () => {
       {showInbox === 3 && <Past />}
 
       <BottomSpacing />
-    </View>
+    </ScreenRapperGrey>
   );
 };
 
@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   text1: {
-    fontWeight: '600',
-    paddingBottom: '1%',
+    fontWeight: '700',
+    marginBottom: '1%',
     textAlign: 'center',
     width: '100%',
   },
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   text2: {
-    fontWeight: '400',
+    fontWeight: '600',
     paddingBottom: '1%',
   },
 });

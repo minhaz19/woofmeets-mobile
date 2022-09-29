@@ -8,6 +8,7 @@ import Text_Size from '../../constants/textScaling';
 import {useAppDispatch} from '../../store/store';
 import {logout} from '../../store/slices/auth/userSlice';
 import methods from '../../api/methods';
+import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 
 const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();
@@ -17,16 +18,6 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 1,
       title: 'Account Setting',
       screenName: () => props.navigation.navigate('AccountSetting'),
-      opacity: 1,
-    },
-    {
-      id: 2,
-      title: 'Logout',
-      screenName: () => {
-        dispatch(logout());
-        methods._get('/auth/logout');
-        props.navigation.navigate('AuthNavigator');
-      },
       opacity: 1,
     },
     {
@@ -47,17 +38,15 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 5,
       title: 'Version',
       screenName: () => {},
-      details: '1.0.2 - beta',
+      details: '1.0.3.6 - beta',
       opacity: 1,
     },
   ];
   return (
+    <ScreenRapperGrey>
     <ScrollView
       style={[
         styles.container,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
       ]}>
       <HeaderText text="General" textStyle={styles.textContainer} />
       {supportData?.map(item => (
@@ -65,6 +54,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       ))}
       <HeaderText text="Woofmeets" textStyle={styles.bottomTextContainer} />
     </ScrollView>
+    </ScreenRapperGrey>
   );
 };
 
