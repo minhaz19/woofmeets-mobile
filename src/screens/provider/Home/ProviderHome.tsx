@@ -7,6 +7,7 @@ import ShortText from '../../../components/common/text/ShortText';
 import TitleText from '../../../components/common/text/TitleText';
 import BookingCard from '../../../components/ScreenComponent/Provider/Home/BookingCard';
 import Colors from '../../../constants/Colors';
+import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 
 const ProviderHome = () => {
   const {colors} = useTheme();
@@ -22,7 +23,7 @@ const ProviderHome = () => {
     },
   ]
   return (
-    <ScreenRapper>
+    <ScreenRapperGrey>
         <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
@@ -52,7 +53,7 @@ const ProviderHome = () => {
             <ShortText text="Last checked today at 5:16 PM" textStyle={styles.bookingText}/>
         </View>
         </ScrollView>
-    </ScreenRapper>
+    </ScreenRapperGrey>
 
   )
 }

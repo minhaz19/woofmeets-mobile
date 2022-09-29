@@ -20,7 +20,7 @@ export default {
   dark: {
     text: 'white',
     background: '#000000',
-    lightDark: '#1D1E20',
+    lightDark: '#151515',
     tint: tintColorDark,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
@@ -32,6 +32,7 @@ export default {
   },
   gray: 'gray',
   black: 'black',
+  blue: 'blue',
   primary: '#FFA557',
   primaryLight: '#FFEDD5',
   secondary: '#FEF1E8',

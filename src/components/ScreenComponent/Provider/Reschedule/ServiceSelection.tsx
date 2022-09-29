@@ -9,6 +9,7 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {selectionData} from '../../../../screens/provider/Reschedule/utils/rescheduleData';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {setSelectService} from '../../../../store/slices/Provider/reschedule/rescheduleSlice';
+import TitleText from '../../../common/text/TitleText';
 
 interface Props {
   setModalVisible: (arg1: boolean) => void;
@@ -59,7 +60,7 @@ const ServiceSelection = ({setModalVisible, setViewDetails}: Props) => {
                     style={styles.image}
                   />
                 </View>
-                <HeaderText text={item.name} textStyle={styles.textHeader} />
+                <TitleText text={item.name} textStyle={styles.textHeader} />
               </TouchableOpacity>
               <View
                 style={[
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
   },
   iconStyle: {paddingRight: 20},
   textHeader: {
-    fontSize: Text_Size.Text_2,
+    fontSize: Text_Size.Text_0,
   },
   divider: {
     height: 1,

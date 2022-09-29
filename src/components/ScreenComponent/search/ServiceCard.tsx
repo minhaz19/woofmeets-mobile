@@ -11,7 +11,7 @@ import {
   DropInVisitIcon,
   HouseSittingIcon,
 } from '../../../assets/svgs/Services_SVG';
-import ShortText from '../../common/text/ShortText';
+import TitleText from '../../common/text/TitleText';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 
 interface Props {
@@ -65,7 +65,7 @@ const ServiceCard: FC<Props> = props => {
             {getIcon(props.data.sequence)}
           </View>
           <View style={[styles.textContainer]}>
-            <ShortText text={props.data.name} textStyle={styles.textStyle} />
+            <TitleText text={props.data.name} textStyle={styles.textStyle} />
           </View>
         </View>
         {props.sequence === props.data.sequence && (

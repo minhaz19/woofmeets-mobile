@@ -29,7 +29,7 @@ const DescriptionText = (props: {
 
 const styles = StyleSheet.create({
   details: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_9,
       fontFamily: 'Muli',
   },
 });
