@@ -32,6 +32,7 @@ import AddPetSubmit from '../screens/pet/AddPet/AddPetSubmit';
 import AddPetHome from '../screens/pet/AddPet/AddPetHome';
 import SitterDetails from '../screens/becomeSitter/Details';
 import BasicInfo from '../screens/profile/BasicInfo';
+import ServiceNavigator from './bottoms/ServiceNavigator';
 // import PetNavigatorFC from './PetNavigatorFS';
 const Stack = createStackNavigator();
 
@@ -130,7 +131,15 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
-
+        <Stack.Screen
+          name="SitterServiceNavigator"
+          component={ServiceNavigator}
+          options={() => ({
+            headerShown: false,
+            title: '',
+            backgroundColor: Colors.primary,
+          })}
+        />
         <Stack.Screen
           name="BasicBackgroundCheck"
           component={BasicBackgroundCheck}
