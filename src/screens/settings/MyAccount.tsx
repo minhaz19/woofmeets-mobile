@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {View, SafeAreaView, StyleSheet, ScrollView, useColorScheme} from 'react-native';
 import {
   CallIcon,
   Payment2Icon,
@@ -16,10 +16,14 @@ import ProfileInfo from '../../components/ScreenComponent/profile/ProfileInfo';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileAction';
 import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
+import storage from '../../utils/helpers/auth/storage';
+import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 
 const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const dispatch = useAppDispatch();
   const {loading, userInfo} = useAppSelector(state => state.userProfile);
+  const [newData, setNewData] = useState<any>([]);
+
   const supportData = [
     {
       id: 1,
@@ -63,28 +67,35 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     },
   ];
   const {colors} = useTheme();
+  const b = async () => {
+    const login: any = await storage.getUser();
+
+    if (login.loginProvider === 'LOCAL') {
+      setNewData(supportData);
+    } else if (login.loginProvider !== 'LOCAL') {
+      supportData.splice(2, 1);
+      setNewData(supportData);
+    }
+  };
+
   useEffect(() => {
     userInfo === null ? dispatch(getUserProfileInfo()) : false;
+    b();
   }, []);
   return (
-    <>
+    <ScreenRapperGrey>
       {loading && <AppActivityIndicator visible={true} />}
 
       <ScrollView
-        style={[
-          styles.rootContainer,
-          {
-            backgroundColor: colors.backgroundColor,
-          },
-        ]}>
+        style={
+          styles.rootContainer
+        }>
         <SafeAreaView>
           <View style={styles.profileContainer}>
             <ProfileInfo />
           </View>
-          <View
-            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-          />
-          {supportData?.map(item => (
+          
+          {newData.map((item: any) => (
             <SettingItem
               data={item}
               key={item.id}
@@ -96,7 +107,7 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
           ))}
         </SafeAreaView>
       </ScrollView>
-    </>
+    </ScreenRapperGrey>
   );
 };
 

@@ -8,7 +8,6 @@ import HeaderText from '../../../common/text/HeaderText';
 import {AirbnbRating} from 'react-native-ratings';
 interface Props {
   name: string;
-  nature: string;
   rating: number;
   distance: string;
   availablity?: string;
@@ -16,7 +15,7 @@ interface Props {
 }
 const ProviderInfo = ({
   name,
-  nature,
+
   rating,
   distance,
   availablity,
@@ -49,8 +48,8 @@ const ProviderInfo = ({
       {repeatClient && (
         <View style={styles.repeatContainer}>
           <View style={styles.repeat}>
-          <ShortText text={repeatClient} />
-        </View>
+            <ShortText text={repeatClient} />
+          </View>
         </View>
       )}
     </View>
@@ -62,7 +61,7 @@ export default ProviderInfo;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
-    width: '100%'
+    width: '100%',
   },
   title: {
     fontWeight: '600',
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
   },
   availableTime: {
     marginVertical: 5,
-    maxWidth: '75%'
+    maxWidth: '75%',
   },
   rating: {marginRight: 5},
   repeat: {
@@ -85,6 +84,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.shadow,
   },
   repeatContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 });

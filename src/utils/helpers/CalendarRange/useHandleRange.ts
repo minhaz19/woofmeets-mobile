@@ -1,9 +1,8 @@
 import moment from 'moment';
 import {useMemo, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
 import {setCross} from '../../../store/slices/misc/hittingCross';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 import {compareDate} from './compareDate';
 
 export const useHandleRange = (name = 'dateRange') => {
@@ -12,8 +11,8 @@ export const useHandleRange = (name = 'dateRange') => {
   const [startingDate, setStartingDate] = useState('');
   const [endingDate, setEndingDate] = useState('');
   const {setValue} = useFormContext();
-  const cross = useSelector((state: any) => state.cross.cross);
-  const dispatch = useDispatch();
+  const cross = useAppSelector((state: any) => state.cross.cross);
+  const dispatch = useAppDispatch();
   const handleDayPress = (day: any) => {
     const {end} = compareDate(day.dateString, step, setPrevDate);
 

@@ -2,7 +2,7 @@
 /* eslint-disable dot-notation */
 import * as Yup from 'yup';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import BigText from '../../../../common/text/BigText';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -14,6 +14,10 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
+import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
+import { useAppDispatch, useAppSelector } from '../../../../../store/store';
+import { setOpenFilter } from '../../../../../store/slices/misc/openFilter';
+import Colors from '../../../../../constants/Colors';
 
 interface props {
   handlePolicy: (arg1: any) => void;
@@ -28,7 +32,8 @@ const SubCancellationPolicy = ({
   policy,
   singlePolicy,
 }: props) => {
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const filter = useAppSelector((state: any) => state.filter.isOpen);
+  const dispatch = useAppDispatch();
   const cancellationSchema = Yup.object().shape({
     policyId: Yup.string()
       .required('At least select one policy')
@@ -55,22 +60,15 @@ const SubCancellationPolicy = ({
   return (
     <View style={styles.headerContainer}>
       <ServiceReusableModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
+        modalVisible={filter}
       />
       <View style={styles.flexContainer}>
-        <BigText text={'Cancellation Policy'} textStyle={styles.headerText} />
-        <View style={styles.textContainer}>
-          {/* <View style={styles.iconContainer}>
-            <QuestionIcon fill={Colors.primary} />
-          </View> */}
-          {/* <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-            <DescriptionText
-              text="Why Cancellation Policy is important?"
-              textStyle={{color: Colors.primary}}
-            />
-          </TouchableOpacity> */}
-        </View>
+        <BigText text={'Cancellation policy'} textStyle={styles.headerText} />
+        <TouchableOpacity
+          onPress={() => dispatch(setOpenFilter(true))}
+          style={styles.iconContainer}>
+          <QuestionIcon fill={Colors.primary} />
+        </TouchableOpacity>
       </View>
       <View>
         <HeaderText
@@ -130,13 +128,12 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   iconContainer: {
-    paddingRight: 10,
+    paddingLeft: 10,
   },
   textContainer: {
     flexDirection: 'row',

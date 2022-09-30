@@ -1,7 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect, useState} from 'react';
+import {Alert} from 'react-native';
 import methods from '../../../../api/methods';
 import {getSubscription} from '../../../../store/slices/onBoarding/Subscriptions/subscriptionAction';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
@@ -39,16 +40,17 @@ export const useSubscription = () => {
     setSequence(id);
   };
   const handleSubmit = async () => {
-    if (sequence === 3) {
-      // @ts-ignore
-      navigation.navigate('BasicBackgroundCheck', {sequence: sequence});
-    } else {
-      // @ts-ignore
-      navigation.navigate('PlanCheckout', {sequence: sequence});
-    }
+    // if (sequence === 3) {
+    //   // @ts-ignore
+    //   navigation.navigate('BasicBackgroundCheck', {sequence: sequence});
+    // } else {
+    //   // @ts-ignore
+    //   navigation.navigate('PlanCheckout', {sequence: sequence});
+    // }
   };
   useEffect(() => {
-    dispatch(getSubscription());
+    // dispatch(getSubscription());
+    Alert.alert('Subscription plans under maintainance');
   }, []);
   return {
     onPressEvent,

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {memo, useCallback, useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Text, Platform} from 'react-native';
 import {MultiSelect} from 'react-native-element-dropdown';
 import Text_Size from '../../../constants/textScaling';
 import Colors from '../../../constants/Colors';
@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   placeholderStyle: {
-    fontSize: Text_Size.Text_12,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
     color: 'gray',
   },
   selectedTextStyle: {
-    fontSize: Text_Size.Text_12,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
   },
   iconStyle: {
     width: 20,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: Text_Size.Text_12,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
   },
   icon: {
     marginRight: 5,

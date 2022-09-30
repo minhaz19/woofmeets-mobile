@@ -16,6 +16,8 @@ import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../../UI/BottomSpacing';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
+import { setOpenFilter } from '../../../../../store/slices/misc/openFilter';
+import { useAppDispatch, useAppSelector } from '../../../../../store/store';
 
 interface Props {
   postLoading?: boolean;
@@ -24,8 +26,8 @@ interface Props {
 }
 
 const SubYourHome = ({handlePost, postLoading, attributes}: Props) => {
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
-
+  const filter = useAppSelector((state: any) => state.filter.isOpen);
+  const dispatch = useAppDispatch();
   const {
     control,
     setValue,
@@ -57,23 +59,16 @@ const SubYourHome = ({handlePost, postLoading, attributes}: Props) => {
   return (
     <View>
       <ServiceReusableModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
+        modalVisible={filter}
       />
       <View style={styles.headerContainer}>
-        <View style={styles.flexContainer}>
+      <View style={styles.flexContainer}>
           <BigText text={'Home'} textStyle={styles.headerText} />
-          <View style={styles.textContainer}>
-            <View style={styles.iconContainer}>
-              <QuestionIcon fill={Colors.primary} />
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-              <DescriptionText
-                text="Why your Home data is important?"
-                textStyle={{color: Colors.primary}}
-              />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() => dispatch(setOpenFilter(true))}
+            style={styles.iconContainer}>
+            <QuestionIcon fill={Colors.primary} />
+          </TouchableOpacity>
         </View>
         <View>
           {YourHomeData.map((data: any, index: number) => {
@@ -227,13 +222,12 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   iconContainer: {
-    paddingRight: 10,
+    paddingLeft: 10,
   },
   textContainer: {
     flexDirection: 'row',

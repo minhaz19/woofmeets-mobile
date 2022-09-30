@@ -11,14 +11,14 @@ import MainNavigationContainer from '../navigation/MainNavigationContainer';
 import FirstScreen from './FirstScreen';
 import authStorage from '../utils/helpers/auth/storage';
 import jwt_decode from 'jwt-decode';
-import {useDispatch} from 'react-redux';
 import {slides} from '../utils/config/Data/splashDatas';
 import {signIn} from '../store/slices/auth/userSlice';
+import { useAppDispatch } from '../store/store';
 
 const Splash = ({}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [isPreviousUser, setIsPreviousUser] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [state, setState] = useState({
     showRealApp: false,
   });

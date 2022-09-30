@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import BigText from '../../../../common/text/BigText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Colors from '../../../../../constants/Colors';
@@ -13,6 +13,8 @@ import {useFormContext} from 'react-hook-form';
 import {useSubRates} from './ulils/useSubRates';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
+import {useAppDispatch, useAppSelector} from '../../../../../store/store';
+import {setOpenFilter} from '../../../../../store/slices/misc/openFilter';
 
 interface Props {
   handleRates: (arg: any) => void;
@@ -21,8 +23,8 @@ interface Props {
 }
 
 const SubRates = ({handleRates, rateFields, loading}: Props) => {
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
-
+  const dispatch = useAppDispatch();
+  const filter = useAppSelector((state: any) => state.filter.isOpen);
   const {
     formState: {errors},
     control,
@@ -41,23 +43,17 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
   return (
     <View>
       <ServiceReusableModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
+        modalVisible={filter}
+        // setModalVisible={setModalVisible}
       />
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
           <BigText text={'Rates'} textStyle={styles.headerText} />
-          <View style={styles.textContainer}>
-            <View style={styles.iconContainer}>
-              <QuestionIcon fill={Colors.primary} />
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-              <DescriptionText
-                text="Need help with rates"
-                textStyle={{color: Colors.primary}}
-              />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() => dispatch(setOpenFilter(true))}
+            style={styles.iconContainer}>
+            <QuestionIcon fill={Colors.primary} />
+          </TouchableOpacity>
         </View>
         {rates?.map(
           (
@@ -118,7 +114,7 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                     autoCorrect={false}
                     keyboardType={'numeric'}
                     textContentType={'none'}
-                    name={item.slug.replace('-', '')}
+                    name={item.slug.replace('-', '').replace('-', '')}
                     label={item.name}
                     handlePress={handlePress}
                     percentage={item.percentage}
@@ -205,13 +201,12 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   iconContainer: {
-    paddingRight: 10,
+    paddingLeft: 10,
   },
   textContainer: {
     flexDirection: 'row',

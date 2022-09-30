@@ -6,16 +6,21 @@ import ReusableCard from '../utils/Common/ReusableCard';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {PastSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
-import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
+import { useAppDispatch } from '../../../../store/store';
+import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 
 const PastMessage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
+         <FilterByDateAndActivity
+          handleActivity={() => {}}
+          handleDate={() => {}}
+        />
         {data.length > 0 ? (
           data?.map((item, index) => {
             return (

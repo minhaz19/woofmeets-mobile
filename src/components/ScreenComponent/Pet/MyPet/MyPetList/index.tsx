@@ -122,9 +122,9 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     paddingTop: 10,
   },
-  title: {fontSize: Text_Size.Text_9, fontWeight: '600'},
-  subTitle: {fontSize: Text_Size.Text_0, fontWeight: '500', marginVertical: 2},
-  description: {fontSize: Text_Size.Text_0},
+  title: {fontSize: Text_Size.Text_0, fontWeight: '600'},
+  subTitle: {fontSize: Text_Size.Text_8, fontWeight: '500', marginVertical: 2},
+  description: {fontSize: Text_Size.Text_8},
   addPet: {
     flex: 1,
     paddingTop: '50%',

@@ -13,6 +13,5 @@ export const openFilter = createSlice({
   },
 });
 export const {setOpenFilter} = openFilter.actions;
-// export const filter = useSelector((state: any) => state.filter);
 
 export default openFilter.reducer;

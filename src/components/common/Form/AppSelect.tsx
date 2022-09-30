@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import Colors from '../../../constants/Colors';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -92,11 +92,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   placeholderStyle: {
-    fontSize: Text_Size.Text_12,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
     color: 'gray',
   },
   selectedTextStyle: {
-    fontSize: Text_Size.Text_12,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
   },
   iconStyle: {
     width: 20,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: Text_Size.Text_12,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
   },
   icon: {
     marginRight: 5,

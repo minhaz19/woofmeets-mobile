@@ -5,11 +5,16 @@ import SitterMap from './components/SitterMap';
 import SitterPets from './components/SitterPets';
 import TitleText from '../../../../../../common/text/TitleText';
 import {useAppSelector} from '../../../../../../../store/store';
+import DescriptionText from '../../../../../../common/text/DescriptionText';
+import Colors from '../../../../../../../constants/Colors';
+import Text_Size from '../../../../../../../constants/textScaling';
+import {useTheme} from '../../../../../../../constants/theme/hooks/useTheme';
 
 const Overview = () => {
   const {overview, profileInfo} = useAppSelector(
     state => state.providerProfile,
   );
+  const {isDarkMode} = useTheme();
   const providerDatas = [
     {
       title: `${profileInfo?.firstName + ' ' + profileInfo?.lastName} home 🏡`,
@@ -52,7 +57,13 @@ const Overview = () => {
           <TitleText textStyle={styles.petTitle} text="Pets" />
 
           {overview?.pastCLients?.length === 0 ? (
-            <TitleText text={'No past client found'} />
+            <DescriptionText
+              textStyle={{
+                color: isDarkMode ? Colors.background : Colors.text,
+                fontSize: Text_Size.Text_9,
+              }}
+              text={'No past client found'}
+            />
           ) : (
             overview?.pastCLients?.map((_: any, i: number) => (
               <SitterPets key={i} />

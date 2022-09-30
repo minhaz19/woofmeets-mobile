@@ -2,11 +2,13 @@
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../../../constants/WindowSize';
+import { useTheme } from '../../../../constants/theme/hooks/useTheme';
 interface Props {
   image: string;
   rounded?: Boolean;
 }
 const ImageContainer = ({image, rounded}: Props) => {
+  const {colors} = useTheme();
   return (
     <View
       style={[
@@ -17,6 +19,7 @@ const ImageContainer = ({image, rounded}: Props) => {
               ? SCREEN_WIDTH / 8
               : SCREEN_WIDTH / 6
             : SCREEN_HEIGHT / 9,
+          borderColor: colors.borderColor,
         },
       ]}>
       <Image
@@ -33,6 +36,8 @@ export default ImageContainer;
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH > 800 ? SCREEN_WIDTH / 10 : SCREEN_WIDTH / 6,
+    borderWidth: 1,
+    borderRadius: 10,
   },
   image: {width: '100%', height: '100%'},
 });

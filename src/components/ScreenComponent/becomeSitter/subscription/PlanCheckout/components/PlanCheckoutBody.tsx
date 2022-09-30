@@ -50,7 +50,7 @@ const PlanCheckoutBody = ({handleSubmit, loading, handleCheck}: Props) => {
                       borderRadius: 2,
                       borderColor: isDarkMode ? Colors.gray : Colors.border,
                     }}
-                  />
+                  /> */}
 
                   <ErrorMessage error={errors?.cardInfo?.postalCode.message} /> */}
                 </>

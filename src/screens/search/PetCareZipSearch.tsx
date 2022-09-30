@@ -29,6 +29,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import ServiceCard from '../../components/ScreenComponent/search/ServiceCard';
 import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
+import BottomSpacingNav from '../../components/UI/BottomSpacingNav';
 
 interface Props {
   item: any;
@@ -146,11 +147,14 @@ const PetCareZipSearch = (props: {
     <ScreenRapper rapperStyle={styles.rapperStyle}>
       <ScrollView
         keyboardShouldPersistTaps="always"
-        keyboardDismissMode="on-drag">
+        keyboardDismissMode="on-drag"
+        showsVerticalScrollIndicator={false}
+        >
         <KeyboardAvoidingView
           keyboardVerticalOffset={20}
-          //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.rootContainer}>
+          <SearchSlider navigation={props.navigation} />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.boxContainer}>
               <RenderHeader />
@@ -170,9 +174,8 @@ const PetCareZipSearch = (props: {
                   />
                 ))}
               </View>
-              <SearchSlider navigation={props.navigation} />
               <View style={styles.zipContainer}>
-                <DescriptionText text="Near" textStyle={styles.zipText} />
+                <TitleText text="Near" textStyle={styles.zipText} />
                 <TextInput
                   placeholder="Enter zip code"
                   keyboardType="number-pad"
@@ -196,7 +199,7 @@ const PetCareZipSearch = (props: {
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
-        <BottomSpacing />
+        <BottomSpacingNav />
       </ScrollView>
     </ScreenRapper>
   );

@@ -3,20 +3,16 @@ import React, {useState} from 'react';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import PastMessage from './PastMessage';
 import BottomHalfModal from '../../../UI/modal/BottomHalfModal';
-import {useSelector} from 'react-redux';
 import BottomCard from './BottomCard';
 import Details from './Details';
+import { useAppSelector } from '../../../../store/store';
 
 const Past = () => {
   const [isPayment, setIsPayment] = useState(false);
   const [isPet, setIsPet] = useState(false);
-  const filter = useSelector((state: any) => state.filter.isOpen);
+  const filter = useAppSelector((state: any) => state.filter.isOpen);
   return (
     <View>
-      <FilterByDateAndActivity
-        handleActivity={() => {}}
-        handleDate={() => {}}
-      />
       <PastMessage />
       <BottomHalfModal isModalVisible={filter}>
         {isPayment === false ? (
