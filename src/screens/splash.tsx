@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {Image, StyleSheet, useColorScheme, View} from 'react-native';
+import {Image, SafeAreaView, StyleSheet, useColorScheme, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DescriptionText from '../components/common/text/DescriptionText';
 import HeaderText from '../components/common/text/HeaderText';
@@ -141,22 +141,26 @@ const Splash = ({}) => {
   } else {
     return (
       <>
+      
         {isPreviousUser ? (
           <MainNavigationContainer previousLoggedIn={true} />
         ) : state.showRealApp ? (
           <MainNavigationContainer previousLoggedIn={false} />
         ) : (
-          <AppIntroSlider
-            activeDotStyle={styles.activeDotStyle}
-            dotStyle={styles.dotStyle}
-            renderItem={_renderItem}
-            data={slides}
-            onDone={_onDone}
-            renderDoneButton={_renderDoneButton}
-            renderNextButton={_renderNextButton}
-            showSkipButton={true}
-          />
+          <SafeAreaView style={{flex: 1}}>
+            <AppIntroSlider
+              activeDotStyle={styles.activeDotStyle}
+              dotStyle={styles.dotStyle}
+              renderItem={_renderItem}
+              data={slides}
+              onDone={_onDone}
+              renderDoneButton={_renderDoneButton}
+              renderNextButton={_renderNextButton}
+              showSkipButton={true}
+            />
+          </SafeAreaView>
         )}
+        
       </>
     );
   }

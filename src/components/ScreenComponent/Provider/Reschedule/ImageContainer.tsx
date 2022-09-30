@@ -16,16 +16,16 @@ const ImageContainer = ({image, rounded}: Props) => {
         {
           height: rounded
             ? SCREEN_WIDTH > 800
-              ? SCREEN_WIDTH / 8
-              : SCREEN_WIDTH / 6
-            : SCREEN_HEIGHT / 9,
+              ? SCREEN_WIDTH / 10
+              : SCREEN_WIDTH / 8
+            : SCREEN_HEIGHT / 11,
           borderColor: colors.borderColor,
         },
       ]}>
       <Image
         source={{uri: image}}
         resizeMode="cover"
-        style={[styles.image, {borderRadius: rounded ? 100 : 50}]}
+        style={[styles.image, {borderRadius: rounded ? 100 : 8}]}
       />
     </View>
   );

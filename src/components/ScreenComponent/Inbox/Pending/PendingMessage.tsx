@@ -98,6 +98,6 @@ export default PendingMessage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
+    // marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
   },
 });

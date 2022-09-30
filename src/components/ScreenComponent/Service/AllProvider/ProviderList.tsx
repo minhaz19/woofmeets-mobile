@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 8,
     paddingHorizontal: 5,
+    borderRadius: 10,
   },
   providerContainer: {
     flexDirection: 'row',

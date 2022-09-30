@@ -12,6 +12,7 @@ import DescriptionText from '../../common/text/DescriptionText';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {Cross} from '../../../assets/svgs/SVG_LOGOS';
 import {useNavigation} from '@react-navigation/native';
+import Screen from '../../common/Screen';
 
 interface Props {
   children: any;
@@ -22,6 +23,7 @@ const SliderScreenParent = ({children}: Props) => {
 
   const navigation = useNavigation();
   return (
+    <Screen style={{flex: 1}}>
     <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <View
         style={[
@@ -34,7 +36,7 @@ const SliderScreenParent = ({children}: Props) => {
           source={require('../../../assets/image/pet/searchBackground.png')}
           resizeMode="cover"
           style={StyleSheet.absoluteFillObject}>
-          <Pressable
+          {/* <Pressable
             onPress={() => {
               navigation.goBack();
             }}
@@ -42,7 +44,7 @@ const SliderScreenParent = ({children}: Props) => {
             <View>
               <Cross height={20} width={20} fill={Colors.light.background} />
             </View>
-          </Pressable>
+          </Pressable> */}
           <View style={styles.childrenContainer}>{children}</View>
         </ImageBackground>
       </View>
@@ -57,6 +59,7 @@ const SliderScreenParent = ({children}: Props) => {
         </Pressable>
       </View>
     </View>
+    </Screen>
   );
 };
 
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
   },
   crossContainer: {
     right: 10,
-    top: Platform.OS === 'ios' ? 50 : 30,
+    top: Platform.OS === 'ios' ? 30 : 15,
     position: 'absolute',
     flex: 2,
     // backgroundColor: Colors.light.background,
