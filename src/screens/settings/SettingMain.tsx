@@ -49,7 +49,7 @@ const SettingMain = (props: {
 
   const loginData = [
     {
-      id: 3,
+      id: 1,
       title: 'Sign Up',
       icon: PreferenceIcon,
       screenName: () => props.navigation.navigate('SignUp'),
@@ -79,7 +79,7 @@ const SettingMain = (props: {
   };
 
   const sitterProfile = {
-    id: 4,
+    id: 1,
     title: 'Profile',
     icon: ProfileIcon,
     screenName: () => props.navigation.navigate('Profile'),
@@ -219,10 +219,10 @@ const SettingMain = (props: {
       <View>
         <View style={[styles.boxContainer, backgroundStyle]}>
           <View style={styles.boxTextContainer}>
-            <ShortText textStyle={{color: Colors.blue}} text={'Get $100 '} />
+            <ShortText textStyle={{color: Colors.primary}} text={'Get $100 '} />
             <ShortText text={' when friends join Woofmeets'} />
           </View>
-          <ShortText text={'Share Now'} />
+          <ShortText text={'Share Now'} textStyle={{color: Colors.blue}} />
         </View>
         {!isLoggedIn && (
           <View style={{backgroundColor: isDarkMode
@@ -231,12 +231,12 @@ const SettingMain = (props: {
             {loginData?.map(item => (
               <SettingItem data={item} key={item.id} />
             ))}
-            {/* <View
+            <View
               style={[
                 styles.divider,
                 {backgroundColor: colors.descriptionText},
               ]}
-            /> */}
+            />
           </View>
         )}
         {isLoggedIn && (

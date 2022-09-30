@@ -78,10 +78,10 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   headerText: {
-    paddingBottom: 6,
+    paddingBottom: 5,
   },
   descriptionText: {
-    paddingBottom: 6,
+    paddingBottom: 5,
     fontWeight: '500',
   },
   recentBookingText: {

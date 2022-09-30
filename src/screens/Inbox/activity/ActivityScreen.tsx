@@ -60,6 +60,7 @@ const ActivityScreen = (props: {
   const [isDetailsModal, setIsDetailsModal] = useState(false);
 
   return (
+    <View style={{flex: 1, backgroundColor: Colors.background}}>
     <SafeAreaView>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -143,7 +144,7 @@ const ActivityScreen = (props: {
             )}
             <View style={{height: paddingHeight}} />
           </ScrollView>
-          <View style={styles.footer}>
+          <View style={[styles.footer, {borderColor: colors.borderColor}]}>
             <TouchableOpacity style={styles.cameraIconContainer}>
               <CameraIcon />
             </TouchableOpacity>
@@ -165,6 +166,7 @@ const ActivityScreen = (props: {
         </>
       </KeyboardAvoidingView>
     </SafeAreaView>
+    </View>
   );
 };
 
@@ -249,6 +251,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
+    borderTopWidth: 1,
   },
   cameraIconContainer: {
     paddingHorizontal: 15,

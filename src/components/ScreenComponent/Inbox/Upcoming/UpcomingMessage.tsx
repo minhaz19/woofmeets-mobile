@@ -8,6 +8,7 @@ import MessageNotSend from '../utils/Common/MessageNotSend';
 import Colors from '../../../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
+import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 
 const UpcomingMessage = () => {
   let navigation = useNavigation();
@@ -46,6 +47,7 @@ const UpcomingMessage = () => {
           />
         )}
       </View>
+      <BottomSpacingNav />
     </ScrollView>
   );
 };
@@ -55,6 +57,6 @@ export default UpcomingMessage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
+    // marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
   },
 });

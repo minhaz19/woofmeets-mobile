@@ -16,7 +16,7 @@ const ActivityHeader = (props: {
   let navigation = useNavigation();
   const {colors} = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {borderColor: colors.borderColor}]}>
       <View style={styles.containerInner}>
         <View style={styles.headerTitleContainer}>
           <TouchableOpacity
@@ -77,6 +77,7 @@ const ActivityHeader = (props: {
 
 const styles = StyleSheet.create({
   container: {
+    borderBottomWidth: 1,
     paddingVertical: 10,
     paddingHorizontal: 15,
   },

@@ -93,7 +93,7 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                     <AppCheckboxField
                       title={'Update my additional rates based on my base rate'}
                       square
-                      active={updateRates}
+                      active={!updateRates}
                       onPress={() => {
                         setUpdateRates(!updateRates);
                       }}

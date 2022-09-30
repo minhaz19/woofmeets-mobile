@@ -1,6 +1,5 @@
-import {StyleSheet, TouchableOpacity, useColorScheme, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
 import HeaderText from '../../components/common/text/HeaderText';
 import Colors from '../../constants/Colors';
 import Upcoming from '../../components/ScreenComponent/Inbox/Upcoming';

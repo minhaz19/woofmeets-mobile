@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     paddingVertical: Platform.OS === 'ios' ? 0 : 5,
+    paddingBottom: 4,
   },
   iconStyle: {paddingRight: 10},
   headerContainer: {

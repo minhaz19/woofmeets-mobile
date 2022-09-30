@@ -28,9 +28,10 @@ import Text_Size from '../../../../constants/textScaling';
     };
     buttonStyles?: string;
     handlePress?: () => void;
+    onScreen?: () => void;
   }
   
-  const BookingCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
+  const BookingCard: FC<Props> = ({item, buttonStyles, handlePress, onScreen}) => {
     const {isDarkMode, colors} = useTheme();
     return (
       <Card
@@ -40,7 +41,7 @@ import Text_Size from '../../../../constants/textScaling';
             ? colors.lightBackgroundColor
             : colors.backgroundColor,
         }}>
-        <TouchableOpacity onPress={handlePress}>
+        <TouchableOpacity onPress={onScreen}>
           <View style={styles.flexContainer}>
             <View style={styles.topContainer}>
                 <View style={styles.imageContainer}>
@@ -144,7 +145,7 @@ import Text_Size from '../../../../constants/textScaling';
       marginTop: 0,
     },
     textTimeDescription: {
-      color: Colors.gray,
+      color: Colors.success,
     },
   });
   
