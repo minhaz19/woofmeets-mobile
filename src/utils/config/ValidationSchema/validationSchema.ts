@@ -147,7 +147,6 @@ const BoardingSettingsSchema = Yup.object().shape({
     .nullable(true)
     .required('Pet per service is required')
     .typeError('A Number is Required'),
-  sixtyMinRate: Yup.number().nullable(true),
   holidayrate: Yup.number()
     .nullable(true)
     .required('holiday rate is required')
@@ -156,15 +155,38 @@ const BoardingSettingsSchema = Yup.object().shape({
     .nullable(true)
     .required('Additional dog rate is required')
     .typeError('A Number is Required'),
-  puppyRate: Yup.number().nullable(true),
   catcare: Yup.number()
     .nullable(true)
     .required('Cate rate is required')
     .typeError('A Number is Required'),
-  additionalCat: Yup.number().nullable(true),
-  extendedStayRate: Yup.number().nullable(true),
-  bathingGrooming: Yup.number().nullable(true),
-  pickUpDropOff: Yup.number().nullable(true),
+  puppyrate: Yup.number()
+    .nullable(true)
+    .required('Puppy rate rate is required')
+    .typeError('A Number is Required'),
+  additionalcat: Yup.number()
+    .nullable(true)
+    .required('Additional cat rate is required')
+    .typeError('A Number is Required'),
+  bathgroomingrate: Yup.number()
+    .nullable(true)
+    .required('Bathgrooming rate is required')
+    .typeError('A Number is Required'),
+  extendedCare: Yup.number()
+    .nullable(true)
+    .required('Extended care rate is required')
+    .typeError('A Number is Required'),
+  costadjustment: Yup.number()
+    .nullable(true)
+    .required('Cost adjustment rate is required')
+    .typeError('A Number is Required'),
+  discountadjustment: Yup.number()
+    .nullable(true)
+    .required('Discount adjustment rate is required')
+    .typeError('A Number is Required'),
+  extendedstayrate: Yup.number()
+    .nullable(true)
+    .required('Extendedstay rate is required')
+    .typeError('A Number is Required'),
 });
 const safetyQuizValidationSchema = Yup.object().shape({
   '1': Yup.string().required('Please choose the corrent answer'),
