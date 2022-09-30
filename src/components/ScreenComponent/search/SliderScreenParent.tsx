@@ -4,6 +4,7 @@ import {
   View,
   Platform,
   Pressable,
+  SafeAreaView,
 } from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -23,20 +24,21 @@ const SliderScreenParent = ({children}: Props) => {
 
   const navigation = useNavigation();
   return (
-    <Screen style={{flex: 1}}>
-    <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
+    <SafeAreaView style={{flex: 1}}>
       <View
-        style={[
-          styles.rootContainer,
-          {
-            backgroundColor: Colors.primary,
-          },
-        ]}>
-        <ImageBackground
-          source={require('../../../assets/image/pet/searchBackground.png')}
-          resizeMode="cover"
-          style={StyleSheet.absoluteFillObject}>
-          {/* <Pressable
+        style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
+        <View
+          style={[
+            styles.rootContainer,
+            {
+              backgroundColor: Colors.primary,
+            },
+          ]}>
+          <ImageBackground
+            source={require('../../../assets/image/pet/searchBackground.png')}
+            resizeMode="cover"
+            style={StyleSheet.absoluteFillObject}>
+            {/* <Pressable
             onPress={() => {
               navigation.goBack();
             }}
@@ -45,21 +47,21 @@ const SliderScreenParent = ({children}: Props) => {
               <Cross height={20} width={20} fill={Colors.light.background} />
             </View>
           </Pressable> */}
-          <View style={styles.childrenContainer}>{children}</View>
-        </ImageBackground>
-      </View>
+            <View style={styles.childrenContainer}>{children}</View>
+          </ImageBackground>
+        </View>
 
-      <View
-        style={[
-          styles.buttonContainer,
-          {backgroundColor: isDarkMode ? Colors.subText : Colors.primary},
-        ]}>
-        <Pressable onPress={() => navigation.goBack()}>
-          <DescriptionText text={'Book Now'} textStyle={styles.description} />
-        </Pressable>
+        <View
+          style={[
+            styles.buttonContainer,
+            {backgroundColor: isDarkMode ? Colors.subText : Colors.primary},
+          ]}>
+          <Pressable onPress={() => navigation.goBack()}>
+            <DescriptionText text={'Book Now'} textStyle={styles.description} />
+          </Pressable>
+        </View>
       </View>
-    </View>
-    </Screen>
+    </SafeAreaView>
   );
 };
 

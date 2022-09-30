@@ -15,18 +15,27 @@ const Overview = () => {
     state => state.providerProfile,
   );
   const {isDarkMode} = useTheme();
+  const changeText = (name: string) => {
+    return name[0].toUpperCase() + name?.slice(1);
+  };
   const providerDatas = [
     {
-      title: `${profileInfo?.firstName + ' ' + profileInfo?.lastName} home 🏡`,
+      title: `🏡  ${
+        changeText(profileInfo?.firstName) +
+        ' ' +
+        changeText(profileInfo?.lastName)
+      } home`,
       viewAll: 'View All',
       subInfo: overview?.sittersHome?.homeAttributes.map((item: any) => ({
         info: item.homeAttributeType?.displayName,
       })),
     },
     {
-      title: `${
-        profileInfo?.firstName + ' ' + profileInfo?.lastName
-      }  skills 🤹‍♀️`,
+      title: `🤹‍♀️  ${
+        changeText(profileInfo?.firstName) +
+        ' ' +
+        changeText(profileInfo?.lastName)
+      }  skills `,
       viewAll: 'View All',
       subInfo:
         overview?.skills.lenght === 0

@@ -4,17 +4,21 @@ import React from 'react';
 import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
 import {DogFeet} from '../../../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../../../constants/Colors';
+import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
 interface Props {
   image: string;
   rounded?: Boolean;
 }
 const ProviderImageContainer = ({image, rounded}: Props) => {
+  const {colors} = useTheme();
+
   return (
     <View
       style={[
         styles.container,
         {
           height: SCREEN_WIDTH > 800 ? SCREEN_WIDTH / 7 : SCREEN_WIDTH / 5,
+          borderColor: colors.borderColor,
         },
       ]}>
       <Image
@@ -41,7 +45,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderWidth: 1,
-    borderColor: Colors.border,
   },
   batchCon: {
     justifyContent: 'center',

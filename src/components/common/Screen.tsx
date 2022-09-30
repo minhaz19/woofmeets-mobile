@@ -1,4 +1,4 @@
-import {Platform, SafeAreaView, StatusBar, StyleSheet, View, ViewStyle} from 'react-native';
+import {SafeAreaView, StyleSheet, View, ViewStyle} from 'react-native';
 import React from 'react';
 type Props = {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ export default Screen;
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   view: {
     flex: 1,
