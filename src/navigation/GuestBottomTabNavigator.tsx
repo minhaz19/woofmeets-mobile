@@ -8,19 +8,21 @@ import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
 import BottomTabText from '../components/common/text/BottomTabText';
+import { useTheme } from '../constants/theme/hooks/useTheme';
 
 const Tab = createBottomTabNavigator();
 
 function GuestBottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
+  const {colors} = useTheme();
   const height =
   SCREEN_WIDTH <= 380
     ? Platform.OS === 'ios'
       ? 70
       : 60
     : Platform.OS === 'ios'
-    ? 80
-    : 75;
+    ? 90
+    : 80;
   return (
     <Tab.Navigator
       initialRouteName="ServiceNavigator"
@@ -37,7 +39,11 @@ function GuestBottomTabNavigator() {
           elevation: 9,
           shadowOpacity: 0.9,
           shadowOffset: {width: 2, height: 8},
-          shadowColor: isDarkMode ? Colors.dark.background : Colors.background,
+          shadowColor: isDarkMode
+            ? Colors.dark.background
+            : Colors.background,
+          borderTopWidth: 2,
+          borderColor: colors.borderColor,
         },
       }}>
       <Tab.Screen

@@ -17,7 +17,7 @@ const RescheduleMain = () => {
       rapperStyle={
         styles.container
       }>
-      <View>
+      <View style={{paddingTop: 10}}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={rescheduleData}
@@ -37,7 +37,7 @@ const RescheduleMain = () => {
           ListFooterComponent={<BottomSpacing />}
         />
       </View>
-      <BottomHalfModal isModalVisible={modalVisible}>
+      <BottomHalfModal isModalVisible={modalVisible} setIsModalVisible={setModalVisible}>
         {viewDetails ? (
           <ServiceSelection
             setModalVisible={setModalVisible}
@@ -46,6 +46,7 @@ const RescheduleMain = () => {
         ) : (
           <EditSchedule setViewDetails={setViewDetails}/>
         )}
+        <View style={{height: 30}} />
       </BottomHalfModal>
     </ScreenRapperGrey>
   );

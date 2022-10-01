@@ -4,6 +4,7 @@ import TitleText from '../../../../../../../common/text/TitleText';
 import ShortText from '../../../../../../../common/text/ShortText';
 import {SvgProps} from 'react-native-svg';
 import Colors from '../../../../../../../../constants/Colors';
+import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   onPress: () => void;
@@ -25,6 +26,7 @@ interface Props {
 }
 
 const PetPricing = ({pricingD, showRate, onPress}: Props) => {
+  const {colors} = useTheme();
   return (
     <View>
       <TouchableOpacity style={styles.titleContainer} onPress={onPress}>
@@ -51,7 +53,11 @@ const PetPricing = ({pricingD, showRate, onPress}: Props) => {
         </View>
       </TouchableOpacity>
       {showRate ? (
-        <View style={styles.priceContainer}>
+        <View
+          style={[
+            styles.priceContainer,
+            {backgroundColor: colors.lightBackgroundColor},
+          ]}>
           {pricingD?.pricingInfo ? (
             pricingD?.pricingInfo.map(
               (pInfo, indexx) =>
@@ -98,7 +104,6 @@ const styles = StyleSheet.create({
   },
   priceContainer: {
     paddingHorizontal: 10,
-    backgroundColor: Colors.secondary,
   },
   icon: {
     marginRight: 10,

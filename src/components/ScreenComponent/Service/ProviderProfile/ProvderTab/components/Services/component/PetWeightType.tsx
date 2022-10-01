@@ -15,10 +15,10 @@ interface Props {
   };
 }
 const PetWeightType = ({item}: Props) => {
-  const {isDarkMode} = useTheme();
+  const {isDarkMode, colors} = useTheme();
   return (
     <TouchableOpacity style={styles.petTypeTextContainer}>
-      <item.Icon fill={Colors.black} />
+      <item.Icon fill={colors.lightText} />
       <ShortText
         textStyle={{
           fontSize: Text_Size.Text_0,

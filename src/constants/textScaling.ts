@@ -12,7 +12,7 @@ export function normalize(size: number) {
   if (Platform.OS === 'ios') {
     return Math.round(PixelRatio.roundToNearestPixel(newSize));
   } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
   }
 }
 export function normalizeInput(size: number, text?: string) {
@@ -27,16 +27,16 @@ export function normalizeInput(size: number, text?: string) {
 }
 const Text_Size_Type = {
   Scale: {
-    Text_0: normalize(12),
-    Text_1: normalize(13),
-    Text_2: normalize(14),
-    Text_3: normalize(16),
-    Text_4: normalize(17),
-    Text_5: normalize(18),
-    Text_6: normalize(20),
-    Text_7: normalize(22),
-    Text_8: normalize(10),
-    Text_9: normalize(11),
+    Text_0: normalize(11),
+    Text_1: normalize(12),
+    Text_2: normalize(13),
+    Text_3: normalize(15),
+    Text_4: normalize(16),
+    Text_5: normalize(17),
+    Text_6: normalize(19),
+    Text_7: normalize(20),
+    Text_8: normalize(9),
+    Text_9: normalize(10),
     Text_10: normalize(9),
     Text_11: normalizeInput(12),
     Text_12: normalizeInput(12, 'text12'),

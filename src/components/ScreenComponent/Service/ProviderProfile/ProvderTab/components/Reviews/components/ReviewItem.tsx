@@ -4,6 +4,7 @@ import TitleText from '../../../../../../../common/text/TitleText';
 import ShortText from '../../../../../../../common/text/ShortText';
 import Colors from '../../../../../../../../constants/Colors';
 import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
+import {colors} from '../../../../../../../../constants/theme/textTheme';
 
 const ReviewItem = () => {
   const {isDarkMode} = useTheme();
@@ -19,7 +20,10 @@ const ReviewItem = () => {
         },
       ]}>
       <Image
-        style={styles.image}
+        style={[
+          styles.image,
+          {borderWidth: 1, borderColor: colors.borderColor},
+        ]}
         source={{
           uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3280&q=80',
         }}

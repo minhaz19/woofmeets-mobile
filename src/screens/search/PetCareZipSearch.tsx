@@ -199,7 +199,7 @@ const PetCareZipSearch = (props: {
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
-        <BottomSpacingNav />
+        <BottomSpacing />
       </ScrollView>
     </ScreenRapper>
   );

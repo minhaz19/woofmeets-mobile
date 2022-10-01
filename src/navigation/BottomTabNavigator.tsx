@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View,  StyleSheet, useColorScheme, Platform} from 'react-native';
+import {View, StyleSheet, useColorScheme, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Finder, Setting, Pets, InboxIcon} from '../assets/svgs/SVG_LOGOS';
 import Colors from '../constants/Colors';
@@ -15,7 +15,7 @@ import {ProHomeIcon, ProRescheduleIcon} from '../assets/svgs/Provider_Logos';
 import ProRescheduleNavigator from './providers/bottoms/RescheduleNavigator';
 import ProSettingNavigator from './providers/bottoms/SettingNavigator';
 import BottomTabText from '../components/common/text/BottomTabText';
-import { useTheme } from '../constants/theme/hooks/useTheme';
+import {useTheme} from '../constants/theme/hooks/useTheme';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,13 +32,13 @@ function BottomTabNavigator() {
     }
   };
   const height =
-  SCREEN_WIDTH <= 380
-    ? Platform.OS === 'ios'
-      ? 70
-      : 60
-    : Platform.OS === 'ios'
-    ? 90
-    : 80;
+    SCREEN_WIDTH <= 380
+      ? Platform.OS === 'ios'
+        ? 70
+        : 60
+      : Platform.OS === 'ios'
+      ? 90
+      : 80;
   getDecodedToken();
   if (token && token.provider) {
     return (
@@ -50,7 +50,7 @@ function BottomTabNavigator() {
           tabBarStyle: {
             backgroundColor: isDarkMode
               ? Colors.dark.background
-              : Colors.light.inputBackground,
+              : Colors.background,
             height: height,
             position: 'absolute',
             bottom: 0,
@@ -60,6 +60,8 @@ function BottomTabNavigator() {
             shadowColor: isDarkMode
               ? Colors.dark.background
               : Colors.background,
+            borderTopWidth: 2,
+            borderColor: colors.borderColor,
           },
         }}>
         <Tab.Screen
@@ -71,10 +73,14 @@ function BottomTabNavigator() {
               <View style={styles.bottomContainer}>
                 <ProHomeIcon
                   stroke={focused ? Colors.primary : Colors.subText}
-                  height={SCREEN_WIDTH <= 380 ? 20 : 24}
-                  width={SCREEN_WIDTH <= 380 ? 20 : 26}
+                  height={SCREEN_WIDTH <= 380 ? 18 : 20}
+                  width={SCREEN_WIDTH <= 380 ? 18 : 20}
                 />
-                <BottomTabText text="Home" focused={focused} textStyle={styles.textStyle} />
+                <BottomTabText
+                  text="Home"
+                  focused={focused}
+                  textStyle={styles.textStyle}
+                />
               </View>
             ),
           }}
@@ -88,10 +94,14 @@ function BottomTabNavigator() {
               <View style={styles.bottomContainer}>
                 <ProRescheduleIcon
                   stroke={focused ? Colors.primary : Colors.subText}
-                  height={SCREEN_WIDTH <= 380 ? 20 : 24}
-                  width={SCREEN_WIDTH <= 380 ? 20 : 26}
+                  height={SCREEN_WIDTH <= 380 ? 18 : 20}
+                  width={SCREEN_WIDTH <= 380 ? 18 : 20}
                 />
-                <BottomTabText text="Reschedule" focused={focused} textStyle={styles.textStyle} />
+                <BottomTabText
+                  text="Reschedule"
+                  focused={focused}
+                  textStyle={styles.textStyle}
+                />
               </View>
             ),
           }}
@@ -111,10 +121,14 @@ function BottomTabNavigator() {
                       ? Colors.light.placeholderTextColor
                       : Colors.subText
                   }
-                  height={SCREEN_WIDTH <= 380 ? 20 : 24}
-                  width={SCREEN_WIDTH <= 380 ? 20 : 26}
+                  height={SCREEN_WIDTH <= 380 ? 18 : 20}
+                  width={SCREEN_WIDTH <= 380 ? 18 : 20}
                 />
-                <BottomTabText text="Inbox" focused={focused} textStyle={styles.textStyle} />
+                <BottomTabText
+                  text="Inbox"
+                  focused={focused}
+                  textStyle={styles.textStyle}
+                />
               </View>
             ),
           })}
@@ -129,10 +143,14 @@ function BottomTabNavigator() {
               <View style={styles.bottomContainer}>
                 <Setting
                   fill={focused ? Colors.primary : Colors.subText}
-                  height={SCREEN_WIDTH <= 380 ? 24 : 28}
-                  width={SCREEN_WIDTH <= 380 ? 26 : 33}
+                  height={SCREEN_WIDTH <= 380 ? 20 : 24}
+                  width={SCREEN_WIDTH <= 380 ? 20 : 26}
                 />
-                <BottomTabText text="Setting" focused={focused} textStyle={styles.textStyle} />
+                <BottomTabText
+                  text="Setting"
+                  focused={focused}
+                  textStyle={styles.textStyle}
+                />
               </View>
             ),
           }}
@@ -177,7 +195,11 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 20 : 24}
                   width={SCREEN_WIDTH <= 380 ? 20 : 26}
                 />
-                <BottomTabText text="Services" focused={focused} textStyle={styles.textStyle} />
+                <BottomTabText
+                  text="Services"
+                  focused={focused}
+                  textStyle={styles.textStyle}
+                />
               </View>
             ),
           }}
@@ -194,7 +216,11 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 20 : 24}
                   width={SCREEN_WIDTH <= 380 ? 20 : 26}
                 />
-                <BottomTabText text="Inbox" focused={focused} textStyle={styles.textStyle} />
+                <BottomTabText
+                  text="Inbox"
+                  focused={focused}
+                  textStyle={styles.textStyle}
+                />
               </View>
             ),
           }}
@@ -217,7 +243,11 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 20 : 22}
                   width={SCREEN_WIDTH <= 380 ? 20 : 24}
                 />
-                <BottomTabText text="My Pets" focused={focused} textStyle={styles.textStyle} />
+                <BottomTabText
+                  text="My Pets"
+                  focused={focused}
+                  textStyle={styles.textStyle}
+                />
               </View>
             ),
           })}
@@ -235,7 +265,11 @@ function BottomTabNavigator() {
                   height={SCREEN_WIDTH <= 380 ? 20 : 24}
                   width={SCREEN_WIDTH <= 380 ? 20 : 26}
                 />
-                <BottomTabText text="Setting" focused={focused} textStyle={styles.textStyle} />
+                <BottomTabText
+                  text="Setting"
+                  focused={focused}
+                  textStyle={styles.textStyle}
+                />
               </View>
             ),
           }}
@@ -254,7 +288,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     paddingVertical: 2,
-    paddingTop: 4,
+    paddingTop: 5,
   },
 });
 

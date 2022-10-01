@@ -14,7 +14,7 @@ import authStorage from '../../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
 const Stack1 = createStackNavigator();
 
-const ServiceNavigator = (props) => {
+const ServiceNavigator = () => {
   const dispatch = useAppDispatch();
   const [token, setToken] = useState<any>();
   const getDecodedToken = async () => {

@@ -7,6 +7,7 @@ import {SvgProps} from 'react-native-svg';
 import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../../../../../constants/textScaling';
 import DescriptionText from '../../../../../../../common/text/DescriptionText';
+import Entypo from 'react-native-vector-icons/Entypo';
 interface Props {
   item: {
     title: string;
@@ -30,34 +31,52 @@ const SitterInfo = ({item}: Props) => {
       </View>
       <View>
         {item.subInfo.length === 0 ? (
-          <DescriptionText
-            textStyle={{
-              color: isDarkMode ? Colors.background : Colors.text,
-              fontSize: Text_Size.Text_9,
-              marginTop: 10,
-            }}
-            text={'No skills found'}
-          />
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Entypo
+              name="check"
+              size={20}
+              color={Colors.green}
+              style={styles.iconStyle}
+            />
+            <DescriptionText
+              textStyle={{
+                color: isDarkMode ? Colors.background : Colors.text,
+                fontSize: Text_Size.Text_9,
+                marginTop: 10,
+              }}
+              text={'No skills found'}
+            />
+          </View>
         ) : (
           item.subInfo.map(inf => (
             <View key={Math.random()} style={styles.info}>
               {inf.info && (
-                <DescriptionText
-                  textStyle={{
-                    color: isDarkMode ? Colors.background : Colors.text,
-                    fontSize: Text_Size.Text_9,
-                  }}
-                  text={inf.info}
-                />
+                <View style={{flexDirection: 'row'}}>
+                  <Entypo
+                    name="check"
+                    size={20}
+                    color={Colors.green}
+                    style={styles.iconStyle}
+                  />
+                  <DescriptionText
+                    textStyle={{
+                      color: isDarkMode ? Colors.background : Colors.text,
+                      fontSize: Text_Size.Text_9,
+                    }}
+                    text={inf.info}
+                  />
+                </View>
               )}
               {inf?.description && (
-                <DescriptionText
-                  textStyle={{
-                    color: isDarkMode ? Colors.background : Colors.text,
-                    fontSize: Text_Size.Text_9,
-                  }}
-                  text={inf.description}
-                />
+                <>
+                  <DescriptionText
+                    textStyle={{
+                      color: isDarkMode ? Colors.background : Colors.text,
+                      fontSize: Text_Size.Text_9,
+                    }}
+                    text={inf.description}
+                  />
+                </>
               )}
             </View>
           ))
@@ -78,4 +97,5 @@ const styles = StyleSheet.create({
   headerContent: {flexDirection: 'row'},
   title: {marginRight: 5, fontWeight: 'bold', fontSize: Text_Size.Text_0},
   info: {marginVertical: 8},
+  iconStyle: {paddingRight: 10},
 });

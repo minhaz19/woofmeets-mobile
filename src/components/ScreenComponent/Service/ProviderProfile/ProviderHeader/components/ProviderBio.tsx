@@ -9,6 +9,7 @@ import {
 } from '../../../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../../../constants/Colors';
 import ShortText from '../../../../../common/text/ShortText';
+import {changeTextLetter} from '../../../../../common/ChangeTextLetter';
 interface Props {
   name: string;
   nature?: string;
@@ -27,7 +28,7 @@ const ProviderBio = ({
 }: Props) => {
   return (
     <View style={styles.container}>
-      <HeaderText textStyle={styles.title} text={name} />
+      <HeaderText textStyle={styles.title} text={changeTextLetter(name)} />
       <View style={styles.shortInfo}>
         <View>
           <AirbnbRating

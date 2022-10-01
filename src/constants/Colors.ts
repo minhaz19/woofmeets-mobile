@@ -45,7 +45,7 @@ export default {
   placeholder: '#BCBEC0',
   failed: '#e46969',
   alert: 'red',
-  success: '#69e4a6',
+  success: 'green',
   green: '#187d48',
   shadow: '#0000000A',
   red: 'red',

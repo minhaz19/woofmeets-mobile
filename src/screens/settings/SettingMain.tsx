@@ -49,7 +49,7 @@ const SettingMain = (props: {
 
   const loginData = [
     {
-      id: 3,
+      id: 1,
       title: 'Sign Up',
       icon: PreferenceIcon,
       screenName: () => props.navigation.navigate('SignUp'),
@@ -79,7 +79,7 @@ const SettingMain = (props: {
   };
 
   const sitterProfile = {
-    id: 4,
+    id: 1,
     title: 'Profile',
     icon: ProfileIcon,
     screenName: () => props.navigation.navigate('Profile'),
@@ -206,145 +206,151 @@ const SettingMain = (props: {
     },
   ];
 
-  const backgroundStyle = {   backgroundColor: isDarkMode
-    ? colors.lightBackgroundColor
-    : colors.backgroundColor}
+  const backgroundStyle = {
+    backgroundColor: isDarkMode
+      ? colors.lightBackgroundColor
+      : colors.backgroundColor,
+  };
 
   return (
     <ScreenRapperGrey>
-    <ScrollView
-      style={[
-        styles.rootContainer
-      ]}>
-      <View>
-        <View style={[styles.boxContainer, backgroundStyle]}>
-          <View style={styles.boxTextContainer}>
-            <ShortText textStyle={{color: Colors.blue}} text={'Get $100 '} />
-            <ShortText text={' when friends join Woofmeets'} />
-          </View>
-          <ShortText text={'Share Now'} />
-        </View>
-        {!isLoggedIn && (
-          <View style={{backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.light.inputBackground}}>
-            {loginData?.map(item => (
-              <SettingItem data={item} key={item.id} />
-            ))}
-            {/* <View
-              style={[
-                styles.divider,
-                {backgroundColor: colors.descriptionText},
-              ]}
-            /> */}
-          </View>
-        )}
-        {isLoggedIn && (
-          <View>
-            <View style={styles.titleContainer}>
-              <TitleText text="Account" />
+      <ScrollView
+        style={[styles.rootContainer]}
+        showsVerticalScrollIndicator={false}>
+        <View>
+          <View style={[styles.boxContainer, backgroundStyle]}>
+            <View style={styles.boxTextContainer}>
+              <ShortText
+                textStyle={{color: Colors.primary}}
+                text={'Get $100 '}
+              />
+              <ShortText text={' when friends join Woofmeets'} />
             </View>
-            <View style={{backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.light.inputBackground}}>
-              {token && token.provider ? (
-                <SettingItem data={sitterProfile} key={sitterProfile.id} />
-              ) : (
-                <SettingItem data={customerProfile} key={customerProfile.id} />
-              )}
-              {profileData?.map(item => (
+            <ShortText text={'Share Now'} textStyle={{color: Colors.blue}} />
+          </View>
+          {!isLoggedIn && (
+            <View
+              style={{
+                backgroundColor: isDarkMode
+                  ? Colors.dark.background
+                  : Colors.light.inputBackground,
+              }}>
+              {loginData?.map(item => (
+                <SettingItem data={item} key={item.id} />
+              ))}
+              <View
+                style={[
+                  styles.divider,
+                  {backgroundColor: colors.descriptionText},
+                ]}
+              />
+            </View>
+          )}
+          {isLoggedIn && (
+            <View>
+              <View style={styles.titleContainer}>
+                <TitleText text="Account" />
+              </View>
+              <View
+                style={{
+                  backgroundColor: isDarkMode
+                    ? Colors.dark.background
+                    : Colors.light.inputBackground,
+                }}>
+                {token && token.provider ? (
+                  <SettingItem data={sitterProfile} key={sitterProfile.id} />
+                ) : (
+                  <SettingItem
+                    data={customerProfile}
+                    key={customerProfile.id}
+                  />
+                )}
+                {profileData?.map(item => (
+                  <SettingItem data={item} key={item.id} />
+                ))}
+              </View>
+              <View
+                style={[
+                  styles.divider,
+                  {backgroundColor: colors.descriptionText},
+                ]}
+              />
+            </View>
+          )}
+          {token && token.provider ? (
+            <View>
+              <View style={styles.titleContainer}>
+                <TitleText text="Services" />
+              </View>
+              {servicesData?.map(item => (
                 <SettingItem data={item} key={item.id} />
               ))}
             </View>
-            <View
-              style={[
-                styles.divider,
-                {backgroundColor: colors.descriptionText},
-              ]}
-            />
-          </View>
-        )}
-        {token && token.provider ? (
-          <View>
-            <View style={styles.titleContainer}>
-              <TitleText text="Services" />
+          ) : (
+            <View>
+              <View style={styles.titleContainer}>
+                <TitleText text="Sitting" />
+              </View>
+              {sittingData?.map(item => (
+                <SettingItem data={item} key={item.id} />
+              ))}
             </View>
-            {servicesData?.map(item => (
-              <SettingItem data={item} key={item.id} />
-            ))}
-          </View>
-        ) : (
-          <View>
-            <View style={styles.titleContainer}>
-              <TitleText text="Sitting" />
-            </View>
-            {sittingData?.map(item => (
-              <SettingItem data={item} key={item.id} />
-            ))}
-          </View>
-        )}
+          )}
 
-        {token && token.provider && (
-          <View>
-            <View
-              style={[
-                styles.divider,
-                {backgroundColor: colors.descriptionText},
-              ]}
-            />
-            <View style={styles.titleContainer}>
-              <TitleText text="Sitting" />
+          {token && token.provider && (
+            <View>
+              <View
+                style={[
+                  styles.divider,
+                  {backgroundColor: colors.descriptionText},
+                ]}
+              />
+              <View style={styles.titleContainer}>
+                <TitleText text="Sitting" />
+              </View>
+              {providerData?.map(item => (
+                <SettingItem data={item} key={item.id} />
+              ))}
             </View>
-            {providerData?.map(item => (
-              <SettingItem data={item} key={item.id} />
-            ))}
-          </View>
-        )}
+          )}
 
-        <View
-          style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-        />
-        {isLoggedIn && (
-          <View>
-            <View style={styles.titleContainer}>
-              <TitleText text="Refferals and Promos" />
+          <View
+            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+          />
+          {isLoggedIn && (
+            <View>
+              <View style={styles.titleContainer}>
+                <TitleText text="Refferals and Promos" />
+              </View>
+              {referralData?.map(item => (
+                <SettingItem data={item} key={item.id} />
+              ))}
+              <View
+                style={[
+                  styles.divider,
+                  {backgroundColor: colors.descriptionText},
+                ]}
+              />
             </View>
-            {referralData?.map(item => (
-              <SettingItem data={item} key={item.id} />
-            ))}
-            <View
-              style={[
-                styles.divider,
-                {backgroundColor: colors.descriptionText},
-              ]}
-            />
+          )}
+          <View style={styles.titleContainer}>
+            <TitleText text="Support" />
           </View>
-        )}
-        <View style={styles.titleContainer}>
-          <TitleText text="Support" />
-        </View>
-        {supportData?.map(item => (
-          <SettingItem data={item} key={item.id} />
-        ))}
-        {isLoggedIn &&
-          preferenceData?.map((item: any) => (
+          {supportData?.map(item => (
             <SettingItem data={item} key={item.id} />
           ))}
-        <View
-              style={[
-                styles.divider,
-                {backgroundColor: colors.descriptionText},
-              ]}
-            />
-        {
-          isLoggedIn && (
-            <SettingItem data={logOut} key={logOut.id} />
-          )
-        }
-      </View>
-      <BottomSpacing />
-      <BottomSpacing />
-    </ScrollView>
+          {isLoggedIn &&
+            preferenceData?.map((item: any) => (
+              <SettingItem data={item} key={item.id} />
+            ))}
+          <View
+            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+          />
+          {isLoggedIn && <SettingItem data={logOut} key={logOut.id} />}
+        </View>
+        <BottomSpacing />
+        <BottomSpacing />
+      </ScrollView>
     </ScreenRapperGrey>
   );
 };
