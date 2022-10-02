@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {View, StyleSheet} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
-import BasicInfoInput from '../../components/ScreenComponent/setting/BasicInfoInput';
-import {basicInfoValidationSchema} from '../../utils/config/setting/validationSchema';
-import {useBasicInitalState} from './useBasicInitalState';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import BasicInfoInput from '../../../components/ScreenComponent/setting/BasicInfoInput';
+import {basicInfoValidationSchema} from '../../../utils/config/setting/validationSchema';
+import {useBasicInitalState} from './utils/useBasicInitalState';
 import {useBasicInfo} from './utils/useBasicInfo';
-import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileAction';
-import {useAppDispatch} from '../../store/store';
-import AppForm from '../../components/common/Form/AppForm';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
+import {useAppDispatch} from '../../../store/store';
+import AppForm from '../../../components/common/Form/AppForm';
 
 const BasicInfo = () => {
   const {colors} = useTheme();
@@ -38,7 +38,8 @@ const BasicInfo = () => {
         ]}>
         <AppForm
           initialValues={useBasicInitalState()}
-          validationSchema={basicInfoValidationSchema} enableReset>
+          validationSchema={basicInfoValidationSchema}
+          enableReset>
           <BasicInfoInput handleSubmit={handleSubmit} loading={loading} />
         </AppForm>
       </View>

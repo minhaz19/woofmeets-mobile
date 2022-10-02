@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {View, StyleSheet, Image, TouchableOpacity, Alert} from 'react-native';
 import React, {useState} from 'react';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import Colors from '../../../constants/Colors';
-import HeaderText from '../../common/text/HeaderText';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import Colors from '../../../../constants/Colors';
+import HeaderText from '../../../common/text/HeaderText';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import ImageUploadModal from '../../UI/modal/ImageUploadModal';
-import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
-import {useApi} from '../../../utils/helpers/api/useApi';
-import methods from '../../../api/methods';
-import UploadingLoader from '../../common/Loaders/UploadingLoader';
-import {useAppDispatch} from '../../../store/store';
-import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
+import {useRHFContext} from '../../../../utils/helpers/Form/useRHFContext';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
+import UploadingLoader from '../../../common/Loaders/UploadingLoader';
+import {useAppDispatch} from '../../../../store/store';
+import {getUserProfileInfo} from '../../../../store/slices/userProfile/userProfileAction';
 interface Props {
   name: string;
   gLoading?: boolean;

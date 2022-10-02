@@ -10,7 +10,7 @@ import {
 import React, {useState} from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import HeaderText from '../../components/common/text/HeaderText';
-import ProfileInfo from '../../components/ScreenComponent/profile/ProfileInfo';
+import ProfileInfo from '../../components/ScreenComponent/profile/BasicInfo/ProfileInfo';
 import TitleText from '../../components/common/text/TitleText';
 import BigText from '../../components/common/text/BigText';
 import Text_Size from '../../constants/textScaling';

@@ -1,4 +1,4 @@
-import {useAppSelector} from '../../store/store';
+import {useAppSelector} from '../../../../store/store';
 
 export const useBasicInitalState = () => {
   const {userInfo} = useAppSelector(state => state.userProfile);

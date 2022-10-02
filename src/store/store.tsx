@@ -30,10 +30,11 @@ import providerProfileSlice from './slices/Provider/ProviderProfile/singlePet/pr
 import initial from './slices/onBoarding/initial';
 import safetyQuizSlice from './slices/onBoarding/safetyQuiz/safetyQuizSlice';
 import whoAmISlice from './slices/common/whoAmI/whoAmISlice';
-import subscriptionSlice from './slices/onBoarding/Subscriptions/subscriptionSlice';
+import subscriptionSlice from './slices/payment/Subscriptions/subscriptionSlice';
 import yourHomeSlice from './slices/onBoarding/setUpService/yourHome/yourHomeSlice';
 import CancellationPolicySlice from './slices/onBoarding/setUpService/cancellationPolicy/CancellationPolicySlice';
 import rescheduleSlice from './slices/Provider/reschedule/rescheduleSlice';
+import cardsSlice from './slices/payment/PaymentCards/cardsSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -61,6 +62,7 @@ const appReducer = combineReducers({
   yourHome: yourHomeSlice,
   cancellationPolicy: CancellationPolicySlice,
   reschedule: rescheduleSlice,
+  cards: cardsSlice,
 });
 
 const RootReducer = (

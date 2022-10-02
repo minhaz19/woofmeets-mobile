@@ -1,10 +1,10 @@
 import {View, Image, StyleSheet} from 'react-native';
 import React from 'react';
-import HeaderText from '../../common/text/HeaderText';
-import ShortText from '../../common/text/ShortText';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {useAppSelector} from '../../../store/store';
+import HeaderText from '../../../common/text/HeaderText';
+import ShortText from '../../../common/text/ShortText';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import {useAppSelector} from '../../../../store/store';
 const img =
   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 const ProfileInfo = () => {

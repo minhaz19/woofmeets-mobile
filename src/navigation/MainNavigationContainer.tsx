@@ -33,6 +33,7 @@ import AddPetHome from '../screens/pet/AddPet/AddPetHome';
 import SitterDetails from '../screens/becomeSitter/Details';
 import BasicInfo from '../screens/profile/BasicInfo';
 import ServiceNavigator from './bottoms/ServiceNavigator';
+import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/AddCardForm';
 // import PetNavigatorFC from './PetNavigatorFS';
 const Stack = createStackNavigator();
 
@@ -378,6 +379,12 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="SafetyScreen"
           component={SafetyScreen}
+          options={{headerShown: false}}
+        />
+        {/* Payment Navigations */}
+        <Stack.Screen
+          name="AddCardForm"
+          component={AddCardForm}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

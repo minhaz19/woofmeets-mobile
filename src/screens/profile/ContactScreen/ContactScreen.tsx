@@ -1,20 +1,20 @@
 import {View, StyleSheet, Text, ScrollView, RefreshControl} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
-import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import Colors from '../../constants/Colors';
-import Text_Size from '../../constants/textScaling';
-import ContactInput from '../../components/ScreenComponent/setting/ContactInput';
-import {contactValues} from '../../utils/config/setting/initalValues';
-import {contactValidationSchema} from '../../utils/config/setting/validationSchema';
-import BottomSpacing from '../../components/UI/BottomSpacing';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import Colors from '../../../constants/Colors';
+import Text_Size from '../../../constants/textScaling';
+import ContactInput from '../../../components/ScreenComponent/setting/ContactInput';
+import {contactValues} from '../../../utils/config/setting/initalValues';
+import {contactValidationSchema} from '../../../utils/config/setting/validationSchema';
+import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {
   getContactInfo,
   postContactInfo,
-} from '../../store/slices/profile/contact';
-import {useAppDispatch, useAppSelector} from '../../store/store';
-import {setProfileData} from '../../store/slices/onBoarding/initial';
-import AppForm from '../../components/common/Form/AppForm';
+} from '../../../store/slices/profile/contact';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {setProfileData} from '../../../store/slices/onBoarding/initial';
+import AppForm from '../../../components/common/Form/AppForm';
 
 const ContactScreen = () => {
   const {colors} = useTheme();

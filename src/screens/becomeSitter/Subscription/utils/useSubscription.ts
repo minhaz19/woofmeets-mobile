@@ -4,7 +4,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../../api/methods';
-import {getSubscription} from '../../../../store/slices/onBoarding/Subscriptions/subscriptionAction';
+import {getSubscription} from '../../../../store/slices/payment/Subscriptions/subscriptionAction';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 type StackParamList = {

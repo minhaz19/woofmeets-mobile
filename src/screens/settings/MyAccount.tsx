@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {View, SafeAreaView, StyleSheet, ScrollView, useColorScheme} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import {
   CallIcon,
   Payment2Icon,
@@ -12,7 +12,7 @@ import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
-import ProfileInfo from '../../components/ScreenComponent/profile/ProfileInfo';
+import ProfileInfo from '../../components/ScreenComponent/profile/BasicInfo/ProfileInfo';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileAction';
 import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
@@ -86,15 +86,12 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     <ScreenRapperGrey>
       {loading && <AppActivityIndicator visible={true} />}
 
-      <ScrollView
-        style={
-          styles.rootContainer
-        }>
+      <ScrollView style={styles.rootContainer}>
         <SafeAreaView>
           <View style={styles.profileContainer}>
             <ProfileInfo />
           </View>
-          
+
           {newData.map((item: any) => (
             <SettingItem
               data={item}

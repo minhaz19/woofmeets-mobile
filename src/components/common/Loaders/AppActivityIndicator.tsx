@@ -13,7 +13,8 @@ const AppActivityIndicator = ({visible = false}) => {
       <Lottie
         autoPlay
         loop
-        source={require('../../../assets/loader.json')}
+        source={require('../../../assets/petLoader.json')}
+        // source={require('../../../assets/loader.json')}
         style={styles.loaderStyle}
       />
     </View>
@@ -25,9 +26,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: '100%',
     width: '100%',
-    opacity: 0.6,
+    // opacity: 0.6,
     flex: 1,
-    zIndex: 1,
+    zIndex: 999,
     justifyContent: 'center',
     alignItems: 'center',
   },

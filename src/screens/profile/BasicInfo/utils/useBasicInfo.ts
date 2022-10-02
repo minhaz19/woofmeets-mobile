@@ -1,9 +1,9 @@
 import {Alert} from 'react-native';
-import methods from '../../../api/methods';
-import { setProfileData } from '../../../store/slices/onBoarding/initial';
-import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {useApi} from '../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
+import { setProfileData } from '../../../../store/slices/onBoarding/initial';
+import {getUserProfileInfo} from '../../../../store/slices/userProfile/userProfileAction';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {useApi} from '../../../../utils/helpers/api/useApi';
 const slug = '/user-profile/basic-info';
 
 export const useBasicInfo = () => {

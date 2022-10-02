@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import {StyleSheet, Pressable} from 'react-native';
+import {StyleSheet, Pressable, TextStyle} from 'react-native';
 interface Props {
   onPress: () => void;
   children: React.ReactNode;
+  style?: TextStyle;
 }
-function AppTouchableOpacity({onPress, children}: Props) {
+function AppTouchableOpacity({onPress, style, children}: Props) {
   return (
     <Pressable
       onPress={onPress}
