@@ -7,8 +7,6 @@ import AllCards from '../../../components/ScreenComponent/profile/PaymentMethod/
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import NoCards from '../../../components/ScreenComponent/profile/PaymentMethod/NoCards';
-import PaymentSheett from './PaymentSheet';
-import AppStripe from '../../../components/common/Stripe/AppStripe';
 const endpoint = '/stripe-payment-method/default-card-info';
 const PaymentMethods = () => {
   const dispatch = useAppDispatch();
@@ -25,17 +23,15 @@ const PaymentMethods = () => {
   }, []);
   return (
     <>
-      <AppStripe>
-        <PaymentSheett />
-      </AppStripe>
-      {/* {(loading || dLoading) && <AppActivityIndicator visible={true} />} */}
-      {/* {cards ? (
+   
+      {(loading || dLoading) && <AppActivityIndicator visible={true} />}
+      {cards ? (
         <>
           <AllCards cards={cards} CardId={CardId} />
         </>
       ) : (
         <NoCards />
-      )} */}
+      )}
     </>
   );
 };

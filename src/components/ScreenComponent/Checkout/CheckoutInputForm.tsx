@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Platform, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {InputFormData} from './utils/InputFormData';
 import AppFormField from '../../common/Form/AppFormField';
@@ -9,9 +9,10 @@ import BottomSpacing from '../../UI/BottomSpacing';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-// import {CardForm} from '@stripe/stripe-react-native';
 import TitleText from '../../common/text/TitleText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {CardField} from '@stripe/stripe-react-native';
+import DescriptionText from '../../common/text/DescriptionText';
 // import ErrorMessage from '../../common/Form/ErrorMessage';
 interface Props {
   handleValues: (values: any) => void;
@@ -26,52 +27,63 @@ const CheckoutInputForm = ({handleValues, loading}: Props) => {
     formState: {errors},
   } = useFormContext();
   return (
-    <View>
-      {InputFormData.map((item, index) => {
-        return (
-          <View key={index}>
-            {item.name === 'cardInfo' ? (
-              <>
-                <TitleText textStyle={styles.label} text={item.title} />
-                {/* <CardForm
-                  onFormComplete={cardDetails => {
-                    setValue(item.name, cardDetails, {
-                      shouldValidate: errors[item.name] ? true : false,
-                    });
-                  }}
-                  style={styles.cardField}
-                  cardStyle={{
-                    borderWidth: 1,
-                    backgroundColor: colors.backgroundColor,
-                    borderRadius: 2,
-                    borderColor: isDarkMode ? Colors.gray : Colors.border,
-                  }}
-                /> */}
-                {/* <ErrorMessage error={errors?.cardInfo?.postalCode.message} /> */}
-              </>
-            ) : (
-              <AppFormField
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType={'default'}
-                placeholder={item.placeholder}
-                textContentType={'none'}
-                name={item.name}
-                label={item.title}
-                // flex={item.flex}
-                key={index}
-                control={control}
-                errors={errors}
-              />
-            )}
-          </View>
-        );
-      })}
+    <View style={styles.inputContainer}>
+      <DescriptionText
+        textStyle={styles.titleText}
+        text={
+          'Select your default methods for payment. we accepts all major credit and debit cards'
+        }
+      />
+      <View style={styles.flatList}>
+        {InputFormData.map((item, index) => {
+          return (
+            <View key={index} style={{width: item.flex ? '48%' : '100%'}}>
+              {item.name === 'cardInfo' ? (
+                <>
+                  <TitleText textStyle={styles.label} text={item.title} />
+                  <CardField
+                    onCardChange={cardDetails => {
+                      setValue(item.name, cardDetails, {
+                        shouldValidate: errors[item.name] ? true : false,
+                      });
+                    }}
+                    style={styles.cardField}
+                    cardStyle={{
+                      borderWidth: 1,
+                      backgroundColor: colors.backgroundColor,
+                      borderRadius: 3,
+                      borderColor: isDarkMode ? Colors.gray : Colors.border,
+                      fontSize: Text_Size.Text_0,
+                    }}
+                  />
+                  {/* <ErrorMessage error={errors?.cardInfo?.postalCode.message} /> */}
+                </>
+              ) : (
+                <AppFormField
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  keyboardType={'default'}
+                  placeholder={item.placeholder}
+                  textContentType={'none'}
+                  name={item.name}
+                  label={item.title}
+                  // flex={item.flex}
+                  key={index}
+                  control={control}
+                  errors={errors}
+                  flex={item.flex}
+                />
+              )}
+            </View>
+          );
+        })}
+      </View>
       <View style={styles.buttonWidth}>
         <SubmitButton
           title={'Add Card'}
           onPress={handleValues}
           loading={loading}
+          color={'black'}
         />
       </View>
       <BottomSpacing />
@@ -83,9 +95,21 @@ const CheckoutInputForm = ({handleValues, loading}: Props) => {
 export default CheckoutInputForm;
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    paddingHorizontal: 20,
+  },
+  flatList: {
+    flexWrap: 'wrap',
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
   textContainer: {
     marginVertical:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+  },
+  titleText: {
+    paddingVertical: 20,
   },
   label: {
     fontSize: Text_Size.Text_1,
@@ -115,7 +139,8 @@ const styles = StyleSheet.create({
   },
   cardField: {
     width: '100%',
-    height: Platform.OS === 'ios' ? 200 : 300,
+    height: 50,
+    fontSize: Text_Size.Text_10,
     marginBottom: 10,
   },
 });

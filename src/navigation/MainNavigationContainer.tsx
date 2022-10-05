@@ -33,9 +33,8 @@ import AddPetHome from '../screens/pet/AddPet/AddPetHome';
 import SitterDetails from '../screens/becomeSitter/Details';
 import BasicInfo from '../screens/profile/BasicInfo';
 import ServiceNavigator from './bottoms/ServiceNavigator';
-import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/AddCardForm';
-import NoCards from '../components/ScreenComponent/profile/PaymentMethod/NoCards';
 import PaymentMethods from '../screens/profile/PaymentMethod';
+import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/AddCardForm';
 // import PetNavigatorFC from './PetNavigatorFS';
 const Stack = createStackNavigator();
 

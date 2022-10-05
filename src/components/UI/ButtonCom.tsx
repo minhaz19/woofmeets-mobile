@@ -26,7 +26,7 @@ interface Props {
   title: String | undefined;
   icon?: any;
   loading?: boolean;
-  success?: boolean;
+  color?: string;
 }
 const ButtonCom = ({
   containerStyle,
@@ -34,7 +34,7 @@ const ButtonCom = ({
   onSelect,
   textAlignment,
   isLeftIcon,
-  success,
+  color,
   titleStyle,
   title,
   icon,
@@ -46,8 +46,8 @@ const ButtonCom = ({
     <Card
       style={{
         ...styles.cardlist,
-        backgroundColor: success
-          ? Colors.success
+        backgroundColor: color
+          ? color
           : isDarkMode
           ? Colors.button.grey
           : Colors.primary,
@@ -57,9 +57,7 @@ const ButtonCom = ({
       <View style={{...styles.touchable}}>
         <TouchableOpacity onPress={onSelect} disabled={loading}>
           <View style={{...styles.card, ...textAlignment}}>
-            {success ? (
-              <SuccessANI />
-            ) : loading ? (
+            {loading ? (
               <DotLoader />
             ) : (
               <>
@@ -68,7 +66,8 @@ const ButtonCom = ({
                     ...styles.title,
                     ...titleStyle,
                   }}
-                  text={title} />
+                  text={title}
+                />
                 {icon && (
                   <Icon
                     name="keyboard-arrow-right"
