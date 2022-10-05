@@ -1,18 +1,43 @@
 /* eslint-disable react-native/no-inline-styles */
 import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Swipeable} from 'react-native-gesture-handler';
-import {Visa} from '../../../../../assets/svgs/Cards';
+import methods from '../../../../../api/methods';
 
 import {Delete} from '../../../../../assets/svgs/SVG_LOGOS';
+import Colors from '../../../../../constants/Colors';
+import Text_Size from '../../../../../constants/textScaling';
+import {getCards} from '../../../../../store/slices/payment/PaymentCards/getCardsAction';
+import {useAppDispatch} from '../../../../../store/store';
+import AppTouchableOpacity from '../../../../common/AppClickEvents/AppTouchableOpacity';
+import TitleText from '../../../../common/text/TitleText';
 interface Props {
   cards?: any;
   newCard?: boolean;
   Icon: any;
+  defaultCard?: boolean;
+  onPress?: () => void;
+  activeCard?: boolean;
+  handleUpdate?: (arg: number) => void;
 }
-const ListItem = ({cards, newCard = false, Icon}: Props) => {
-  const navigation = useNavigation();
+type StackParamList = {
+  AddCardForm: {foo: string; onBar: () => void} | undefined;
+};
+
+type NavigationProps = StackNavigationProp<StackParamList>;
+const ListItem = ({
+  cards,
+  Icon,
+  onPress,
+  newCard = false,
+  defaultCard = false,
+  activeCard = false,
+  handleUpdate,
+}: Props) => {
+  const navigation = useNavigation<NavigationProps>();
+  const dispatch = useAppDispatch();
   const rightSwipeActions = () => {
     return (
       <View
@@ -23,10 +48,29 @@ const ListItem = ({cards, newCard = false, Icon}: Props) => {
           marginBottom: 20,
           marginRight: 20,
         }}>
-        <TouchableOpacity style={{margin: 10}}>
+        <TouchableOpacity
+          style={{margin: 10}}
+          onPress={() => handleUpdate!(cards.id)}>
           <Delete fill="black" width={20} height={20} />
         </TouchableOpacity>
-        <TouchableOpacity style={{margin: 10}}>
+        <TouchableOpacity
+          style={{margin: 10}}
+          onPress={() => {
+            Alert.alert('Delete!', 'Are you sure to  delete this card.', [
+              {
+                text: 'No',
+              },
+              {
+                text: 'Yes',
+                onPress: async () => {
+                  await methods._delete(
+                    `/stripe-payment-method/customer/all-cards/${cards.id}`,
+                  );
+                  dispatch(getCards());
+                },
+              },
+            ]);
+          }}>
           <Delete fill="black" width={20} height={20} />
         </TouchableOpacity>
       </View>
@@ -41,27 +85,76 @@ const ListItem = ({cards, newCard = false, Icon}: Props) => {
   return (
     <>
       {newCard ? (
-        <TouchableOpacity
-          style={[styles.taskContainer]}
+        <AppTouchableOpacity
+          style={[styles.taskContainer, {paddingVertical: 20}]}
           onPress={() => navigation.navigate('AddCardForm')}>
-          <View style={[styles.task, {justifyContent: 'flex-start'}]}>
+          <View style={[styles.task, {justifyContent: 'center'}]}>
             {Icon}
-            <Text style={styles.text}>Add new card</Text>
+            <TitleText textStyle={styles.text} text={'Add New Card'} />
           </View>
-        </TouchableOpacity>
+        </AppTouchableOpacity>
       ) : (
         <Swipeable
           renderRightActions={rightSwipeActions}
           onSwipeableRightOpen={swipeFromRightOpen}
           onSwipeableLeftOpen={swipeFromLeftOpen}>
-          <TouchableOpacity style={[styles.taskContainer]}>
+          <AppTouchableOpacity
+            onPress={onPress}
+            onLongPress={() => {
+              Alert.alert(
+                'Update Card',
+                'Do you want to use this card as a default card',
+                [
+                  {
+                    text: 'No',
+                  },
+                  {
+                    text: 'Yes',
+                    onPress: async () => {
+                      await methods._update(
+                        `/stripe-payment-method/all-cards/${cards.id}/change-default-card`,
+                      );
+                      dispatch(getCards());
+                    },
+                  },
+                ],
+              );
+            }}
+            style={[
+              styles.taskContainer,
+              {
+                borderWidth: defaultCard ? 2 : activeCard ? 1 : 0,
+                borderColor:
+                  defaultCard || activeCard ? Colors.primary : 'none',
+              },
+            ]}>
             <View style={[styles.task]}>
               {Icon}
-              <Text style={styles.stars}>****</Text>
-              <Text style={styles.taskTitle}>{cards?.last4}</Text>
-              <Text style={styles.taskTitle}>12/29</Text>
+              <TitleText textStyle={styles.stars} text={'****'} />
+              <TitleText textStyle={styles.taskTitle} text={cards?.last4} />
+              <TitleText
+                textStyle={styles.taskTitle}
+                text={
+                  ('0' + cards.expMonth).slice(-2) +
+                  '/' +
+                  String(cards.expYear).slice(-2)
+                }
+              />
             </View>
-          </TouchableOpacity>
+            {defaultCard && (
+              <View
+                style={{
+                  position: 'absolute',
+                  right: 5,
+                  top: 5,
+                  width: 10,
+                  height: 10,
+                  borderRadius: 100,
+                  backgroundColor: 'green',
+                }}
+              />
+            )}
+          </AppTouchableOpacity>
         </Swipeable>
       )}
     </>
@@ -95,10 +188,12 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 20,
+    fontSize: Text_Size.Text_1,
+    color: Colors.text,
   },
   stars: {
     marginBottom: 0,
-    marginTop: 0,
+    marginTop: 5,
   },
   taskTitle: {
     alignSelf: 'center',

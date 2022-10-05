@@ -214,6 +214,11 @@ const planCheckoutValidationSchema = Yup.object().shape({
   }),
 });
 
+const cardExpValidationSchema = Yup.object().shape({
+  month: Yup.number().required('Month is required'),
+  year: Yup.number().required('Year is required'),
+});
+
 export {
   loginValidationSchema,
   signUpValidationSchema,
@@ -231,4 +236,5 @@ export {
   safetyQuizValidationSchema,
   backgroundCheckValidationSchema,
   planCheckoutValidationSchema,
+  cardExpValidationSchema,
 };

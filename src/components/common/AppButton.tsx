@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet,  TouchableOpacity} from 'react-native';
 import React from 'react';
 import {btnStyles} from '../../constants/theme/common/buttonStyles';
 import Text_Size from '../../constants/textScaling';

@@ -53,7 +53,7 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 4,
       title: 'Payment method',
       icon: Payment2Icon,
-      screenName: () => props.navigation.navigate('CreditAndDebitCard'),
+      screenName: () => props.navigation.navigate('PaymentMethod'),
       details: 'Add payment, Card',
       opacity: 1,
     },

@@ -174,21 +174,6 @@ const SettingNavigator = () => {
         })}
       />
       <Stack1.Screen
-        name="CreditAndDebitCard"
-        component={CreditAndDebitCard}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Checkout"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
         name="Profile"
         component={Profile}
         options={({navigation}) => ({

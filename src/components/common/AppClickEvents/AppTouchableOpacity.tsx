@@ -2,15 +2,17 @@
 import React from 'react';
 import {StyleSheet, Pressable, TextStyle} from 'react-native';
 interface Props {
-  onPress: () => void;
+  onPress?: () => void;
   children: React.ReactNode;
-  style?: TextStyle;
+  style?: TextStyle | any;
+  onLongPress?: () => void;
 }
-function AppTouchableOpacity({onPress, style, children}: Props) {
+function AppTouchableOpacity({onPress, style, children, onLongPress}: Props) {
   return (
     <Pressable
       onPress={onPress}
-      style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
+      onLongPress={onLongPress}
+      style={({pressed}) => [style, {opacity: pressed ? 0.5 : 1}]}>
       {children}
     </Pressable>
   );

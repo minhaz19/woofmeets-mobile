@@ -34,6 +34,8 @@ import SitterDetails from '../screens/becomeSitter/Details';
 import BasicInfo from '../screens/profile/BasicInfo';
 import ServiceNavigator from './bottoms/ServiceNavigator';
 import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/AddCardForm';
+import NoCards from '../components/ScreenComponent/profile/PaymentMethod/NoCards';
+import PaymentMethods from '../screens/profile/PaymentMethod';
 // import PetNavigatorFC from './PetNavigatorFS';
 const Stack = createStackNavigator();
 
@@ -386,6 +388,17 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           name="AddCardForm"
           component={AddCardForm}
           options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="PaymentMethod"
+          component={PaymentMethods}
+          options={({navigation}) => ({
+            title: 'Payment Cards',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Cards" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

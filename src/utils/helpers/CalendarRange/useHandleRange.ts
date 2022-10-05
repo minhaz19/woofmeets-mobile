@@ -2,7 +2,7 @@ import moment from 'moment';
 import {useMemo, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {setCross} from '../../../store/slices/misc/hittingCross';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {compareDate} from './compareDate';
 
 export const useHandleRange = (name = 'dateRange') => {

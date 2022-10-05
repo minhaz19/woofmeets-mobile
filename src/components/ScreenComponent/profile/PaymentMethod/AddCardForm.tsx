@@ -1,31 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Alert,
-  SafeAreaView,
-} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 import methods from '../../../../api/methods';
-import BottomSpacing from '../../../UI/BottomSpacing';
 import Colors from '../../../../constants/Colors';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import storage from '../../../../utils/helpers/auth/storage';
+import {useNavigation} from '@react-navigation/native';
 
+import Ion from 'react-native-vector-icons/Ionicons';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
+import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 const endpoint = '/stripe-payment-method/add-card';
 const customerEndPoint = '/stripe-payment-method/customers';
 const STRIPE_PK =
   'pk_test_51LTB7cKt0zm1z41kPTt1L4KXeMUPfd4qyWjQdYQR69ejOa2wdd2kpoO2ucIgYG8WJWZTohiDbdmtzG0m04nF0ff900964FN1Vr';
-const fn = async () => {
-  return await storage.getToken();
-  // setAuthToken(authTok);
-};
+
 const AddCardForm = (props: any) => {
-  const [tokenLoding, setTokenLoading] = useState(false);
   const [customerId, setCustomerId] = useState<string | null | undefined>('');
   const {loading, request} = useApi(methods._post);
   const {request: getReq} = useApi(methods._get);
@@ -46,9 +39,9 @@ const AddCardForm = (props: any) => {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                <title>Payment Page</title>
-           
-           <script src="https://js.stripe.com/v3/"></script>
-             <script src="https://cdn.tailwindcss.com"></script>
+               <script src="https://js.stripe.com/v3/"></script>
+               <script src="https://cdn.tailwindcss.com"></script>
+               <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
                 <style>
        
                 </style>
@@ -57,10 +50,15 @@ const AddCardForm = (props: any) => {
             </head>
             <body>
                 
-   <div class="mt-10 mx-6">
+      <div class='w-full h-[30%] bg-black mx-auto flex flex-col justify-center items-center rounded-b-2xl'>
+   
+         <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_egmSxc.json"  background="transparent"  speed="1"  style="width: 350px; "  loop  autoplay></lottie-player>
+        <p class='text-3xl font-bold text-center text-white -mt-10 mb-10'>Add New Card</p>
+         </div>
+
+   <div class="mt-5  mx-6">
       <div class="info-container">
-        <h3 class="mb-3 text-3xl font-bold">Your payment methods</h3>
-        <p class="text-sm">
+        <p class="text-sm mb-5">
           Select your default method for payments. We accepts all major credit
           and debit cards.
         </p>
@@ -124,7 +122,7 @@ const AddCardForm = (props: any) => {
           </div>
 
           <label class="mb-6 flex flex-col space-y-2">
-            <span class="text-gray-700 font-bold">Address line 1</span>
+            <span class="text-gray-700 font-bold">Address </span>
             <input
               name="address1"
               type="text"
@@ -132,44 +130,29 @@ const AddCardForm = (props: any) => {
               class="border border-gray-300 py-2 px-3 rounded"
               placeholder="Enter address" />
           </label>
-          <label class="mb-6 flex flex-col space-y-2">
-            <span class="text-gray-700 font-bold">Address line 2</span>
-            <input
-              name="address2"
-              type="text"
-                id="address-line2"
-              class="border border-gray-300 py-2 px-3 rounded"
-              placeholder="Enter address" />
-          </label>
+     
          
-            <label class="mb-6 flex flex-col space-y-2">
+         <div class='flex flex-wrap justify-between '>
+            <label class="mb-6 flex flex-col space-y-2 w-[48%]">
               <span class="text-gray-700 font-bold">City</span>
               <input
                 name="city"
                 type="text"
                   id="address-city"
                 class="border border-gray-300 py-2 px-3 rounded"
-                placeholder="Enter address" />
+                placeholder="Enter city" />
             </label>
 
-            <label class="mb-6 flex flex-col space-y-2">
+            <label class="mb-6 flex flex-col space-y-2 w-[48%]">
               <span class="text-gray-700 font-bold">State/Province</span>
               <input
                 name="state"
                 type="text"
                   id="address-state"
                 class="border border-gray-300 py-2 px-3 rounded"
-                placeholder="Enter address" />
+                placeholder="Enter state" />
             </label>
-            <label class="mb-6 flex flex-col space-y-2">
-              <span class="text-gray-700 font-bold">Country name</span>
-              <input
-                name="zip"
-                type="text"
-                  id="country"
-                class="border border-gray-300 py-2 px-3 rounded"
-                placeholder="Enter your country name" />
-            </label>
+          </div>
             <label class="mb-6 flex flex-col space-y-2">
               <span class="text-gray-700 font-bold">Zip/Postal code</span>
               <input
@@ -184,7 +167,7 @@ const AddCardForm = (props: any) => {
             <button
               type="submit"
            
-              class="w-full rounded-full py-2 text-white font-bold bg-[#FFA557]">
+              class="w-full rounded-full py-2 text-white font-bold bg-black">
               Add Card
             </button>
         
@@ -197,6 +180,9 @@ const AddCardForm = (props: any) => {
                 </div>
                 
                 <script>
+                function goBack() {
+  window.history.back()
+}
                     var stripe = Stripe('${STRIPE_PK}');
                     var elements = stripe.elements();
             
@@ -259,11 +245,11 @@ const AddCardForm = (props: any) => {
                             var additionalData = {
                                 name: document.getElementById('card-name').value,
                                 address_line1: document.getElementById('address-line1').value,
-                                address_line2: document.getElementById('address-line2').value,
+                                address_line2: null,
                                 address_city:  document.getElementById('address-city').value,
                                 address_state: document.getElementById('address-state').value,
                                 address_zip: document.getElementById('address-zip').value,
-                                country: document.getElementById('country').value,
+                                country: null,
                             };
                        
                         
@@ -302,20 +288,46 @@ const AddCardForm = (props: any) => {
     console.log('result', result);
     // }
   };
+  const webViewRef = useRef(null);
+  const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={styles.container}>
+      <AppTouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.back}>
+        <Ion
+          name="ios-chevron-back"
+          size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+          style={styles.iconStyle}
+          color={Colors.primary}
+        />
+      </AppTouchableOpacity>
       <WebView
+        ref={webViewRef}
+        startInLoadingState={true}
         javaScriptEnabled={true}
+        renderLoading={() => <AppActivityIndicator visible />}
         style={styles.container}
         originWhitelist={['*']}
         source={{html: htmlContent}}
         injectedJavaScript={injectedJavaScript}
         onMessage={onMessage}
+        showsVerticalScrollIndicator={false}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
 export default AddCardForm;
-const styles = StyleSheet.create({container: {flex: 1}});
+const styles = StyleSheet.create({
+  container: {flex: 1},
+  iconStyle: {paddingRight: 10},
+  back: {
+    position: 'absolute',
+    left: 10,
+    top: 30,
+    padding: 10,
+    zIndex: 9999,
+  },
+});
