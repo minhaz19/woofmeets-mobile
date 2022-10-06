@@ -5,7 +5,7 @@ import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import AppTouchableOpacity from './AppClickEvents/AppTouchableOpacity';
 import TitleText from './text/TitleText';
 import DescriptionText from './text/DescriptionText';
-import {Calendar} from '../../assets/svgs/SVG_LOGOS';
+import {CalendarCSvg} from '../../assets/svgs/SVG_LOGOS';
 import AppCalendar from './AppCalendar';
 import Colors from '../../constants/Colors';
 interface Props {
@@ -35,7 +35,7 @@ const BottomSheetCalendar = ({title}: Props) => {
             <DescriptionText text={'Tap to add dates'} />
           </View>
           <View style={styles.iconContainer}>
-            <Calendar fill="black" width={30} height={30} />
+            <CalendarCSvg fill="black" width={30} height={30} />
           </View>
         </AppTouchableOpacity>
         <BottomSheetModal
@@ -57,7 +57,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: Colors.primary,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    backgroundColor: Colors.border,
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 8,
@@ -71,6 +73,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.background,
     borderRadius: 6,
+    backgroundColor: Colors.background,
   },
 
   container: {},
