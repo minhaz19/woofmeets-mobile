@@ -4,20 +4,29 @@ import TitleText from './text/TitleText';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Text_Size from '../../constants/textScaling';
+import {useFormContext} from 'react-hook-form';
 
 interface Props {
   title: string;
   data: any;
+  name: string;
+  setScheduleId?: (arg: number | null) => void;
+  setVisitId?: (arg: number | null) => void;
 }
-const AppHalfTabs = ({data, title}: Props) => {
+const AppHalfTabs = ({data, title, name, setScheduleId}: Props) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const {setValue} = useFormContext();
   return (
     <View style={styles.container}>
       <TitleText textStyle={styles.titleText} text={title} />
       <View style={styles.tabContainer}>
         {data.map((item: any, index: number) => (
           <Pressable
-            onPress={() => setActiveIndex(index)}
+            onPress={() => {
+              setActiveIndex(index);
+              setScheduleId && setScheduleId(index);
+              setValue(name, index);
+            }}
             style={[
               styles.tab,
               {

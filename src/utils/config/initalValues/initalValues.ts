@@ -82,7 +82,30 @@ const planCheckoutInit = {
     postalCode: '',
   },
 };
+const appointmentInit = {
+  serviceId: null,
+  visit: 0,
+  schedule: 0,
 
+  isRepeatBooking: false,
+  bookingDates: [],
+  startDay: '',
+  bookingDays: [],
+
+  dropOff: {
+    date: '',
+    from: '',
+    to: '',
+  },
+  pickUp: {
+    date: '',
+    from: '',
+    to: '',
+  },
+  pets: [],
+  message: '',
+  isReceivedPhotos: false,
+};
 export {
   loginValue,
   signupValue,
@@ -95,4 +118,5 @@ export {
   forgotPasswordReset,
   backgroundCheckInit,
   planCheckoutInit,
+  appointmentInit,
 };

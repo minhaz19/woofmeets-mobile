@@ -8,7 +8,10 @@ import DescriptionText from './text/DescriptionText';
 import {Calendar} from '../../assets/svgs/SVG_LOGOS';
 import AppCalendar from './AppCalendar';
 import Colors from '../../constants/Colors';
-const BottomSheetCalendar = () => {
+interface Props {
+  title: string;
+}
+const BottomSheetCalendar = ({title}: Props) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
@@ -28,7 +31,7 @@ const BottomSheetCalendar = () => {
           style={styles.sectionContainer}
           onPress={handlePresentModalPress}>
           <View>
-            <TitleText textStyle={styles.titleText} text={'Dates'} />
+            <TitleText textStyle={styles.titleText} text={title} />
             <DescriptionText text={'Tap to add dates'} />
           </View>
           <View style={styles.iconContainer}>

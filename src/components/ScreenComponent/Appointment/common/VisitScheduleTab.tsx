@@ -1,7 +1,6 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import AppHalfTabs from '../../../common/AppHalfTabs';
-import BottomSheetCalendar from '../../../common/BottomSheetCalendar';
 import {Calendar, ClockSvg, Repeat} from '../../../../assets/svgs/SVG_LOGOS';
 import AppDayPicker from '../../../common/AppDayPicker';
 const data = [
@@ -28,13 +27,31 @@ const schedule = [
     Icon: <Repeat width={30} height={30} fill={'black'} />,
   },
 ];
-const VisitScheduleTab = () => {
+interface Props {
+  serviceId: number;
+}
+const VisitScheduleTab = ({serviceId}: Props) => {
+  const [visitId, setVisitId] = useState(null);
+  const [scheduleId, setScheduleId] = useState(null);
   return (
     <View style={styles.container}>
-      <AppHalfTabs title="Visit Length" data={data} />
-      <AppHalfTabs title="Schedule" data={schedule} />
-      <AppDayPicker />
-      <BottomSheetCalendar />
+      {serviceId === 4 ? null : (
+        <AppHalfTabs
+          title="Visit Length"
+          data={data}
+          //@ts-ignore
+          setVisitId={setVisitId}
+          name="visit"
+        />
+      )}
+      <AppHalfTabs
+        title="Schedule"
+        data={schedule}
+        //@ts-ignore
+        setScheduleId={setScheduleId}
+        name="schedule"
+      />
+      {scheduleId === 1 && <AppDayPicker />}
     </View>
   );
 };
@@ -43,7 +60,7 @@ export default VisitScheduleTab;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     flex: 1,
+    marginVertical: 20,
   },
 });

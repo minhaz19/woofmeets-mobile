@@ -91,7 +91,6 @@ function renderCustomHeader(date: any) {
 export default AppCalendar;
 
 const styles = StyleSheet.create({
-
   contentContainer: {
     flex: 1,
     alignItems: 'center',

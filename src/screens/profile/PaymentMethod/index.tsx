@@ -23,7 +23,6 @@ const PaymentMethods = () => {
   }, []);
   return (
     <>
-   
       {(loading || dLoading) && <AppActivityIndicator visible={true} />}
       {cards ? (
         <>

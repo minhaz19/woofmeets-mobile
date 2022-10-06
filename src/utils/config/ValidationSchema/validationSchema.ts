@@ -219,6 +219,31 @@ const cardExpValidationSchema = Yup.object().shape({
   year: Yup.number().required('Year is required'),
 });
 
+const appointmentValidationSchema = Yup.object().shape({
+  serviceId: Yup.number().nullable(true).typeError('A Number is Required'),
+  visit: Yup.number().nullable(true).typeError('A Number is Required'),
+  schedule: Yup.number().nullable(true).typeError('A Number is Required'),
+  isRepeatBooking: Yup.boolean(),
+  bookingDates: Yup.array(),
+  startDay: Yup.string(),
+  bookingDays: Yup.array(),
+
+  dropOff: Yup.object().shape({
+    date: Yup.string(),
+    from: Yup.string(),
+    to: Yup.string(),
+  }),
+  pickUp: Yup.object().shape({
+    date: Yup.string(),
+    from: Yup.string(),
+    to: Yup.string(),
+  }),
+
+  pets: Yup.array(),
+  message: Yup.string(),
+  isReceivedPhotos: Yup.boolean(),
+});
+
 export {
   loginValidationSchema,
   signUpValidationSchema,
@@ -237,4 +262,5 @@ export {
   backgroundCheckValidationSchema,
   planCheckoutValidationSchema,
   cardExpValidationSchema,
+  appointmentValidationSchema,
 };

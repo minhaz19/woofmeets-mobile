@@ -11,8 +11,10 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import TimeSlotPicker from '../../../common/TimeRangePicker';
 import AppCalendar from '../../../common/AppCalendar';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-
-const DateDropPick = () => {
+interface Props {
+  serviceId?: number;
+}
+const DateDropPick = ({serviceId}: Props) => {
   const [startSlot, setStartSlot] = useState();
   const [endSlot, setEndSlot] = useState();
   const [visible, setVisible] = useState(false);
@@ -33,17 +35,19 @@ const DateDropPick = () => {
       <BottomSheetModalProvider>
         <View style={styles.container}>
           <TitleText textStyle={styles.headerText} text={'Schedule'} />
-          <AppTouchableOpacity
-            style={styles.sectionContainer}
-            onPress={handlePresentModalPress}>
-            <View>
-              <TitleText textStyle={styles.titleText} text={'Dates'} />
-              <DescriptionText text={'Tap to add dates'} />
-            </View>
-            <View style={styles.iconContainer}>
-              <Calendar fill="black" width={30} height={30} />
-            </View>
-          </AppTouchableOpacity>
+          {serviceId === 4 ? null : (
+            <AppTouchableOpacity
+              style={styles.sectionContainer}
+              onPress={handlePresentModalPress}>
+              <View>
+                <TitleText textStyle={styles.titleText} text={'Dates'} />
+                <DescriptionText text={'Tap to add dates'} />
+              </View>
+              <View style={styles.iconContainer}>
+                <Calendar fill="black" width={30} height={30} />
+              </View>
+            </AppTouchableOpacity>
+          )}
 
           <View style={styles.slotContainer}>
             <AppTouchableOpacity
@@ -64,6 +68,7 @@ const DateDropPick = () => {
             </AppTouchableOpacity>
           </View>
           <TimeSlotPicker visible={visible} setVisbile={setVisible} />
+
           <BottomSheetModal
             ref={bottomSheetModalRef}
             index={1}
@@ -118,6 +123,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   container: {
-    padding: 20,
+    paddingVertical: 20,
   },
 });

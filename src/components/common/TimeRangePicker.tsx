@@ -1,6 +1,5 @@
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
-
 import {Picker} from '@react-native-picker/picker';
 interface Props {
   visible: boolean;
