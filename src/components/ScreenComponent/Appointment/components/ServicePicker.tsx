@@ -3,7 +3,6 @@ import React, {useMemo, useState} from 'react';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
-import {Calendar} from '../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../constants/Colors';
 import {
   BoardingIcon,
@@ -48,19 +47,23 @@ const data = [
 interface Props {
   name: string;
   setValue: (arg: string, arg1: number) => void;
+  setServiceId: (arg: number) => void;
 }
-const ServicePicker = ({name, setValue}: Props) => {
+const ServicePicker = ({name, setValue, setServiceId}: Props) => {
   const [visible, setVisible] = useState(false);
   const [selectedService, setSelectedService] = useState<{
     title: string;
     subTitle: string;
     id: null | number;
+    Icon: any;
   }>({
     title: '',
     subTitle: '',
     id: null,
+    Icon: null,
   });
   const [activeServie, setActiveService] = useState(1);
+
   useMemo(() => {
     const selected = data.filter(item => item.id === activeServie);
     setSelectedService(selected[0]);
@@ -81,7 +84,7 @@ const ServicePicker = ({name, setValue}: Props) => {
           <DescriptionText text={selectedService.subTitle} />
         </View>
         <View style={styles.iconContainer}>
-          <Calendar fill="black" width={30} height={30} />
+          <selectedService.Icon fill="black" width={30} height={30} />
         </View>
       </AppTouchableOpacity>
       <Modal transparent animationType="slide" visible={visible}>
@@ -100,6 +103,7 @@ const ServicePicker = ({name, setValue}: Props) => {
                 setActiveService(item.id);
                 setVisible(false);
                 setValue(name, item.id);
+                setServiceId(item.id);
               }}>
               <View>
                 <TitleText textStyle={styles.titleText} text={item.title} />

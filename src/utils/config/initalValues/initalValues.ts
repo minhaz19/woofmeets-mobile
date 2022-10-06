@@ -83,7 +83,7 @@ const planCheckoutInit = {
   },
 };
 const appointmentInit = {
-  serviceId: null,
+  serviceId: 0,
   visit: 0,
   schedule: 0,
 

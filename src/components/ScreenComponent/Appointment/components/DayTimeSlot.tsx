@@ -56,7 +56,7 @@ const DayTimeSlot = () => {
   return (
     <View>
       {newData.map((item, index) => (
-        <>
+        <View key={index}>
           {index === 0 ? (
             <View>
               <TitleText
@@ -85,7 +85,7 @@ const DayTimeSlot = () => {
               {!item.active && <TimeMultiSlotPicker />}
             </View>
           )}
-        </>
+        </View>
       ))}
     </View>
   );

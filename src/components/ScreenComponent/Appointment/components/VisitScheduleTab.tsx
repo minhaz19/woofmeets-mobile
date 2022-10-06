@@ -31,7 +31,7 @@ interface Props {
   serviceId: number;
 }
 const VisitScheduleTab = ({serviceId}: Props) => {
-  const [visitId, setVisitId] = useState(null);
+  const [, setVisitId] = useState(null);
   const [scheduleId, setScheduleId] = useState(null);
   return (
     <View style={styles.container}>

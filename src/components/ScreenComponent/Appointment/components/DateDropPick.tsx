@@ -3,7 +3,7 @@ import {StyleSheet, Text, TextStyle, View} from 'react-native';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
-import {Calendar, ClockSvg} from '../../../../assets/svgs/SVG_LOGOS';
+import {CalendarCSvg, ClockSvg} from '../../../../assets/svgs/SVG_LOGOS';
 import Text_Size from '../../../../constants/textScaling';
 import Colors from '../../../../constants/Colors';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
@@ -44,7 +44,7 @@ const DateDropPick = ({serviceId}: Props) => {
                 <DescriptionText text={'Tap to add dates'} />
               </View>
               <View style={styles.iconContainer}>
-                <Calendar fill="black" width={30} height={30} />
+                <CalendarCSvg fill="black" width={30} height={30} />
               </View>
             </AppTouchableOpacity>
           )}
@@ -94,11 +94,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.border,
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    marginBottom: 10,
+    marginBottom: 15,
   },
   titleText: {
     fontWeight: 'bold',
@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
   iconContainer: {
     padding: 10,
     borderWidth: 1,
-    borderColor: Colors.background,
+    borderColor: Colors.border,
+    backgroundColor: Colors.background,
     borderRadius: 6,
   },
   slotContainer: {
