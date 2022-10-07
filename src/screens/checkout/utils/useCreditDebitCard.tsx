@@ -9,7 +9,11 @@ import {useApi} from '../../../utils/helpers/api/useApi';
 
 const customerEndPoint = '/stripe-payment-method/customers';
 const endpoint = '/stripe-payment-method/add-card';
-export const useCreditDebitCard = (navigation: any) => {
+const subscriptionEndpoint = '/subscriptions/subscribe';
+export const useCreditDebitCard = (
+  navigation: any,
+  sequence: number | null,
+) => {
   const [tokenLoading, setTokenLoading] = useState(false);
   const [customerId, setCustomerId] = useState<string | null | undefined>('');
   const {request, loading} = useApi(methods._post);
@@ -41,7 +45,6 @@ export const useCreditDebitCard = (navigation: any) => {
     };
     const {error, token} = await createToken(tokenPayload);
     setTokenLoading(false);
-    console.log('token check', token, cardData);
     if (error) {
       Alert.alert(`Error code: ${error.code}`, error.message);
       console.log('errors', error);
@@ -51,10 +54,23 @@ export const useCreditDebitCard = (navigation: any) => {
         countryId: 1,
         token: token.id,
       };
-      console.log('card', token);
       const result = await request(endpoint, reqPayload);
-      console.log('result', result);
-      result.ok && navigation.navigate('PaymentMethod');
+      if (result.ok && (sequence !== null || sequence !== undefined)) {
+        const cardId = result.data.data.id;
+        if (sequence === 1) {
+          navigation.navigate('BasicPayment', {
+            sequence: sequence,
+            cardId: cardId,
+          });
+        } else if (sequence === 2 || sequence === 3) {
+          const res = await request(
+            `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+          );
+          res.ok && navigation.navigate('SubscriptionScreen');
+        } else {
+          navigation.navigate('PaymentMethod');
+        }
+      }
       dispatch(getCards());
     }
   };

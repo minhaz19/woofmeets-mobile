@@ -7,12 +7,33 @@ import AllCards from '../../../components/ScreenComponent/profile/PaymentMethod/
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import NoCards from '../../../components/ScreenComponent/profile/PaymentMethod/NoCards';
+import {getCurrentplan} from '../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 const endpoint = '/stripe-payment-method/default-card-info';
-const PaymentMethods = () => {
+interface Props {
+  navigation: any;
+  route: {
+    params: {
+      sequence: number | null;
+    };
+  };
+}
+const subscriptionEndpoint = '/subscriptions/subscribe/';
+const PaymentMethods = ({route, navigation}: Props) => {
   const dispatch = useAppDispatch();
   const {loading, cards} = useAppSelector(state => state.cards);
   const [CardId, setDefaultCard] = useState(null);
   const {loading: dLoading, request} = useApi(methods._get);
+  const {loading: Hloading, request: postRequest} = useApi(methods._post);
+  const {sequence} = route.params;
+
+  const handlePayment = async () => {
+    const result = await postRequest(
+      `${subscriptionEndpoint}?priceId=${sequence}&cardId=${CardId}`,
+    );
+    result.ok &&
+      (await dispatch(getCurrentplan()),
+      navigation.navigate('SubscriptionScreen'));
+  };
   useEffect(() => {
     const callApi = async () => {
       const result = await request(endpoint);
@@ -26,10 +47,16 @@ const PaymentMethods = () => {
       {(loading || dLoading) && <AppActivityIndicator visible={true} />}
       {cards ? (
         <>
-          <AllCards cards={cards} CardId={CardId} />
+          <AllCards
+            cards={cards}
+            CardId={CardId}
+            sequence={sequence}
+            onPress={handlePayment}
+            loading={Hloading}
+          />
         </>
       ) : (
-        <NoCards />
+        <NoCards sequence={sequence} />
       )}
     </>
   );

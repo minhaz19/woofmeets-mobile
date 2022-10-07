@@ -18,9 +18,10 @@ import ErrorMessage from '../../common/Form/ErrorMessage';
 interface Props {
   handleValues: (values: any) => void;
   loading: boolean;
+  sequence: null | number;
 }
 
-const CheckoutInputForm = ({handleValues, loading}: Props) => {
+const CheckoutInputForm = ({handleValues, loading, sequence}: Props) => {
   const {isDarkMode, colors} = useTheme();
   const {
     setValue,
@@ -84,9 +85,25 @@ const CheckoutInputForm = ({handleValues, loading}: Props) => {
           );
         })}
       </View>
+      <View style={styles.noteContainer}>
+        <DescriptionText
+          textStyle={{
+            textAlign: 'justify',
+            fontWeight: 'bold',
+            color: Colors.text,
+          }}
+          text="Note: We are going to use this card as a default card for future payments, you can add, delete multiple cards and make any card as your default card for payments anytime you want."
+        />
+      </View>
       <View style={styles.buttonWidth}>
         <SubmitButton
-          title={'Add Card'}
+          title={
+            sequence === 1
+              ? 'Add Card'
+              : sequence === 2 || sequence === 3
+              ? 'Confirm Payment'
+              : 'Add Card'
+          }
           onPress={handleValues}
           loading={loading}
           color={'black'}
@@ -141,12 +158,20 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   buttonWidth: {
-    marginTop: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+    marginTop: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '7%' : '2%',
   },
   cardField: {
     width: '100%',
     height: 50,
     fontSize: Text_Size.Text_10,
     marginBottom: 10,
+  },
+  noteContainer: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    backgroundColor: Colors.secondary,
+    borderRadius: 5,
+    marginTop: '6%',
   },
 });

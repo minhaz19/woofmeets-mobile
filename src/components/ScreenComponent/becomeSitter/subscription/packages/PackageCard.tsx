@@ -32,17 +32,17 @@ const PackageCard = (props: {
   const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleSubmit = () => {
-    if (props.item.sequence === 3) {
-      // @ts-ignore
-      navigation.navigate('BasicBackgroundCheck', {
-        sequence: props.item.sequence,
-      });
-      setIsModalVisible(!isModalVisible);
-    } else {
-      // @ts-ignore
-      navigation.navigate('PlanCheckout', {sequence: props.item.sequence});
-      setIsModalVisible(!isModalVisible);
-    }
+    // @ts-ignore
+    navigation.navigate('PaymentMethod', {
+      sequence: props.item.sequence,
+    });
+    setIsModalVisible(!isModalVisible);
+    // if (props.item.sequence === 3) {
+    // } else {
+    //   // @ts-ignore
+    //   navigation.navigate('PlanCheckout', {sequence: props.item.sequence});
+    //   setIsModalVisible(!isModalVisible);
+    // }
   };
   return (
     <TouchableOpacity
@@ -91,7 +91,7 @@ const PackageCard = (props: {
               containerStyle={btnStyles.containerStyleFullWidth}
               titleStyle={btnStyles.titleStyle}
               onSelect={handleSubmit}
-              //   loading={loading}
+              // loading={loading}
             />
           </View>
         </View>

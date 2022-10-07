@@ -83,7 +83,7 @@ Props) => {
     // Alert.alert('Swipe from right');
   };
   return (
-    <>
+    <View style={{}}>
       {newCard ? (
         <AppTouchableOpacity
           style={[styles.taskContainer, {paddingVertical: 20}]}
@@ -157,15 +157,13 @@ Props) => {
           </AppTouchableOpacity>
         </Swipeable>
       )}
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   taskContainer: {
-    flex: 1,
     marginHorizontal: 20,
-
     marginBottom: 20,
     paddingHorizontal: 20,
     paddingVertical: 10,

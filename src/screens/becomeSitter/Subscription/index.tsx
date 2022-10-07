@@ -11,6 +11,7 @@ import {useSubscription} from './utils/useSubscription';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import Screen from '../../../components/common/Screen';
+import Welcome from '../../../components/ScreenComponent/becomeSitter/subscription/Welcome/Welcome';
 const SubscriptionScreen = () => {
   const {colors} = useTheme();
   const {
@@ -20,10 +21,12 @@ const SubscriptionScreen = () => {
     formattedPackageRate,
     sequence,
     handleSubmit,
+    planLoading,
+    currentPlan,
   } = useSubscription();
   return (
     <Screen style={{flex: 1}}>
-      {loading && <AppActivityIndicator visible={true} />}
+      {(loading || planLoading) && <AppActivityIndicator visible={true} />}
       <ScrollView
         style={[
           styles.container,
@@ -31,36 +34,47 @@ const SubscriptionScreen = () => {
             backgroundColor: colors.backgroundColor,
           },
         ]}>
-        <BigText text="Choose A Subscription" textStyle={styles.textStyle} />
-        <HeaderText
-          text="Choose a subscription that works for you"
-          textStyle={styles.textStyle}
-        />
-        <TitleText
-          text="Lorem ipsum description about the subscription packs"
-          textStyle={{...styles.textStyle, paddingBottom: 10}}
-        />
-        {formattedPackageRate?.map((item: any) => (
-          <PackageCard
-            item={item}
-            onPressEvent={onPressEvent}
-            sequence={sequence}
-            key={item.id}
-            navigation={{
-              goBack: () => {},
-            }}
-          />
-        ))}
-        <View style={styles.footerContainer}>
-          <ButtonCom
-            textAlignment={btnStyles.textAlignment}
-            containerStyle={btnStyles.containerStyleFullWidth}
-            titleStyle={btnStyles.titleStyle}
-            title="Choose Plan"
-            onSelect={handleSubmit}
-            loading={pLoading}
-          />
-        </View>
+        {currentPlan ? (
+          <>
+            <Welcome item={currentPlan.subscriptionInfo.membershipPlanPrice} />
+          </>
+        ) : (
+          <>
+            <BigText
+              text="Choose A Subscription"
+              textStyle={styles.textStyle}
+            />
+            <HeaderText
+              text="Choose a subscription that works for you"
+              textStyle={styles.textStyle}
+            />
+            <TitleText
+              text="Lorem ipsum description about the subscription packs"
+              textStyle={{...styles.textStyle, paddingBottom: 10}}
+            />
+            {formattedPackageRate?.map((item: any) => (
+              <PackageCard
+                item={item}
+                onPressEvent={onPressEvent}
+                sequence={sequence}
+                key={item.id}
+                navigation={{
+                  goBack: () => {},
+                }}
+              />
+            ))}
+            <View style={styles.footerContainer}>
+              <ButtonCom
+                textAlignment={btnStyles.textAlignment}
+                containerStyle={btnStyles.containerStyleFullWidth}
+                titleStyle={btnStyles.titleStyle}
+                title="Choose Plan"
+                onSelect={handleSubmit}
+                loading={pLoading}
+              />
+            </View>
+          </>
+        )}
       </ScrollView>
     </Screen>
   );

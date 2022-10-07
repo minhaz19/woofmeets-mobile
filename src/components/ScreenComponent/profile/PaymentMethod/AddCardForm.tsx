@@ -21,9 +21,13 @@ import {CreditAndDebitCardSchema} from '../../../../utils/config/creditandDebitC
 import Text_Size from '../../../../constants/textScaling';
 import CardFormHeader from './components/CardFormHeader';
 
-const AddCardForm = ({navigation}: any) => {
+const AddCardForm = ({navigation, route}: any) => {
   const {colors} = useTheme();
-  const {handleValues, loading, tokenLoading} = useCreditDebitCard(navigation);
+  const {sequence} = route.params;
+  const {handleValues, loading, tokenLoading} = useCreditDebitCard(
+    navigation,
+    sequence,
+  );
   return (
     <View
       style={[
@@ -41,6 +45,7 @@ const AddCardForm = ({navigation}: any) => {
             <CheckoutInputForm
               handleValues={handleValues}
               loading={loading || tokenLoading}
+              sequence={sequence}
             />
           </AppStripe>
         </AppForm>

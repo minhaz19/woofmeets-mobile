@@ -52,7 +52,7 @@ const PlanCheckoutBody = ({handleSubmit, loading, handleCheck}: Props) => {
                     }}
                   /> */}
 
-                  <ErrorMessage error={errors?.cardInfo?.postalCode.message} /> */}
+                  {/* <ErrorMessage error={errors?.cardInfo?.postalCode.message} /> */}
                 </>
               ) : (
                 <AppFormField

@@ -13,9 +13,11 @@ import {StackNavigationProp} from '@react-navigation/stack';
 type StackParamList = {
   AddCardForm: {foo: string; onBar: () => void} | undefined;
 };
-
+interface Props {
+  sequence: null | number;
+}
 type NavigationProps = StackNavigationProp<StackParamList>;
-const NoCards = () => {
+const NoCards = ({sequence}: Props) => {
   const {colors} = useTheme();
   const navigation = useNavigation<NavigationProps>();
   return (
@@ -45,7 +47,10 @@ const NoCards = () => {
             text={'Add your cards for future payment and make your life easier'}
           />
           <AppTouchableOpacity
-            onPress={() => navigation.navigate('AddCardForm')}
+            onPress={() =>
+              // @ts-ignore
+              navigation.navigate('AddCardForm', {sequence: sequence})
+            }
             style={{
               backgroundColor: '#028FE7',
               width: '100%',
