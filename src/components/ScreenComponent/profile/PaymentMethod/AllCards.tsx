@@ -1,5 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import React, {useRef, useState} from 'react';
 import ListItem from './components/ListItem';
 import {
@@ -17,34 +16,34 @@ import HeaderText from '../../../common/text/HeaderText';
 import Text_Size from '../../../../constants/textScaling';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import AppBottomSheet from '../../../UI/modal/AppBottomSheet';
-import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
-import {Controller, useForm} from 'react-hook-form';
-import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
-import {BottomSheetTextInput} from '@gorhom/bottom-sheet';
-import ErrorMessage from '../../../common/Form/ErrorMessage';
-import {cardExpValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {useApi} from '../../../../utils/helpers/api/useApi';
-import methods from '../../../../api/methods';
+// import AppBottomSheet from '../../../UI/modal/AppBottomSheet';
+// import TitleText from '../../../common/text/TitleText';
+// import {Controller, useForm} from 'react-hook-form';
+// import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
+// import {BottomSheetTextInput} from '@gorhom/bottom-sheet';
+// import ErrorMessage from '../../../common/Form/ErrorMessage';
+// import {cardExpValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
+// import {yupResolver} from '@hookform/resolvers/yup';
+// import {useApi} from '../../../../utils/helpers/api/useApi';
+// import methods from '../../../../api/methods';
 interface Props {
   cards: any;
   CardId: null | number;
 }
-const EditCard = [
-  {
-    title: 'Expiry Month',
-    placeholder: 'Enter month',
-    name: 'month',
-  },
-  {
-    title: 'Expiry Year',
-    placeholder: 'Enter year',
-    name: 'year',
-  },
-];
-const updateEndpoint = '/stripe-payment-method/all-cards/';
+// const EditCard = [
+//   {
+//     title: 'Expiry Month',
+//     placeholder: 'Enter month',
+//     name: 'month',
+//   },
+//   {
+//     title: 'Expiry Year',
+//     placeholder: 'Enter year',
+//     name: 'year',
+//   },
+// ];
+// const updateEndpoint = '/stripe-payment-method/all-cards/';
 const AllCards = ({cards, CardId}: Props) => {
   const newCard = [...cards];
   const i = cards.findIndex((item: {id: number}) => item.id === CardId);
@@ -55,24 +54,24 @@ const AllCards = ({cards, CardId}: Props) => {
   const {colors} = useTheme();
   const [active, setActive] = useState(true);
   const [cardIndex, setActiveCardIndex] = useState<null | number>(null);
-  const [cardInfo, setCardInfo] = useState<any>(null);
-  const {request} = useApi(methods._update);
-  const {handleSubmit, control} = useForm({
-    resolver: yupResolver(cardExpValidationSchema),
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    defaultValues: {
-      year: 20,
-      month: 30,
-    },
-  });
-  const onSubmit = async (data: any) => {
-    const r = await request(`${updateEndpoint + cardInfo.id}`, {
-      expMonth: String(data.month),
-      expYear: String(data.year),
-    });
-    console.log('r', r);
-  };
+  // const [cardInfo, setCardInfo] = useState<any>(null);
+  // const {request} = useApi(methods._update);
+  // const {handleSubmit, control} = useForm({
+  //   resolver: yupResolver(cardExpValidationSchema),
+  //   mode: 'onChange',
+  //   reValidateMode: 'onChange',
+  //   defaultValues: {
+  //     year: 20,
+  //     month: 30,
+  //   },
+  // });
+  // const onSubmit = async (data: any) => {
+  //   const r = await request(`${updateEndpoint + cardInfo.id}`, {
+  //     expMonth: String(data.month),
+  //     expYear: String(data.year),
+  //   });
+  //   console.log('r', r);
+  // };
   const getIcon = (brand: string) => {
     switch (brand) {
       case 'Visa':
@@ -116,7 +115,7 @@ const AllCards = ({cards, CardId}: Props) => {
               activeCard={index === cardIndex ? true : false}
               handleUpdate={id => {
                 if (card.id === id) {
-                  setCardInfo(card);
+                  // setCardInfo(card);
                   setActive(!active);
                 } else {
                   setActive(false);
@@ -129,7 +128,7 @@ const AllCards = ({cards, CardId}: Props) => {
         <BottomSpacing />
         <BottomSpacing />
       </ScrollView>
-      <AppBottomSheet isActive={active} setIsActive={setActive}>
+      {/* <AppBottomSheet isActive={active} setIsActive={setActive}>
         <View style={{marginHorizontal: 20}}>
           <TitleText
             text={'Update Card info'}
@@ -193,7 +192,7 @@ const AllCards = ({cards, CardId}: Props) => {
             <TitleText textStyle={{textAlign: 'center'}} text={'Update Card'} />
           </AppTouchableOpacity>
         </View>
-      </AppBottomSheet>
+      </AppBottomSheet> */}
     </SafeAreaView>
   );
 };

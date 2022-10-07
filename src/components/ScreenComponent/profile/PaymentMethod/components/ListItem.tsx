@@ -34,8 +34,8 @@ const ListItem = ({
   newCard = false,
   defaultCard = false,
   activeCard = false,
-  handleUpdate,
-}: Props) => {
+}: // handleUpdate,
+Props) => {
   const navigation = useNavigation<NavigationProps>();
   const dispatch = useAppDispatch();
   const rightSwipeActions = () => {
@@ -48,11 +48,11 @@ const ListItem = ({
           marginBottom: 20,
           marginRight: 20,
         }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{margin: 10}}
           onPress={() => handleUpdate!(cards.id)}>
           <Delete fill="black" width={20} height={20} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={{margin: 10}}
           onPress={() => {
