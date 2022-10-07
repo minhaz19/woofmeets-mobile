@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
   },
   textPortion2: {
     alignItems: 'flex-end',
+    justifyContent: 'flex-end',
   },
   textPortion3: {
     paddingBottom: 4,

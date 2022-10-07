@@ -43,7 +43,11 @@ const TimeMultiSlotPicker = () => {
             onPress={() => handleMultipleCheck(item.id)}
             style={[
               styles.slots,
-              {backgroundColor: item.active ? Colors.primary : Colors.border},
+              {
+                backgroundColor: item.active
+                  ? Colors.primary
+                  : Colors.background,
+              },
             ]}>
             <TitleText text={item.slot} textStyle={styles.text} />
           </Pressable>

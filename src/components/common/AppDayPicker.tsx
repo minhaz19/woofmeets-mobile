@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   day: {
     // padding: 10,
-
+    backgroundColor: Colors.background,
     width: (SCREEN_WIDTH - 50) / 7.5,
     height: (SCREEN_WIDTH - 50) / 7.5,
     flexDirection: 'row',

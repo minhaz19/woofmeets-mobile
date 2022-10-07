@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -29,7 +30,7 @@ export const useSubscription = () => {
     sequence: item.id,
     title: item.name[0].toUpperCase() + item.name.slice(1),
     description: 'Only 5% Service Fee For All Unlimited Appointments',
-    price: item.monthlyRate,
+    price: item.MembershipPlanPrices[0].rate,
     annualRate: item.annualRate,
     details: item.features?.map((des: any, i: number) => ({
       id: i + 1,
@@ -39,18 +40,18 @@ export const useSubscription = () => {
   const onPressEvent = (id: number) => {
     setSequence(id);
   };
+  console.log('plans', plans);
   const handleSubmit = async () => {
-    // if (sequence === 3) {
-    //   // @ts-ignore
-    //   navigation.navigate('BasicBackgroundCheck', {sequence: sequence});
-    // } else {
-    //   // @ts-ignore
-    //   navigation.navigate('PlanCheckout', {sequence: sequence});
-    // }
+    if (sequence === 3) {
+      // @ts-ignore
+      navigation.navigate('PaymentMethod', {sequence: sequence});
+    } else {
+      // @ts-ignore
+      navigation.navigate('PaymentMethod', {sequence: sequence});
+    }
   };
   useEffect(() => {
-    // dispatch(getSubscription());
-    Alert.alert('Subscription plans under maintainance');
+    dispatch(getSubscription());
   }, []);
   return {
     onPressEvent,

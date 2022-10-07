@@ -20,23 +20,10 @@ import {debitAndCreditCard} from '../../../../utils/config/creditandDebitCard/in
 import {CreditAndDebitCardSchema} from '../../../../utils/config/creditandDebitCard/validationSchema';
 import Text_Size from '../../../../constants/textScaling';
 import CardFormHeader from './components/CardFormHeader';
-const endpoint = '/stripe-payment-method/add-card';
-const customerEndPoint = '/stripe-payment-method/customers';
 
-const AddCardForm = (props: any) => {
-  // const [customerId, setCustomerId] = useState<string | null | undefined>('');
-  // const {loading, request} = useApi(methods._post);
-  // const {request: getReq} = useApi(methods._get);
-  // const cd = async () => {
-  //   const response = await getReq(customerEndPoint);
-  //   console.log('res', response);
-  //   response.ok && setCustomerId(response?.data?.data.stripeCustomerId);
-  // };
-  // useEffect(() => {
-  //   cd();
-  // }, []);
+const AddCardForm = ({navigation}: any) => {
   const {colors} = useTheme();
-  const {handleValues, loading, tokenLoading} = useCreditDebitCard();
+  const {handleValues, loading, tokenLoading} = useCreditDebitCard(navigation);
   return (
     <View
       style={[

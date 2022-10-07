@@ -74,7 +74,7 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
     <>
       <TitleText textStyle={styles.header} text={'Provider Services'} />
       <AppTouchableOpacity
-        style={styles.sectionContainer}
+        style={styles.selectedContainer}
         onPress={() => setVisible(true)}>
         <View>
           <TitleText
@@ -83,7 +83,7 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
           />
           <DescriptionText text={selectedService.subTitle} />
         </View>
-        <View style={styles.iconContainer}>
+        <View style={styles.selectedIcon}>
           <selectedService.Icon fill="black" width={30} height={30} />
         </View>
       </AppTouchableOpacity>
@@ -128,6 +128,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
+  selectedContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    marginBottom: 10,
+
+    shadowOpacity: 0.08,
+    shadowOffset: {
+      width: 0,
+      height: 20,
+    },
+    shadowRadius: 10,
+    // Shadow for Android
+    elevation: 5,
+  },
   sectionContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -150,6 +169,13 @@ const styles = StyleSheet.create({
   titleText: {
     fontWeight: 'bold',
     fontSize: Text_Size.Text_1,
+  },
+  selectedIcon: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    backgroundColor: Colors.background,
+    borderRadius: 6,
   },
   iconContainer: {
     padding: 10,

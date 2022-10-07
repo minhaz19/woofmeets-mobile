@@ -29,7 +29,7 @@ export const InputFormData = [
   {
     title: 'Zip/Postal code',
     placeholder: 'Enter zip code',
-    name: 'zipCode',
+    name: 'postalCode',
   },
   // {
   //   title: 'ZIP/postal/ Postcode',

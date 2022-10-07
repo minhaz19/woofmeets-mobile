@@ -13,6 +13,7 @@ import TitleText from '../../common/text/TitleText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {CardField} from '@stripe/stripe-react-native';
 import DescriptionText from '../../common/text/DescriptionText';
+import ErrorMessage from '../../common/Form/ErrorMessage';
 // import ErrorMessage from '../../common/Form/ErrorMessage';
 interface Props {
   handleValues: (values: any) => void;
@@ -26,6 +27,7 @@ const CheckoutInputForm = ({handleValues, loading}: Props) => {
     control,
     formState: {errors},
   } = useFormContext();
+  console.log(errors);
   return (
     <View style={styles.inputContainer}>
       <DescriptionText
@@ -42,10 +44,14 @@ const CheckoutInputForm = ({handleValues, loading}: Props) => {
                 <>
                   <TitleText textStyle={styles.label} text={item.title} />
                   <CardField
+                    postalCodeEnabled={false}
                     onCardChange={cardDetails => {
-                      setValue(item.name, cardDetails, {
-                        shouldValidate: errors[item.name] ? true : false,
+                      setValue(item.name, cardDetails.last4, {
+                        shouldValidate: errors?.cardInfo?.message
+                          ? true
+                          : false,
                       });
+                      console.log('card', cardDetails);
                     }}
                     style={styles.cardField}
                     cardStyle={{
@@ -56,7 +62,7 @@ const CheckoutInputForm = ({handleValues, loading}: Props) => {
                       fontSize: Text_Size.Text_0,
                     }}
                   />
-                  {/* <ErrorMessage error={errors?.cardInfo?.postalCode.message} /> */}
+                  <ErrorMessage error={errors?.cardInfo?.message} />
                 </>
               ) : (
                 <AppFormField
