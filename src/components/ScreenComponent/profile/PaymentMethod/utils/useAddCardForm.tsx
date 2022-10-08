@@ -2,18 +2,15 @@
 import {createToken} from '@stripe/stripe-react-native';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
-import methods from '../../../api/methods';
-import {getCards} from '../../../store/slices/payment/PaymentCards/getCardsAction';
-import {useAppDispatch} from '../../../store/store';
-import {useApi} from '../../../utils/helpers/api/useApi';
+import methods from '../../../../../api/methods';
+import {getCards} from '../../../../../store/slices/payment/PaymentCards/getCardsAction';
+import {useAppDispatch} from '../../../../../store/store';
+import {useApi} from '../../../../../utils/helpers/api/useApi';
 
 const customerEndPoint = '/stripe-payment-method/customers';
 const endpoint = '/stripe-payment-method/add-card';
 const subscriptionEndpoint = '/subscriptions/subscribe';
-export const useCreditDebitCard = (
-  navigation: any,
-  sequence: number | null,
-) => {
+export const useAddCardForm = (navigation: any, sequence: number | null) => {
   const [tokenLoading, setTokenLoading] = useState(false);
   const [customerId, setCustomerId] = useState<string | null | undefined>('');
   const {request, loading} = useApi(methods._post);

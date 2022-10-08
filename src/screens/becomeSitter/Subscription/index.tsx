@@ -24,10 +24,13 @@ const SubscriptionScreen = () => {
     planLoading,
     currentPlan,
     ssLoading,
+    cardLoading,
   } = useSubscription();
   return (
     <Screen style={{flex: 1}}>
-      {(loading || planLoading) && <AppActivityIndicator visible={true} />}
+      {(loading || planLoading || cardLoading) && (
+        <AppActivityIndicator visible={true} />
+      )}
       <ScrollView
         style={[
           styles.container,

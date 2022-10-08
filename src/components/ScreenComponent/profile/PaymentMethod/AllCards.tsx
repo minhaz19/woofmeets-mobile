@@ -28,6 +28,28 @@ interface Props {
   sequence: number | null;
   loading: boolean;
 }
+const getIcon = (brand: string) => {
+  switch (brand) {
+    case 'Visa':
+      return <Visa width={50} height={50} />;
+    case 'MasterCard':
+      return <MasterCard width={50} height={50} />;
+    case 'American Express':
+      return <AmericanExpress width={50} height={50} />;
+    case 'UnionPay':
+      return <UnionPay width={50} height={50} />;
+    case 'Diners Club':
+      return <DinnersClubs width={50} height={50} />;
+    case 'JCB':
+      return <JCB width={50} height={50} />;
+    case 'Discover':
+      return <Discover width={50} height={50} />;
+    case 'Amazon':
+      return <Amazon width={50} height={50} />;
+    case 'new':
+      return <Plus fill="gray" width={25} height={25} />;
+  }
+};
 const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
   const newCard = [...cards];
   const i = cards.findIndex((item: {id: number}) => item.id === CardId);
@@ -38,28 +60,6 @@ const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
   const [active, setActive] = useState(true);
   const [cardIndex, setActiveCardIndex] = useState<null | number>(null);
 
-  const getIcon = (brand: string) => {
-    switch (brand) {
-      case 'Visa':
-        return <Visa width={50} height={50} />;
-      case 'MasterCard':
-        return <MasterCard width={50} height={50} />;
-      case 'American Express':
-        return <AmericanExpress width={50} height={50} />;
-      case 'UnionPay':
-        return <UnionPay width={50} height={50} />;
-      case 'Diners Club':
-        return <DinnersClubs width={50} height={50} />;
-      case 'JCB':
-        return <JCB width={50} height={50} />;
-      case 'Discover':
-        return <Discover width={50} height={50} />;
-      case 'Amazon':
-        return <Amazon width={50} height={50} />;
-      case 'new':
-        return <Plus fill="gray" width={25} height={25} />;
-    }
-  };
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
@@ -82,7 +82,6 @@ const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
                   activeCard={index === cardIndex ? true : false}
                   handleUpdate={id => {
                     if (card.id === id) {
-                      // setCardInfo(card);
                       setActive(!active);
                     } else {
                       setActive(false);

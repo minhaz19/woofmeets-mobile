@@ -1,19 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
-import {InputFormData} from './utils/InputFormData';
-import AppFormField from '../../common/Form/AppFormField';
+import React, {useState} from 'react';
+import {InputFormData} from '../utils/InputFormData';
+import AppFormField from '../../../../common/Form/AppFormField';
 import {useFormContext} from 'react-hook-form';
-import SubmitButton from '../../common/Form/SubmitButton';
-import BottomSpacing from '../../UI/BottomSpacing';
-import Colors from '../../../constants/Colors';
-import Text_Size from '../../../constants/textScaling';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import TitleText from '../../common/text/TitleText';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import SubmitButton from '../../../../common/Form/SubmitButton';
+import BottomSpacing from '../../../../UI/BottomSpacing';
+import Colors from '../../../../../constants/Colors';
+import Text_Size from '../../../../../constants/textScaling';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
+import TitleText from '../../../../common/text/TitleText';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import {CardField} from '@stripe/stripe-react-native';
-import DescriptionText from '../../common/text/DescriptionText';
-import ErrorMessage from '../../common/Form/ErrorMessage';
+import DescriptionText from '../../../../common/text/DescriptionText';
+import ErrorMessage from '../../../../common/Form/ErrorMessage';
 // import ErrorMessage from '../../common/Form/ErrorMessage';
 interface Props {
   handleValues: (values: any) => void;
@@ -21,8 +21,9 @@ interface Props {
   sequence: null | number;
 }
 
-const CheckoutInputForm = ({handleValues, loading, sequence}: Props) => {
+const AddCardFormBody = ({handleValues, loading, sequence}: Props) => {
   const {isDarkMode, colors} = useTheme();
+  const [cardStatus, setCardStatus] = useState<string | null>(null);
   const {
     setValue,
     control,
@@ -47,11 +48,17 @@ const CheckoutInputForm = ({handleValues, loading, sequence}: Props) => {
                     postalCodeEnabled={false}
                     onCardChange={cardDetails => {
                       setValue(item.name, cardDetails.last4, {
-                        shouldValidate: errors?.cardInfo?.message
-                          ? true
-                          : false,
+                        shouldValidate: cardDetails.complete ? true : false,
                       });
-                      console.log('card', cardDetails);
+                      !cardDetails.complete
+                        ? cardDetails.validCVC === 'Invalid'
+                          ? setCardStatus('CVC is invalid')
+                          : cardDetails.validExpiryDate === 'Invalid'
+                          ? setCardStatus('Expiry date is invalid')
+                          : cardDetails.validNumber === 'Invalid'
+                          ? setCardStatus('Card number is invalid')
+                          : setCardStatus('Card field incomplete')
+                        : setCardStatus(null);
                     }}
                     style={styles.cardField}
                     cardStyle={{
@@ -62,7 +69,9 @@ const CheckoutInputForm = ({handleValues, loading, sequence}: Props) => {
                       fontSize: Text_Size.Text_0,
                     }}
                   />
-                  <ErrorMessage error={errors?.cardInfo?.message} />
+                  <ErrorMessage
+                    error={cardStatus || errors.cardInfo?.message}
+                  />
                 </>
               ) : (
                 <AppFormField
@@ -73,11 +82,9 @@ const CheckoutInputForm = ({handleValues, loading, sequence}: Props) => {
                   textContentType={'none'}
                   name={item.name}
                   label={item.title}
-                  // flex={item.flex}
                   key={index}
                   control={control}
                   errors={errors}
-                  flex={item.flex}
                 />
               )}
             </View>
@@ -114,7 +121,7 @@ const CheckoutInputForm = ({handleValues, loading, sequence}: Props) => {
   );
 };
 
-export default CheckoutInputForm;
+export default AddCardFormBody;
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -173,4 +180,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: '6%',
   },
+  leftContainer: {
+    position: 'absolute',
+    left: 10,
+    top: '5%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconStyle: {paddingRight: 10},
 });

@@ -13,6 +13,10 @@ import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/
 import {getSubscription} from '../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
 const endpoint = '/subscriptions/pay-basic-verification-payment';
 const subscriptionEndpoint = '/subscriptions/subscribe';
+import AppTouchableOpacity from '../../../../common/AppClickEvents/AppTouchableOpacity';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
+import Colors from '../../../../../constants/Colors';
 interface Props {
   route: {
     params: {
@@ -22,6 +26,7 @@ interface Props {
   };
   navigation: {
     navigate: (arg1: string, arg2?: any) => void;
+    goBack: () => void;
   };
 }
 const BasicPayment = ({route, navigation}: Props) => {
@@ -42,6 +47,18 @@ const BasicPayment = ({route, navigation}: Props) => {
   };
   return (
     <View style={styles.container}>
+      <AppTouchableOpacity
+        style={styles.leftContainer}
+        onPress={() => {
+          navigation.goBack();
+        }}>
+        <Ionicons
+          name="ios-chevron-back"
+          size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+          style={styles.iconStyle}
+          color={Colors.primary}
+        />
+      </AppTouchableOpacity>
       <AnimatedLottieView
         autoPlay
         loop
@@ -86,4 +103,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   lottie: {width: '100%'},
+  leftContainer: {
+    position: 'absolute',
+    left: '4%',
+    top: '6%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconStyle: {paddingRight: 10},
 });

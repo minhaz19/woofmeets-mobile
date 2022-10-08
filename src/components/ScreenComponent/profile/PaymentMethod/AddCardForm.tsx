@@ -13,18 +13,18 @@ import HeaderText from '../../../common/text/HeaderText';
 import ShortText from '../../../common/text/ShortText';
 import AppForm from '../../../common/Form/AppForm';
 import AppStripe from '../../../common/Stripe/AppStripe';
-import CheckoutInputForm from '../../Checkout/CheckoutInputForm';
-import {useCreditDebitCard} from '../../../../screens/checkout/utils/useCreditDebitCard';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {debitAndCreditCard} from '../../../../utils/config/creditandDebitCard/initialValues';
 import {CreditAndDebitCardSchema} from '../../../../utils/config/creditandDebitCard/validationSchema';
 import Text_Size from '../../../../constants/textScaling';
 import CardFormHeader from './components/CardFormHeader';
+import {useAddCardForm} from './utils/useAddCardForm';
+import AddCardFormBody from './components/AddCardFormBody';
 
 const AddCardForm = ({navigation, route}: any) => {
   const {colors} = useTheme();
   const {sequence} = route.params;
-  const {handleValues, loading, tokenLoading} = useCreditDebitCard(
+  const {handleValues, loading, tokenLoading} = useAddCardForm(
     navigation,
     sequence,
   );
@@ -42,7 +42,7 @@ const AddCardForm = ({navigation, route}: any) => {
           initialValues={debitAndCreditCard}
           validationSchema={CreditAndDebitCardSchema}>
           <AppStripe>
-            <CheckoutInputForm
+            <AddCardFormBody
               handleValues={handleValues}
               loading={loading || tokenLoading}
               sequence={sequence}

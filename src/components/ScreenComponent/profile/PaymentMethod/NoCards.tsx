@@ -9,7 +9,6 @@ import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpac
 import AnimatedLottieView from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-
 type StackParamList = {
   AddCardForm: {foo: string; onBar: () => void} | undefined;
 };

@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 export const CreditAndDebitCardSchema = Yup.object().shape({
   name: Yup.string().required('Card Name required'),
-  cardInfo: Yup.string().required('Card field invalid'),
+  cardInfo: Yup.string().required('Card field incomplete'),
   // cardInfo: Yup.object().shape({
   //   last4: Yup.string().required('Card info is required'),
   //   expiryMonth: Yup.string().required('Card info is required'),

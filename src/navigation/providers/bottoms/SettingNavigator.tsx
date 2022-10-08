@@ -11,8 +11,6 @@ import AccountSetting from '../../../components/ScreenComponent/setting/Preferen
 import CreditAndDebitCard from '../../../screens/profile/PaymentMethod';
 import SetNewPassword from '../../../screens/auth/ResetPassword';
 import Profile from '../../../screens/settings/Profile';
-import BasicBackgroundCheck from '../../../components/ScreenComponent/becomeSitter/subscription/BasicBackgroundCheck';
-import PlanCheckout from '../../../components/ScreenComponent/becomeSitter/subscription/PlanCheckout';
 import ProviderAvailablity from '../../../screens/provider/ProviderAvailablity';
 
 const Stack1 = createStackNavigator();
@@ -35,36 +33,7 @@ const ProSettingNavigator = () => {
           backgroundColor: Colors.primary,
         })}
       />
-      <Stack1.Screen
-        name="BasicBackgroundCheck"
-        component={BasicBackgroundCheck}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Background Check"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
-        name="PlanCheckout"
-        component={PlanCheckout}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Checkout"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
+
       <Stack1.Screen
         name="MyAccount"
         component={MyAccount}

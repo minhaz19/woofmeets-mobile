@@ -3,16 +3,16 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {WebView} from 'react-native-webview';
-import methods from '../../../../api/methods';
-import Colors from '../../../../constants/Colors';
-import {useApi} from '../../../../utils/helpers/api/useApi';
-import storage from '../../../../utils/helpers/auth/storage';
+import methods from '../../../../../api/methods';
+import Colors from '../../../../../constants/Colors';
+import {useApi} from '../../../../../utils/helpers/api/useApi';
+import storage from '../../../../../utils/helpers/auth/storage';
 import {useNavigation} from '@react-navigation/native';
 
 import Ion from 'react-native-vector-icons/Ionicons';
-import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
-import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
+import AppTouchableOpacity from '../../../../common/AppClickEvents/AppTouchableOpacity';
+import AppActivityIndicator from '../../../../common/Loaders/AppActivityIndicator';
 const endpoint = '/stripe-payment-method/add-card';
 const customerEndPoint = '/stripe-payment-method/customers';
 const STRIPE_PK =

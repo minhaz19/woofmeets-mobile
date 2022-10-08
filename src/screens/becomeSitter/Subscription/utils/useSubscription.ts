@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {ApiResponse} from 'apisauce';
 import {useEffect, useState} from 'react';
 import methods from '../../../../api/methods';
@@ -94,5 +93,6 @@ export const useSubscription = () => {
     planLoading,
     currentPlan,
     ssLoading,
+    cardLoading,
   };
 };
