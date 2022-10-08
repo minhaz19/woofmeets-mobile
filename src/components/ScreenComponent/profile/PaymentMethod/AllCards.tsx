@@ -17,21 +17,10 @@ import HeaderText from '../../../common/text/HeaderText';
 import Text_Size from '../../../../constants/textScaling';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../constants/Colors';
-import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
-import TitleText from '../../../common/text/TitleText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import DescriptionText from '../../../common/text/DescriptionText';
-import DotLoader from '../../../common/Loaders/DotLoader';
-// import AppBottomSheet from '../../../UI/modal/AppBottomSheet';
-// import TitleText from '../../../common/text/TitleText';
-// import {Controller, useForm} from 'react-hook-form';
-// import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
-// import {BottomSheetTextInput} from '@gorhom/bottom-sheet';
-// import ErrorMessage from '../../../common/Form/ErrorMessage';
-// import {cardExpValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
-// import {yupResolver} from '@hookform/resolvers/yup';
-// import {useApi} from '../../../../utils/helpers/api/useApi';
-// import methods from '../../../../api/methods';
+import ButtonCom from '../../../UI/ButtonCom';
+import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 interface Props {
   cards: any;
   CardId: null | number;
@@ -39,19 +28,6 @@ interface Props {
   sequence: number | null;
   loading: boolean;
 }
-// const EditCard = [
-//   {
-//     title: 'Expiry Month',
-//     placeholder: 'Enter month',
-//     name: 'month',
-//   },
-//   {
-//     title: 'Expiry Year',
-//     placeholder: 'Enter year',
-//     name: 'year',
-//   },
-// ];
-// const updateEndpoint = '/stripe-payment-method/all-cards/';
 const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
   const newCard = [...cards];
   const i = cards.findIndex((item: {id: number}) => item.id === CardId);
@@ -61,24 +37,7 @@ const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
   const {colors} = useTheme();
   const [active, setActive] = useState(true);
   const [cardIndex, setActiveCardIndex] = useState<null | number>(null);
-  // const [cardInfo, setCardInfo] = useState<any>(null);
-  // const {request} = useApi(methods._update);
-  // const {handleSubmit, control} = useForm({
-  //   resolver: yupResolver(cardExpValidationSchema),
-  //   mode: 'onChange',
-  //   reValidateMode: 'onChange',
-  //   defaultValues: {
-  //     year: 20,
-  //     month: 30,
-  //   },
-  // });
-  // const onSubmit = async (data: any) => {
-  //   const r = await request(`${updateEndpoint + cardInfo.id}`, {
-  //     expMonth: String(data.month),
-  //     expYear: String(data.year),
-  //   });
-  //   console.log('r', r);
-  // };
+
   const getIcon = (brand: string) => {
     switch (brand) {
       case 'Visa':
@@ -110,7 +69,7 @@ const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
         <View>
           <HeaderText textStyle={styles.title} text="Your cards" />
           {newCard.map((card: any, index: number) => (
-            <View>
+            <View key={index}>
               {card.addCard === true ? (
                 <ListItem key={index} newCard Icon={getIcon(card.brand)} />
               ) : (
@@ -141,90 +100,20 @@ const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
           />
         </View>
         <View>
-          {(sequence !== null || sequence !== undefined) && (
-            <>
-              <AppTouchableOpacity
-                onPress={onPress}
-                style={styles.buttonContainer}>
-                {loading ? (
-                  <DotLoader />
-                ) : (
-                  <TitleText
-                    textStyle={styles.buttonText}
-                    text={'Confirm Payment'}
-                  />
-                )}
-              </AppTouchableOpacity>
-            </>
-          )}
-        </View>
-        {/* <BottomSpacing /> */}
-      </ScrollView>
-      {/* <AppBottomSheet isActive={active} setIsActive={setActive}>
-        <View style={{marginHorizontal: 20}}>
-          <TitleText
-            text={'Update Card info'}
-            textStyle={{color: 'black', marginBottom: 10, fontWeight: 'bold'}}
-          />
-          <View style={[styles.taskContainer]}>
-            <View style={[styles.task]}>
-              {getIcon(cardInfo?.brand)}
-              <TitleText textStyle={styles.stars} text={'****'} />
-              <TitleText textStyle={styles.taskTitle} text={cardInfo?.last4} />
-              <TitleText
-                textStyle={styles.taskTitle}
-                text={
-                  ('0' + cardInfo?.expMonth).slice(-2) +
-                  '/' +
-                  String(cardInfo?.expYear).slice(-2)
-                }
+          {sequence !== null && sequence !== undefined && (
+            <View style={{marginHorizontal: 20}}>
+              <ButtonCom
+                title="Confirm Payment"
+                textAlignment={btnStyles.textAlignment}
+                containerStyle={btnStyles.containerStyleFullWidth}
+                titleStyle={btnStyles.titleStyle}
+                onSelect={onPress}
+                loading={loading}
               />
             </View>
-          </View>
-          <View>
-            {EditCard.map((item: any, index: number) => (
-              <Controller
-                control={control}
-                render={({
-                  field: {onChange, onBlur, value},
-                  fieldState: {error},
-                }) => {
-                  return (
-                    <>
-                      <BottomSheetTextInput
-                        key={index}
-                        style={styles.input}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        keyboardType={'numeric'}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                        placeholder={item.placeholder}
-                        textContentType={'none'}
-                      />
-                      {error?.message && (
-                        <ErrorMessage error={error?.message} />
-                      )}
-                    </>
-                  );
-                }}
-                name={item.name}
-              />
-            ))}
-          </View>
-          <AppTouchableOpacity
-            style={{
-              width: '100%',
-              paddingVertical: 10,
-              borderRadius: 100,
-              backgroundColor: Colors.primary,
-            }}
-            onPress={handleSubmit(onSubmit)}>
-            <TitleText textStyle={{textAlign: 'center'}} text={'Update Card'} />
-          </AppTouchableOpacity>
+          )}
         </View>
-      </AppBottomSheet> */}
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -17,6 +17,9 @@ import AnimatedLottieView from 'lottie-react-native';
 import BottomSpacing from '../../../../UI/BottomSpacing';
 import methods from '../../../../../api/methods';
 import {useNavigation} from '@react-navigation/native';
+import {useAppDispatch} from '../../../../../store/store';
+import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
+import {getSubscription} from '../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
 const endpoint = '/subscriptions/cancel-subscription';
 const Welcome = (props: any) => {
   const {colors, isDarkMode} = useTheme();
@@ -25,6 +28,7 @@ const Welcome = (props: any) => {
   const [show, setShow] = useState(true);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation<any>();
+  const dispatch = useAppDispatch();
   const handleSubmit = () => {
     Alert.alert(
       'Cancel Subscription',
@@ -41,7 +45,10 @@ const Welcome = (props: any) => {
           onPress: async () => {
             setLoading(true);
             const result = await methods._delete(endpoint);
-            result.ok && navigation.navigate('SubscriptionScreen');
+            result.ok &&
+              (navigation.navigate('SubscriptionScreen'),
+              dispatch(getCurrentplan()),
+              dispatch(getSubscription()));
             setLoading(false);
           },
         },

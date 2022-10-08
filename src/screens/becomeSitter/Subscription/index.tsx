@@ -23,6 +23,7 @@ const SubscriptionScreen = () => {
     handleSubmit,
     planLoading,
     currentPlan,
+    ssLoading,
   } = useSubscription();
   return (
     <Screen style={{flex: 1}}>
@@ -70,7 +71,7 @@ const SubscriptionScreen = () => {
                 titleStyle={btnStyles.titleStyle}
                 title="Choose Plan"
                 onSelect={handleSubmit}
-                loading={pLoading}
+                loading={pLoading || ssLoading}
               />
             </View>
           </>

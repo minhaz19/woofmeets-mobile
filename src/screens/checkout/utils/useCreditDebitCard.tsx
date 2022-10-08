@@ -18,7 +18,6 @@ export const useCreditDebitCard = (
   const [customerId, setCustomerId] = useState<string | null | undefined>('');
   const {request, loading} = useApi(methods._post);
   const dispatch = useAppDispatch();
-  // const {loading: getLoading, request} = useApi(methods._post);
   const {request: getReq} = useApi(methods._get);
   const cd = async () => {
     const response = await getReq(customerEndPoint);
@@ -47,7 +46,6 @@ export const useCreditDebitCard = (
     setTokenLoading(false);
     if (error) {
       Alert.alert(`Error code: ${error.code}`, error.message);
-      console.log('errors', error);
     } else if (token) {
       const reqPayload = {
         customerId: customerId,
@@ -68,7 +66,7 @@ export const useCreditDebitCard = (
           );
           res.ok && navigation.navigate('SubscriptionScreen');
         } else {
-          navigation.navigate('PaymentMethod');
+          navigation.navigate('PaymentMethod', {sequence: null});
         }
       }
       dispatch(getCards());

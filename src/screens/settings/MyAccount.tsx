@@ -19,7 +19,9 @@ import AppActivityIndicator from '../../components/common/Loaders/AppActivityInd
 import storage from '../../utils/helpers/auth/storage';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 
-const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
+const MyAccount = (props: {
+  navigation: {navigate: (arg0: string, arg1?: any) => any};
+}) => {
   const dispatch = useAppDispatch();
   const {loading, userInfo} = useAppSelector(state => state.userProfile);
   const [newData, setNewData] = useState<any>([]);
@@ -53,12 +55,21 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 4,
       title: 'Payment method',
       icon: Payment2Icon,
-      screenName: () => props.navigation.navigate('PaymentMethod'),
+      screenName: () =>
+        props.navigation.navigate('PaymentMethod', {sequence: null}),
       details: 'Add payment, Card',
       opacity: 1,
     },
     {
       id: 5,
+      title: 'Current Plan',
+      icon: Payment2Icon,
+      screenName: () => props.navigation.navigate('SubscriptionScreen'),
+      details: 'Current Subscribe Plan',
+      opacity: 1,
+    },
+    {
+      id: 6,
       title: 'Your Pets',
       icon: PetsIcon,
       screenName: () => props.navigation.navigate('PetScreens'),

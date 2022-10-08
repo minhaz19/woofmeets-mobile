@@ -8,18 +8,36 @@ import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {useApi} from '../../../../../utils/helpers/api/useApi';
 import methods from '../../../../../api/methods';
 import Text_Size from '../../../../../constants/textScaling';
+import {useAppDispatch} from '../../../../../store/store';
+import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
+import {getSubscription} from '../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
 const endpoint = '/subscriptions/pay-basic-verification-payment';
 const subscriptionEndpoint = '/subscriptions/subscribe';
-const BasicPayment = ({route, navigation}: any) => {
-  const {sequence, cardId} = route?.params;
+interface Props {
+  route: {
+    params: {
+      sequence: number | null;
+      cardId: number | null;
+    };
+  };
+  navigation: {
+    navigate: (arg1: string, arg2?: any) => void;
+  };
+}
+const BasicPayment = ({route, navigation}: Props) => {
+  const {sequence, cardId} = route.params;
   const {loading, request} = useApi(methods._post);
+  const dispatch = useAppDispatch();
   const handleSubmit = async () => {
     const result = await request(endpoint);
     if (result.ok) {
       const res = await request(
         `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
       );
-      res.ok && navigation.navigate('SubscriptionScreen');
+      res.ok &&
+        (navigation.navigate('SubscriptionScreen'),
+        dispatch(getCurrentplan()),
+        dispatch(getSubscription()));
     }
   };
   return (

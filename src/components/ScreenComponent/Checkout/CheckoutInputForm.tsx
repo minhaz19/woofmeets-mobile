@@ -28,7 +28,6 @@ const CheckoutInputForm = ({handleValues, loading, sequence}: Props) => {
     control,
     formState: {errors},
   } = useFormContext();
-  console.log(errors);
   return (
     <View style={styles.inputContainer}>
       <DescriptionText

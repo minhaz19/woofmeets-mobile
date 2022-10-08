@@ -26,7 +26,7 @@ type StackParamList = {
   AddCardForm: {foo: string; onBar: () => void} | undefined;
 };
 
-type NavigationProps = StackNavigationProp<StackParamList>;
+type NavigationProps = StackNavigationProp<StackParamList | any>;
 const ListItem = ({
   cards,
   Icon,
@@ -87,7 +87,7 @@ Props) => {
       {newCard ? (
         <AppTouchableOpacity
           style={[styles.taskContainer, {paddingVertical: 20}]}
-          onPress={() => navigation.navigate('AddCardForm')}>
+          onPress={() => navigation.navigate('AddCardForm', {sequence: null})}>
           <View style={[styles.task, {justifyContent: 'center'}]}>
             {Icon}
             <TitleText textStyle={styles.text} text={'Add New Card'} />
