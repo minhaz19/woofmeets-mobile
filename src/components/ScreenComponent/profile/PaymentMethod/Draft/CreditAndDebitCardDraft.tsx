@@ -8,13 +8,12 @@ import Colors from '../../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import CheckoutInputForm from '../components/AddCardFormBody';
 import AppStripe from '../../../../common/Stripe/AppStripe';
-import {useCreditDebitCard} from '../utils/useAddCardForm';
 import {debitAndCreditCard} from '../../../../../utils/config/creditandDebitCard/initialValues';
 import {CreditAndDebitCardSchema} from '../../../../../utils/config/creditandDebitCard/validationSchema';
 import AppForm from '../../../../common/Form/AppForm';
 const CreditAndDebitCard = () => {
   const {colors} = useTheme();
-  const {handleValues, loading, tokenLoading} = useCreditDebitCard();
+  // const {handleValues, loading, tokenLoading} = useCreditDebitCard();
   return (
     <View
       style={[
@@ -23,7 +22,7 @@ const CreditAndDebitCard = () => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <ScrollView
+      {/* <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.inputContainer}>
         <HeaderText
@@ -44,7 +43,7 @@ const CreditAndDebitCard = () => {
             />
           </AppStripe>
         </AppForm>
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 };

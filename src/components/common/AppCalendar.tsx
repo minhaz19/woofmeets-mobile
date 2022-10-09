@@ -1,71 +1,90 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {Button, StyleSheet, Text, TextStyle, View} from 'react-native';
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import {StyleSheet, Text, TextStyle, View} from 'react-native';
+import React from 'react';
 import {CalendarList} from 'react-native-calendars';
 import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
-import {_dateRange} from '../../utils/helpers/datesArray';
-import {orderAndStyleRange} from '../../utils/helpers/CalendarRange/orderAndStyleRange';
 import Colors from '../../constants/Colors';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
 const RANGE = 12;
+var type = 'RANGE';
 const AppCalendar = () => {
-  const [_markedStyle, setMarkedStyle] = useState({});
-
-  //   const {startingDate, endingDate, handleDayPress} = useHandleRange('range');
-
-  //   useMemo(() => {
-  //     const range: Boolean | Date[] =
-  //       typeof startingDate !== 'undefined' &&
-  //       typeof endingDate !== 'undefined' &&
-  //       _dateRange(startingDate, endingDate);
-
-  //     const {styledMarkedRange} = orderAndStyleRange(range, Colors.primary);
-
-  //     setMarkedStyle(styledMarkedRange);
-  //   }, [startingDate, endingDate]);
-
+  const {colors} = useTheme();
+  const {handleDayPress, singleSelect, _markedStyle} = useHandleRange(type);
   return (
     <View style={styles.contentContainer}>
       <CalendarList
         current={new Date().toString()}
         pastScrollRange={0}
         futureScrollRange={RANGE}
-        // onDayPress={handleDayPress}
+        onDayPress={handleDayPress}
+        markingType={
+          type === 'RANGE'
+            ? singleSelect !== ''
+              ? 'custom'
+              : 'period'
+            : 'custom'
+        }
+        markedDates={{
+          ..._markedStyle,
+          [singleSelect]: {
+            customStyles: {
+              container: {
+                backgroundColor: Colors.primary,
+                elevation: 2,
+                borderRadius: 10,
 
-        markingType={'period'}
-        // markedDates={{
-        //   ..._markedStyle,
-        // }}
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+              text: {
+                color: 'white',
+              },
+            },
+          },
+        }}
         renderHeader={renderCustomHeader}
-        theme={theme}
-        // horizontal={false}
-        // pagingEnabled={true}
-        // staticHeader={true}
+        theme={{
+          stylesheet: {
+            calendar: {
+              header: {
+                dayHeader: {
+                  fontWeight: 'bold',
+                  color: Colors.primary,
+                },
+              },
+            },
+          },
+          // @ts-ignore
+          'stylesheet.day.basic': {
+            today: {
+              borderColor: Colors.border,
+              borderWidth: 0.8,
+            },
+            todayText: {
+              color: Colors.primary,
+              fontWeight: '800',
+            },
+          },
+          backgroundColor: colors.backgroundColor,
+          calendarBackground: colors.backgroundColor,
+          selectedDayBackgroundColor: Colors.primary,
+          selectedDayTextColor: Colors.headerText,
+          todayTextColor: Colors.primary,
+          dayTextColor: colors.headerText,
+          textDisabledColor: Colors.gray,
+          arrowColor: Colors.headerText,
+          disabledArrowColor: Colors.subText,
+          monthTextColor: colors.headerText,
+          indicatorColor: colors.headerText,
+          textDayFontWeight: '300',
+          textMonthFontWeight: 'bold',
+          textDayHeaderFontWeight: '300',
+          textDayFontSize: 14,
+          textMonthFontSize: 16,
+          textDayHeaderFontSize: 14,
+        }}
       />
     </View>
   );
-};
-
-const theme = {
-  stylesheet: {
-    calendar: {
-      header: {
-        dayHeader: {
-          fontWeight: '600',
-          color: '#48BFE3',
-        },
-      },
-    },
-  },
-  'stylesheet.day.basic': {
-    today: {
-      borderColor: '#48BFE3',
-      borderWidth: 0.8,
-    },
-    todayText: {
-      color: '#5390D9',
-      fontWeight: '800',
-    },
-  },
 };
 
 function renderCustomHeader(date: any) {

@@ -1,14 +1,13 @@
 import React from 'react';
-import {View, Text, StyleSheet, useColorScheme, Platform} from 'react-native';
+import {View, StyleSheet, useColorScheme, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Finder, Setting} from '../assets/svgs/SVG_LOGOS';
 import Colors from '../constants/Colors';
 import {SCREEN_WIDTH} from '../constants/WindowSize';
-import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
 import BottomTabText from '../components/common/text/BottomTabText';
-import { useTheme } from '../constants/theme/hooks/useTheme';
+import {useTheme} from '../constants/theme/hooks/useTheme';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,13 +15,13 @@ function GuestBottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
   const {colors} = useTheme();
   const height =
-  SCREEN_WIDTH <= 380
-    ? Platform.OS === 'ios'
-      ? 70
-      : 60
-    : Platform.OS === 'ios'
-    ? 90
-    : 80;
+    SCREEN_WIDTH <= 380
+      ? Platform.OS === 'ios'
+        ? 70
+        : 60
+      : Platform.OS === 'ios'
+      ? 90
+      : 80;
   return (
     <Tab.Navigator
       initialRouteName="ServiceNavigator"
@@ -39,9 +38,7 @@ function GuestBottomTabNavigator() {
           elevation: 9,
           shadowOpacity: 0.9,
           shadowOffset: {width: 2, height: 8},
-          shadowColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.background,
+          shadowColor: isDarkMode ? Colors.dark.background : Colors.background,
           borderTopWidth: 2,
           borderColor: colors.borderColor,
         },
@@ -60,7 +57,11 @@ function GuestBottomTabNavigator() {
                 height={SCREEN_WIDTH <= 380 ? 20 : 24}
                 width={SCREEN_WIDTH <= 380 ? 20 : 26}
               />
-              <BottomTabText text="Services" focused={focused} textStyle={styles.textStyle} />
+              <BottomTabText
+                text="Services"
+                focused={focused}
+                textStyle={styles.textStyle}
+              />
             </View>
           ),
         }}
@@ -78,7 +79,11 @@ function GuestBottomTabNavigator() {
                 height={SCREEN_WIDTH <= 380 ? 20 : 24}
                 width={SCREEN_WIDTH <= 380 ? 20 : 26}
               />
-               <BottomTabText text="Setting" focused={focused} textStyle={styles.textStyle} />
+              <BottomTabText
+                text="Setting"
+                focused={focused}
+                textStyle={styles.textStyle}
+              />
             </View>
           ),
         }}
