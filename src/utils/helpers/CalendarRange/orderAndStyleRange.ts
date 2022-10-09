@@ -31,10 +31,23 @@ export const orderAndStyleRange = (range: any, type: string) => {
       orderRange.length !== 0 &&
       orderRange.map((_: string, i: number) => ({
         [orderRange[i]]: {
-          startingDay: i === 0,
-          color: Colors.primary,
-          textColor: 'white',
-          endingDay: i === orderRange.length - 1,
+          customStyles: {
+            container: {
+              backgroundColor: Colors.primary,
+              elevation: 2,
+              borderRadius: 0,
+              borderBottomLeftRadius: i === 0 ? 30 : 0,
+              borderTopLeftRadius: i === 0 ? 30 : 0,
+              borderBottomRightRadius: i === orderRange.length - 1 ? 30 : 0,
+              borderTopRightRadius: i === orderRange.length - 1 ? 30 : 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+            },
+            text: {
+              color: 'white',
+            },
+          },
         },
       }));
 

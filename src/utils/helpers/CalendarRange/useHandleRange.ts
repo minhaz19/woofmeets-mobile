@@ -8,6 +8,7 @@ export const useHandleRange = (type: string) => {
   const [_markedStyle, setMarkedStyle] = useState({});
   const [singleSelect, setSingleSelect] = useState<string>('');
   const [step, setSteps] = useState(1);
+  const [dateRange, setDateRange] = useState<Date[]>([]);
   const [prevDate, setPrevDate] = useState<false | undefined | Date>();
   const [startingDate, setStartingDate] = useState('');
   const [endingDate, setEndingDate] = useState('');
@@ -51,7 +52,21 @@ export const useHandleRange = (type: string) => {
       const range = _dateRange(startingDate, endingDate);
       const {styledMarkedRange} = orderAndStyleRange(range, 'RANGE');
       setMarkedStyle(styledMarkedRange);
+      setDateRange(range);
     }
   }, [endingDate, startingDate]);
-  return {handleDayPress, _markedStyle, singleSelect};
+  const reset = () => {
+    setStartingDate('');
+    setEndingDate('');
+    setSteps(1);
+  };
+  return {
+    handleDayPress,
+    _markedStyle,
+    singleSelect,
+    startingDate,
+    endingDate,
+    dateRange,
+    reset,
+  };
 };

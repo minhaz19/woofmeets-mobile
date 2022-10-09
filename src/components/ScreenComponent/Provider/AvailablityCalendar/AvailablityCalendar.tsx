@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, Text, TextStyle, View} from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -8,54 +7,60 @@ import {_dateRange} from '../../../../utils/helpers/datesArray';
 import {useHandleRange} from '../../../../utils/helpers/CalendarRange/useHandleRange';
 import Colors from '../../../../constants/Colors';
 import EditCart from './EditCart';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 
 const RANGE = 12;
-const initialDate = '2022-08-17';
+const selectType = 'RANGE';
+const dateArray = [
+  '2022-09-20',
+  '2022-09-22',
+  '2022-09-23',
+  '2022-09-24',
+  '2022-09-25',
+  '2022-09-26',
+  '2022-09-27',
+  '2022-09-29',
+  '2022-10-01',
+  '2022-10-02',
+  '2022-10-03',
+  '2022-10-04',
+  '2022-10-05',
+  '2022-10-06',
+  '2022-10-10',
+  '2022-10-12',
+  '2022-10-13',
+  '2022-10-15',
+  '2022-10-16',
+];
 const AvailablityCalendar = () => {
-  const dateArray = [
-    '2022-09-20',
-    '2022-09-22',
-    '2022-09-23',
-    '2022-09-24',
-    '2022-09-25',
-    '2022-09-26',
-    '2022-09-27',
-    '2022-09-29',
-    '2022-10-01',
-    '2022-10-02',
-    '2022-10-03',
-    '2022-10-04',
-    '2022-10-05',
-    '2022-10-06',
-    '2022-10-10',
-    '2022-10-12',
-    '2022-10-13',
-    '2022-10-15',
-    '2022-10-16',
-  ];
-  const [_markedStyle, setMarkedStyle] = useState({});
+  const {colors} = useTheme();
   const [preMarked, setPremarked] = useState({});
 
-  const {startingDate, endingDate, resetRange, handleDayPress} =
-    useHandleRange('range');
+  const {
+    singleSelect,
+    startingDate,
+    _markedStyle,
 
-  useMemo(() => {
-    const range: Boolean | Date[] =
-      typeof startingDate !== 'undefined' &&
-      typeof endingDate !== 'undefined' &&
-      _dateRange(startingDate, endingDate);
+    reset,
+    handleDayPress,
+  } = useHandleRange(selectType);
 
-    const {styledMarkedRange} = orderAndStyleRange(range, Colors.primary);
-
-    setMarkedStyle(styledMarkedRange);
-  }, [startingDate, endingDate]);
   useMemo(() => {
     const preStyled = dateArray.map((_: string, i: number) => ({
       [dateArray[i]]: {
-        // startingDay: i === 0,
-        color: Colors.primary,
-        textColor: 'white',
-        // endingDay: i === dateArray.length - 1,
+        customStyles: {
+          container: {
+            backgroundColor: Colors.primary,
+            elevation: 2,
+            borderRadius: 10,
+
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          text: {
+            color: 'white',
+          },
+        },
       },
     }));
     let preStyledMarkedRange: any = {};
@@ -75,18 +80,76 @@ const AvailablityCalendar = () => {
         pastScrollRange={0}
         futureScrollRange={RANGE}
         onDayPress={handleDayPress}
-        markingType={'period'}
+        markingType={'custom'}
+        // markingType={
+        //   selectType === 'RANGE'
+        //     ? // ? singleSelect !== ''
+        //       //   ? 'custom'
+        //       'period'
+        //     : 'custom'
+        // }
         markedDates={{
           ..._markedStyle,
           ...preMarked,
+          [singleSelect]: {
+            customStyles: {
+              container: {
+                backgroundColor: Colors.primary,
+                elevation: 2,
+                borderRadius: 10,
+
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+              text: {
+                color: 'white',
+              },
+            },
+          },
         }}
         renderHeader={renderCustomHeader}
-        theme={theme}
-        // horizontal={false}
-        // pagingEnabled={true}
-        // staticHeader={true}
+        theme={{
+          stylesheet: {
+            calendar: {
+              header: {
+                dayHeader: {
+                  fontWeight: 'bold',
+                  color: Colors.primary,
+                },
+              },
+            },
+          },
+          // @ts-ignore
+          'stylesheet.day.basic': {
+            today: {
+              borderColor: Colors.border,
+              borderWidth: 0.8,
+            },
+            todayText: {
+              color: Colors.primary,
+              fontWeight: '800',
+            },
+          },
+          backgroundColor: colors.backgroundColor,
+          calendarBackground: colors.backgroundColor,
+          selectedDayBackgroundColor: Colors.primary,
+          selectedDayTextColor: Colors.headerText,
+          todayTextColor: Colors.primary,
+          dayTextColor: colors.headerText,
+          textDisabledColor: Colors.gray,
+          arrowColor: Colors.headerText,
+          disabledArrowColor: Colors.subText,
+          monthTextColor: colors.headerText,
+          indicatorColor: colors.headerText,
+          textDayFontWeight: '300',
+          textMonthFontWeight: 'bold',
+          textDayHeaderFontWeight: '300',
+          textDayFontSize: 14,
+          textMonthFontSize: 16,
+          textDayHeaderFontSize: 14,
+        }}
       />
-      <EditCart startingDate={startingDate} resetRange={resetRange} />
+      <EditCart startingDate={startingDate} resetRange={reset} />
     </View>
   );
 };

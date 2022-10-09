@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import AppCalendar from '../../../components/common/AppCalendar';
 import AppForm from '../../../components/common/Form/AppForm';
 import Screen from '../../../components/common/Screen';
-// import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar/AvailablityCalendar';
+import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar/AvailablityCalendar';
 import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {providerAvailablityValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
@@ -25,8 +25,7 @@ const ProviderAvailablity = () => {
         initialValues={{
           dateRange: '',
         }}>
-        {/* <AvailablityCalendar /> */}
-        <AppCalendar />
+        <AvailablityCalendar />
       </AppForm>
     </Screen>
   );
