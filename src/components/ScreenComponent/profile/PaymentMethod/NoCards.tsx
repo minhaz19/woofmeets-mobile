@@ -16,9 +16,11 @@ interface Props {
   sequence: null | number;
 }
 type NavigationProps = StackNavigationProp<StackParamList>;
+
 const NoCards = ({sequence}: Props) => {
   const {colors} = useTheme();
   const navigation = useNavigation<NavigationProps>();
+  console.log('no cards');
   return (
     <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <View>
