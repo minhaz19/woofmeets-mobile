@@ -1,0 +1,58 @@
+export const myPetData = [
+  {
+    id: 1,
+    sequence: 3,
+    name: 'Bunty',
+    icon: false,
+    selected: false,
+  },
+  {
+    id: 2,
+    sequence: 4,
+    name: 'gunty',
+    icon: false,
+    selected: false,
+  },
+  {
+    id: 3,
+    sequence: 5,
+    name: 'Punty',
+    icon: false,
+    selected: false,
+  },
+  {
+    id: 4,
+    sequence: 6,
+    name: 'Dunty',
+    icon: false,
+    selected: false,
+  },
+  {
+    id: 5,
+    sequence: 7,
+    name: 'Hunty',
+    icon: false,
+    selected: false,
+  },
+  {
+    id: 6,
+    sequence: 8,
+    name: 'Cunty',
+    icon: false,
+    selected: false,
+  },
+  {
+    id: 7,
+    sequence: 9,
+    name: 'Lunty',
+    icon: false,
+    selected: false,
+  },
+  {
+    id: 8,
+    sequence: 10,
+    name: 'Aunty',
+    icon: false,
+    selected: false,
+  },
+];

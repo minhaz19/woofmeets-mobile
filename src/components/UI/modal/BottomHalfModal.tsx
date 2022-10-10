@@ -3,7 +3,7 @@ import React from 'react';
 import {designs} from '../../../constants/theme/common/modalEndStyles';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {setOpenFilter} from '../../../store/slices/misc/openFilter';
-import { useAppDispatch } from '../../../store/store';
+import {useAppDispatch} from '../../../store/store';
 const BottomHalfModal = (props: {
   setIsModalVisible?: (arg0: boolean) => void;
   isModalVisible?: boolean | undefined;

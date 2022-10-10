@@ -6,18 +6,15 @@ import ReusableCard from '../utils/Common/ReusableCard';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {PastSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
-import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
-import { useAppDispatch } from '../../../../store/store';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 
-const PastMessage = () => {
-  const dispatch = useAppDispatch();
+const PastMessage = (props: {setModalVisible: (arg1: boolean) => void}) => {
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-         <FilterByDateAndActivity
+        <FilterByDateAndActivity
           handleActivity={() => {}}
           handleDate={() => {}}
         />
@@ -34,7 +31,7 @@ const PastMessage = () => {
                   status: item.status,
                 }}
                 buttonStyles={Colors.green}
-                handlePress={() => dispatch(setOpenFilter(true))}
+                handlePress={() => props.setModalVisible(true)}
               />
             );
           })

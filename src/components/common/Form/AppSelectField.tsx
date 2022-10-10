@@ -9,7 +9,7 @@ import ErrorMessage from './ErrorMessage';
 interface Props {
   name: string;
   control: any;
-  label: string;
+  label?: string;
   data: any;
   placeholder: any;
   disable?: boolean;
@@ -28,7 +28,7 @@ const AppSelectField = ({
 }: Props) => {
   return (
     <View>
-      <TitleText textStyle={styles.label} text={label} />
+      {label && <TitleText textStyle={styles.label} text={label} />}
       <Controller
         control={control}
         render={({field: {onChange, value}, fieldState: {error}}) => {

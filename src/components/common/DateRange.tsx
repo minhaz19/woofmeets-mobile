@@ -23,7 +23,6 @@ const DateRange = ({name}: Props) => {
       _dateRange(startingDate, endingDate);
 
     const {styledMarkedRange} = orderAndStyleRange(range, Colors.primary);
-
     setMarkedStyle(styledMarkedRange);
   }, [startingDate, endingDate]);
 
