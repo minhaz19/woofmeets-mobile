@@ -1,6 +1,6 @@
 import {StyleSheet, View, TouchableOpacity, useColorScheme} from 'react-native';
 import React from 'react';
-import ProfileInfo from '../../../components/ScreenComponent/profile/ProfileInfo';
+import ProfileInfo from '../../../components/ScreenComponent/profile/BasicInfo/ProfileInfo';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';

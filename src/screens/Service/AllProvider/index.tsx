@@ -28,20 +28,19 @@ const AllProvider = ({navigation}: Props) => {
   const renderHeader = () => {
     return (
       <ShortText
-          textStyle={{
-            paddingVertical: Platform.OS === 'ios' ? 10 : 0,
-            color: Colors.gray,
-          }}
-          text="20 Result"
-        />
-    )
-  }
+        textStyle={{
+          paddingVertical: Platform.OS === 'ios' ? 10 : 0,
+          color: Colors.gray,
+        }}
+        text="20 Result"
+      />
+    );
+  };
 
   return (
     <ScreenRapperGrey>
       {loading && <AppActivityIndicator visible={true} />}
-      <Screen
-        style={styles.container}>
+      <Screen style={styles.container}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={providers}

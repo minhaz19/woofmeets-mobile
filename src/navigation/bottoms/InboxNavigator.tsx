@@ -6,12 +6,13 @@ import Inbox from '../../screens/Inbox';
 import ActivityScreen from '../../screens/Inbox/activity/ActivityScreen';
 import CheckoutDetails from '../../screens/checkout/CheckoutDetails';
 import EditDetails from '../../screens/Inbox/editDetails';
+import Appointment from '../../screens/Appointment';
 
 const Stack1 = createStackNavigator();
 
 const InboxNavigator = () => {
   return (
-    <Stack1.Navigator initialRouteName="details">
+    <Stack1.Navigator initialRouteName="Appointment">
       <Stack1.Screen
         name="Inbox"
         component={Inbox}
@@ -25,6 +26,13 @@ const InboxNavigator = () => {
             />
           ),
           backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="Appointment"
+        component={Appointment}
+        options={() => ({
+          headerShown: false,
         })}
       />
       <Stack1.Screen

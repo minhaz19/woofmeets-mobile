@@ -120,7 +120,6 @@ const Splash = ({}) => {
         }
       }
     } catch (err) {
-      // console.log(err);
     }
   };
 

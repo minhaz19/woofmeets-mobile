@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Colors from '../../constants/Colors';
 import PetCareZipSearch from '../../screens/search/PetCareZipSearch';
 import AllProvider from '../../screens/Service/AllProvider';
@@ -9,9 +9,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import RealtimeLocation from '../../screens/RealtimeLocation';
 import Header from '../../components/common/header/Header';
 import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
-import { useAppDispatch } from '../../store/store';
+import {useAppDispatch} from '../../store/store';
 import authStorage from '../../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
+import SubscriptionScreen from '../../screens/becomeSitter/Subscription';
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
@@ -32,7 +33,7 @@ const ServiceNavigator = () => {
         name="PetCareZipSearch"
         component={PetCareZipSearch}
         options={({navigation}) => ({
-          header: () => (
+          header: () =>
             token?.provider ? (
               <HeaderWithBack
                 navigation={navigation}
@@ -47,8 +48,7 @@ const ServiceNavigator = () => {
                 notification
                 onPress={() => dispatch(setOpenFilter(true))}
               />
-            )
-          ),
+            ),
           backgroundColor: Colors.primary,
         })}
       />
@@ -62,6 +62,12 @@ const ServiceNavigator = () => {
       <Stack1.Screen
         name="RealtimeLocation"
         component={RealtimeLocation}
+        options={{headerShown: false}}
+      />
+
+      <Stack1.Screen
+        name="SubscriptionScreen"
+        component={SubscriptionScreen}
         options={{headerShown: false}}
       />
       <Stack1.Screen

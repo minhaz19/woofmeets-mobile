@@ -12,7 +12,7 @@ import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
 import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../../common/text/HeaderText';
-import ProfileHeader from '../profile/ProfileHeader';
+import ProfileHeader from '../profile/BasicInfo/ProfileHeader';
 import BottomSpacing from '../../UI/BottomSpacing';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useFormContext} from 'react-hook-form';

@@ -61,111 +61,123 @@ const ActivityScreen = (props: {
 
   return (
     <View style={{flex: 1, backgroundColor: Colors.background}}>
-    <SafeAreaView>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
-        <>
-          <ActivityHeader setIsDetailsModal={setIsDetailsModal} />
-          <BottomHalfModal
-            isModalVisible={isDetailsModal}
-            setIsModalVisible={setIsDetailsModal}>
-            <Details setIsDetailsModal={setIsDetailsModal} />
-          </BottomHalfModal>
-          <ScrollView
-            ref={scrollViewRef}
-            style={styles.scrollTop}
-            onContentSizeChange={() =>
-              scrollViewRef.current.scrollToEnd({animated: true})
-            }>
-            {conversation[0].messages === undefined ? (
-              <TitleText
-                textStyle={styles.emptyContainer}
-                text={`' '
+      <SafeAreaView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
+          <>
+            <ActivityHeader setIsDetailsModal={setIsDetailsModal} />
+            <BottomHalfModal
+              isModalVisible={isDetailsModal}
+              setIsModalVisible={setIsDetailsModal}>
+              <Details setIsDetailsModal={setIsDetailsModal} />
+            </BottomHalfModal>
+            <ScrollView
+              ref={scrollViewRef}
+              style={styles.scrollTop}
+              onContentSizeChange={() =>
+                scrollViewRef.current.scrollToEnd({animated: true})
+              }>
+              {conversation[0].messages === undefined ? (
+                <TitleText
+                  textStyle={styles.emptyContainer}
+                  text={`' '
                 The Conversation just got created, No texts yet...' '`}
-              />
-            ) : (
-              conversation[0].messages?.map((item, i) =>
-                item.type === 'other' ? (
-                  // Sender
-                  <View key={i} style={styles.senderContainer}>
-                    <View
-                      style={[
-                        styles.sender,
-                        {backgroundColor: colors.inputLightBg},
-                      ]}>
-                      <TitleText text={item.msg} />
-                      <ShortText text="Jun 14, 9:27" />
+                />
+              ) : (
+                conversation[0].messages?.map((item, i) =>
+                  item.type === 'other' ? (
+                    // Sender
+                    <View key={i} style={styles.senderContainer}>
+                      <View
+                        style={[
+                          styles.sender,
+                          {backgroundColor: colors.inputLightBg},
+                        ]}>
+                        <TitleText text={item.msg} />
+                        <ShortText text="Jun 14, 9:27" />
+                      </View>
+                      <View style={styles.userIconView}>
+                        <Image
+                          source={{uri: currentUser.image}}
+                          style={[
+                            styles.imageStyle,
+                            {borderColor: colors.borderColor},
+                          ]}
+                        />
+                      </View>
                     </View>
-                    <View style={styles.userIconView}>
-                      <Image
-                        source={{uri: currentUser.image}}
-                        style={[styles.imageStyle, {borderColor: colors.borderColor}]}
-                      />
-                    </View>
-                  </View>
-                ) : (
-                  // Receiver
-                  <View key={i} style={styles.receiverContainer}>
-                    <View style={styles.userIconViewReceiver}>
-                      <Image source={{uri: image}} style={[styles.imageStyle, {borderColor: colors.borderColor}]} />
-                    </View>
-                    <View
-                      style={[
-                        styles.receiver,
-                        {backgroundColor: colors.inputLightBg},
-                      ]}>
-                      {item.title && <HeaderText text={item.title} />}
-                      <TitleText text={item.msg} />
-                      {item.details && (
-                        <View>
-                          <View style={styles.detailsImage}>
-                            <Image
-                              source={{uri: image}}
-                              style={[styles.imageStyle, {borderColor: colors.borderColor}]}
-                            />
+                  ) : (
+                    // Receiver
+                    <View key={i} style={styles.receiverContainer}>
+                      <View style={styles.userIconViewReceiver}>
+                        <Image
+                          source={{uri: image}}
+                          style={[
+                            styles.imageStyle,
+                            {borderColor: colors.borderColor},
+                          ]}
+                        />
+                      </View>
+                      <View
+                        style={[
+                          styles.receiver,
+                          {backgroundColor: colors.inputLightBg},
+                        ]}>
+                        {item.title && <HeaderText text={item.title} />}
+                        <TitleText text={item.msg} />
+                        {item.details && (
+                          <View>
+                            <View style={styles.detailsImage}>
+                              <Image
+                                source={{uri: image}}
+                                style={[
+                                  styles.imageStyle,
+                                  {borderColor: colors.borderColor},
+                                ]}
+                              />
+                            </View>
+                            <TouchableOpacity
+                              onPress={() =>
+                                props.navigation.navigate('Checkout')
+                              }>
+                              <TitleText
+                                text="VIEW DETAILS"
+                                textStyle={styles.textDetailsStyle}
+                              />
+                            </TouchableOpacity>
                           </View>
-                          <TouchableOpacity
-                            onPress={() =>
-                              props.navigation.navigate('Checkout')
-                            }>
-                            <TitleText
-                              text="VIEW DETAILS"
-                              textStyle={styles.textDetailsStyle}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      )}
-                      {!item.details && <ShortText text="Jun 14, 9:27" />}
+                        )}
+                        {!item.details && <ShortText text="Jun 14, 9:27" />}
+                      </View>
                     </View>
-                  </View>
-                ),
-              )
-            )}
-            <View style={{height: paddingHeight}} />
-          </ScrollView>
-          <View style={[styles.footer, {borderColor: colors.borderColor}]}>
-            <TouchableOpacity style={styles.cameraIconContainer}>
-              <CameraIcon />
-            </TouchableOpacity>
-            <TextInput
-              placeholder="Type Message..."
-              style={styles.textInput}
-              numberOfLines={10}
-              onChangeText={text => setMessage(text)}
-              value={message}
-            />
-            <TouchableOpacity
-              onPress={sendMsg}
-              activeOpacity={0.5}
-              style={{marginRight: 20}}>
-              <SendIcon height={20} width={20} fill={Colors.primary} />
-            </TouchableOpacity>
-          </View>
-          <BottomSpacing />
-        </>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+                  ),
+                )
+              )}
+              <View style={{height: paddingHeight}} />
+            </ScrollView>
+            <View style={[styles.footer, {borderColor: colors.borderColor}]}>
+              <TouchableOpacity style={styles.cameraIconContainer}>
+                <CameraIcon />
+              </TouchableOpacity>
+              <TextInput
+                placeholder="Type Message..."
+                style={styles.textInput}
+                numberOfLines={10}
+                onChangeText={text => setMessage(text)}
+                value={message}
+              />
+              <TouchableOpacity
+                onPress={sendMsg}
+                activeOpacity={0.5}
+                style={{marginRight: 20}}>
+                <SendIcon height={20} width={20} fill={Colors.primary} />
+              </TouchableOpacity>
+            </View>
+            <BottomSpacing />
+          </>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </View>
   );
 };

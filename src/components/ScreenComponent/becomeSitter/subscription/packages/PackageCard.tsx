@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import BigText from '../../../../common/text/BigText';
 import TitleText from '../../../../common/text/TitleText';
 import Colors from '../../../../../constants/Colors';
@@ -13,7 +13,7 @@ import BulletPoints from '../../../../UI/Points/BulletPoints';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
-import {useNavigation} from '@react-navigation/native';
+import {usePackageCard} from './utils/usePackageCard';
 
 const PackageCard = (props: {
   onPressEvent: (arg0: any) => void;
@@ -29,117 +29,112 @@ const PackageCard = (props: {
   navigation: any;
 }) => {
   const {colors, isDarkMode} = useTheme();
-  const navigation = useNavigation();
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const handleSubmit = () => {
-    if (props.item.sequence === 3) {
-      // @ts-ignore
-      navigation.navigate('BasicBackgroundCheck', {
-        sequence: props.item.sequence,
-      });
-      setIsModalVisible(!isModalVisible);
-    } else {
-      // @ts-ignore
-      navigation.navigate('PlanCheckout', {sequence: props.item.sequence});
-      setIsModalVisible(!isModalVisible);
-    }
-  };
+  const {handleSubmit, isModalVisible, setIsModalVisible, pLoading, ssLoading} =
+    usePackageCard(props);
   return (
-    <TouchableOpacity
-      onPress={() => props.onPressEvent(props.item.sequence)}
-      key={props.item.id}>
-      <MiddleModal
-        isModalVisible={isModalVisible}
-        setIsModalVisible={() => {
-          setIsModalVisible(!isModalVisible);
-        }}
-        onBlur={() => null}>
-        <Image
-          source={require('../../../../../assets/image/subscription/subscription.png')}
-          style={styles.imageStyle}
-        />
-        <View style={styles.headerContainer}>
-          <BigText text={props.item.title} textStyle={styles.textHeaderStyle} />
-          <View style={styles.divider} />
-          <HeaderText
-            text={`Everything in ${props.item.title}`}
-            textStyle={styles.textEveryStyle}
+    <>
+      <TouchableOpacity
+        onPress={() => props.onPressEvent(props.item.sequence)}
+        key={props.item.id}>
+        <MiddleModal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={() => {
+            setIsModalVisible(!isModalVisible);
+          }}
+          onBlur={() => null}>
+          <Image
+            source={require('../../../../../assets/image/subscription/subscription.png')}
+            style={styles.imageStyle}
           />
-          <View style={styles.textPortion2}>
+          <View style={styles.headerContainer}>
             <BigText
-              text={`$${props.item.price}`}
-              textStyle={styles.headerText}
+              text={props.item.title}
+              textStyle={styles.textHeaderStyle}
             />
-            <View style={styles.textPortion3}>
-              <DescriptionText
-                text="/month"
-                textStyle={styles.textHeaderStyle}
+            <View style={styles.divider} />
+            <HeaderText
+              text={`Everything in ${props.item.title}`}
+              textStyle={styles.textEveryStyle}
+            />
+            <View style={styles.textPortion2}>
+              <BigText
+                text={`$${props.item.price}`}
+                textStyle={styles.headerText}
+              />
+              <View style={styles.textPortion3}>
+                <DescriptionText
+                  text="/month"
+                  textStyle={styles.textHeaderStyle}
+                />
+              </View>
+            </View>
+          </View>
+          <View style={styles.modalContainer}>
+            {props.item.details?.map(
+              (item: {description: string; id: number}) => (
+                <BulletPoints text={item.description} key={item.id} />
+              ),
+            )}
+            <View style={styles.footerContainer}>
+              <ButtonCom
+                title="Choose Plan"
+                textAlignment={btnStyles.textAlignment}
+                containerStyle={btnStyles.containerStyleFullWidth}
+                titleStyle={btnStyles.titleStyle}
+                onSelect={handleSubmit}
+                loading={pLoading || ssLoading}
               />
             </View>
           </View>
-        </View>
-        <View style={styles.modalContainer}>
-          {props.item.details?.map(
-            (item: {description: string; id: number}) => (
-              <BulletPoints text={item.description} key={item.id} />
-            ),
-          )}
-          <View style={styles.footerContainer}>
-            <ButtonCom
-              title="Choose Plan"
-              textAlignment={btnStyles.textAlignment}
-              containerStyle={btnStyles.containerStyleFullWidth}
-              titleStyle={btnStyles.titleStyle}
-              onSelect={handleSubmit}
-              //   loading={loading}
+        </MiddleModal>
+        <View
+          key={props.item.id}
+          style={{
+            ...styles.contentStyle,
+            backgroundColor: colors.backgroundColor,
+            borderWidth: 2,
+            borderColor:
+              props.sequence === props.item.sequence
+                ? Colors.primary
+                : colors.borderColor,
+          }}>
+          <View style={styles.textPortion}>
+            <BigText text={props.item.title} textStyle={styles.biggerText} />
+            <TouchableOpacity
+              style={styles.detailsWrap}
+              onPress={() => setIsModalVisible(!isModalVisible)}>
+              <View
+                style={[
+                  styles.detailsContainer,
+                  {
+                    backgroundColor: isDarkMode
+                      ? colors.lightBackgroundColor
+                      : colors.primaryLight,
+                  },
+                ]}>
+                <DescriptionText
+                  text="Details"
+                  textStyle={styles.detailsText}
+                />
+              </View>
+            </TouchableOpacity>
+            <TitleText text={props.item.description} />
+          </View>
+          <View style={styles.textPortion2}>
+            <BigText
+              text={`$${props.item.price}`}
+              textStyle={styles.biggerText}
             />
-          </View>
-        </View>
-      </MiddleModal>
-      <View
-        key={props.item.id}
-        style={{
-          ...styles.contentStyle,
-          backgroundColor: colors.backgroundColor,
-          borderWidth: 2,
-          borderColor:
-            props.sequence === props.item.sequence
-              ? Colors.primary
-              : colors.borderColor,
-        }}>
-        <View style={styles.textPortion}>
-          <BigText text={props.item.title} textStyle={styles.biggerText} />
-          <TouchableOpacity
-            style={styles.detailsWrap}
-            onPress={() => setIsModalVisible(!isModalVisible)}>
-            <View
-              style={[
-                styles.detailsContainer,
-                {
-                  backgroundColor: isDarkMode
-                    ? colors.lightBackgroundColor
-                    : colors.primaryLight,
-                },
-              ]}>
-              <DescriptionText text="Details" textStyle={styles.detailsText} />
+            <View style={styles.textPortion3}>
+              <DescriptionText text="(per month)" />
             </View>
-          </TouchableOpacity>
-          <TitleText text={props.item.description} />
-        </View>
-        <View style={styles.textPortion2}>
-          <BigText
-            text={`$${props.item.price}`}
-            textStyle={styles.biggerText}
-          />
-          <View style={styles.textPortion3}>
-            <DescriptionText text="(per month)" />
           </View>
+          {props.sequence === props.item.sequence && (
+            <View style={styles.rightSelection} />
+          )}
         </View>
-        {props.sequence === props.item.sequence && (
-          <View style={styles.rightSelection} />
-        )}
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </>
   );
 };
 
@@ -178,6 +173,7 @@ const styles = StyleSheet.create({
   },
   textPortion2: {
     alignItems: 'flex-end',
+    justifyContent: 'flex-end',
   },
   textPortion3: {
     paddingBottom: 4,

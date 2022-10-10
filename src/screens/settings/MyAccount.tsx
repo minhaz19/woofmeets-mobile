@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {View, SafeAreaView, StyleSheet, ScrollView, useColorScheme} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import {
   CallIcon,
   Payment2Icon,
@@ -12,14 +12,16 @@ import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
-import ProfileInfo from '../../components/ScreenComponent/profile/ProfileInfo';
+import ProfileInfo from '../../components/ScreenComponent/profile/BasicInfo/ProfileInfo';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileAction';
 import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
 import storage from '../../utils/helpers/auth/storage';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 
-const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
+const MyAccount = (props: {
+  navigation: {navigate: (arg0: string, arg1?: any) => any};
+}) => {
   const dispatch = useAppDispatch();
   const {loading, userInfo} = useAppSelector(state => state.userProfile);
   const [newData, setNewData] = useState<any>([]);
@@ -53,12 +55,21 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 4,
       title: 'Payment method',
       icon: Payment2Icon,
-      screenName: () => props.navigation.navigate('CreditAndDebitCard'),
+      screenName: () =>
+        props.navigation.navigate('PaymentMethod', {sequence: null}),
       details: 'Add payment, Card',
       opacity: 1,
     },
     {
       id: 5,
+      title: 'Current Plan',
+      icon: Payment2Icon,
+      screenName: () => props.navigation.navigate('SubscriptionScreen'),
+      details: 'Current Subscribe Plan',
+      opacity: 1,
+    },
+    {
+      id: 6,
       title: 'Your Pets',
       icon: PetsIcon,
       screenName: () => props.navigation.navigate('PetScreens'),
@@ -86,15 +97,12 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     <ScreenRapperGrey>
       {loading && <AppActivityIndicator visible={true} />}
 
-      <ScrollView
-        style={
-          styles.rootContainer
-        }>
+      <ScrollView style={styles.rootContainer}>
         <SafeAreaView>
           <View style={styles.profileContainer}>
             <ProfileInfo />
           </View>
-          
+
           {newData.map((item: any) => (
             <SettingItem
               data={item}
