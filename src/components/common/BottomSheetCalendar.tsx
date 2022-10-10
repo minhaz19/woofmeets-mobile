@@ -41,7 +41,7 @@ const BottomSheetCalendar = ({title}: Props) => {
           index={1}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}>
-          <AppCalendar selectType={'SINGLE'} />
+          <AppCalendar />
         </BottomSheetModal>
       </View>
     </BottomSheetModalProvider>

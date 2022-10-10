@@ -42,20 +42,10 @@ const PaymentMethods = ({route, navigation}: Props) => {
     callApi();
     cards === null && dispatch(getCards());
   }, []);
-  console.log(
-    'payment method',
-    'loading',
-    loading,
-    'dloading',
-    dLoading,
-    cards,
-  );
   return (
     <>
       {(loading || dLoading) && <AppActivityIndicator visible={true} />}
-      {cards === undefined || cards === null ? (
-        <NoCards sequence={sequence} />
-      ) : (
+      {cards ? (
         <>
           <AllCards
             cards={cards}
@@ -65,6 +55,8 @@ const PaymentMethods = ({route, navigation}: Props) => {
             loading={Hloading}
           />
         </>
+      ) : (
+        <NoCards sequence={sequence} />
       )}
     </>
   );
