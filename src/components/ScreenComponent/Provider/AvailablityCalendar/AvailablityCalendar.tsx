@@ -52,8 +52,9 @@ const AvailablityCalendar = () => {
           container: {
             backgroundColor: Colors.primary,
             elevation: 2,
-            borderRadius: 10,
-
+            // borderRadius: 10,
+            width: '100%',
+            borderRadius: 0,
             justifyContent: 'center',
             alignItems: 'center',
           },
@@ -81,13 +82,6 @@ const AvailablityCalendar = () => {
         futureScrollRange={RANGE}
         onDayPress={handleDayPress}
         markingType={'custom'}
-        // markingType={
-        //   selectType === 'RANGE'
-        //     ? // ? singleSelect !== ''
-        //       //   ? 'custom'
-        //       'period'
-        //     : 'custom'
-        // }
         markedDates={{
           ..._markedStyle,
           ...preMarked,

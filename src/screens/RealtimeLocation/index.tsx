@@ -78,8 +78,6 @@ const RealtimeLocation = () => {
         });
       },
       (error: any) => {
-        // See error code charts below.
-        // console.log(error.code, error.message);
       },
       {
         enableHighAccuracy: true,

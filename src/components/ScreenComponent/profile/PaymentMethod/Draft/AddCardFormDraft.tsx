@@ -24,7 +24,6 @@ const AddCardFormDraft = (props: any) => {
   const {request: getReq} = useApi(methods._get);
   const cd = async () => {
     const response = await getReq(customerEndPoint);
-    console.log('res', response);
     response.ok && setCustomerId(response?.data?.data.stripeCustomerId);
   };
   useEffect(() => {
@@ -230,7 +229,7 @@ const AddCardFormDraft = (props: any) => {
                                 // enable payment button
                             } else if (event.error) {
                                 const { message} = event.error
-                                console.log(message)
+                              
                                 showCardError(message)
                             }
                         });
@@ -283,9 +282,7 @@ const AddCardFormDraft = (props: any) => {
       countryId: 1,
       token: da?.token?.id,
     };
-    console.log('card', customerId, da?.token?.id);
     const result = await request(endpoint, reqPayload);
-    console.log('result', result);
     // }
   };
   const webViewRef = useRef(null);

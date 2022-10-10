@@ -23,7 +23,6 @@ for (var i = 0; tt < 24 * 60; i++) {
 }
 const TimeMultiSlotPicker = () => {
   const [newData, setDatas] = useState(times);
-  console.log(newData);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);

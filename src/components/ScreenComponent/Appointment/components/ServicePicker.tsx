@@ -67,7 +67,6 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
   useMemo(() => {
     const selected = data.filter(item => item.id === activeServie);
     setSelectedService(selected[0]);
-    console.log('sel', selected);
   }, [activeServie]);
 
   return (

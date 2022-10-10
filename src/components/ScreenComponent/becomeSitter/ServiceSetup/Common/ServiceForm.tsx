@@ -68,7 +68,6 @@ const ServiceForm = ({
   checked,
 }: Props) => {
   useMemo(() => {
-    console.log('calling');
     name !== 'baserate' &&
       updateRates === false &&
       checked === false &&

@@ -2,7 +2,6 @@ import {useAppSelector} from '../../../../../store/store';
 
 export const useServiceRateInit = () => {
   const {fieldValue} = useAppSelector(state => state.fieldValue);
-  console.log('field value', fieldValue);
   return {
     baserate: fieldValue && fieldValue[0]?.amount ? fieldValue[0].amount : null,
     holidayrate:

@@ -39,7 +39,6 @@ export const useServiceRates = (serviceSetup: any) => {
       (item: {id: number}, index: number) =>
         (rateFieldId[index].putId = item.id),
     );
-  console.log('rate field id', fieldValue, serviceRateFields);
   const handleRates = async (e: any) => {
     let payload: any = {
       serviceRate: [],
@@ -61,9 +60,7 @@ export const useServiceRates = (serviceSetup: any) => {
           });
         },
       );
-    console.log('e', e, 'rate', rateFieldId, 'pay', payload);
     const result = await request(payload);
-    console.log('result ,', result);
     if (result.ok) {
       dispatch(setBoardingSelection({pass: 0}));
       dispatch(getRateFieldValue(providerServicesId));

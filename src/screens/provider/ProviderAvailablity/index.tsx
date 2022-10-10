@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import AppCalendar from '../../../components/common/AppCalendar';
 import AppForm from '../../../components/common/Form/AppForm';
 import Screen from '../../../components/common/Screen';
 import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar/AvailablityCalendar';

@@ -5,7 +5,6 @@ import apiClient from '../../../../../../api/client';
 export const getRateFieldValue = createAsyncThunk(
   '/service-rates',
   async (id: string) => {
-    console.log(id);
     try {
       const response: ApiResponse<any> = await apiClient.get(
         `/service-rates/${id}`,

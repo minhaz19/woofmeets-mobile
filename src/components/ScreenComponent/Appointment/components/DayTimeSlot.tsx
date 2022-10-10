@@ -46,7 +46,6 @@ const dates = [
 const DayTimeSlot = () => {
   const [active, setActive] = useState(true);
   const [newData, setDatas] = useState(dates);
-  console.log(newData);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);

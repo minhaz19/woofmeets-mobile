@@ -18,7 +18,6 @@ export const useAddCardForm = (navigation: any, sequence: number | null) => {
   const {request: getReq} = useApi(methods._get);
   const cd = async () => {
     const response = await getReq(customerEndPoint);
-    console.log('res', response);
     response.ok && setCustomerId(response?.data?.data.stripeCustomerId);
   };
   useEffect(() => {

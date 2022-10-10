@@ -21,9 +21,7 @@ const BottomSheetCalendar = ({title}: Props) => {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
+  const handleSheetChanges = useCallback(() => {}, []);
   return (
     <BottomSheetModalProvider>
       <View style={styles.container}>
