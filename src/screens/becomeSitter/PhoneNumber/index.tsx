@@ -1,6 +1,6 @@
 import {View, StyleSheet} from 'react-native';
 import React from 'react';
-import ContactScreen from '../../profile/ContactScreen';
+import ContactScreen from '../../profile/ContactScreen/ContactScreen';
 
 const PhoneNumberSitter = () => {
   return (

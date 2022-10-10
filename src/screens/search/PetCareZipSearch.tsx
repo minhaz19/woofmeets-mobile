@@ -20,7 +20,6 @@ import {
   PetFootSvg,
   WeatherSvg,
 } from '../../assets/svgs/SVG_LOGOS';
-import DescriptionText from '../../components/common/text/DescriptionText';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
 import ScreenRapper from '../../components/common/ScreenRapper';
@@ -29,7 +28,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import ServiceCard from '../../components/ScreenComponent/search/ServiceCard';
 import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
-import BottomSpacingNav from '../../components/UI/BottomSpacingNav';
 
 interface Props {
   item: any;
@@ -148,11 +146,10 @@ const PetCareZipSearch = (props: {
       <ScrollView
         keyboardShouldPersistTaps="always"
         keyboardDismissMode="on-drag"
-        showsVerticalScrollIndicator={false}
-        >
+        showsVerticalScrollIndicator={false}>
         <KeyboardAvoidingView
           keyboardVerticalOffset={20}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.rootContainer}>
           <SearchSlider navigation={props.navigation} />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

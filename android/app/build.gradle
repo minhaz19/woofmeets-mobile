@@ -277,9 +277,12 @@ dependencies {
 
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native'  // From node_modules
-
+implementation (project(':stripe_stripe-react-native')) {
+      exclude group: "org.bouncycastle", module: "bcprov-jdk15to18"
+}
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+    
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
     }

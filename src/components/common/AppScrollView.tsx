@@ -2,12 +2,12 @@ import React from 'react';
 import {FlatList} from 'react-native';
 interface Props {
   children: React.ReactNode;
-  showsVerticalScrollIndicator: boolean;
+  showsVerticalScrollIndicator?: boolean;
   style: any;
 }
 const AppScrollView = ({
   children,
-  showsVerticalScrollIndicator,
+  showsVerticalScrollIndicator = false,
   style,
 }: Props) => {
   return (

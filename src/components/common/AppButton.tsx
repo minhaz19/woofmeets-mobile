@@ -1,10 +1,11 @@
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
 import {btnStyles} from '../../constants/theme/common/buttonStyles';
 import Text_Size from '../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
 import TitleText from './text/TitleText';
+import AppTouchableOpacity from './AppClickEvents/AppTouchableOpacity';
 interface Props {
   title: string;
   onPress?: () => void;
@@ -12,11 +13,11 @@ interface Props {
 const width = SCREEN_WIDTH;
 const AppButton = ({title, onPress}: Props) => {
   return (
-    <TouchableOpacity
+    <AppTouchableOpacity
       onPress={onPress}
       style={btnStyles.containerStyleFullWidth}>
       <TitleText textStyle={styles.title} text={title} />
-    </TouchableOpacity>
+    </AppTouchableOpacity>
   );
 };
 

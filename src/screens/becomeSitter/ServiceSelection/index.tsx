@@ -74,7 +74,6 @@ const ServiceSelection = () => {
       // return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {
-        // console.log(error.response);
       }
       setLoading(false);
     }
