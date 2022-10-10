@@ -16,9 +16,6 @@ import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../../UI/BottomSpacing';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
-import { setOpenFilter } from '../../../../../store/slices/misc/openFilter';
-import { useAppDispatch, useAppSelector } from '../../../../../store/store';
-
 interface Props {
   postLoading?: boolean;
   handlePost: (arg1: any) => void;
@@ -26,8 +23,7 @@ interface Props {
 }
 
 const SubYourHome = ({handlePost, postLoading, attributes}: Props) => {
-  const filter = useAppSelector((state: any) => state.filter.isOpen);
-  const dispatch = useAppDispatch();
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {
     control,
     setValue,
@@ -59,13 +55,14 @@ const SubYourHome = ({handlePost, postLoading, attributes}: Props) => {
   return (
     <View>
       <ServiceReusableModal
-        modalVisible={filter}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
       />
       <View style={styles.headerContainer}>
-      <View style={styles.flexContainer}>
+        <View style={styles.flexContainer}>
           <BigText text={'Home'} textStyle={styles.headerText} />
           <TouchableOpacity
-            onPress={() => dispatch(setOpenFilter(true))}
+            onPress={() => setModalVisible(true)}
             style={styles.iconContainer}>
             <QuestionIcon fill={Colors.primary} />
           </TouchableOpacity>

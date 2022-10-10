@@ -8,15 +8,12 @@ import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import IOSButton from '../../../../UI/IOSButton';
 import Colors from '../../../../../constants/Colors';
 import BottomSpacing from '../../../../UI/BottomSpacing';
-import {setOpenFilter} from '../../../../../store/slices/misc/openFilter';
-import {useAppDispatch} from '../../../../../store/store';
 
 interface Props {
   modalVisible: boolean;
-  setModalVisible?: (arg1: boolean) => void;
+  setModalVisible: (arg1: boolean) => void;
 }
 const ServiceReusableModal = ({modalVisible, setModalVisible}: Props) => {
-  const dispatch = useAppDispatch();
   const modalData = [
     {
       id: 1,
@@ -43,9 +40,7 @@ const ServiceReusableModal = ({modalVisible, setModalVisible}: Props) => {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={styles.titleStyle}
-            onSelect={() => {
-              dispatch(setOpenFilter(false));
-            }}
+            onSelect={() => setModalVisible(false)}
           />
           <BottomSpacing />
         </ScrollView>

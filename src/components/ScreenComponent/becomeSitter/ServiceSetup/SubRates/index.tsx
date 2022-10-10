@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import BigText from '../../../../common/text/BigText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Colors from '../../../../../constants/Colors';
@@ -13,8 +13,6 @@ import {useFormContext} from 'react-hook-form';
 import {useSubRates} from './ulils/useSubRates';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
-import {useAppDispatch, useAppSelector} from '../../../../../store/store';
-import {setOpenFilter} from '../../../../../store/slices/misc/openFilter';
 
 interface Props {
   handleRates: (arg: any) => void;
@@ -23,8 +21,7 @@ interface Props {
 }
 
 const SubRates = ({handleRates, rateFields, loading}: Props) => {
-  const dispatch = useAppDispatch();
-  const filter = useAppSelector((state: any) => state.filter.isOpen);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {
     formState: {errors},
     control,
@@ -43,14 +40,14 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
   return (
     <View>
       <ServiceReusableModal
-        modalVisible={filter}
-        // setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
       />
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
           <BigText text={'Rates'} textStyle={styles.headerText} />
           <TouchableOpacity
-            onPress={() => dispatch(setOpenFilter(true))}
+            onPress={() => setModalVisible(true)}
             style={styles.iconContainer}>
             <QuestionIcon fill={Colors.primary} />
           </TouchableOpacity>
