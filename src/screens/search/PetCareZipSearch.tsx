@@ -30,6 +30,7 @@ import AppActivityIndicator from '../../components/common/Loaders/AppActivityInd
 // import {useApi} from '../../utils/helpers/api/useApi';
 // import methods from '../../api/methods';
 import {getAllProvider} from '../../store/slices/Provider/allProvider/getAllProvider';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const petData = [
   {
@@ -164,7 +165,7 @@ const PetCareZipSearch = (props: {
       // console.log(result?.data?.providers);
       console.log(formattedData);
       dispatch(getAllProvider(formattedData));
-      // props.navigation.navigate('AllProvider');
+      props.navigation.navigate('AllProvider');
     } else {
       setErrorMessage('Service must be selected');
     }
@@ -256,15 +257,17 @@ const PetCareZipSearch = (props: {
         <AppActivityIndicator visible={true} />
       )}
       <ScreenRapper rapperStyle={styles.rapperStyle}>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={20}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        <KeyboardAwareScrollView
+          extraHeight={100}
+          extraScrollHeight={200}
+          enableAutomaticScroll={true}
+          // keyboardVerticalOffset={20}
+          // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.rootContainer}>
           <ScrollView
-            keyboardShouldPersistTaps="always"
+            keyboardShouldPersistTaps="handled"
             // keyboardDismissMode="on-drag"
-            showsVerticalScrollIndicator={false}
-            nestedScrollEnabled={true}>
+            showsVerticalScrollIndicator={false}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View style={styles.boxContainer}>
                 <SearchSlider navigation={props.navigation} />
@@ -274,11 +277,11 @@ const PetCareZipSearch = (props: {
                   <GooglePlacesAutocomplete
                     placeholder="Type a place"
                     onPress={onPressAddress}
+                    isRowScrollable={false}
                     query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo'}}
                     fetchDetails={true}
                     onFail={error => console.log(error)}
                     onNotFound={() => console.log('no results')}
-                    keyboardShouldPersistTaps={'always'}
                     keepResultsAfterBlur={true}
                     styles={{
                       container: {
@@ -310,7 +313,7 @@ const PetCareZipSearch = (props: {
             </TouchableWithoutFeedback>
             <BottomSpacing />
           </ScrollView>
-        </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
       </ScreenRapper>
     </>
   );
@@ -319,6 +322,7 @@ const PetCareZipSearch = (props: {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    // paddingBottom: 80,
   },
   rapperStyle: {
     paddingTop: 20,
