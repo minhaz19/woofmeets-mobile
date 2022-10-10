@@ -34,6 +34,7 @@ import subscriptionSlice from './slices/payment/Subscriptions/SubscriptionPlans/
 import yourHomeSlice from './slices/onBoarding/setUpService/yourHome/yourHomeSlice';
 import CancellationPolicySlice from './slices/onBoarding/setUpService/cancellationPolicy/CancellationPolicySlice';
 import rescheduleSlice from './slices/Provider/reschedule/rescheduleSlice';
+import allProviderSlice from './slices/Provider/allProvider/allProviderSlice';
 import cardsSlice from './slices/payment/PaymentCards/cardsSlice';
 import currentPlanSlice from './slices/payment/Subscriptions/CurrentSubscription/currentPlanSlice';
 
@@ -63,6 +64,7 @@ const appReducer = combineReducers({
   yourHome: yourHomeSlice,
   cancellationPolicy: CancellationPolicySlice,
   reschedule: rescheduleSlice,
+  allProvider: allProviderSlice,
   cards: cardsSlice,
   currentPlan: currentPlanSlice,
 });
