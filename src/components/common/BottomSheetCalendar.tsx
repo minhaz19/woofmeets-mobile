@@ -8,12 +8,34 @@ import {CalendarCSvg} from '../../assets/svgs/SVG_LOGOS';
 import AppCalendar from './AppCalendar';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
+import {useFormContext} from 'react-hook-form';
 interface Props {
   title: string;
+  sequence?: number;
 }
-const BottomSheetCalendar = ({title}: Props) => {
+var dayss = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+const BottomSheetCalendar = ({title, sequence = 1}: Props) => {
   const [visible, setVisible] = useState(false);
-
+  const {setValue} = useFormContext();
+  const handlePress = (data: any) => {
+    const next6Days = [...Array(7).keys()].map(index => {
+      const date = new Date(data.dateString);
+      date.setDate(date.getDate() + index);
+      var d = new Date(date);
+      var dayName = dayss[d.getDay()];
+      return {date: date.toDateString(), day: dayName};
+    });
+    setValue('recurringStartDate', data.dateString);
+    setValue('repeatDate', next6Days);
+  };
   return (
     <>
       <View
@@ -58,7 +80,10 @@ const BottomSheetCalendar = ({title}: Props) => {
               }}
               text={'Select date range 🗓'}
             />
-            <AppCalendar selectType="RANGE" />
+            <AppCalendar
+              selectType={sequence === 0 ? 'RANGE' : 'SINGLE'}
+              handlePress={handlePress}
+            />
           </View>
         </Modal>
       </View>

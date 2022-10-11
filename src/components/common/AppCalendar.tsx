@@ -8,8 +8,9 @@ import {useTheme} from '../../constants/theme/hooks/useTheme';
 interface Props {
   range?: number;
   selectType: string;
+  handlePress?: (arg: any) => void;
 }
-const AppCalendar = ({range = 12, selectType}: Props) => {
+const AppCalendar = ({range = 12, selectType, handlePress}: Props) => {
   const {colors} = useTheme();
   const {handleDayPress, singleSelect, _markedStyle} =
     useHandleRange(selectType);
@@ -19,7 +20,10 @@ const AppCalendar = ({range = 12, selectType}: Props) => {
         current={new Date().toString()}
         pastScrollRange={0}
         futureScrollRange={range}
-        onDayPress={handleDayPress}
+        onDayPress={data => {
+          handleDayPress(data);
+          handlePress && handlePress(data);
+        }}
         markingType={'custom'}
         markedDates={{
           ..._markedStyle,

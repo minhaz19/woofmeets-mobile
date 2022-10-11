@@ -4,44 +4,53 @@ import TitleText from './text/TitleText';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Text_Size from '../../constants/textScaling';
-// const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+import {useFormContext} from 'react-hook-form';
+
 const days = [
   {
     id: 1,
     day: 'M',
     active: false,
+    value: 'Monday',
   },
   {
     id: 2,
     day: 'T',
     active: false,
+    value: 'Tuesday',
   },
   {
     id: 3,
     day: 'W',
     active: false,
+    value: 'Wednesday',
   },
   {
     id: 4,
     day: 'T',
     active: false,
+    value: 'Thursday',
   },
   {
     id: 5,
     day: 'F',
     active: false,
+    value: 'Friday',
   },
   {
     id: 6,
     day: 'S',
     active: false,
+    value: 'Saturday',
   },
   {
     id: 7,
     day: 'S',
     active: false,
+    value: 'Sunday',
   },
 ];
+let selectedDays: string[] = [];
 const AppDayPicker = () => {
   const [newData, setDatas] = useState(days);
   const handleMultipleCheck = (id: number) => {
@@ -50,6 +59,7 @@ const AppDayPicker = () => {
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
+  const {setValue} = useFormContext();
   return (
     <View style={styles.container}>
       <TitleText
@@ -64,7 +74,12 @@ const AppDayPicker = () => {
               styles.day,
               {borderColor: item.active ? Colors.primary : Colors.border},
             ]}
-            onPress={() => handleMultipleCheck(item.id)}>
+            onPress={() => {
+              selectedDays.push(item.value);
+              setValue('recurringSelectedDay', selectedDays);
+              handleMultipleCheck(item.id);
+            }}
+          >
             <TitleText text={item.day} textStyle={styles.text} />
           </Pressable>
         ))}

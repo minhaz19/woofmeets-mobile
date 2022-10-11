@@ -220,28 +220,24 @@ const cardExpValidationSchema = Yup.object().shape({
 });
 
 const appointmentValidationSchema = Yup.object().shape({
-  serviceId: Yup.number().nullable(true).typeError('A Number is Required'),
-  visit: Yup.number().nullable(true).typeError('A Number is Required'),
-  schedule: Yup.number().nullable(true).typeError('A Number is Required'),
-  isRepeatBooking: Yup.boolean(),
-  bookingDates: Yup.array(),
-  startDay: Yup.string(),
-  bookingDays: Yup.array(),
-
-  dropOff: Yup.object().shape({
-    date: Yup.string(),
-    from: Yup.string(),
-    to: Yup.string(),
-  }),
-  pickUp: Yup.object().shape({
-    date: Yup.string(),
-    from: Yup.string(),
-    to: Yup.string(),
-  }),
-
+  providerServiceId: Yup.number()
+    .nullable(true)
+    .typeError('A Number is Required'),
+  visitLength: Yup.number().nullable(true).typeError('A Number is Required'),
+  isRecurring: Yup.boolean(),
+  dropOffStartTime: Yup.string(),
+  dropOffEndTime: Yup.string(),
+  pickUpStartTime: Yup.string(),
+  pickUpEndTime: Yup.string(),
   pets: Yup.array(),
-  message: Yup.string(),
+  firstMessage: Yup.string(),
   isReceivedPhotos: Yup.boolean(),
+  recurringStartDate: Yup.string(),
+  recurringSelectedDay: Yup.array(),
+  repeatDate: Yup.array(),
+  proposalStartDate: Yup.string(),
+  proposalEndDate: Yup.string(),
+  proposalOtherDate: Yup.array(),
 });
 
 export {

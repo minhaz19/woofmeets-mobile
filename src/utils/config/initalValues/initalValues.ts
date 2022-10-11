@@ -83,27 +83,21 @@ const planCheckoutInit = {
   },
 };
 const appointmentInit = {
-  serviceId: 0,
-  visit: 0,
-  schedule: 0,
-
-  isRepeatBooking: false,
-  bookingDates: [],
-  startDay: '',
-  bookingDays: [],
-
-  dropOff: {
-    date: '',
-    from: '',
-    to: '',
-  },
-  pickUp: {
-    date: '',
-    from: '',
-    to: '',
-  },
+  providerServiceId: 0,
+  visitLength: 0,
+  isRecurring: false,
+  dropOffStartTime: '',
+  dropOffEndTime: '',
+  pickUpStartTime: '',
+  pickUpEndTime: '',
+  recurringStartDate: '',
+  recurringSelectedDay: [],
+  repeatDate: [],
+  proposalStartDate: '',
+  proposalEndDate: '',
+  proposalOtherDate: [],
   pets: [],
-  message: '',
+  firstMessage: '',
   isReceivedPhotos: false,
 };
 export {

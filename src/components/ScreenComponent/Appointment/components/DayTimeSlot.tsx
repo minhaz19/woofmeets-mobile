@@ -5,6 +5,7 @@ import TimeMultiSlotPicker from '../../../common/TimeMultiSlotPicker';
 import DescriptionText from '../../../common/text/DescriptionText';
 import SwitchView from '../../../common/switch/SwitchView';
 import Text_Size from '../../../../constants/textScaling';
+import {useFormContext} from 'react-hook-form';
 
 const dates = [
   {
@@ -52,9 +53,22 @@ const DayTimeSlot = () => {
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
+  const {watch} = useFormContext();
+  const {recurringSelectedDay, repeatDate} = watch();
+
+  const output = repeatDate.filter((obj: any) => {
+    return recurringSelectedDay.indexOf(obj.day) !== -1;
+  });
+  const modData = output?.map((item: any, index: number) => ({
+    id: index + 1,
+    date: item.date,
+    day: item.day,
+    active: index === 0 ? null : true,
+  }));
+  console.log('recurringSelectedDay', recurringSelectedDay, repeatDate, output);
   return (
     <View>
-      {newData.map((item, index) => (
+      {modData?.map((item: any, index: number) => (
         <View key={index}>
           {index === 0 ? (
             <View>
@@ -62,15 +76,15 @@ const DayTimeSlot = () => {
                 textStyle={styles.headerText}
                 text={'Pick walk times'}
               />
-              <TitleText textStyle={styles.day} text={'Monday'} />
+              <TitleText textStyle={styles.day} text={item.day} />
               <DescriptionText text={'Add one or more walk times'} />
               <TimeMultiSlotPicker />
             </View>
           ) : (
             <View style={styles.section}>
-              <TitleText textStyle={styles.day} text={'Monday'} />
+              <TitleText textStyle={styles.day} text={item.day} />
               <View style={styles.checkContainer}>
-                <DescriptionText text="Use same walk times as Mondays" />
+                <DescriptionText text={`Use same walk times as ${item.day}`} />
                 <SwitchView
                   isActive={item.active}
                   activeText=""

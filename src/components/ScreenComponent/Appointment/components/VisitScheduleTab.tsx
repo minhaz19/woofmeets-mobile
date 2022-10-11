@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import AppHalfTabs from '../../../common/AppHalfTabs';
 import {Calendar, ClockSvg, Repeat} from '../../../../assets/svgs/SVG_LOGOS';
 import AppDayPicker from '../../../common/AppDayPicker';
+// import BottomSheetCalendar from '../../../common/BottomSheetCalendar';
 const data = [
   {
     id: 1,
@@ -52,6 +53,7 @@ const VisitScheduleTab = ({serviceId}: Props) => {
         name="schedule"
       />
       {scheduleId === 1 && <AppDayPicker />}
+      {/* <BottomSheetCalendar title={scheduleId === 0 ? 'Dates' : 'Start Date'} /> */}
     </View>
   );
 };
