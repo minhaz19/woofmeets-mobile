@@ -26,15 +26,6 @@ const SubscriptionScreen = () => {
     ssLoading,
     cardLoading,
   } = useSubscription();
-  console.log(
-    'subscription',
-    'loading',
-    loading,
-    'planLoading',
-    planLoading,
-    'cardLoading',
-    cardLoading,
-  );
   return (
     <Screen style={{flex: 1}}>
       {(loading || planLoading || cardLoading) && (

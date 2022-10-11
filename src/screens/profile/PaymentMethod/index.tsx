@@ -52,7 +52,7 @@ const PaymentMethods = ({route, navigation}: Props) => {
   );
   return (
     <>
-      {(loading || dLoading) && <AppActivityIndicator visible={true} />}
+      {/* {(loading || dLoading) && <AppActivityIndicator visible={true} />} */}
       {cards === undefined || cards === null ? (
         <NoCards sequence={sequence} />
       ) : (

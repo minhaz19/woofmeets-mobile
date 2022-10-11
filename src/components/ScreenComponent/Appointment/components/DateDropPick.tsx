@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {StyleSheet, Text, TextStyle, View} from 'react-native';
+import {Modal, Pressable, StyleSheet, View} from 'react-native';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
@@ -15,68 +16,78 @@ interface Props {
   serviceId?: number;
 }
 const DateDropPick = ({serviceId}: Props) => {
-  const [startSlot, setStartSlot] = useState();
-  const [endSlot, setEndSlot] = useState();
   const [visible, setVisible] = useState(false);
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const [slotVisible, setSlotVisible] = useState(false);
 
-  // variables
-  const snapPoints = useMemo(() => ['75%', '90%'], []);
-
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-  const handleSheetChanges = useCallback((index: number) => {}, []);
   return (
-    <>
-      <BottomSheetModalProvider>
-        <View style={styles.container}>
-          <TitleText textStyle={styles.headerText} text={'Schedule'} />
-          {serviceId === 4 ? null : (
-            <AppTouchableOpacity
-              style={styles.sectionContainer}
-              onPress={handlePresentModalPress}>
-              <View>
-                <TitleText textStyle={styles.titleText} text={'Dates'} />
-                <DescriptionText text={'Tap to add dates'} />
-              </View>
-              <View style={styles.iconContainer}>
-                <CalendarCSvg fill="black" width={30} height={30} />
-              </View>
-            </AppTouchableOpacity>
-          )}
+    <View>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: visible ? 'rgba(0,0,0,0.5)' : '#f1f1f1',
+            zIndex: 99999,
+            position: visible ? 'absolute' : 'relative',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+          },
+        ]}>
+        <TitleText textStyle={styles.headerText} text={'Schedule'} />
+        {serviceId === 4 || !visible === true ? null : (
+          <AppTouchableOpacity
+            style={styles.sectionContainer}
+            onPress={() => setVisible(!visible)}>
+            <View>
+              <TitleText textStyle={styles.titleText} text={'Dates'} />
+              <DescriptionText text={'Tap to add dates'} />
+            </View>
+            <View style={styles.iconContainer}>
+              <CalendarCSvg fill="black" width={30} height={30} />
+            </View>
+          </AppTouchableOpacity>
+        )}
 
-          <View style={styles.slotContainer}>
-            <AppTouchableOpacity
-              style={styles.slot}
-              onPress={() => setVisible(!visible)}>
-              <TitleText textStyle={{}} text={'Start range'} />
-              <View style={styles.iconContainer}>
-                <ClockSvg fill="black" />
-              </View>
-            </AppTouchableOpacity>
-            <AppTouchableOpacity
-              style={styles.slot}
-              onPress={() => setVisible(!visible)}>
-              <TitleText textStyle={{}} text={'End range'} />
-              <View style={styles.iconContainer}>
-                <ClockSvg fill="black" />
-              </View>
-            </AppTouchableOpacity>
-          </View>
-          <TimeSlotPicker visible={visible} setVisbile={setVisible} />
-
-          <BottomSheetModal
-            ref={bottomSheetModalRef}
-            index={1}
-            snapPoints={snapPoints}
-            onChange={handleSheetChanges}>
-            <AppCalendar />
-          </BottomSheetModal>
+        <View style={styles.slotContainer}>
+          <AppTouchableOpacity
+            style={styles.slot}
+            onPress={() => setSlotVisible(!slotVisible)}>
+            <TitleText textStyle={{}} text={'Start range'} />
+            <View style={styles.iconContainer}>
+              <ClockSvg fill="black" />
+            </View>
+          </AppTouchableOpacity>
+          <AppTouchableOpacity
+            style={styles.slot}
+            onPress={() => setSlotVisible(!slotVisible)}>
+            <TitleText textStyle={{}} text={'End range'} />
+            <View style={styles.iconContainer}>
+              <ClockSvg fill="black" />
+            </View>
+          </AppTouchableOpacity>
         </View>
-      </BottomSheetModalProvider>
-    </>
+        <TimeSlotPicker visible={slotVisible} setVisbile={setSlotVisible} />
+
+        <Modal animated transparent visible={visible} animationType="slide">
+          <Pressable
+            style={styles.bgContainer}
+            onPress={() => setVisible(!visible)}
+          />
+          <View style={styles.pickerContainer}>
+            <TitleText
+              textStyle={{
+                fontWeight: 'bold',
+                color: Colors.text,
+                fontSize: Text_Size.Text_1,
+              }}
+              text={'Select date range'}
+            />
+            <AppCalendar selectType="RANGE" />
+          </View>
+        </Modal>
+      </View>
+    </View>
   );
 };
 
@@ -123,5 +134,14 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingVertical: 20,
+  },
+  pickerContainer: {
+    height: '80%',
+    width: '100%',
+    backgroundColor: 'white',
+    flexDirection: 'row',
+  },
+  bgContainer: {
+    flex: 1,
   },
 });

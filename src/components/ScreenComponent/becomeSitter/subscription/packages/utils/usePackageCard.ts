@@ -22,7 +22,7 @@ export const usePackageCard = (props: any) => {
       setSSLoading(true);
       const result: ApiResponse<any> = await methods._get(endpoint);
       const cardResponse = await cardRequest(defaultCardEndpoint);
-      if (result.ok) {
+      if (result.ok && cardResponse.ok) {
         if (
           result.data.data.needPayment === true &&
           cardResponse.status === 200

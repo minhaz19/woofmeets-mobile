@@ -9,7 +9,7 @@ interface Props {
   range?: number;
   selectType: string;
 }
-const AppCalendar = ({range = 12, selectType = 'SINGLE'}: Props) => {
+const AppCalendar = ({range = 12, selectType}: Props) => {
   const {colors} = useTheme();
   const {handleDayPress, singleSelect, _markedStyle} =
     useHandleRange(selectType);
@@ -20,13 +20,7 @@ const AppCalendar = ({range = 12, selectType = 'SINGLE'}: Props) => {
         pastScrollRange={0}
         futureScrollRange={range}
         onDayPress={handleDayPress}
-        markingType={
-          selectType === 'RANGE'
-            ? singleSelect !== ''
-              ? 'custom'
-              : 'period'
-            : 'custom'
-        }
+        markingType={'custom'}
         markedDates={{
           ..._markedStyle,
           [singleSelect]: {
@@ -122,7 +116,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
-    marginTop: 10,
     marginBottom: 10,
   },
   month: {
