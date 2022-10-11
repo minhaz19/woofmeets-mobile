@@ -6,6 +6,7 @@ import Colors from '../../../../constants/Colors';
 import {PendingSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
+import { useNavigation } from '@react-navigation/native';
 
 export const data = [
   {
@@ -54,6 +55,7 @@ export const data = [
 ];
 
 const PendingMessage = () => {
+  const navigation = useNavigation();
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
@@ -76,6 +78,7 @@ const PendingMessage = () => {
                   status: item.status,
                 }}
                 buttonStyles={Colors.yellow}
+                handlePress={() => {navigation.navigate('ReportCardInitial')}}
               />
             );
           })

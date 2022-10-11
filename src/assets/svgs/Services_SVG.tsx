@@ -1541,3 +1541,35 @@ export const DropInVisitIcon = (props: SvgProps) => (
     </G>
   </Svg>
 );
+
+export const DogIcon = (props: SvgProps) => (
+  <Svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} {...props} viewBox="0 0 24 24">
+    <Defs>
+      <ClipPath id="a">
+        <Path
+          data-name="Rectangle 22122"
+          transform="translate(2527 -14844)"
+          fill="#fea557"
+          d="M0 0h24v24H0z"
+        />
+      </ClipPath>
+    </Defs>
+    <G
+      data-name="Mask Group 36694"
+      transform="translate(-2527 14844)"
+      clipPath="url(#a)"
+    >
+      <G fill="#fea557">
+        <Path
+          data-name="Path 20668"
+          d="M2539.969-14834.499v.011h-5.934a4.2 4.2 0 0 0-2.33.7h-1.893a1.406 1.406 0 1 1 0-2.812h2.11a.703.703 0 1 0 0-1.406h-2.11a2.813 2.813 0 1 0 0 5.625h.568a4.2 4.2 0 0 0-.568 2.113v8.809a.7.7 0 0 0 .7.7h2.816a.7.7 0 0 0 .7-.7v-5.929l6.422.577v5.4a.7.7 0 0 0 .7.7h2.812a.7.7 0 0 0 .7-.7v-6.68l.866-4.332Z"
+        />
+        <Path
+          data-name="Path 20669"
+          d="M2550.297-14838.704h-2.122a2.153 2.153 0 0 0-2.142-1.922h-1.18l-.431-2.109a.7.7 0 0 0-1.348-.1l-2.614 7.021 5.358 2 .134-.669h1.533a3.52 3.52 0 0 0 3.515-3.521.7.7 0 0 0-.7-.7Z"
+        />
+      </G>
+    </G>
+  </Svg>
+)
+

@@ -4,7 +4,7 @@ import React, {FC} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import {DogWalkingIcon} from '../../../assets/svgs/Services_SVG';
+import {DogIcon, DogWalkingIcon} from '../../../assets/svgs/Services_SVG';
 import TitleText from '../../common/text/TitleText';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 
@@ -20,9 +20,9 @@ const PetCard: FC<Props> = props => {
   const getIcon = (iconId: number) => {
     switch (iconId) {
       case 1:
-        return <DogWalkingIcon width={34} height={36} />;
+        return <DogIcon width={32} height={34} />;
       case 2:
-        return <DogWalkingIcon width={34} height={36} />;
+        return <DogIcon width={32} height={34} />;
     }
   };
 
@@ -50,7 +50,7 @@ const PetCard: FC<Props> = props => {
         <View style={[styles.boxContainer, props.divide ? styles.pet : {}]}>
           {props.data.icon && (
             <View style={styles.imageContainer}>
-              {getIcon(props.data.selected)}
+              {getIcon(props.data.sequence)}
             </View>
           )}
           <View style={[styles.textContainer]}>

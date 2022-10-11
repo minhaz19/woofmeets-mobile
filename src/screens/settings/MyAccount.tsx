@@ -3,9 +3,13 @@ import React, {useEffect, useState} from 'react';
 import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import {
   CallIcon,
+  CardsIcon,
+  ChangePasswordIcon,
   Payment2Icon,
+  PaymentIcon,
   PetsIcon,
   Profile2Icon,
+  ProfileIcon,
 } from '../../assets/svgs/Setting_SVG';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
@@ -30,7 +34,7 @@ const MyAccount = (props: {
     {
       id: 1,
       title: 'Basic Info',
-      icon: Profile2Icon,
+      icon: ProfileIcon,
       screenName: () => props.navigation.navigate('BasicInfo'),
       details: 'Name, Age, Photo, Address, Country',
       opacity: 1,
@@ -46,7 +50,7 @@ const MyAccount = (props: {
     {
       id: 3,
       title: 'Change Password',
-      icon: PetsIcon,
+      icon: ChangePasswordIcon,
       screenName: () => props.navigation.navigate('ResetPassword'),
       details: 'Update and secure your password',
       opacity: 1,
@@ -54,7 +58,7 @@ const MyAccount = (props: {
     {
       id: 4,
       title: 'Payment method',
-      icon: Payment2Icon,
+      icon: PaymentIcon,
       screenName: () =>
         props.navigation.navigate('PaymentMethod', {sequence: null}),
       details: 'Add payment, Card',

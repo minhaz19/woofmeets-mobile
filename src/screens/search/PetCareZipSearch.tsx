@@ -186,7 +186,7 @@ const PetCareZipSearch = (props: {
           {myPet && myPet.length > 0 && (
             <View style={styles.switchContainer}>
               <TitleText
-                textStyle={{...styles.petTitleText, paddingRight: 6}}
+                textStyle={{...styles.petTitleText1, paddingRight: 6}}
                 text={'My Pet'}
               />
               <SwitchView
@@ -373,7 +373,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: '4%',
+    marginLeft: '4%',
+    width: '90%',
+    paddingBottom: 5,
   },
   switchContainer: {
     flexDirection: 'row',
@@ -382,6 +384,13 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_1,
     fontWeight: '500',
     paddingBottom: 8,
+    width: '70%',
+  },
+  petTitleText1: {
+    fontSize: Text_Size.Text_1,
+    fontWeight: '500',
+    paddingBottom: 8,
+    // width: '70%',
   },
 });
 
