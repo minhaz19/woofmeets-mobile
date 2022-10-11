@@ -13,7 +13,6 @@ import {useForm} from 'react-hook-form';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
-import DescriptionText from '../../../../common/text/DescriptionText';
 import Colors from '../../../../../constants/Colors';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
 interface Props {
@@ -70,17 +69,11 @@ const SubPetPreference = ({
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
           <BigText text={'Pet Preference'} textStyle={styles.headerText} />
-          <View style={styles.textContainer}>
-            <View style={styles.iconContainer}>
-              <QuestionIcon fill={Colors.primary} />
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-              <DescriptionText
-                text="Why Pet Preference is important?"
-                textStyle={{color: Colors.primary}}
-              />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() => setModalVisible(true)}
+            style={styles.iconContainer}>
+            <QuestionIcon fill={Colors.primary} />
+          </TouchableOpacity>
         </View>
         <View>
           <HeaderText
@@ -135,13 +128,12 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   iconContainer: {
-    paddingRight: 10,
+    paddingLeft: 10,
   },
   textContainer: {
     flexDirection: 'row',

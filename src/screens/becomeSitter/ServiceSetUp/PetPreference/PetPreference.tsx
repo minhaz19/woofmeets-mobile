@@ -51,7 +51,9 @@ const PetPreference = () => {
         style={[
           styles.rootContainer,
           {backgroundColor: colors.backgroundColor},
-        ]}>
+        ]}
+        showsVerticalScrollIndicator={false}
+        >
         <ReusableHeader
           itemId={itemId}
           name={name}

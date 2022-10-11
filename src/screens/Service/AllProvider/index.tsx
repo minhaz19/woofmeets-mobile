@@ -21,27 +21,30 @@ interface Props {
 }
 const AllProvider = ({navigation}: Props) => {
   const filter = useAppSelector((state: any) => state.filter.isOpen);
-  const {loading} = useAppSelector(state => state.providerProfile);
+  // const {loading} = useAppSelector(state => state.providerProfile);
+  const {allProvider, loading: getLoading} = useAppSelector(
+    (state: any) => state.allProvider,
+  );
+  console.log('----------------', allProvider);
   const dispatch = useAppDispatch();
   const isDarkMode = useColorScheme() === 'dark';
 
   const renderHeader = () => {
     return (
       <ShortText
-          textStyle={{
-            paddingVertical: Platform.OS === 'ios' ? 10 : 0,
-            color: Colors.gray,
-          }}
-          text="20 Result"
-        />
-    )
-  }
+        textStyle={{
+          paddingVertical: Platform.OS === 'ios' ? 10 : 0,
+          color: Colors.gray,
+        }}
+        text="20 Result"
+      />
+    );
+  };
 
   return (
     <ScreenRapperGrey>
-      {loading && <AppActivityIndicator visible={true} />}
-      <Screen
-        style={styles.container}>
+      {getLoading && <AppActivityIndicator visible={true} />}
+      <Screen style={styles.container}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={providers}
@@ -58,10 +61,14 @@ const AllProvider = ({navigation}: Props) => {
                 availablity={item.availablity}
                 repeatClient={item.repeatClient}
                 onPress={async () => {
-                  await dispatch(getProviderProfile('xCMyOqAm'));
+                  await dispatch(getProviderProfile('2NzBcMvn'));
                   navigation.navigate('ProviderNavigator', {
-                    providerOpk: 'xCMyOqAm',
+                    providerOpk: '2NzBcMvn',
                   });
+                  // await dispatch(getProviderProfile('xCMyOqAm'));
+                  // navigation.navigate('ProviderNavigator', {
+                  //   providerOpk: 'xCMyOqAm',
+                  // });
                 }}
               />
             );

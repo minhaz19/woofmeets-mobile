@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {FC} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
@@ -11,8 +11,8 @@ import {
   DropInVisitIcon,
   HouseSittingIcon,
 } from '../../../assets/svgs/Services_SVG';
-import ShortText from '../../common/text/ShortText';
 import TitleText from '../../common/text/TitleText';
+import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 
 interface Props {
   data: any;
@@ -36,22 +36,21 @@ const ServiceCard: FC<Props> = props => {
         return <DoggyDayCareIcon width={34} height={36} />;
       case 5:
         return <DogWalkingIcon width={34} height={36} />;
-      case 6:
-        return <DogWalkingIcon width={34} height={36} />;
-      case 7:
-        return <DogWalkingIcon width={34} height={36} />;
     }
   };
   return (
-    <TouchableOpacity
-      onPress={() => props.onPressEvent(props.data.sequence)}
+    <AppTouchableOpacity
+      onPress={() => {
+        props.onPressEvent(props.data);
+        // props.data.onPress;
+      }}
       key={props.data.id}>
       <View
         style={[
           styles.container,
           {
             backgroundColor: colors.backgroundColor,
-            borderWidth: props.sequence === props.data.sequence ? 2 : 1,
+            borderWidth: props.sequence === props.data.sequence ? 2 : 2,
             borderColor:
               props.sequence === props.data.sequence
                 ? Colors.primary
@@ -72,7 +71,7 @@ const ServiceCard: FC<Props> = props => {
           <View style={styles.rightSelection} />
         )}
       </View>
-    </TouchableOpacity>
+    </AppTouchableOpacity>
   );
 };
 

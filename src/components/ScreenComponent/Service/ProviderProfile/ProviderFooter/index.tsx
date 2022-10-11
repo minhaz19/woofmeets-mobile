@@ -3,9 +3,13 @@ import React from 'react';
 import BottomSpacing from '../../../../UI/BottomSpacing';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
+import { useNavigation } from '@react-navigation/native';
 
 const ProviderFooter = () => {
-  const handleSubmit = () => {};
+  const navigation = useNavigation();
+  const handleSubmit = () => {
+    navigation.navigate('Appointment')
+  };
   return (
     <View style={styles.container}>
       <ButtonCom

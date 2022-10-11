@@ -78,8 +78,6 @@ const RealtimeLocation = () => {
         });
       },
       (error: any) => {
-        // See error code charts below.
-        // console.log(error.code, error.message);
       },
       {
         enableHighAccuracy: true,
@@ -114,7 +112,7 @@ const RealtimeLocation = () => {
           showsCompass
           userLocationPriority="high"
           zoomEnabled
-          onUserLocationChange={e => console.log('e', e)}>
+          onUserLocationChange={e => null}>
           <Polyline
             coordinates={mapInfo.coordinates}
             strokeColor="#bf8221"

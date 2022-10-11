@@ -8,7 +8,7 @@ const _post = (slug: string, payload: any, value?: string) => {
     },
   });
 };
-const _update = (slug: string, payload: any, value?: string) =>
+const _update = (slug: string, payload?: any, value?: string) =>
   client.patch(slug, payload, {
     headers: {
       Authorization: value,

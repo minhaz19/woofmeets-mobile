@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import ModalBottomView from '../../../../UI/modal/ModalBottomView';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -7,6 +7,7 @@ import DescriptionText from '../../../../common/text/DescriptionText';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import IOSButton from '../../../../UI/IOSButton';
 import Colors from '../../../../../constants/Colors';
+import BottomSpacing from '../../../../UI/BottomSpacing';
 
 interface Props {
   modalVisible: boolean;
@@ -32,16 +33,17 @@ const ServiceReusableModal = ({modalVisible, setModalVisible}: Props) => {
         setIsModalVisible={setModalVisible}>
         <HeaderText text={modalData[0].title} />
         <Divider />
-        <DescriptionText text={modalData[0].text} />
-        <IOSButton
-          title={'Close'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={styles.titleStyle}
-          onSelect={() => {
-            setModalVisible(!modalVisible);
-          }}
-        />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <DescriptionText text={modalData[0].text} />
+          <IOSButton
+            title={'Close'}
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={btnStyles.containerStyleFullWidth}
+            titleStyle={styles.titleStyle}
+            onSelect={() => setModalVisible(false)}
+          />
+          <BottomSpacing />
+        </ScrollView>
       </ModalBottomView>
     </View>
   );

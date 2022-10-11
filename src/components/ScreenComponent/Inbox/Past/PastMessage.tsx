@@ -6,16 +6,18 @@ import ReusableCard from '../utils/Common/ReusableCard';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {PastSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
-import {useDispatch} from 'react-redux';
-import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
+import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 
-const PastMessage = () => {
-  const dispatch = useDispatch();
+const PastMessage = (props: {setModalVisible: (arg1: boolean) => void}) => {
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
+        <FilterByDateAndActivity
+          handleActivity={() => {}}
+          handleDate={() => {}}
+        />
         {data.length > 0 ? (
           data?.map((item, index) => {
             return (
@@ -29,7 +31,7 @@ const PastMessage = () => {
                   status: item.status,
                 }}
                 buttonStyles={Colors.green}
-                handlePress={() => dispatch(setOpenFilter(true))}
+                handlePress={() => props.setModalVisible(true)}
               />
             );
           })
@@ -52,6 +54,6 @@ export default PastMessage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
+    // marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
   },
 });

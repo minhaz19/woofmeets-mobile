@@ -17,7 +17,7 @@ import Rates from '../../../screens/becomeSitter/ServiceSetUp/Rates';
 import YourHome from '../../../screens/becomeSitter/ServiceSetUp/YourHome/YourHome';
 import SubscriptionScreen from '../../../screens/becomeSitter/Subscription';
 import BasicInfo from '../../../screens/profile/BasicInfo';
-import ContactScreen from '../../../screens/profile/ContactScreen';
+import ContactScreen from '../../../screens/profile/ContactScreen/ContactScreen';
 
 export const getOnboardingProgress = createAsyncThunk(
   'progress/getOnboardingProgress',

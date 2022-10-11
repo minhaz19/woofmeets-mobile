@@ -1,5 +1,5 @@
 import {View, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BigText from '../../../components/common/text/BigText';
 import {
@@ -10,27 +10,38 @@ import ShortText from '../../../components/common/text/ShortText';
 import IconTwoText from '../../../components/ScreenComponent/activity/IconTwoText';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import ModifyCalendar from '../../../components/ScreenComponent/activity/ModifyCalendar';
+import TimeRange from '../../../components/ScreenComponent/activity/TimeRange';
 
 const EditDetails = () => {
   const {colors} = useTheme();
+  const [fromTime, setFromTime] = useState({
+    startTime: '',
+    endTime: '',
+  });
+  const [toTime, setToTime] = useState({
+    startTime: '',
+    endTime: '',
+  });
+  // const [from, setFrom] = useState(null);
+  // const [to, setTo] = useState(null);
   return (
     <ScrollView
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <BigText text="Edit Schedule" />
-      <IconTwoText
-        icon={<RightArrow />}
-        title="Dates"
-        description="2:00 PM - 3:00 PM"
-      />
-      <IconTwoText
+      <ModifyCalendar icon={<RightArrow />} title="Drop-off Dates" />
+      <TimeRange
         icon={<RightArrow />}
         title="Drop-off range"
-        description="2:00 PM - 3:00 PM"
+        time={fromTime}
+        setTime={setFromTime}
       />
-      <IconTwoText
+      <ModifyCalendar icon={<LeftArrow />} title="Pick-up Dates" />
+      <TimeRange
         icon={<LeftArrow />}
-        title="Pick-up range"
-        description="2:00 PM - 3:00 PM"
+        title="Drop-off range"
+        time={toTime}
+        setTime={setToTime}
       />
       <View style={styles.boxContainer}>
         <View style={styles.boxTextContainer}>

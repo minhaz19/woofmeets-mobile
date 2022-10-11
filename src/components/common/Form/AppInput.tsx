@@ -26,7 +26,7 @@ const AppInput = ({...otherProps}) => {
           {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
             height: numberOfLines >= 10 ? 120 : 45,
-            flex: 1,
+            width: otherProps.secureTextEntry ? '90%' : '100%',
             color: isDarkMode ? 'white' : 'black',
             fontSize: Text_Size.Text_11,
           },
@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    width: '90%',
-    flex: 0,
+    // width: '90%',
+    flex: 1,
   },
   check: {height: '100%', alignSelf: 'center'},
 });

@@ -13,6 +13,8 @@ import ImageUploadModal from '../../../UI/modal/ImageUploadModal';
 import {Delete} from '../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import TitleText from '../../../common/text/TitleText';
+import HeaderText from '../../../common/text/HeaderText';
 
 interface Props {
   imageUri?: string;
@@ -70,7 +72,7 @@ const PhotoGallery = ({imageUri, handlePress, onChangeImage}: Props) => {
             <TouchableOpacity
               style={styles.imageContainer}
               onPress={() => setIsModalVisible(!isModalVisible)}>
-              <Text style={styles.innerText}>Add Photo</Text>
+              <HeaderText textStyle={styles.innerText} text="Add Photo" />
             </TouchableOpacity>
           </>
         )}
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
   },
   innerText: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_9,
     color: 'gray',
   },
   delete: {

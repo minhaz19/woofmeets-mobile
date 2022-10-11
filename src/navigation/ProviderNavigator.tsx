@@ -13,7 +13,13 @@ function ProviderNavigator() {
       <Stack.Screen
         name="ProviderProfile"
         component={ProviderProfile}
-        options={{headerShown: false}}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack navigation={navigation} title="Provider Profile" />
+          ),
+          backgroundColor: Colors.primary,
+        })}
       />
 
       <Stack.Screen

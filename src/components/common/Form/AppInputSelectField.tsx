@@ -6,9 +6,9 @@ import Text_Size from '../../../constants/textScaling';
 import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
 import AppInputSelect from './AppInputSelect';
-import {useDispatch} from 'react-redux';
 import {setCross} from '../../../store/slices/misc/hittingCross';
 import {useRHFContext} from '../../../utils/helpers/Form/useRHFContext';
+import { useAppDispatch } from '../../../store/store';
 interface Props {
   name: string;
   label: string;
@@ -35,7 +35,7 @@ const AppInputSelectField = ({
   onPress,
 }: Props) => {
   const {errors, value, onBlur} = useRHFContext(name);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <>
       <View style={{width: '100%'}}>

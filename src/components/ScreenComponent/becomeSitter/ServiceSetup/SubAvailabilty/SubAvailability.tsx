@@ -20,8 +20,8 @@ import {useHandleMultipleActiveCheck} from '../handleCheck/HandleCheck';
 import Colors from '../../../../../constants/Colors';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
-import ShortText from '../../../../common/text/ShortText';
-import { useTheme } from '../../../../../constants/theme/hooks/useTheme';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+
 
 interface Props {
   handlePost: (arg1: any) => void;
@@ -48,18 +48,12 @@ const SubAvailability = ({handlePost, loading}: Props) => {
       />
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
-          <BigText text={'Availability'} textStyle={styles.headerText} />
-          <View style={styles.textContainer}>
-            <View style={styles.iconContainer}>
-              <QuestionIcon fill={Colors.primary} />
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-              <DescriptionText
-                text="Why is availability important"
-                textStyle={{color: Colors.primary}}
-              />
-            </TouchableOpacity>
-          </View>
+          <BigText text={'Pet Preference'} textStyle={styles.headerText} />
+          <TouchableOpacity
+            onPress={() => setModalVisible(true)}
+            style={styles.iconContainer}>
+            <QuestionIcon fill={Colors.primary} />
+          </TouchableOpacity>
         </View>
         <View>
           <HeaderText text={availabilityInput.title} />
@@ -92,7 +86,10 @@ const SubAvailability = ({handlePost, loading}: Props) => {
           {availabilitySelectDay.subtitle && (
             <DescriptionText
               text={availabilitySelectDay.subtitle}
-              textStyle={{...styles.subHeaderText, color: colors.descriptionText}}
+              textStyle={{
+                ...styles.subHeaderText,
+                color: colors.descriptionText,
+              }}
             />
           )}
           <View style={styles.dayBoxContainer}>
@@ -188,13 +185,12 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   iconContainer: {
-    paddingRight: 10,
+    paddingLeft: 10,
   },
   textContainer: {
     flexDirection: 'row',

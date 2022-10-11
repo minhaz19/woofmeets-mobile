@@ -5,6 +5,8 @@ import ReusableCard from '../utils/Common/ReusableCard';
 import Colors from '../../../../constants/Colors';
 import {PendingSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
+import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
+import { useNavigation } from '@react-navigation/native';
 
 export const data = [
   {
@@ -53,11 +55,16 @@ export const data = [
 ];
 
 const PendingMessage = () => {
+  const navigation = useNavigation();
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
+        <FilterByDateAndActivity
+          handleActivity={() => {}}
+          handleDate={() => {}}
+        />
         {data.length > 0 ? (
           data?.map((item, index) => {
             return (
@@ -71,6 +78,7 @@ const PendingMessage = () => {
                   status: item.status,
                 }}
                 buttonStyles={Colors.yellow}
+                handlePress={() => {navigation.navigate('ReportCardInitial')}}
               />
             );
           })
@@ -93,6 +101,6 @@ export default PendingMessage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
+    // marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
   },
 });

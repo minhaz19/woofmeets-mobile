@@ -14,6 +14,8 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
+import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
+import Colors from '../../../../../constants/Colors';
 
 interface props {
   handlePolicy: (arg1: any) => void;
@@ -59,18 +61,12 @@ const SubCancellationPolicy = ({
         setModalVisible={setModalVisible}
       />
       <View style={styles.flexContainer}>
-        <BigText text={'Cancellation Policy'} textStyle={styles.headerText} />
-        <View style={styles.textContainer}>
-          {/* <View style={styles.iconContainer}>
-            <QuestionIcon fill={Colors.primary} />
-          </View> */}
-          {/* <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-            <DescriptionText
-              text="Why Cancellation Policy is important?"
-              textStyle={{color: Colors.primary}}
-            />
-          </TouchableOpacity> */}
-        </View>
+        <BigText text={'Cancellation policy'} textStyle={styles.headerText} />
+        <TouchableOpacity
+          onPress={() => setModalVisible(true)}
+          style={styles.iconContainer}>
+          <QuestionIcon fill={Colors.primary} />
+        </TouchableOpacity>
       </View>
       <View>
         <HeaderText
@@ -130,13 +126,12 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   iconContainer: {
-    paddingRight: 10,
+    paddingLeft: 10,
   },
   textContainer: {
     flexDirection: 'row',

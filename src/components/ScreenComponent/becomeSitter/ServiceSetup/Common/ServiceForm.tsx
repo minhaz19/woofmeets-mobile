@@ -74,7 +74,6 @@ const ServiceForm = ({
       setValue!(name, convertedValue?.toFixed(2), {
         shouldValidate: errors[name] ? true : false,
       });
-
   }, [name, updateRates, checked, setValue, convertedValue, errors]);
   return (
     <>

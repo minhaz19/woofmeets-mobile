@@ -1,31 +1,40 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {View, SafeAreaView, StyleSheet, ScrollView, useColorScheme} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import {
   CallIcon,
+  CardsIcon,
+  ChangePasswordIcon,
   Payment2Icon,
+  PaymentIcon,
   PetsIcon,
   Profile2Icon,
+  ProfileIcon,
 } from '../../assets/svgs/Setting_SVG';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import SettingItem from '../../components/ScreenComponent/setting/SettingItem';
-import ProfileInfo from '../../components/ScreenComponent/profile/ProfileInfo';
+import ProfileInfo from '../../components/ScreenComponent/profile/BasicInfo/ProfileInfo';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileAction';
 import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
+import storage from '../../utils/helpers/auth/storage';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 
-const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
+const MyAccount = (props: {
+  navigation: {navigate: (arg0: string, arg1?: any) => any};
+}) => {
   const dispatch = useAppDispatch();
   const {loading, userInfo} = useAppSelector(state => state.userProfile);
+  const [newData, setNewData] = useState<any>([]);
+
   const supportData = [
     {
       id: 1,
       title: 'Basic Info',
-      icon: Profile2Icon,
+      icon: ProfileIcon,
       screenName: () => props.navigation.navigate('BasicInfo'),
       details: 'Name, Age, Photo, Address, Country',
       opacity: 1,
@@ -41,7 +50,7 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     {
       id: 3,
       title: 'Change Password',
-      icon: PetsIcon,
+      icon: ChangePasswordIcon,
       screenName: () => props.navigation.navigate('ResetPassword'),
       details: 'Update and secure your password',
       opacity: 1,
@@ -49,13 +58,22 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     {
       id: 4,
       title: 'Payment method',
-      icon: Payment2Icon,
-      screenName: () => props.navigation.navigate('CreditAndDebitCard'),
+      icon: PaymentIcon,
+      screenName: () =>
+        props.navigation.navigate('PaymentMethod', {sequence: null}),
       details: 'Add payment, Card',
       opacity: 1,
     },
     {
       id: 5,
+      title: 'Current Plan',
+      icon: Payment2Icon,
+      screenName: () => props.navigation.navigate('SubscriptionScreen'),
+      details: 'Current Subscribe Plan',
+      opacity: 1,
+    },
+    {
+      id: 6,
       title: 'Your Pets',
       icon: PetsIcon,
       screenName: () => props.navigation.navigate('PetScreens'),
@@ -64,25 +82,32 @@ const MyAccount = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     },
   ];
   const {colors} = useTheme();
+  const b = async () => {
+    const login: any = await storage.getUser();
+
+    if (login.loginProvider === 'LOCAL') {
+      setNewData(supportData);
+    } else if (login.loginProvider !== 'LOCAL') {
+      supportData.splice(2, 1);
+      setNewData(supportData);
+    }
+  };
+
   useEffect(() => {
     userInfo === null ? dispatch(getUserProfileInfo()) : false;
+    b();
   }, []);
   return (
     <ScreenRapperGrey>
       {loading && <AppActivityIndicator visible={true} />}
 
-      <ScrollView
-        style={
-          styles.rootContainer
-        }>
+      <ScrollView style={styles.rootContainer}>
         <SafeAreaView>
           <View style={styles.profileContainer}>
             <ProfileInfo />
           </View>
-          {/* <View
-            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-          /> */}
-          {supportData?.map(item => (
+
+          {newData.map((item: any) => (
             <SettingItem
               data={item}
               key={item.id}

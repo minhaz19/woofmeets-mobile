@@ -12,12 +12,17 @@ import ScreenRapperGrey from '../../../../components/common/ScreenRapperGrey';
 const RescheduleMain = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [viewDetails, setViewDetails] = useState<boolean>(true);
+
   return (
     <ScreenRapperGrey
       rapperStyle={
         styles.container
       }>
+<<<<<<< HEAD
       <View>
+=======
+      <View style={{paddingTop: 10}}>
+>>>>>>> WOOF-40_new
         <FlatList
           showsVerticalScrollIndicator={false}
           data={rescheduleData}
@@ -37,15 +42,16 @@ const RescheduleMain = () => {
           ListFooterComponent={<BottomSpacing />}
         />
       </View>
-      <BottomHalfModal isModalVisible={modalVisible}>
+      <BottomHalfModal isModalVisible={modalVisible} setIsModalVisible={setModalVisible}>
         {viewDetails ? (
           <ServiceSelection
             setModalVisible={setModalVisible}
             setViewDetails={setViewDetails}
           />
         ) : (
-          <EditSchedule setViewDetails={setViewDetails}/>
+          <EditSchedule setViewDetails={setViewDetails} />
         )}
+        <View style={{height: 30}} />
       </BottomHalfModal>
     </ScreenRapperGrey>
   );

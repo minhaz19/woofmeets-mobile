@@ -1,17 +1,10 @@
 const debitAndCreditCard = {
   name: '',
-  cardInfo: {
-    last4: '',
-    expiryMonth: '',
-    expiryYear: '',
-    country: '',
-    postalCode: '',
-  },
+  cardInfo: '',
   line1: '',
-  line2: '',
   state: '',
-  aptState: '',
   city: '',
+  postalCode: '',
 };
 
 export {debitAndCreditCard};

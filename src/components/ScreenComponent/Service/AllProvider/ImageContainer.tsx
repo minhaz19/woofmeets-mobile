@@ -30,7 +30,10 @@ const ImageContainer = ({image, rounded}: Props) => {
       />
       <View style={styles.batchContainer}>
         <DogFeet />
-        <ShortText textStyle={{color: Colors.text, fontSize: Text_Size.Text_10}} text="Verified" />
+        <ShortText
+          textStyle={{color: Colors.text, fontSize: Text_Size.Text_10}}
+          text="Verified"
+        />
       </View>
     </View>
   );

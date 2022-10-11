@@ -2,8 +2,9 @@ import {
   ImageBackground,
   StyleSheet,
   View,
-  TouchableOpacity,
-  TouchableHighlight,
+  Platform,
+  Pressable,
+  SafeAreaView,
 } from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -12,6 +13,7 @@ import DescriptionText from '../../common/text/DescriptionText';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {Cross} from '../../../assets/svgs/SVG_LOGOS';
 import {useNavigation} from '@react-navigation/native';
+import Screen from '../../common/Screen';
 
 interface Props {
   children: any;
@@ -22,34 +24,44 @@ const SliderScreenParent = ({children}: Props) => {
 
   const navigation = useNavigation();
   return (
-    <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
-      <View style={styles.rootContainer}>
-        <ImageBackground
-          source={require('../../../assets/image/pet/searchBackground.png')}
-          resizeMode="cover"
-          style={StyleSheet.absoluteFillObject}>
-          {/* <TouchableHighlight onPress={() => {
-            console.log('pressed')
-            navigation.goBack()}}
+    <SafeAreaView style={{flex: 1}}>
+      <View
+        style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
+        <View
+          style={[
+            styles.rootContainer,
+            {
+              backgroundColor: Colors.primary,
+            },
+          ]}>
+          <ImageBackground
+            source={require('../../../assets/image/pet/searchBackground.png')}
+            resizeMode="cover"
+            style={StyleSheet.absoluteFillObject}>
+            {/* <Pressable
+            onPress={() => {
+              navigation.goBack();
+            }}
             style={styles.crossContainer}>
-            <View >
+            <View>
               <Cross height={20} width={20} fill={Colors.light.background} />
             </View>
-          </TouchableHighlight> */}
-          <View style={styles.childrenContainer}>{children}</View>
-        </ImageBackground>
-      </View>
+          </Pressable> */}
+            <View style={styles.childrenContainer}>{children}</View>
+          </ImageBackground>
+        </View>
 
-      <View
-        style={[
-          styles.buttonContainer,
-          {backgroundColor: isDarkMode ? Colors.subText : Colors.primary},
-        ]}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <DescriptionText text={'Book Now'} textStyle={styles.description} />
-        </TouchableOpacity>
+        <View
+          style={[
+            styles.buttonContainer,
+            {backgroundColor: isDarkMode ? Colors.subText : Colors.primary},
+          ]}>
+          <Pressable onPress={() => navigation.goBack()}>
+            <DescriptionText text={'Book Now'} textStyle={styles.description} />
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -60,7 +72,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   rootContainer: {
-    backgroundColor: Colors.primary,
     height: '80%',
     width: '100%',
     justifyContent: 'center',
@@ -78,11 +89,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   crossContainer: {
-    right: 20,
-    top: 50,
+    right: 10,
+    top: Platform.OS === 'ios' ? 30 : 15,
     position: 'absolute',
     flex: 2,
-    backgroundColor: 'black',
+    // backgroundColor: Colors.light.background,
     padding: 10,
   },
   childrenContainer: {

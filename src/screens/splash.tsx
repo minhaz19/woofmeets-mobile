@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {Image, StyleSheet, useColorScheme, View} from 'react-native';
+import {Image, SafeAreaView, StyleSheet, useColorScheme, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DescriptionText from '../components/common/text/DescriptionText';
 import HeaderText from '../components/common/text/HeaderText';
@@ -11,14 +11,15 @@ import MainNavigationContainer from '../navigation/MainNavigationContainer';
 import FirstScreen from './FirstScreen';
 import authStorage from '../utils/helpers/auth/storage';
 import jwt_decode from 'jwt-decode';
-import {useDispatch} from 'react-redux';
 import {slides} from '../utils/config/Data/splashDatas';
 import {signIn} from '../store/slices/auth/userSlice';
-
+import {useAppDispatch} from '../store/store';
+import {getServiceTypes} from '../store/slices/profile/services';
+import {getAllPets} from '../store/slices/pet/allPets/allPetsAction';
 const Splash = ({}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [isPreviousUser, setIsPreviousUser] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [state, setState] = useState({
     showRealApp: false,
   });
@@ -120,12 +121,13 @@ const Splash = ({}) => {
         }
       }
     } catch (err) {
-      // console.log(err);
     }
   };
 
   useEffect(() => {
     signInHandler();
+    dispatch(getServiceTypes());
+    dispatch(getAllPets());
   }, []);
 
   const RenderIcon = () => {
@@ -141,22 +143,26 @@ const Splash = ({}) => {
   } else {
     return (
       <>
+      
         {isPreviousUser ? (
           <MainNavigationContainer previousLoggedIn={true} />
         ) : state.showRealApp ? (
           <MainNavigationContainer previousLoggedIn={false} />
         ) : (
-          <AppIntroSlider
-            activeDotStyle={styles.activeDotStyle}
-            dotStyle={styles.dotStyle}
-            renderItem={_renderItem}
-            data={slides}
-            onDone={_onDone}
-            renderDoneButton={_renderDoneButton}
-            renderNextButton={_renderNextButton}
-            showSkipButton={true}
-          />
+          <SafeAreaView style={{flex: 1}}>
+            <AppIntroSlider
+              activeDotStyle={styles.activeDotStyle}
+              dotStyle={styles.dotStyle}
+              renderItem={_renderItem}
+              data={slides}
+              onDone={_onDone}
+              renderDoneButton={_renderDoneButton}
+              renderNextButton={_renderNextButton}
+              showSkipButton={true}
+            />
+          </SafeAreaView>
         )}
+        
       </>
     );
   }

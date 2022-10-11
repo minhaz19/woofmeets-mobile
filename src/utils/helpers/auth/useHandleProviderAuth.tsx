@@ -74,9 +74,7 @@ export const useHandleProviderAuth = () => {
               dispatch(providerAuth(userInfo));
               dispatch(authProviderLoading(true));
             }
-          } catch (error) {
-            // console.log(error);
-          }
+          } catch (error) {}
         }
       }
     } catch (error) {

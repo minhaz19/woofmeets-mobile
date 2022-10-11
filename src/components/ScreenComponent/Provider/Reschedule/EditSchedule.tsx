@@ -25,6 +25,7 @@ import {
 import ButtonCom from '../../../UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import SwitchView from '../../../common/switch/SwitchView';
+import TitleText from '../../../common/text/TitleText';
 
 interface Props {
   setViewDetails: (arg1: boolean) => void;
@@ -101,7 +102,7 @@ const EditSchedule = ({setViewDetails}: Props) => {
             <View style={styles.serviceContainer} key={item.id}>
               <View>{item.icon}</View>
               <View style={styles.textContainer}>
-                <HeaderText text={item.name} textStyle={styles.titleStyle} />
+                <TitleText text={item.name} textStyle={styles.titleStyle} />
                 <DescriptionText
                   text={item.description}
                   textStyle={styles.shortText}
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
   },
   iconStyle: {paddingRight: 20},
   textHeader: {
-    fontSize: Text_Size.Text_2,
+    // fontSize: Text_Size.Text_2,
   },
   divider: {
     height: 1,
@@ -193,11 +194,12 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     paddingBottom: 6,
+    fontWeight: '600',
   },
   shortText: {color: Colors.gray},
   HeaderText: {
     color: Colors.primary,
-    fontSize: Text_Size.Text_2,
+    // fontSize: Text_Size.Text_2,
   },
   petContainer: {
     flexDirection: 'row',

@@ -19,8 +19,6 @@ import {
 import DescriptionText from '../../../common/text/DescriptionText';
 import Card from '../../../UI/Card';
 import AppCheckbox from '../../../common/Form/AppCheckbox';
-import {useDispatch} from 'react-redux';
-import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
 import BottomSpacing from '../../../UI/BottomSpacing';
 
 interface Props {
@@ -28,9 +26,16 @@ interface Props {
   isPet?: boolean;
   setIsPayment?: (value: boolean) => void;
   setIsPet?: (value: boolean) => void;
+  setModalVisible: (arg1: boolean) => void;
 }
 
-const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
+const BottomCard: FC<Props> = ({
+  isPayment,
+  isPet,
+  setIsPayment,
+  setIsPet,
+  setModalVisible,
+}) => {
   const {colors} = useTheme();
   const [showDropDown, setShowDropDown] = useState(false);
   const [isBooked, setIsBooked] = useState(true);
@@ -39,7 +44,6 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
   const [selectData, setSelectData] = useState(
     'Once you have booked a stay or walk',
   );
-  const dispatch = useDispatch();
 
   const tempData = [
     {
@@ -118,7 +122,7 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
   return (
     <View>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => dispatch(setOpenFilter(false))}>
+        <TouchableOpacity onPress={() => setModalVisible(false)}>
           <Ion
             name="ios-chevron-back"
             size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
@@ -211,7 +215,7 @@ const BottomCard: FC<Props> = ({isPayment, isPet, setIsPayment, setIsPet}) => {
         </Card>
       )}
       {!showDropDown && (
-        <TouchableOpacity onPress={() => dispatch(setOpenFilter(false))}>
+        <TouchableOpacity onPress={() => setModalVisible(false)}>
           <HeaderText text={'Cancel'} textStyle={styles.cancelText} />
         </TouchableOpacity>
       )}

@@ -28,7 +28,7 @@ export const useServiceRates = (serviceSetup: any) => {
   const rateFieldId = serviceRateFields?.map(
     (item: {slug: string; id: number}) => {
       return {
-        name: item.slug.replace('-', ''),
+        name: item.slug.replace('-', '').replace('-', ''),
         postId: item.id,
       };
     },
