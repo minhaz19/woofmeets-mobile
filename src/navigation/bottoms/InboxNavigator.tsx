@@ -29,21 +29,6 @@ const InboxNavigator = () => {
           backgroundColor: Colors.primary,
         })}
       />
-      
-      <Stack1.Screen
-        name="Appointment"
-        component={Appointment}
-        options={() => ({
-          headerShown: false,
-        })}
-      />
-      <Stack1.Screen
-        name="Appointment"
-        component={Appointment}
-        options={() => ({
-          headerShown: false,
-        })}
-      />
       <Stack1.Screen
         name="Appointment"
         component={Appointment}

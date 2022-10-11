@@ -18,11 +18,7 @@ const RescheduleMain = () => {
       rapperStyle={
         styles.container
       }>
-<<<<<<< HEAD
       <View>
-=======
-      <View style={{paddingTop: 10}}>
->>>>>>> WOOF-40_new
         <FlatList
           showsVerticalScrollIndicator={false}
           data={rescheduleData}
