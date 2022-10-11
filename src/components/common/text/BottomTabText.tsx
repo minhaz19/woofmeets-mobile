@@ -18,8 +18,8 @@ const BottomTabText = (props: {
         style={[
           styles.details,
           props.focused
-            ? {color: Colors.primary}
-            : {color: Colors.light.lightText},
+            ? {color: Colors.primary, fontWeight: '700'}
+            : {color: Colors.light.lightText, fontWeight: '500'},
           {...props.textStyle},
         ]}>
         {props.text}
@@ -31,8 +31,7 @@ const BottomTabText = (props: {
 const styles = StyleSheet.create({
   details: {
     fontSize: Text_Size.Text_8,
-    fontWeight: '600',
-    // fontFamily: 'AlbraTextSemi',
+    fontFamily: 'Muli-Bold',
   },
 });
 

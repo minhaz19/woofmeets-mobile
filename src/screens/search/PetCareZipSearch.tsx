@@ -70,6 +70,7 @@ const PetCareZipSearch = (props: {
     serviceId: '',
   });
   const dispatch = useAppDispatch();
+  const {colors} = useTheme();
 
   // updating the state
   useEffect(() => {
@@ -260,14 +261,20 @@ const PetCareZipSearch = (props: {
                 <View style={styles.zipContainer}>
                   <TitleText text="Near" textStyle={styles.zipText} />
                   <GooglePlacesAutocomplete
-                    placeholder="Type a place"
+                    placeholder="Address or Zip code"
                     onPress={onPressAddress}
                     isRowScrollable={false}
-                    query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo'}}
+                    enablePoweredByContainer={false}
+                    query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo', language: 'en'}}
                     fetchDetails={true}
                     onFail={error => console.log(error)}
                     onNotFound={() => console.log('no results')}
                     keepResultsAfterBlur={true}
+                    textInputProps={{
+                      returnKeyType: "search",
+                      fontSize: Text_Size.Text_11,
+                      color: colors.placeholderTextColor,
+                    }}
                     styles={{
                       container: {
                         flex: 0,

@@ -1,6 +1,6 @@
-<?xml version="1.0.3.7" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0.3.7">
+<plist version="1.0">
 <dict>
 	<key>CFBundleIconFiles</key>
 	<array>
@@ -101,6 +101,9 @@
 		<string>Muli-Light.ttf</string>
 		<string>Muli-Regular.ttf</string>
 		<string>Muli-SemiBold.ttf</string>
+		<string>UberMoveBold.otf</string>
+		<string>UberMoveMedium.otf</string>
+		<string>VisbyRegular.otf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Woofmeets needs to access the your photo library to upload photos.</string>
