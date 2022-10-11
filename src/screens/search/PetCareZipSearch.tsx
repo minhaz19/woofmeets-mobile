@@ -2,10 +2,8 @@
 import {
   View,
   StyleSheet,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  Platform,
   ScrollView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -18,7 +16,6 @@ import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
 import ScreenRapper from '../../components/common/ScreenRapper';
 import ErrorMessage from '../../components/common/Form/ErrorMessage';
-// import {ScrollView} from 'react-native-gesture-handler';
 import ServiceCard from '../../components/ScreenComponent/search/ServiceCard';
 import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
 import SwitchView from '../../components/common/switch/SwitchView';
@@ -27,8 +24,6 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
-// import {useApi} from '../../utils/helpers/api/useApi';
-// import methods from '../../api/methods';
 import {getAllProvider} from '../../store/slices/Provider/allProvider/getAllProvider';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -115,16 +110,6 @@ const PetCareZipSearch = (props: {
       setPetType(newPetType);
     }
   };
-
-  // const handleZipCode = (code: number) => {
-  //   let reg = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-  //   setPostCode(code);
-  //   if (reg.test(code) === false) {
-  //     setErrorMessage('Zip code is not valid');
-  //   } else {
-  //     setErrorMessage(null);
-  //   }
-  // };
 
   // lat lng
   const onPressAddress = (data: any, details: any) => {
