@@ -38,6 +38,13 @@ const InboxNavigator = () => {
         })}
       />
       <Stack1.Screen
+        name="Appointment"
+        component={Appointment}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
+      <Stack1.Screen
         name="ActivityScreen"
         component={ActivityScreen}
         options={() => ({
