@@ -1,8 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BottomSpacing from '../../../components/UI/BottomSpacing'
 import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey'
 import InputItem from '../../../components/ScreenComponent/reports/Cards/InputItem'
+import StaticMap from '../map/NavigateMap'
+import { useAppSelector } from '../../../store/store'
+import getLiveLocation from '../map/helperFunction/getCurrentLocation'
 
 const ReportCardInitial = () => {
     const [items, setItems] = useState([
@@ -28,15 +31,15 @@ const ReportCardInitial = () => {
         },
     ])
     const [sequence, setSequence] = useState<number>(0);
+    const currentUserLocation = useAppSelector(state => state.address.currentUserLocation);
+    useEffect(() => {
+        console.log('cul',currentUserLocation);
+    }, [currentUserLocation])
 
     const onPressService = (data: any) => {
         setSequence(data?.id);
-        // setItems({
-        //   service: data?.slug,
-        //   serviceId: data?.id,
-        // });
-        // setErrorMessage(null);
       };
+    getLiveLocation();
   return (
     <ScreenRapperGrey rapperStyle={styles.container}>
       <View style={styles.tabContainer}>
@@ -50,7 +53,9 @@ const ReportCardInitial = () => {
             />
         ))}
       </View>
-
+      <View style={{height: 200}}>
+          <StaticMap />
+        </View>
       <BottomSpacing />
     </ScreenRapperGrey>
   )

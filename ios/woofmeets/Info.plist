@@ -101,9 +101,6 @@
 		<string>Muli-Light.ttf</string>
 		<string>Muli-Regular.ttf</string>
 		<string>Muli-SemiBold.ttf</string>
-		<string>UberMoveBold.otf</string>
-		<string>UberMoveMedium.otf</string>
-		<string>VisbyRegular.otf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Woofmeets needs to access the your photo library to upload photos.</string>

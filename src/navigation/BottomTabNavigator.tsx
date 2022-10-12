@@ -157,7 +157,7 @@ function BottomTabNavigator() {
         />
       </Tab.Navigator>
     );
-  } else {
+  } else if (token && !token.provider) {
     return (
       <Tab.Navigator
         initialRouteName="ServiceNavigator"
@@ -276,6 +276,11 @@ function BottomTabNavigator() {
         />
       </Tab.Navigator>
     );
+  }
+  else {
+    return (
+      <View></View>
+    )  
   }
 }
 
