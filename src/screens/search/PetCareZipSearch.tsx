@@ -2,209 +2,312 @@
 import {
   View,
   StyleSheet,
-  TextInput,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Text_Size from '../../constants/textScaling';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import TitleText from '../../components/common/text/TitleText';
 import ButtonCom from '../../components/UI/ButtonCom';
 import {btnStyles} from '../../constants/theme/common/buttonStyles';
-import {
-  BriefCaseSvg,
-  HomeSvgICon,
-  LocationSvg,
-  PetFootSvg,
-  WeatherSvg,
-} from '../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
 import ScreenRapper from '../../components/common/ScreenRapper';
 import ErrorMessage from '../../components/common/Form/ErrorMessage';
-import {ScrollView} from 'react-native-gesture-handler';
-import BottomSpacing from '../../components/UI/BottomSpacing';
 import ServiceCard from '../../components/ScreenComponent/search/ServiceCard';
 import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
+import SwitchView from '../../components/common/switch/SwitchView';
+import PetCard from '../../components/ScreenComponent/search/PetCard';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import BottomSpacing from '../../components/UI/BottomSpacing';
+import {useAppDispatch, useAppSelector} from '../../store/store';
+import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
+import {getAllProvider} from '../../store/slices/Provider/allProvider/getAllProvider';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-interface Props {
-  item: any;
-}
-
+const petData = [
+  {
+    id: 1,
+    sequence: 1,
+    name: 'Dog',
+    selected: false,
+    icon: true,
+    slug: 'dog',
+  },
+  {
+    id: 2,
+    sequence: 2,
+    name: 'Cat',
+    selected: false,
+    icon: true,
+    slug: 'cat',
+  },
+];
+// const endPoint = '/provider';
 const PetCareZipSearch = (props: {
   navigation: {navigate: (arg0: string) => void};
 }) => {
-  const [postCode, setPostCode] = useState<number>();
+  const {serviceTypes, loading: serviceTypesLoading} = useAppSelector(
+    (state: any) => state?.services,
+  );
+  const {pets, loading: petsLoading} = useAppSelector(
+    (state: any) => state?.allPets,
+  );
+  // const [postCode, setPostCode] = useState<number>();
   const [errorMessage, setErrorMessage] = useState<string>();
-  const petData = [
-    {
-      id: 6,
-      sequence: 6,
-      name: 'Dog',
-    },
-    {
-      id: 7,
-      sequence: 7,
-      name: 'Cat',
-    },
-  ];
-  const selectData = [
-    {
-      id: 1,
-      sequence: 1,
-      name: 'Boarding',
-      image: <BriefCaseSvg />,
-      description: "in the sitter's home",
-    },
-    {
-      id: 2,
-      sequence: 2,
-      name: 'Dog Waking',
-      _image: <PetFootSvg fill={'#FFA557'} />,
-      get image() {
-        return this._image;
-      },
-      set image(value) {
-        this._image = value;
-      },
-      description: 'in your neighborhood',
-    },
-    {
-      id: 3,
-      sequence: 3,
-      name: 'Doggy Day Care',
-      image: <WeatherSvg />,
-      description: "in the sitter's home",
-    },
-    {
-      id: 4,
-      sequence: 4,
-      name: 'Drop-in Visits',
-      image: <LocationSvg />,
-      description: 'visits in your home',
-    },
-    {
-      id: 5,
-      sequence: 5,
-      name: 'House Sitting',
-      image: <HomeSvgICon />,
-      description: 'in your home',
-    },
-  ];
-  const {colors} = useTheme();
-  const handleSubmit = () => {
-    props.navigation.navigate('AllProvider');
-  };
+  const [isMyPetEnabled, setIsMyPetEnabled] = useState(false);
+  const [petType, setPetType] = useState(petData);
+  const [myPet, setMyPet] = useState<any[]>([]);
+  const [location, setLocation] = useState({
+    lat: 40.702078,
+    lng: -73.822156,
+  });
   const [sequence, setSequence] = useState<number>(0);
-  const [petSequence, setPetSequence] = useState<number>(0);
+  const [serviceData, setServiceData] = useState({
+    service: '',
+    serviceId: '',
+  });
+  const dispatch = useAppDispatch();
 
-  const onPressService = (id: number) => {
-    setSequence(id);
+  // updating the state
+  useEffect(() => {
+    if (pets) {
+      setMyPet(pets);
+    }
+  }, [pets]);
+
+  // select service Data
+  const onPressService = (data: any) => {
+    setSequence(data?.id);
+    setServiceData({
+      service: data?.slug,
+      serviceId: data?.id,
+    });
+    setErrorMessage(null);
   };
+
+  // select pet
   const onPressPet = (id: number) => {
-    setPetSequence(id);
-  };
-
-  const handleZipCode = (code: number) => {
-    let reg = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-    setPostCode(code);
-    if (reg.test(code) === false) {
-      setErrorMessage('Zip code is not valid');
+    if (isMyPetEnabled) {
+      const myNewPet = myPet.map((item: any) => {
+        if (item.id === id) {
+          return {...item, selected: !item.selected};
+        } else {
+          return item;
+        }
+      });
+      setMyPet(myNewPet);
     } else {
-      setErrorMessage(null);
+      const newPetType = petType.map((item: any) => {
+        if (item.id === id) {
+          return {...item, selected: !item.selected};
+        } else {
+          return item;
+        }
+      });
+      setPetType(newPetType);
     }
   };
 
+  // lat lng
+  const onPressAddress = (data: any, details: any) => {
+    const lat = details.geometry.location.lat;
+    const lng = details.geometry.location.lng;
+    setLocation({lat: lat, lng: lng});
+  };
+  // const {request: getRequest, loading: getLoading} = useApi(methods._get);
+
+  // submitting the data and get request
+  const handleSubmit = async () => {
+    const selectedPetType = petType
+      ?.filter((item: any) => item.selected)
+      .map((item: any) => item.slug);
+    const selectedMyPet = myPet
+      ?.filter((item: any) => item.selected)
+      .map((item: any) => item.id);
+    let formattedData;
+    if (isMyPetEnabled) {
+      formattedData = {
+        service: serviceData.service,
+        serviceId: serviceData.serviceId,
+        petsId: selectedMyPet,
+        lat: location.lat,
+        lng: location.lng,
+      };
+    } else {
+      formattedData = {
+        service: serviceData.service,
+        serviceId: serviceData.serviceId,
+        pet_type: selectedPetType,
+        lat: location.lat,
+        lng: location.lng,
+      };
+    }
+    if (formattedData.service) {
+      // const result = await getRequest(endPoint, formattedData);
+      // console.log(result?.data?.providers);
+      console.log(formattedData);
+      dispatch(getAllProvider(formattedData));
+      props.navigation.navigate('AllProvider');
+    } else {
+      setErrorMessage('Service must be selected');
+    }
+  };
+
+  const {allProvider, loading: getLoading} = useAppSelector(
+    (state: any) => state.allProvider,
+  );
+  console.log('----------------', allProvider);
   const RenderHeader = () => {
     return (
       <View>
-        <TitleText
-          text="Looking service for my"
-          textStyle={styles.textHeader}
-        />
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          {petData.map(item => (
-            <ServiceCard
-              key={item.id}
-              data={item}
-              noShadow
-              onPressEvent={onPressPet}
-              sequence={petSequence}
-              divide={2}
-            />
-          ))}
+        <View style={styles.headerContainer}>
+          <TitleText
+            text="Looking service for my"
+            textStyle={styles.petTitleText}
+          />
+          {myPet && myPet.length > 0 && (
+            <View style={styles.switchContainer}>
+              <TitleText
+                textStyle={{...styles.petTitleText1, paddingRight: 6}}
+                text={'My Pet'}
+              />
+              <SwitchView
+                isActive={isMyPetEnabled}
+                activeText=""
+                inActiveText=""
+                onSelect={is => {
+                  setIsMyPetEnabled(is);
+                }}
+              />
+            </View>
+          )}
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+          }}>
+          {isMyPetEnabled
+            ? myPet.map((item: any) => (
+                <PetCard
+                  key={item.id}
+                  data={item}
+                  noShadow
+                  onPressEvent={onPressPet}
+                />
+              ))
+            : petType.map(item => (
+                <PetCard
+                  key={item.id}
+                  data={item}
+                  noShadow
+                  onPressEvent={onPressPet}
+                  divide={2}
+                />
+              ))}
         </View>
         <TitleText text="I want" textStyle={styles.textHeader} />
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+          }}>
+          {serviceTypes &&
+            serviceTypes.map((item: any) => (
+              <ServiceCard
+                key={item.id}
+                data={item}
+                noShadow
+                onPressEvent={onPressService}
+                sequence={sequence}
+              />
+            ))}
+        </View>
+        <View style={styles.textHeader}>
+          {errorMessage && <ErrorMessage error={errorMessage} />}
+        </View>
       </View>
     );
   };
 
   return (
-    <ScreenRapper rapperStyle={styles.rapperStyle}>
-      <ScrollView
-        keyboardShouldPersistTaps="always"
-        keyboardDismissMode="on-drag"
-        showsVerticalScrollIndicator={false}>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={20}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <>
+      {serviceTypesLoading && petsLoading && (
+        <AppActivityIndicator visible={true} />
+      )}
+      <ScreenRapper rapperStyle={styles.rapperStyle}>
+        <KeyboardAwareScrollView
+          extraHeight={100}
+          extraScrollHeight={200}
+          enableAutomaticScroll={true}
+          // keyboardVerticalOffset={20}
+          // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.rootContainer}>
-          <SearchSlider navigation={props.navigation} />
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={styles.boxContainer}>
-              <RenderHeader />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  justifyContent: 'center',
-                }}>
-                {selectData.map(item => (
-                  <ServiceCard
-                    key={item.id}
-                    data={item}
-                    noShadow
-                    onPressEvent={onPressService}
-                    sequence={sequence}
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            // keyboardDismissMode="on-drag"
+            showsVerticalScrollIndicator={false}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View style={styles.boxContainer}>
+                <SearchSlider navigation={props.navigation} />
+                <RenderHeader />
+                <View style={styles.zipContainer}>
+                  <TitleText text="Near" textStyle={styles.zipText} />
+                  <GooglePlacesAutocomplete
+                    placeholder="Type a place"
+                    onPress={onPressAddress}
+                    isRowScrollable={false}
+                    query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo'}}
+                    fetchDetails={true}
+                    onFail={error => console.log(error)}
+                    onNotFound={() => console.log('no results')}
+                    keepResultsAfterBlur={true}
+                    styles={{
+                      container: {
+                        flex: 0,
+                        borderWidth: 1,
+                        borderColor: Colors.border,
+                      },
+                      description: {
+                        color: '#000',
+                        fontSize: Text_Size.Text_11,
+                      },
+                      // predefinedPlacesDescription: {
+                      //   color: '#3caf50',
+                      // },
+                    }}
                   />
-                ))}
-              </View>
-              <View style={styles.zipContainer}>
-                <TitleText text="Near" textStyle={styles.zipText} />
-                <TextInput
-                  placeholder="Enter zip code"
-                  keyboardType="number-pad"
-                  value={postCode}
-                  allowFontScaling={false}
-                  onChangeText={code => handleZipCode(code)}
-                  style={[styles._input, {color: colors.headerText}]}
-                />
-                {errorMessage && <ErrorMessage error={errorMessage} />}
-                <View style={styles.footerContainer}>
-                  <ButtonCom
-                    title="Search"
-                    // loading={loading}
-                    textAlignment={btnStyles.textAlignment}
-                    containerStyle={btnStyles.containerStyleFullWidth}
-                    titleStyle={btnStyles.titleStyle}
-                    onSelect={handleSubmit}
-                  />
+                  <View style={styles.footerContainer}>
+                    <ButtonCom
+                      title="Search"
+                      loading={getLoading}
+                      textAlignment={btnStyles.textAlignment}
+                      containerStyle={btnStyles.containerStyleFullWidth}
+                      titleStyle={btnStyles.titleStyle}
+                      onSelect={handleSubmit}
+                    />
+                  </View>
                 </View>
               </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
-        <BottomSpacing />
-      </ScrollView>
-    </ScreenRapper>
+            </TouchableWithoutFeedback>
+            <BottomSpacing />
+          </ScrollView>
+        </KeyboardAwareScrollView>
+      </ScreenRapper>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    // paddingBottom: 80,
   },
   rapperStyle: {
     paddingTop: 20,
@@ -218,7 +321,7 @@ const styles = StyleSheet.create({
   textHeader: {
     fontSize: Text_Size.Text_1,
     fontWeight: '500',
-    paddingLeft: '3%',
+    paddingLeft: '4%',
     paddingBottom: 8,
   },
   footerContainer: {
@@ -250,6 +353,29 @@ const styles = StyleSheet.create({
     paddingTop: '5%',
     paddingHorizontal: '5%',
     paddingLeft: '3%',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginLeft: '4%',
+    width: '90%',
+    paddingBottom: 5,
+  },
+  switchContainer: {
+    flexDirection: 'row',
+  },
+  petTitleText: {
+    fontSize: Text_Size.Text_1,
+    fontWeight: '500',
+    paddingBottom: 8,
+    width: '70%',
+  },
+  petTitleText1: {
+    fontSize: Text_Size.Text_1,
+    fontWeight: '500',
+    paddingBottom: 8,
+    // width: '70%',
   },
 });
 

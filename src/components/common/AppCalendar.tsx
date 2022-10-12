@@ -4,7 +4,6 @@ import {CalendarList} from 'react-native-calendars';
 import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
 import Colors from '../../constants/Colors';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
-
 interface Props {
   range?: number;
   selectType: string;
@@ -14,6 +13,7 @@ const AppCalendar = ({range = 12, selectType, handlePress}: Props) => {
   const {colors} = useTheme();
   const {handleDayPress, singleSelect, _markedStyle} =
     useHandleRange(selectType);
+
   return (
     <View style={styles.contentContainer}>
       <CalendarList

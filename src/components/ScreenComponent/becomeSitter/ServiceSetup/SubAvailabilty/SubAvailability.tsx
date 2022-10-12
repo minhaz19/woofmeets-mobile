@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import HeaderText from '../../../../common/text/HeaderText';
 import {
@@ -21,16 +21,14 @@ import Colors from '../../../../../constants/Colors';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
-import {useAppDispatch, useAppSelector} from '../../../../../store/store';
-import {setOpenFilter} from '../../../../../store/slices/misc/openFilter';
+
 
 interface Props {
   handlePost: (arg1: any) => void;
   loading: boolean;
 }
 const SubAvailability = ({handlePost, loading}: Props) => {
-  const filter = useAppSelector((state: any) => state.filter.isOpen);
-  const dispatch = useAppDispatch();
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
     availabilitySelectDay.options,
   );
@@ -44,12 +42,15 @@ const SubAvailability = ({handlePost, loading}: Props) => {
   const {colors} = useTheme();
   return (
     <View>
-      <ServiceReusableModal modalVisible={filter} />
+      <ServiceReusableModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
           <BigText text={'Pet Preference'} textStyle={styles.headerText} />
           <TouchableOpacity
-            onPress={() => dispatch(setOpenFilter(true))}
+            onPress={() => setModalVisible(true)}
             style={styles.iconContainer}>
             <QuestionIcon fill={Colors.primary} />
           </TouchableOpacity>

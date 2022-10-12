@@ -34,6 +34,7 @@ import ServiceNavigator from './bottoms/ServiceNavigator';
 import PaymentMethods from '../screens/profile/PaymentMethod';
 import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/AddCardForm';
 import BasicPayment from '../components/ScreenComponent/becomeSitter/subscription/BasicPayment/BasicPayment';
+import Appointment from '../screens/Appointment';
 // import PetNavigatorFC from './PetNavigatorFS';
 const Stack = createStackNavigator();
 
@@ -371,6 +372,21 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             title: 'Payment Cards',
             header: () => (
               <HeaderWithBack navigation={navigation} title="Cards" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="Appointment"
+          component={Appointment}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Appointment"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}

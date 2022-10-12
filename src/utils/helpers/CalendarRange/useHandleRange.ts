@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useMemo, useState} from 'react';
+import {useFormContext} from 'react-hook-form';
 import {_dateRange} from '../datesArray';
 import {compareDate} from './compareDate';
 import {orderAndStyleRange} from './orderAndStyleRange';
@@ -12,6 +13,7 @@ export const useHandleRange = (type: string) => {
   const [prevDate, setPrevDate] = useState<false | undefined | Date>();
   const [startingDate, setStartingDate] = useState('');
   const [endingDate, setEndingDate] = useState('');
+  const {setValue} = useFormContext();
   const handleDayPress = (date: any) => {
     if (type === 'SINGLE') {
       setSingleSelect(date.dateString);
@@ -53,6 +55,9 @@ export const useHandleRange = (type: string) => {
       const {styledMarkedRange} = orderAndStyleRange(range, 'RANGE');
       setMarkedStyle(styledMarkedRange);
       setDateRange(range);
+
+      setValue('proposalStartDate', startingDate);
+      setValue('proposalEndDate', endingDate);
     }
   }, [endingDate, startingDate]);
   const reset = () => {

@@ -10,8 +10,10 @@ import BottomSpacing from '../../UI/BottomSpacing';
 import BottomSheetCalendar from '../../common/BottomSheetCalendar';
 import MyPets from './components/MyPets';
 import MessageCheck from './components/MessageCheck';
-
-const AppointmentBody = () => {
+interface Props {
+  handleSubmit: (arg: any) => void;
+}
+const AppointmentBody = ({handleSubmit}: Props) => {
   const [serviceId, setServiceId] = useState(1);
   const {
     control,
@@ -32,7 +34,11 @@ const AppointmentBody = () => {
             setValue={setValue}
             setServiceId={setServiceId}
           />
-          {(serviceId === 1 || serviceId === 2) && <DateDropPick />}
+          {(serviceId === 1 || serviceId === 2) && (
+            <>
+              <DateDropPick serviceId={serviceId} />
+            </>
+          )}
           {(serviceId === 3 || serviceId === 4 || serviceId === 5) && (
             <>
               <VisitScheduleTab serviceId={serviceId} />
@@ -46,7 +52,7 @@ const AppointmentBody = () => {
             {(serviceId === 3 || serviceId === 5) && <DayTimeSlot />}
             <MyPets />
             <MessageCheck errors={errors} control={control} />
-            <SubmitButton title="Send Proposal" />
+            <SubmitButton title="Send Proposal" onPress={handleSubmit} />
             <BottomSpacing />
             <BottomSpacing />
           </View>

@@ -98,7 +98,7 @@ const appointmentInit = {
   proposalOtherDate: [],
   pets: [],
   firstMessage: '',
-  isReceivedPhotos: false,
+  isRecivedPhotos: false,
 };
 export {
   loginValue,

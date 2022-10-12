@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import TitleText from '../../../common/text/TitleText';
 import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
@@ -7,47 +8,42 @@ import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
 import {Plus} from '../../../../assets/svgs/SVG_LOGOS';
 import DescriptionText from '../../../common/text/DescriptionText';
-
-const pets = [
-  {
-    id: 1,
-    name: 'Golu',
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
+import {useNavigation} from '@react-navigation/native';
+import {useFormContext} from 'react-hook-form';
+var petIds: any[] = [];
+const MyPets = () => {
+  const dispatch = useAppDispatch();
+  const {pets: allPets} = useAppSelector(state => state.allPets);
+  const modArray = allPets?.map((item: any, index: number) => ({
+    id: index + 1,
+    name: item.name,
+    petId: item.id,
     active: true,
-  },
-  {
-    id: 2,
-    name: 'Molu',
-    active: true,
-  },
-  {
-    id: 3,
-    name: 'Tolu',
-    active: true,
-  },
-  {
-    id: 4,
-    name: 'Cholu',
-    active: true,
-  },
-
-  {
-    id: 5,
+  }));
+  modArray?.push({
+    id: allPets.length,
     Icon: Plus,
     text: '',
     new: true,
-  },
-];
-const MyPets = () => {
-  const [newData, setDatas] = useState(pets);
+  });
+  console.log('addPets', allPets);
+  const [newData, setDatas] = useState(modArray);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
+  const {setValue} = useFormContext();
+  useEffect(() => {
+    dispatch(getAllPets());
+  }, []);
+  const navigation = useNavigation<any>();
   return (
     <>
-      {newData.length === 0 ? (
+      {allPets?.length === 0 ? (
         <View>
           <TitleText textStyle={styles.headerText} text={'Your Pets'} />
           <DescriptionText
@@ -67,11 +63,11 @@ const MyPets = () => {
             </View> */}
           </View>
           <View style={styles.container}>
-            {newData.map((item, index) =>
+            {newData.map((item: any, index: number) =>
               item.new ? (
                 <AppTouchableOpacity
                   key={index}
-                  onPress={() => {}}
+                  onPress={() => navigation.navigate('AddPetHome', {opk: null})}
                   style={[styles.icon]}>
                   <item.Icon fill="black" width={20} height={20} />
                 </AppTouchableOpacity>
@@ -80,6 +76,9 @@ const MyPets = () => {
                   key={index}
                   onPress={() => {
                     handleMultipleCheck(item.id);
+                    petIds.push(...petIds, item.id);
+                    console.log('petsId', petIds);
+                    setValue('petsId', petIds);
                   }}
                   style={[
                     styles.pet,

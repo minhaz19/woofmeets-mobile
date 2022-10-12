@@ -42,14 +42,6 @@ const PaymentMethods = ({route, navigation}: Props) => {
     callApi();
     cards === null && dispatch(getCards());
   }, []);
-  console.log(
-    'payment method',
-    'loading',
-    loading,
-    'dloading',
-    dLoading,
-    cards,
-  );
   return (
     <>
       {/* {(loading || dLoading) && <AppActivityIndicator visible={true} />} */}

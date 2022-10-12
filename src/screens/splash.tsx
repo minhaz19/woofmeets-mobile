@@ -13,8 +13,9 @@ import authStorage from '../utils/helpers/auth/storage';
 import jwt_decode from 'jwt-decode';
 import {slides} from '../utils/config/Data/splashDatas';
 import {signIn} from '../store/slices/auth/userSlice';
-import { useAppDispatch } from '../store/store';
-
+import {useAppDispatch} from '../store/store';
+import {getServiceTypes} from '../store/slices/profile/services';
+import {getAllPets} from '../store/slices/pet/allPets/allPetsAction';
 const Splash = ({}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [isPreviousUser, setIsPreviousUser] = useState(false);
@@ -125,6 +126,8 @@ const Splash = ({}) => {
 
   useEffect(() => {
     signInHandler();
+    dispatch(getServiceTypes());
+    dispatch(getAllPets());
   }, []);
 
   const RenderIcon = () => {

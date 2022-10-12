@@ -2,7 +2,7 @@
 /* eslint-disable dot-notation */
 import * as Yup from 'yup';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import BigText from '../../../../common/text/BigText';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -15,8 +15,6 @@ import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
-import { useAppDispatch, useAppSelector } from '../../../../../store/store';
-import { setOpenFilter } from '../../../../../store/slices/misc/openFilter';
 import Colors from '../../../../../constants/Colors';
 
 interface props {
@@ -32,8 +30,7 @@ const SubCancellationPolicy = ({
   policy,
   singlePolicy,
 }: props) => {
-  const filter = useAppSelector((state: any) => state.filter.isOpen);
-  const dispatch = useAppDispatch();
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const cancellationSchema = Yup.object().shape({
     policyId: Yup.string()
       .required('At least select one policy')
@@ -60,12 +57,13 @@ const SubCancellationPolicy = ({
   return (
     <View style={styles.headerContainer}>
       <ServiceReusableModal
-        modalVisible={filter}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
       />
       <View style={styles.flexContainer}>
         <BigText text={'Cancellation policy'} textStyle={styles.headerText} />
         <TouchableOpacity
-          onPress={() => dispatch(setOpenFilter(true))}
+          onPress={() => setModalVisible(true)}
           style={styles.iconContainer}>
           <QuestionIcon fill={Colors.primary} />
         </TouchableOpacity>

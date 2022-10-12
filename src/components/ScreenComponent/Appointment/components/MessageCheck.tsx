@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import AppFormField from '../../../common/Form/AppFormField';
 import AppCheckboxField from '../../../common/Form/AppCheckboxField';
 interface Props {
   errors: any;
   control: any;
+  setValue?: (arg: string, arg1: boolean) => void;
 }
 const MessageCheck = ({errors, control}: Props) => {
+  const [active, setActive] = useState(false);
   return (
     <>
       <AppFormField
@@ -14,7 +16,7 @@ const MessageCheck = ({errors, control}: Props) => {
         keyboardType={'default'}
         placeholder={'Enter your message'}
         textContentType={'none'}
-        name={'message'}
+        name={'firstMessage'}
         label={'Message'}
         subTitle="Share a little info about your pet and why they would have a great time with fahmida"
         multiline
@@ -25,12 +27,14 @@ const MessageCheck = ({errors, control}: Props) => {
       <AppCheckboxField
         title={'I would like to receive photos of my pets during this stay'}
         square
+        active={active}
         errors={errors}
         control={control}
         onPress={() => {
-          //   setValue(item.name, type.value);
+          setActive(!active);
+          // setValue(item.name, type.value);
         }}
-        name={'receivePhoto'}
+        name={'isRecivedPhotos'}
       />
     </>
   );

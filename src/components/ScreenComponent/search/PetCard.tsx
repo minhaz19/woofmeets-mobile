@@ -4,44 +4,32 @@ import React, {FC} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import {
-  BoardingIcon,
-  DoggyDayCareIcon,
-  DogWalkingIcon,
-  DropInVisitIcon,
-  HouseSittingIcon,
-} from '../../../assets/svgs/Services_SVG';
+import {DogIcon} from '../../../assets/svgs/Services_SVG';
 import TitleText from '../../common/text/TitleText';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 
 interface Props {
   data: any;
   noShadow?: boolean;
-  sequence: number;
   onPressEvent: (id: number) => void;
   divide?: number;
 }
 
-const ServiceCard: FC<Props> = props => {
+const PetCard: FC<Props> = props => {
   const {colors} = useTheme();
   const getIcon = (iconId: number) => {
     switch (iconId) {
       case 1:
-        return <BoardingIcon width={34} height={36} />;
+        return <DogIcon width={32} height={34} />;
       case 2:
-        return <HouseSittingIcon width={34} height={36} />;
-      case 3:
-        return <DropInVisitIcon width={34} height={36} />;
-      case 4:
-        return <DoggyDayCareIcon width={34} height={36} />;
-      case 5:
-        return <DogWalkingIcon width={34} height={36} />;
+        return <DogIcon width={32} height={34} />;
     }
   };
+
   return (
     <AppTouchableOpacity
       onPress={() => {
-        props.onPressEvent(props.data);
+        props.onPressEvent(props.data.id);
         // props.data.onPress;
       }}
       key={props.data.id}>
@@ -50,9 +38,9 @@ const ServiceCard: FC<Props> = props => {
           styles.container,
           {
             backgroundColor: colors.backgroundColor,
-            borderWidth: props.sequence === props.data.sequence ? 2 : 2,
+            borderWidth: props.data.selected ? 2 : 2,
             borderColor:
-              props.sequence === props.data.sequence
+              props.data.selected
                 ? Colors.primary
                 : colors.borderColor,
             width: props.divide ? SCREEN_WIDTH / 2 - 24 : SCREEN_WIDTH / 3 - 20,
@@ -60,14 +48,16 @@ const ServiceCard: FC<Props> = props => {
           },
         ]}>
         <View style={[styles.boxContainer, props.divide ? styles.pet : {}]}>
-          <View style={styles.imageContainer}>
-            {getIcon(props.data.sequence)}
-          </View>
+          {props.data.icon && (
+            <View style={styles.imageContainer}>
+              {getIcon(props.data.sequence)}
+            </View>
+          )}
           <View style={[styles.textContainer]}>
             <TitleText text={props.data.name} textStyle={styles.textStyle} />
           </View>
         </View>
-        {props.sequence === props.data.sequence && (
+        {props.data.selected && (
           <View style={styles.rightSelection} />
         )}
       </View>
@@ -75,7 +65,7 @@ const ServiceCard: FC<Props> = props => {
   );
 };
 
-export default ServiceCard;
+export default PetCard;
 
 const styles = StyleSheet.create({
   container: {

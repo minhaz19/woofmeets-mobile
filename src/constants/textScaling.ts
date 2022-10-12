@@ -12,7 +12,7 @@ export function normalize(size: number) {
   if (Platform.OS === 'ios') {
     return Math.round(PixelRatio.roundToNearestPixel(newSize));
   } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
 export function normalizeInput(size: number, text?: string) {

@@ -41,15 +41,15 @@ export const useSubscription = () => {
   };
   const handleSubmit = async () => {
     if (sequence === 1) {
-      setSSloading(false);
+      setSSloading(true);
       const result: ApiResponse<any> = await methods._get(endpoint);
       const cardResponse = await cardRequest(defaultCardEndpoint);
-      if (result.ok && cardResponse.ok) {
+      const cardId = cardResponse?.data?.data.id;
+      if (result.ok) {
         if (
-          result?.data?.data.needPayment === true &&
+          result.data.data.needPayment === true &&
           cardResponse.status === 200
         ) {
-          const cardId = cardResponse?.data?.data.id;
           navigation.navigate('BasicPayment', {
             sequence: sequence,
             cardId: cardId,

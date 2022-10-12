@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import React, {useEffect, memo} from 'react';
+import React, {useEffect, memo, useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -15,8 +15,6 @@ import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../../constants/Colors';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
-import {useAppDispatch, useAppSelector} from '../../../../../store/store';
-import {setOpenFilter} from '../../../../../store/slices/misc/openFilter';
 interface Props {
   handlePetPreference: (arg1: any) => void;
   putLoading: boolean;
@@ -29,8 +27,7 @@ const SubPetPreference = ({
   petPreference,
   petPerDay,
 }: Props) => {
-  const filter = useAppSelector((state: any) => state.filter.isOpen);
-  const dispatch = useAppDispatch();
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {
     control,
     handleSubmit,
@@ -66,13 +63,14 @@ const SubPetPreference = ({
   return (
     <>
       <ServiceReusableModal
-        modalVisible={filter}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
       />
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
           <BigText text={'Pet Preference'} textStyle={styles.headerText} />
           <TouchableOpacity
-            onPress={() => dispatch(setOpenFilter(true))}
+            onPress={() => setModalVisible(true)}
             style={styles.iconContainer}>
             <QuestionIcon fill={Colors.primary} />
           </TouchableOpacity>
