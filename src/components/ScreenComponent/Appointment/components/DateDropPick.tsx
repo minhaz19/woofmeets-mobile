@@ -12,9 +12,10 @@ import TimeSlotPicker from '../../../common/TimeRangePicker';
 import AppCalendar from '../../../common/AppCalendar';
 interface Props {
   serviceId?: number;
+  setValue: (arg: string, arg2: any) => void;
 }
 
-const DateDropPick = ({serviceId}: Props) => {
+const DateDropPick = ({serviceId, setValue}: Props) => {
   const [visible, setVisible] = useState(false);
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
@@ -79,7 +80,7 @@ const DateDropPick = ({serviceId}: Props) => {
           onPress={() => setVisible(!visible)}
         />
         <View style={styles.pickerContainer}>
-          <AppCalendar selectType="RANGE" />
+          <AppCalendar selectType="RANGE" setValue={setValue} />
         </View>
       </Modal>
     </View>

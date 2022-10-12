@@ -8,11 +8,19 @@ interface Props {
   range?: number;
   selectType: string;
   handlePress?: (arg: any) => void;
+  setValue: (arg: string, arg2: any) => void;
 }
-const AppCalendar = ({range = 12, selectType, handlePress}: Props) => {
+const AppCalendar = ({
+  range = 12,
+  selectType,
+  setValue,
+  handlePress,
+}: Props) => {
   const {colors} = useTheme();
-  const {handleDayPress, singleSelect, _markedStyle} =
-    useHandleRange(selectType);
+  const {handleDayPress, singleSelect, _markedStyle} = useHandleRange(
+    selectType,
+    setValue,
+  );
 
   return (
     <View style={styles.contentContainer}>

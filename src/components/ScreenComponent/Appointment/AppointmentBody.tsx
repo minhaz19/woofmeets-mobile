@@ -10,7 +10,6 @@ import BottomSpacing from '../../UI/BottomSpacing';
 import BottomSheetCalendar from '../../common/BottomSheetCalendar';
 import MyPets from './components/MyPets';
 import MessageCheck from './components/MessageCheck';
-// import {useAppSelector} from '../../../store/store';
 interface Props {
   handleSubmit: (arg: any) => void;
   loading: boolean;
@@ -24,14 +23,12 @@ const AppointmentBody = ({handleSubmit, loading}: Props) => {
     formState: {errors},
   } = useFormContext();
   const {isRecurring} = watch();
-  // const {serviceType} = useAppSelector(state => state.services);
-  // const {serviceTypes} = useAppSelector(state => state.services);
-  // const serviceIDs = serviceTypes?.map((item: {id: number}) => item.id);
   return (
     <FlatList
       data={[]}
       renderItem={null}
       contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
       ListEmptyComponent={
         <>
           <ServicePicker
@@ -41,19 +38,24 @@ const AppointmentBody = ({handleSubmit, loading}: Props) => {
           />
           {(serviceId === 1 || serviceId === 2) && (
             <>
-              <DateDropPick serviceId={serviceId} />
+              <DateDropPick serviceId={serviceId} setValue={setValue} />
             </>
           )}
           {(serviceId === 3 || serviceId === 4 || serviceId === 5) && (
             <>
               <VisitScheduleTab serviceId={serviceId} />
-              <BottomSheetCalendar
-                title={isRecurring ? 'Start Date' : 'Dates'}
-              />
+              {serviceId !== 4 && (
+                <BottomSheetCalendar
+                  title={isRecurring ? 'Start Date' : 'Dates'}
+                  setValue={setValue}
+                />
+              )}
             </>
           )}
           <View style={styles.zIndex}>
-            {serviceId === 4 && <DateDropPick serviceId={serviceId} />}
+            {serviceId === 4 && (
+              <DateDropPick serviceId={serviceId} setValue={setValue} />
+            )}
             {(serviceId === 3 || serviceId === 5) && <DayTimeSlot />}
             <MyPets />
             <MessageCheck

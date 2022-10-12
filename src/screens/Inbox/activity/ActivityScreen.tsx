@@ -19,6 +19,7 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {CameraIcon, SendIcon} from '../../../assets/Inbox_SVG';
 import BottomHalfModal from '../../../components/UI/modal/BottomHalfModal';
 import Details from '../../../components/ScreenComponent/Inbox/Past/Details';
+import Text_Size from '../../../constants/textScaling';
 
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -277,6 +278,8 @@ const styles = StyleSheet.create({
     padding: 10,
     color: 'grey',
     borderRadius: 30,
+    fontFamily: 'Muli',
+    fontSize: Text_Size.Text_11,
   },
   notActive: {
     width: 10,

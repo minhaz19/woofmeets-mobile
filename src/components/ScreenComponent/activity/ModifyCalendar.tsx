@@ -129,5 +129,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     padding: 8,
     marginVertical: 6,
+    fontFamily: 'Muli',
   },
 });

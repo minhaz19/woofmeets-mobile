@@ -6,6 +6,7 @@ import ShortText from '../../../../common/text/ShortText';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
 import TitleText from '../../../../common/text/TitleText';
+import Text_Size from '../../../../../constants/textScaling';
 
 const ServiceInput = ({...otherProps}) => {
   const {isDarkMode, colors} = useTheme();
@@ -78,6 +79,8 @@ const styles = StyleSheet.create({
     height: 40,
     flex: 0,
     textAlign: 'right',
+    fontFamily: 'Muli',
+    fontSize: Text_Size.Text_11,
   },
   headerText: {
     paddingHorizontal: 5,

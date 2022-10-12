@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useMemo, useState} from 'react';
-import {useFormContext} from 'react-hook-form';
 import {_dateRange} from '../datesArray';
 import {compareDate} from './compareDate';
 import {orderAndStyleRange} from './orderAndStyleRange';
 
-export const useHandleRange = (type: string) => {
+export const useHandleRange = (
+  type: string,
+  setValue: (arg: string, arg2: any) => void,
+) => {
   const [_markedStyle, setMarkedStyle] = useState({});
   const [singleSelect, setSingleSelect] = useState<string>('');
   const [step, setSteps] = useState(1);
@@ -13,7 +15,7 @@ export const useHandleRange = (type: string) => {
   const [prevDate, setPrevDate] = useState<false | undefined | Date>();
   const [startingDate, setStartingDate] = useState('');
   const [endingDate, setEndingDate] = useState('');
-  const {setValue} = useFormContext();
+  // const {setValue} = useFormContext();
   const handleDayPress = (date: any) => {
     if (type === 'SINGLE') {
       setSingleSelect(date.dateString);

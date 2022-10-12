@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: Text_Size.Text_11,
+    fontFamily: 'Muli',
     flex: 1,
   },
   zipContainer: {

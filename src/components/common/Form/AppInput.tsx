@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   },
   text: {
     // width: '90%',
+    fontFamily: 'Muli',
     flex: 1,
   },
   check: {height: '100%', alignSelf: 'center'},

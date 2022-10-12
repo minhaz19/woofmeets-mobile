@@ -49,7 +49,7 @@ const Appointment = () => {
       isRecurring: data.isRecurring,
       providerTimeZone: 'string',
       appointmentserviceType: 'NONE',
-      // proposalOtherDate: data.proposalEndDate,
+      proposalOtherDate: data.isRecurring ? [] : data.DIVspecificDates,
       recurringStartDate: data.recurringStartDate,
       recurringSelectedDay: data.recurringSelectedDay,
       firstMessage: data.firstMessage,

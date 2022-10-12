@@ -107,7 +107,8 @@ const styles = StyleSheet.create({
   _input: {
     width: '100%',
     height: SCREEN_WIDTH <= 380 ? 35 : SCREEN_WIDTH <= 480 ? 45 : 50,
-    fontSize: Text_Size.Text_1,
+    fontFamily: 'Muli',
+    fontSize: Text_Size.Text_11,
     borderWidth: 1,
     borderColor: Colors.border,
     padding: 8,

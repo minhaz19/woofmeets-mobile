@@ -14,6 +14,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
+import AllProviderLoader from './AllProviderLoadingUI';
 interface Props {
   navigation: {
     navigate: (arg: string, arg1: {providerOpk: string}) => void;
@@ -42,7 +43,7 @@ const AllProvider = ({navigation}: Props) => {
 
   return (
     <ScreenRapperGrey>
-      {getLoading && <AppActivityIndicator visible={true} />}
+      {getLoading && <AllProviderLoader />}
       <Screen style={styles.container}>
         <FlatList
           showsVerticalScrollIndicator={false}

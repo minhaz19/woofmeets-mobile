@@ -1,5 +1,5 @@
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
@@ -19,7 +19,7 @@ interface Props {
   setValue: (arg: string, arg1: number) => void;
   setServiceId: (arg: number) => void;
 }
-
+let modData: any = [];
 const getIcon = (iconId: number) => {
   switch (iconId) {
     case 1:
@@ -34,19 +34,24 @@ const getIcon = (iconId: number) => {
       return DogWalkingIcon;
   }
 };
-const ServicePicker = ({name, setValue, setServiceId}: Props) => {
+const ServicePicker = ({
+  name,
+  setValue,
+  setServiceId,
+}: Props) => {
   const [visible, setVisible] = useState(false);
   const {providerServices} = useAppSelector(state => state?.providerServices);
-  const modData = providerServices?.map((item: any) => ({
-    id: item.id,
-    serviceTypeId: item.serviceTypeId,
-    title: item.serviceType.displayName,
-    subTitle: item.serviceType.description,
-    Icon: getIcon(item.serviceTypeId),
-  }));
-  const [selectedService, setSelectedService] = useState<any>(
-    modData ? modData[0] : [],
-  );
+  const [selectedService, setSelectedService] = useState<any>([]);
+  useEffect(() => {
+    modData = providerServices?.map((item: any) => ({
+      id: item.id,
+      serviceTypeId: item.serviceTypeId,
+      title: item.serviceType.displayName,
+      subTitle: item.serviceType.description,
+      Icon: getIcon(item.serviceTypeId),
+    }));
+    modData !== undefined && setSelectedService(modData[0]);
+  }, [providerServices]);
   return (
     <>
       <TitleText textStyle={styles.header} text={'Provider Services'} />

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView,
+  RefreshControl,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Text_Size from '../../constants/textScaling';
@@ -23,9 +24,10 @@ import PetCard from '../../components/ScreenComponent/search/PetCard';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../store/store';
-import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
 import {getAllProvider} from '../../store/slices/Provider/allProvider/getAllProvider';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import ServiceTypesLoader from './ServiceTypesLoader';
+import {getServiceTypes} from '../../store/slices/profile/services';
 
 const petData = [
   {
@@ -49,14 +51,16 @@ const petData = [
 const PetCareZipSearch = (props: {
   navigation: {navigate: (arg0: string) => void};
 }) => {
-  const {serviceTypes, loading: serviceTypesLoading} = useAppSelector(
-    (state: any) => state?.services,
-  );
+  const {
+    serviceTypes,
+    loading: serviceTypesLoading,
+   
+  } = useAppSelector((state: any) => state?.services);
   const {pets, loading: petsLoading} = useAppSelector(
     (state: any) => state?.allPets,
   );
   // const [postCode, setPostCode] = useState<number>();
-  const [errorMessage, setErrorMessage] = useState<string>();
+  const [errorMessage, setErrorMessage] = useState<string | null>();
   const [isMyPetEnabled, setIsMyPetEnabled] = useState(false);
   const [petType, setPetType] = useState(petData);
   const [myPet, setMyPet] = useState<any[]>([]);
@@ -70,6 +74,7 @@ const PetCareZipSearch = (props: {
     serviceId: '',
   });
   const dispatch = useAppDispatch();
+  const {colors} = useTheme();
 
   // updating the state
   useEffect(() => {
@@ -77,6 +82,18 @@ const PetCareZipSearch = (props: {
       setMyPet(pets);
     }
   }, [pets]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(getServiceTypes());
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
 
   // select service Data
   const onPressService = (data: any) => {
@@ -207,24 +224,30 @@ const PetCareZipSearch = (props: {
                 />
               ))}
         </View>
-        <TitleText text="I want" textStyle={styles.textHeader} />
-        <View
-          style={{
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-          }}>
-          {serviceTypes &&
-            serviceTypes.map((item: any) => (
-              <ServiceCard
-                key={item.id}
-                data={item}
-                noShadow
-                onPressEvent={onPressService}
-                sequence={sequence}
-              />
-            ))}
-        </View>
+        {serviceTypesLoading || !serviceTypes ? (
+          <ServiceTypesLoader />
+        ) : (
+          <View>
+            <TitleText text="I want" textStyle={styles.textHeader} />
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+              }}>
+              {serviceTypes &&
+                serviceTypes.map((item: any) => (
+                  <ServiceCard
+                    key={item.id}
+                    data={item}
+                    noShadow
+                    onPressEvent={onPressService}
+                    sequence={sequence}
+                  />
+                ))}
+            </View>
+          </View>
+        )}
         <View style={styles.textHeader}>
           {errorMessage && <ErrorMessage error={errorMessage} />}
         </View>
@@ -234,9 +257,9 @@ const PetCareZipSearch = (props: {
 
   return (
     <>
-      {serviceTypesLoading && petsLoading && (
+      {/* {serviceTypesLoading && petsLoading && (
         <AppActivityIndicator visible={true} />
-      )}
+      )} */}
       <ScreenRapper rapperStyle={styles.rapperStyle}>
         <KeyboardAwareScrollView
           extraHeight={100}
@@ -244,56 +267,64 @@ const PetCareZipSearch = (props: {
           enableAutomaticScroll={true}
           // keyboardVerticalOffset={20}
           // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.rootContainer}>
-          <ScrollView
-            keyboardShouldPersistTaps="handled"
-            // keyboardDismissMode="on-drag"
-            showsVerticalScrollIndicator={false}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View style={styles.boxContainer}>
-                <SearchSlider navigation={props.navigation} />
-                <RenderHeader />
-                <View style={styles.zipContainer}>
-                  <TitleText text="Near" textStyle={styles.zipText} />
-                  <GooglePlacesAutocomplete
-                    placeholder="Type a place"
-                    onPress={onPressAddress}
-                    isRowScrollable={false}
-                    query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo'}}
-                    fetchDetails={true}
-                    onFail={error => console.log(error)}
-                    onNotFound={() => console.log('no results')}
-                    keepResultsAfterBlur={true}
-                    styles={{
-                      container: {
-                        flex: 0,
-                        borderWidth: 1,
-                        borderColor: Colors.border,
-                      },
-                      description: {
-                        color: '#000',
-                        fontSize: Text_Size.Text_11,
-                      },
-                      // predefinedPlacesDescription: {
-                      //   color: '#3caf50',
-                      // },
-                    }}
+          style={styles.rootContainer}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.boxContainer}>
+              <SearchSlider navigation={props.navigation} />
+              <RenderHeader />
+              <View style={styles.zipContainer}>
+                <TitleText text="Near" textStyle={styles.zipText} />
+                <GooglePlacesAutocomplete
+                  placeholder="Address or Zip code"
+                  onPress={onPressAddress}
+                  isRowScrollable={false}
+                  enablePoweredByContainer={false}
+                  query={{
+                    key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo',
+                    language: 'en',
+                  }}
+                  fetchDetails={true}
+                  onFail={error => console.log(error)}
+                  onNotFound={() => console.log('no results')}
+                  keepResultsAfterBlur={true}
+                  textInputProps={{
+                    returnKeyType: 'search',
+                    fontSize: Text_Size.Text_11,
+                    color: colors.placeholderTextColor,
+                  }}
+                  styles={{
+                    container: {
+                      flex: 0,
+                      borderWidth: 1,
+                      borderColor: Colors.border,
+                    },
+                    description: {
+                      color: '#000',
+                      fontSize: Text_Size.Text_11,
+                    },
+                    // predefinedPlacesDescription: {
+                    //   color: '#3caf50',
+                    // },
+                  }}
+                />
+                <View style={styles.footerContainer}>
+                  <ButtonCom
+                    title="Search"
+                    loading={getLoading}
+                    textAlignment={btnStyles.textAlignment}
+                    containerStyle={btnStyles.containerStyleFullWidth}
+                    titleStyle={btnStyles.titleStyle}
+                    onSelect={handleSubmit}
                   />
-                  <View style={styles.footerContainer}>
-                    <ButtonCom
-                      title="Search"
-                      loading={getLoading}
-                      textAlignment={btnStyles.textAlignment}
-                      containerStyle={btnStyles.containerStyleFullWidth}
-                      titleStyle={btnStyles.titleStyle}
-                      onSelect={handleSubmit}
-                    />
-                  </View>
                 </View>
               </View>
-            </TouchableWithoutFeedback>
-            <BottomSpacing />
-          </ScrollView>
+            </View>
+          </TouchableWithoutFeedback>
+          <BottomSpacing />
         </KeyboardAwareScrollView>
       </ScreenRapper>
     </>

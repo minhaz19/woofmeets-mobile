@@ -13,7 +13,7 @@ export const getAllPets = createAsyncThunk(endpoint, async () => {
       } else if (response.problem === 'TIMEOUT_ERROR') {
         return response;
       } else {
-        Alert.alert('An unexpected error happened');
+        // Alert.alert('An unexpected error happened');
       }
       throw new Error(response.data.message);
     }

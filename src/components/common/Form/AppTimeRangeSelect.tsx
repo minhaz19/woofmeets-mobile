@@ -20,7 +20,7 @@ const AppTimeRangeSelect = ({
   data,
   placeholder,
   value,
-  onChange,
+
   disable = false,
   setTime,
   time,

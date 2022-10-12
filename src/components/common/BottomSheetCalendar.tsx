@@ -8,11 +8,11 @@ import {CalendarCSvg} from '../../assets/svgs/SVG_LOGOS';
 import AppCalendar from './AppCalendar';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
-import {useFormContext} from 'react-hook-form';
 interface Props {
   title: string;
   sequence?: number;
   isRecurring?: boolean;
+  setValue: (arg1: string, arg3: any) => void;
 }
 var dayss = [
   'Sunday',
@@ -25,11 +25,10 @@ var dayss = [
 ];
 const BottomSheetCalendar = ({
   title,
-  sequence = 1,
   isRecurring = false,
+  setValue,
 }: Props) => {
   const [visible, setVisible] = useState(false);
-  const {setValue} = useFormContext();
   const handlePress = (data: any) => {
     const next6Days = [...Array(7).keys()].map(index => {
       const date = new Date(data.dateString);
@@ -88,6 +87,7 @@ const BottomSheetCalendar = ({
             <AppCalendar
               selectType={isRecurring ? 'SINGLE' : 'MULTI'}
               handlePress={handlePress}
+              setValue={setValue}
             />
           </View>
         </Modal>
