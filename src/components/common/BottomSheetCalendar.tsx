@@ -12,6 +12,7 @@ import {useFormContext} from 'react-hook-form';
 interface Props {
   title: string;
   sequence?: number;
+  isRecurring?: boolean;
 }
 var dayss = [
   'Sunday',
@@ -22,7 +23,11 @@ var dayss = [
   'Friday',
   'Saturday',
 ];
-const BottomSheetCalendar = ({title, sequence = 1}: Props) => {
+const BottomSheetCalendar = ({
+  title,
+  sequence = 1,
+  isRecurring = false,
+}: Props) => {
   const [visible, setVisible] = useState(false);
   const {setValue} = useFormContext();
   const handlePress = (data: any) => {
@@ -81,7 +86,7 @@ const BottomSheetCalendar = ({title, sequence = 1}: Props) => {
               text={'Select date range 🗓'}
             />
             <AppCalendar
-              selectType={sequence === 0 ? 'RANGE' : 'SINGLE'}
+              selectType={isRecurring ? 'SINGLE' : 'MULTI'}
               handlePress={handlePress}
             />
           </View>

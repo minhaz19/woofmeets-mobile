@@ -13,40 +13,14 @@ import AppCalendar from '../../../common/AppCalendar';
 interface Props {
   serviceId?: number;
 }
-const slots = [
-  {
-    id: 0,
-    title: 'Drop-Off',
-    modal: 'Drop Off Time Slot ⏰',
-    startName: 'dropOffStartTime',
-    endName: 'dropOffEndTime',
-  },
-  {
-    id: 1,
-    title: 'Pick-Up',
-    modal: 'Pick Up Time Slot ⏰',
-    startName: 'pickUpStartTime',
-    endName: 'pickUpEndTime',
-  },
-];
+
 const DateDropPick = ({serviceId}: Props) => {
   const [visible, setVisible] = useState(false);
-  const [slotVisible, setSlotVisible] = useState(false);
+  const [dropVisible, setDropVisible] = useState(false);
+  const [pickVisible, setPickVisible] = useState(false);
 
   return (
-    <View
-      style={[
-        styles.container,
-        // {
-        //   backgroundColor: visible ? 'rgba(0,0,0,0.5)' : '#f1f1f1',
-        //   zIndex: 99999,
-        //   position: visible ? 'absolute' : 'relative',
-        //   top: 0,
-        //   right: 0,
-        //   bottom: 0,
-        //   left: 0,
-        // },
-      ]}>
+    <View style={[styles.container]}>
       <TitleText textStyle={styles.headerText} text={'Schedule'} />
       {(serviceId === 4 || serviceId === 1 || serviceId === 2) && (
         <AppTouchableOpacity
@@ -63,26 +37,40 @@ const DateDropPick = ({serviceId}: Props) => {
       )}
 
       <View style={styles.slotContainer}>
-        {slots.map((item, index) => (
-          <>
-            <AppTouchableOpacity
-              style={styles.slot}
-              key={index}
-              onPress={() => setSlotVisible(!slotVisible)}>
-              <TitleText textStyle={{}} text={item.title} />
-              <View style={styles.iconContainer}>
-                <ClockSvg fill="black" />
-              </View>
-            </AppTouchableOpacity>
-            <TimeSlotPicker
-              visible={slotVisible}
-              setVisbile={setSlotVisible}
-              title={item.modal}
-              startName={item.startName}
-              endName={item.endName}
-            />
-          </>
-        ))}
+        <>
+          <AppTouchableOpacity
+            style={styles.slot}
+            onPress={() => setDropVisible(!dropVisible)}>
+            <TitleText textStyle={{}} text={'Drop-Off'} />
+            <View style={styles.iconContainer}>
+              <ClockSvg fill="black" />
+            </View>
+          </AppTouchableOpacity>
+          <TimeSlotPicker
+            visible={dropVisible}
+            setVisbile={setDropVisible}
+            title={'Drop Off Time Slot ⏰'}
+            startName={'dropOffStartTime'}
+            endName={'dropOffEndTime'}
+          />
+        </>
+        <>
+          <AppTouchableOpacity
+            style={styles.slot}
+            onPress={() => setPickVisible(!pickVisible)}>
+            <TitleText textStyle={{}} text={'Pick-Up'} />
+            <View style={styles.iconContainer}>
+              <ClockSvg fill="black" />
+            </View>
+          </AppTouchableOpacity>
+          <TimeSlotPicker
+            visible={pickVisible}
+            setVisbile={setPickVisible}
+            title={'Pick Up Time Slot ⏰'}
+            startName={'pickUpStartTime'}
+            endName={'pickUpEndTime'}
+          />
+        </>
       </View>
 
       <Modal animated transparent visible={visible} animationType="fade">

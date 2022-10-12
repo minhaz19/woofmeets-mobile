@@ -54,7 +54,6 @@ const TimeSlotPicker = ({
     setValue(startName, fromTime);
     setValue(endName, toTime);
   }, [endName, fromTime, setValue, startName, toTime]);
-  console.log('start', fromTime, 'edn', toTime);
   return (
     <View>
       <Modal animated transparent visible={visible} animationType="fade">

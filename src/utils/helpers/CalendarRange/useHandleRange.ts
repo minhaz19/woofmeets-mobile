@@ -18,8 +18,10 @@ export const useHandleRange = (type: string) => {
     if (type === 'SINGLE') {
       setSingleSelect(date.dateString);
     } else if (type === 'MULTI') {
-      const {styledMarkedRange} = orderAndStyleRange(date, 'MULTI');
+      const {styledMarkedRange, orderRange} = orderAndStyleRange(date, 'MULTI');
       setMarkedStyle({..._markedStyle, ...styledMarkedRange});
+      // setDateRange([...orderRange]);
+      setValue('multiDate', [...orderRange]);
     } else if (type === 'RANGE') {
       const {end} = compareDate(date.dateString, step, setPrevDate);
 
@@ -59,10 +61,18 @@ export const useHandleRange = (type: string) => {
       setValue('proposalStartDate', startingDate);
       setValue('proposalEndDate', endingDate);
     }
+    // else if (type === 'MULTI') {
+    //   setValue('multiDate', dateRange);
+    // }
   }, [endingDate, startingDate]);
   const reset = () => {
     setStartingDate('');
     setEndingDate('');
+    setDateRange([]);
+    setSingleSelect('');
+    setValue('proposalStartDate', '');
+    setValue('proposalEndDate', '');
+    setValue('multiDate', []);
     setSteps(1);
   };
   return {

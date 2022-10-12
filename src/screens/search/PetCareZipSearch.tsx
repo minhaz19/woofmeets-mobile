@@ -146,9 +146,6 @@ const PetCareZipSearch = (props: {
       };
     }
     if (formattedData.service) {
-      // const result = await getRequest(endPoint, formattedData);
-      // console.log(result?.data?.providers);
-      console.log(formattedData);
       dispatch(getAllProvider(formattedData));
       props.navigation.navigate('AllProvider');
     } else {
@@ -159,7 +156,6 @@ const PetCareZipSearch = (props: {
   const {allProvider, loading: getLoading} = useAppSelector(
     (state: any) => state.allProvider,
   );
-  console.log('----------------', allProvider);
   const RenderHeader = () => {
     return (
       <View>

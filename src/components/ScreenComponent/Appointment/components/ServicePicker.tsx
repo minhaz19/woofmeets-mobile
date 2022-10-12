@@ -38,7 +38,8 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
   const [visible, setVisible] = useState(false);
   const {providerServices} = useAppSelector(state => state?.providerServices);
   const modData = providerServices?.map((item: any) => ({
-    id: item.serviceTypeId,
+    id: item.id,
+    serviceTypeId: item.serviceTypeId,
     title: item.serviceType.displayName,
     subTitle: item.serviceType.description,
     Icon: getIcon(item.serviceTypeId),
@@ -46,7 +47,6 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
   const [selectedService, setSelectedService] = useState<any>(
     modData ? modData[0] : [],
   );
-
   return (
     <>
       <TitleText textStyle={styles.header} text={'Provider Services'} />
@@ -81,7 +81,7 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
               onPress={() => {
                 setSelectedService(item);
                 setValue(name, item.id);
-                setServiceId(item.id);
+                setServiceId(item.serviceTypeId);
                 setVisible(false);
               }}>
               <View>

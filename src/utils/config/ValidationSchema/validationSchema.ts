@@ -223,6 +223,7 @@ const appointmentValidationSchema = Yup.object().shape({
   providerServiceId: Yup.number()
     .nullable(true)
     .typeError('A Number is Required'),
+  serviceTypeId: Yup.number().nullable(true).typeError('A Number is Required'),
   visitLength: Yup.number().nullable(true).typeError('A Number is Required'),
   isRecurring: Yup.boolean(),
   dropOffStartTime: Yup.string(),

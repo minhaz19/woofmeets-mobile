@@ -10,10 +10,12 @@ import BottomSpacing from '../../UI/BottomSpacing';
 import BottomSheetCalendar from '../../common/BottomSheetCalendar';
 import MyPets from './components/MyPets';
 import MessageCheck from './components/MessageCheck';
+// import {useAppSelector} from '../../../store/store';
 interface Props {
   handleSubmit: (arg: any) => void;
+  loading: boolean;
 }
-const AppointmentBody = ({handleSubmit}: Props) => {
+const AppointmentBody = ({handleSubmit, loading}: Props) => {
   const [serviceId, setServiceId] = useState(1);
   const {
     control,
@@ -21,7 +23,10 @@ const AppointmentBody = ({handleSubmit}: Props) => {
     watch,
     formState: {errors},
   } = useFormContext();
-  const {schedule} = watch();
+  const {isRecurring} = watch();
+  // const {serviceType} = useAppSelector(state => state.services);
+  // const {serviceTypes} = useAppSelector(state => state.services);
+  // const serviceIDs = serviceTypes?.map((item: {id: number}) => item.id);
   return (
     <FlatList
       data={[]}
@@ -30,7 +35,7 @@ const AppointmentBody = ({handleSubmit}: Props) => {
       ListEmptyComponent={
         <>
           <ServicePicker
-            name="serviceId"
+            name="providerServiceId"
             setValue={setValue}
             setServiceId={setServiceId}
           />
@@ -43,7 +48,7 @@ const AppointmentBody = ({handleSubmit}: Props) => {
             <>
               <VisitScheduleTab serviceId={serviceId} />
               <BottomSheetCalendar
-                title={schedule === 0 ? 'Dates' : 'Start Date'}
+                title={isRecurring ? 'Start Date' : 'Dates'}
               />
             </>
           )}
@@ -51,8 +56,16 @@ const AppointmentBody = ({handleSubmit}: Props) => {
             {serviceId === 4 && <DateDropPick serviceId={serviceId} />}
             {(serviceId === 3 || serviceId === 5) && <DayTimeSlot />}
             <MyPets />
-            <MessageCheck errors={errors} control={control} />
-            <SubmitButton title="Send Proposal" onPress={handleSubmit} />
+            <MessageCheck
+              errors={errors}
+              control={control}
+              setValue={setValue}
+            />
+            <SubmitButton
+              title="Send Proposal"
+              onPress={handleSubmit}
+              loading={loading}
+            />
             <BottomSpacing />
             <BottomSpacing />
           </View>

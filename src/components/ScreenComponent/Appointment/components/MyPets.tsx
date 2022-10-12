@@ -28,7 +28,7 @@ const MyPets = () => {
     text: '',
     new: true,
   });
-  console.log('addPets', allPets);
+
   const [newData, setDatas] = useState(modArray);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
@@ -58,12 +58,9 @@ const MyPets = () => {
         <>
           <View style={styles.headerContainer}>
             <TitleText textStyle={styles.headerText} text={'Your Pets'} />
-            {/* <View style={styles.iconWrapper}>
-              <Pets width={25} height={25} fill="black" />
-            </View> */}
           </View>
           <View style={styles.container}>
-            {newData.map((item: any, index: number) =>
+            {newData?.map((item: any, index: number) =>
               item.new ? (
                 <AppTouchableOpacity
                   key={index}
@@ -76,9 +73,14 @@ const MyPets = () => {
                   key={index}
                   onPress={() => {
                     handleMultipleCheck(item.id);
-                    petIds.push(...petIds, item.id);
-                    console.log('petsId', petIds);
-                    setValue('petsId', petIds);
+                    const matchIndex = petIds.indexOf(item.id);
+                    if (matchIndex === -1) {
+                      petIds.push(...petIds, item.id);
+                      setValue('petsId', petIds);
+                    } else {
+                      petIds.splice(matchIndex, 1);
+                      setValue('petsId', petIds);
+                    }
                   }}
                   style={[
                     styles.pet,

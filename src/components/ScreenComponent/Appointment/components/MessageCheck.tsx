@@ -4,9 +4,9 @@ import AppCheckboxField from '../../../common/Form/AppCheckboxField';
 interface Props {
   errors: any;
   control: any;
-  setValue?: (arg: string, arg1: boolean) => void;
+  setValue: (arg: string, arg1: boolean) => void;
 }
-const MessageCheck = ({errors, control}: Props) => {
+const MessageCheck = ({errors, control, setValue}: Props) => {
   const [active, setActive] = useState(false);
   return (
     <>
@@ -32,7 +32,7 @@ const MessageCheck = ({errors, control}: Props) => {
         control={control}
         onPress={() => {
           setActive(!active);
-          // setValue(item.name, type.value);
+          setValue('isRecivedPhotos', !active);
         }}
         name={'isRecivedPhotos'}
       />

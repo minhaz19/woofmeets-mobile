@@ -75,11 +75,16 @@ const AppDayPicker = () => {
               {borderColor: item.active ? Colors.primary : Colors.border},
             ]}
             onPress={() => {
-              selectedDays.push(item.value);
+              const matchIndex = selectedDays.indexOf(item.value);
+              if (matchIndex === -1) {
+                // petIds.push(...petIds, item.id);
+                selectedDays.push(item.value);
+              } else {
+                selectedDays.splice(matchIndex, 1);
+              }
               setValue('recurringSelectedDay', selectedDays);
               handleMultipleCheck(item.id);
-            }}
-          >
+            }}>
             <TitleText text={item.day} textStyle={styles.text} />
           </Pressable>
         ))}
