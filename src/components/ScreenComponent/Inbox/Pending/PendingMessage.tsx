@@ -7,6 +7,7 @@ import {PendingSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import { useNavigation } from '@react-navigation/native';
+import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 
 export const data = [
   {
@@ -92,6 +93,7 @@ const PendingMessage = () => {
           />
         )}
       </View>
+      <BottomSpacingNav />
     </ScrollView>
   );
 };

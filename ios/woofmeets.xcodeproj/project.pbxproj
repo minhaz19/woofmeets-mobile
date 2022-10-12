@@ -21,11 +21,8 @@
 		7699B88040F8A987B510C191 /* libPods-woofmeets-woofmeetsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-woofmeets-woofmeetsTests.a */; };
 		78E429EB206046D18AD0DDD2 /* Muli-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 913C65F0ACF247A698C501D4 /* Muli-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		88228BA1BA97406EACDF10F8 /* UberMoveMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0BDC12DA72E6471F824731AC /* UberMoveMedium.otf */; };
 		9268965AAEE24E6DBAA37CB0 /* Muli-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D33DEF2170143F8B066280C /* Muli-ExtraLight.ttf */; };
-		BD24C7AB27C64D0C90DF9490 /* VisbyRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 11A3E6DAA083416C94D879A2 /* VisbyRegular.otf */; };
 		CD23AAF060544E929F9BE76A /* Muli-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CD806669D844DEAB6E83110 /* Muli-Black.ttf */; };
-		D0776DD59F4942C0A33CA322 /* UberMoveBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8619BA04D040808A42B4AB /* UberMoveBold.otf */; };
 		D24F6A444EC3491B81A60A5C /* Muli-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECA16DFFFAA14A708E889CB7 /* Muli-Italic.ttf */; };
 		E353A493723B4A2EA7F65D83 /* Muli-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7347E9F524F54D9780D1B215 /* Muli-ExtraBold.ttf */; };
 /* End PBXBuildFile section */
@@ -44,9 +41,7 @@
 		00E356EE1AD99517003FC87E /* woofmeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = woofmeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* woofmeetsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = woofmeetsTests.m; sourceTree = "<group>"; };
-		0BDC12DA72E6471F824731AC /* UberMoveMedium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = UberMoveMedium.otf; path = ../src/assets/fonts/UberMoveMedium.otf; sourceTree = "<group>"; };
 		0FD670FB28DD64F100AAA2E4 /* Icon-App.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App.png"; sourceTree = "<group>"; };
-		11A3E6DAA083416C94D879A2 /* VisbyRegular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = VisbyRegular.otf; path = ../src/assets/fonts/VisbyRegular.otf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* woofmeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = woofmeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = woofmeets/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = woofmeets/AppDelegate.mm; sourceTree = "<group>"; };
@@ -54,7 +49,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = woofmeets/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = woofmeets/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-woofmeets-woofmeetsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-woofmeets-woofmeetsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E8619BA04D040808A42B4AB /* UberMoveBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = UberMoveBold.otf; path = ../src/assets/fonts/UberMoveBold.otf; sourceTree = "<group>"; };
 		3589E96C97CA45F081C806E3 /* Muli-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Muli-SemiBold.ttf"; path = "../src/assets/fonts/Muli-SemiBold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-woofmeets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-woofmeets.debug.xcconfig"; path = "Target Support Files/Pods-woofmeets/Pods-woofmeets.debug.xcconfig"; sourceTree = "<group>"; };
 		4CD806669D844DEAB6E83110 /* Muli-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Muli-Black.ttf"; path = "../src/assets/fonts/Muli-Black.ttf"; sourceTree = "<group>"; };
@@ -142,9 +136,6 @@
 				6F95E9B82D484481B4625965 /* Muli-Light.ttf */,
 				913C65F0ACF247A698C501D4 /* Muli-Regular.ttf */,
 				3589E96C97CA45F081C806E3 /* Muli-SemiBold.ttf */,
-				2E8619BA04D040808A42B4AB /* UberMoveBold.otf */,
-				0BDC12DA72E6471F824731AC /* UberMoveMedium.otf */,
-				11A3E6DAA083416C94D879A2 /* VisbyRegular.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -308,9 +299,6 @@
 				0497A0A05F4C4912B02284A2 /* Muli-Light.ttf in Resources */,
 				78E429EB206046D18AD0DDD2 /* Muli-Regular.ttf in Resources */,
 				35D78FF8ED424BC89787A960 /* Muli-SemiBold.ttf in Resources */,
-				D0776DD59F4942C0A33CA322 /* UberMoveBold.otf in Resources */,
-				88228BA1BA97406EACDF10F8 /* UberMoveMedium.otf in Resources */,
-				BD24C7AB27C64D0C90DF9490 /* VisbyRegular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

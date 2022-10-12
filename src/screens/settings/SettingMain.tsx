@@ -24,10 +24,9 @@ import {logout} from '../../store/slices/auth/userSlice';
 import methods from '../../api/methods';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
+import { CommonActions } from '@react-navigation/native';
 
-const SettingMain = (props: {
-  navigation: {navigate: (arg0: string) => any};
-}) => {
+const SettingMain = (props: { navigation: { navigate: (arg0: string) => any; dispatch: (arg0: CommonActions.Action) => void; }; }) => {
   const dispatch = useAppDispatch();
   const isDarkMode = useColorScheme() === 'dark';
   const {colors} = useTheme();
@@ -173,7 +172,14 @@ const SettingMain = (props: {
     screenName: () => {
       dispatch(logout());
       methods._get('/auth/logout');
-      props.navigation.navigate('AuthNavigator');
+      props.navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [
+            { name: 'AuthNavigator' },
+          ],
+        })
+      );
     },
     opacity: 1,
     color: Colors.alert,

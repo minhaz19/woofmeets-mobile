@@ -37,6 +37,7 @@ import rescheduleSlice from './slices/Provider/reschedule/rescheduleSlice';
 import allProviderSlice from './slices/Provider/allProvider/allProviderSlice';
 import cardsSlice from './slices/payment/PaymentCards/cardsSlice';
 import currentPlanSlice from './slices/payment/Subscriptions/CurrentSubscription/currentPlanSlice';
+import addressReducer from './slices/address/address';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -67,6 +68,7 @@ const appReducer = combineReducers({
   allProvider: allProviderSlice,
   cards: cardsSlice,
   currentPlan: currentPlanSlice,
+  address: addressReducer,
 });
 
 const RootReducer = (

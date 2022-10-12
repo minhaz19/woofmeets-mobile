@@ -29,7 +29,7 @@ const Login = ({navigation}: Props) => {
   const {handleSubmit, providerLoading, loading} = useLogin(navigation);
   return (
     <>
-      {providerLoading && <AppActivityIndicator visible={true} />}
+      {/* {providerLoading && <AppActivityIndicator visible={true} />} */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
