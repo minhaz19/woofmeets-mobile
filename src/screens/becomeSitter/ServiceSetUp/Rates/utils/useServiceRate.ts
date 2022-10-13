@@ -43,7 +43,6 @@ export const useServiceRates = (serviceSetup: any) => {
     let payload: any = {
       serviceRate: [],
     };
-    console.log(rateFieldId);
     rateFieldId &&
       rateFieldId
         .slice(0, 6)
@@ -62,7 +61,6 @@ export const useServiceRates = (serviceSetup: any) => {
           });
         });
     const result = await request(payload);
-    console.log('result', result);
     if (result.ok) {
       dispatch(setBoardingSelection({pass: 0}));
       dispatch(getRateFieldValue(providerServicesId));

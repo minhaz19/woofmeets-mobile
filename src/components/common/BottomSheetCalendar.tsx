@@ -43,7 +43,6 @@ const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
     setValue('repeatDate', next6Days);
     setStartDate(data.dateString);
   };
-  console.log('mulitad', multiDate?.join(' '));
   return (
     <>
       <View

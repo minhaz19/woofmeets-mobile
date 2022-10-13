@@ -16,6 +16,8 @@ export default {
     tabIconSelected: tintColorLight,
     inputBg: '#f8f4f4',
     blue: '#21409A',
+    loaderBackground: '#e3e3e3',
+    loaderForeground: '#D3D3D3',
   },
   dark: {
     text: 'white',
@@ -25,6 +27,8 @@ export default {
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
     borderColor: '#585858',
+    loaderBackground: '#262626',
+    loaderForeground: '#454545',
   },
   button: {
     blue: '#81a7ff',

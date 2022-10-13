@@ -6,7 +6,7 @@ import {orderAndStyleRange} from './orderAndStyleRange';
 
 export const useHandleRange = (
   type: string,
-  setValue: (arg: string, arg2: any) => void,
+  setValue?: (arg: string, arg2: any) => void,
 ) => {
   const [_markedStyle, setMarkedStyle] = useState({});
   const [singleSelect, setSingleSelect] = useState<string>('');
@@ -25,8 +25,7 @@ export const useHandleRange = (
       setMarkedStyle({..._markedStyle, ...styledMarkedRange});
       // setDateRange([...orderRange]);
       setMultiDate([...multiDate, date.dateString]);
-      setValue('multiDate', [...multiDate, date.dateString]);
-      console.log('core mulit', [...multiDate, date.dateString]);
+      setValue && setValue('multiDate', [...multiDate, date.dateString]);
     } else if (type === 'RANGE') {
       const {end} = compareDate(date.dateString, step, setPrevDate);
 
@@ -65,8 +64,8 @@ export const useHandleRange = (
       const {styledMarkedRange} = orderAndStyleRange(range, 'RANGE');
       setMarkedStyle(styledMarkedRange);
       range && setDateRange(range);
-      setValue('proposalStartDate', startingDate);
-      setValue('proposalEndDate', endingDate);
+      setValue && setValue('proposalStartDate', startingDate);
+      setValue && setValue('proposalEndDate', endingDate);
     }
     // else if (type === 'MULTI') {
     //   setValue('multiDate', dateRange);
@@ -78,13 +77,12 @@ export const useHandleRange = (
     setDateRange([]);
     setSingleSelect('');
     setMultiDate([]);
-    setValue('proposalStartDate', '');
-    setValue('proposalEndDate', '');
-    setValue('multiDate', []);
     setMarkedStyle({});
     setSteps(1);
+    setValue && setValue('proposalStartDate', '');
+    setValue && setValue('proposalEndDate', '');
+    setValue && setValue('multiDate', []);
   };
-  // console.log('white', startingDate, endingDate, _markedStyle, dateRange);
   return {
     handleDayPress,
     _markedStyle,

@@ -19,7 +19,6 @@ const DayTimeSlot = () => {
   useMemo(() => {
     if (isRecurring) {
       const output = repeatDate?.filter((obj: any) => {
-        console.log('ojb', obj.day, recurringSelectedDay);
         return recurringSelectedDay.indexOf(obj.day) !== -1;
       });
 
@@ -29,16 +28,7 @@ const DayTimeSlot = () => {
         active: true,
       }));
       setDatas(recurring);
-      console.log(
-        'dtym',
-        recurringSelectedDay,
-        isRecurring,
-        repeatDate,
-        'out',
-        output,
-        're',
-        recurring,
-      );
+    
     } else {
       const multi = multiDate?.map((item: any, index: number) => ({
         id: index + 1,
@@ -48,7 +38,6 @@ const DayTimeSlot = () => {
       setDatas(multi);
     }
   }, [isRecurring, multiDate, repeatDate, recurringSelectedDay]);
-  console.log('new data', newData);
   return (
     <View>
       {newData?.map((item: any, index: number) => (

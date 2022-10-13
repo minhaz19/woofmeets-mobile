@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
   },
   roundContainer: {
     borderRadius: 200,
-    width: SCREEN_WIDTH <= 380 ? 80 : SCREEN_WIDTH <= 600 ? 140 : 150,
-    height: SCREEN_WIDTH <= 380 ? 80 : SCREEN_WIDTH <= 600 ? 140 : 150,
+    width: SCREEN_WIDTH <= 380 ? 120 : SCREEN_WIDTH <= 600 ? 160 : 180,
+    height: SCREEN_WIDTH <= 380 ? 120 : SCREEN_WIDTH <= 600 ? 160 : 180,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',

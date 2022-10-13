@@ -35,7 +35,6 @@ const TimeMultiSlotPicker = (date: any) => {
   // useMemo(() => {
   //   // const times = generate_series(visitLength);
   //   // const times = generate_series(visitLength);
-  //   console.log('inside use effect');
   //   times && setDatas(times);
   // }, [visitLength]);
   const handleMultipleCheck = (id: number) => {

@@ -1,16 +1,22 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, Text, View} from 'react-native';
 import React, {memo, useState} from 'react';
 import AppInputRange from '../../../common/Form/AppInputRange';
 import TitleText from '../../../common/text/TitleText';
 import Text_Size from '../../../../constants/textScaling';
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-const PriceRange = () => {
-  const [multiSliderValue, setMultiSliderValue] = useState([0, 10000]);
-  const multiSliderValuesChange = (values: number[]) =>
+import {Slider} from '@miblanchard/react-native-slider';
+
+interface Props {
+  multiSliderValue: any;
+  setMultiSliderValue: (arg0: any) => void;
+}
+const PriceRange = ({setMultiSliderValue, multiSliderValue}: Props) => {
+  const multiSliderValuesChange = (values: any) => {
     setMultiSliderValue(values);
+  };
   return (
     <View>
       <TitleText textStyle={styles.title} text="Rate Per Night" />
@@ -21,18 +27,29 @@ const PriceRange = () => {
         <Text style={styles.label}>{multiSliderValue[1]}</Text>
       </View>
       <View style={styles.rangeContainer}>
-        <MultiSlider
-          values={[multiSliderValue[0], multiSliderValue[1]]}
-          onValuesChange={multiSliderValuesChange}
-          min={0}
-          max={10000}
-          selectedStyle={styles.selectedStyle}
-          unselectedStyle={styles.unselectedStyle}
-          containerStyle={styles.containerStyle}
-          trackStyle={styles.trackStyle}
-          touchDimensions={styles.touchDimensions}
-          markerOffsetY={1.5}
-          customMarker={() => <View style={[styles.balls]} />}
+        <Slider
+          trackClickable={true}
+          animateTransitions={true}
+          value={[multiSliderValue[0], multiSliderValue[1]]}
+          minimumValue={0}
+          maximumValue={150}
+          trackMarks={[0, 10]}
+          step={1}
+          thumbTouchSize={{width: 30, height: 30}}
+          thumbTintColor={Colors.primary}
+          thumbStyle={{
+            borderColor: Colors.primary,
+            borderWidth: 0.5,
+          }}
+          minimumTrackTintColor={Colors.primary}
+          maximumTrackTintColor="#CECECE"
+          trackStyle={{
+            height: 3,
+          }}
+          // onValueChange={value => {
+          //   multiSliderValuesChange(value);
+          // }}
+          onSlidingComplete={value => multiSliderValuesChange(value)}
         />
       </View>
     </View>

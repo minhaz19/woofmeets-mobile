@@ -1,39 +1,45 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, View} from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
+import React from 'react';
 import Colors from '../../constants/Colors';
 import {Calendar} from 'react-native-calendars';
-import {_dateRange} from '../../utils/helpers/datesArray';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
-import {orderAndStyleRange} from '../../utils/helpers/CalendarRange/orderAndStyleRange';
 interface Props {
-  name: string;
+  selectType?: string;
+  value?: any;
+  setValue: (arg: string) => void;
 }
-const DateRange = ({name}: Props) => {
-  const [_markedStyle, setMarkedStyle] = useState({});
+const DateRange = ({selectType = 'SINGLE', setValue, value}: Props) => {
   const {colors} = useTheme();
-
-  const {startingDate, endingDate, handleDayPress} = useHandleRange();
-
-  useMemo(() => {
-    const range: Boolean | Date[] =
-      typeof startingDate !== 'undefined' &&
-      typeof endingDate !== 'undefined' &&
-      _dateRange(startingDate, endingDate);
-
-    const {styledMarkedRange} = orderAndStyleRange(range, Colors.primary);
-    setMarkedStyle(styledMarkedRange);
-  }, [startingDate, endingDate]);
-
+  const {handleDayPress, singleSelect, _markedStyle} =
+    useHandleRange(selectType);
   return (
-    <View style={styles.containerCL}>
+    <View>
       <Calendar
         style={styles.calenderStyles}
-        onDayPress={handleDayPress}
-        markingType={'period'}
-        markedDates={_markedStyle}
-        minDate={new Date().toString()}
+        onDayPress={data => {
+          handleDayPress(data);
+          setValue(data.dateString);
+        }}
+        markingType={'custom'}
+        markedDates={{
+          ..._markedStyle,
+          [singleSelect]: {
+            customStyles: {
+              container: {
+                backgroundColor: Colors.primary,
+                elevation: 2,
+                borderRadius: 10,
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+              text: {
+                color: 'white',
+              },
+            },
+          },
+        }}
+        minDate={value ? value.toString() : new Date().toString()}
         enableSwipeMonths
         theme={{
           backgroundColor: colors.backgroundColor,
@@ -59,10 +65,7 @@ const DateRange = ({name}: Props) => {
   );
 };
 
-export default DateRange;
-
 const styles = StyleSheet.create({
-  containerCL: {},
   calenderStyles: {
     width: '100%',
     borderWidth: 1,
@@ -71,3 +74,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+export default DateRange;

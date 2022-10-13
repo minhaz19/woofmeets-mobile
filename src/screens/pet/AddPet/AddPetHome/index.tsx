@@ -21,7 +21,7 @@ const AddPetHome = ({route, navigation}: Props) => {
   const {isDarkMode} = useTheme();
   const {opk} = route.params;
   const {loading, handleSubmit} = useAddPetUtils(navigation, opk);
-  console.log('pk', opk);
+
   return (
     <>
       {loading && <AppActivityIndicator visible={true} />}

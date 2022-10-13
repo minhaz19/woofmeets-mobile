@@ -59,6 +59,7 @@ const VisitScheduleTab = ({serviceId}: Props) => {
         name="isRecurring"
       />
       {scheduleId === 1 && <AppDayPicker />}
+      {/* <BottomSheetCalendar title={scheduleId === 0 ? 'Dates' : 'Start Date'} /> */}
     </View>
   );
 };

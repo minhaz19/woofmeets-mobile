@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {Alert, Image, SafeAreaView, StyleSheet, useColorScheme, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  useColorScheme,
+  View,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DescriptionText from '../components/common/text/DescriptionText';
 import HeaderText from '../components/common/text/HeaderText';
@@ -16,7 +23,7 @@ import {signIn} from '../store/slices/auth/userSlice';
 import {useAppDispatch} from '../store/store';
 import {getServiceTypes} from '../store/slices/profile/services';
 import {getAllPets} from '../store/slices/pet/allPets/allPetsAction';
-import { NetInfoState, useNetInfo } from '@react-native-community/netinfo';
+import {NetInfoState, useNetInfo} from '@react-native-community/netinfo';
 const Splash = ({}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const [isPreviousUser, setIsPreviousUser] = useState(false);
@@ -121,8 +128,7 @@ const Splash = ({}) => {
           authStorage.removeToken();
         }
       }
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {
@@ -139,14 +145,13 @@ const Splash = ({}) => {
     );
   };
 
-
   const internetState: NetInfoState = useNetInfo();
   useEffect(() => {
     if (internetState.isConnected === false) {
       Alert.alert(
-        "No Internet! ❌",
-        "Sorry, we need an Internet connection for Woofmeets to run correctly.",
-        [{ text: "Okay" }]
+        'No Internet! ❌',
+        'Sorry, we need an Internet connection for Woofmeets to run correctly.',
+        [{text: 'Okay'}],
       );
     }
   }, [internetState.isConnected]);
@@ -156,7 +161,6 @@ const Splash = ({}) => {
   } else {
     return (
       <>
-      
         {isPreviousUser ? (
           <MainNavigationContainer previousLoggedIn={true} />
         ) : state.showRealApp ? (
@@ -175,7 +179,6 @@ const Splash = ({}) => {
             />
           </SafeAreaView>
         )}
-        
       </>
     );
   }

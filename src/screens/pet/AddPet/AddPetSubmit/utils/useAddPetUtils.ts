@@ -13,10 +13,10 @@ export const useAddPetUtils = (
   const {request, loading: Ploading} = useApi(addPetApi);
 
   const handleSubmit = async (data: any) => {
-    console.log('po', opk);
+
     const payload = {...data, ...routeData};
     const result = await request(payload, opk);
-    console.log('');
+
     if (result.ok) {
       if (opk === 'Appointment') {
         dispatch(getAllPets());

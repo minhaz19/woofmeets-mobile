@@ -13,7 +13,6 @@ const endpoint = '/subscriptions/check-basic-verification-payment';
 const subscriptionEndpoint = '/subscriptions/subscribe/';
 const defaultCardEndpoint = '/stripe-payment-method/default-card-info';
 export const useSubscription = () => {
-  console.log('subs');
   const [sequence, setSequence] = useState<number>(0);
   const [ssLoading, setSSloading] = useState(false);
   const dispatch = useAppDispatch();
@@ -78,7 +77,6 @@ export const useSubscription = () => {
     }
   };
   useEffect(() => {
-    console.log('current', currentPlan, plans);
     (currentPlan === null || currentPlan === undefined) &&
       dispatch(getCurrentplan());
     (currentPlan === null || plans === null) && dispatch(getSubscription());

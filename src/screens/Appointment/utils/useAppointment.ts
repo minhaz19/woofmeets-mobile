@@ -51,7 +51,6 @@ export const useAppointment = () => {
       firstMessage: data.firstMessage,
       isRecivedPhotos: data.isRecivedPhotos,
     };
-    console.log('boarding', payload);
     // const response = await request(endpoint, payload);
     Alert.alert('Appointment under maintainance');
     // console.log('res', response);

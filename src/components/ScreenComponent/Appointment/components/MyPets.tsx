@@ -44,7 +44,6 @@ const MyPets = () => {
   }, []);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
-  console.log('g', allPets);
   return (
     <>
       {allPets === null || allPets === undefined ? (
