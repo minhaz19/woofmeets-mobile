@@ -29,7 +29,9 @@ build/
 local.properties
 *.iml
 *.hprof
+
 release/
+.apk
 
 # node.js
 #
