@@ -3,16 +3,19 @@ import React, {useState} from 'react';
 import AppHalfTabs from '../../../common/AppHalfTabs';
 import {Calendar, ClockSvg, Repeat} from '../../../../assets/svgs/SVG_LOGOS';
 import AppDayPicker from '../../../common/AppDayPicker';
+// import BottomSheetCalendar from '../../../common/BottomSheetCalendar';
 const data = [
   {
     id: 1,
     title: '30 Minites',
     Icon: <ClockSvg width={20} height={20} fill={'black'} />,
+    value: 30,
   },
   {
     id: 2,
     title: '60 Minites',
     Icon: <ClockSvg width={20} height={20} fill={'black'} />,
+    value: 60,
   },
 ];
 const schedule = [
@@ -20,11 +23,13 @@ const schedule = [
     id: 1,
     title: 'Specific Dates',
     Icon: <Calendar width={20} height={20} fill={'black'} />,
+    value: false,
   },
   {
     id: 2,
     title: 'Repeat weekly',
     Icon: <Repeat width={30} height={30} fill={'black'} />,
+    value: true,
   },
 ];
 interface Props {
@@ -41,7 +46,7 @@ const VisitScheduleTab = ({serviceId}: Props) => {
           data={data}
           //@ts-ignore
           setVisitId={setVisitId}
-          name="visit"
+          name="visitLength"
         />
       )}
       <AppHalfTabs
@@ -49,7 +54,7 @@ const VisitScheduleTab = ({serviceId}: Props) => {
         data={schedule}
         //@ts-ignore
         setScheduleId={setScheduleId}
-        name="schedule"
+        name="isRecurring"
       />
       {scheduleId === 1 && <AppDayPicker />}
     </View>

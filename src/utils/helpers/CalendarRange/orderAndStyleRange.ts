@@ -2,8 +2,8 @@
 
 import Colors from '../../../constants/Colors';
 
+var orderRange: any = [];
 export const orderAndStyleRange = (range: any, type: string) => {
-  let orderRange: any = [];
   let styledMarkedRange: any = {};
   if (type === 'RANGE') {
     const unorderedRange =
@@ -82,5 +82,5 @@ export const orderAndStyleRange = (range: any, type: string) => {
           (styledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
       );
   }
-  return {styledMarkedRange};
+  return {styledMarkedRange, orderRange};
 };

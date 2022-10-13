@@ -26,7 +26,6 @@ const AllProvider = ({navigation}: Props) => {
   const {allProvider, loading: getLoading} = useAppSelector(
     (state: any) => state.allProvider,
   );
-  console.log('----------------', allProvider);
   const dispatch = useAppDispatch();
   const isDarkMode = useColorScheme() === 'dark';
 

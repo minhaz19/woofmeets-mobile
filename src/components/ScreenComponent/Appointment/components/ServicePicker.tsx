@@ -1,5 +1,5 @@
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
@@ -12,63 +12,46 @@ import {
   HouseSittingIcon,
 } from '../../../../assets/svgs/Services_SVG';
 import Text_Size from '../../../../constants/textScaling';
-const data = [
-  {
-    id: 1,
-    title: 'Borading',
-    subTitle: 'in the sitters home',
-    Icon: BoardingIcon,
-  },
-  {
-    id: 2,
-    title: 'House Sitting',
-    subTitle: 'in your home',
-    Icon: HouseSittingIcon,
-  },
-  {
-    id: 3,
-    title: 'Drop-In visits',
-    subTitle: 'visits in your home',
-    Icon: DropInVisitIcon,
-  },
-  {
-    id: 4,
-    title: 'Doggy Day Care',
-    subTitle: 'in the sitters home',
-    Icon: DoggyDayCareIcon,
-  },
-  {
-    id: 5,
-    title: 'Dog Walking',
-    subTitle: 'in your neighourhood',
-    Icon: DogWalkingIcon,
-  },
-];
+import {useAppSelector} from '../../../../store/store';
+
 interface Props {
   name: string;
   setValue: (arg: string, arg1: number) => void;
   setServiceId: (arg: number) => void;
 }
-const ServicePicker = ({name, setValue, setServiceId}: Props) => {
+let modData: any = [];
+const getIcon = (iconId: number) => {
+  switch (iconId) {
+    case 1:
+      return BoardingIcon;
+    case 2:
+      return HouseSittingIcon;
+    case 3:
+      return DropInVisitIcon;
+    case 4:
+      return DoggyDayCareIcon;
+    case 5:
+      return DogWalkingIcon;
+  }
+};
+const ServicePicker = ({
+  name,
+  setValue,
+  setServiceId,
+}: Props) => {
   const [visible, setVisible] = useState(false);
-  const [selectedService, setSelectedService] = useState<{
-    title: string;
-    subTitle: string;
-    id: null | number;
-    Icon: any;
-  }>({
-    title: '',
-    subTitle: '',
-    id: null,
-    Icon: null,
-  });
-  const [activeServie, setActiveService] = useState(1);
-
-  useMemo(() => {
-    const selected = data.filter(item => item.id === activeServie);
-    setSelectedService(selected[0]);
-  }, [activeServie]);
-
+  const {providerServices} = useAppSelector(state => state?.providerServices);
+  const [selectedService, setSelectedService] = useState<any>([]);
+  useEffect(() => {
+    modData = providerServices?.map((item: any) => ({
+      id: item.id,
+      serviceTypeId: item.serviceTypeId,
+      title: item.serviceType.displayName,
+      subTitle: item.serviceType.description,
+      Icon: getIcon(item.serviceTypeId),
+    }));
+    modData !== undefined && setSelectedService(modData[0]);
+  }, [providerServices]);
   return (
     <>
       <TitleText textStyle={styles.header} text={'Provider Services'} />
@@ -78,12 +61,14 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
         <View>
           <TitleText
             textStyle={styles.titleText}
-            text={selectedService.title}
+            text={selectedService?.title}
           />
-          <DescriptionText text={selectedService.subTitle} />
+          <DescriptionText text={selectedService?.subTitle} />
         </View>
         <View style={styles.selectedIcon}>
-          <selectedService.Icon fill="black" width={30} height={30} />
+          {selectedService?.Icon && (
+            <selectedService.Icon fill="black" width={30} height={30} />
+          )}
         </View>
       </AppTouchableOpacity>
       <Modal transparent animationType="slide" visible={visible}>
@@ -94,15 +79,15 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
           }}
         />
         <View style={styles.pickerContainer}>
-          {data.map((item, index) => (
+          {modData?.map((item: any, index: number) => (
             <AppTouchableOpacity
               key={index}
               style={styles.sectionContainer}
               onPress={() => {
-                setActiveService(item.id);
-                setVisible(false);
+                setSelectedService(item);
                 setValue(name, item.id);
-                setServiceId(item.id);
+                setServiceId(item.serviceTypeId);
+                setVisible(false);
               }}>
               <View>
                 <TitleText textStyle={styles.titleText} text={item.title} />

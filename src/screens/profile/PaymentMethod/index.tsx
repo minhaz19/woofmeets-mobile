@@ -44,8 +44,10 @@ const PaymentMethods = ({route, navigation}: Props) => {
   }, []);
   return (
     <>
-      {(loading || dLoading) && <AppActivityIndicator visible={true} />}
-      {cards ? (
+      {/* {(loading || dLoading) && <AppActivityIndicator visible={true} />} */}
+      {cards === undefined || cards === null ? (
+        <NoCards sequence={sequence} />
+      ) : (
         <>
           <AllCards
             cards={cards}
@@ -55,8 +57,6 @@ const PaymentMethods = ({route, navigation}: Props) => {
             loading={Hloading}
           />
         </>
-      ) : (
-        <NoCards sequence={sequence} />
       )}
     </>
   );
