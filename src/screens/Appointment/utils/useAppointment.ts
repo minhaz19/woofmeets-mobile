@@ -50,7 +50,9 @@ export const useAppointment = () => {
       firstMessage: data.firstMessage,
       isRecivedPhotos: data.isRecivedPhotos,
     };
-    await request(endpoint, payload);
+    console.log('boarding', payload);
+    const response = await request(endpoint, payload);
+    console.log('res', response);
   };
   useEffect(() => {
     providerServices === null && dispatch(getProviderServices('HFJHx6EP'));

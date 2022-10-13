@@ -20,31 +20,40 @@ interface Props {
 const subscriptionEndpoint = '/subscriptions/subscribe/';
 const PaymentMethods = ({route, navigation}: Props) => {
   const dispatch = useAppDispatch();
-  const {loading, cards} = useAppSelector(state => state.cards);
+  const {cards, loading} = useAppSelector(state => state.cards);
   const [CardId, setDefaultCard] = useState(null);
-  const {loading: dLoading, request} = useApi(methods._get);
+  const [selectedCard, setSelectedCard] = useState<null | number>(null);
+  const {request} = useApi(methods._get);
   const {loading: Hloading, request: postRequest} = useApi(methods._post);
   const {sequence} = route.params;
 
   const handlePayment = async () => {
-    const result = await postRequest(
-      `${subscriptionEndpoint}?priceId=${sequence}&cardId=${CardId}`,
-    );
-    result.ok &&
-      (await dispatch(getCurrentplan()),
-      navigation.navigate('SubscriptionScreen'));
+    if (sequence === 1) {
+      navigation.navigate('BasicPayment', {
+        sequence: sequence,
+        cardId: selectedCard !== null ? selectedCard : CardId,
+      });
+    } else {
+      const selectCardId = selectedCard !== null ? selectedCard : CardId;
+      const result = await postRequest(
+        `${subscriptionEndpoint}?priceId=${sequence}&cardId=${selectCardId}`,
+      );
+      result.ok &&
+        (await dispatch(getCurrentplan()),
+        navigation.navigate('SubscriptionScreen'));
+    }
+  };
+  const callApi = async () => {
+    const result = await request(endpoint);
+    result.ok && setDefaultCard(result.data.data.id);
   };
   useEffect(() => {
-    const callApi = async () => {
-      const result = await request(endpoint);
-      result.ok && setDefaultCard(result.data.data.id);
-    };
     callApi();
     cards === null && dispatch(getCards());
   }, []);
   return (
     <>
-      {/* {(loading || dLoading) && <AppActivityIndicator visible={true} />} */}
+      {loading && <AppActivityIndicator visible={true} />}
       {cards === undefined || cards === null ? (
         <NoCards sequence={sequence} />
       ) : (
@@ -55,6 +64,7 @@ const PaymentMethods = ({route, navigation}: Props) => {
             sequence={sequence}
             onPress={handlePayment}
             loading={Hloading}
+            setSelectedCard={setSelectedCard}
           />
         </>
       )}

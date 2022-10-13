@@ -34,6 +34,8 @@ export const useApi = (apiFunc: any) => {
           ],
           {cancelable: false},
         );
+      } else if (response.status === 402) {
+        Alert.alert(response.data.message);
       } else {
         Alert.alert('An unexpected error occurred.');
       }

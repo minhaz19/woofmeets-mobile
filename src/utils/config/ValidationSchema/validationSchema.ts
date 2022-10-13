@@ -167,26 +167,26 @@ const BoardingSettingsSchema = Yup.object().shape({
     .nullable(true)
     .required('Additional cat rate is required')
     .typeError('A Number is Required'),
-  bathgroomingrate: Yup.number()
-    .nullable(true)
-    .required('Bathgrooming rate is required')
-    .typeError('A Number is Required'),
-  extendedCare: Yup.number()
-    .nullable(true)
-    .required('Extended care rate is required')
-    .typeError('A Number is Required'),
-  costadjustment: Yup.number()
-    .nullable(true)
-    .required('Cost adjustment rate is required')
-    .typeError('A Number is Required'),
-  discountadjustment: Yup.number()
-    .nullable(true)
-    .required('Discount adjustment rate is required')
-    .typeError('A Number is Required'),
-  extendedstayrate: Yup.number()
-    .nullable(true)
-    .required('Extendedstay rate is required')
-    .typeError('A Number is Required'),
+  // bathgroomingrate: Yup.number()
+  //   .nullable(true)
+  //   .required('Bathgrooming rate is required')
+  //   .typeError('A Number is Required'),
+  // extendedCare: Yup.number()
+  //   .nullable(true)
+  //   .required('Extended care rate is required')
+  //   .typeError('A Number is Required'),
+  // costadjustment: Yup.number()
+  //   .nullable(true)
+  //   .required('Cost adjustment rate is required')
+  //   .typeError('A Number is Required'),
+  // discountadjustment: Yup.number()
+  //   .nullable(true)
+  //   .required('Discount adjustment rate is required')
+  //   .typeError('A Number is Required'),
+  // extendedstayrate: Yup.number()
+  //   .nullable(true)
+  //   .required('Extendedstay rate is required')
+  //   .typeError('A Number is Required'),
 });
 const safetyQuizValidationSchema = Yup.object().shape({
   '1': Yup.string().required('Please choose the corrent answer'),

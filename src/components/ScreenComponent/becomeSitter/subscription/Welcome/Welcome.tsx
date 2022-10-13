@@ -210,7 +210,9 @@ const Welcome = (props: any) => {
           borderWidth: 1,
           borderColor: Colors.border,
           borderRadius: 6,
-          backgroundColor: Colors.primaryLight,
+          backgroundColor: isDarkMode
+            ? colors.backgroundColor
+            : Colors.primaryLight,
           padding: 10,
           marginTop: 20,
           marginBottom: 40,

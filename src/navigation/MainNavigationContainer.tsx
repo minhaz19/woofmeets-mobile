@@ -35,6 +35,7 @@ import PaymentMethods from '../screens/profile/PaymentMethod';
 import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/AddCardForm';
 import BasicPayment from '../components/ScreenComponent/becomeSitter/subscription/BasicPayment/BasicPayment';
 import Appointment from '../screens/Appointment';
+import SubscriptionScreen from '../screens/becomeSitter/Subscription';
 // import PetNavigatorFC from './PetNavigatorFS';
 const Stack = createStackNavigator();
 
@@ -355,6 +356,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={{headerShown: false}}
         />
         {/* Payment Navigations */}
+        <Stack.Screen
+          name="SubscriptionScreen"
+          component={SubscriptionScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="AddCardForm"
           component={AddCardForm}

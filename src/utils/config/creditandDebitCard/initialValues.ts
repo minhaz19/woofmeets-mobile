@@ -4,7 +4,7 @@ const debitAndCreditCard = {
   line1: '',
   state: '',
   city: '',
-  postalCode: '',
+  postalCode: null,
 };
 
 export {debitAndCreditCard};

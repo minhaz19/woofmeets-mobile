@@ -15,7 +15,6 @@ import {signUpInitalState} from '../../../utils/config/Data/signUpDatas';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {useSignUp} from './utils/useSignUp';
 import {othersAuthIcons} from '../../../utils/config/Data/loginDatas';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -25,11 +24,10 @@ interface Props {
 
 const SignUp = ({navigation}: Props) => {
   const {isDarkMode} = useTheme();
-  const {handleSubmit, providerLoading, loading} = useSignUp(navigation);
+  const {handleSubmit, loading} = useSignUp(navigation);
 
   return (
     <>
-      {providerLoading && <AppActivityIndicator visible />}
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={[

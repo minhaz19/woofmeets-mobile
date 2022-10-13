@@ -49,6 +49,7 @@ export const useAddCardForm = (navigation: any, sequence: number | null) => {
         token: token.id,
       };
       const result = await request(endpoint, reqPayload);
+      console.log('result', result);
       if (result.ok && (sequence !== null || sequence !== undefined)) {
         const cardId = result.data.data.id;
         if (sequence === 1) {

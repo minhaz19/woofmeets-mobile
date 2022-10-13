@@ -22,7 +22,7 @@ import {useAddCardForm} from './utils/useAddCardForm';
 import AddCardFormBody from './components/AddCardFormBody';
 
 const AddCardForm = ({navigation, route}: any) => {
-  const {colors} = useTheme();
+  const {colors, isDarkMode} = useTheme();
   const {sequence} = route.params;
   const {handleValues, loading, tokenLoading} = useAddCardForm(
     navigation,

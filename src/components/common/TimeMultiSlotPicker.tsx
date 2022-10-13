@@ -30,11 +30,13 @@ const TimeMultiSlotPicker = (date: any) => {
       }; // pushing data in array in [00:00 - 12:00 AM/PM format]
       tt = tt + x;
     }
+    console.log('lopping');
     return times;
   }
   useMemo(() => {
     let x = visitLength; //minutes interval
     const times = generate_series(x);
+    console.log('lopping');
     setDatas(times);
   }, [visitLength]);
   const handleMultipleCheck = (id: number) => {

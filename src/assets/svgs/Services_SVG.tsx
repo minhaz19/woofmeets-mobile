@@ -1543,7 +1543,12 @@ export const DropInVisitIcon = (props: SvgProps) => (
 );
 
 export const DogIcon = (props: SvgProps) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} {...props} viewBox="0 0 24 24">
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    {...props}
+    viewBox="0 0 24 24">
     <Defs>
       <ClipPath id="a">
         <Path
@@ -1557,8 +1562,7 @@ export const DogIcon = (props: SvgProps) => (
     <G
       data-name="Mask Group 36694"
       transform="translate(-2527 14844)"
-      clipPath="url(#a)"
-    >
+      clipPath="url(#a)">
       <G fill="#fea557">
         <Path
           data-name="Path 20668"
@@ -1571,5 +1575,4 @@ export const DogIcon = (props: SvgProps) => (
       </G>
     </G>
   </Svg>
-)
-
+);

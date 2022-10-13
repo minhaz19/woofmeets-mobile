@@ -16,20 +16,8 @@ var petIds: any[] = [];
 const MyPets = () => {
   const dispatch = useAppDispatch();
   const {pets: allPets} = useAppSelector(state => state.allPets);
-  const modArray = allPets?.map((item: any, index: number) => ({
-    id: index + 1,
-    name: item.name,
-    petId: item.id,
-    active: true,
-  }));
-  modArray?.push({
-    id: allPets.length,
-    Icon: Plus,
-    text: '',
-    new: true,
-  });
 
-  const [newData, setDatas] = useState(modArray);
+  const [newData, setDatas] = useState<any>([]);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);
@@ -39,6 +27,19 @@ const MyPets = () => {
   const {setValue} = useFormContext();
   useEffect(() => {
     dispatch(getAllPets());
+    const modArray = allPets?.map((item: any, index: number) => ({
+      id: index + 1,
+      name: item.name,
+      petId: item.id,
+      active: false,
+    }));
+    modArray?.push({
+      id: allPets.length,
+      Icon: Plus,
+      text: '',
+      new: false,
+    });
+    setDatas(modArray);
   }, []);
   const navigation = useNavigation<any>();
   return (
@@ -50,7 +51,9 @@ const MyPets = () => {
             textStyle={styles.descriptionText}
             text="You havent listed any pets yet, Please add!"
           />
-          <AppTouchableOpacity onPress={() => {}} style={[styles.newPet]}>
+          <AppTouchableOpacity
+            onPress={() => navigation.navigate('AddPet')}
+            style={[styles.newPet]}>
             <Plus fill="black" width={20} height={20} />
           </AppTouchableOpacity>
         </View>

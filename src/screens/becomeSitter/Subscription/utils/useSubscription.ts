@@ -13,6 +13,7 @@ const endpoint = '/subscriptions/check-basic-verification-payment';
 const subscriptionEndpoint = '/subscriptions/subscribe/';
 const defaultCardEndpoint = '/stripe-payment-method/default-card-info';
 export const useSubscription = () => {
+  console.log('subs');
   const [sequence, setSequence] = useState<number>(0);
   const [ssLoading, setSSloading] = useState(false);
   const dispatch = useAppDispatch();
@@ -40,24 +41,26 @@ export const useSubscription = () => {
     setSequence(id);
   };
   const handleSubmit = async () => {
+    console.log('subs');
+    console.log('bas', sequence);
     if (sequence === 1) {
       setSSloading(true);
       const result: ApiResponse<any> = await methods._get(endpoint);
+
       const cardResponse = await cardRequest(defaultCardEndpoint);
-      const cardId = cardResponse?.data?.data.id;
-      if (result.ok) {
+      if (result.ok && cardResponse.ok) {
         if (
           result.data.data.needPayment === true &&
           cardResponse.status === 200
         ) {
-          navigation.navigate('BasicPayment', {
+          navigation.navigate('PaymentMethod', {
             sequence: sequence,
-            cardId: cardId,
           });
           setSSloading(false);
         } else if (result.data.data.needPayment === false) {
+          const cardId = cardResponse?.data?.data.id;
           const subscriptionResult = await request(
-            `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardResponse.data.data.id}`,
+            `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
           );
           subscriptionResult.ok &&
             (await dispatch(getCurrentplan()),
@@ -66,11 +69,9 @@ export const useSubscription = () => {
           setSSloading(false);
         }
       } else {
-        if (result.status === 400) {
-          // @ts-ignore
-          navigation.navigate('PaymentMethod', {sequence: sequence});
-          setSSloading(false);
-        }
+        // @ts-ignore
+        navigation.navigate('PaymentMethod', {sequence: sequence});
+        setSSloading(false);
       }
     } else {
       // @ts-ignore
@@ -79,9 +80,9 @@ export const useSubscription = () => {
     }
   };
   useEffect(() => {
+    console.log('current', currentPlan, plans);
     currentPlan === null && dispatch(getCurrentplan());
-    (currentPlan === undefined || currentPlan === null || plans === null) &&
-      dispatch(getSubscription());
+    (currentPlan === null || plans === null) && dispatch(getSubscription());
   }, []);
   return {
     onPressEvent,
