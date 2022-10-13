@@ -4,29 +4,35 @@ import {CalendarList} from 'react-native-calendars';
 import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
 import Colors from '../../constants/Colors';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
-
 interface Props {
   range?: number;
   selectType: string;
+  handlePress?: (arg: any) => void;
+  setValue: (arg: string, arg2: any) => void;
 }
-const AppCalendar = ({range = 12, selectType = 'SINGLE'}: Props) => {
+const AppCalendar = ({
+  range = 12,
+  selectType,
+  setValue,
+  handlePress,
+}: Props) => {
   const {colors} = useTheme();
-  const {handleDayPress, singleSelect, _markedStyle} =
-    useHandleRange(selectType);
+  const {handleDayPress, singleSelect, _markedStyle} = useHandleRange(
+    selectType,
+    setValue,
+  );
+
   return (
     <View style={styles.contentContainer}>
       <CalendarList
         current={new Date().toString()}
         pastScrollRange={0}
         futureScrollRange={range}
-        onDayPress={handleDayPress}
-        markingType={
-          selectType === 'RANGE'
-            ? singleSelect !== ''
-              ? 'custom'
-              : 'period'
-            : 'custom'
-        }
+        onDayPress={data => {
+          handleDayPress(data);
+          handlePress && handlePress(data);
+        }}
+        markingType={'custom'}
         markedDates={{
           ..._markedStyle,
           [singleSelect]: {
@@ -122,7 +128,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
-    marginTop: 10,
     marginBottom: 10,
   },
   month: {

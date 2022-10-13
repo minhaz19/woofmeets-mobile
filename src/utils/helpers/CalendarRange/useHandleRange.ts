@@ -4,7 +4,10 @@ import {_dateRange} from '../datesArray';
 import {compareDate} from './compareDate';
 import {orderAndStyleRange} from './orderAndStyleRange';
 
-export const useHandleRange = (type: string) => {
+export const useHandleRange = (
+  type: string,
+  setValue: (arg: string, arg2: any) => void,
+) => {
   const [_markedStyle, setMarkedStyle] = useState({});
   const [singleSelect, setSingleSelect] = useState<string>('');
   const [step, setSteps] = useState(1);
@@ -12,12 +15,15 @@ export const useHandleRange = (type: string) => {
   const [prevDate, setPrevDate] = useState<false | undefined | Date>();
   const [startingDate, setStartingDate] = useState('');
   const [endingDate, setEndingDate] = useState('');
+  // const {setValue} = useFormContext();
   const handleDayPress = (date: any) => {
     if (type === 'SINGLE') {
       setSingleSelect(date.dateString);
     } else if (type === 'MULTI') {
-      const {styledMarkedRange} = orderAndStyleRange(date, 'MULTI');
+      const {styledMarkedRange, orderRange} = orderAndStyleRange(date, 'MULTI');
       setMarkedStyle({..._markedStyle, ...styledMarkedRange});
+      // setDateRange([...orderRange]);
+      setValue('multiDate', [...orderRange]);
     } else if (type === 'RANGE') {
       const {end} = compareDate(date.dateString, step, setPrevDate);
 
@@ -53,11 +59,22 @@ export const useHandleRange = (type: string) => {
       const {styledMarkedRange} = orderAndStyleRange(range, 'RANGE');
       setMarkedStyle(styledMarkedRange);
       setDateRange(range);
+
+      setValue('proposalStartDate', startingDate);
+      setValue('proposalEndDate', endingDate);
     }
+    // else if (type === 'MULTI') {
+    //   setValue('multiDate', dateRange);
+    // }
   }, [endingDate, startingDate]);
   const reset = () => {
     setStartingDate('');
     setEndingDate('');
+    setDateRange([]);
+    setSingleSelect('');
+    setValue('proposalStartDate', '');
+    setValue('proposalEndDate', '');
+    setValue('multiDate', []);
     setSteps(1);
   };
   return {

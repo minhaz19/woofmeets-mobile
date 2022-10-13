@@ -10,8 +10,11 @@ import BottomSpacing from '../../UI/BottomSpacing';
 import BottomSheetCalendar from '../../common/BottomSheetCalendar';
 import MyPets from './components/MyPets';
 import MessageCheck from './components/MessageCheck';
-
-const AppointmentBody = () => {
+interface Props {
+  handleSubmit: (arg: any) => void;
+  loading: boolean;
+}
+const AppointmentBody = ({handleSubmit, loading}: Props) => {
   const [serviceId, setServiceId] = useState(1);
   const {
     control,
@@ -19,34 +22,52 @@ const AppointmentBody = () => {
     watch,
     formState: {errors},
   } = useFormContext();
-  const {schedule} = watch();
+  const {isRecurring} = watch();
   return (
     <FlatList
       data={[]}
       renderItem={null}
       contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
       ListEmptyComponent={
         <>
           <ServicePicker
-            name="serviceId"
+            name="providerServiceId"
             setValue={setValue}
             setServiceId={setServiceId}
           />
-          {(serviceId === 1 || serviceId === 2) && <DateDropPick />}
+          {(serviceId === 1 || serviceId === 2) && (
+            <>
+              <DateDropPick serviceId={serviceId} setValue={setValue} />
+            </>
+          )}
           {(serviceId === 3 || serviceId === 4 || serviceId === 5) && (
             <>
               <VisitScheduleTab serviceId={serviceId} />
-              <BottomSheetCalendar
-                title={schedule === 0 ? 'Dates' : 'Start Date'}
-              />
+              {serviceId !== 4 && (
+                <BottomSheetCalendar
+                  title={isRecurring ? 'Start Date' : 'Dates'}
+                  setValue={setValue}
+                />
+              )}
             </>
           )}
           <View style={styles.zIndex}>
-            {serviceId === 4 && <DateDropPick serviceId={serviceId} />}
+            {serviceId === 4 && (
+              <DateDropPick serviceId={serviceId} setValue={setValue} />
+            )}
             {(serviceId === 3 || serviceId === 5) && <DayTimeSlot />}
             <MyPets />
-            <MessageCheck errors={errors} control={control} />
-            <SubmitButton title="Send Proposal" />
+            <MessageCheck
+              errors={errors}
+              control={control}
+              setValue={setValue}
+            />
+            <SubmitButton
+              title="Send Proposal"
+              onPress={handleSubmit}
+              loading={loading}
+            />
             <BottomSpacing />
             <BottomSpacing />
           </View>

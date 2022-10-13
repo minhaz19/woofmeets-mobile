@@ -1,60 +1,45 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import TimeMultiSlotPicker from '../../../common/TimeMultiSlotPicker';
 import DescriptionText from '../../../common/text/DescriptionText';
 import SwitchView from '../../../common/switch/SwitchView';
 import Text_Size from '../../../../constants/textScaling';
-
-const dates = [
-  {
-    id: 1,
-    date: '10-20-30',
-    active: null,
-  },
-  {
-    id: 2,
-    date: '10-20-30',
-    active: true,
-  },
-  {
-    id: 3,
-    date: '10-20-30',
-    active: true,
-  },
-  {
-    id: 4,
-    date: '10-20-30',
-    active: true,
-  },
-  {
-    id: 5,
-    date: '10-20-30',
-    active: true,
-  },
-  {
-    id: 6,
-    date: '10-20-30',
-    active: true,
-  },
-  {
-    id: 7,
-    date: '10-20-30',
-    active: true,
-  },
-];
+import {useWatch} from 'react-hook-form';
+let modData: any = [];
 const DayTimeSlot = () => {
-  const [active, setActive] = useState(true);
-  const [newData, setDatas] = useState(dates);
+  const {recurringSelectedDay, isRecurring, repeatDate, multiDate} = useWatch();
+  const [newData, setDatas] = useState(modData);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
+  useMemo(() => {
+    if (isRecurring) {
+      const output = repeatDate.filter((obj: any) => {
+        return recurringSelectedDay.indexOf(obj.day) !== -1;
+      });
+      const recurring = output?.map((item: any, index: number) => ({
+        id: index + 1,
+        date: item,
+        active: true,
+      }));
+      setDatas(recurring);
+    } else {
+      const multi = multiDate?.map((item: any, index: number) => ({
+        id: index + 1,
+        date: item,
+        active: true,
+      }));
+      setDatas(multi);
+    }
+  }, [isRecurring, multiDate, recurringSelectedDay, repeatDate]);
+
   return (
     <View>
-      {newData.map((item, index) => (
+      {newData?.map((item: any, index: number) => (
         <View key={index}>
           {index === 0 ? (
             <View>
@@ -62,26 +47,27 @@ const DayTimeSlot = () => {
                 textStyle={styles.headerText}
                 text={'Pick walk times'}
               />
-              <TitleText textStyle={styles.day} text={'Monday'} />
+              <TitleText textStyle={styles.day} text={item.date} />
+              {/* <TitleText textStyle={styles.day} text={item.day} /> */}
               <DescriptionText text={'Add one or more walk times'} />
-              <TimeMultiSlotPicker />
+              <TimeMultiSlotPicker date={item.date} />
             </View>
           ) : (
             <View style={styles.section}>
-              <TitleText textStyle={styles.day} text={'Monday'} />
+              <TitleText textStyle={styles.day} text={item.date} />
               <View style={styles.checkContainer}>
-                <DescriptionText text="Use same walk times as Mondays" />
+                <DescriptionText text={`Use same walk times as ${item.day}`} />
                 <SwitchView
                   isActive={item.active}
                   activeText=""
                   inActiveText=""
                   onSelect={() => {
-                    setActive(!active);
+                    // setActive(!active);
                     handleMultipleCheck(item.id);
                   }}
                 />
               </View>
-              {!item.active && <TimeMultiSlotPicker />}
+              {!item.active && <TimeMultiSlotPicker date={item.date} />}
             </View>
           )}
         </View>

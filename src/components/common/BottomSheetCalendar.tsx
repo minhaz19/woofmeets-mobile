@@ -1,50 +1,98 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useCallback, useMemo, useRef} from 'react';
-
-import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+/* eslint-disable react-native/no-inline-styles */
+import {Modal, Pressable, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
 import AppTouchableOpacity from './AppClickEvents/AppTouchableOpacity';
 import TitleText from './text/TitleText';
 import DescriptionText from './text/DescriptionText';
 import {CalendarCSvg} from '../../assets/svgs/SVG_LOGOS';
 import AppCalendar from './AppCalendar';
 import Colors from '../../constants/Colors';
+import Text_Size from '../../constants/textScaling';
 interface Props {
   title: string;
+  sequence?: number;
+  isRecurring?: boolean;
+  setValue: (arg1: string, arg3: any) => void;
 }
-const BottomSheetCalendar = ({title}: Props) => {
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  // variables
-  const snapPoints = useMemo(() => ['75%', '90%'], []);
-
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-  const handleSheetChanges = useCallback(() => {}, []);
+var dayss = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+const BottomSheetCalendar = ({
+  title,
+  isRecurring = false,
+  setValue,
+}: Props) => {
+  const [visible, setVisible] = useState(false);
+  const handlePress = (data: any) => {
+    const next6Days = [...Array(7).keys()].map(index => {
+      const date = new Date(data.dateString);
+      date.setDate(date.getDate() + index);
+      var d = new Date(date);
+      var dayName = dayss[d.getDay()];
+      return {date: date.toDateString(), day: dayName};
+    });
+    setValue('recurringStartDate', data.dateString);
+    setValue('repeatDate', next6Days);
+  };
   return (
-    <BottomSheetModalProvider>
-      <View style={styles.container}>
-        <AppTouchableOpacity
-          style={styles.sectionContainer}
-          onPress={handlePresentModalPress}>
-          <View>
-            <TitleText textStyle={styles.titleText} text={title} />
-            <DescriptionText text={'Tap to add dates'} />
+    <>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: visible ? 'rgba(0,0,0,0.5)' : '#f1f1f1',
+            zIndex: 99999,
+            position: visible ? 'absolute' : 'relative',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+          },
+        ]}>
+        {!visible && (
+          <AppTouchableOpacity
+            style={styles.sectionContainer}
+            onPress={() => setVisible(!visible)}>
+            <View>
+              <TitleText textStyle={styles.titleText} text={title} />
+              <DescriptionText text={'Tap to add dates'} />
+            </View>
+            <View style={styles.iconContainer}>
+              <CalendarCSvg fill="black" width={30} height={30} />
+            </View>
+          </AppTouchableOpacity>
+        )}
+        <Modal animated transparent visible={visible} animationType="slide">
+          <Pressable
+            style={styles.bgContainer}
+            onPress={() => setVisible(!visible)}
+          />
+
+          <View style={styles.pickerContainer}>
+            <TitleText
+              textStyle={{
+                fontWeight: 'bold',
+                color: Colors.text,
+                fontSize: Text_Size.Text_1,
+                margin: 20,
+              }}
+              text={'Select date range 🗓'}
+            />
+            <AppCalendar
+              selectType={isRecurring ? 'SINGLE' : 'MULTI'}
+              handlePress={handlePress}
+              setValue={setValue}
+            />
           </View>
-          <View style={styles.iconContainer}>
-            <CalendarCSvg fill="black" width={30} height={30} />
-          </View>
-        </AppTouchableOpacity>
-        <BottomSheetModal
-          ref={bottomSheetModalRef}
-          index={1}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}>
-          <AppCalendar />
-        </BottomSheetModal>
+        </Modal>
       </View>
-    </BottomSheetModalProvider>
+    </>
   );
 };
 
@@ -73,6 +121,26 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: Colors.background,
   },
-
-  container: {},
+  container: {
+    flex: 1,
+  },
+  bgContainer: {
+    flex: 1,
+  },
+  pickerContainer: {
+    height: '80%',
+    width: '100%',
+    backgroundColor: 'white',
+    flexDirection: 'column',
+  },
+  halfCont: {width: '50%'},
+  label: {
+    textTransform: 'capitalize',
+  },
+  header: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
 });

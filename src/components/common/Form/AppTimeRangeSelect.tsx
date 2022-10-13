@@ -20,7 +20,7 @@ const AppTimeRangeSelect = ({
   data,
   placeholder,
   value,
-  onChange,
+
   disable = false,
   setTime,
   time,
@@ -37,7 +37,6 @@ const AppTimeRangeSelect = ({
     },
     [colors.backgroundColor],
   );
-  // console.log('time..........', time);
   return (
     <View>
       <Dropdown
@@ -71,7 +70,6 @@ const AppTimeRangeSelect = ({
           placeholder === 'From'
             ? setTime({...time, startTime: item.label})
             : setTime({...time, endTime: item.label});
-          console.log(item);
           setIsFocus(false);
         }}
         // onChange={onChange}

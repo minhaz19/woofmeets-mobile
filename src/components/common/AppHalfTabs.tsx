@@ -25,7 +25,7 @@ const AppHalfTabs = ({data, title, name, setScheduleId}: Props) => {
             onPress={() => {
               setActiveIndex(index);
               setScheduleId && setScheduleId(index);
-              setValue(name, index);
+              setValue(name, item.value);
             }}
             style={[
               styles.tab,
