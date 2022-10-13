@@ -6,26 +6,12 @@ import ProviderPricing from './ProviderPricing';
 import Card from '../../../UI/Card';
 import { useTheme } from '../../../../constants/theme/hooks/useTheme';
 interface Props {
-  image: string;
-  name: string;
-  nature: string;
-  rating: number;
-  distance: string;
-  availablity: string;
-  pricing: string;
-  repeatClient: string;
+  item: any;
   onPress: () => void;
 }
 
 const ProviderList = ({
-  image,
-  name,
-  nature,
-  rating,
-  distance,
-  availablity,
-  repeatClient,
-  pricing,
+  item,
   onPress,
 }: Props) => {
   const {isDarkMode, colors} = useTheme();
@@ -34,17 +20,17 @@ const ProviderList = ({
       ? colors.lightBackgroundColor
       : colors.backgroundColor}}>
     <TouchableOpacity onPress={onPress} style={styles.providerContainer}>
-      <ImageContainer image={image} />
+      <ImageContainer provider={item?.provider} />
       <ProviderInfo
-        rating={rating}
-        distance={distance}
-        nature={nature}
-        name={name}
-        availablity={availablity}
-        repeatClient={repeatClient}
+        rating={4}
+        distance={item?.distance}
+        nature={'na na a'}
+        user={item?.provider?.user}
+        availability={item?.availability}
+        // repeatClient={item.repeatClient}
       />
       <View style={styles.pricing}>
-        <ProviderPricing pricing={pricing} />
+        <ProviderPricing pricing={item.ServiceHasRates} />
       </View>
     </TouchableOpacity>
     </Card>

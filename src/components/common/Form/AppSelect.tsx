@@ -13,6 +13,7 @@ interface Props {
   placeholder: string;
   onChange: (arg: any) => void;
   setSelectedService?: (arg: any) => void;
+  setIsService?: (arg: any) => void;
 }
 const AppSelect = ({
   data,
@@ -21,6 +22,7 @@ const AppSelect = ({
   disable = false,
   onChange,
   setSelectedService,
+  setIsService,
 }: Props) => {
   const {isDarkMode, colors} = useTheme();
   const [value, setValuee] = useState(defaultText);
@@ -65,10 +67,10 @@ const AppSelect = ({
         renderItem={renderItem}
         onChange={item => {
           setValuee(item.value);
-
           setIsFocus(false);
           onChange(item.value);
           setSelectedService && setSelectedService(item.id);
+          setIsService && setIsService({service: item.value, serviceId: item.id});
         }}
       />
     </View>

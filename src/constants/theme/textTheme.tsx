@@ -14,6 +14,8 @@ export const colors = {
   inputBackground: Colors.light.inputBackground,
   primaryLight: Colors.primaryLight,
   primary: Colors.primary,
+  loaderBackground: Colors.light.loaderBackground,
+  loaderForeground: Colors.light.loaderForeground,
 };
 
 export const themedColors = {
@@ -32,5 +34,7 @@ export const themedColors = {
     blueText: Colors.dark.text,
     borderColor: Colors.dark.borderColor,
     inputBackground: Colors.dark.text,
+    loaderBackground: Colors.dark.loaderBackground,
+    loaderForeground: Colors.dark.loaderForeground,
   },
 };

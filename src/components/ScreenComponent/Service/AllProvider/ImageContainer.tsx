@@ -7,10 +7,10 @@ import Colors from '../../../../constants/Colors';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';
 interface Props {
-  image: string;
+  provider: any;
   rounded?: Boolean;
 }
-const ImageContainer = ({image, rounded}: Props) => {
+const ImageContainer = ({provider, rounded}: Props) => {
   return (
     <View
       style={[
@@ -18,23 +18,39 @@ const ImageContainer = ({image, rounded}: Props) => {
         {
           height: rounded
             ? SCREEN_WIDTH > 800
-              ? SCREEN_WIDTH / 8
-              : SCREEN_WIDTH / 6
-            : SCREEN_HEIGHT / 8.5,
+              ? SCREEN_WIDTH / 10
+              : SCREEN_WIDTH / 8
+            : SCREEN_HEIGHT / 10.5,
         },
       ]}>
       <Image
-        source={{uri: image}}
+        source={{
+          uri:
+            provider?.user.image !== null
+              ? provider?.user.image
+              : 'https://source.unsplash.com/random/800x800/?img=1',
+        }}
         resizeMode="cover"
         style={[styles.image, {borderRadius: rounded ? 100 : 50}]}
       />
-      <View style={styles.batchContainer}>
-        <DogFeet />
-        <ShortText
-          textStyle={{color: Colors.text, fontSize: Text_Size.Text_10}}
-          text="Verified"
-        />
-      </View>
+      {provider?.backGroundCheck !== 'NONE' && (
+        <View
+          style={[
+            styles.batchContainer,
+            {
+              backgroundColor:
+                provider?.backGroundCheck === 'BASIC'
+                  ? Colors.yellow
+                  : Colors.primary,
+            },
+          ]}>
+          <DogFeet />
+          <ShortText
+            textStyle={{color: Colors.text, fontSize: Text_Size.Text_10}}
+            text="Verified"
+          />
+        </View>
+      )}
     </View>
   );
 };

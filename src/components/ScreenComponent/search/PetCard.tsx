@@ -20,9 +20,9 @@ const PetCard: FC<Props> = props => {
   const getIcon = (iconId: number) => {
     switch (iconId) {
       case 1:
-        return <DogIcon width={32} height={34} />;
+        return <DogIcon width={34} height={36} />;
       case 2:
-        return <DogIcon width={32} height={34} />;
+        return <CatIcon width={34} height={36} />;
     }
   };
 
@@ -50,7 +50,7 @@ const PetCard: FC<Props> = props => {
         <View style={[styles.boxContainer, props.divide ? styles.pet : {}]}>
           {props.data.icon && (
             <View style={styles.imageContainer}>
-              {getIcon(props.data.sequence)}
+              {getIcon(props.data.selected)}
             </View>
           )}
           <View style={[styles.textContainer]}>
@@ -70,10 +70,9 @@ export default PetCard;
 const styles = StyleSheet.create({
   container: {
     borderColor: Colors.subText,
-    marginBottom: 10,
     marginRight: 10,
     borderRadius: 5,
-    paddingVertical: 10,
+    paddingVertical: 6,
   },
   boxContainer: {
     alignItems: 'center',
