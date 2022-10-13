@@ -7,7 +7,7 @@ import Colors from '../../../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
-import { upcomingInboxFetch } from '../../../../store/slices/appointment/appointment';
+import { upcomingInboxFetch } from '../../../../store/slices/Appointment/appointment';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import TitleText from '../../../common/text/TitleText';
 
