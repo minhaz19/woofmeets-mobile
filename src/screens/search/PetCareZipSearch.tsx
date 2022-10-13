@@ -263,6 +263,7 @@ const PetCareZipSearch = (props: {
           extraHeight={100}
           extraScrollHeight={200}
           enableAutomaticScroll={true}
+          enableOnAndroid={true}
           // keyboardVerticalOffset={20}
           // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.rootContainer}
