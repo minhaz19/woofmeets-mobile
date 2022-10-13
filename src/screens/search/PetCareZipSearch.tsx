@@ -51,11 +51,9 @@ const petData = [
 const PetCareZipSearch = (props: {
   navigation: {navigate: (arg0: string) => void};
 }) => {
-  const {
-    serviceTypes,
-    loading: serviceTypesLoading,
-   
-  } = useAppSelector((state: any) => state?.services);
+  const {serviceTypes, loading: serviceTypesLoading} = useAppSelector(
+    (state: any) => state?.services,
+  );
   const {pets, loading: petsLoading} = useAppSelector(
     (state: any) => state?.allPets,
   );
