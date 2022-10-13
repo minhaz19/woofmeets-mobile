@@ -28,7 +28,7 @@ const AllProviderLoader = () => {
                 >
                     <Rect x="0" y="0" rx="4" ry="4" width="100" height="20" />
                     {data.map(item => (
-                        <Rect x={item.x} y={item.y} rx="10" ry="10" width={SCREEN_WIDTH - 50} height="140" />
+                        <Rect key={item.id} x={item.x} y={item.y} rx="10" ry="10" width={SCREEN_WIDTH - 50} height="140" />
                     ))}
                 </ContentLoader>
             </View>

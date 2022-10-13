@@ -70,7 +70,7 @@ const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
               },
             ]}
             onPress={() => setVisible(!visible)}>
-            <View>
+            <View style={{width: '85%'}}>
               <TitleText textStyle={styles.titleText} text={title} />
               <DescriptionText
                 text={
@@ -80,6 +80,7 @@ const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
                     ? startDate
                     : 'Tap to add dates'
                 }
+                textStyle={{}}
               />
             </View>
             <View style={styles.iconContainer}>

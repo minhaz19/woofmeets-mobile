@@ -39,6 +39,7 @@ import cardsSlice from './slices/payment/PaymentCards/cardsSlice';
 import currentPlanSlice from './slices/payment/Subscriptions/CurrentSubscription/currentPlanSlice';
 import providerServicesSlice from './slices/Appointment/ProviderServices/providerServicesSlice';
 import addressReducer from './slices/address/address';
+import appointmentSlice from './slices/Appointment/appointment';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -71,6 +72,7 @@ const appReducer = combineReducers({
   currentPlan: currentPlanSlice,
   providerServices: providerServicesSlice,
   address: addressReducer,
+  appointment: appointmentSlice,
 });
 
 const RootReducer = (

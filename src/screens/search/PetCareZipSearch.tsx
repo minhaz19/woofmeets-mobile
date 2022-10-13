@@ -72,7 +72,7 @@ const PetCareZipSearch = (props: {
     serviceId: '',
   });
   const dispatch = useAppDispatch();
-  const {colors} = useTheme();
+  const {colors, isDarkMode} = useTheme();
 
   // updating the state
   useEffect(() => {
@@ -263,6 +263,7 @@ const PetCareZipSearch = (props: {
           extraHeight={100}
           extraScrollHeight={200}
           enableAutomaticScroll={true}
+          enableOnAndroid={true}
           // keyboardVerticalOffset={20}
           // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.rootContainer}
@@ -296,8 +297,8 @@ const PetCareZipSearch = (props: {
                   }}
                   styles={{
                     container: {
-                      flex: 0,
-                      borderWidth: 1,
+                      flex: 1,
+                      borderWidth: isDarkMode ? 0 : 1,
                       borderColor: Colors.border,
                     },
                     description: {

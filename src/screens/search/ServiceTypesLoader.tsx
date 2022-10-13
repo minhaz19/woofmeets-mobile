@@ -11,9 +11,9 @@ const ServiceTypesLoader = () => {
             <View style={{flex: 1}}>
                 <ContentLoader
                     speed={1}
-                    width={SCREEN_WIDTH - 25}
+                    width={SCREEN_WIDTH}
                     height={200}
-                    viewBox="25 -20 300 200"
+                    viewBox="40 -20 300 200"
                     backgroundColor="#e3e3e3"
                     foregroundColor="#D3D3D3"
                 >

@@ -5,14 +5,12 @@ import Screen from '../../../components/common/Screen';
 import ShortText from '../../../components/common/text/ShortText';
 import Colors from '../../../constants/Colors';
 import ProviderList from '../../../components/ScreenComponent/Service/AllProvider/ProviderList';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {providers} from '../../../utils/config/Data/providers';
 import BottomHalfModal from '../../../components/UI/modal/BottomHalfModal';
 import FilterProvider from '../FilterProvider';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 import AllProviderLoader from './AllProviderLoadingUI';
 interface Props {

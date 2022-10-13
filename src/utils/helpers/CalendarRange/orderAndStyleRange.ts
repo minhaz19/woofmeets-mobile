@@ -1,6 +1,7 @@
 /* eslint-disable radix */
 
 import Colors from '../../../constants/Colors';
+
 export const orderAndStyleRange = (range: any, type: string) => {
   let orderRange: any = [];
   let styledMarkedRange: any = {};
@@ -82,5 +83,5 @@ export const orderAndStyleRange = (range: any, type: string) => {
           (styledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
       );
   }
-  return {styledMarkedRange};
+  return {styledMarkedRange, orderRange};
 };

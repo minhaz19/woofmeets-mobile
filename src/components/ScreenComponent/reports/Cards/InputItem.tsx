@@ -4,13 +4,6 @@ import React, {FC} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import {
-  BoardingIcon,
-  DoggyDayCareIcon,
-  DogWalkingIcon,
-  DropInVisitIcon,
-  HouseSittingIcon,
-} from '../../../../assets/svgs/Services_SVG';
 import TitleText from '../../../common/text/TitleText';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 
@@ -20,24 +13,11 @@ interface Props {
   sequence: number;
   onPressEvent: (id: number) => void;
   divide?: number;
+  icon?: any;
 }
 
 const InputItem: FC<Props> = props => {
   const {colors} = useTheme();
-  const getIcon = (iconId: number) => {
-    switch (iconId) {
-      case 1:
-        return <BoardingIcon width={34} height={36} />;
-      case 2:
-        return <HouseSittingIcon width={34} height={36} />;
-      case 3:
-        return <DropInVisitIcon width={34} height={36} />;
-      case 4:
-        return <DoggyDayCareIcon width={34} height={36} />;
-      case 5:
-        return <DogWalkingIcon width={34} height={36} />;
-    }
-  };
   return (
     <AppTouchableOpacity
       onPress={() => {
@@ -61,7 +41,7 @@ const InputItem: FC<Props> = props => {
         ]}>
         <View style={[styles.boxContainer, props.divide ? styles.pet : {}]}>
           <View style={styles.imageContainer}>
-            {getIcon(props.data.sequence)}
+            {props.data.icon}
           </View>
           <View style={[styles.textContainer]}>
             <TitleText text={props.data.name} textStyle={styles.textStyle} />
@@ -81,7 +61,6 @@ const styles = StyleSheet.create({
   container: {
     borderColor: Colors.subText,
     marginBottom: 10,
-    // marginRight: 10,
     marginHorizontal: 5,
     borderRadius: 5,
     paddingVertical: 10,
