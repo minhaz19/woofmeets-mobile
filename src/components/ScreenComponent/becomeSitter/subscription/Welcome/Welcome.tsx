@@ -24,7 +24,7 @@ const endpoint = '/subscriptions/cancel-subscription';
 const Welcome = (props: any) => {
   const {colors, isDarkMode} = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const opk = props?.opk;
   const [show, setShow] = useState(true);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation<any>();
@@ -144,22 +144,25 @@ const Welcome = (props: any) => {
               ),
             )}
             <View style={styles.footerContainer}>
-              <ButtonCom
-                title="Go Home"
-                textAlignment={btnStyles.textAlignment}
-                containerStyle={btnStyles.containerStyleFullWidth}
-                titleStyle={btnStyles.titleStyle}
-                onSelect={() => navigation.navigate('SettingsMain')}
-                loading={loading}
-              />
-              {/* <ButtonCom
-                title="Cancel Plan"
-                textAlignment={btnStyles.textAlignment}
-                containerStyle={btnStyles.containerStyleFullWidth}
-                titleStyle={btnStyles.titleStyle}
-                onSelect={handleSubmit}
-                loading={loading}
-              /> */}
+              {opk === 'current_plan' ? (
+                <ButtonCom
+                  title="Cancel Plan"
+                  textAlignment={btnStyles.textAlignment}
+                  containerStyle={btnStyles.containerStyleFullWidth}
+                  titleStyle={btnStyles.titleStyle}
+                  onSelect={handleSubmit}
+                  loading={loading}
+                />
+              ) : (
+                <ButtonCom
+                  title="Go Home"
+                  textAlignment={btnStyles.textAlignment}
+                  containerStyle={btnStyles.containerStyleFullWidth}
+                  titleStyle={btnStyles.titleStyle}
+                  onSelect={() => navigation.navigate('BottomTabNavigator')}
+                  loading={loading}
+                />
+              )}
             </View>
           </View>
         </MiddleModal>
@@ -233,22 +236,26 @@ const Welcome = (props: any) => {
         />
       </View>
       <View>
-        {/* <ButtonCom
-          title="Cancel Plan"
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={handleSubmit}
-          loading={loading}
-        /> */}
-        <ButtonCom
-          title="Go Home"
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={() => navigation.navigate('Go Home')}
-          loading={loading}
-        />
+        {/* */}
+        {opk === 'current_plan' ? (
+          <ButtonCom
+            title="Cancel Plan"
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={btnStyles.containerStyleFullWidth}
+            titleStyle={btnStyles.titleStyle}
+            onSelect={handleSubmit}
+            loading={loading}
+          />
+        ) : (
+          <ButtonCom
+            title="Go Home"
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={btnStyles.containerStyleFullWidth}
+            titleStyle={btnStyles.titleStyle}
+            onSelect={() => navigation.navigate('BottomTabNavigator')}
+            loading={loading}
+          />
+        )}
       </View>
       <BottomSpacing />
     </View>

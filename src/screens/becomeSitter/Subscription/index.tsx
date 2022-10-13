@@ -12,7 +12,12 @@ import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import Screen from '../../../components/common/Screen';
 import Welcome from '../../../components/ScreenComponent/becomeSitter/subscription/Welcome/Welcome';
-const SubscriptionScreen = () => {
+interface Props {
+  route: any;
+}
+const SubscriptionScreen = ({route}: Props) => {
+  const opk = route?.params?.opk;
+  console.log('opk', route?.params?.opk);
   const {colors} = useTheme();
   const {
     onPressEvent,
@@ -38,7 +43,10 @@ const SubscriptionScreen = () => {
         ]}>
         {currentPlan ? (
           <>
-            <Welcome item={currentPlan.subscriptionInfo.membershipPlanPrice} />
+            <Welcome
+              item={currentPlan.subscriptionInfo.membershipPlanPrice}
+              opk={opk}
+            />
           </>
         ) : (
           <>
