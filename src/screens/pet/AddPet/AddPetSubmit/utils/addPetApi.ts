@@ -89,7 +89,7 @@ export const addPetApi = async (data: any, opk: string | null) => {
   formData.append('topicalMedication', topicalMedication);
   formData.append('sitterInstructions', sitterInstructions);
   formData.append('vetInfo', vetInfo);
-  return opk === null
+  return opk === null || opk === 'Appointment'
     ? methods._post(postEndpoint, formData)
     : methods._put(`${putEndpoint + opk}`, formData);
 };

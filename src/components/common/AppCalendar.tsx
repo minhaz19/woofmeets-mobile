@@ -24,6 +24,9 @@ const AppCalendar = ({
 
   return (
     <View style={styles.contentContainer}>
+      {/* <AppTouchableOpacity onPress={() => reset()} style={styles.reset}>
+        <Text style={[styles.month, styles.textStyle]}>Reset</Text>
+      </AppTouchableOpacity> */}
       <CalendarList
         current={new Date().toString()}
         pastScrollRange={0}
@@ -112,6 +115,7 @@ function renderCustomHeader(date: any) {
   return (
     <View style={styles.header}>
       <Text style={[styles.month, textStyle]}>{`${month}`}</Text>
+
       <Text style={[styles.year, textStyle]}>{year}</Text>
     </View>
   );
@@ -123,7 +127,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
+    position: 'relative',
   },
+  reset: {position: 'absolute', top: '1%', zIndex: 999, left: '43%'},
   header: {
     flexDirection: 'row',
     width: '100%',
@@ -135,5 +141,13 @@ const styles = StyleSheet.create({
   },
   year: {
     marginRight: 5,
+  },
+  textStyle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    paddingTop: 10,
+    paddingBottom: 10,
+    color: Colors.primary,
+    paddingRight: 5,
   },
 });

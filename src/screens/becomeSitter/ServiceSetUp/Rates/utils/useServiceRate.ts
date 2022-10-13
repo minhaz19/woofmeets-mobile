@@ -44,8 +44,9 @@ export const useServiceRates = (serviceSetup: any) => {
       serviceRate: [],
     };
     rateFieldId &&
-      rateFieldId.forEach(
-        (element: {postId: number; name: string; putId: number}) => {
+      rateFieldId
+        .slice(0, 6)
+        .forEach((element: {postId: number; name: string; putId: number}) => {
           Object.keys(e).map(item => {
             if (item === element.name) {
               payload.serviceRate.push({
@@ -58,8 +59,7 @@ export const useServiceRates = (serviceSetup: any) => {
               });
             }
           });
-        },
-      );
+        });
     const result = await request(payload);
     if (result.ok) {
       dispatch(setBoardingSelection({pass: 0}));

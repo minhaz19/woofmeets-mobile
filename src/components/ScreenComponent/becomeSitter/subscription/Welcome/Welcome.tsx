@@ -145,13 +145,21 @@ const Welcome = (props: any) => {
             )}
             <View style={styles.footerContainer}>
               <ButtonCom
+                title="Go Home"
+                textAlignment={btnStyles.textAlignment}
+                containerStyle={btnStyles.containerStyleFullWidth}
+                titleStyle={btnStyles.titleStyle}
+                onSelect={() => navigation.navigate('SettingsMain')}
+                loading={loading}
+              />
+              {/* <ButtonCom
                 title="Cancel Plan"
                 textAlignment={btnStyles.textAlignment}
                 containerStyle={btnStyles.containerStyleFullWidth}
                 titleStyle={btnStyles.titleStyle}
                 onSelect={handleSubmit}
                 loading={loading}
-              />
+              /> */}
             </View>
           </View>
         </MiddleModal>
@@ -210,7 +218,9 @@ const Welcome = (props: any) => {
           borderWidth: 1,
           borderColor: Colors.border,
           borderRadius: 6,
-          backgroundColor: Colors.primaryLight,
+          backgroundColor: isDarkMode
+            ? colors.backgroundColor
+            : Colors.primaryLight,
           padding: 10,
           marginTop: 20,
           marginBottom: 40,
@@ -223,12 +233,20 @@ const Welcome = (props: any) => {
         />
       </View>
       <View>
-        <ButtonCom
+        {/* <ButtonCom
           title="Cancel Plan"
           textAlignment={btnStyles.textAlignment}
           containerStyle={btnStyles.containerStyleFullWidth}
           titleStyle={btnStyles.titleStyle}
           onSelect={handleSubmit}
+          loading={loading}
+        /> */}
+        <ButtonCom
+          title="Go Home"
+          textAlignment={btnStyles.textAlignment}
+          containerStyle={btnStyles.containerStyleFullWidth}
+          titleStyle={btnStyles.titleStyle}
+          onSelect={() => navigation.navigate('Go Home')}
           loading={loading}
         />
       </View>

@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import React from 'react';
 import AnimatedLottieView from 'lottie-react-native';
 import HeaderText from '../../../../common/text/HeaderText';
@@ -8,11 +8,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 const CardFormHeader = () => {
+  const {colors, isDarkMode} = useTheme();
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkMode ? Colors.gray : colors.backgroundColor,
+        },
+      ]}>
       <AnimatedLottieView
         autoPlay
         loop
@@ -40,24 +48,22 @@ export default CardFormHeader;
 
 const styles = StyleSheet.create({
   container: {
-    height: 300,
+    height: Platform.OS === 'ios' ? 300 : 250,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
     paddingHorizontal: 0,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
-  loaderStyle: {width: '50%'},
+  loaderStyle: {width: Platform.OS === 'ios' ? '50%' : '60%'},
   text: {
     fontWeight: 'bold',
     fontSize: Text_Size.Text_3,
-    color: 'black',
   },
   leftContainer: {
     position: 'absolute',
     left: '4%',
-    top: '20%',
+    top: Platform.OS === 'ios' ? '20%' : '10%',
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',

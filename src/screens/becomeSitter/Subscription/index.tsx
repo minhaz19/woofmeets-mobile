@@ -28,9 +28,7 @@ const SubscriptionScreen = () => {
   } = useSubscription();
   return (
     <Screen style={{flex: 1}}>
-      {(loading || planLoading || cardLoading) && (
-        <AppActivityIndicator visible={true} />
-      )}
+      {(loading || planLoading) && <AppActivityIndicator visible={true} />}
       <ScrollView
         style={[
           styles.container,
@@ -74,7 +72,7 @@ const SubscriptionScreen = () => {
                 titleStyle={btnStyles.titleStyle}
                 title="Choose Plan"
                 onSelect={handleSubmit}
-                loading={pLoading || ssLoading}
+                loading={pLoading || ssLoading || cardLoading}
               />
             </View>
           </>

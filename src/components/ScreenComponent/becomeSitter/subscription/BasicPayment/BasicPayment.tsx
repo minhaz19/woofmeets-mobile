@@ -11,12 +11,13 @@ import Text_Size from '../../../../../constants/textScaling';
 import {useAppDispatch} from '../../../../../store/store';
 import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 import {getSubscription} from '../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
-const endpoint = '/subscriptions/pay-basic-verification-payment';
-const subscriptionEndpoint = '/subscriptions/subscribe';
 import AppTouchableOpacity from '../../../../common/AppClickEvents/AppTouchableOpacity';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+const endpoint = '/subscriptions/pay-basic-verification-payment';
+const subscriptionEndpoint = '/subscriptions/subscribe';
 interface Props {
   route: {
     params: {
@@ -34,7 +35,7 @@ const BasicPayment = ({route, navigation}: Props) => {
   const {loading, request} = useApi(methods._post);
   const dispatch = useAppDispatch();
   const handleSubmit = async () => {
-    const result = await request(endpoint);
+    const result = await request(endpoint + `?cardId=${cardId}`);
     if (result.ok) {
       const res = await request(
         `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
@@ -45,8 +46,9 @@ const BasicPayment = ({route, navigation}: Props) => {
         dispatch(getSubscription()));
     }
   };
+  const {colors} = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <AppTouchableOpacity
         style={styles.leftContainer}
         onPress={() => {

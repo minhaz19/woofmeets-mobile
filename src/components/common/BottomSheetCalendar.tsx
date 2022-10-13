@@ -8,6 +8,8 @@ import {CalendarCSvg} from '../../assets/svgs/SVG_LOGOS';
 import AppCalendar from './AppCalendar';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
+import {useFormContext} from 'react-hook-form';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
 interface Props {
   title: string;
   sequence?: number;
@@ -23,12 +25,12 @@ var dayss = [
   'Friday',
   'Saturday',
 ];
-const BottomSheetCalendar = ({
-  title,
-  isRecurring = false,
-  setValue,
-}: Props) => {
+const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
   const [visible, setVisible] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const {getValues} = useFormContext();
+  const {isDarkMode, colors} = useTheme();
+  const {multiDate} = getValues();
   const handlePress = (data: any) => {
     const next6Days = [...Array(7).keys()].map(index => {
       const date = new Date(data.dateString);
@@ -39,6 +41,7 @@ const BottomSheetCalendar = ({
     });
     setValue('recurringStartDate', data.dateString);
     setValue('repeatDate', next6Days);
+    setStartDate(data.dateString);
   };
   return (
     <>
@@ -53,15 +56,31 @@ const BottomSheetCalendar = ({
             right: 0,
             bottom: 0,
             left: 0,
+            borderRadius: 10,
           },
         ]}>
         {!visible && (
           <AppTouchableOpacity
-            style={styles.sectionContainer}
+            style={[
+              styles.sectionContainer,
+              {
+                backgroundColor: isDarkMode ? Colors.lightDark : Colors.border,
+                borderColor: colors.borderColor,
+              },
+            ]}
             onPress={() => setVisible(!visible)}>
-            <View>
+            <View style={{width: '85%'}}>
               <TitleText textStyle={styles.titleText} text={title} />
-              <DescriptionText text={'Tap to add dates'} />
+              <DescriptionText
+                text={
+                  !isRecurring
+                    ? multiDate?.join(' ')
+                    : startDate !== '' && isRecurring === true
+                    ? startDate
+                    : 'Tap to add dates'
+                }
+                textStyle={{}}
+              />
             </View>
             <View style={styles.iconContainer}>
               <CalendarCSvg fill="black" width={30} height={30} />
@@ -74,11 +93,18 @@ const BottomSheetCalendar = ({
             onPress={() => setVisible(!visible)}
           />
 
-          <View style={styles.pickerContainer}>
+          <View
+            style={[
+              styles.pickerContainer,
+              {
+                backgroundColor: colors.backgroundColor,
+                borderTopWidth: 2,
+                borderTopColor: Colors.primary,
+              },
+            ]}>
             <TitleText
               textStyle={{
                 fontWeight: 'bold',
-                color: Colors.text,
                 fontSize: Text_Size.Text_1,
                 margin: 20,
               }}
@@ -104,12 +130,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: Colors.border,
-    backgroundColor: Colors.border,
+    // borderColor: Colors.border,
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   titleText: {
     fontWeight: 'bold',

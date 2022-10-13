@@ -1,10 +1,10 @@
 import Geolocation from '@react-native-community/geolocation';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {PermissionsAndroid, Platform} from 'react-native';
 import {saveCurrentUserLocation} from '../../../../store/slices/address/address';
 import {useAppDispatch} from '../../../../store/store';
 
-const getLiveLocation = () => {
+const useGetLiveLocation = () => {
   const dispatch = useAppDispatch();
   const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
@@ -67,4 +67,4 @@ const getLiveLocation = () => {
   return {};
 };
 
-export default getLiveLocation;
+export default useGetLiveLocation;
