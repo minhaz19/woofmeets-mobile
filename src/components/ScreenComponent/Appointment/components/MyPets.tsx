@@ -37,14 +37,14 @@ const MyPets = () => {
       id: allPets.length,
       Icon: Plus,
       text: '',
-      new: false,
+      new: true,
     });
     setDatas(modArray);
   }, []);
   const navigation = useNavigation<any>();
   return (
     <>
-      {allPets?.length === 0 ? (
+      {allPets === null || allPets === undefined ? (
         <View>
           <TitleText textStyle={styles.headerText} text={'Your Pets'} />
           <DescriptionText
@@ -52,7 +52,7 @@ const MyPets = () => {
             text="You havent listed any pets yet, Please add!"
           />
           <AppTouchableOpacity
-            onPress={() => navigation.navigate('AddPet')}
+            onPress={() => navigation.navigate('AddPetHome', {opk: null})}
             style={[styles.newPet]}>
             <Plus fill="black" width={20} height={20} />
           </AppTouchableOpacity>

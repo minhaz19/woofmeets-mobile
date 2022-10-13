@@ -1,44 +1,43 @@
 import {FlatList, Pressable, StyleSheet, View} from 'react-native';
-import React, {memo, useMemo, useState} from 'react';
+import React, {memo, useState} from 'react';
 import TitleText from './text/TitleText';
 import Colors from '../../constants/Colors';
-import {useFormContext, useWatch} from 'react-hook-form';
+import {useFormContext} from 'react-hook-form';
 
+// function generate_series(step: number = 60) {
+var x = 60; //minutes interval
+var times: any = []; // time array
+var tt = 0; // start time
+var ap = ['AM', 'PM']; // AM-PM
+
+for (var i = 0; tt < 24 * 60; i++) {
+  var hh = Math.floor(tt / 60); // getting hours of day in 0-24 format
+  var mm = tt % 60; // getting minutes of the hour in 0-55 format
+  times[i] = {
+    id: i + 1,
+
+    slot:
+      ('0' + (hh % 12)).slice(-2) +
+      ':' +
+      ('0' + mm).slice(-2) +
+      ap[Math.floor(hh / 12)],
+    active: false,
+  }; // pushing data in array in [00:00 - 12:00 AM/PM format]
+  tt = tt + x;
+}
+// return times;
+// }
 var Dates: any = [];
 const TimeMultiSlotPicker = (date: any) => {
-  const {visitLength} = useWatch();
+  // const {visitLength} = useWatch();
   const {setValue} = useFormContext();
-  const [newData, setDatas] = useState<any>([]);
-  function generate_series(step: number) {
-    var x = step; //minutes interval
-    var times = []; // time array
-    var tt = 0; // start time
-    var ap = ['AM', 'PM']; // AM-PM
-
-    for (var i = 0; tt < 24 * 60; i++) {
-      var hh = Math.floor(tt / 60); // getting hours of day in 0-24 format
-      var mm = tt % 60; // getting minutes of the hour in 0-55 format
-      times[i] = {
-        id: i + 1,
-
-        slot:
-          ('0' + (hh % 12)).slice(-2) +
-          ':' +
-          ('0' + mm).slice(-2) +
-          ap[Math.floor(hh / 12)],
-        active: false,
-      }; // pushing data in array in [00:00 - 12:00 AM/PM format]
-      tt = tt + x;
-    }
-    console.log('lopping');
-    return times;
-  }
-  useMemo(() => {
-    let x = visitLength; //minutes interval
-    const times = generate_series(x);
-    console.log('lopping');
-    setDatas(times);
-  }, [visitLength]);
+  const [newData, setDatas] = useState<any>(times);
+  // useMemo(() => {
+  //   // const times = generate_series(visitLength);
+  //   // const times = generate_series(visitLength);
+  //   console.log('inside use effect');
+  //   times && setDatas(times);
+  // }, [visitLength]);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);

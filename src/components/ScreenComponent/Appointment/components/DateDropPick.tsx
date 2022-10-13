@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import {CalendarCSvg, ClockSvg} from '../../../../assets/svgs/SVG_LOGOS';
@@ -10,6 +9,8 @@ import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpac
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import TimeSlotPicker from '../../../common/TimeRangePicker';
 import AppCalendar from '../../../common/AppCalendar';
+import {useFormContext, useWatch} from 'react-hook-form';
+import ShortText from '../../../common/text/ShortText';
 interface Props {
   serviceId?: number;
   setValue: (arg: string, arg2: any) => void;
@@ -19,7 +20,16 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
   const [visible, setVisible] = useState(false);
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
-
+  const {getValues} = useFormContext();
+  const {
+    proposalStartDate,
+    proposalEndDate,
+    dropOffStartTime,
+    dropOffEndTime,
+    pickUpStartTime,
+    pickUpEndTime,
+  } = getValues();
+  console.log('data ra', proposalStartDate, proposalEndDate);
   return (
     <View style={[styles.container]}>
       <TitleText textStyle={styles.headerText} text={'Schedule'} />
@@ -29,7 +39,13 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
           onPress={() => setVisible(!visible)}>
           <View>
             <TitleText textStyle={styles.titleText} text={'Dates'} />
-            <DescriptionText text={'Tap to add dates'} />
+            <DescriptionText
+              text={
+                proposalStartDate !== ''
+                  ? `( From: ${proposalStartDate} To: ${proposalEndDate})`
+                  : 'Tap to add dates'
+              }
+            />
           </View>
           <View style={styles.iconContainer}>
             <CalendarCSvg fill="black" width={30} height={30} />
@@ -42,7 +58,20 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
           <AppTouchableOpacity
             style={styles.slot}
             onPress={() => setDropVisible(!dropVisible)}>
-            <TitleText textStyle={{}} text={'Drop-Off'} />
+            <View>
+              <TitleText textStyle={{fontWeight: 'bold'}} text={'Drop-Off'} />
+              <ShortText
+                textStyle={{}}
+                text={
+                  dropOffStartTime !== ''
+                    ? 'From:' + dropOffStartTime
+                    : 'Tap Drop-off'
+                }
+              />
+              {dropOffEndTime !== '' && (
+                <ShortText textStyle={{}} text={'To:' + dropOffEndTime} />
+              )}
+            </View>
             <View style={styles.iconContainer}>
               <ClockSvg fill="black" />
             </View>
@@ -59,7 +88,20 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
           <AppTouchableOpacity
             style={styles.slot}
             onPress={() => setPickVisible(!pickVisible)}>
-            <TitleText textStyle={{}} text={'Pick-Up'} />
+            <View>
+              <TitleText textStyle={{fontWeight: 'bold'}} text={'Pick-Up'} />
+              <ShortText
+                textStyle={{}}
+                text={
+                  pickUpStartTime !== ''
+                    ? 'From:' + pickUpStartTime
+                    : 'Tap Pick-up'
+                }
+              />
+              {pickUpEndTime !== '' && (
+                <ShortText textStyle={{}} text={'To:' + pickUpEndTime} />
+              )}
+            </View>
             <View style={styles.iconContainer}>
               <ClockSvg fill="black" />
             </View>

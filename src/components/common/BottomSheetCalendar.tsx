@@ -8,6 +8,7 @@ import {CalendarCSvg} from '../../assets/svgs/SVG_LOGOS';
 import AppCalendar from './AppCalendar';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
+import {useFormContext} from 'react-hook-form';
 interface Props {
   title: string;
   sequence?: number;
@@ -23,12 +24,11 @@ var dayss = [
   'Friday',
   'Saturday',
 ];
-const BottomSheetCalendar = ({
-  title,
-  isRecurring = false,
-  setValue,
-}: Props) => {
+const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
   const [visible, setVisible] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const {getValues} = useFormContext();
+  const {multiDate} = getValues();
   const handlePress = (data: any) => {
     const next6Days = [...Array(7).keys()].map(index => {
       const date = new Date(data.dateString);
@@ -39,7 +39,9 @@ const BottomSheetCalendar = ({
     });
     setValue('recurringStartDate', data.dateString);
     setValue('repeatDate', next6Days);
+    setStartDate(data.dateString);
   };
+  console.log('mulitad', multiDate?.join(' '));
   return (
     <>
       <View
@@ -61,7 +63,15 @@ const BottomSheetCalendar = ({
             onPress={() => setVisible(!visible)}>
             <View>
               <TitleText textStyle={styles.titleText} text={title} />
-              <DescriptionText text={'Tap to add dates'} />
+              <DescriptionText
+                text={
+                  !isRecurring
+                    ? multiDate?.join(' ')
+                    : startDate !== '' && isRecurring === true
+                    ? startDate
+                    : 'Tap to add dates'
+                }
+              />
             </View>
             <View style={styles.iconContainer}>
               <CalendarCSvg fill="black" width={30} height={30} />

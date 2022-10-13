@@ -1,9 +1,8 @@
 /* eslint-disable radix */
 
 import Colors from '../../../constants/Colors';
-
-var orderRange: any = [];
 export const orderAndStyleRange = (range: any, type: string) => {
+  let orderRange: any = [];
   let styledMarkedRange: any = {};
   if (type === 'RANGE') {
     const unorderedRange =
@@ -59,6 +58,7 @@ export const orderAndStyleRange = (range: any, type: string) => {
       );
   } else if (type === 'MULTI') {
     orderRange.push(range.dateString);
+
     const styledRange = orderRange?.map((_: string, i: number) => ({
       [orderRange[i]]: {
         customStyles: {
@@ -82,5 +82,5 @@ export const orderAndStyleRange = (range: any, type: string) => {
           (styledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
       );
   }
-  return {styledMarkedRange, orderRange};
+  return {styledMarkedRange};
 };

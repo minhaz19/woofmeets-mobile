@@ -15,15 +15,18 @@ export const useHandleRange = (
   const [prevDate, setPrevDate] = useState<false | undefined | Date>();
   const [startingDate, setStartingDate] = useState('');
   const [endingDate, setEndingDate] = useState('');
+  const [multiDate, setMultiDate] = useState<any>([]);
   // const {setValue} = useFormContext();
   const handleDayPress = (date: any) => {
     if (type === 'SINGLE') {
       setSingleSelect(date.dateString);
     } else if (type === 'MULTI') {
-      const {styledMarkedRange, orderRange} = orderAndStyleRange(date, 'MULTI');
+      const {styledMarkedRange} = orderAndStyleRange(date, 'MULTI');
       setMarkedStyle({..._markedStyle, ...styledMarkedRange});
       // setDateRange([...orderRange]);
-      setValue('multiDate', [...orderRange]);
+      setMultiDate([...multiDate, date.dateString]);
+      setValue('multiDate', [...multiDate, date.dateString]);
+      console.log('core mulit', [...multiDate, date.dateString]);
     } else if (type === 'RANGE') {
       const {end} = compareDate(date.dateString, step, setPrevDate);
 
@@ -55,11 +58,13 @@ export const useHandleRange = (
   };
   useMemo(() => {
     if (type === 'RANGE') {
-      const range = _dateRange(startingDate, endingDate);
+      const range =
+        startingDate !== '' &&
+        endingDate !== '' &&
+        _dateRange(startingDate, endingDate);
       const {styledMarkedRange} = orderAndStyleRange(range, 'RANGE');
       setMarkedStyle(styledMarkedRange);
-      setDateRange(range);
-
+      range && setDateRange(range);
       setValue('proposalStartDate', startingDate);
       setValue('proposalEndDate', endingDate);
     }
@@ -72,11 +77,14 @@ export const useHandleRange = (
     setEndingDate('');
     setDateRange([]);
     setSingleSelect('');
+    setMultiDate([]);
     setValue('proposalStartDate', '');
     setValue('proposalEndDate', '');
     setValue('multiDate', []);
+    setMarkedStyle({});
     setSteps(1);
   };
+  // console.log('white', startingDate, endingDate, _markedStyle, dateRange);
   return {
     handleDayPress,
     _markedStyle,
