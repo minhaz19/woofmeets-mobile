@@ -13,10 +13,18 @@ export const useAddPetUtils = (
   const {request, loading: Ploading} = useApi(addPetApi);
 
   const handleSubmit = async (data: any) => {
+
     const payload = {...data, ...routeData};
     const result = await request(payload, opk);
+
     if (result.ok) {
-      navigation.navigate('MyPet');
+      if (opk === 'Appointment') {
+        dispatch(getAllPets());
+        navigation.navigate('Appointment');
+      } else {
+        navigation.navigate('MyPet');
+      }
+
       dispatch(getAllPets());
       const checkPetPayload = {havePets: 'YES'};
       await methods._post(endpoint, checkPetPayload);

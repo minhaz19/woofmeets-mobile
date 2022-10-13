@@ -48,6 +48,7 @@ const AppointmentBody = ({handleSubmit, loading}: Props) => {
                 <BottomSheetCalendar
                   title={isRecurring ? 'Start Date' : 'Dates'}
                   setValue={setValue}
+                  isRecurring={isRecurring}
                 />
               )}
             </>

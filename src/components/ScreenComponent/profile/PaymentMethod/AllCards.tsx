@@ -27,6 +27,7 @@ interface Props {
   onPress?: () => void;
   sequence: number | null;
   loading: boolean;
+  setSelectedCard: (arg: number) => void;
 }
 const getIcon = (brand: string) => {
   switch (brand) {
@@ -47,10 +48,17 @@ const getIcon = (brand: string) => {
     case 'Amazon':
       return <Amazon width={50} height={50} />;
     case 'new':
-      return <Plus fill="gray" width={25} height={25} />;
+      return <Plus fill={Colors.background} width={20} height={20} />;
   }
 };
-const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
+const AllCards = ({
+  cards,
+  CardId,
+  onPress,
+  sequence,
+  loading,
+  setSelectedCard,
+}: Props) => {
   const newCard = [...cards];
   const i = cards.findIndex((item: {id: number}) => item.id === CardId);
   newCard.splice(0, 0, newCard.splice(i, 1)[0]);
@@ -58,7 +66,7 @@ const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
 
   const {colors} = useTheme();
   const [active, setActive] = useState(true);
-  const [cardIndex, setActiveCardIndex] = useState<null | number>(null);
+  const [cardIndex, setActiveCardIndex] = useState<null | number>(0);
 
   return (
     <SafeAreaView
@@ -77,7 +85,10 @@ const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
                   key={index}
                   cards={card}
                   Icon={getIcon(card.brand)}
-                  onPress={() => setActiveCardIndex(index)}
+                  onPress={() => {
+                    setActiveCardIndex(index);
+                    setSelectedCard(card.id);
+                  }}
                   defaultCard={card.id === CardId ? true : false}
                   activeCard={index === cardIndex ? true : false}
                   handleUpdate={id => {
@@ -93,16 +104,44 @@ const AllCards = ({cards, CardId, onPress, sequence, loading}: Props) => {
           ))}
         </View>
         <View style={styles.textContainer}>
-          <DescriptionText
-            textStyle={{textAlign: 'center'}}
-            text="We are using the selected card as your default card to make payment and will use this card for future payment as well, you can add, delete multiple cards and make any card as your default card for payments anytime you want."
-          />
+          {sequence === 1 ? (
+            <DescriptionText
+              textStyle={{
+                textAlign: 'center',
+              }}
+              text="You are currenly selected basic plan. Based on woofmeet terms and policy we have to make sure you are a verified user, so that we are going to charge you USD: $35 to validate your background. You can select any of your payment cards for payment."
+            />
+          ) : sequence === 2 || sequence === 3 ? (
+            <>
+              <DescriptionText
+                textStyle={{
+                  textAlign: 'center',
+                }}
+                text="We are using the selected card (GREEN TICK) as your default card to make payment and will use your default card for future payment as well, you can add, delete multiple cards and make any card as your default card for payments anytime you want."
+              />
+              <View style={{marginTop: 20}}>
+                <DescriptionText
+                  textStyle={{textAlign: 'center'}}
+                  text="You can select any of your cards or you can use the default card for current payment "
+                />
+              </View>
+            </>
+          ) : (
+            <>
+              <DescriptionText
+                textStyle={{
+                  textAlign: 'center',
+                }}
+                text="We are using the selected card (GREEN TICK) as your default card to make payment and will use your default card for future payment as well, you can add, delete multiple cards and make any card as your default card for payments anytime you want."
+              />
+            </>
+          )}
         </View>
         <View>
           {sequence !== null && sequence !== undefined && (
             <View style={{marginHorizontal: 20}}>
               <ButtonCom
-                title="Confirm Payment"
+                title={sequence === 1 ? 'Continue' : 'Confirm Payment'}
                 textAlignment={btnStyles.textAlignment}
                 containerStyle={btnStyles.containerStyleFullWidth}
                 titleStyle={btnStyles.titleStyle}
@@ -131,6 +170,7 @@ const styles = StyleSheet.create({
   },
   scrollview: {
     flex: 1,
+    height: '100%',
     justifyContent: 'space-between',
   },
   taskContainer: {

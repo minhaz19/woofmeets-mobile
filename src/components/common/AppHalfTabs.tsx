@@ -5,6 +5,7 @@ import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Text_Size from '../../constants/textScaling';
 import {useFormContext} from 'react-hook-form';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
 
 interface Props {
   title: string;
@@ -16,8 +17,9 @@ interface Props {
 const AppHalfTabs = ({data, title, name, setScheduleId}: Props) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const {setValue} = useFormContext();
+  const {isDarkMode, colors} = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {}]}>
       <TitleText textStyle={styles.titleText} text={title} />
       <View style={styles.tabContainer}>
         {data.map((item: any, index: number) => (
@@ -31,9 +33,13 @@ const AppHalfTabs = ({data, title, name, setScheduleId}: Props) => {
               styles.tab,
               {
                 backgroundColor:
-                  activeIndex === index ? Colors.primary : Colors.border,
+                  activeIndex === index
+                    ? Colors.primary
+                    : isDarkMode
+                    ? Colors.lightDark
+                    : Colors.border,
                 borderColor:
-                  activeIndex === index ? Colors.primary : Colors.border,
+                  activeIndex === index ? Colors.primary : colors.borderColor,
               },
             ]}
             key={index}>

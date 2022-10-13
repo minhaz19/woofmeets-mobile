@@ -43,7 +43,9 @@ const AddPetSubmitBody = ({handleSubmit, loading, opk}: Props) => {
             name="gallery"
           />
           <SubmitButton
-            title={opk === null ? 'Add Pet' : 'Update Pet'}
+            title={
+              opk === null || opk === 'Appointment' ? 'Add Pet' : 'Update Pet'
+            }
             onPress={handleSubmit}
             loading={loading}
           />

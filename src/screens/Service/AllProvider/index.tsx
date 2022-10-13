@@ -112,8 +112,6 @@ const AllProvider = ({navigation}: Props) => {
     );
   };
 
-  // console.log('helkloasdfh wolrd',allProvider);
-
   return (
     <ScreenRapperGrey>
       {getLoading && <AllProviderLoader />}

@@ -6,12 +6,15 @@ import {appointmentInit} from '../../utils/config/initalValues/initalValues';
 import {appointmentValidationSchema} from '../../utils/config/ValidationSchema/validationSchema';
 import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
 import {useAppointment} from './utils/useAppointment';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
 const Appointment = () => {
   const {handleSubmit, loading, btnLoading} = useAppointment();
+  const {colors} = useTheme();
   return (
     <>
       {loading && <AppActivityIndicator visible />}
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
         <AppForm
           initialValues={appointmentInit}
           validationSchema={appointmentValidationSchema}>

@@ -38,8 +38,8 @@ const Text_Size_Type = {
     Text_8: normalize(9),
     Text_9: normalize(10),
     Text_10: normalize(9),
-    Text_11: normalizeInput(11),
-    Text_12: normalizeInput(12, 'text12'),
+    Text_11: normalizeInput(12),
+    Text_12: normalizeInput(13, 'text12'),
   },
 };
 const Text_Size = Text_Size_Type.Scale;

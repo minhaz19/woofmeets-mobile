@@ -1,10 +1,12 @@
-import {Modal, Pressable, StyleSheet, View} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import {Modal, Platform, Pressable, StyleSheet, View} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import TitleText from './text/TitleText';
 import Text_Size from '../../constants/textScaling';
 import Colors from '../../constants/Colors';
 import {useFormContext} from 'react-hook-form';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
 interface Props {
   visible: boolean;
   setVisbile: (arg: boolean) => void;
@@ -50,6 +52,7 @@ const TimeSlotPicker = ({
   const [fromTime, setFromTime] = useState<string>('');
   const [toTime, setToTime] = useState<string>('');
   const {setValue} = useFormContext();
+  const {colors, isDarkMode} = useTheme();
   useMemo(() => {
     setValue(startName, fromTime);
     setValue(endName, toTime);
@@ -58,8 +61,30 @@ const TimeSlotPicker = ({
     <View>
       <Modal animated transparent visible={visible} animationType="fade">
         <Pressable style={styles.container} onPress={() => setVisbile(false)} />
-        <TitleText text={title} textStyle={styles.headerText} />
-        <View style={styles.pickerContainer}>
+
+        <TitleText
+          text={title}
+          textStyle={{
+            borderTopColor: Colors.primary,
+            borderTopWidth: 2,
+            fontWeight: 'bold',
+            fontSize: Text_Size.Text_1,
+            padding: 20,
+            backgroundColor: isDarkMode
+              ? Colors.lightDark
+              : colors.backgroundColor,
+          }}
+        />
+
+        <View
+          style={[
+            styles.pickerContainer,
+            {
+              backgroundColor: isDarkMode
+                ? Colors.lightDark
+                : colors.backgroundColor,
+            },
+          ]}>
           <View style={styles.halfCont}>
             <TitleText text={'From'} textStyle={styles.title} />
             <Picker
@@ -100,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   pickerContainer: {
-    height: 250,
+    height: Platform.OS === 'ios' ? 250 : 150,
     width: '100%',
     backgroundColor: 'white',
     flexDirection: 'row',
@@ -117,8 +142,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   title: {
-    textAlign: 'center',
+    textAlign: Platform.OS === 'ios' ? 'center' : 'left',
     fontWeight: 'bold',
     fontSize: Text_Size.Text_1,
+    marginLeft: 10,
   },
 });

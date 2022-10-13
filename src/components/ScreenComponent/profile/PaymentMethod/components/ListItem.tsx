@@ -9,6 +9,7 @@ import methods from '../../../../../api/methods';
 import {Delete} from '../../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../../constants/Colors';
 import Text_Size from '../../../../../constants/textScaling';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import {getCards} from '../../../../../store/slices/payment/PaymentCards/getCardsAction';
 import {useAppDispatch} from '../../../../../store/store';
 import AppTouchableOpacity from '../../../../common/AppClickEvents/AppTouchableOpacity';
@@ -71,7 +72,7 @@ Props) => {
               },
             ]);
           }}>
-          <Delete fill="black" width={20} height={20} />
+          <Delete fill={Colors.text} width={20} height={20} />
         </TouchableOpacity>
       </View>
     );
@@ -82,11 +83,20 @@ Props) => {
   const swipeFromRightOpen = () => {
     // Alert.alert('Swipe from right');
   };
+  const {colors, isDarkMode} = useTheme();
   return (
     <View style={{}}>
       {newCard ? (
         <AppTouchableOpacity
-          style={[styles.taskContainer, {paddingVertical: 20}]}
+          style={[
+            styles.taskContainer,
+            {
+              paddingVertical: 20,
+              backgroundColor: isDarkMode
+                ? colors.lightBackgroundColor
+                : colors.backgroundColor,
+            },
+          ]}
           onPress={() => navigation.navigate('AddCardForm', {sequence: null})}>
           <View style={[styles.task, {justifyContent: 'center'}]}>
             {Icon}
@@ -123,9 +133,13 @@ Props) => {
             style={[
               styles.taskContainer,
               {
-                borderWidth: defaultCard ? 2 : activeCard ? 1 : 0,
-                borderColor:
-                  defaultCard || activeCard ? Colors.primary : 'none',
+                backgroundColor: colors.lightBackgroundColor,
+                borderWidth:
+                  // activeCard === false && defaultCard === true
+                  //   ? 2
+                  //   :
+                  activeCard ? 2 : 0,
+                borderColor: activeCard ? Colors.primary : 'none',
               },
             ]}>
             <View style={[styles.task]}>
@@ -187,7 +201,6 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 20,
     fontSize: Text_Size.Text_1,
-    color: Colors.text,
   },
   stars: {
     marginBottom: 0,

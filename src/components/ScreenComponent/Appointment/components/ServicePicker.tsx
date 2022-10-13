@@ -13,6 +13,7 @@ import {
 } from '../../../../assets/svgs/Services_SVG';
 import Text_Size from '../../../../constants/textScaling';
 import {useAppSelector} from '../../../../store/store';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 
 interface Props {
   name: string;
@@ -34,11 +35,7 @@ const getIcon = (iconId: number) => {
       return DogWalkingIcon;
   }
 };
-const ServicePicker = ({
-  name,
-  setValue,
-  setServiceId,
-}: Props) => {
+const ServicePicker = ({name, setValue, setServiceId}: Props) => {
   const [visible, setVisible] = useState(false);
   const {providerServices} = useAppSelector(state => state?.providerServices);
   const [selectedService, setSelectedService] = useState<any>([]);
@@ -52,6 +49,7 @@ const ServicePicker = ({
     }));
     modData !== undefined && setSelectedService(modData[0]);
   }, [providerServices]);
+  const {isDarkMode, colors} = useTheme();
   return (
     <>
       <TitleText textStyle={styles.header} text={'Provider Services'} />
@@ -73,16 +71,23 @@ const ServicePicker = ({
       </AppTouchableOpacity>
       <Modal transparent animationType="slide" visible={visible}>
         <Pressable
-          style={styles.container}
+          style={[styles.container]}
           onPress={() => {
             setVisible(false);
           }}
         />
-        <View style={styles.pickerContainer}>
+        <View
+          style={[
+            styles.pickerContainer,
+            {backgroundColor: colors.backgroundColor},
+          ]}>
           {modData?.map((item: any, index: number) => (
             <AppTouchableOpacity
               key={index}
-              style={styles.sectionContainer}
+              style={[
+                styles.sectionContainer,
+                {backgroundColor: isDarkMode ? Colors.lightDark : Colors.iosBG},
+              ]}
               onPress={() => {
                 setSelectedService(item);
                 setValue(name, item.id);
@@ -181,6 +186,5 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderTopWidth: 3,
     borderTopColor: Colors.primary,
-    backgroundColor: '#f1f1f1',
   },
 });

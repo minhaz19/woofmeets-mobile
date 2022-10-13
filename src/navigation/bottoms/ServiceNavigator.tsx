@@ -12,7 +12,6 @@ import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 import {useAppDispatch} from '../../store/store';
 import authStorage from '../../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
-import SubscriptionScreen from '../../screens/becomeSitter/Subscription';
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
@@ -65,11 +64,7 @@ const ServiceNavigator = () => {
         options={{headerShown: false}}
       />
 
-      <Stack1.Screen
-        name="SubscriptionScreen"
-        component={SubscriptionScreen}
-        options={{headerShown: false}}
-      />
+   
       <Stack1.Screen
         name="AllProvider"
         component={AllProvider}

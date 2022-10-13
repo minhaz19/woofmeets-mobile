@@ -2,9 +2,11 @@ import React from 'react';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 import {View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 
 const ServiceTypesLoader = () => {
+  const {colors} = useTheme();
   return (
     <ScrollView>
       <View style={{flex: 1}}>
@@ -12,9 +14,9 @@ const ServiceTypesLoader = () => {
           speed={1}
           width={SCREEN_WIDTH}
           height={200}
-          viewBox="40 -20 300 200"
-          backgroundColor="#e3e3e3"
-          foregroundColor="#D3D3D3">
+          viewBox="0 -20 300 200"
+          backgroundColor={colors.loaderBackground}
+          foregroundColor={colors.loaderBackground}>
           <Rect x="0" y="0" rx="4" ry="4" width="100" height="20" />
 
           <Rect

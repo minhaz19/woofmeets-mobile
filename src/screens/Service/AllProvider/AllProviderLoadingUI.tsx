@@ -17,13 +17,13 @@ const AllProviderLoader = () => {
   ];
   const {colors} = useTheme();
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{flex: 1}}>
         <ContentLoader
           speed={1}
           width={SCREEN_WIDTH}
           height={1280}
-          viewBox="20 -20 300 1280"
+          viewBox="5 -20 300 1280"
           backgroundColor={colors.loaderBackground}
           foregroundColor={colors.loaderForeground}>
           <Rect x="0" y="0" rx="4" ry="4" width="100" height="20" />

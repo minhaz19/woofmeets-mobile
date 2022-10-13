@@ -27,16 +27,15 @@ export const usePackageCard = (props: any) => {
           result.data.data.needPayment === true &&
           cardResponse.status === 200
         ) {
-          const cardId = cardResponse.data.data.id;
-          // @ts-ignore
-          navigation.navigate('BasicPayment', {
+          navigation.navigate('PaymentMethod', {
             sequence: sequence,
-            cardId: cardId,
           });
+
           setSSLoading(false);
         } else if (result.data.data.needPayment === false) {
+          const cardId = cardResponse.data.data.id;
           const subscriptionResult = await request(
-            `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardResponse.data.data.id}`,
+            `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
           );
           subscriptionResult.ok &&
             (await dispatch(getCurrentplan()),

@@ -91,7 +91,15 @@ const AddCardFormBody = ({handleValues, loading, sequence}: Props) => {
           );
         })}
       </View>
-      <View style={styles.noteContainer}>
+      <View
+        style={[
+          styles.noteContainer,
+          {
+            backgroundColor: isDarkMode
+              ? Colors.light.tabIconDefault
+              : Colors.secondary,
+          },
+        ]}>
         <DescriptionText
           textStyle={{
             textAlign: 'justify',
@@ -112,7 +120,7 @@ const AddCardFormBody = ({handleValues, loading, sequence}: Props) => {
           }
           onPress={handleValues}
           loading={loading}
-          color={'black'}
+          // color={isDarkMode ? Colors.primary : Colors.background}
         />
       </View>
       <BottomSpacing />
@@ -176,7 +184,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderColor: Colors.border,
-    backgroundColor: Colors.secondary,
+
     borderRadius: 5,
     marginTop: '6%',
   },

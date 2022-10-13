@@ -5,7 +5,6 @@ import React, {memo, useState} from 'react';
 import AppInputRange from '../../../common/Form/AppInputRange';
 import TitleText from '../../../common/text/TitleText';
 import Text_Size from '../../../../constants/textScaling';
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {Slider} from '@miblanchard/react-native-slider';

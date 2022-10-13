@@ -2,8 +2,8 @@
 
 import Colors from '../../../constants/Colors';
 
-var orderRange: any = [];
 export const orderAndStyleRange = (range: any, type: string) => {
+  let orderRange: any = [];
   let styledMarkedRange: any = {};
   if (type === 'RANGE') {
     const unorderedRange =
@@ -59,6 +59,7 @@ export const orderAndStyleRange = (range: any, type: string) => {
       );
   } else if (type === 'MULTI') {
     orderRange.push(range.dateString);
+
     const styledRange = orderRange?.map((_: string, i: number) => ({
       [orderRange[i]]: {
         customStyles: {
