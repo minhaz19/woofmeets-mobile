@@ -41,8 +41,6 @@ export const useSubscription = () => {
     setSequence(id);
   };
   const handleSubmit = async () => {
-    console.log('subs');
-    console.log('bas', sequence);
     if (sequence === 1) {
       setSSloading(true);
       const result: ApiResponse<any> = await methods._get(endpoint);
@@ -81,7 +79,8 @@ export const useSubscription = () => {
   };
   useEffect(() => {
     console.log('current', currentPlan, plans);
-    currentPlan === null && dispatch(getCurrentplan());
+    (currentPlan === null || currentPlan === undefined) &&
+      dispatch(getCurrentplan());
     (currentPlan === null || plans === null) && dispatch(getSubscription());
   }, []);
   return {

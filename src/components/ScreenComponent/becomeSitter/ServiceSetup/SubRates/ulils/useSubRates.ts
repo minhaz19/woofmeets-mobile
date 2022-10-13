@@ -13,9 +13,9 @@ export const useSubRates = (rateFields: any, watch: any) => {
     setShowAdditionalRates(!showAdditionalRates);
   };
   useMemo(() => {
-    const modRates = rateFields
-      .slice(0, 6)
-      ?.map((item: any, index: number) => ({
+    const modRates =
+      rateFields &&
+      rateFields.slice(0, 6)?.map((item: any, index: number) => ({
         ...item,
         percentage: 5 * index,
       }));
