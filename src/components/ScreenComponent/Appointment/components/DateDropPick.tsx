@@ -9,8 +9,9 @@ import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpac
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import TimeSlotPicker from '../../../common/TimeRangePicker';
 import AppCalendar from '../../../common/AppCalendar';
-import {useFormContext, useWatch} from 'react-hook-form';
+import {useFormContext} from 'react-hook-form';
 import ShortText from '../../../common/text/ShortText';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 interface Props {
   serviceId?: number;
   setValue: (arg: string, arg2: any) => void;
@@ -29,13 +30,16 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
     pickUpStartTime,
     pickUpEndTime,
   } = getValues();
-  console.log('data ra', proposalStartDate, proposalEndDate);
+  const {isDarkMode} = useTheme();
   return (
     <View style={[styles.container]}>
       <TitleText textStyle={styles.headerText} text={'Schedule'} />
       {(serviceId === 4 || serviceId === 1 || serviceId === 2) && (
         <AppTouchableOpacity
-          style={styles.sectionContainer}
+          style={[
+            styles.sectionContainer,
+            {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
+          ]}
           onPress={() => setVisible(!visible)}>
           <View>
             <TitleText textStyle={styles.titleText} text={'Dates'} />
@@ -56,7 +60,10 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
       <View style={styles.slotContainer}>
         <>
           <AppTouchableOpacity
-            style={styles.slot}
+            style={[
+              styles.slot,
+              {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
+            ]}
             onPress={() => setDropVisible(!dropVisible)}>
             <View>
               <TitleText textStyle={{fontWeight: 'bold'}} text={'Drop-Off'} />
@@ -86,7 +93,10 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
         </>
         <>
           <AppTouchableOpacity
-            style={styles.slot}
+            style={[
+              styles.slot,
+              {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
+            ]}
             onPress={() => setPickVisible(!pickVisible)}>
             <View>
               <TitleText textStyle={{fontWeight: 'bold'}} text={'Pick-Up'} />
@@ -141,7 +151,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: Colors.border,
+
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 8,

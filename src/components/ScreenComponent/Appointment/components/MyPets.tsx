@@ -12,6 +12,7 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
 import {useNavigation} from '@react-navigation/native';
 import {useFormContext} from 'react-hook-form';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 var petIds: any[] = [];
 const MyPets = () => {
   const dispatch = useAppDispatch();
@@ -42,6 +43,7 @@ const MyPets = () => {
     setDatas(modArray);
   }, []);
   const navigation = useNavigation<any>();
+  const {isDarkMode, colors} = useTheme();
   return (
     <>
       {allPets === null || allPets === undefined ? (
@@ -62,14 +64,26 @@ const MyPets = () => {
           <View style={styles.headerContainer}>
             <TitleText textStyle={styles.headerText} text={'Your Pets'} />
           </View>
-          <View style={styles.container}>
+          <View style={[styles.container]}>
             {newData?.map((item: any, index: number) =>
               item.new ? (
                 <AppTouchableOpacity
                   key={index}
                   onPress={() => navigation.navigate('AddPetHome', {opk: null})}
-                  style={[styles.icon]}>
-                  <item.Icon fill="black" width={20} height={20} />
+                  style={[
+                    styles.icon,
+                    {
+                      backgroundColor: isDarkMode
+                        ? Colors.lightDark
+                        : colors.borderColor,
+                      borderColor: colors.borderColor,
+                    },
+                  ]}>
+                  <item.Icon
+                    fill={colors.descriptionText}
+                    width={20}
+                    height={20}
+                  />
                 </AppTouchableOpacity>
               ) : (
                 <AppTouchableOpacity
@@ -87,7 +101,14 @@ const MyPets = () => {
                   }}
                   style={[
                     styles.pet,
-                    {borderColor: item.active ? Colors.primary : Colors.border},
+                    {
+                      borderColor: item.active
+                        ? Colors.primary
+                        : colors.borderColor,
+                      backgroundColor: isDarkMode
+                        ? Colors.lightDark
+                        : Colors.border,
+                    },
                   ]}>
                   {item.name && (
                     <TitleText text={item.name} textStyle={styles.text} />
@@ -152,7 +173,7 @@ const styles = StyleSheet.create({
     height: 'auto',
     width: SCREEN_WIDTH / 3 - 30,
     borderWidth: 1,
-    borderColor: Colors.border,
+
     backgroundColor: 'white',
     borderRadius: 4,
     marginHorizontal: 7,

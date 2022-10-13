@@ -4,6 +4,7 @@ import ProviderProfile from '../screens/Service/ProviderProfile';
 import ProviderCalendar from '../screens/Service/ProviderCalender';
 import HeaderWithBack from '../components/common/header/HeaderWithBack';
 import Colors from '../constants/Colors';
+import Appointment from '../screens/Appointment';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,20 @@ function ProviderNavigator() {
           title: '',
           header: () => (
             <HeaderWithBack navigation={navigation} title="Provider Profile" />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack.Screen
+        name="Appointment"
+        component={Appointment}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="Create Appointment"
+            />
           ),
           backgroundColor: Colors.primary,
         })}
