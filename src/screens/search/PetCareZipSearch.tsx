@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  RefreshControl,
+  RefreshControl
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Text_Size from '../../constants/textScaling';
@@ -24,10 +23,12 @@ import PetCard from '../../components/ScreenComponent/search/PetCard';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../store/store';
+import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
 import {getAllProvider} from '../../store/slices/Provider/allProvider/getAllProvider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ServiceTypesLoader from './ServiceTypesLoader';
 import {getServiceTypes} from '../../store/slices/profile/services';
+import {getAllPets} from '../../store/slices/pet/allPets/allPetsAction';
 
 const petData = [
   {
@@ -58,7 +59,7 @@ const PetCareZipSearch = (props: {
     (state: any) => state?.allPets,
   );
   // const [postCode, setPostCode] = useState<number>();
-  const [errorMessage, setErrorMessage] = useState<string | null>();
+  const [errorMessage, setErrorMessage] = useState<string>();
   const [isMyPetEnabled, setIsMyPetEnabled] = useState(false);
   const [petType, setPetType] = useState(petData);
   const [myPet, setMyPet] = useState<any[]>([]);
@@ -71,8 +72,9 @@ const PetCareZipSearch = (props: {
     service: '',
     serviceId: '',
   });
-  const dispatch = useAppDispatch();
+
   const {colors, isDarkMode} = useTheme();
+  const dispatch = useAppDispatch();
 
   // updating the state
   useEffect(() => {
@@ -86,6 +88,7 @@ const PetCareZipSearch = (props: {
   const onRefresh = () => {
     setRefreshing(true);
     dispatch(getServiceTypes());
+    dispatch(getAllPets());
     setRefreshing(false);
   };
 
@@ -126,13 +129,22 @@ const PetCareZipSearch = (props: {
     }
   };
 
+  // const handleZipCode = (code: number) => {
+  //   let reg = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+  //   setPostCode(code);
+  //   if (reg.test(code) === false) {
+  //     setErrorMessage('Zip code is not valid');
+  //   } else {
+  //     setErrorMessage(null);
+  //   }
+  // };
+
   // lat lng
   const onPressAddress = (data: any, details: any) => {
     const lat = details.geometry.location.lat;
     const lng = details.geometry.location.lng;
     setLocation({lat: lat, lng: lng});
   };
-  // const {request: getRequest, loading: getLoading} = useApi(methods._get);
 
   // submitting the data and get request
   const handleSubmit = async () => {
@@ -147,7 +159,7 @@ const PetCareZipSearch = (props: {
       formattedData = {
         service: serviceData.service,
         serviceId: serviceData.serviceId,
-        petsId: selectedMyPet,
+        petsId: selectedMyPet.toString(),
         lat: location.lat,
         lng: location.lng,
       };
@@ -155,7 +167,7 @@ const PetCareZipSearch = (props: {
       formattedData = {
         service: serviceData.service,
         serviceId: serviceData.serviceId,
-        pet_type: selectedPetType,
+        pet_type: selectedPetType.toString(),
         lat: location.lat,
         lng: location.lng,
       };
@@ -167,13 +179,54 @@ const PetCareZipSearch = (props: {
       setErrorMessage('Service must be selected');
     }
   };
-
-  const {allProvider, loading: getLoading} = useAppSelector(
-    (state: any) => state.allProvider,
-  );
   const RenderHeader = () => {
     return (
       <View>
+        {/* <TitleText text="I want" textStyle={styles.textHeader} />
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+          }}>
+          {serviceTypes &&
+            serviceTypes.map((item: any) => (
+              <ServiceCard
+                key={item.id}
+                data={item}
+                noShadow
+                onPressEvent={onPressService}
+                sequence={sequence}
+              />
+            ))}
+        </View> */}
+        {serviceTypesLoading || !serviceTypes ? (
+          <ServiceTypesLoader />
+        ) : (
+          <View>
+            <TitleText text="I want" textStyle={styles.textHeader} />
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+              }}>
+              {serviceTypes &&
+                serviceTypes.map((item: any) => (
+                  <ServiceCard
+                    key={item.id}
+                    data={item}
+                    noShadow
+                    onPressEvent={onPressService}
+                    sequence={sequence}
+                  />
+                ))}
+            </View>
+          </View>
+        )}
+        <View style={styles.textHeader}>
+          {errorMessage && <ErrorMessage error={errorMessage} />}
+        </View>
         <View style={styles.headerContainer}>
           <TitleText
             text="Looking service for my"
@@ -182,7 +235,7 @@ const PetCareZipSearch = (props: {
           {myPet && myPet.length > 0 && (
             <View style={styles.switchContainer}>
               <TitleText
-                textStyle={{...styles.petTitleText1, paddingRight: 6}}
+                textStyle={{...styles.petTitleText, paddingRight: 6}}
                 text={'My Pet'}
               />
               <SwitchView
@@ -222,33 +275,6 @@ const PetCareZipSearch = (props: {
                 />
               ))}
         </View>
-        {serviceTypesLoading || !serviceTypes ? (
-          <ServiceTypesLoader />
-        ) : (
-          <View>
-            <TitleText text="I want" textStyle={styles.textHeader} />
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-              }}>
-              {serviceTypes &&
-                serviceTypes.map((item: any) => (
-                  <ServiceCard
-                    key={item.id}
-                    data={item}
-                    noShadow
-                    onPressEvent={onPressService}
-                    sequence={sequence}
-                  />
-                ))}
-            </View>
-          </View>
-        )}
-        <View style={styles.textHeader}>
-          {errorMessage && <ErrorMessage error={errorMessage} />}
-        </View>
       </View>
     );
   };
@@ -278,42 +304,64 @@ const PetCareZipSearch = (props: {
               <View style={styles.zipContainer}>
                 <TitleText text="Near" textStyle={styles.zipText} />
                 <GooglePlacesAutocomplete
-                  placeholder="Address or Zip code"
+                  placeholder="Type a place"
                   onPress={onPressAddress}
-                  isRowScrollable={false}
-                  enablePoweredByContainer={false}
-                  query={{
-                    key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo',
-                    language: 'en',
-                  }}
+                  query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo'}}
                   fetchDetails={true}
                   onFail={error => console.log(error)}
                   onNotFound={() => console.log('no results')}
+                  keyboardShouldPersistTaps={'always'}
                   keepResultsAfterBlur={true}
-                  textInputProps={{
-                    returnKeyType: 'search',
-                    fontSize: Text_Size.Text_11,
-                    color: colors.placeholderTextColor,
-                  }}
                   styles={{
                     container: {
-                      flex: 1,
-                      borderWidth: isDarkMode ? 0 : 1,
-                      borderColor: Colors.border,
+                      flex: 0,
                     },
                     description: {
-                      color: '#000',
+                      color: colors.headerText,
                       fontSize: Text_Size.Text_11,
                     },
-                    // predefinedPlacesDescription: {
-                    //   color: '#3caf50',
-                    // },
+                    textInput: {
+                      backgroundColor: isDarkMode
+                        ? Colors.dark.background
+                        : Colors.light.background,
+                      height: 40,
+                      borderRadius: 5,
+                      paddingVertical: 5,
+                      paddingHorizontal: 10,
+                      fontSize: Text_Size.Text_0,
+                      borderColor: colors.borderColor,
+                      borderWidth: 1,
+                      flex: 1,
+                      color: colors.headerText,
+                    },
+                    predefinedPlacesDescription: {
+                      color: colors.headerText,
+                    },
+                    poweredContainer: {
+                      justifyContent: 'flex-end',
+                      alignItems: 'center',
+                      borderBottomRightRadius: 5,
+                      borderBottomLeftRadius: 5,
+                      borderColor: '#c8c7cc',
+                      borderTopWidth: 0.5,
+                      backgroundColor: isDarkMode
+                        ? Colors.dark.background
+                        : Colors.light.background,
+                    },
+                    row: {
+                      backgroundColor: isDarkMode
+                        ? Colors.dark.background
+                        : Colors.light.background,
+                      padding: 13,
+                      height: 44,
+                      flexDirection: 'row',
+                    },
                   }}
                 />
                 <View style={styles.footerContainer}>
                   <ButtonCom
                     title="Search"
-                    loading={getLoading}
+                    // loading={getLoading}
                     textAlignment={btnStyles.textAlignment}
                     containerStyle={btnStyles.containerStyleFullWidth}
                     titleStyle={btnStyles.titleStyle}
@@ -384,9 +432,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginLeft: '4%',
-    width: '90%',
-    paddingBottom: 5,
+    marginHorizontal: '4%',
+    marginTop: 10,
   },
   switchContainer: {
     flexDirection: 'row',
@@ -395,13 +442,6 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_1,
     fontWeight: '500',
     paddingBottom: 8,
-    width: '70%',
-  },
-  petTitleText1: {
-    fontSize: Text_Size.Text_1,
-    fontWeight: '500',
-    paddingBottom: 8,
-    // width: '70%',
   },
 });
 

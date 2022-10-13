@@ -1,26 +1,27 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {colors} from '../../../../constants/theme/textTheme';
 import ShortText from '../../../common/text/ShortText';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 interface Props {
   Icon: any;
-  index: number;
-  selected: number;
+  selected: string;
   onPress?: () => void;
   text: string;
+  slug: string;
 }
-const HomeType = ({Icon, text, index, onPress, selected}: Props) => {
+const HomeType = ({Icon, text, onPress, selected, slug}: Props) => {
   const {isDarkMode} = useTheme();
   return (
-    <TouchableOpacity style={styles.homeTypeContainer} onPress={onPress}>
+    <AppTouchableOpacity style={styles.homeTypeContainer} onPress={onPress}>
       <View
         style={[
           styles.container,
-          {borderColor: index === selected ? Colors.primary : Colors.border},
+          {borderColor: slug === selected ? Colors.primary : Colors.border},
         ]}>
         <Icon
           height={30}
@@ -34,7 +35,7 @@ const HomeType = ({Icon, text, index, onPress, selected}: Props) => {
           textAlign: 'center',
           marginTop: 10,
           color:
-            index === selected
+          slug === selected
               ? Colors.primary
               : isDarkMode
               ? Colors.background
@@ -42,7 +43,7 @@ const HomeType = ({Icon, text, index, onPress, selected}: Props) => {
         }}
         text={text}
       />
-    </TouchableOpacity>
+    </AppTouchableOpacity>
   );
 };
 
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 20,
-    marginVertical: 20,
+    marginBottom: 10,
   },
   container: {
     width: '100%',
