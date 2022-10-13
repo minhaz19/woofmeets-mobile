@@ -6,7 +6,6 @@ export const upcomingInboxFetch = createAsyncThunk(
   'appointment/upcomingInboxFetch',
   async ({statusId}: any, {rejectWithValue}) => {
     const response: ApiResponse<any> = await apiClient.get(`/appointment/inbox?status=${statusId}`);
-    console.log(response.data);
     if (!response.ok) {
       throw new Error(response.data.message);
     }

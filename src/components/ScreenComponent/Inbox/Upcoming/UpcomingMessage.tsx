@@ -15,7 +15,7 @@ const UpcomingMessage = () => {
   let navigation = useNavigation();
   const dispatch = useAppDispatch();
   const {upcomingAppointment, error, upcomingStatus} = useAppSelector(state => state.appointment);
-  console.log(upcomingAppointment, error, upcomingStatus);
+  // console.log(upcomingAppointment, error, upcomingStatus);
 
   useEffect(() => {
     dispatch(
