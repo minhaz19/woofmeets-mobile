@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect} from 'react';
+import {Alert} from 'react-native';
 import methods from '../../../api/methods';
 import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -51,8 +52,9 @@ export const useAppointment = () => {
       isRecivedPhotos: data.isRecivedPhotos,
     };
     console.log('boarding', payload);
-    const response = await request(endpoint, payload);
-    console.log('res', response);
+    // const response = await request(endpoint, payload);
+    Alert.alert('Appointment under maintainance');
+    // console.log('res', response);
   };
   useEffect(() => {
     providerServices === null && dispatch(getProviderServices('HFJHx6EP'));

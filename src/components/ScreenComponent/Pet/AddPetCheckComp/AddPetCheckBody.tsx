@@ -56,7 +56,11 @@ const AddPetCheckBody = ({handleSubmit, opk}: Props) => {
           />
 
           <SubmitButton
-            title={opk === null ? 'Next' : 'Update & Go next'}
+            title={
+              opk === null || opk === 'Appointment'
+                ? 'Next'
+                : 'Update & Go next'
+            }
             onPress={handleSubmit}
           />
         </View>

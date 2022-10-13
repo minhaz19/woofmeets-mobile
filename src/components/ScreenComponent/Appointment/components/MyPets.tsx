@@ -44,6 +44,7 @@ const MyPets = () => {
   }, []);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
+  console.log('g', allPets);
   return (
     <>
       {allPets === null || allPets === undefined ? (
@@ -54,7 +55,9 @@ const MyPets = () => {
             text="You havent listed any pets yet, Please add!"
           />
           <AppTouchableOpacity
-            onPress={() => navigation.navigate('AddPetHome', {opk: null})}
+            onPress={() =>
+              navigation.navigate('AddPetHome', {opk: 'Appointment'})
+            }
             style={[styles.newPet]}>
             <Plus fill="black" width={20} height={20} />
           </AppTouchableOpacity>
@@ -69,7 +72,9 @@ const MyPets = () => {
               item.new ? (
                 <AppTouchableOpacity
                   key={index}
-                  onPress={() => navigation.navigate('AddPetHome', {opk: null})}
+                  onPress={() =>
+                    navigation.navigate('AddPetHome', {opk: 'Appointment'})
+                  }
                   style={[
                     styles.icon,
                     {
