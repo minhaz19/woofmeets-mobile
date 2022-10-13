@@ -21,6 +21,7 @@ interface Props {
     description: string;
     boardingTime: string;
     status: string;
+    pickUpStartTime?: string;
   };
   buttonStyles?: string;
   handlePress?: () => void;
@@ -60,7 +61,7 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
           </View>
           <View style={styles.timeContainer}>
             <DescriptionText
-              text="9:00 AM"
+              text={item.pickUpStartTime}
               textStyle={styles.textTimeDescription}
             />
 
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   timeContainer: {
-    width: '25%',
+    // width: '25%',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
   },
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 6,
     paddingHorizontal: 10,
+    marginTop: 6,
   },
   buttonContainer: {
     alignItems: 'flex-end',

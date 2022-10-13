@@ -1,6 +1,6 @@
 import moment from 'moment';
-import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, TouchableOpacity, FlatList, Platform, Alert} from 'react-native';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -9,6 +9,10 @@ import DescriptionText from '../../components/common/text/DescriptionText';
 import HeaderText from '../../components/common/text/HeaderText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import MiddleModal from '../../components/UI/modal/MiddleModal';
+import messaging from '@react-native-firebase/messaging';
+import baseUrl from '../../utils/helpers/httpRequest';
+import { ApiResponse } from 'apisauce';
+import apiClient from '../../api/client';
 
 const Notifications = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -45,6 +49,72 @@ const Notifications = () => {
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     },
   ];
+
+  const NotificationListner = () => {
+    messaging().onNotificationOpenedApp(remoteMessage => {});
+
+    // Check whether an initial notification is available
+    messaging()
+      .getInitialNotification()
+      .then((remoteMessage: any) => {
+        if (remoteMessage) {}
+        // setLoading(false);
+      });
+    messaging().onMessage(async remoteMessage => {});
+  };
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {}
+  }
+
+  const tokenManagement = async () => {
+    if (
+      Platform.OS === 'ios' &&
+      !messaging().isDeviceRegisteredForRemoteMessages
+    ) {
+    }
+
+    try {
+      messaging()
+        .getToken()
+        .then(async (token: any) => {
+          // const response: ApiResponse<any> = await apiClient.get('/fcm-tokens', {
+          //   token: token,
+          // });
+          console.log(token);
+        });
+    } catch (error) {
+      // console.log('myMethod: ', 'Error after getToken: ', error);
+    }
+  };
+
+  useEffect(() => {
+    // Get the device token
+    requestUserPermission();
+    tokenManagement();
+
+    NotificationListner();
+    // Listen to whether the token changes
+    return messaging().onTokenRefresh(token => {});
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert(
+        'A new notification arrived!',
+        remoteMessage.notification.body,
+        remoteMessage.notification.description,
+      );
+    });
+
+    return unsubscribe;
+  });
+
 
   if (!notifi) {
     return (

@@ -6,7 +6,6 @@ import {useAppDispatch} from '../../../../store/store';
 
 const getLiveLocation = () => {
   const dispatch = useAppDispatch();
-  // const [location, setLocation] = useState()
   const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
       async position => {
@@ -20,13 +19,11 @@ const getLiveLocation = () => {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           };
-
-          // setLocation(cords);
           return cords;
         }
       },
       error => {
-        console.log(error.message);
+        // console.log(error.message);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );

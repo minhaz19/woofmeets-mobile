@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "313710503954",
+    "project_id": "burnished-form-358420",
+    "storage_bucket": "burnished-form-358420.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313710503954:android:7c4074c29e5fcb60c810cb",
+        "android_client_info": {
+          "package_name": "com.woofmeets.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313710503954-6lkjoaiivc91dlbl3nbp9v440qr9qdp2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3oKYPsv4C3I-nuaukfnQkD18NGSKYEh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313710503954-6lkjoaiivc91dlbl3nbp9v440qr9qdp2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "313710503954-3n02f9k6848u5f2lkoaefm5ii33pfivu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.woofmeets.customer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

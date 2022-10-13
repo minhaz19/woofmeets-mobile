@@ -43,10 +43,6 @@ const NavigateMap = () => {
     getLiveLocation();
   }, []);
 
-  useEffect(() => {
-    console.log(locationStatus, curLoc, coordinate);
-  }, [locationStatus])
-
   const getLiveLocation = async () => {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
