@@ -64,7 +64,6 @@ const ServiceNavigator = () => {
         options={{headerShown: false}}
       />
 
-   
       <Stack1.Screen
         name="AllProvider"
         component={AllProvider}

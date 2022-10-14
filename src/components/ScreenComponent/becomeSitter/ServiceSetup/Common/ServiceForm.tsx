@@ -102,12 +102,12 @@ const ServiceForm = ({
                 onBlur={onBlur}
                 value={
                   name === 'baserate' && value !== null
-                    ? value.toString()
+                    ? value?.toString()
                     : updateRates === false && baseRateWatch !== undefined
                     ? ((baseRateWatch! / 100) * percentage)
                         .toFixed(2)
                         .toString()
-                    : value !== null && value.toString()
+                    : value !== null && value?.toString()
                 }
                 error={error?.message}
                 textInputStyle={textInputStyle}

@@ -91,6 +91,7 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
               onPress={() => {
                 setSelectedService(item);
                 setValue(name, item.id);
+                setValue('serviceTypeId', item.serviceTypeId);
                 setServiceId(item.serviceTypeId);
                 setVisible(false);
               }}>

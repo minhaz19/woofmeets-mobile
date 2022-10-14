@@ -5,10 +5,19 @@ import TimeMultiSlotPicker from '../../../common/TimeMultiSlotPicker';
 import DescriptionText from '../../../common/text/DescriptionText';
 import SwitchView from '../../../common/switch/SwitchView';
 import Text_Size from '../../../../constants/textScaling';
-import {useWatch} from 'react-hook-form';
+import {useFormContext, useWatch} from 'react-hook-form';
 let modData: any = [];
 const DayTimeSlot = () => {
-  const {recurringSelectedDay, isRecurring, repeatDate, multiDate} = useWatch();
+  const {setValue} = useFormContext();
+  // const {DIVSpecificDate} = getValues();
+  const {
+    recurringSelectedDay,
+    specificModDates,
+    recurringModDates,
+    isRecurring,
+    repeatDate,
+    multiDate,
+  } = useWatch();
   const [newData, setDatas] = useState(modData);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
@@ -16,19 +25,32 @@ const DayTimeSlot = () => {
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
+  const getRecurringDays = (rd: any, rsd: any) => {
+    const output = rd?.filter((obj: any) => {
+      return rsd.indexOf(obj.day) !== -1;
+    });
+
+    const recurring = output?.map((item: any, index: number) => ({
+      id: index + 1,
+      date: item.day,
+      active: true,
+    }));
+    return recurring;
+  };
   useMemo(() => {
     if (isRecurring) {
-      const output = repeatDate?.filter((obj: any) => {
-        return recurringSelectedDay.indexOf(obj.day) !== -1;
-      });
+      // const output = repeatDate?.filter((obj: any) => {
+      //   return recurringSelectedDay.indexOf(obj.day) !== -1;
+      // });
 
-      const recurring = output?.map((item: any, index: number) => ({
-        id: index + 1,
-        date: item.day,
-        active: true,
-      }));
+      // const recurring = output?.map((item: any, index: number) => ({
+      //   id: index + 1,
+      //   date: item.day,
+      //   active: true,
+      // }));
+
+      const recurring = getRecurringDays(repeatDate, recurringSelectedDay);
       setDatas(recurring);
-    
     } else {
       const multi = multiDate?.map((item: any, index: number) => ({
         id: index + 1,
@@ -37,7 +59,66 @@ const DayTimeSlot = () => {
       }));
       setDatas(multi);
     }
-  }, [isRecurring, multiDate, repeatDate, recurringSelectedDay]);
+  }, [isRecurring, repeatDate, recurringSelectedDay, multiDate]);
+  useMemo(() => {
+    if (isRecurring) {
+      console.log('rr', isRecurring, recurringModDates);
+      const unMatched = newData?.filter((item: {date: string}) => {
+        return !recurringModDates?.some(
+          (it: {date: string}) => item.date === it.date,
+        );
+      });
+      if (recurringModDates?.length !== 0) {
+        const sameData = unMatched?.map((item: any) => ({
+          date: item.date,
+          visitTime: recurringModDates ? recurringModDates[0].visitTime : [],
+        }));
+        sameData?.length > 0 &&
+          recurringModDates?.length > 0 &&
+          setValue('recurringModDates', [...recurringModDates, ...sameData]);
+        console.log('recurringModDates', [...recurringModDates, ...sameData]);
+      }
+    } else {
+      const unMatched = multiDate?.filter((item: string) => {
+        return !specificModDates?.some(
+          (it: {date: string}) => item === it.date,
+        );
+      });
+      console.log('un', unMatched);
+      if (specificModDates && specificModDates?.length > 0) {
+        const sameData = unMatched?.map((item: any) => ({
+          date: item,
+          visitTime: specificModDates ? specificModDates[0].visitTime : [],
+        }));
+        sameData?.length > 0 &&
+          specificModDates?.length > 0 &&
+          setValue('specificModDates', [...specificModDates, ...sameData]);
+        console.log('specificModDates', [...specificModDates, ...sameData]);
+      }
+    }
+
+    // const unMatched = multiDate?.filter((item: string) => {
+    //   return !specificModDates?.some((it: {date: string}) => item === it.date);
+    // });
+    // console.log('un', unMatched);
+    // if (specificModDates && specificModDates?.length > 0) {
+    //   const sameData = unMatched?.map((item: any) => ({
+    //     date: item,
+    //     visitTime: specificModDates ? specificModDates[0].visitTime : [],
+    //   }));
+    //   sameData?.length > 0 &&
+    //     specificModDates?.length > 0 &&
+    //     setValue('specificModDates', [...specificModDates, ...sameData]);
+    //   console.log('specificModDates', [...specificModDates, ...sameData]);
+    // }
+  }, [
+    isRecurring,
+    multiDate,
+    newData,
+    recurringModDates,
+    setValue,
+    specificModDates,
+  ]);
   return (
     <View>
       {newData?.map((item: any, index: number) => (
@@ -51,7 +132,7 @@ const DayTimeSlot = () => {
               <TitleText textStyle={styles.day} text={item.date} />
               {/* <TitleText textStyle={styles.day} text={item.day} /> */}
               <DescriptionText text={'Add one or more walk times'} />
-              <TimeMultiSlotPicker date={item.date} />
+              <TimeMultiSlotPicker date={item.date} isRecurring={isRecurring} />
             </View>
           ) : (
             <View style={styles.section}>
@@ -68,7 +149,12 @@ const DayTimeSlot = () => {
                   }}
                 />
               </View>
-              {!item.active && <TimeMultiSlotPicker date={item.date} />}
+              {!item.active && (
+                <TimeMultiSlotPicker
+                  date={item.date}
+                  isRecurring={isRecurring}
+                />
+              )}
             </View>
           )}
         </View>

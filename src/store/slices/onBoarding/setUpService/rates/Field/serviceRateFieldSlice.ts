@@ -11,8 +11,7 @@ const initialState: any = {
 const serviceRateFieldSlice = createSlice({
   name: 'serviceRates',
   initialState,
-  reducers: {
-  },
+  reducers: {},
 
   extraReducers(builder) {
     builder
@@ -23,9 +22,10 @@ const serviceRateFieldSlice = createSlice({
       .addCase(getServiceRateFields.fulfilled, (state, {payload}) => {
         state.loading = false;
         state.serviceData = payload.data;
-        state.serviceRateFields = payload.data?.map(
-          (item: any) => item.serviceRateType,
-        );
+        state.serviceRateFields = payload.data?.map((item: any) => ({
+          ...item.serviceRateType,
+          rateId: item.id,
+        }));
       })
       .addCase(getServiceRateFields.rejected, (state, {payload}) => {
         state.loading = false;

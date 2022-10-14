@@ -85,7 +85,7 @@ const planCheckoutInit = {
 const appointmentInit = {
   providerServiceId: null,
   serviceTypeId: null,
-  visitLength: 0,
+  visitLength: 30,
   isRecurring: false,
   dropOffStartTime: '',
   dropOffEndTime: '',
@@ -97,8 +97,10 @@ const appointmentInit = {
   proposalStartDate: '',
   proposalEndDate: '',
   proposalOtherDate: [],
-  pets: [],
+  petsId: [],
   firstMessage: '',
+  recurringModDates: [],
+  specificModDates: [],
   isRecivedPhotos: false,
 };
 export {

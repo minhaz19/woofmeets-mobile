@@ -230,7 +230,7 @@ const appointmentValidationSchema = Yup.object().shape({
   dropOffEndTime: Yup.string(),
   pickUpStartTime: Yup.string(),
   pickUpEndTime: Yup.string(),
-  pets: Yup.array(),
+  petsId: Yup.array(),
   firstMessage: Yup.string(),
   isRecivedPhotos: Yup.boolean(),
   recurringStartDate: Yup.string(),
@@ -239,6 +239,8 @@ const appointmentValidationSchema = Yup.object().shape({
   proposalStartDate: Yup.string(),
   proposalEndDate: Yup.string(),
   proposalOtherDate: Yup.array(),
+  recurringModDates: Yup.array(),
+  specificModDates: Yup.array(),
 });
 
 export {

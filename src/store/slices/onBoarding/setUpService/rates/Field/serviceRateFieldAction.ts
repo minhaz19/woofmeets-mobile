@@ -19,6 +19,7 @@ export const getServiceRateFields = createAsyncThunk(
         }
         throw new Error(response.data.message);
       }
+      console.log('resu', response.data);
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {

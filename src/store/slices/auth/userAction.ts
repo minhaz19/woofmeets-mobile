@@ -94,7 +94,7 @@ export const providerAuth = createAsyncThunk(
       if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
       }
-
+      console.log('facebook', response);
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {

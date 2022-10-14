@@ -43,6 +43,7 @@ const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
     setValue('repeatDate', next6Days);
     setStartDate(data.dateString);
   };
+
   return (
     <>
       <View
@@ -74,7 +75,9 @@ const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
               <DescriptionText
                 text={
                   !isRecurring
-                    ? multiDate?.join(' ')
+                    ? multiDate !== ''
+                      ? multiDate?.join(' ')
+                      : 'Tap to add dates'
                     : startDate !== '' && isRecurring === true
                     ? startDate
                     : 'Tap to add dates'

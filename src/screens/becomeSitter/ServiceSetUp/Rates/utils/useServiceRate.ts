@@ -26,10 +26,10 @@ export const useServiceRates = (serviceSetup: any) => {
   };
   const {loading: btnLoading, request} = useApi(addRateApi);
   const rateFieldId = serviceRateFields?.map(
-    (item: {slug: string; id: number}) => {
+    (item: {slug: string; rateId: number}) => {
       return {
         name: item.slug.replace('-', '').replace('-', ''),
-        postId: item.id,
+        postId: item.rateId,
       };
     },
   );
@@ -39,14 +39,14 @@ export const useServiceRates = (serviceSetup: any) => {
       (item: {id: number}, index: number) =>
         (rateFieldId[index].putId = item.id),
     );
+  console.log('get', serviceRateFields, fieldValue);
   const handleRates = async (e: any) => {
     let payload: any = {
       serviceRate: [],
     };
     rateFieldId &&
-      rateFieldId
-        .slice(0, 6)
-        .forEach((element: {postId: number; name: string; putId: number}) => {
+      rateFieldId.forEach(
+        (element: {postId: number; name: string; putId: number}) => {
           Object.keys(e).map(item => {
             if (item === element.name) {
               payload.serviceRate.push({
@@ -55,12 +55,14 @@ export const useServiceRates = (serviceSetup: any) => {
                   fieldValue === null || fieldValue === undefined
                     ? element.postId
                     : element.putId,
-                amount: e[element.name],
+                amount: Number(e[element.name]),
               });
             }
           });
-        });
+        },
+      );
     const result = await request(payload);
+    console.log('res', result, payload);
     if (result.ok) {
       dispatch(setBoardingSelection({pass: 0}));
       dispatch(getRateFieldValue(providerServicesId));
