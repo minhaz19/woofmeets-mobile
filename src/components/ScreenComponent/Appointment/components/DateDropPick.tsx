@@ -22,6 +22,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
   const {getValues} = useFormContext();
+  const {isRecurring} = getValues();
   const {
     proposalStartDate,
     proposalEndDate,
@@ -31,6 +32,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
     pickUpEndTime,
   } = getValues();
   const {isDarkMode} = useTheme();
+
   return (
     <View style={[styles.container]}>
       <TitleText textStyle={styles.headerText} text={'Schedule'} />
@@ -66,7 +68,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
             ]}
             onPress={() => setDropVisible(!dropVisible)}>
             <View>
-              <TitleText textStyle={{fontWeight: 'bold'}} text={'Drop-Off'} />
+              <TitleText textStyle={styles.done} text={'Drop-Off'} />
               <ShortText
                 textStyle={{}}
                 text={
@@ -99,7 +101,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
             ]}
             onPress={() => setPickVisible(!pickVisible)}>
             <View>
-              <TitleText textStyle={{fontWeight: 'bold'}} text={'Pick-Up'} />
+              <TitleText textStyle={styles.done} text={'Pick-Up'} />
               <ShortText
                 textStyle={{}}
                 text={
@@ -132,7 +134,16 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
           onPress={() => setVisible(!visible)}
         />
         <View style={styles.pickerContainer}>
-          <AppCalendar selectType="RANGE" setValue={setValue} />
+          <View style={styles.calHeader}>
+            <TitleText textStyle={styles.title} text={'Select date'} />
+            <AppTouchableOpacity onPress={() => setVisible(false)}>
+              <TitleText textStyle={styles.calDone} text={'Done'} />
+            </AppTouchableOpacity>
+          </View>
+          <AppCalendar
+            selectType={serviceId === 4 && isRecurring ? 'SINGLE' : 'RANGE'}
+            setValue={setValue}
+          />
         </View>
       </Modal>
     </View>
@@ -187,10 +198,25 @@ const styles = StyleSheet.create({
     height: '80%',
     width: '100%',
     backgroundColor: 'white',
-    flexDirection: 'row',
   },
   bgContainer: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
+  calHeader: {
+    marginVertical: 20,
+    marginHorizontal: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: Text_Size.Text_3,
+  },
+  calDone: {
+    fontWeight: 'bold',
+    fontSize: Text_Size.Text_2,
+  },
+  done: {fontWeight: 'bold'},
 });

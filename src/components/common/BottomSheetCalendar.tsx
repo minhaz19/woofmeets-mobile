@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import AppTouchableOpacity from './AppClickEvents/AppTouchableOpacity';
@@ -46,20 +45,7 @@ const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
 
   return (
     <>
-      <View
-        style={[
-          styles.container,
-          {
-            backgroundColor: visible ? 'rgba(0,0,0,0.5)' : '#f1f1f1',
-            zIndex: 99999,
-            position: visible ? 'absolute' : 'relative',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            borderRadius: 10,
-          },
-        ]}>
+      <View style={[styles.container]}>
         {!visible && (
           <AppTouchableOpacity
             style={[
@@ -70,12 +56,12 @@ const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
               },
             ]}
             onPress={() => setVisible(!visible)}>
-            <View style={{width: '85%'}}>
+            <View style={styles.textWidth}>
               <TitleText textStyle={styles.titleText} text={title} />
               <DescriptionText
                 text={
                   !isRecurring
-                    ? multiDate !== ''
+                    ? multiDate.length !== 0
                       ? multiDate?.join(' ')
                       : 'Tap to add dates'
                     : startDate !== '' && isRecurring === true
@@ -90,7 +76,7 @@ const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
             </View>
           </AppTouchableOpacity>
         )}
-        <Modal animated transparent visible={visible} animationType="slide">
+        <Modal animated transparent visible={visible} animationType="fade">
           <Pressable
             style={styles.bgContainer}
             onPress={() => setVisible(!visible)}
@@ -101,18 +87,14 @@ const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
               styles.pickerContainer,
               {
                 backgroundColor: colors.backgroundColor,
-                borderTopWidth: 2,
-                borderTopColor: Colors.primary,
               },
             ]}>
-            <TitleText
-              textStyle={{
-                fontWeight: 'bold',
-                fontSize: Text_Size.Text_1,
-                margin: 20,
-              }}
-              text={'Select date range 🗓'}
-            />
+            <View style={styles.calHeader}>
+              <TitleText textStyle={styles.calTitle} text={'Select date'} />
+              <AppTouchableOpacity onPress={() => setVisible(false)}>
+                <TitleText textStyle={styles.done} text={'Done'} />
+              </AppTouchableOpacity>
+            </View>
             <AppCalendar
               selectType={isRecurring ? 'SINGLE' : 'MULTI'}
               handlePress={handlePress}
@@ -154,12 +136,15 @@ const styles = StyleSheet.create({
   },
   bgContainer: {
     flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   pickerContainer: {
     height: '80%',
     width: '100%',
     backgroundColor: 'white',
     flexDirection: 'column',
+    borderTopWidth: 2,
+    borderTopColor: Colors.primary,
   },
   halfCont: {width: '50%'},
   label: {
@@ -171,4 +156,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
+  calHeader: {
+    marginTop: 20,
+    marginHorizontal: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  calTitle: {
+    fontWeight: 'bold',
+    fontSize: Text_Size.Text_3,
+  },
+  done: {
+    fontWeight: 'bold',
+    fontSize: Text_Size.Text_2,
+  },
+  textWidth: {width: '85%'},
 });

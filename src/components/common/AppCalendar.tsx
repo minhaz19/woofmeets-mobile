@@ -9,6 +9,7 @@ interface Props {
   selectType: string;
   handlePress?: (arg: any) => void;
   setValue: (arg: string, arg2: any) => void;
+  name?: string;
 }
 const AppCalendar = ({
   range = 12,
@@ -24,9 +25,6 @@ const AppCalendar = ({
 
   return (
     <View style={styles.contentContainer}>
-      {/* <AppTouchableOpacity onPress={() => reset()} style={styles.reset}>
-        <Text style={[styles.month, styles.textStyle]}>Reset</Text>
-      </AppTouchableOpacity> */}
       <CalendarList
         current={new Date().toString()}
         pastScrollRange={0}
@@ -37,6 +35,7 @@ const AppCalendar = ({
         }}
         markingType={'custom'}
         markedDates={{
+          // ...preMarked,
           ..._markedStyle,
           [singleSelect]: {
             customStyles: {

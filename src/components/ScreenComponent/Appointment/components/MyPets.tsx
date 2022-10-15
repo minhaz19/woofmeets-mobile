@@ -13,11 +13,10 @@ import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
 import {useNavigation} from '@react-navigation/native';
 import {useFormContext} from 'react-hook-form';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-var petIds: any[] = [];
+let petsId: any = [];
 const MyPets = () => {
   const dispatch = useAppDispatch();
   const {pets: allPets} = useAppSelector(state => state.allPets);
-
   const [newData, setDatas] = useState<any>([]);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
@@ -94,14 +93,14 @@ const MyPets = () => {
                   key={index}
                   onPress={() => {
                     handleMultipleCheck(item.id);
-                    const matchIndex = petIds.indexOf(item.id);
+                    const matchIndex = petsId.indexOf(item.id);
                     if (matchIndex === -1) {
-                      petIds.push(...petIds, item.id);
-                      setValue('petsId', petIds);
+                      petsId.push(item.id);
                     } else {
-                      petIds.splice(matchIndex, 1);
-                      setValue('petsId', petIds);
+                      petsId.splice(matchIndex, 1);
                     }
+
+                    setValue('petsId', petsId);
                   }}
                   style={[
                     styles.pet,

@@ -241,6 +241,9 @@ const appointmentValidationSchema = Yup.object().shape({
   proposalOtherDate: Yup.array(),
   recurringModDates: Yup.array(),
   specificModDates: Yup.array(),
+  multiDate: Yup.array(),
+  selectedRange: Yup.array(),
+  selectDate: Yup.array(),
 });
 
 export {

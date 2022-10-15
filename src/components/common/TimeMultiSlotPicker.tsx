@@ -44,11 +44,10 @@ const TimeMultiSlotPicker = (date: any) => {
     setDatas(newArray);
   };
   const {isRecurring: RR} = useWatch();
-  console.log('iiii', RR);
   useMemo(() => {
+    console.log('rr', RR);
     Dates = [];
   }, [RR]);
-  console.log('rr', Dates);
   return (
     <View style={styles.container}>
       <TitleText textStyle={{}} text={''} />

@@ -101,6 +101,9 @@ const appointmentInit = {
   firstMessage: '',
   recurringModDates: [],
   specificModDates: [],
+  multiDate: [],
+  selectedRange: [],
+  selectDate: [],
   isRecivedPhotos: false,
 };
 export {

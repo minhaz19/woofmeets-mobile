@@ -2,7 +2,11 @@
 
 import Colors from '../../../constants/Colors';
 
-export const orderAndStyleRange = (range: any, type: string) => {
+const orderMultiDates: any = [];
+export const orderAndStyleRange = (
+  range: any,
+  type: string,
+) => {
   let orderRange: any = [];
   let styledMarkedRange: any = {};
   if (type === 'RANGE') {
@@ -58,10 +62,15 @@ export const orderAndStyleRange = (range: any, type: string) => {
           (styledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
       );
   } else if (type === 'MULTI') {
-    orderRange.push(range.dateString);
+    const matchIndex = orderMultiDates?.indexOf(range.dateString);
+    if (matchIndex === -1) {
+      orderMultiDates.push(range.dateString);
+    } else {
+      orderMultiDates.splice(matchIndex, 1);
+    }
 
-    const styledRange = orderRange?.map((_: string, i: number) => ({
-      [orderRange[i]]: {
+    const styledRange = orderMultiDates?.map((_: string, i: number) => ({
+      [orderMultiDates[i]]: {
         customStyles: {
           container: {
             backgroundColor: Colors.primary,
@@ -83,5 +92,5 @@ export const orderAndStyleRange = (range: any, type: string) => {
           (styledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
       );
   }
-  return {styledMarkedRange, orderRange};
+  return {styledMarkedRange, orderRange, orderMultiDates};
 };
