@@ -30,6 +30,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
     dropOffEndTime,
     pickUpStartTime,
     pickUpEndTime,
+    recurringStartDate,
   } = getValues();
   const {isDarkMode} = useTheme();
 
@@ -47,7 +48,9 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
             <TitleText textStyle={styles.titleText} text={'Dates'} />
             <DescriptionText
               text={
-                proposalStartDate !== ''
+                isRecurring && recurringStartDate !== ''
+                  ? recurringStartDate
+                  : proposalStartDate !== ''
                   ? `( From: ${proposalStartDate} To: ${proposalEndDate})`
                   : 'Tap to add dates'
               }
@@ -141,7 +144,13 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
             </AppTouchableOpacity>
           </View>
           <AppCalendar
-            selectType={serviceId === 4 && isRecurring ? 'SINGLE' : 'RANGE'}
+            selectType={
+              serviceId === 4 && isRecurring
+                ? 'SINGLE'
+                : serviceId === 4 && !isRecurring
+                ? 'MULTI'
+                : 'RANGE'
+            }
             setValue={setValue}
           />
         </View>

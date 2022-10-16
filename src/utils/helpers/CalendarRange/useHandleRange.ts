@@ -22,7 +22,6 @@ export const useHandleRange = (
   const [multiDate, setMultiDate] = useState<any>([]);
   const {getValues} = useFormContext();
   const {selectedDate, selectedRange, multiDate: selectMultiDate} = getValues();
-  const [testOrderRange, setOrderRange] = useState([]);
   const handleDayPress = (date: any) => {
     if (type === 'SINGLE') {
       setSingleSelect(date.dateString);

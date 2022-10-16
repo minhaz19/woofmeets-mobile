@@ -276,11 +276,8 @@ function BottomTabNavigator() {
         />
       </Tab.Navigator>
     );
-  }
-  else {
-    return (
-      <View></View>
-    )  
+  } else {
+    return <View></View>;
   }
 }
 

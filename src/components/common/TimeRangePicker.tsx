@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Modal, Platform, Pressable, StyleSheet, View} from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import TitleText from './text/TitleText';
 import Text_Size from '../../constants/textScaling';
@@ -53,7 +53,7 @@ const TimeSlotPicker = ({
   const [toTime, setToTime] = useState<string>('');
   const {setValue} = useFormContext();
   const {colors, isDarkMode} = useTheme();
-  useMemo(() => {
+  useEffect(() => {
     setValue(startName, fromTime);
     setValue(endName, toTime);
   }, [endName, fromTime, setValue, startName, toTime]);
