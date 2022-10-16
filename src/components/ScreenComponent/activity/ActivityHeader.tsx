@@ -13,11 +13,11 @@ import {useAppSelector} from '../../../store/store';
 
 const ActivityHeader = (props: {
   setIsDetailsModal: (arg0: boolean) => void;
+  opk: string;
 }) => {
-  let navigation = useNavigation();
+  let navigation = useNavigation<any>();
   const {colors} = useTheme();
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  console.log('pr', proposedServiceInfo);
   return (
     <View style={[styles.container, {borderColor: colors.borderColor}]}>
       <View style={styles.containerInner}>
@@ -39,11 +39,19 @@ const ActivityHeader = (props: {
               <HeaderText text={proposedServiceInfo?.providerName} />
               <DescriptionText
                 text={
-                  proposedServiceInfo?.serviceName +
-                  ' on ' +
-                  proposedServiceInfo?.proposalStartDate +
-                  '-' +
-                  proposedServiceInfo?.proposalEndDate
+                  proposedServiceInfo?.serviceTypeId === 1 ||
+                  proposedServiceInfo?.serviceTypeId === 2
+                    ? proposedServiceInfo?.serviceName +
+                      ' on ' +
+                      proposedServiceInfo?.proposalStartDate +
+                      '-' +
+                      proposedServiceInfo?.proposalEndDate
+                    : proposedServiceInfo?.serviceTypeId === 3 ||
+                      proposedServiceInfo?.serviceTypeId === 5
+                    ? proposedServiceInfo?.serviceName
+                    : proposedServiceInfo?.serviceTypeId === 4
+                    ? proposedServiceInfo?.serviceName
+                    : ''
                 }
               />
             </View>
@@ -66,7 +74,10 @@ const ActivityHeader = (props: {
             />
           </TouchableOpacity>
           <View style={styles.divider} />
-          <TouchableOpacity onPress={() => navigation.navigate('EditDetails')}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('EditDetails', {appointmentOpk: props.opk})
+            }>
             <TitleText
               text="Modify"
               textStyle={{...styles.textStyle, color: Colors.light.background}}

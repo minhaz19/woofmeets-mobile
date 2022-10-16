@@ -42,11 +42,7 @@ export const useAppointment = () => {
     if (isRecurring && serviceTypeId === 4 && recurringStartDate === '') {
       console.log('heere1');
       Alert.alert('You have to select recurring start date');
-    } else if (
-      serviceTypeId === 4 &&
-      !isRecurring &&
-      (proposalStartDate === '' || proposalEndDate === '')
-    ) {
+    } else if (serviceTypeId === 4 && !isRecurring && multiDate.length === 0) {
       console.log('heere2');
       Alert.alert('You must select schedule dates');
     } else if (
@@ -121,7 +117,7 @@ export const useAppointment = () => {
         appointmentserviceType:
           serviceTypeId === 3 ? 'VISIT' : serviceTypeId === 5 ? 'WALK' : 'NONE',
         proposalOtherDate:
-          serviceTypeId === 3 || serviceTypeId === 5
+          serviceTypeId === 3 || serviceTypeId === 5 || serviceTypeId === 4
             ? isRecurring
               ? recurringModDates
               : specificModDates

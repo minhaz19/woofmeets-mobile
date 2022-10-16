@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import SubmitButton from '../../common/Form/SubmitButton';
 import ServicePicker from './components/ServicePicker';
@@ -24,57 +24,47 @@ const AppointmentBody = ({handleSubmit, loading}: Props) => {
   } = useFormContext();
   const {isRecurring} = watch();
   return (
-    <FlatList
-      data={[]}
-      renderItem={null}
+    <ScrollView
       contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-      ListEmptyComponent={
+      showsVerticalScrollIndicator={false}>
+      <ServicePicker
+        name="providerServiceId"
+        setValue={setValue}
+        setServiceId={setServiceId}
+      />
+      {(serviceId === 1 || serviceId === 2) && (
         <>
-          <ServicePicker
-            name="providerServiceId"
-            setValue={setValue}
-            setServiceId={setServiceId}
-          />
-          {(serviceId === 1 || serviceId === 2) && (
-            <>
-              <DateDropPick serviceId={serviceId} setValue={setValue} />
-            </>
-          )}
-          {(serviceId === 3 || serviceId === 4 || serviceId === 5) && (
-            <>
-              <VisitScheduleTab serviceId={serviceId} />
-              {serviceId !== 4 && (
-                <BottomSheetCalendar
-                  title={isRecurring ? 'Start Date' : 'Dates'}
-                  setValue={setValue}
-                  isRecurring={isRecurring}
-                />
-              )}
-            </>
-          )}
-          <View style={styles.zIndex}>
-            {serviceId === 4 && (
-              <DateDropPick serviceId={serviceId} setValue={setValue} />
-            )}
-            {(serviceId === 3 || serviceId === 5) && <DayTimeSlot />}
-            <MyPets />
-            <MessageCheck
-              errors={errors}
-              control={control}
-              setValue={setValue}
-            />
-            <SubmitButton
-              title="Send Proposal"
-              onPress={handleSubmit}
-              loading={loading}
-            />
-            <BottomSpacing />
-            <BottomSpacing />
-          </View>
+          <DateDropPick serviceId={serviceId} setValue={setValue} />
         </>
-      }
-    />
+      )}
+      {(serviceId === 3 || serviceId === 4 || serviceId === 5) && (
+        <>
+          <VisitScheduleTab serviceId={serviceId} />
+          {serviceId !== 4 && (
+            <BottomSheetCalendar
+              title={isRecurring ? 'Start Date' : 'Dates'}
+              setValue={setValue}
+              isRecurring={isRecurring}
+            />
+          )}
+        </>
+      )}
+      <View style={styles.zIndex}>
+        {serviceId === 4 && (
+          <DateDropPick serviceId={serviceId} setValue={setValue} />
+        )}
+        {(serviceId === 3 || serviceId === 5) && <DayTimeSlot />}
+        <MyPets />
+        <MessageCheck errors={errors} control={control} setValue={setValue} />
+        <SubmitButton
+          title="Send Proposal"
+          onPress={handleSubmit}
+          loading={loading}
+        />
+        <BottomSpacing />
+        <BottomSpacing />
+      </View>
+    </ScrollView>
   );
 };
 
@@ -86,3 +76,10 @@ const styles = StyleSheet.create({
   },
   zIndex: {zIndex: -1},
 });
+// <FlatList
+//   data={[]}
+//   renderItem={null}
+//   contentContainerStyle={styles.container}
+//   showsVerticalScrollIndicator={false}
+//   ListEmptyComponent={  //   }
+// />

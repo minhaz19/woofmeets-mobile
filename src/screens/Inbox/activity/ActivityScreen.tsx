@@ -41,7 +41,7 @@ const ActivityScreen = (props: {
   const [paddingHeight, setPaddingHeight] = useState(0);
   const scrollViewRef = useRef<any>();
   const dispatch = useAppDispatch();
-  const {proposal, loading} = useAppSelector(state => state.proposal);
+  const {loading} = useAppSelector(state => state.proposal);
   const {appointmentOpk} = props.route.params;
   const sendMsg = async () => {};
 
@@ -69,7 +69,7 @@ const ActivityScreen = (props: {
 
   const {colors} = useTheme();
   const [isDetailsModal, setIsDetailsModal] = useState(false);
-  console.log('nav', proposal);
+  console.log('nav', props.route);
   return (
     <>
       {loading && <AppActivityIndicator visible={true} />}
@@ -82,7 +82,10 @@ const ActivityScreen = (props: {
               {backgroundColor: colors.backgroundColor},
             ]}>
             <>
-              <ActivityHeader setIsDetailsModal={setIsDetailsModal} />
+              <ActivityHeader
+                setIsDetailsModal={setIsDetailsModal}
+                opk={appointmentOpk}
+              />
               <BottomHalfModal
                 isModalVisible={isDetailsModal}
                 setIsModalVisible={setIsDetailsModal}>

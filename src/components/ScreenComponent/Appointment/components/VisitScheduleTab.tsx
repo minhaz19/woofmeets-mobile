@@ -4,7 +4,6 @@ import AppHalfTabs from '../../../common/AppHalfTabs';
 import {Calendar, ClockSvg, Repeat} from '../../../../assets/svgs/SVG_LOGOS';
 import AppDayPicker from '../../../common/AppDayPicker';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-// import BottomSheetCalendar from '../../../common/BottomSheetCalendar';
 interface Props {
   serviceId: number;
 }
@@ -59,7 +58,6 @@ const VisitScheduleTab = ({serviceId}: Props) => {
         name="isRecurring"
       />
       {scheduleId === 1 && <AppDayPicker />}
-      {/* <BottomSheetCalendar title={scheduleId === 0 ? 'Dates' : 'Start Date'} /> */}
     </View>
   );
 };

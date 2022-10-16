@@ -41,6 +41,7 @@ import providerServicesSlice from './slices/Appointment/ProviderServices/provide
 import addressReducer from './slices/address/address';
 import appointmentSlice from './slices/Appointment/appointment';
 import providerProposalSlice from './slices/Appointment/ProviderProposal/providerProposalSlice';
+import markedStyle from './slices/misc/markedStyle';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -75,6 +76,7 @@ const appReducer = combineReducers({
   address: addressReducer,
   appointment: appointmentSlice,
   proposal: providerProposalSlice,
+  markedStyle: markedStyle,
 });
 
 const RootReducer = (

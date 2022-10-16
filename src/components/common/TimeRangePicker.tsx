@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Modal, Platform, Pressable, StyleSheet, View} from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import TitleText from './text/TitleText';
 import Text_Size from '../../constants/textScaling';
@@ -14,18 +14,7 @@ interface Props {
   startName: string;
   endName: string;
 }
-// var x = 60; //minutes interval
-// var times: any = []; // time array
-// var tt = 0; // start time
 
-// //loop to increment the time and push results in array
-// for (var i = 0; tt < 24 * 60; i++) {
-//   var hh = Math.floor(tt / 60); // getting hours of day in 0-24 format
-
-//   var mm = tt % 60; // getting minutes of the hour in 0-55 format
-//   times[i] = ('0' + hh).slice(-2) + ':' + ('0' + mm).slice(-2); // pushing data in array in [00:00 - 12:00 AM/PM format]
-//   tt = tt + x;
-// }
 var x = 60; //minutes interval
 var times: any = [];
 var tt = 0; // start time

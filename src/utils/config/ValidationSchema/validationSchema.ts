@@ -245,6 +245,27 @@ const appointmentValidationSchema = Yup.object().shape({
   selectedRange: Yup.array(),
   selectDate: Yup.array(),
 });
+const appointmentModifyValidationSchema = Yup.object().shape({
+  visitLength: Yup.number().nullable(true).typeError('A Number is Required'),
+  isRecurring: Yup.boolean(),
+  dropOffStartTime: Yup.string(),
+  dropOffEndTime: Yup.string(),
+  pickUpStartTime: Yup.string(),
+  pickUpEndTime: Yup.string(),
+  petsId: Yup.array(),
+  recurringStartDate: Yup.string(),
+  recurringSelectedDay: Yup.array(),
+  repeatDate: Yup.array(),
+  proposalStartDate: Yup.string(),
+  proposalEndDate: Yup.string(),
+  proposalOtherDate: Yup.array(),
+  recurringModDates: Yup.array(),
+  specificModDates: Yup.array(),
+  multiDate: Yup.array(),
+  selectedRange: Yup.array(),
+  selectDate: Yup.array(),
+  markedStyle: Yup.object(),
+});
 
 export {
   loginValidationSchema,
@@ -265,4 +286,5 @@ export {
   planCheckoutValidationSchema,
   cardExpValidationSchema,
   appointmentValidationSchema,
+  appointmentModifyValidationSchema,
 };

@@ -12,6 +12,7 @@ import AppCalendar from '../../../common/AppCalendar';
 import {useFormContext} from 'react-hook-form';
 import ShortText from '../../../common/text/ShortText';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import {useAppSelector} from '../../../../store/store';
 interface Props {
   serviceId?: number;
   setValue: (arg: string, arg2: any) => void;
@@ -31,9 +32,11 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
     pickUpStartTime,
     pickUpEndTime,
     recurringStartDate,
+    multiDate,
   } = getValues();
   const {isDarkMode} = useTheme();
-
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  console.log('proposedServiceInfo', proposedServiceInfo);
   return (
     <View style={[styles.container]}>
       <TitleText textStyle={styles.headerText} text={'Schedule'} />
@@ -44,12 +47,14 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
             {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
           ]}
           onPress={() => setVisible(!visible)}>
-          <View>
+          <View style={styles.textWidth}>
             <TitleText textStyle={styles.titleText} text={'Dates'} />
             <DescriptionText
               text={
                 isRecurring && recurringStartDate !== ''
                   ? recurringStartDate
+                  : !isRecurring && multiDate.length > 0
+                  ? multiDate?.join(' ')
                   : proposalStartDate !== ''
                   ? `( From: ${proposalStartDate} To: ${proposalEndDate})`
                   : 'Tap to add dates'
@@ -228,4 +233,5 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_2,
   },
   done: {fontWeight: 'bold'},
+  textWidth: {width: '85%'},
 });

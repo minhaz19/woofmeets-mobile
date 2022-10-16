@@ -9,8 +9,6 @@ import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import {upcomingInboxFetch} from '../../../../store/slices/Appointment/appointment';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import TitleText from '../../../common/text/TitleText';
-
 const UpcomingMessage = () => {
   let navigation = useNavigation();
   const dispatch = useAppDispatch();
@@ -47,13 +45,7 @@ const UpcomingMessage = () => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
       {!upcomingAppointment && error ? (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 200,
-          }}>
+        <View style={styles.noMessages}>
           <MessageNotSend
             svg={<UpcomingSvg width={200} height={200} />}
             title={'No messages in Upcoming inbox'}
@@ -68,7 +60,7 @@ const UpcomingMessage = () => {
             handleActivity={() => {}}
             handleDate={() => {}}
           />
-          {upcomingAppointment?.length > 0 ? (
+          {upcomingAppointment !== null && upcomingAppointment!.length > 0 ? (
             upcomingAppointment?.map(item => {
               return (
                 <ReusableCard
@@ -76,21 +68,24 @@ const UpcomingMessage = () => {
                   item={{
                     name: `${item.provider.user.firstName} ${item.provider.user.lastName}`,
                     image: item.provider.user.image,
-                    description: item?.appointmentProposal[0]?.firstMessage,
-                    boardingTime: item?.appointmentProposal[0]
-                      ?.proposalStartDate
-                      ? `${item.appointmentProposal[0].proposalStartDate} to ${item.appointmentProposal[0].proposalEndDate} `
-                      : '',
-                    pickUpStartTime: item?.appointmentProposal[0]
-                      ?.pickUpStartTime
-                      ? item.appointmentProposal[0].pickUpStartTime
-                      : '',
+                    description: item?.appointmentProposal[0]?.firstMessage
+                      ? item?.appointmentProposal[0]?.firstMessage
+                      : 'No Mesaegs fonnd',
+                    boardingTime: item?.providerService?.serviceType?.name,
+                    // boardingTime: item?.appointmentProposal[0]
+                    //   ?.proposalStartDate
+                    //   ? `${item.appointmentProposal[0].proposalStartDate} to ${item.appointmentProposal[0].proposalEndDate} `
+                    //   : '',
+                    // pickUpStartTime: item?.appointmentProposal[0]
+                    //   ?.pickUpStartTime
+                    //   ? item.appointmentProposal[0].pickUpStartTime
+                    //   : '',
                     status: item.status,
                   }}
                   buttonStyles={Colors.primary}
                   handlePress={() =>
                     navigation.navigate('ActivityScreen', {
-                      apointmentOpk: 'string',
+                      appointmentOpk: item.opk,
                     })
                   }
                 />
@@ -119,5 +114,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // marginTop: SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '2%',
+  },
+  noMessages: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 200,
   },
 });
