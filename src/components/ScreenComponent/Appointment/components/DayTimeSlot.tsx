@@ -1,11 +1,12 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import TimeMultiSlotPicker from '../../../common/TimeMultiSlotPicker';
 import DescriptionText from '../../../common/text/DescriptionText';
 import SwitchView from '../../../common/switch/SwitchView';
 import Text_Size from '../../../../constants/textScaling';
 import {useFormContext, useWatch} from 'react-hook-form';
+
 let modData: any = [];
 const DayTimeSlot = () => {
   const {setValue} = useFormContext();
@@ -17,6 +18,7 @@ const DayTimeSlot = () => {
     isRecurring,
     repeatDate,
     multiDate,
+    proposalOtherDate,
   } = useWatch();
   const [newData, setDatas] = useState(modData);
   const handleMultipleCheck = (id: number) => {
@@ -26,7 +28,7 @@ const DayTimeSlot = () => {
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-  const getRecurringDays = (rd: any, rsd: any) => {
+  const getRecurringDays = (rd: any, rsd: any, pod: any) => {
     const output = rd?.filter((obj: any) => {
       return rsd.indexOf(obj.day) !== -1;
     });
@@ -34,14 +36,28 @@ const DayTimeSlot = () => {
     const recurring = output?.map((item: any, index: number) => ({
       id: index + 1,
       date: item.day,
-      active: true,
+      active:
+        pod.length !== 0
+          ? pod.some(
+              (elm: any) =>
+                elm.date === item.day && elm.sameAsStartDate === true,
+            )
+          : true,
+      initalSlot:
+        pod.length !== 0
+          ? pod?.find((elm: any) => elm.date === item.day).visitTime
+          : [],
     }));
     return recurring;
   };
-  useMemo(() => {
-    console.log('reloading day time slo');
+  useEffect(() => {
+    console.log('1');
     if (isRecurring) {
-      const recurring = getRecurringDays(repeatDate, recurringSelectedDay);
+      const recurring = getRecurringDays(
+        repeatDate,
+        recurringSelectedDay,
+        proposalOtherDate,
+      );
       setDatas(recurring);
       console.log('recurring', recurring, repeatDate, recurringSelectedDay);
     } else {
@@ -52,9 +68,15 @@ const DayTimeSlot = () => {
       }));
       setDatas(multi);
     }
-  }, [isRecurring, repeatDate, recurringSelectedDay, multiDate]);
-  useMemo(() => {
-    console.log('reloading day time slo');
+  }, [
+    isRecurring,
+    repeatDate,
+    recurringSelectedDay,
+    multiDate,
+    proposalOtherDate,
+  ]);
+  useEffect(() => {
+    console.log('2');
     if (isRecurring) {
       const unMatched = newData?.filter((item: {date: string}) => {
         return !recurringModDates?.some(
@@ -66,6 +88,7 @@ const DayTimeSlot = () => {
         const sameData = unMatched?.map((item: any) => ({
           date: item.date,
           visitTime: recurringModDates ? recurringModDates[0].visitTime : [],
+          sameAsStartDate: true,
         }));
         sameData?.length > 0 &&
           recurringModDates?.length > 0 &&
@@ -98,6 +121,7 @@ const DayTimeSlot = () => {
     setValue,
     specificModDates,
   ]);
+  console.log('rmd', newData);
   console.log('day time slot');
   return (
     <View>
@@ -112,7 +136,11 @@ const DayTimeSlot = () => {
               <TitleText textStyle={styles.day} text={item.date} />
               {/* <TitleText textStyle={styles.day} text={item.day} /> */}
               <DescriptionText text={'Add one or more walk times'} />
-              <TimeMultiSlotPicker date={item.date} isRecurring={isRecurring} />
+              <TimeMultiSlotPicker
+                date={item.date}
+                isRecurring={isRecurring}
+                initalSlot={item?.initalSlot}
+              />
             </View>
           ) : (
             <View style={styles.section}>
@@ -129,12 +157,13 @@ const DayTimeSlot = () => {
                   }}
                 />
               </View>
-              {/* {!item.active && (
+              {!item.active && (
                 <TimeMultiSlotPicker
                   date={item.date}
                   isRecurring={isRecurring}
+                  initalSlot={item?.initalSlot}
                 />
-              )} */}
+              )}
             </View>
           )}
         </View>

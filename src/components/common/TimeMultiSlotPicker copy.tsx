@@ -5,7 +5,7 @@ import Colors from '../../constants/Colors';
 import {useFormContext, useWatch} from 'react-hook-form';
 
 let Dates: any = [];
-const TimeMultiSlotPicker = ({isRecurring, date, initalSlot}: any) => {
+const TimeMultiSlotPicker = ({isRecurring, date}: any) => {
   const {visitLength} = useWatch();
 
   const {setValue} = useFormContext();
@@ -16,27 +16,23 @@ const TimeMultiSlotPicker = ({isRecurring, date, initalSlot}: any) => {
     const times: any = []; // time array
     let tt = 0; // start time
     const ap = ['AM', 'PM']; // AM-PM
-    console.log('ind lop', initalSlot);
+    console.log('ind lop');
     for (let i = 0; tt < 24 * 60; i++) {
-      console.log('ind lop');
       const hh = Math.floor(tt / 60); // getting hours of day in 0-24 format
       const mm = tt % 60; // getting minutes of the hour in 0-55 format
-      const individualSlot =
-        ('0' + (hh % 12)).slice(-2) +
-        ':' +
-        ('0' + mm).slice(-2) +
-        ap[Math.floor(hh / 12)];
       times[i] = {
         id: i + 1,
-        slot: individualSlot,
-        active: initalSlot
-          ? initalSlot?.some((it: string) => it === individualSlot)
-          : false,
+        slot:
+          ('0' + (hh % 12)).slice(-2) +
+          ':' +
+          ('0' + mm).slice(-2) +
+          ap[Math.floor(hh / 12)],
+        active: false,
       }; // pushing data in array in [00:00 - 12:00 AM/PM format]
       tt = tt + visitLength;
     }
     setDatas(times);
-  }, [initalSlot, visitLength]);
+  }, [visitLength]);
 
   console.log('reloading day time slo');
 
@@ -68,9 +64,6 @@ const TimeMultiSlotPicker = ({isRecurring, date, initalSlot}: any) => {
                 Dates.push({
                   date: date,
                   visitTime: [item.slot],
-                  sameAsStartDate: false,
-                  startDate:
-                    matchDate === -1 && Dates.length === 0 ? true : false,
                 });
                 console.log('multi time slot', matchDate, Dates);
               } else {
@@ -85,7 +78,7 @@ const TimeMultiSlotPicker = ({isRecurring, date, initalSlot}: any) => {
                   found[0].visitTime.splice(matchIndex, 1);
                 }
               }
-              console.log('dates', Dates);
+
               isRecurring
                 ? setValue('recurringModDates', Dates)
                 : setValue('specificModDates', Dates);

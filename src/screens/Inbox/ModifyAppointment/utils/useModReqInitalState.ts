@@ -27,22 +27,22 @@ export const useModReqInitialState = () => {
   const d1 = new Date(proposedServiceInfo?.proposalStartDate);
   const d2 = new Date(proposedServiceInfo?.proposalEndDate);
 
-  const next6Days = [...Array(7).keys()].map(index => {
-    const date =
-      proposedServiceInfo.recurringStartDate &&
-      new Date(proposedServiceInfo.recurringStartDate);
-    date.setDate(date.getDate() + index);
-    var d = new Date(date);
-    var dayName = dayss[d.getDay()];
-    return {date: date.toDateString(), day: dayName};
-  });
-  console.log('inital state', next6Days);
+  const next6Days =
+    proposedServiceInfo.recurringStartDate !== '' &&
+    [...Array(7).keys()].map(index => {
+      const date = new Date(proposedServiceInfo.recurringStartDate);
+      date?.setDate(date.getDate() + index);
+      var d = new Date(date);
+      var dayName = dayss[d.getDay()];
+      return {date: date?.toDateString(), day: dayName};
+    });
+  console.log('inital state', proposedServiceInfo);
 
   return {
     providerServiceId: null,
     serviceTypeId: proposedServiceInfo?.serviceTypeId,
     visitLength: proposedServiceInfo.length,
-    isRecurring: proposedServiceInfo?.isRecurring,
+    isRecurring: proposedServiceInfo.isRecurring,
 
     dropOffStartTime: proposedServiceInfo?.dropOffStartTime
       ? proposedServiceInfo.dropOffStartTime

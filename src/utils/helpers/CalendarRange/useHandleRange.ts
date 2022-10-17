@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import {useEffect,  useState} from 'react';
 // import {useFormContext} from 'react-hook-form';
 // import Colors from '../../../constants/Colors';
 // import {storeMarkStyle} from '../../../store/slices/misc/markedStyle';
@@ -74,8 +74,8 @@ export const useHandleRange = (
     }
   };
   console.log('calendar reloading');
-  useMemo(() => {
-    console.log('caliing');
+  useEffect(() => {
+    console.log('caliing range');
     if (type === 'RANGE') {
       const range = _dateRange(startingDate, endingDate);
       const {styledMarkedRange, orderRange} = orderAndStyleRange(

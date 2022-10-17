@@ -34,31 +34,7 @@ const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
       {(serviceId === 1 || serviceId === 2) && <BoardingSitting />}
       {(serviceId === 3 || serviceId === 5) && <DropInVisitWalking />}
       {serviceId === 4 && <DoggyDayCare />}
-      {/* {(serviceId === 1 || serviceId === 2) && (
-        <>
-          <DateDropPick serviceId={serviceId} setValue={setValue} />
-        </>
-      )}
-      {(serviceId === 3 || serviceId === 4 || serviceId === 5) && (
-        <>
-          <VisitScheduleTab serviceId={serviceId} />
-          {serviceId !== 4 && (
-            <BottomSheetCalendar
-              title={isRecurring ? 'Start Date' : 'Dates'}
-              setValue={setValue}
-              isRecurring={isRecurring}
-            />
-          )}
-        </>
-      )}
-      <View style={{}}>
-        {serviceId === 4 && (
-          <DateDropPick serviceId={serviceId} setValue={setValue} />
-        )}
-        {(serviceId === 3 || serviceId === 5) && <DayTimeSlot />}
-        <MyPets /> */}
 
-      {/* </View> */}
       <MyPets />
 
       <SubmitButton

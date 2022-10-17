@@ -25,6 +25,7 @@ const MyPets = () => {
   const {setValue, getValues} = useFormContext();
   const {petsId: pp} = getValues();
   useEffect(() => {
+    console.log('rednzasdf');
     const modArray = allPets?.map((item: any, index: number) => {
       return {
         id: index + 1,

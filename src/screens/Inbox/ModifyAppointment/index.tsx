@@ -10,8 +10,10 @@ import {useModReqInitialState} from './utils/useModReqInitalState';
 import {useAppSelector} from '../../../store/store';
 interface Props {
   route: any;
+  navigation: any;
 }
-const ModifyAppointment = ({route}: Props) => {
+
+const ModifyAppointment = ({route, navigation}: Props) => {
   const {colors} = useTheme();
   const {proposal} = useAppSelector(state => state.proposal);
   const {loading, request} = useApi(methods._put);
@@ -40,7 +42,7 @@ const ModifyAppointment = ({route}: Props) => {
       proposedBy: 'USER',
       petsId: petsId,
       length: serviceTypeId === 3 || serviceTypeId === 5 ? visitLength : 30,
-      isRecurring: false,
+      isRecurring: isRecurring,
       dropOffStartTime:
         serviceTypeId === 3 || serviceTypeId === 5 ? '' : dropOffStartTime,
       dropOffEndTime:
@@ -81,6 +83,7 @@ const ModifyAppointment = ({route}: Props) => {
       // totalPrice: 0,
     };
     const result = await request(endpoint, payload);
+
     console.log('res', payload, result);
   };
 
