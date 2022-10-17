@@ -198,7 +198,7 @@ const ActivityScreen = (props: {
                   <SendIcon height={20} width={20} fill={Colors.primary} />
                 </TouchableOpacity>
               </View>
-              <BottomSpacing />
+              {/* <BottomSpacing /> */}
             </>
           </KeyboardAvoidingView>
         </SafeAreaView>

@@ -15,15 +15,15 @@ function getDatesInRange(startDate: Date, endDate: Date) {
 export const useModReqInitialState = () => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
 
-  // const d1 = new Date(proposedServiceInfo?.proposalStartDate);
-  // const d2 = new Date(proposedServiceInfo?.proposalEndDate);
+  const d1 = new Date(proposedServiceInfo?.proposalStartDate);
+  const d2 = new Date(proposedServiceInfo?.proposalEndDate);
 
-  // console.log(proposedServiceInfo.specificModDates);
+  console.log(proposedServiceInfo);
 
   return {
     providerServiceId: null,
     serviceTypeId: proposedServiceInfo?.serviceTypeId,
-    visitLength: proposedServiceInfo?.visitLength,
+    visitLength: proposedServiceInfo?.length,
     isRecurring: proposedServiceInfo?.isRecurring,
 
     dropOffStartTime: proposedServiceInfo?.dropOffStartTime
@@ -55,7 +55,9 @@ export const useModReqInitialState = () => {
       ? proposedServiceInfo.proposalOtherDate
       : [],
     petsId: proposedServiceInfo?.appointmentPet
-      ? proposedServiceInfo.appointmentPet
+      ? proposedServiceInfo.appointmentPet.map(
+          (item: {petId: number}) => item.petId,
+        )
       : [],
     recurringModDates: proposedServiceInfo?.recurringModDates
       ? proposedServiceInfo.recurringModDates
@@ -64,7 +66,7 @@ export const useModReqInitialState = () => {
       ? proposedServiceInfo.specificModDates
       : [],
     multiDate: [],
-    // selectedRange: getDatesInRange(d1, d2),
+    selectedRange: getDatesInRange(d1, d2),
     selectDate: [],
     markedStyle: {},
   };

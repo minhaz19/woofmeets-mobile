@@ -18,7 +18,7 @@ const DropInVisitWalking = () => {
   const [scheduleId, setScheduleId] = useState(null);
   const {colors} = useTheme();
   const {setValue, getValues} = useFormContext();
-  const {isRecurring} = getValues();
+  const {isRecurring, length} = getValues();
   const data = [
     {
       id: 1,
@@ -47,6 +47,7 @@ const DropInVisitWalking = () => {
       value: true,
     },
   ];
+  console.log('leng', length, isRecurring);
   return (
     <View style={styles.container}>
       <AppHalfTabs

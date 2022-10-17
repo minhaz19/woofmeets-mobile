@@ -36,6 +36,10 @@ import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/Add
 import BasicPayment from '../components/ScreenComponent/becomeSitter/subscription/BasicPayment/BasicPayment';
 import Appointment from '../screens/Appointment';
 import SubscriptionScreen from '../screens/becomeSitter/Subscription';
+import ActivityScreen from '../screens/Inbox/activity/ActivityScreen';
+import CheckoutDetails from '../screens/checkout/CheckoutDetails';
+import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
+
 // import PetNavigatorFC from './PetNavigatorFS';
 const Stack = createStackNavigator();
 
@@ -393,6 +397,51 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 title="Appointment"
                 notification
               />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        {/* <Stack.Screen
+          name="ActivityScreen"
+          component={ActivityScreen}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Activity Screen"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })} */}
+        {/* /> */}
+
+        <Stack.Screen
+          name="ActivityScreen"
+          component={ActivityScreen}
+          options={() => ({
+            headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name="Checkout"
+          component={CheckoutDetails}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Checkout" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="EditDetails"
+          component={ModifyAppointment}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Edit Details" />
             ),
             backgroundColor: Colors.primary,
           })}
