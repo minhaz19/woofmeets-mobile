@@ -12,13 +12,14 @@ import AppHalfTabs from '../../../../../common/AppHalfTabs';
 import AppDayPicker from '../../../../../common/AppDayPicker';
 import TitleText from '../../../../../common/text/TitleText';
 import Text_Size from '../../../../../../constants/textScaling';
+import DayTimeSlot from '../../../../Appointment/components/DayTimeSlot';
 
 const DropInVisitWalking = () => {
   const [, setVisitId] = useState(null);
   const [scheduleId, setScheduleId] = useState(null);
   const {colors} = useTheme();
   const {setValue, getValues} = useFormContext();
-  const {isRecurring, length} = getValues();
+  const {isRecurring, visitLength, recurringStartDate} = getValues();
   const data = [
     {
       id: 1,
@@ -47,7 +48,7 @@ const DropInVisitWalking = () => {
       value: true,
     },
   ];
-  console.log('leng', length, isRecurring);
+  console.log('leng', visitLength, isRecurring);
   return (
     <View style={styles.container}>
       <AppHalfTabs
@@ -56,6 +57,7 @@ const DropInVisitWalking = () => {
         //@ts-ignore
         setVisitId={setVisitId}
         name="visitLength"
+        defaultValue={visitLength === 30 ? 0 : 1}
       />
 
       <AppHalfTabs
@@ -64,8 +66,9 @@ const DropInVisitWalking = () => {
         //@ts-ignore
         setScheduleId={setScheduleId}
         name="isRecurring"
+        defaultValue={isRecurring ? 1 : 0}
       />
-      {scheduleId === 1 && <AppDayPicker />}
+      {isRecurring && recurringStartDate !== '' && <AppDayPicker />}
       <View>
         <TitleText
           text={!scheduleId ? 'Select Dates' : 'Select starting date'}
@@ -76,7 +79,9 @@ const DropInVisitWalking = () => {
         title={scheduleId === 0 ? 'Dates' : 'Start Date'}
         setValue={setValue}
         isRecurring={isRecurring}
+        initalData={recurringStartDate}
       />
+      <DayTimeSlot />
     </View>
   );
 };

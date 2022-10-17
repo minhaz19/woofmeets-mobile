@@ -12,18 +12,36 @@ function getDatesInRange(startDate: Date, endDate: Date) {
 
   return dates;
 }
+var dayss = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
 export const useModReqInitialState = () => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
 
   const d1 = new Date(proposedServiceInfo?.proposalStartDate);
   const d2 = new Date(proposedServiceInfo?.proposalEndDate);
 
-  console.log(proposedServiceInfo);
+  const next6Days = [...Array(7).keys()].map(index => {
+    const date =
+      proposedServiceInfo.recurringStartDate &&
+      new Date(proposedServiceInfo.recurringStartDate);
+    date.setDate(date.getDate() + index);
+    var d = new Date(date);
+    var dayName = dayss[d.getDay()];
+    return {date: date.toDateString(), day: dayName};
+  });
+  console.log('inital state', next6Days);
 
   return {
     providerServiceId: null,
     serviceTypeId: proposedServiceInfo?.serviceTypeId,
-    visitLength: proposedServiceInfo?.length,
+    visitLength: proposedServiceInfo.length,
     isRecurring: proposedServiceInfo?.isRecurring,
 
     dropOffStartTime: proposedServiceInfo?.dropOffStartTime
@@ -44,7 +62,7 @@ export const useModReqInitialState = () => {
     recurringSelectedDay: proposedServiceInfo?.recurringSelectedDay
       ? proposedServiceInfo.recurringSelectedDay
       : [],
-    repeatDate: [],
+    repeatDate: next6Days ? next6Days : [],
     proposalStartDate: proposedServiceInfo?.proposalStartDate
       ? proposedServiceInfo.proposalStartDate
       : '',

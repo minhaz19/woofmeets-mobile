@@ -1,13 +1,10 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useMemo, useState} from 'react';
-import TitleText from '../../../common/text/TitleText';
-import TimeMultiSlotPicker from '../../../common/TimeMultiSlotPicker';
-import DescriptionText from '../../../common/text/DescriptionText';
-import SwitchView from '../../../common/switch/SwitchView';
-import Text_Size from '../../../../constants/textScaling';
+
 import {useFormContext, useWatch} from 'react-hook-form';
+import Text_Size from '../../../../../../../constants/textScaling';
 let modData: any = [];
-const DayTimeSlot = () => {
+const DVDayTimeSlot = () => {
   const {setValue} = useFormContext();
   // const {DIVSpecificDate} = getValues();
   const {
@@ -15,12 +12,13 @@ const DayTimeSlot = () => {
     specificModDates,
     recurringModDates,
     isRecurring,
+    proposalOtherDate,
     repeatDate,
     multiDate,
   } = useWatch();
+  console.log('day time slot');
   const [newData, setDatas] = useState(modData);
   const handleMultipleCheck = (id: number) => {
-    console.log('reloading day time slo');
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].active = !newArray[index].active;
@@ -39,11 +37,10 @@ const DayTimeSlot = () => {
     return recurring;
   };
   useMemo(() => {
-    console.log('reloading day time slo');
     if (isRecurring) {
       const recurring = getRecurringDays(repeatDate, recurringSelectedDay);
       setDatas(recurring);
-      console.log('recurring', recurring, repeatDate, recurringSelectedDay);
+      console.log('recurring', recurringSelectedDay, repeatDate, recurring);
     } else {
       const multi = multiDate?.map((item: any, index: number) => ({
         id: index + 1,
@@ -54,14 +51,12 @@ const DayTimeSlot = () => {
     }
   }, [isRecurring, repeatDate, recurringSelectedDay, multiDate]);
   useMemo(() => {
-    console.log('reloading day time slo');
     if (isRecurring) {
       const unMatched = newData?.filter((item: {date: string}) => {
         return !recurringModDates?.some(
           (it: {date: string}) => item.date === it.date,
         );
       });
-      console.log('un matched', unMatched);
       if (recurringModDates?.length !== 0) {
         const sameData = unMatched?.map((item: any) => ({
           date: item.date,
@@ -78,7 +73,6 @@ const DayTimeSlot = () => {
           (it: {date: string}) => item === it.date,
         );
       });
-      console.log('un', unMatched);
       if (specificModDates && specificModDates?.length > 0) {
         const sameData = unMatched?.map((item: any) => ({
           date: item,
@@ -87,7 +81,6 @@ const DayTimeSlot = () => {
         sameData?.length > 0 &&
           specificModDates?.length > 0 &&
           setValue('specificModDates', [...specificModDates, ...sameData]);
-        console.log('specificModDates', [...specificModDates, ...sameData]);
       }
     }
   }, [
@@ -98,7 +91,18 @@ const DayTimeSlot = () => {
     setValue,
     specificModDates,
   ]);
-  console.log('day time slot');
+
+  // modify
+  // useEffect(() => {
+  //   console.log('rendering day time slot');
+  //   const recurring = recurringSelectedDay?.map((item: any, index: number) => ({
+  //     id: index + 1,
+  //     date: item,
+  //     active: true,
+  //   }));
+  //   setDatas(recurring);
+  // }, [recurringSelectedDay]);
+  console.log('asdf', proposalOtherDate);
   return (
     <View>
       {newData?.map((item: any, index: number) => (
@@ -129,12 +133,12 @@ const DayTimeSlot = () => {
                   }}
                 />
               </View>
-              {/* {!item.active && (
+              {!item.active && (
                 <TimeMultiSlotPicker
                   date={item.date}
                   isRecurring={isRecurring}
                 />
-              )} */}
+              )}
             </View>
           )}
         </View>
@@ -143,7 +147,7 @@ const DayTimeSlot = () => {
   );
 };
 
-export default DayTimeSlot;
+export default DVDayTimeSlot;
 
 const styles = StyleSheet.create({
   headerText: {

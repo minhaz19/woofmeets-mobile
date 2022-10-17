@@ -1,4 +1,4 @@
-import {Button, ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import React, {memo} from 'react';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import MyPets from '../../Appointment/components/MyPets';
@@ -15,7 +15,6 @@ const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {serviceTypeId: serviceId} = proposedServiceInfo;
   const {
-    getValues,
     formState: {errors},
   } = useFormContext();
   //   const {

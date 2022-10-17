@@ -8,31 +8,32 @@ import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
 import {Plus} from '../../../../assets/svgs/SVG_LOGOS';
 import DescriptionText from '../../../common/text/DescriptionText';
-import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
+import {useAppSelector} from '../../../../store/store';
 import {useNavigation} from '@react-navigation/native';
 import {useFormContext} from 'react-hook-form';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 let petsId: any = [];
 const MyPets = () => {
-  const dispatch = useAppDispatch();
   const {pets: allPets} = useAppSelector(state => state.allPets);
   const [newData, setDatas] = useState<any>([]);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
-    const index = newArray.findIndex(item => item.id === id);
+    const index = newArray.findIndex(item => item.petId === id);
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-  const {setValue} = useFormContext();
+  const {setValue, getValues} = useFormContext();
+  const {petsId: pp} = getValues();
   useEffect(() => {
-    dispatch(getAllPets());
-    const modArray = allPets?.map((item: any, index: number) => ({
-      id: index + 1,
-      name: item.name,
-      petId: item.id,
-      active: false,
-    }));
+    const modArray = allPets?.map((item: any, index: number) => {
+      return {
+        id: index + 1,
+        name: item.name,
+        petId: item.id,
+        active:
+          pp.findIndex((it: number) => it === item.id) !== -1 ? true : false,
+      };
+    });
     modArray?.push({
       id: allPets.length,
       Icon: Plus,
@@ -40,7 +41,7 @@ const MyPets = () => {
       new: true,
     });
     setDatas(modArray);
-  }, []);
+  }, [allPets]);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
   return (
@@ -92,10 +93,10 @@ const MyPets = () => {
                 <AppTouchableOpacity
                   key={index}
                   onPress={() => {
-                    handleMultipleCheck(item.id);
-                    const matchIndex = petsId.indexOf(item.id);
+                    handleMultipleCheck(item.petId);
+                    const matchIndex = petsId.indexOf(item.petId);
                     if (matchIndex === -1) {
-                      petsId.push(item.id);
+                      petsId.push(item.petId);
                     } else {
                       petsId.splice(matchIndex, 1);
                     }
@@ -110,7 +111,7 @@ const MyPets = () => {
                         : colors.borderColor,
                       backgroundColor: isDarkMode
                         ? Colors.lightDark
-                        : Colors.border,
+                        : Colors.primary,
                     },
                   ]}>
                   {item.name && (

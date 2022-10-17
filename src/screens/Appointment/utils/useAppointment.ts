@@ -4,6 +4,7 @@ import {useEffect} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../api/methods';
 import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
+import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import storage from '../../../utils/helpers/auth/storage';
@@ -148,6 +149,7 @@ export const useAppointment = () => {
   };
   useEffect(() => {
     providerServices === null && dispatch(getProviderServices('HFJHx6EP'));
+    dispatch(getAllPets());
   }, []);
   return {
     handleSubmit,

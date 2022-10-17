@@ -20,7 +20,6 @@ const DayTimeSlot = () => {
   } = useWatch();
   const [newData, setDatas] = useState(modData);
   const handleMultipleCheck = (id: number) => {
-    console.log('reloading day time slo');
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].active = !newArray[index].active;
@@ -39,11 +38,19 @@ const DayTimeSlot = () => {
     return recurring;
   };
   useMemo(() => {
-    console.log('reloading day time slo');
     if (isRecurring) {
+      // const output = repeatDate?.filter((obj: any) => {
+      //   return recurringSelectedDay.indexOf(obj.day) !== -1;
+      // });
+
+      // const recurring = output?.map((item: any, index: number) => ({
+      //   id: index + 1,
+      //   date: item.day,
+      //   active: true,
+      // }));
+
       const recurring = getRecurringDays(repeatDate, recurringSelectedDay);
       setDatas(recurring);
-      console.log('recurring', recurring, repeatDate, recurringSelectedDay);
     } else {
       const multi = multiDate?.map((item: any, index: number) => ({
         id: index + 1,
@@ -54,14 +61,12 @@ const DayTimeSlot = () => {
     }
   }, [isRecurring, repeatDate, recurringSelectedDay, multiDate]);
   useMemo(() => {
-    console.log('reloading day time slo');
     if (isRecurring) {
       const unMatched = newData?.filter((item: {date: string}) => {
         return !recurringModDates?.some(
           (it: {date: string}) => item.date === it.date,
         );
       });
-      console.log('un matched', unMatched);
       if (recurringModDates?.length !== 0) {
         const sameData = unMatched?.map((item: any) => ({
           date: item.date,
@@ -70,7 +75,6 @@ const DayTimeSlot = () => {
         sameData?.length > 0 &&
           recurringModDates?.length > 0 &&
           setValue('recurringModDates', [...recurringModDates, ...sameData]);
-        console.log('recurringModDates', [...recurringModDates, ...sameData]);
       }
     } else {
       const unMatched = multiDate?.filter((item: string) => {
@@ -78,7 +82,6 @@ const DayTimeSlot = () => {
           (it: {date: string}) => item === it.date,
         );
       });
-      console.log('un', unMatched);
       if (specificModDates && specificModDates?.length > 0) {
         const sameData = unMatched?.map((item: any) => ({
           date: item,
@@ -87,9 +90,23 @@ const DayTimeSlot = () => {
         sameData?.length > 0 &&
           specificModDates?.length > 0 &&
           setValue('specificModDates', [...specificModDates, ...sameData]);
-        console.log('specificModDates', [...specificModDates, ...sameData]);
       }
     }
+
+    // const unMatched = multiDate?.filter((item: string) => {
+    //   return !specificModDates?.some((it: {date: string}) => item === it.date);
+    // });
+    // console.log('un', unMatched);
+    // if (specificModDates && specificModDates?.length > 0) {
+    //   const sameData = unMatched?.map((item: any) => ({
+    //     date: item,
+    //     visitTime: specificModDates ? specificModDates[0].visitTime : [],
+    //   }));
+    //   sameData?.length > 0 &&
+    //     specificModDates?.length > 0 &&
+    //     setValue('specificModDates', [...specificModDates, ...sameData]);
+    //   console.log('specificModDates', [...specificModDates, ...sameData]);
+    // }
   }, [
     isRecurring,
     multiDate,
@@ -98,7 +115,6 @@ const DayTimeSlot = () => {
     setValue,
     specificModDates,
   ]);
-  console.log('day time slot');
   return (
     <View>
       {newData?.map((item: any, index: number) => (
@@ -129,12 +145,12 @@ const DayTimeSlot = () => {
                   }}
                 />
               </View>
-              {/* {!item.active && (
+              {!item.active && (
                 <TimeMultiSlotPicker
                   date={item.date}
                   isRecurring={isRecurring}
                 />
-              )} */}
+              )}
             </View>
           )}
         </View>

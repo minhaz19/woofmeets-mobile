@@ -73,7 +73,7 @@ export const useHandleRange = (
       }
     }
   };
-  console.log('reloading');
+  console.log('calendar reloading');
   useMemo(() => {
     console.log('caliing');
     if (type === 'RANGE') {

@@ -1,8 +1,8 @@
 import {FlatList, Pressable, StyleSheet, View} from 'react-native';
 import React, {memo, useMemo, useState} from 'react';
-import TitleText from './text/TitleText';
-import Colors from '../../constants/Colors';
 import {useFormContext, useWatch} from 'react-hook-form';
+import TitleText from '../../../../../../common/text/TitleText';
+import Colors from '../../../../../../../constants/Colors';
 
 function generate_series(step: number) {
   var times: any = []; // time array
@@ -10,7 +10,7 @@ function generate_series(step: number) {
   var ap = ['AM', 'PM']; // AM-PM
   console.log('ind lop');
   for (var i = 0; tt < 24 * 60; i++) {
-    console.log('reloading day time slo');
+    console.log('looping');
     var hh = Math.floor(tt / 60); // getting hours of day in 0-24 format
     var mm = tt % 60; // getting minutes of the hour in 0-55 format
     times[i] = {
@@ -28,29 +28,37 @@ function generate_series(step: number) {
   return times;
 }
 var Dates: any = [];
-const TimeMultiSlotPicker = (date: any) => {
+const DVTimeMultiSlotPicker = (date: any) => {
   const {visitLength} = useWatch();
-  const {setValue} = useFormContext();
+  const {setValue, getValues} = useFormContext();
   const [newData, setDatas] = useState<any>([]);
+  const {proposalOtherDate} = getValues();
   useMemo(() => {
-    console.log('reloading day time slo');
     const times = generate_series(visitLength);
 
     times && setDatas(times);
   }, [visitLength]);
   const handleMultipleCheck = (id: number) => {
-    console.log('reloading day time slo');
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-  // const {isRecurring: RR} = useWatch();
+  const {isRecurring: RR} = useWatch();
   // useMemo(() => {
   //   console.log('rr', RR);
   //   Dates = [];
   // }, [RR]);
-  console.log('reloading day time slo');
+  // useEffect(() => {
+  //   newData.map(item => ({
+  //     id: item.id,
+  //     slot: item.slot,
+  //     active: false,
+  //   }));
+
+  //   console.log('time multi slot');
+  // }, []);
+  console.log(newData, visitLength);
   return (
     <View style={styles.container}>
       <TitleText textStyle={{}} text={''} />
@@ -71,7 +79,6 @@ const TimeMultiSlotPicker = (date: any) => {
                   date: date.date,
                   visitTime: [item.slot],
                 });
-                console.log('multi time slot', matchDate, Dates);
               } else {
                 const found = Dates.filter(
                   (obj: any) => obj.date === date.date,
@@ -86,7 +93,6 @@ const TimeMultiSlotPicker = (date: any) => {
                   found[0].visitTime.splice(matchIndex, 1);
                 }
               }
-              console.log('un matched', date.isRecurring, Dates);
               date.isRecurring
                 ? setValue('recurringModDates', Dates)
                 : setValue('specificModDates', Dates);
@@ -107,7 +113,7 @@ const TimeMultiSlotPicker = (date: any) => {
   );
 };
 
-export default memo(TimeMultiSlotPicker);
+export default memo(DVTimeMultiSlotPicker);
 
 const styles = StyleSheet.create({
   container: {

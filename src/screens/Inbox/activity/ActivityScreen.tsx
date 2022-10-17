@@ -14,7 +14,6 @@ import ActivityHeader from '../../../components/ScreenComponent/activity/Activit
 import ShortText from '../../../components/common/text/ShortText';
 import HeaderText from '../../../components/common/text/HeaderText';
 import TitleText from '../../../components/common/text/TitleText';
-import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {CameraIcon, SendIcon} from '../../../assets/Inbox_SVG';
@@ -24,6 +23,7 @@ import Text_Size from '../../../constants/textScaling';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProviderProposal} from '../../../store/slices/Appointment/ProviderProposal/getProviderProposal';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
 
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -42,6 +42,7 @@ const ActivityScreen = (props: {
   const scrollViewRef = useRef<any>();
   const dispatch = useAppDispatch();
   const {loading} = useAppSelector(state => state.proposal);
+  const {loading: petLoading} = useAppSelector(state => state.allPets);
   const {appointmentOpk} = props.route.params;
   const sendMsg = async () => {};
 
@@ -65,14 +66,15 @@ const ActivityScreen = (props: {
   }, []);
   useEffect(() => {
     dispatch(getProviderProposal(appointmentOpk));
+    dispatch(getAllPets());
   }, []);
 
   const {colors} = useTheme();
   const [isDetailsModal, setIsDetailsModal] = useState(false);
-  console.log('nav', props.route);
+
   return (
     <>
-      {loading && <AppActivityIndicator visible={true} />}
+      {(loading || petLoading) && <AppActivityIndicator visible={true} />}
       <View style={styles.rootContainer}>
         <SafeAreaView>
           <KeyboardAvoidingView

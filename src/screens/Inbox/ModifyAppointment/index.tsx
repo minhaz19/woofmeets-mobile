@@ -14,9 +14,9 @@ interface Props {
 const ModifyAppointment = ({route}: Props) => {
   const {colors} = useTheme();
   const {proposal} = useAppSelector(state => state.proposal);
-  const {loading, request} = useApi(methods._get);
+  const {loading, request} = useApi(methods._put);
   const {appointmentOpk} = route.params;
-  const endpoint = `/appointment/update/FFsqPHww/proposal`;
+  const endpoint = `/appointment/update/${appointmentOpk}/proposal`;
   console.log('proposal', proposal);
   const handleSubmit = async (data: any) => {
     console.log('hello', appointmentOpk);
@@ -37,67 +37,48 @@ const ModifyAppointment = ({route}: Props) => {
       visitLength,
     } = data;
     const payload = {
-      // proposedBy: 'USER',
-      // petsId: petsId,
-      // length: serviceTypeId === 3 || serviceTypeId === 5 ? visitLength : 30,
-      // isRecurring: false,
-      // dropOffStartTime:
-      //   serviceTypeId === 3 || serviceTypeId === 5 ? '' : dropOffStartTime,
-      // dropOffEndTime:
-      //   serviceTypeId === 3 || serviceTypeId === 5 ? '' : dropOffEndTime,
-      // pickUpStartTime:
-      //   serviceTypeId === 3 || serviceTypeId === 5 ? '' : pickUpStartTime,
-      // pickUpEndTime:
-      //   serviceTypeId === 3 || serviceTypeId === 5 ? '' : pickUpEndTime,
-      // proposalStartDate:
-      //   serviceTypeId === 3 || serviceTypeId === 5 ? '' : proposalStartDate,
-      // proposalEndDate:
-      //   serviceTypeId === 3 || serviceTypeId === 5 ? '' : proposalEndDate,
+      proposedBy: 'USER',
+      petsId: petsId,
+      length: serviceTypeId === 3 || serviceTypeId === 5 ? visitLength : 30,
+      isRecurring: false,
+      dropOffStartTime:
+        serviceTypeId === 3 || serviceTypeId === 5 ? '' : dropOffStartTime,
+      dropOffEndTime:
+        serviceTypeId === 3 || serviceTypeId === 5 ? '' : dropOffEndTime,
+      pickUpStartTime:
+        serviceTypeId === 3 || serviceTypeId === 5 ? '' : pickUpStartTime,
+      pickUpEndTime:
+        serviceTypeId === 3 || serviceTypeId === 5 ? '' : pickUpEndTime,
+      proposalStartDate:
+        serviceTypeId === 3 || serviceTypeId === 5 ? '' : proposalStartDate,
+      proposalEndDate:
+        serviceTypeId === 3 || serviceTypeId === 5 ? '' : proposalEndDate,
 
-      // appointmentserviceType:
-      //   serviceTypeId === 3 ? 'VISIT' : serviceTypeId === 5 ? 'WALK' : 'NONE',
-      // proposalOtherDate:
-      //   serviceTypeId === 3 || serviceTypeId === 5 || serviceTypeId === 4
-      //     ? isRecurring
-      //       ? recurringModDates
-      //       : specificModDates
-      //     : [],
-      // recurringStartDate:
-      //   serviceTypeId === 1 || serviceTypeId === 2
-      //     ? ''
-      //     : isRecurring
-      //     ? recurringStartDate
-      //     : '',
-      // recurringSelectedDay:
-      //   serviceTypeId === 1 || serviceTypeId === 2
-      //     ? []
-      //     : isRecurring
-      //     ? recurringSelectedDay
-      //     : [],
+      appointmentserviceType:
+        serviceTypeId === 3 ? 'VISIT' : serviceTypeId === 5 ? 'WALK' : 'NONE',
+      proposalOtherDate:
+        serviceTypeId === 3 || serviceTypeId === 5 || serviceTypeId === 4
+          ? isRecurring
+            ? recurringModDates
+            : specificModDates
+          : [],
+      recurringStartDate:
+        serviceTypeId === 1 || serviceTypeId === 2
+          ? ''
+          : isRecurring
+          ? recurringStartDate
+          : '',
+      recurringSelectedDay:
+        serviceTypeId === 1 || serviceTypeId === 2
+          ? []
+          : isRecurring
+          ? recurringSelectedDay
+          : [],
       // additionalLengthPrice: 0,
       // regularPrice: 0,
       // additionalCharge: [],
       // providerExtraFee: 0,
       // totalPrice: 0,
-      proposedBy: 'USER',
-      appointmentserviceType: 'NONE',
-      petsId: [1, 2],
-      length: null,
-      additionalLengthPrice: 0,
-      regularPrice: 0,
-      additionalCharge: [],
-      providerExtraFee: 0,
-      totalPrice: 0,
-      dropOffStartTime: 'string',
-      dropOffEndTime: 'string',
-      pickUpStartTime: 'string',
-      pickUpEndTime: 'string',
-      proposalStartDate: 'string',
-      proposalEndDate: 'string',
-      proposalOtherDate: [],
-      isRecurring: true,
-      recurringStartDate: 'string',
-      recurringSelectedDay: [],
     };
     const result = await request(endpoint, payload);
     console.log('res', payload, result);

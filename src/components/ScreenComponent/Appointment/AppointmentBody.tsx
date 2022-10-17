@@ -22,7 +22,8 @@ const AppointmentBody = ({handleSubmit, loading}: Props) => {
     watch,
     formState: {errors},
   } = useFormContext();
-  const {isRecurring} = watch();
+  const {isRecurring, recurringStartDate} = watch();
+  console.log('apbody');
   return (
     <ScrollView
       contentContainerStyle={styles.container}
@@ -45,6 +46,7 @@ const AppointmentBody = ({handleSubmit, loading}: Props) => {
               title={isRecurring ? 'Start Date' : 'Dates'}
               setValue={setValue}
               isRecurring={isRecurring}
+              initalData={recurringStartDate}
             />
           )}
         </>

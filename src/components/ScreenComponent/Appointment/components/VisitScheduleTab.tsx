@@ -39,11 +39,13 @@ const VisitScheduleTab = ({serviceId}: Props) => {
       value: true,
     },
   ];
+  console.log('reloading visitscheduletab');
   return (
     <View style={styles.container}>
       {serviceId === 4 ? null : (
         <AppHalfTabs
           title="Visit Length"
+          defaultValue={0}
           data={data}
           //@ts-ignore
           setVisitId={setVisitId}
@@ -53,6 +55,7 @@ const VisitScheduleTab = ({serviceId}: Props) => {
       <AppHalfTabs
         title="Schedule"
         data={schedule}
+        defaultValue={0}
         //@ts-ignore
         setScheduleId={setScheduleId}
         name="isRecurring"

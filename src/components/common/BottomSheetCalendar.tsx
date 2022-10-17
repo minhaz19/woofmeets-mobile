@@ -14,6 +14,7 @@ interface Props {
   sequence?: number;
   isRecurring?: boolean;
   setValue: (arg1: string, arg3: any) => void;
+  initalData: string;
 }
 var dayss = [
   'Sunday',
@@ -24,25 +25,32 @@ var dayss = [
   'Friday',
   'Saturday',
 ];
-const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
+const BottomSheetCalendar = ({
+  title,
+  isRecurring,
+  setValue,
+  initalData,
+}: Props) => {
   const [visible, setVisible] = useState(false);
-  const [startDate, setStartDate] = useState('');
+  // const [startDate, setStartDate] = useState('');
   const {getValues} = useFormContext();
   const {isDarkMode, colors} = useTheme();
   const {multiDate} = getValues();
   const handlePress = (data: any) => {
-    const next6Days = [...Array(7).keys()].map(index => {
-      const date = new Date(data.dateString);
-      date.setDate(date.getDate() + index);
-      var d = new Date(date);
-      var dayName = dayss[d.getDay()];
-      return {date: date.toDateString(), day: dayName};
-    });
-    setValue('recurringStartDate', data.dateString);
-    setValue('repeatDate', next6Days);
-    setStartDate(data.dateString);
+    if (isRecurring) {
+      const next6Days = [...Array(7).keys()].map(index => {
+        const date = new Date(data.dateString);
+        date.setDate(date.getDate() + index);
+        var d = new Date(date);
+        var dayName = dayss[d.getDay()];
+        return {date: date.toDateString(), day: dayName};
+      });
+      setValue('recurringStartDate', data.dateString);
+      setValue('repeatDate', next6Days);
+    }
+    // setStartDate(data.dateString);
   };
-
+  console.log('bottom sheet calendar');
   return (
     <>
       <View style={[styles.container]}>
@@ -64,8 +72,9 @@ const BottomSheetCalendar = ({title, isRecurring, setValue}: Props) => {
                     ? multiDate.length !== 0
                       ? multiDate?.join(' ')
                       : 'Tap to add dates'
-                    : startDate !== '' && isRecurring === true
-                    ? startDate
+                    : initalData !== '' && isRecurring === true
+                    ? // : startDate !== '' && isRecurring === true
+                      initalData
                     : 'Tap to add dates'
                 }
                 textStyle={{}}
