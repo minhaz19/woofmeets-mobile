@@ -1,4 +1,5 @@
-import {useEffect,  useState} from 'react';
+import {format} from 'date-fns';
+import {useEffect, useState} from 'react';
 // import {useFormContext} from 'react-hook-form';
 // import Colors from '../../../constants/Colors';
 // import {storeMarkStyle} from '../../../store/slices/misc/markedStyle';
@@ -33,6 +34,9 @@ export const useHandleRange = (
     if (type === 'SINGLE') {
       setSingleSelect(date.dateString);
       setValue && setValue('recurringStartDate', date.dateString);
+      const dd = new Date(date.dateString).toISOString();
+      const test = format(new Date(dd), 'yyyy-MM-dd');
+      console.log('text', test, date.dateString);
     } else if (type === 'MULTI') {
       const {styledMarkedRange, orderMultiDates} = orderAndStyleRange(
         date,

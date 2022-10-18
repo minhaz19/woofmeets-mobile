@@ -1,3 +1,4 @@
+import {format} from 'date-fns';
 import {useAppSelector} from '../../../../store/store';
 
 function getDatesInRange(startDate: Date, endDate: Date) {
@@ -28,7 +29,7 @@ export const useModReqInitialState = () => {
   const d2 = new Date(proposedServiceInfo?.proposalEndDate);
 
   const next6Days =
-    proposedServiceInfo.recurringStartDate !== '' &&
+    proposedServiceInfo.recurringStartDate !== undefined &&
     [...Array(7).keys()].map(index => {
       const date = new Date(proposedServiceInfo.recurringStartDate);
       date?.setDate(date.getDate() + index);
@@ -36,10 +37,16 @@ export const useModReqInitialState = () => {
       var dayName = dayss[d.getDay()];
       return {date: date?.toDateString(), day: dayName};
     });
-  console.log('inital state', proposedServiceInfo);
+
+  const modMultiDates = proposedServiceInfo.proposalOtherDate.map(
+    (item: {date: string}) => item.date,
+  );
+  console.log('inital state', proposedServiceInfo, modMultiDates);
 
   return {
     providerServiceId: null,
+    userId: proposedServiceInfo?.userId,
+    providerId: proposedServiceInfo?.providerId,
     serviceTypeId: proposedServiceInfo?.serviceTypeId,
     visitLength: proposedServiceInfo.length,
     isRecurring: proposedServiceInfo.isRecurring,
@@ -56,18 +63,22 @@ export const useModReqInitialState = () => {
     pickUpEndTime: proposedServiceInfo?.pickUpEndTime
       ? proposedServiceInfo.pickUpEndTime
       : '',
-    recurringStartDate: proposedServiceInfo?.recurringStartDate
-      ? proposedServiceInfo.recurringStartDate
-      : '',
+    recurringStartDate:
+      proposedServiceInfo?.recurringStartDate !== undefined
+        ? format(
+            new Date(proposedServiceInfo?.recurringStartDate),
+            'yyyy-MM-dd',
+          )
+        : '',
     recurringSelectedDay: proposedServiceInfo?.recurringSelectedDay
       ? proposedServiceInfo.recurringSelectedDay
       : [],
     repeatDate: next6Days ? next6Days : [],
     proposalStartDate: proposedServiceInfo?.proposalStartDate
-      ? proposedServiceInfo.proposalStartDate
+      ? format(new Date(proposedServiceInfo?.proposalStartDate), 'yyyy-MM-dd')
       : '',
     proposalEndDate: proposedServiceInfo?.proposalEndDate
-      ? proposedServiceInfo.proposalEndDate
+      ? format(new Date(proposedServiceInfo?.proposalEndDate), 'yyyy-MM-dd')
       : '',
     proposalOtherDate: proposedServiceInfo?.proposalOtherDate
       ? proposedServiceInfo.proposalOtherDate
@@ -77,13 +88,15 @@ export const useModReqInitialState = () => {
           (item: {petId: number}) => item.petId,
         )
       : [],
-    recurringModDates: proposedServiceInfo?.recurringModDates
-      ? proposedServiceInfo.recurringModDates
-      : [],
-    specificModDates: proposedServiceInfo?.specificModDates
-      ? proposedServiceInfo.specificModDates
-      : [],
-    multiDate: [],
+    recurringModDates:
+      proposedServiceInfo.isRecurring && proposedServiceInfo?.proposalOtherDate
+        ? proposedServiceInfo.proposalOtherDate
+        : [],
+    specificModDates:
+      !proposedServiceInfo.isRecurring && proposedServiceInfo?.proposalOtherDate
+        ? proposedServiceInfo.proposalOtherDate
+        : [],
+    multiDate: !proposedServiceInfo.isRecurring ? modMultiDates : [],
     selectedRange: getDatesInRange(d1, d2),
     selectDate: [],
     markedStyle: {},

@@ -95,49 +95,66 @@ export const useAppointment = () => {
     } else if (petsId.length === 0 || petsId === undefined) {
       Alert.alert('You have to select at least one pet');
     } else {
-      const payload = {
+      const boardSittingPayload = {
         providerServiceId: providerServiceId,
         userId: user?.id,
         providerId: providerServices[0].providerId,
         petsId: petsId,
-        length: serviceTypeId === 3 || serviceTypeId === 5 ? visitLength : null,
-        isRecurring: isRecurring,
-        dropOffStartTime:
-          serviceTypeId === 3 || serviceTypeId === 5 ? '' : dropOffStartTime,
-        dropOffEndTime:
-          serviceTypeId === 3 || serviceTypeId === 5 ? '' : dropOffEndTime,
-        pickUpStartTime:
-          serviceTypeId === 3 || serviceTypeId === 5 ? '' : pickUpStartTime,
-        pickUpEndTime:
-          serviceTypeId === 3 || serviceTypeId === 5 ? '' : pickUpEndTime,
-        proposalStartDate:
-          serviceTypeId === 3 || serviceTypeId === 5 ? '' : proposalStartDate,
-        proposalEndDate:
-          serviceTypeId === 3 || serviceTypeId === 5 ? '' : proposalEndDate,
+        dropOffStartTime: dropOffStartTime,
+        dropOffEndTime: dropOffEndTime,
+        pickUpStartTime: pickUpStartTime,
+        pickUpEndTime: pickUpEndTime,
+        proposalStartDate: proposalStartDate,
+        proposalEndDate: proposalEndDate,
         providerTimeZone: 'string',
-        appointmentserviceType:
-          serviceTypeId === 3 ? 'VISIT' : serviceTypeId === 5 ? 'WALK' : 'NONE',
-        proposalOtherDate:
-          serviceTypeId === 3 || serviceTypeId === 5 || serviceTypeId === 4
-            ? isRecurring
-              ? recurringModDates
-              : specificModDates
-            : [],
-        recurringStartDate:
-          serviceTypeId === 1 || serviceTypeId === 2
-            ? undefined
-            : isRecurring
-            ? recurringStartDate
-            : undefined,
-        recurringSelectedDay:
-          serviceTypeId === 1 || serviceTypeId === 2
-            ? []
-            : isRecurring
-            ? recurringSelectedDay
-            : [],
+        appointmentserviceType: 'NONE',
         firstMessage: firstMessage,
         isRecivedPhotos: isRecivedPhotos,
       };
+      const dropDogPayload = {
+        providerServiceId: providerServiceId,
+        userId: user?.id,
+        providerId: providerServices[0].providerId,
+        petsId: petsId,
+        length: visitLength,
+        isRecurring: isRecurring,
+        providerTimeZone: 'string',
+        appointmentserviceType:
+          serviceTypeId === 3 ? 'VISIT' : serviceTypeId === 5 ? 'WALK' : 'NONE',
+        proposalOtherDate: isRecurring ? recurringModDates : specificModDates,
+        recurringStartDate: isRecurring
+          ? new Date(recurringStartDate).toISOString()
+          : undefined,
+        recurringSelectedDay: isRecurring ? recurringSelectedDay : [],
+        firstMessage: firstMessage,
+        isRecivedPhotos: isRecivedPhotos,
+      };
+      const doggyPayload = {
+        providerServiceId: providerServiceId,
+        userId: user?.id,
+        providerId: providerServices[0].providerId,
+        petsId: petsId,
+        isRecurring: isRecurring,
+        providerTimeZone: 'string',
+        appointmentserviceType: 'NONE',
+        dropOffStartTime: dropOffStartTime,
+        dropOffEndTime: dropOffEndTime,
+        pickUpStartTime: pickUpStartTime,
+        pickUpEndTime: pickUpEndTime,
+        proposalOtherDate: isRecurring ? recurringModDates : specificModDates,
+        recurringStartDate: isRecurring
+          ? new Date(recurringStartDate).toISOString()
+          : undefined,
+        recurringSelectedDay: isRecurring ? recurringSelectedDay : [],
+        firstMessage: firstMessage,
+        isRecivedPhotos: isRecivedPhotos,
+      };
+      const payload =
+        serviceTypeId === 1 || serviceTypeId === 2
+          ? boardSittingPayload
+          : serviceTypeId === 3 || serviceTypeId === 5
+          ? dropDogPayload
+          : doggyPayload;
       const response = await request(endpoint, payload);
       response.ok &&
         navigation.navigate('ActivityScreen', {
@@ -157,3 +174,47 @@ export const useAppointment = () => {
     loading,
   };
 };
+
+// const payload = {
+//   providerServiceId: providerServiceId,
+//   userId: user?.id,
+//   providerId: providerServices[0].providerId,
+//   petsId: petsId,
+//   length: serviceTypeId === 3 || serviceTypeId === 5 ? visitLength : null,
+//   isRecurring: isRecurring,
+//   dropOffStartTime:
+//     serviceTypeId === 3 || serviceTypeId === 5 ? '' : dropOffStartTime,
+//   dropOffEndTime:
+//     serviceTypeId === 3 || serviceTypeId === 5 ? '' : dropOffEndTime,
+//   pickUpStartTime:
+//     serviceTypeId === 3 || serviceTypeId === 5 ? '' : pickUpStartTime,
+//   pickUpEndTime:
+//     serviceTypeId === 3 || serviceTypeId === 5 ? '' : pickUpEndTime,
+//   proposalStartDate:
+//     serviceTypeId === 3 || serviceTypeId === 5 ? '' : proposalStartDate,
+//   proposalEndDate:
+//     serviceTypeId === 3 || serviceTypeId === 5 ? '' : proposalEndDate,
+//   providerTimeZone: 'string',
+//   appointmentserviceType:
+//     serviceTypeId === 3 ? 'VISIT' : serviceTypeId === 5 ? 'WALK' : 'NONE',
+//   proposalOtherDate:
+//     serviceTypeId === 3 || serviceTypeId === 5 || serviceTypeId === 4
+//       ? isRecurring
+//         ? recurringModDates
+//         : specificModDates
+//       : [],
+//   recurringStartDate:
+//     serviceTypeId === 1 || serviceTypeId === 2
+//       ? ''
+//       : isRecurring
+//       ? recurringStartDate
+//       : '',
+//   recurringSelectedDay:
+//     serviceTypeId === 1 || serviceTypeId === 2
+//       ? []
+//       : isRecurring
+//       ? recurringSelectedDay
+//       : [],
+//   firstMessage: firstMessage,
+//   isRecivedPhotos: isRecivedPhotos,
+// };

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import { ApiResponse } from 'apisauce';
+import {ApiResponse} from 'apisauce';
 import React from 'react';
 import apiClient from '../../../api/client';
 import {ArrowRight} from '../../../assets/svgs/Services_SVG';
@@ -22,7 +22,9 @@ import ContactScreen from '../../../screens/profile/ContactScreen/ContactScreen'
 export const getOnboardingProgress = createAsyncThunk(
   'progress/getOnboardingProgress',
   async () => {
-    const response: ApiResponse<any> = await apiClient.get('/user-profile/onboarding-progress');
+    const response: ApiResponse<any> = await apiClient.get(
+      '/user-profile/onboarding-progress',
+    );
     if (!response.ok) {
       throw new Error(response.data.message);
     }
@@ -76,7 +78,7 @@ const initialState: any = {
       name: 'subscription',
       isCompleted: false,
       inProgress: false,
-      screen: <SubscriptionScreen />,
+      screen: <SubscriptionScreen route={undefined} />,
     },
   ],
   profileData: [
@@ -188,7 +190,7 @@ const contact = createSlice({
       newArray.map(v => {
         v.inProgress = false;
         return v;
-      })
+      });
       state.oldUser = true;
       if (action.payload.pass === newArray.length - 1) {
         newArray[action.payload.pass].isCompleted = true;
@@ -208,7 +210,7 @@ const contact = createSlice({
         newArray.map(v => {
           v.inProgress = false;
           return v;
-        })
+        });
         newArray[action.payload.pass].inProgress = true;
       }
       state.sitterData = newArray;
@@ -218,7 +220,7 @@ const contact = createSlice({
       newArray1.map(v => {
         v.inProgress = false;
         return v;
-      })
+      });
       state.oldUser = true;
       if (action.payload.pass === newArray1.length - 1) {
         newArray1[action.payload.pass].isCompleted = true;
@@ -235,7 +237,7 @@ const contact = createSlice({
       newArray1.map(v => {
         v.inProgress = false;
         return v;
-      })
+      });
       state.oldUser = true;
       newArray1[action.payload.pass].inProgress = true;
     },
@@ -244,7 +246,7 @@ const contact = createSlice({
       newArray1.map(v => {
         v.inProgress = false;
         return v;
-      })
+      });
       state.oldUser = true;
       newArray1[action.payload.pass].inProgress = true;
     },
@@ -253,7 +255,7 @@ const contact = createSlice({
       newArray.map(v => {
         v.inProgress = false;
         return v;
-      })
+      });
       state.oldUser = true;
       if (action.payload.pass === newArray.length - 1) {
         newArray[action.payload.pass].isCompleted = true;
@@ -276,58 +278,63 @@ const contact = createSlice({
         state.loading = false;
         state.progressData = payload.data;
         const serviceSubList = payload.data.serviceSetupSublist;
-        const individualServiceSetupSublistTemp = payload.data.individualServiceSetupSublist.boarding;
+        const individualServiceSetupSublistTemp =
+          payload.data.individualServiceSetupSublist.boarding;
         const sitterDataTemp = [...state.sitterData];
         sitterDataTemp.map(v => {
           switch (v.name) {
             case 'serviceSelection':
-              return v.isCompleted = payload.data.serviceSelection;
+              return (v.isCompleted = payload.data.serviceSelection);
             case 'serviceSetup':
-              return v.isCompleted = payload.data.serviceSetup;
+              return (v.isCompleted = payload.data.serviceSetup);
             case 'profileSetup':
-              return v.isCompleted = payload.data.profileSetup;
+              return (v.isCompleted = payload.data.profileSetup);
             case 'safetyQuiz':
-              return v.isCompleted = payload.data.safetyQuiz;
+              return (v.isCompleted = payload.data.safetyQuiz);
             case 'subscription':
-              return v.isCompleted = payload.data.subscription;
+              return (v.isCompleted = payload.data.subscription);
           }
           return v;
-        })
+        });
         // create profile screen progress
         const profileDataTemp = [...state.profileData];
         const profileSubList = payload.data.profileSetupSublist;
         profileDataTemp.map(v => {
           switch (v.name) {
             case 'BASIC_INFO':
-              return v.isCompleted = profileSubList.BASIC_INFO.complete;
+              return (v.isCompleted = profileSubList.BASIC_INFO.complete);
             case 'DETAILS':
-              return v.isCompleted = profileSubList.DETAILS.complete;
+              return (v.isCompleted = profileSubList.DETAILS.complete);
             case 'CONTACT':
-              return v.isCompleted = profileSubList.CONTACT.complete;
+              return (v.isCompleted = profileSubList.CONTACT.complete);
             case 'GALLERY':
-              return v.isCompleted = profileSubList.GALLERY.complete;
+              return (v.isCompleted = profileSubList.GALLERY.complete);
             case 'PET_MANAGEMENT':
-              return v.isCompleted = profileSubList.PET_MANAGEMENT.complete;
+              return (v.isCompleted = profileSubList.PET_MANAGEMENT.complete);
           }
           return v;
-        })
+        });
         // service setup screen progress
         const serviceSetupTemp = [...state.boardingSelection];
         serviceSetupTemp.map(v => {
           switch (v.name) {
             case 'PROVIDER_PET_PREFERANCE':
-              return v.isCompleted = serviceSubList.PROVIDER_PET_PREFERANCE.complete;
+              return (v.isCompleted =
+                serviceSubList.PROVIDER_PET_PREFERANCE.complete);
             case 'HOME_ATTRIBUTES':
-              return v.isCompleted = serviceSubList.HOME_ATTRIBUTES.complete;
+              return (v.isCompleted = serviceSubList.HOME_ATTRIBUTES.complete);
             case 'CANCELLATION_POLICY':
-              return v.isCompleted = serviceSubList.CANCELLATION_POLICY.complete;
+              return (v.isCompleted =
+                serviceSubList.CANCELLATION_POLICY.complete);
             case 'SERVICE_RATES':
-              return v.isCompleted = individualServiceSetupSublistTemp.SERVICE_RATES.complete;
+              return (v.isCompleted =
+                individualServiceSetupSublistTemp.SERVICE_RATES.complete);
             case 'AVAILABILITY':
-              return v.isCompleted = individualServiceSetupSublistTemp.AVAILABILITY.complete;
+              return (v.isCompleted =
+                individualServiceSetupSublistTemp.AVAILABILITY.complete);
           }
           return v;
-        })
+        });
         // service setup sublist
 
         state.error = null;
@@ -335,11 +342,17 @@ const contact = createSlice({
       .addCase(getOnboardingProgress.rejected, (state, {payload}) => {
         state.loading = false;
         state.error = payload;
-      })
+      });
   },
 });
 
-export const {setSitterData, setProfileData, setBoardingSelection, setCurrentScreen, setProfileScreen, setBoardingScreen} =
-  contact.actions;
+export const {
+  setSitterData,
+  setProfileData,
+  setBoardingSelection,
+  setCurrentScreen,
+  setProfileScreen,
+  setBoardingScreen,
+} = contact.actions;
 
 export default contact.reducer;

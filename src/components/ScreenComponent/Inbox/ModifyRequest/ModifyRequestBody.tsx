@@ -17,15 +17,7 @@ const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
   const {
     formState: {errors},
   } = useFormContext();
-  //   const {
-  //     proposalStartDate,
-  //     proposalEndDate,
-  //     dropOffStartTime,
-  //     dropOffEndTime,
-  //     pickUpStartTime,
-  //     pickUpEndTime,
-  //     markedStyle,
-  //   } = getValues();
+
   console.log(errors);
   return (
     <ScrollView

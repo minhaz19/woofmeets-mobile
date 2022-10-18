@@ -32,7 +32,7 @@ const BottomSheetCalendar = ({
   initalData,
 }: Props) => {
   const [visible, setVisible] = useState(false);
-  const [startDate, setStartDate] = useState('');
+
   const {getValues} = useFormContext();
   const {isDarkMode, colors} = useTheme();
   const {multiDate} = getValues();
@@ -48,7 +48,6 @@ const BottomSheetCalendar = ({
       setValue('recurringStartDate', data.dateString);
       setValue('repeatDate', next6Days);
     }
-    setStartDate(data.dateString);
   };
   console.log('bottom sheet calendar');
   return (

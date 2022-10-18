@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import TimeMultiSlotPicker from '../../../common/TimeMultiSlotPicker';
 import DescriptionText from '../../../common/text/DescriptionText';
@@ -60,11 +60,20 @@ const DayTimeSlot = () => {
       );
       setDatas(recurring);
       console.log('recurring', recurring, repeatDate, recurringSelectedDay);
-    } else {
+    } else if (!isRecurring) {
       const multi = multiDate?.map((item: any, index: number) => ({
         id: index + 1,
         date: item,
-        active: true,
+        active:
+          proposalOtherDate.length !== 0
+            ? proposalOtherDate.some(
+                (elm: any) => elm.date === item && elm.sameAsStartDate === true,
+              )
+            : true,
+        initalSlot:
+          proposalOtherDate.length !== 0
+            ? proposalOtherDate?.find((elm: any) => elm.date === item).visitTime
+            : [],
       }));
       setDatas(multi);
     }
@@ -75,7 +84,7 @@ const DayTimeSlot = () => {
     multiDate,
     proposalOtherDate,
   ]);
-  useEffect(() => {
+  useMemo(() => {
     console.log('2');
     if (isRecurring) {
       const unMatched = newData?.filter((item: {date: string}) => {
@@ -95,33 +104,27 @@ const DayTimeSlot = () => {
           setValue('recurringModDates', [...recurringModDates, ...sameData]);
         console.log('recurringModDates', [...recurringModDates, ...sameData]);
       }
-    } else {
-      const unMatched = multiDate?.filter((item: string) => {
+    } else if (!isRecurring) {
+      const unMatched = newData?.filter((item: {date: string}) => {
         return !specificModDates?.some(
-          (it: {date: string}) => item === it.date,
+          (it: {date: string}) => item.date === it.date,
         );
       });
       console.log('un', unMatched);
-      if (specificModDates && specificModDates?.length > 0) {
-        const sameData = unMatched?.map((item: any) => ({
-          date: item,
-          visitTime: specificModDates ? specificModDates[0].visitTime : [],
-        }));
-        sameData?.length > 0 &&
-          specificModDates?.length > 0 &&
-          setValue('specificModDates', [...specificModDates, ...sameData]);
-        console.log('specificModDates', [...specificModDates, ...sameData]);
-      }
+      // if (specificModDates && specificModDates?.length > 0) {
+      //   const sameData = unMatched?.map((item: any) => ({
+      //     date: item,
+      //     visitTime: specificModDates ? specificModDates[0].visitTime : [],
+      //     sameAsStartDate: true,
+      //   }));
+      //   sameData?.length > 0 &&
+      //     specificModDates?.length > 0 &&
+      //     setValue('specificModDates', [...specificModDates, ...sameData]);
+      //   console.log('specificModDates', [...specificModDates, ...sameData]);
+      // }
+      console.log('rmd', isRecurring, newData, specificModDates, unMatched);
     }
-  }, [
-    isRecurring,
-    multiDate,
-    newData,
-    recurringModDates,
-    setValue,
-    specificModDates,
-  ]);
-  console.log('rmd', newData);
+  }, [isRecurring, newData, recurringModDates, setValue, specificModDates]);
   console.log('day time slot');
   return (
     <View>

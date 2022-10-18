@@ -8,9 +8,8 @@ import {CalendarCSvg, ClockSvg} from '../../../../../../assets/svgs/SVG_LOGOS';
 import TitleText from '../../../../../common/text/TitleText';
 import AppTouchableOpacity from '../../../../../common/AppClickEvents/AppTouchableOpacity';
 import DescriptionText from '../../../../../common/text/DescriptionText';
-import {useFormContext} from 'react-hook-form';
+import {useFormContext, useWatch} from 'react-hook-form';
 import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
-import {useAppSelector} from '../../../../../../store/store';
 import Colors from '../../../../../../constants/Colors';
 import TimeSlotPicker from '../../../../../common/TimeRangePicker';
 import ShortText from '../../../../../common/text/ShortText';
@@ -18,14 +17,14 @@ import AppCalendar from '../../../../../common/AppCalendar';
 import Text_Size from '../../../../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
 const DoggyDayCare = () => {
-  const [scheduleId, setScheduleId] = useState(null);
+  const [setScheduleId] = useState(null);
   const [visible, setVisible] = useState(false);
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
   const {setValue} = useFormContext();
 
   const {isDarkMode} = useTheme();
-  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  // const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {
     proposalStartDate,
     proposalEndDate,
@@ -33,7 +32,8 @@ const DoggyDayCare = () => {
     dropOffEndTime,
     pickUpStartTime,
     pickUpEndTime,
-  } = proposedServiceInfo;
+    isRecurring,
+  } = useWatch();
   const schedule = [
     {
       id: 1,
@@ -55,9 +55,10 @@ const DoggyDayCare = () => {
         data={schedule}
         //@ts-ignore
         setScheduleId={setScheduleId}
+        defaultValue={isRecurring ? 1 : 0}
         name="isRecurring"
       />
-      {scheduleId === 1 && <AppDayPicker />}
+      {isRecurring && <AppDayPicker />}
       <View style={[styles.sContainer]}>
         <TitleText textStyle={styles.headerText} text={'Schedule'} />
 
@@ -171,7 +172,7 @@ const DoggyDayCare = () => {
                 <TitleText textStyle={styles.calDone} text={'Done'} />
               </AppTouchableOpacity>
             </View>
-            <AppCalendar selectType={'RANGE'} setValue={setValue} />
+            <AppCalendar selectType={'SINGLE'} setValue={setValue} />
           </View>
         </Modal>
       </View>

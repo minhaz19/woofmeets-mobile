@@ -39,7 +39,7 @@ const TimeMultiSlotPicker = ({isRecurring, date, initalSlot}: any) => {
     setDatas(times);
   }, [initalSlot, visitLength]);
 
-  console.log('reloading day time slo');
+  console.log('rel it timeslot', isRecurring);
 
   console.log('calling');
   const handleMultipleCheck = (id: number) => {
@@ -87,9 +87,8 @@ const TimeMultiSlotPicker = ({isRecurring, date, initalSlot}: any) => {
                 }
               }
               console.log('dates', Dates);
-              isRecurring
-                ? setValue('recurringModDates', Dates)
-                : setValue('specificModDates', Dates);
+              isRecurring && setValue('recurringModDates', Dates);
+              !isRecurring && setValue('specificModDates', Dates);
             }}
             style={[
               styles.slots,

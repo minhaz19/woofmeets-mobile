@@ -35,6 +35,8 @@ const providerProposalSlice = createSlice({
           payload.data.appointment.providerService.serviceTypeId === 1 ||
           payload.data.appointment.providerService.serviceTypeId === 2
             ? {
+                userId: payload.data.appointment.user.id,
+                providerId: payload.data.appointment.provider.user.id,
                 serviceName:
                   payload.data.appointment.providerService.serviceType.name,
                 providerName:
@@ -57,6 +59,8 @@ const providerProposalSlice = createSlice({
             : payload.data.appointment.providerService.serviceTypeId === 3 ||
               payload.data.appointment.providerService.serviceTypeId === 5
             ? {
+                userId: payload.data.appointment.user.id,
+                providerId: payload.data.appointment.provider.user.id,
                 serviceName:
                   payload.data.appointment.providerService.serviceType.name,
                 serviceTypeId:
@@ -80,6 +84,8 @@ const providerProposalSlice = createSlice({
               }
             : payload.data.appointment.providerService.serviceTypeId === 4
             ? {
+                userId: payload.data.appointment.user.id,
+                providerId: payload.data.appointment.provider.user.id,
                 serviceName:
                   payload.data.appointment.providerService.serviceType.name,
                 serviceTypeId:
@@ -93,8 +99,7 @@ const providerProposalSlice = createSlice({
                 dropOffEndTime: payload.data.proposal.dropOffEndTime,
                 pickUpStartTime: payload.data.proposal.pickUpStartTime,
                 pickUpEndTime: payload.data.proposal.pickUpEndTime,
-                proposalStartDate: payload.data.proposal.dropOffStartTime,
-                proposalEndDate: payload.data.proposal.proposalEndDate,
+                proposalOtherDate: payload.data.proposal.proposalOtherDate,
                 isRecurring: payload.data.proposal.isRecurring,
                 recurringStartDate: payload.data.proposal.recurringStartDate,
                 recurringSelectedDay:
