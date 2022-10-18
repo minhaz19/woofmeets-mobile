@@ -11,6 +11,7 @@ import {setPetPreference} from '../../../../store/slices/onBoarding/setUpService
 import {setBoardingSelection} from '../../../../store/slices/onBoarding/initial';
 import {getYourHome} from '../../../../store/slices/onBoarding/setUpService/yourHome/getYourHome';
 import { getPetPreference } from '../../../../store/slices/onBoarding/setUpService/petPreference/getPetPreference';
+import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
 
 const endPoint = '/pet-preference';
 
@@ -47,13 +48,8 @@ const PetPreference = () => {
   return (
     <>
       {loading && <AppActivityIndicator visible={true} />}
-      <ScrollView
-        style={[
-          styles.rootContainer,
-          {backgroundColor: colors.backgroundColor},
-        ]}
-        showsVerticalScrollIndicator={false}
-        >
+      <ScrollViewRapper
+        style={styles.rootContainer}>
         <ReusableHeader
           itemId={itemId}
           name={name}
@@ -66,7 +62,7 @@ const PetPreference = () => {
           petPreference={petPreference}
           petPerDay={petPerDay}
         />
-      </ScrollView>
+      </ScrollViewRapper>
     </>
   );
 };

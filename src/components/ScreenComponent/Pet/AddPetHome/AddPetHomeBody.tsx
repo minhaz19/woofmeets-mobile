@@ -9,6 +9,7 @@ import AddPetCheck from '../components/AddPetCheck';
 import AddPetInfoInputs from '../components/AddPetInfoInputs';
 import AddPetHeader from '../components/AddPetHeader';
 import AddPetBreeds from '../components/AddPetBreeds';
+import ScrollViewRapper from '../../../common/ScrollViewRapper';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -24,11 +25,8 @@ const AddPetHomeBody = ({handleSubmit, opk}: Props) => {
   } = useFormContext();
   return (
     <View style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.inputContainer}>
+      <ScrollViewRapper>
         <AddPetHeader />
-
         <View>
           <AddPetImage name="profile_image" />
           <AddPetCheck errors={errors} setValue={setValue} control={control} />
@@ -52,7 +50,7 @@ const AddPetHomeBody = ({handleSubmit, opk}: Props) => {
         </View>
 
         <BottomSpacing />
-      </ScrollView>
+      </ScrollViewRapper>
     </View>
   );
 };
@@ -63,7 +61,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  inputContainer: {flex: 1},
   spaceHeader: {
     paddingVertical: 10,
   },

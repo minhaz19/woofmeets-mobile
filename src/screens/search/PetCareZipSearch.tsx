@@ -432,7 +432,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: '4%',
+    marginLeft: '4%',
+    width: '90%',
     marginTop: 10,
   },
   switchContainer: {

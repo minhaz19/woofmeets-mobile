@@ -14,7 +14,7 @@ const ServiceTypesLoader = () => {
           speed={1}
           width={SCREEN_WIDTH}
           height={200}
-          viewBox="0 -20 300 200"
+          viewBox="30 -20 300 200"
           backgroundColor={colors.loaderBackground}
           foregroundColor={colors.loaderBackground}>
           <Rect x="0" y="0" rx="4" ry="4" width="100" height="20" />

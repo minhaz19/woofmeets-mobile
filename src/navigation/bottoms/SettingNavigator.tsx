@@ -86,7 +86,7 @@ const SettingNavigator = () => {
           header: () => (
             <HeaderWithBack
               navigation={navigation}
-              title="Basic Info"
+              title="Reset Password"
               notification
             />
           ),

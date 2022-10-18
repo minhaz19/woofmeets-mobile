@@ -106,6 +106,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
           data={locationInput}
           horizontal={false}
           showsVerticalScrollIndicator={false}
+          inverted
           renderItem={useCallback(
             ({item}) => {
               return (
@@ -146,8 +147,8 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
             [control, errors],
           )}
           keyExtractor={(item, index) => item.name + index.toString()}
-          ListHeaderComponent={renderHeader}
-          ListFooterComponent={renderFooter}
+          ListHeaderComponent={renderFooter}
+          ListFooterComponent={renderHeader}
         />
       </TouchableWithoutFeedback>
       <BottomSpacing />

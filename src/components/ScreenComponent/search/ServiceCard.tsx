@@ -49,7 +49,7 @@ const ServiceCard: FC<Props> = props => {
         style={[
           styles.container,
           {
-            backgroundColor: colors.backgroundColor,
+            backgroundColor: props.sequence === props.data.sequence ? Colors.primary : colors.backgroundColor,
             borderWidth: props.sequence === props.data.sequence ? 2 : 2,
             borderColor:
               props.sequence === props.data.sequence
@@ -64,7 +64,10 @@ const ServiceCard: FC<Props> = props => {
             {getIcon(props.data.sequence)}
           </View>
           <View style={[styles.textContainer]}>
-            <TitleText text={props.data.name} textStyle={styles.textStyle} />
+            <TitleText text={props.data.name} textStyle={{...styles.textStyle,  
+              color: props.sequence === props.data.sequence ? 'white' : 'black',
+              fontWeight: props.sequence === props.data.sequence ? '800' : '500',
+            }} />
           </View>
         </View>
         {props.sequence === props.data.sequence && (

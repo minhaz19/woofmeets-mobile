@@ -204,7 +204,7 @@ const contact = createSlice({
       const newArray = [...state.sitterData];
       if (action.payload.pass === 0) {
         //do nothing
-      } else {
+      } else if (state.sitterData[0].isCompleted) {
         newArray.map(v => {
           v.inProgress = false;
           return v;

@@ -9,6 +9,8 @@ import {useServiceRateInit} from './utils/useServiceRateInit';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {useServiceRates} from './utils/useServiceRate';
 import {useAppSelector} from '../../../../store/store';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
 
 const Rates = () => {
   const {colors} = useTheme();
@@ -25,12 +27,10 @@ const Rates = () => {
   return (
     <>
       {(loading || fLoading) && <AppActivityIndicator visible={true} />}
-      <ScrollView
-        style={[
-          styles.rootContainer,
-          {backgroundColor: colors.backgroundColor},
-        ]}
-        showsVerticalScrollIndicator={false}>
+      <ScrollViewRapper
+        style={
+          styles.rootContainer
+        }>
         <ReusableHeader
           itemId={itemId}
           name={name}
@@ -47,7 +47,7 @@ const Rates = () => {
             loading={btnLoading}
           />
         </AppForm>
-      </ScrollView>
+      </ScrollViewRapper>
     </>
   );
 };

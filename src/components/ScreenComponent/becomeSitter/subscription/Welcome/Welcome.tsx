@@ -149,7 +149,7 @@ const Welcome = (props: any) => {
                 textAlignment={btnStyles.textAlignment}
                 containerStyle={btnStyles.containerStyleFullWidth}
                 titleStyle={btnStyles.titleStyle}
-                onSelect={() => navigation.navigate('SettingsMain')}
+                onSelect={() => navigation.navigate('BottomTabNavigator')}
                 loading={loading}
               />
               {/* <ButtonCom
@@ -246,7 +246,7 @@ const Welcome = (props: any) => {
           textAlignment={btnStyles.textAlignment}
           containerStyle={btnStyles.containerStyleFullWidth}
           titleStyle={btnStyles.titleStyle}
-          onSelect={() => navigation.navigate('Go Home')}
+          onSelect={() => navigation.navigate('BottomTabNavigator')}
           loading={loading}
         />
       </View>

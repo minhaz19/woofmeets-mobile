@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { setCurrentScreen, setSitterData } from '../../../../store/slices/onBoarding/initial';
+import { setCurrentScreen } from '../../../../store/slices/onBoarding/initial';
 import { useAppDispatch } from '../../../../store/store';
 import { SCREEN_WIDTH } from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';

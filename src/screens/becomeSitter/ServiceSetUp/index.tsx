@@ -59,6 +59,7 @@ const ServiceSetUp = () => {
                     id={item.id}
                     isCompleted={item.isCompleted}
                     handleClick={item.onPress}
+                    inProgress={item.inProgress}
                     isBoarding={true}
                   />
                 ),
@@ -74,6 +75,7 @@ const ServiceSetUp = () => {
                     id={item.id}
                     isCompleted={item.isCompleted}
                     handleClick={item.onPress}
+                    inProgress={item.inProgress}
                     isBoarding={true}
                   />
                 ),

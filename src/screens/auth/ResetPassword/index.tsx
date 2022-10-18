@@ -20,6 +20,7 @@ import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {useResetPassword} from './utils/useResetPassword';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface Props {
   navigation: {
@@ -32,7 +33,7 @@ const SetNewPassword = ({navigation}: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
   const {handleSubmit, loading} = useResetPassword();
   return (
-    <ScrollView
+    <KeyboardAwareScrollView
       contentContainerStyle={{
         // height: '100%',
         flex: height > 800 ? 1 : 0,
@@ -46,11 +47,11 @@ const SetNewPassword = ({navigation}: Props) => {
             ? Colors.dark.background
             : Colors.background,
         },
-      ]}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-        enabled={Platform.OS === 'ios' ? true : false}>
+      ]}
+      extraHeight={100}
+      extraScrollHeight={200}
+      enableAutomaticScroll={true}
+      enableOnAndroid={true}>
         <View
           style={[
             styles.infoContainer,
@@ -78,8 +79,7 @@ const SetNewPassword = ({navigation}: Props) => {
           <View style={styles.view} />
           <BottomSpacing />
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

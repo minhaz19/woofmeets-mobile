@@ -1,4 +1,4 @@
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, Linking} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import PreferenceItem from '../../components/ScreenComponent/setting/Preference/PreferenceItem';
@@ -23,14 +23,14 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     {
       id: 3,
       title: 'Terms of Service',
-      screenName: () => {},
+      screenName: () => Linking.openURL('https://www.google.com'),
       details: 'https://www.google.com',
       opacity: 1,
     },
     {
       id: 4,
       title: 'Privacy Policy',
-      screenName: () => {},
+      screenName: () => Linking.openURL('https://www.google.com'),
       details: 'https://www.google.com',
       opacity: 1,
     },
