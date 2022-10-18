@@ -11,6 +11,7 @@ interface Props {
 const AddPetBreeds = ({name, control, setValue, getValues}: Props) => {
   const {dogBreeds, catBreeds} = useAppSelector(state => state?.petBreeds);
   const breedId = getValues('type');
+  console.log('breeds', dogBreeds, catBreeds);
   return (
     <View>
       <AppMultiSelectField

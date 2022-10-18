@@ -20,7 +20,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch} from '../../../../../store/store';
 import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 import {getSubscription} from '../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
-const endpoint = '/subscriptions/cancel-subscription';
+const endpoint = '/subscriptions/cancel-subscription?subscriptionId=';
 const Welcome = (props: any) => {
   const {colors, isDarkMode} = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -29,6 +29,7 @@ const Welcome = (props: any) => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
+  console.log('pppp', props);
   const handleSubmit = () => {
     Alert.alert(
       'Cancel Subscription',
@@ -44,7 +45,10 @@ const Welcome = (props: any) => {
           text: 'Yes',
           onPress: async () => {
             setLoading(true);
-            const result = await methods._delete(endpoint);
+            const result = await methods._delete(
+              endpoint + props.subscriptionId,
+            );
+            console.log('ress', result);
             result.ok &&
               (navigation.navigate('SubscriptionScreen'),
               dispatch(getCurrentplan()),
@@ -121,7 +125,7 @@ const Welcome = (props: any) => {
             />
             <View style={styles.divider} />
             <HeaderText
-              text={`Everything in ${props.item.membershipPlan.displayName}`}
+              text={`Everything in ${props.item?.membershipPlan?.displayName}`}
               textStyle={styles.textEveryStyle}
             />
             <View style={styles.textPortion2}>
@@ -138,7 +142,7 @@ const Welcome = (props: any) => {
             </View>
           </View>
           <View style={styles.modalContainer}>
-            {props.item.membershipPlan.features?.map(
+            {props.item?.membershipPlan?.features?.map(
               (item: string, index: number) => (
                 <BulletPoints text={item} key={index} />
               ),

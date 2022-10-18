@@ -15,10 +15,11 @@ export const useSubRates = (rateFields: any, watch: any) => {
   useMemo(() => {
     const modRates = rateFields?.map((item: any, index: number) => ({
       ...item,
-      percentage: 5 * index,
+      percentage: Number(item.percentage),
     }));
     setRates(modRates);
   }, [rateFields]);
+  console.log('reates', rateFields);
 
   useMemo(() => {
     const checkFields = fieldValue?.map(

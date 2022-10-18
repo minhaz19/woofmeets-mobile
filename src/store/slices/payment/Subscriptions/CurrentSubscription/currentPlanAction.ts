@@ -20,6 +20,7 @@ export const getCurrentplan = createAsyncThunk(
         }
         throw new Error(response.data?.message);
       }
+      console.log('cur', response);
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {

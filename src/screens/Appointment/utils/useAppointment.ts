@@ -125,10 +125,10 @@ export const useAppointment = () => {
             : [],
         recurringStartDate:
           serviceTypeId === 1 || serviceTypeId === 2
-            ? ''
+            ? undefined
             : isRecurring
             ? recurringStartDate
-            : '',
+            : undefined,
         recurringSelectedDay:
           serviceTypeId === 1 || serviceTypeId === 2
             ? []
@@ -148,7 +148,7 @@ export const useAppointment = () => {
     }
   };
   useEffect(() => {
-    providerServices === null && dispatch(getProviderServices('HFJHx6EP'));
+    providerServices === null && dispatch(getProviderServices('dOkDx5rM'));
     dispatch(getAllPets());
   }, []);
   return {

@@ -36,6 +36,7 @@ const BasicPayment = ({route, navigation}: Props) => {
   const dispatch = useAppDispatch();
   const handleSubmit = async () => {
     const result = await request(endpoint + `?cardId=${cardId}`);
+    console.log('basic payment', result);
     if (result.ok) {
       const res = await request(
         `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
