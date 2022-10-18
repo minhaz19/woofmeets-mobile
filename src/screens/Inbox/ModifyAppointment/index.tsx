@@ -84,7 +84,7 @@ const ModifyAppointment = ({route, navigation}: Props) => {
     };
     const result = await request(endpoint, payload);
 
-    console.log('res', payload, result);
+    console.log('res mod', payload, result);
   };
 
   return (

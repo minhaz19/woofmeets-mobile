@@ -17,6 +17,7 @@ const TimeMultiSlotPicker = ({isRecurring, date, initalSlot}: any) => {
     let tt = 0; // start time
     const ap = ['AM', 'PM']; // AM-PM
     console.log('ind lop', initalSlot);
+
     for (let i = 0; tt < 24 * 60; i++) {
       console.log('ind lop');
       const hh = Math.floor(tt / 60); // getting hours of day in 0-24 format
