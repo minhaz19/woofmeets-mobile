@@ -113,6 +113,7 @@ const AllProvider = ({navigation}: Props) => {
                   <ProviderList
                     item={item}
                     onPress={async () => {
+                      console.log(item.provider?.user?.opk)
                       await dispatch(
                         getProviderProfile(item.provider?.user?.opk),
                       );

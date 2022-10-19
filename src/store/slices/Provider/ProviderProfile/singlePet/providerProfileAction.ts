@@ -9,6 +9,7 @@ export const getProviderProfile = createAsyncThunk(
       const response: ApiResponse<any> = await apiClient.get(
         `/provider/${id}/details`,
       );
+      console.log(response)
       if (!response.ok) {
         if (response.data) {
           Alert.alert(response.data.message);

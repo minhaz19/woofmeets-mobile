@@ -308,8 +308,8 @@ const PetCareZipSearch = (props: {
     <>
       <ScreenRapper rapperStyle={styles.rapperStyle}>
         <KeyboardAwareScrollView
-          extraHeight={100}
-          extraScrollHeight={200}
+          extraHeight={80}
+          extraScrollHeight={120}
           enableAutomaticScroll={true}
           enableOnAndroid={true}
           // keyboardVerticalOffset={20}
