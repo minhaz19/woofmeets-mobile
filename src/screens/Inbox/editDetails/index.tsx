@@ -27,6 +27,7 @@ const EditDetails = () => {
   // const [to, setTo] = useState(null);
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <BigText text="Edit Schedule" />
       <ModifyCalendar icon={<RightArrow />} title="Drop-off Dates" />

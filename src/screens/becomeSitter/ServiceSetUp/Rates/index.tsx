@@ -27,7 +27,8 @@ const Rates = () => {
   return (
     <>
       {(loading || fLoading) && <AppActivityIndicator visible={true} />}
-      <ScrollViewRapper
+      <ScrollView
+        showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
         style={
           styles.rootContainer
         }>
@@ -47,7 +48,7 @@ const Rates = () => {
             loading={btnLoading}
           />
         </AppForm>
-      </ScrollViewRapper>
+      </ScrollView>
     </>
   );
 };

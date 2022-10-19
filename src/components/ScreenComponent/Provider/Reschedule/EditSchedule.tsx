@@ -96,7 +96,7 @@ const EditSchedule = ({setViewDetails}: Props) => {
         style={[styles.divider, {backgroundColor: colors.descriptionText}]}
       />
       <HeaderText text={'Edit Schedule'} textStyle={styles.HeaderText} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
         {scheduleData.map((item: any) => {
           return (
             <View style={styles.serviceContainer} key={item.id}>

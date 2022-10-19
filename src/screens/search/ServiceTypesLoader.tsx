@@ -8,7 +8,7 @@ import {SCREEN_WIDTH} from '../../constants/WindowSize';
 const ServiceTypesLoader = () => {
   const {colors} = useTheme();
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
       <View style={{flex: 1}}>
         <ContentLoader
           speed={1}

@@ -65,6 +65,8 @@ const ServiceSetting = () => {
     <>
       {userServicesLoading && <AppActivityIndicator visible={true} />}
       <ScrollView
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         style={[
           styles.rootContainer,
           {

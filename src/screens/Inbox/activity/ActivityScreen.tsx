@@ -74,6 +74,7 @@ const ActivityScreen = (props: {
               <Details setIsDetailsModal={setIsDetailsModal} />
             </BottomHalfModal>
             <ScrollView
+              showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
               ref={scrollViewRef}
               style={styles.scrollTop}
               onContentSizeChange={() =>
