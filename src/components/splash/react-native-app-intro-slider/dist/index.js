@@ -83,7 +83,7 @@ class AppIntroSlider extends React.Component {
               this.props.onDone();
             }}
             style={styles.skipContainerView}>
-            <TitleText text="SKIP" textStyle={styles.skipText} />
+            {this.props.showSkipButton && <TitleText text="SKIP" textStyle={styles.skipText} />}
           </TouchableOpacity>
         </View>
       );

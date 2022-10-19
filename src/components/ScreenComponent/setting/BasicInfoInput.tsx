@@ -23,6 +23,7 @@ import {
   basicInfoInput,
   locationInput,
 } from '../../../utils/config/Data/basicInfoDatas';
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -98,15 +99,12 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     );
   }, [handleSubmit, loading]);
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <FlatList
+        <KeyboardAwareFlatList
           data={locationInput}
           horizontal={false}
+          extraHeight={60}
+          extraScrollHeight={120}
           showsVerticalScrollIndicator={false}
-          inverted
           renderItem={useCallback(
             ({item}) => {
               return (
@@ -147,12 +145,11 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
             [control, errors],
           )}
           keyExtractor={(item, index) => item.name + index.toString()}
-          ListHeaderComponent={renderFooter}
-          ListFooterComponent={renderHeader}
-        />
-      </TouchableWithoutFeedback>
+          ListHeaderComponent={renderHeader}
+          ListFooterComponent={renderFooter}
+        >
       <BottomSpacing />
-    </KeyboardAvoidingView>
+    </KeyboardAwareFlatList>
   );
 };
 
