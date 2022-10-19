@@ -14,11 +14,8 @@ interface Props {
 const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {serviceTypeId: serviceId} = proposedServiceInfo;
-  const {
-    formState: {errors},
-  } = useFormContext();
+  const {} = useFormContext();
 
-  console.log(errors);
   return (
     <ScrollView
       contentContainerStyle={styles.container}

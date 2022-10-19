@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
-  password: Yup.string().required().min(8).label('Password'),
+  password: Yup.string().required().min(6).label('Password'),
 });
 
 const signUpValidationSchema = Yup.object().shape({
@@ -26,7 +26,7 @@ const signUpValidationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
   password: Yup.string()
     .required('No password provided.')
-    .min(8, 'Too short - should be min 8 character.')
+    .min(6, 'Too short - should be min 6 character.')
     .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   terms: Yup.boolean()
     .required('The terms and conditions must be accepted.')
@@ -34,10 +34,10 @@ const signUpValidationSchema = Yup.object().shape({
 });
 
 const setPasswordValidationSchema = Yup.object().shape({
-  oldPassword: Yup.string().required().min(8).label('Old Password'),
+  oldPassword: Yup.string().required().min(6).label('Old Password'),
   newPassword: Yup.string()
     .required('No password provided.')
-    .min(8, 'Too short - should be min 8 character.')
+    .min(6, 'Too short - should be min 6 character.')
     .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   confirmPassword: Yup.string()
     .label('confirm password')
@@ -47,7 +47,7 @@ const setPasswordValidationSchema = Yup.object().shape({
 const forgotPasswordResetValidationSchema = Yup.object().shape({
   newPassword: Yup.string()
     .required('No password provided.')
-    .min(8, 'Too short - should be min 8 character.')
+    .min(6, 'Too short - should be min 6 character.')
     .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   confirmPassword: Yup.string()
     .label('confirm password')
