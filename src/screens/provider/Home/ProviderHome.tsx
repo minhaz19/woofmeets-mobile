@@ -45,7 +45,8 @@ const ProviderHome = (props: { navigation: { navigate: (arg0: string) => any; };
                     key={index}
                     item={item}
                     buttonStyles={Colors.yellow}
-                    onScreen={() => props.navigation.navigate('OngoingActivityScreen')}
+                    // onScreen={() => props.navigation.navigate('OngoingActivityScreen')}
+                    onScreen={() => {}}
                 />
                 );
             })}

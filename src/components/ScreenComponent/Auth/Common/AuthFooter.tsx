@@ -73,7 +73,7 @@ const AuthFooter = ({
       <View style={styles.textContainer}>
         <ShortText textStyle={styles.haveAccount} text={accountType} />
         <TouchableOpacity onPress={() => navigation.navigate(navigateScreen)}>
-          <ShortText textStyle={styles.screenRoute} text={authType} />
+          <ShortText textStyle={{...styles.screenRoute, color: isDarkMode ? Colors.primary : Colors.blue}} text={authType} />
         </TouchableOpacity>
       </View>
     </View>

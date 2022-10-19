@@ -6,6 +6,7 @@ import ErrorMessage from './Form/ErrorMessage';
 import SwitchView from './switch/SwitchView';
 import ShortText from './text/ShortText';
 import {useRHFContext} from '../../utils/helpers/Form/useRHFContext';
+import { useTheme } from '../../constants/theme/hooks/useTheme';
 interface Props {
   name: string;
   terms?: boolean;
@@ -16,6 +17,7 @@ interface Props {
 }
 const AppSwitch = ({name, terms, auth, title}: Props) => {
   const [isEnabled, setIsEnabled] = useState(false);
+  const {isDarkMode} = useTheme()
 
   const {errors, value, setValue} = useRHFContext(name);
   return (
@@ -25,7 +27,7 @@ const AppSwitch = ({name, terms, auth, title}: Props) => {
           <View style={styles.textContainer}>
             <ShortText textStyle={styles.text} text="Agree to" />
             <TouchableOpacity onPress={() => Linking.openURL('https://stage.woofmeets.com/terms-and-conditions')}>
-              <ShortText textStyle={styles.link} text="Terms and Conditions" />
+              <ShortText textStyle={{...styles.link, color: isDarkMode ? Colors.primary : Colors.blue}} text="Terms and Conditions" />
             </TouchableOpacity>
           </View>
         )}
@@ -62,7 +64,6 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_0,
   },
   link: {
-    color: Colors.blue,
     fontSize: Text_Size.Text_0,
     textDecorationLine: 'underline',
   },

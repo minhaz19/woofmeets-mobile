@@ -34,7 +34,7 @@ import { useTheme } from '../../constants/theme/hooks/useTheme';
           {backgroundColor: colors.backgroundColor},
         ]}
         extraHeight={props?.extraHeight ? props.extraHeight : 80}
-        extraScrollHeight={props?.extraScrollHeight ? props.extraScrollHeight :200}
+        extraScrollHeight={props?.extraScrollHeight ? props.extraScrollHeight : 180}
         enableAutomaticScroll={true}
         enableOnAndroid={true}
         showsVerticalScrollIndicator={false}>

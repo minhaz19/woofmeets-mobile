@@ -45,7 +45,7 @@ export const basicInfoInput = [
 
   {
     title: 'Date of Birth',
-    placeholder: 'DD / MM / YYYY',
+    placeholder: 'MM / DD / YYYY',
     name: 'dob',
   },
 ];

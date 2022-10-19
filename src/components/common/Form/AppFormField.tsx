@@ -8,6 +8,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
 import {Controller} from 'react-hook-form';
+import Colors from '../../../constants/Colors';
+import { useTheme } from '../../../constants/theme/hooks/useTheme';
 interface Props {
   name: string;
   label: string;
@@ -63,6 +65,7 @@ const AppFormField = ({
   editable = true,
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
+  const {isDarkMode} = useTheme()
   return (
     <>
       <View>
@@ -112,7 +115,7 @@ const AppFormField = ({
         <TouchableOpacity
           onPress={() => navigation.navigate('ForgotPasswordEmail')}>
           <TitleText
-            textStyle={styles.forgotPassword}
+            textStyle={{...styles.forgotPassword, color: isDarkMode ? Colors.primary : Colors.blue}}
             text="Forgot Password ?"
           />
         </TouchableOpacity>
