@@ -10,9 +10,9 @@ import {
   TwentyFourBySevenSvg,
 } from './utils/SearchBoxCardSvg';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import ShortText from '../../common/text/ShortText';
 import Colors from '../../../constants/Colors';
 import HeaderText from '../../common/text/HeaderText';
+import DescriptionText from '../../common/text/DescriptionText';
 
 const SafetyScreen = () => {
   const safetyData = [
@@ -80,7 +80,7 @@ const SafetyScreen = () => {
               </View>
               <View style={styles.textContainer}>
                 <HeaderText text={item.header} textStyle={styles.headerText} />
-                <ShortText
+                <DescriptionText
                   text={item.description}
                   textStyle={styles.shortTextStyle}
                 />
@@ -97,11 +97,11 @@ export default SafetyScreen;
 
 const styles = StyleSheet.create({
   bigTextStyle: {
-    marginTop: '15%',
+    // marginTop: '10%',
     fontSize: Text_Size.Text_7,
     textAlign: 'center',
     fontWeight: '700',
-    marginBottom: '5%',
+    // marginBottom: '5%',
     color: Colors.light.text,
   },
   flexContainer: {

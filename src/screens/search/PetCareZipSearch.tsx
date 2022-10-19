@@ -24,7 +24,10 @@ import PetCard from '../../components/ScreenComponent/search/PetCard';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../store/store';
-import {getAllProvider, getAllProviderOneTime} from '../../store/slices/Provider/allProvider/getAllProvider';
+import {
+  getAllProvider,
+  getAllProviderOneTime,
+} from '../../store/slices/Provider/allProvider/getAllProvider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ServiceTypesLoader from './ServiceTypesLoader';
 import {getServiceTypes} from '../../store/slices/profile/services';
@@ -69,17 +72,15 @@ const PetCareZipSearch = (props: {
   const {serviceTypes, loading: serviceTypesLoading} = useAppSelector(
     (state: any) => state?.services,
   );
-  const {pets, loading: petsLoading} = useAppSelector(
-    (state: any) => state?.allPets,
-  );
-  // const [postCode, setPostCode] = useState<number>();
-  const [errorMessage, setErrorMessage] = useState<string | null>();
+  const {pets} = useAppSelector((state: any) => state?.allPets);
+  const [errorMessage, setErrorMessage] = useState<any>();
+  const [errorLocation, setErrorLocation] = useState<any>();
   const [isMyPetEnabled, setIsMyPetEnabled] = useState(false);
   const [selectPetType, setSelectPetType] = useState(petData);
   const [myPet, setMyPet] = useState<any[]>([]);
   const [careLocation, setCareLocation] = useState({
-    lat: 40.702078,
-    lng: -73.822156,
+    lat: null,
+    lng: null,
   });
   const [sequence, setSequence] = useState<number>(0);
   const [serviceData, setServiceData] = useState({
@@ -158,8 +159,8 @@ const PetCareZipSearch = (props: {
     const lat = details.geometry.location.lat;
     const lng = details.geometry.location.lng;
     setCareLocation({lat: lat, lng: lng});
+    setErrorLocation(null);
   };
-
   // submitting the data and get request
   const handleSubmit = () => {
     const selectedPetType = selectPetType
@@ -190,7 +191,7 @@ const PetCareZipSearch = (props: {
         limit: 10,
       };
     }
-    if (formattedData.service) {
+    if (formattedData.service && formattedData.lat && formattedData.lng) {
       dispatch(
         setIsService({
           service: serviceData.service,
@@ -214,7 +215,11 @@ const PetCareZipSearch = (props: {
       dispatch(setScheduleId(null));
       props.navigation.navigate('AllProvider');
     } else {
-      setErrorMessage('Service must be selected');
+      if (formattedData.service) {
+        setErrorLocation('Location must be selected');
+      } else {
+        setErrorMessage('Service must be selected');
+      }
     }
   };
   const RenderHeader = () => {
@@ -375,6 +380,7 @@ const PetCareZipSearch = (props: {
                     },
                   }}
                 />
+                {errorLocation && <ErrorMessage error={errorLocation} />}
                 <View style={styles.footerContainer}>
                   <ButtonCom
                     title="Search"

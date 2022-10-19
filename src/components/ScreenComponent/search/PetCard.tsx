@@ -4,7 +4,6 @@ import React, {FC} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import {CatIcon, DogIcon} from '../../../assets/svgs/Services_SVG';
 import TitleText from '../../common/text/TitleText';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -44,12 +43,13 @@ const PetCard: FC<Props> = props => {
         style={[
           styles.container,
           {
-            backgroundColor: props.data.selected ? Colors.primary : colors.backgroundColor,
+            backgroundColor: props.data.selected
+              ? Colors.primary
+              : Colors.light.background,
             borderWidth: props.data.selected ? 2 : 2,
-            borderColor:
-              props.data.selected
-                ? Colors.primary
-                : colors.borderColor,
+            borderColor: props.data.selected
+              ? Colors.primary
+              : colors.borderColor,
             width: props.divide ? SCREEN_WIDTH / 2 - 24 : SCREEN_WIDTH / 3 - 20,
             height: 'auto',
           },
@@ -61,17 +61,19 @@ const PetCard: FC<Props> = props => {
             </View>
 
           <View style={[styles.textContainer]}>
-            <TitleText text={props.data.name} 
-              textStyle={{...styles.textStyle, 
-                color: props.data.selected ? 'white' : colors.headerText,
-                fontWeight: props.data.selected ? '800' : '500',
-              }} 
+            <TitleText
+              text={props.data.name}
+              textStyle={{
+                ...styles.textStyle,
+                color:
+                  props.data.selected ? 'white' : 'black',
+                fontWeight:
+                  props.data.selected ? '800' : '500',
+              }}
             />
           </View>
         </View>
-        {props.data.selected && (
-          <View style={styles.rightSelection} />
-        )}
+        {/* {props.data.selected && <View style={styles.rightSelection} />} */}
       </View>
     </AppTouchableOpacity>
   );

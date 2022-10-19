@@ -24,7 +24,6 @@ import ServiceSetting from '../components/ScreenComponent/setting/subProfile/Ser
 import ProfileModify from '../components/ScreenComponent/setting/subProfile/ProfileModify';
 import ManageBusiness from '../components/ScreenComponent/setting/subProfile/ManageBusiness';
 import SchedulePetSettings from '../components/ScreenComponent/search/SchedulePetSettings';
-import SafetyScreen from '../components/ScreenComponent/search/SafetyScreen';
 import AddPetCheckScreen from '../screens/pet/AddPet/AddPetCheck';
 import AddPetSubmit from '../screens/pet/AddPet/AddPetSubmit';
 import AddPetHome from '../screens/pet/AddPet/AddPetHome';
@@ -36,6 +35,8 @@ import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/Add
 import BasicPayment from '../components/ScreenComponent/becomeSitter/subscription/BasicPayment/BasicPayment';
 import Appointment from '../screens/Appointment';
 import SubscriptionScreen from '../screens/becomeSitter/Subscription';
+import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
+// import PetNavigatorFC from './PetNavigatorFS';
 import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
 import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
 const Stack = createStackNavigator();
@@ -351,8 +352,8 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="SafetyScreen"
-          component={SafetyScreen}
+          name="ScreenSlider"
+          component={ScreenSlider}
           options={{headerShown: false}}
         />
         {/* Payment Navigations */}
