@@ -30,7 +30,6 @@ export const useHandleRange = (
       setValue && setValue('recurringStartDate', date.dateString);
       const dd = new Date(date.dateString).toISOString();
       const test = format(new Date(dd), 'yyyy-MM-dd');
-      console.log('text', test, date.dateString);
     } else if (type === 'MULTI') {
       const {styledMarkedRange, orderMultiDates} = orderAndStyleRange(
         date,
@@ -42,7 +41,6 @@ export const useHandleRange = (
       const sortedDates = orderMultiDates.sort(
         (a: string, b: string) => Date.parse(a) - Date.parse(b),
       );
-      console.log('unSortedDates', sortedDates);
       setMultiDate([...multiDate, date.dateString]);
       setValue && setValue('multiDate', sortedDates);
     } else if (type === 'RANGE') {
@@ -76,16 +74,13 @@ export const useHandleRange = (
       }
     }
   };
-  console.log('calendar reloading');
   useEffect(() => {
-    console.log('caliing range');
     if (type === 'RANGE') {
       const range = _dateRange(startingDate, endingDate);
       const {styledMarkedRange, orderRange} = orderAndStyleRange(
         range,
         'RANGE',
       );
-      console.log('inside', styledMarkedRange);
       setMarkedStyle(styledMarkedRange);
       // dispatch(storeMarkStyle(styledMarkedRange));
       range && setDateRange(orderRange);
@@ -104,7 +99,6 @@ export const useHandleRange = (
   //   // setMarkedStyle(styledMarkedRange);
   // }, [proposalEndDate]);
 
-  console.log('code m', _markedStyle);
   const reset = () => {
     setStartingDate('');
     setEndingDate('');

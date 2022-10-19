@@ -29,7 +29,6 @@ const Welcome = (props: any) => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
-  console.log('pppp', props);
   const handleSubmit = () => {
     Alert.alert(
       'Cancel Subscription',
@@ -48,7 +47,6 @@ const Welcome = (props: any) => {
             const result = await methods._delete(
               endpoint + props.subscriptionId,
             );
-            console.log('ress', result);
             result.ok &&
               (navigation.navigate('SubscriptionScreen'),
               dispatch(getCurrentplan()),

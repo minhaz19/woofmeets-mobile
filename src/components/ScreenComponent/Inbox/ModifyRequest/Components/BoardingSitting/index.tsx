@@ -26,7 +26,6 @@ const BoardingSitting = () => {
 
   const {isDarkMode} = useTheme();
 
-  console.log('dropOffStartTime', proposalStartDate);
   return (
     <View style={[styles.container]}>
       <TitleText textStyle={styles.headerText} text={'Schedule'} />

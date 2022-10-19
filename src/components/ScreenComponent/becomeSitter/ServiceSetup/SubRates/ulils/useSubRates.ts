@@ -19,7 +19,6 @@ export const useSubRates = (rateFields: any, watch: any) => {
     }));
     setRates(modRates);
   }, [rateFields]);
-  console.log('reates', rateFields);
 
   useMemo(() => {
     const checkFields = fieldValue?.map(

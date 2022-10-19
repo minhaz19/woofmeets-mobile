@@ -44,7 +44,6 @@ export const useModReqInitialState = () => {
   const modMultiDateTimes = proposedServiceInfo?.proposalOtherDate?.filter(
     (item: {sameAsStartDate: boolean}) => item.sameAsStartDate === false,
   );
-  console.log('inital state', proposedServiceInfo, modMultiDateTimes);
 
   return {
     providerServiceId: null,

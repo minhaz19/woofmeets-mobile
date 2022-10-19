@@ -5,10 +5,8 @@ export const useServiceRateInit = () => {
   const {ratesMeta, serviceRateFields} = useAppSelector(
     state => state.serviceRates,
   );
-  console.log('ratexmeta', serviceRateFields, ratesMeta, fieldValue);
   const baseRate =
     ratesMeta !== null && ratesMeta !== undefined && ratesMeta['base-rate'];
-  console.log('base init', baseRate);
   return {
     baserate:
       fieldValue && fieldValue.length > 0

@@ -25,7 +25,6 @@ const AppForm = ({
   useEffect(() => {
     enableReset && reset(initialValues);
   }, [initialValues, enableReset, reset]);
-  console.log('app form');
   return (
     <FormProvider {...methods}>
       <>{children}</>

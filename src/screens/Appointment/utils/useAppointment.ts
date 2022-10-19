@@ -41,16 +41,13 @@ export const useAppointment = () => {
     } = data;
 
     if (isRecurring && serviceTypeId === 4 && recurringStartDate === '') {
-      console.log('heere1');
       Alert.alert('You have to select recurring start date');
     } else if (serviceTypeId === 4 && !isRecurring && multiDate.length === 0) {
-      console.log('heere2');
       Alert.alert('You must select schedule dates');
     } else if (
       (serviceTypeId === 1 || serviceTypeId === 2) &&
       (proposalStartDate === '' || proposalEndDate === '')
     ) {
-      console.log('heer3e');
       Alert.alert('You must select schedule dates');
     } else if (
       (serviceTypeId === 1 ||
@@ -60,7 +57,6 @@ export const useAppointment = () => {
         pickUpStartTime === '' ||
         pickUpEndTime === '')
     ) {
-      console.log('heere5');
       Alert.alert('You must select Drop-off & Pick-up times');
     } else if (
       (serviceTypeId === 3 || serviceTypeId === 5) &&
@@ -163,7 +159,6 @@ export const useAppointment = () => {
           appointmentOpk: response.data.data.appointment.opk,
           screen: 'Inbox',
         });
-      console.log('res', payload, response);
     }
   };
   useEffect(() => {

@@ -39,7 +39,6 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
   const [visible, setVisible] = useState(false);
   const {providerServices} = useAppSelector(state => state?.providerServices);
   const [selectedService, setSelectedService] = useState<any>([]);
-  console.log('servicePicker', providerServices);
   useEffect(() => {
     modData = providerServices?.map((item: any) => ({
       id: item.id,

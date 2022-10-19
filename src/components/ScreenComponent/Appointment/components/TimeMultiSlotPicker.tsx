@@ -86,7 +86,6 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
               const matchDate = Dates?.findIndex(
                 (it: {date: string}) => it.date === singleItem.date,
               );
-              console.log('matchDate', matchDate);
               if (matchDate === -1) {
                 Dates.push({
                   date: singleItem.date,
@@ -95,25 +94,20 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                   startDate:
                     matchDate === -1 && Dates.length === 0 ? true : false,
                 });
-                console.log('multi time slot', matchDate, Dates);
               } else {
                 const found = Dates.filter(
                   (obj: any) => obj.date === singleItem.date,
                 );
-                console.log('found', found);
 
                 const matchIndex = found[0].visitTime?.findIndex(
                   (it: {visitTime: string}) => it === item.slot,
                 );
                 if (matchIndex === -1) {
-                  console.log('calling -1');
                   found[0].visitTime.push(item.slot);
                 } else {
-                  console.log('calling 1');
                   found[0].visitTime.splice(matchIndex, 1);
                 }
               }
-              console.log('dates', Dates);
               isRecurring && setValue('recurringModDatesRef', Dates);
               !isRecurring && setValue('specificModDates', Dates);
             }}

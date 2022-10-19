@@ -15,7 +15,6 @@ const UpcomingMessage = () => {
   const {upcomingAppointment, error, upcomingStatus} = useAppSelector(
     state => state.appointment,
   );
-  // console.log(upcomingAppointment, error, upcomingStatus);
 
   useEffect(() => {
     dispatch(
@@ -36,7 +35,6 @@ const UpcomingMessage = () => {
   useEffect(() => {
     onRefresh();
   }, []);
-  console.log('up', upcomingAppointment);
 
   return (
     <ScrollView

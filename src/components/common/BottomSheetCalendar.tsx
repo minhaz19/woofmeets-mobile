@@ -49,7 +49,6 @@ const BottomSheetCalendar = ({
       setValue('repeatDate', next6Days);
     }
   };
-  console.log('bottom sheet calendar');
   return (
     <>
       <View style={[styles.container]}>

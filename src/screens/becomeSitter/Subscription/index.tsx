@@ -17,7 +17,6 @@ interface Props {
 }
 const SubscriptionScreen = ({route}: Props) => {
   const opk = route?.params?.opk;
-  console.log('opk', route?.params?.opk);
   const {colors} = useTheme();
   const {
     onPressEvent,
@@ -31,7 +30,6 @@ const SubscriptionScreen = ({route}: Props) => {
     ssLoading,
     cardLoading,
   } = useSubscription();
-  console.log('subscriptionInfo.membershipPlanPrice', currentPlan);
   return (
     <Screen style={{flex: 1}}>
       {(loading || planLoading) && <AppActivityIndicator visible={true} />}

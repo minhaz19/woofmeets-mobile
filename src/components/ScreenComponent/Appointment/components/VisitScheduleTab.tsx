@@ -39,7 +39,6 @@ const VisitScheduleTab = ({serviceId}: Props) => {
       value: true,
     },
   ];
-  console.log('reloading visitscheduletab');
   return (
     <View style={styles.container}>
       {serviceId === 4 ? null : (

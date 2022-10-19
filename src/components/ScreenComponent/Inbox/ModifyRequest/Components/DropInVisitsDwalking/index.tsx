@@ -48,7 +48,6 @@ const DropInVisitWalking = () => {
       value: true,
     },
   ];
-  console.log('leng', visitLength, isRecurring);
   return (
     <View style={styles.container}>
       <AppHalfTabs
