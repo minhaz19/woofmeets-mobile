@@ -69,16 +69,11 @@ const PetCareZipSearch = (props: {
   const {serviceTypes, loading: serviceTypesLoading} = useAppSelector(
     (state: any) => state?.services,
   );
-<<<<<<< HEAD
   const {pets, loading: petsLoading} = useAppSelector(
     (state: any) => state?.allPets,
   );
   // const [postCode, setPostCode] = useState<number>();
   const [errorMessage, setErrorMessage] = useState<string | null>();
-=======
-  const {pets} = useAppSelector((state: any) => state?.allPets);
-  const [errorMessage, setErrorMessage] = useState<any>();
->>>>>>> 0f752ee (Woof 79)
   const [isMyPetEnabled, setIsMyPetEnabled] = useState(false);
   const [selectPetType, setSelectPetType] = useState(petData);
   const [myPet, setMyPet] = useState<any[]>([]);
