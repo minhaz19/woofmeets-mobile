@@ -30,7 +30,7 @@ const allProviderSlice = createSlice({
       })
       .addCase(getAllProviderOneTime.fulfilled, (state, {payload}) => {
         state.allProvider = payload.data;
-        state.messageOneTime = payload;
+        state.message = payload;
         state.errorOneTime = payload;
         state.loadingOneTime = false;
       })

@@ -9,6 +9,7 @@ export const getCurrentplan = createAsyncThunk(
       const response: ApiResponse<any> = await apiClient.get(
         '/subscriptions/my-current-subscription',
       );
+      console.log(response);
       if (!response.ok) {
         if (response.data) {
           // Alert.alert(response.data?.message);

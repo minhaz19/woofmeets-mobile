@@ -15,6 +15,10 @@ import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 import AllProviderLoader from './AllProviderLoadingUI';
 import {getAllProvider} from '../../../store/slices/Provider/allProvider/getAllProvider';
+import { SCREEN_HEIGHT } from '../../../constants/WindowSize';
+import IOSButton from '../../../components/UI/IOSButton';
+import { btnStyles } from '../../../constants/theme/common/buttonStyles';
+import BigText from '../../../components/common/text/BigText';
 
 interface Props {
   navigation: {
@@ -67,6 +71,7 @@ const AllProvider = ({navigation}: Props) => {
     );
   };
 
+  console.log(allProvider);
   const renderLoader = () => {
     return (
       <>
@@ -123,7 +128,16 @@ const AllProvider = ({navigation}: Props) => {
             />
           </>
         ) : (
-          <DescriptionText text={message} textStyle={{textAlign: 'center'}} />
+          <View style={{justifyContent: 'center', height: SCREEN_HEIGHT}}>
+            <BigText text={message} textStyle={{textAlign: 'center'}} />
+            <IOSButton
+              title={'Search Again'}
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={btnStyles.containerStyleFullWidth}
+              titleStyle={{color: Colors.blue}}
+              onSelect={() => navigation.goBack()}
+            />
+          </View>
         )}
         <BottomHalfModal isModalVisible={filter}>
           <FilterProvider />

@@ -23,14 +23,14 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     {
       id: 3,
       title: 'Terms of Service',
-      screenName: () => Linking.openURL('https://www.google.com'),
+      screenName: () => Linking.openURL('https://stage.woofmeets.com/terms-and-conditions'),
       details: 'https://www.google.com',
       opacity: 1,
     },
     {
       id: 4,
       title: 'Privacy Policy',
-      screenName: () => Linking.openURL('https://www.google.com'),
+      screenName: () => Linking.openURL('https://stage.woofmeets.com/privacy-policy'),
       details: 'https://www.google.com',
       opacity: 1,
     },
@@ -45,6 +45,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   return (
     <ScreenRapperGrey>
     <ScrollView
+      showsVerticalScrollIndicator={false}
       style={[
         styles.container,
       ]}>

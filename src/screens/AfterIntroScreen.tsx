@@ -25,6 +25,7 @@ const AfterIntroScreen = (props: {
         },
       ]}>
       <ScrollView
+        showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
         style={[
           styles.infoContainer,
           {

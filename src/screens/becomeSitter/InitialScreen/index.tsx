@@ -15,6 +15,7 @@ import {bulletData1, bulletData2, bulletData3} from './data';
 import {styles} from './styles';
 import {getOnboardingProgress} from '../../../store/slices/onBoarding/initial';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
+import { getCurrentplan } from '../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 
 const SitterInitialScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -23,8 +24,22 @@ const SitterInitialScreen = (props: {
   const {colors} = useTheme();
   useEffect(() => {
     dispatch(getOnboardingProgress());
+    dispatch(getCurrentplan());
   }, []);
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const currentPlan = useAppSelector(state => state.currentPlan);
+
+  const handlePress = () => {
+    if (isLoggedIn) {
+      if (currentPlan.currentPlan) {
+        console.log(currentPlan);
+      } else {
+        props.navigation.navigate('SitterLandingPage')
+      }
+    } else {
+      Alert.alert('Please Sign in to continue')
+    }
+  }
   
   return (
     <ScrollView
@@ -58,7 +73,7 @@ const SitterInitialScreen = (props: {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => isLoggedIn ? props.navigation.navigate('SitterLandingPage') : Alert.alert('Please Sign in to continue')}
+            onSelect={handlePress}
           />
         </View>
         {/* Flexibility */}
@@ -116,7 +131,7 @@ const SitterInitialScreen = (props: {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => isLoggedIn ? props.navigation.navigate('SitterLandingPage') : Alert.alert('Please Sign in to continue')}
+            onSelect={handlePress}
           />
         </View>
       </View>
@@ -147,7 +162,7 @@ const SitterInitialScreen = (props: {
           textAlignment={btnStyles.textAlignment}
           containerStyle={btnStyles.containerStyleFullWidth}
           titleStyle={btnStyles.titleStyle}
-          onSelect={() => isLoggedIn ? props.navigation.navigate('SitterLandingPage') : Alert.alert('Please Sign in to continue')}
+          onSelect={handlePress}
         />
       </View>
       <BottomSpacing />
