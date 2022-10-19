@@ -24,7 +24,7 @@ import PetCard from '../../components/ScreenComponent/search/PetCard';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../store/store';
-import {getAllProvider} from '../../store/slices/Provider/allProvider/getAllProvider';
+import {getAllProvider, getAllProviderOneTime} from '../../store/slices/Provider/allProvider/getAllProvider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ServiceTypesLoader from './ServiceTypesLoader';
 import {getServiceTypes} from '../../store/slices/profile/services';
@@ -203,7 +203,7 @@ const PetCareZipSearch = (props: {
         dispatch(setPetType(selectPetType));
       }
       dispatch(setFormattedData(formattedData));
-      dispatch(getAllProvider(formattedData));
+      dispatch(getAllProviderOneTime(formattedData));
       dispatch(setLocation({lat: careLocation.lat, lng: careLocation.lng}));
       dispatch(setSelectedHome(''));
       dispatch(setMultiSliderValue([0, 150]));

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {View, Image, ScrollView} from 'react-native';
+import {View, Image, ScrollView, Alert} from 'react-native';
 import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BigText from '../../../components/common/text/BigText';
@@ -14,7 +14,7 @@ import HowItWorks from '../../../components/ScreenComponent/becomeSitter/works/H
 import {bulletData1, bulletData2, bulletData3} from './data';
 import {styles} from './styles';
 import {getOnboardingProgress} from '../../../store/slices/onBoarding/initial';
-import {useAppDispatch} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 
 const SitterInitialScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -24,6 +24,8 @@ const SitterInitialScreen = (props: {
   useEffect(() => {
     dispatch(getOnboardingProgress());
   }, []);
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -56,7 +58,7 @@ const SitterInitialScreen = (props: {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => props.navigation.navigate('SitterLandingPage')}
+            onSelect={() => isLoggedIn ? props.navigation.navigate('SitterLandingPage') : Alert.alert('Please Sign in to continue')}
           />
         </View>
         {/* Flexibility */}
@@ -114,7 +116,7 @@ const SitterInitialScreen = (props: {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => props.navigation.navigate('SitterLandingPage')}
+            onSelect={() => isLoggedIn ? props.navigation.navigate('SitterLandingPage') : Alert.alert('Please Sign in to continue')}
           />
         </View>
       </View>
@@ -145,7 +147,7 @@ const SitterInitialScreen = (props: {
           textAlignment={btnStyles.textAlignment}
           containerStyle={btnStyles.containerStyleFullWidth}
           titleStyle={btnStyles.titleStyle}
-          onSelect={() => props.navigation.navigate('SitterLandingPage')}
+          onSelect={() => isLoggedIn ? props.navigation.navigate('SitterLandingPage') : Alert.alert('Please Sign in to continue')}
         />
       </View>
       <BottomSpacing />

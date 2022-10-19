@@ -23,7 +23,6 @@ const FilterMyPet = ({selectedPet}: Props) => {
         return item;
       }
     });
-    console.log(myNewPet);
     dispatch(setSelectedPet(myNewPet));
   };
   return (

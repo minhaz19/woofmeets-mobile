@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import {FlatList, Platform, StyleSheet} from 'react-native';
+import {ActivityIndicator, FlatList, Platform, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Screen from '../../../components/common/Screen';
 import ShortText from '../../../components/common/text/ShortText';
@@ -15,6 +15,7 @@ import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 import AllProviderLoader from './AllProviderLoadingUI';
 import {getAllProvider} from '../../../store/slices/Provider/allProvider/getAllProvider';
+
 interface Props {
   navigation: {
     navigate: (arg: string, arg1: {providerOpk: string}) => void;
@@ -31,24 +32,29 @@ const AllProvider = ({navigation}: Props) => {
     allProvider,
     loading: getLoading,
     message,
+    loadingOneTime
   } = useAppSelector((state: any) => state.allProvider);
   const dispatch = useAppDispatch();
-  const providers = allProvider !== null && allProvider;
+  // const providers = allProvider !== null && allProvider;
 
   const loadMoreItem = () => {
     setCurrentPage(currentPage + 1);
   };
   let getApiData = formattedData;
 
+  const getMoreProviderData = async() => {
+    if (currentPage !== 1 && allProvider?.length >= limit) {
+      setIsLoading(true);
+      getApiData['page'] = currentPage;
+      await dispatch(getAllProvider(getApiData));
+      setIsLoading(false);
+    }
+  }
+
   useEffect(() => {
-    setIsLoading(true);
-    getApiData['page'] = currentPage;
-    dispatch(getAllProvider(getApiData));
-    setIsLoading(false);
+    getMoreProviderData()
   }, [currentPage]);
 
-  // console.log(providers);
-  // render header
   const renderHeader = () => {
     return (
       <ShortText
@@ -56,7 +62,7 @@ const AllProvider = ({navigation}: Props) => {
           paddingVertical: Platform.OS === 'ios' ? 10 : 0,
           color: Colors.gray,
         }}
-        text={providers ? `${providers.length} Results` : '0 Result'}
+        text={allProvider ? `${allProvider.length} Results` : '0 Result'}
       />
     );
   };
@@ -66,11 +72,16 @@ const AllProvider = ({navigation}: Props) => {
       <>
         {isLoading ? (
           <>
-            <DescriptionText text={'Loading...'} />
-            <BottomSpacing />
+            <View style={{ marginVertical: 10, alignItems: "center"}}>
+              <ActivityIndicator size="large" color="#1f1f1f" />
+              <BottomSpacing />
+            </View>
           </>
         ) : (
-          <BottomSpacing />
+          <View>
+            <BottomSpacing />
+            <BottomSpacing />
+          </View>
         )}
       </>
     );
@@ -78,13 +89,13 @@ const AllProvider = ({navigation}: Props) => {
 
   return (
     <ScreenRapperGrey>
-      {getLoading && <AllProviderLoader />}
+      {loadingOneTime && <AllProviderLoader />}
       <Screen style={styles.container}>
-        {providers ? (
+        {allProvider ? (
           <>
             <FlatList
               showsVerticalScrollIndicator={false}
-              data={providers}
+              data={allProvider}
               keyExtractor={(_, i) => i.toString()}
               renderItem={({item}) => {
                 return (
@@ -102,7 +113,7 @@ const AllProvider = ({navigation}: Props) => {
               ListFooterComponent={renderLoader}
               ListHeaderComponent={renderHeader}
               onEndReached={loadMoreItem}
-              onEndReachedThreshold={0.8}
+              onEndReachedThreshold={0.2}
               // refreshControl={
               //   <RefreshControl
               //     refreshing={isRefreshing}
