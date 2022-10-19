@@ -107,9 +107,9 @@ const AllProvider = ({navigation}: Props) => {
                   <ProviderList
                     item={item}
                     onPress={async () => {
-                      await dispatch(getProviderProfile('2NzBcMvn'));
+                      await dispatch(getProviderProfile(item.provider?.user?.opk));
                       navigation.navigate('ProviderNavigator', {
-                        providerOpk: '2NzBcMvn',
+                        providerOpk: item.provider?.user?.opk,
                       });
                     }}
                   />

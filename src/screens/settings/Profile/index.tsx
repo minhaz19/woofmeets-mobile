@@ -1,5 +1,5 @@
 import {StyleSheet, View, TouchableOpacity, useColorScheme} from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfileInfo from '../../../components/ScreenComponent/profile/BasicInfo/ProfileInfo';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -12,6 +12,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ShortText from '../../../components/common/text/ShortText';
 import { getProviderProfile } from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
 import { useNavigation } from '@react-navigation/native';
+import jwtDecode from 'jwt-decode';
+import authStorage from '../../../utils/helpers/auth/storage';
 
 const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();
@@ -20,6 +22,22 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   useProfileData();
+
+  const [token, setToken] = useState<any>();
+  // const userInfo = useAppSelector(state => state.auth.userInfo);
+
+  const getDecodedToken = async () => {
+    const tok: any = await authStorage.getToken();
+    if (tok) {
+      const decode: any = await jwtDecode(tok);
+      setToken(decode);
+      return decode;
+    }
+  };
+  useEffect(() => {
+    getDecodedToken();
+  }, []);
+
   return (
     <>
       {loading && <AppActivityIndicator visible={true} />}
@@ -48,9 +66,9 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
                 },
               ]}
               onPress={async () => {
-                await dispatch(getProviderProfile('xCMyOqAm'));
+                await dispatch(getProviderProfile(token?.opk));
                 navigation.navigate('ProviderNavigator', {
-                  providerOpk: 'xCMyOqAm',
+                  providerOpk: token?.opk,
                 });
               }}>
               <ShortText text="View Profile" textStyle={styles.text} />
