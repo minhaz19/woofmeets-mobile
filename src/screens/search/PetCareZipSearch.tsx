@@ -59,7 +59,7 @@ const PetCareZipSearch = (props: {
     (state: any) => state?.allPets,
   );
   // const [postCode, setPostCode] = useState<number>();
-  const [errorMessage, setErrorMessage] = useState<string>();
+  const [errorMessage, setErrorMessage] = useState<string | null>();
   const [isMyPetEnabled, setIsMyPetEnabled] = useState(false);
   const [petType, setPetType] = useState(petData);
   const [myPet, setMyPet] = useState<any[]>([]);
@@ -98,7 +98,7 @@ const PetCareZipSearch = (props: {
 
   // select service Data
   const onPressService = (data: any) => {
-    setSequence(data?.id);
+    setSequence(data?.sequence);
     setServiceData({
       service: data?.slug,
       serviceId: data?.id,

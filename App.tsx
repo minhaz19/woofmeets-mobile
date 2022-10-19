@@ -24,6 +24,7 @@ Ant.loadFont();
 EvilIcons.loadFont();
 Fe.loadFont();
 Foundation.loadFont();
+// FontAwesome5.loadFont();
 
 const App = () => {
   return (

@@ -13,6 +13,8 @@ import {
 } from '../../../assets/svgs/Services_SVG';
 import TitleText from '../../common/text/TitleText';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
   data: any;
@@ -24,25 +26,49 @@ interface Props {
 
 const ServiceCard: FC<Props> = props => {
   const {colors} = useTheme();
-  const getIcon = (iconId: number) => {
+  const getIcon = (iconId: number, selected: boolean) => {
     switch (iconId) {
+      // case 1:
+      //   return <BoardingIcon width={34} height={36} />;
+      // case 2:
+      //   return <HouseSittingIcon width={34} height={36} />;
+      // case 3:
+      //   return <DropInVisitIcon width={34} height={36} />;
+      // case 4:
+      //   return <DoggyDayCareIcon width={34} height={36} />;
+      // case 5:
+      //   return <DogWalkingIcon width={34} height={36} />;
       case 1:
-        return <BoardingIcon width={34} height={36} />;
+        return <FontAwesome5Icon
+        name="briefcase"
+        size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+        color={selected ? 'white' : Colors.primary}/>;
       case 2:
-        return <HouseSittingIcon width={34} height={36} />;
+        return <FontAwesome5Icon
+          name="home"
+          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+          color={selected ? 'white' : Colors.primary}/>;
       case 3:
-        return <DropInVisitIcon width={34} height={36} />;
+        return <FontAwesome5Icon
+          name="house-user"
+          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+          color={selected ? 'white' : Colors.primary}/>;
       case 4:
-        return <DoggyDayCareIcon width={34} height={36} />;
+        return <MaterialCommunityIcons
+          name="dog-service"
+          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+          color={selected ? 'white' : Colors.primary}/>;
       case 5:
-        return <DogWalkingIcon width={34} height={36} />;
+        return <FontAwesome5Icon
+          name="paw"
+          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+          color={selected ? 'white' : Colors.primary}/>;
     }
   };
   return (
     <AppTouchableOpacity
       onPress={() => {
         props.onPressEvent(props.data);
-        // props.data.onPress;
       }}
       key={props.data.id}>
       <View
@@ -61,7 +87,7 @@ const ServiceCard: FC<Props> = props => {
         ]}>
         <View style={[styles.boxContainer, props.divide ? styles.pet : {}]}>
           <View style={styles.imageContainer}>
-            {getIcon(props.data.sequence)}
+            {getIcon(props.data.sequence, props.sequence === props.data.sequence)}
           </View>
           <View style={[styles.textContainer]}>
             <TitleText text={props.data.name} textStyle={{...styles.textStyle,  
@@ -92,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageContainer: {
-    paddingBottom: 10,
+    paddingBottom: 5,
   },
   image: {},
   textContainer: {

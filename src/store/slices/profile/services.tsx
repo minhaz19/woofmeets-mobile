@@ -10,6 +10,7 @@ export const getServiceTypes = createAsyncThunk(
     if (!response.ok) {
       throw new Error(response.data.message);
     }
+    console.log(response.data)
     return response.data;
   },
 );
