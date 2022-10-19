@@ -62,6 +62,7 @@ export const useServiceRates = (serviceSetup: any) => {
         },
       );
     const result = await request(payload);
+    console.log('payload', e, payload);
 
     if (result.ok) {
       dispatch(setBoardingSelection({pass: 0}));

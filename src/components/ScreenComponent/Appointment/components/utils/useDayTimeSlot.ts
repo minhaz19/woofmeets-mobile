@@ -47,7 +47,7 @@ export const useDayTimeSlot = () => {
           : false,
       initalSlot:
         pod.length !== 0
-          ? pod?.find((elm: any) => elm.date === item.day).visitTime
+          ? pod?.find((elm: any) => elm.date === item.day)?.visitTime
           : [],
     }));
     return recurring;
@@ -104,7 +104,7 @@ export const useDayTimeSlot = () => {
         );
       });
       console.log('un matched', unMatched, newData, recurringModDatesRef);
-      if (recurringModDatesRef?.length !== 0) {
+      if (recurringModDatesRef?.length > 0) {
         const sameData = unMatched?.map((item: any) => ({
           date: item.date,
           visitTime: recurringModDatesRef
