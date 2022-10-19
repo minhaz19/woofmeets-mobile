@@ -47,7 +47,7 @@ const UpcomingMessage = () => {
         />
       }>
       {!upcomingAppointment && error ? (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', height: 200}} >
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', height: 200, paddingTop: 100}} >
           <MessageNotSend
             svg={<UpcomingSvg width={200} height={200} />}
             title={'No messages in Upcoming inbox'}

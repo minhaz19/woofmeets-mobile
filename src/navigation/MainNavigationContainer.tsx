@@ -36,7 +36,8 @@ import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/Add
 import BasicPayment from '../components/ScreenComponent/becomeSitter/subscription/BasicPayment/BasicPayment';
 import Appointment from '../screens/Appointment';
 import SubscriptionScreen from '../screens/becomeSitter/Subscription';
-// import PetNavigatorFC from './PetNavigatorFS';
+import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
+import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -45,7 +46,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName={
-          // !props.previousLoggedIn ? 'BottomTabNavigator' : 'HomeProfile'
           props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
         }>
         <Stack.Screen
@@ -391,6 +391,36 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
               <HeaderWithBack
                 navigation={navigation}
                 title="Appointment"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSelection"
+          component={ServiceSelection}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Selection"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSetUp"
+          component={ServiceSetUp}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Set Up"
                 notification
               />
             ),

@@ -86,7 +86,7 @@ const Notifications = () => {
           // const response: ApiResponse<any> = await apiClient.get('/fcm-tokens', {
           //   token: token,
           // });
-          console.log(token);
+          // console.log(token);
         });
     } catch (error) {
       // console.log('myMethod: ', 'Error after getToken: ', error);

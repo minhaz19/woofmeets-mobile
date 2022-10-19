@@ -18,7 +18,7 @@ const forgotPassData = {
   image: require('../../../assets/image/verifyAccount/logo.png'),
   title: 'Verify Account',
   subTitle:
-    'We have sent an OTP (One Time Password) to your [Email]. Please enter the 4 digit code below to continue.',
+    'We have sent an OTP (One Time Password) to your [Email]. Please enter the 6 digit code below to continue.',
 };
 interface Props {
   navigation: {navigate: (arg0: string) => void};

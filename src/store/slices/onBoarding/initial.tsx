@@ -205,11 +205,21 @@ const contact = createSlice({
       if (action.payload.pass === 0) {
         //do nothing
       } else if (state.sitterData[0].isCompleted) {
-        newArray.map(v => {
-          v.inProgress = false;
-          return v;
-        })
-        newArray[action.payload.pass].inProgress = true;
+        if (action.payload.pass === 4) {
+          if (state.sitterData[1].isCompleted && state.sitterData[2].isCompleted && state.sitterData[3].isCompleted) {
+            newArray.map(v => {
+              v.inProgress = false;
+              return v;
+            })
+            newArray[action.payload.pass].inProgress = true;
+          }
+        } else {
+          newArray.map(v => {
+            v.inProgress = false;
+            return v;
+          })
+          newArray[action.payload.pass].inProgress = true;
+        }
       }
       state.sitterData = newArray;
     },

@@ -18,6 +18,7 @@ import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/Sign
 import {useSignUp} from './utils/useSignUp';
 import {othersAuthIcons} from '../../../utils/config/Data/loginDatas';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import ScrollViewRapper from '../../../components/common/ScrollViewRapper';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
@@ -28,20 +29,7 @@ const SignUp = ({navigation}: Props) => {
 
   return (
     <>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={[
-          {
-            backgroundColor: isDarkMode
-              ? Colors.dark.lightDark
-              : Colors.background,
-          },
-        ]}>
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-          enabled={Platform.OS === 'ios' ? true : false}>
+        <ScrollViewRapper extraHeight={40} extraScrollHeight={120}>
           <View
             style={[
               styles.infoContainer,
@@ -75,8 +63,7 @@ const SignUp = ({navigation}: Props) => {
             />
             <View style={styles.view} />
           </View>
-        </KeyboardAvoidingView>
-      </ScrollView>
+        </ScrollViewRapper>
     </>
   );
 };
@@ -90,7 +77,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flexGrow: 1,
-
+    paddingTop: 60,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,

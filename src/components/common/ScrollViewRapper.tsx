@@ -17,6 +17,8 @@ import { useTheme } from '../../constants/theme/hooks/useTheme';
       | React.ReactPortal
       | null
       | undefined;
+    extraHeight?: number;
+    extraScrollHeight?: number;
   }) => {
     const isDarkMode = useColorScheme() === 'dark';
     const {colors} = useTheme();
@@ -31,8 +33,8 @@ import { useTheme } from '../../constants/theme/hooks/useTheme';
           props?.style,
           {backgroundColor: colors.backgroundColor},
         ]}
-        extraHeight={80}
-        extraScrollHeight={200}
+        extraHeight={props?.extraHeight ? props.extraHeight : 80}
+        extraScrollHeight={props?.extraScrollHeight ? props.extraScrollHeight :200}
         enableAutomaticScroll={true}
         enableOnAndroid={true}
         showsVerticalScrollIndicator={false}>

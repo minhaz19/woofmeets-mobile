@@ -10,7 +10,6 @@ export const getServiceTypes = createAsyncThunk(
     if (!response.ok) {
       throw new Error(response.data.message);
     }
-    console.log(response.data)
     return response.data;
   },
 );
@@ -61,14 +60,14 @@ const services = createSlice({
         state.loading = false;
         state.error = payload;
       })
-      .addCase(getUserServices.pending, state => {
+      .addCase(getUserServices.pending, (state, {payload}) => {
         state.userServicesLoading = true;
         state.userServicesError = null;
       })
       .addCase(getUserServices.fulfilled, (state, {payload}) => {
         state.userServicesLoading = false;
         state.userServices = payload.data;
-        state.userServicesError = null;
+        state.userServicesError = payload.message;
       })
       .addCase(getUserServices.rejected, (state, {payload}) => {
         state.userServicesLoading = false;
