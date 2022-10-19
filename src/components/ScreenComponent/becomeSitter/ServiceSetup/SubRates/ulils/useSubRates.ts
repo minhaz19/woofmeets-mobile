@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useAppSelector} from '../../../../../../store/store';
 
 export const useSubRates = (rateFields: any, watch: any) => {
@@ -13,7 +13,8 @@ export const useSubRates = (rateFields: any, watch: any) => {
     setShowAdditionalRates(!showAdditionalRates);
   };
   useMemo(() => {
-    const modRates = rateFields?.map((item: any, index: number) => ({
+    console.log('calling memo service one');
+    const modRates = rateFields?.map((item: any) => ({
       ...item,
       percentage: Number(item.percentage),
     }));
@@ -21,6 +22,7 @@ export const useSubRates = (rateFields: any, watch: any) => {
   }, [rateFields]);
 
   useMemo(() => {
+    console.log('calling memo service tow');
     const checkFields = fieldValue?.map(
       (_: any, index: number) =>
         (fieldValue[0].amount / 100) * (index * 5) === fieldValue[index].amount,
@@ -38,6 +40,7 @@ export const useSubRates = (rateFields: any, watch: any) => {
   }, [fieldValue]);
 
   useMemo(() => {
+    console.log('calling memo service three');
     if (checked === true) {
       if (updateRates === false) {
         setChecked(false);

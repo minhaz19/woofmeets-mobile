@@ -60,7 +60,7 @@ const MyPets = () => {
               navigation.navigate('AddPetHome', {opk: 'Appointment'})
             }
             style={[styles.newPet]}>
-            <Plus fill="black" width={20} height={20} />
+            <Plus fill={colors.headerText} width={20} height={20} />
           </AppTouchableOpacity>
         </View>
       ) : (
@@ -102,7 +102,6 @@ const MyPets = () => {
                     } else {
                       petsId.splice(matchIndex, 1);
                     }
-
                     setValue('petsId', petsId);
                   }}
                   style={[
@@ -125,7 +124,9 @@ const MyPets = () => {
                         textAlign: 'center',
                         paddingVertical: 10,
                         fontWeight: 'bold',
-                        color: item.active ? Colors.background : Colors.text,
+                        color: item.active
+                          ? Colors.background
+                          : colors.headerText,
                       }}
                     />
                   )}

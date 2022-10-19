@@ -30,7 +30,6 @@ const ModifyAppointment = ({route}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: '5%',
     paddingTop: 20,
   },
 });
