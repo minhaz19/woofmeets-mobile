@@ -75,16 +75,18 @@ class AppIntroSlider extends React.Component {
             ...styles.skipPositionContainer,
           }}>
           {this.props.renderItem(props)}
-          <TouchableOpacity
-            onPress={() => {
-              clearTimeout(this.timer1);
-              clearTimeout(this.timer2);
-              clearTimeout(this.timer3);
-              this.props.onDone();
-            }}
-            style={styles.skipContainerView}>
-            {this.props.showSkipButton && <TitleText text="SKIP" textStyle={styles.skipText} />}
-          </TouchableOpacity>
+          {this.props.showSkipButton && (
+            <TouchableOpacity
+              onPress={() => {
+                clearTimeout(this.timer1);
+                clearTimeout(this.timer2);
+                clearTimeout(this.timer3);
+                this.props.onDone();
+              }}
+              style={styles.skipContainerView}>
+              <TitleText text="SKIP" textStyle={styles.skipText} />
+            </TouchableOpacity>
+          )}
         </View>
       );
     };

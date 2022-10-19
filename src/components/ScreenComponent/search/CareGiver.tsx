@@ -1,23 +1,23 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import SliderScreenParent from './SliderScreenParent';
-import BigText from '../../common/text/BigText';
 import {
   CustomerServiceSvg,
   GirlWithCatsSvg,
   TwentyFourBySevenSvg,
 } from './utils/SearchBoxCardSvg';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import Colors from '../../../constants/Colors';
+import SliderScreenParent from './SliderScreenParent';
+import BigText from '../../common/text/BigText';
 import Text_Size from '../../../constants/textScaling';
+import Colors from '../../../constants/Colors';
 import DescriptionText from '../../common/text/DescriptionText';
 
-const SchedulePetSettings = () => {
+const CareGiver = () => {
   const data = [
     {
       id: 1,
       description:
-        'Veterinary care reimbursement up to $25,000 is included in the Woofmeets Guarantee.',
+        "Following submission of your request, you will be matched with an amazing Pet Sitter based on your dog's breed(s) and specific comments.",
       icon: (
         <CustomerServiceSvg
           width={SCREEN_WIDTH <= 380 ? 25 : SCREEN_WIDTH <= 600 ? 35 : 50}
@@ -27,7 +27,8 @@ const SchedulePetSettings = () => {
     },
     {
       id: 2,
-      description: 'Support available 24/7, including veterinary assistance.',
+      description:
+        'If you want to choose your own pet-sitter, choose Pet parent match in pet-sitter preference during booking. Alternatively, from the home screen, use Browse & Book to find and communicate with nearby pet-sitters.',
       icon: (
         <TwentyFourBySevenSvg
           width={SCREEN_WIDTH <= 380 ? 25 : SCREEN_WIDTH <= 600 ? 35 : 50}
@@ -37,42 +38,43 @@ const SchedulePetSettings = () => {
     },
   ];
   return (
-    <>
-      <SliderScreenParent>
-        <View style={styles.imageContainer}>
-          <GirlWithCatsSvg style={styles.image} />
-        </View>
-        <BigText
-          text={'Schedule Pet Sittings \nAnd More.'}
-          textStyle={styles.bigTextStyle}
-        />
-        {data.map((item: any) => {
-          return (
-            <View style={styles.flexContainer} key={item.id}>
-              <View style={styles.iconContainer}>
-                <View style={styles.icon}>{item.icon}</View>
-              </View>
-              <View style={styles.textContainer}>
-                <DescriptionText
-                  text={item.description}
-                  textStyle={styles.shortTextStyle}
-                />
-              </View>
+    <SliderScreenParent>
+      <View style={styles.imageContainer}>
+        <GirlWithCatsSvg style={styles.image} />
+      </View>
+      <BigText text={'Finding a Pet Sitter.'} textStyle={styles.bigTextStyle} />
+      {data.map((item: any) => {
+        return (
+          <View style={styles.flexContainer} key={item.id}>
+            <View style={styles.iconContainer}>
+              <View style={styles.icon}>{item.icon}</View>
             </View>
-          );
-        })}
-      </SliderScreenParent>
-    </>
+            <View style={styles.textContainer}>
+              <DescriptionText
+                text={item.description}
+                textStyle={styles.shortTextStyle}
+              />
+            </View>
+          </View>
+        );
+      })}
+      <DescriptionText
+        text={
+          'All Woofmeets Pet-Sitters have been properly screened and background checked.'
+        }
+        textStyle={styles.footerTextStyle}
+      />
+    </SliderScreenParent>
   );
 };
 
-export default SchedulePetSettings;
+export default CareGiver;
 
 const styles = StyleSheet.create({
   imageContainer: {
     alignSelf: 'center',
-    width: '45%',
-    height: '45%',
+    width: '40%',
+    height: '40%',
   },
   image: {
     width: '100%',
@@ -107,5 +109,9 @@ const styles = StyleSheet.create({
   },
   shortTextStyle: {
     color: Colors.light.text,
+  },
+  footerTextStyle: {
+    color: Colors.primaryLight,
+    textAlign: 'center',
   },
 });

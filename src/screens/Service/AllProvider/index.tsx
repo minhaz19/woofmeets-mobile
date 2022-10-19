@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import {ActivityIndicator, FlatList, Platform, StyleSheet, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Screen from '../../../components/common/Screen';
 import ShortText from '../../../components/common/text/ShortText';
@@ -15,9 +21,9 @@ import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 import AllProviderLoader from './AllProviderLoadingUI';
 import {getAllProvider} from '../../../store/slices/Provider/allProvider/getAllProvider';
-import { SCREEN_HEIGHT } from '../../../constants/WindowSize';
+import {SCREEN_HEIGHT} from '../../../constants/WindowSize';
 import IOSButton from '../../../components/UI/IOSButton';
-import { btnStyles } from '../../../constants/theme/common/buttonStyles';
+import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import BigText from '../../../components/common/text/BigText';
 
 interface Props {
@@ -36,7 +42,7 @@ const AllProvider = ({navigation}: Props) => {
     allProvider,
     loading: getLoading,
     message,
-    loadingOneTime
+    loadingOneTime,
   } = useAppSelector((state: any) => state.allProvider);
   const dispatch = useAppDispatch();
   // const providers = allProvider !== null && allProvider;
@@ -46,17 +52,17 @@ const AllProvider = ({navigation}: Props) => {
   };
   let getApiData = formattedData;
 
-  const getMoreProviderData = async() => {
+  const getMoreProviderData = async () => {
     if (currentPage !== 1 && allProvider?.length >= limit) {
       setIsLoading(true);
       getApiData['page'] = currentPage;
       await dispatch(getAllProvider(getApiData));
       setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    getMoreProviderData()
+    getMoreProviderData();
   }, [currentPage]);
 
   const renderHeader = () => {
@@ -77,7 +83,7 @@ const AllProvider = ({navigation}: Props) => {
       <>
         {isLoading ? (
           <>
-            <View style={{ marginVertical: 10, alignItems: "center"}}>
+            <View style={{marginVertical: 10, alignItems: 'center'}}>
               <ActivityIndicator size="large" color="#1f1f1f" />
               <BottomSpacing />
             </View>
@@ -107,7 +113,9 @@ const AllProvider = ({navigation}: Props) => {
                   <ProviderList
                     item={item}
                     onPress={async () => {
-                      await dispatch(getProviderProfile(item.provider?.user?.opk));
+                      await dispatch(
+                        getProviderProfile(item.provider?.user?.opk),
+                      );
                       navigation.navigate('ProviderNavigator', {
                         providerOpk: item.provider?.user?.opk,
                       });

@@ -6,7 +6,7 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const TitleText = (props: {
   text: string | number;
   textStyle?: TextStyle;
-  ellipsizeMode?: string;
+  ellipsizeMode?: any;
   numberOfLines?: number;
 }) => {
   const {colors} = useTheme();
