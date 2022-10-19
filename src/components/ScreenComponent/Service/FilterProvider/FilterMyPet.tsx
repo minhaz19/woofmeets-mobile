@@ -5,14 +5,16 @@ import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import {setSelectedPet} from '../../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
+import {useAppDispatch} from '../../../../store/store';
 
 interface Props {
   selectedPet?: any;
-  setSelectedPet: (arg0: any) => void;
 }
 
-const FilterMyPet = ({setSelectedPet, selectedPet}: Props) => {
+const FilterMyPet = ({selectedPet}: Props) => {
   const {colors} = useTheme();
+  const dispatch = useAppDispatch();
   const handleMultipleCheck = (id: number) => {
     const myNewPet = selectedPet.map((item: any) => {
       if (item.id === id) {
@@ -21,11 +23,10 @@ const FilterMyPet = ({setSelectedPet, selectedPet}: Props) => {
         return item;
       }
     });
-    setSelectedPet(myNewPet);
+    dispatch(setSelectedPet(myNewPet));
   };
   return (
-    <View
-      style={[styles.boxContainer]}>
+    <View style={[styles.boxContainer]}>
       <FlatList
         data={selectedPet}
         showsHorizontalScrollIndicator={false}

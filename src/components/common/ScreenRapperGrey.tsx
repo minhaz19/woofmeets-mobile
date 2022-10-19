@@ -1,14 +1,10 @@
 import {
   View,
   StyleSheet,
-  Falsy,
-  RecursiveArray,
-  RegisteredStyle,
   ViewStyle,
   useColorScheme,
 } from 'react-native';
 import React from 'react';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
 import Colors from '../../constants/Colors';
 
 const ScreenRapperGrey = (props: {

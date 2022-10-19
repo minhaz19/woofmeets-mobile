@@ -1,6 +1,6 @@
 import {parse} from 'date-fns';
 import * as Yup from 'yup';
-import { phoneNumberReg, emailReg, phoneNumberReg1 } from '../../../constants/regex';
+import {  emailReg, phoneNumberReg1 } from '../../../constants/regex';
 
 const basicInfoValidationSchema = Yup.object().shape({
   profileImage: Yup.string(),

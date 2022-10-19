@@ -3,6 +3,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <React/RCTLinkingManager.h>
 
 #import <React/RCTAppSetupUtils.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -75,6 +76,10 @@
 {
   
   if ([[FBSDKApplicationDelegate sharedInstance] application:app openURL:url options:options]) {
+    return YES;
+  }
+
+  if ([RCTLinkingManager application:app openURL:url options:options]) {
     return YES;
   }
   

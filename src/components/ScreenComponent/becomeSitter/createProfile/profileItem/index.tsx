@@ -10,16 +10,19 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import ShortText from '../../../../common/text/ShortText';
 import { useAppDispatch } from '../../../../../store/store';
 import { setBoardingScreen, setProfileScreen } from '../../../../../store/slices/onBoarding/initial';
+import { useTheme } from '../../../../../constants/theme/hooks/useTheme';
 
 const ProfileItemCard = (props: {
   title: string;
   id: number;
   isCompleted: boolean;
+  inProgress: boolean;
   handleClick: ((event: GestureResponderEvent) => void) | undefined;
   name: string;
   isBoarding: boolean;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const {colors} = useTheme();
   const dispatch = useAppDispatch();
   const handleSubmit = async() => {
     setLoading(true);
@@ -89,7 +92,7 @@ const ProfileItemCard = (props: {
       )}
       <ShortText
         text={props.title}
-        textStyle={{...styles.textStyle, color: Colors.light.subText}}
+        textStyle={{...styles.textStyle, color: props.inProgress ? Colors.primary : colors.descriptionText}}
       />
     </TouchableOpacity>
   );

@@ -45,6 +45,7 @@ const CreateProfileLanding = () => {
                   title={item.title}
                   id={item.id}
                   isCompleted={item.isCompleted}
+                  inProgress={item.inProgress}
                   handleClick={item.onPress} 
                   isBoarding={false} />
               ),
@@ -59,6 +60,7 @@ const CreateProfileLanding = () => {
                   title={item.title}
                   id={item.id}
                   isCompleted={item.isCompleted}
+                  inProgress={item.inProgress}
                   handleClick={item.onPress} isBoarding={false} />
               ),
           )}

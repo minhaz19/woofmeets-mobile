@@ -11,6 +11,7 @@ import {
 } from './utils/AvailabilityInitialValues';
 import {useAppSelector} from '../../../../store/store';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
+import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
 
 const Availability = () => {
   const {colors} = useTheme();
@@ -26,12 +27,10 @@ const Availability = () => {
   return (
     <>
       {loading && <AppActivityIndicator visible={true} />}
-      <ScrollView
-        style={[
-          styles.rootContainer,
-          {backgroundColor: colors.backgroundColor},
-        ]}
-        showsVerticalScrollIndicator={false}>
+      <ScrollViewRapper
+        style={
+          styles.rootContainer
+        }>
         <ReusableHeader
           itemId={itemId}
           name={name}
@@ -48,7 +47,7 @@ const Availability = () => {
           enableReset>
           <SubAvailability handlePost={handlePost} loading={isLoading} />
         </AppForm>
-      </ScrollView>
+      </ScrollViewRapper>
     </>
   );
 };

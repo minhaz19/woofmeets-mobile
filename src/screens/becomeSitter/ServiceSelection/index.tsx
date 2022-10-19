@@ -10,11 +10,14 @@ import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {getServiceTypes} from '../../../store/slices/profile/services';
+import {getServiceTypes, getUserServices} from '../../../store/slices/profile/services';
 import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {setSitterData} from '../../../store/slices/onBoarding/initial';
+import jwtDecode from 'jwt-decode';
+import authStorage from '../../../utils/helpers/auth/storage';
+import { useNavigation } from '@react-navigation/native';
 interface Props {
   item: any;
 }
@@ -31,6 +34,7 @@ const ServiceSelection = () => {
   const dispatch = useAppDispatch();
 
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<any>('');
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -51,10 +55,24 @@ const ServiceSelection = () => {
     }
   }, [userServices]);
 
+  const navigation = useNavigation();
+
+  const [token, setToken] = useState<any>();
+  const getDecodedToken = async () => {
+    const tok: any = await authStorage.getToken();
+    if (tok) {
+      const decode: any = await jwtDecode(tok);
+      setToken(decode);
+      return decode;
+    }
+  };
+  
+  useEffect(() => {
+    getDecodedToken();
+  }, [])
+
   const onPressEvent = (id: number) => {
     setSequence(id);
-    // selectData[id].clicked = !selectData[id].clicked;
-    // setSelectData([...selectData]);
   };
 
   const onServicePostHandle = async () => {
@@ -63,13 +81,19 @@ const ServiceSelection = () => {
       const response: ApiResponse<any> = await apiClient.post(
         `/provider-services/${sequence}`,
       );
+      setError(response.data.message);
       if (!response.ok) {
         setLoading(false);
         throw new Error(response.data.message);
       }
       if (response.ok) {
         setLoading(false);
-        dispatch(setSitterData({pass: 0}));
+        if (token && token.provider) {
+          dispatch(getUserServices());
+          navigation.goBack();
+        } else {
+          dispatch(setSitterData({pass: 0}));
+        }
       }
       // return response.data;
     } catch (error: any) {
@@ -116,6 +140,7 @@ const ServiceSelection = () => {
   const renderFooter = () => {
     return (
       <View style={styles.footerContainer}>
+          <DescriptionText text={error} textStyle={{color: Colors.alert, paddingVertical: 5, textAlign: 'center'}}/>
         <ButtonCom
           title="Save and Continue"
           textAlignment={btnStyles.textAlignment}
@@ -176,8 +201,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   footerContainer: {
-    paddingHorizontal: '10%',
-    paddingBottom: 100,
+    marginHorizontal: '10%',
+    marginBottom: 100,
   },
   flatList: {
     flexWrap: 'wrap',

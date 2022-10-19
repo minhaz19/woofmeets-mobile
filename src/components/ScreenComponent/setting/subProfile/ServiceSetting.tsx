@@ -1,5 +1,5 @@
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, View, TouchableOpacity, ScrollView, RefreshControl} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   BoardingIcon,
   DoggyDayCareIcon,
@@ -15,16 +15,21 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
-import ServiceSetUp from '../../../../screens/becomeSitter/ServiceSetUp';
+// import ServiceSetUp from '../../../../screens/becomeSitter/ServiceSetUp';
 import {setServiceSetup} from '../../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
+import ButtonCom from '../../../UI/ButtonCom';
+import { btnStyles } from '../../../../constants/theme/common/buttonStyles';
+import { useNavigation } from '@react-navigation/native';
+import { getUserServices } from '../../../../store/slices/profile/services';
 
 const ServiceSetting = () => {
-  const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
+  // const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
   const {userServices, userServicesLoading} = useAppSelector(
     (state: any) => state.services,
   );
+  const navigation = useNavigation();
 
   const serviceData = userServices !== null && userServices;
   const getIcon = (icon: string) => {
@@ -41,19 +46,36 @@ const ServiceSetting = () => {
         return <DoggyDayCareIcon width={34} height={36} />;
     }
   };
-  if (isBoardingSelected) {
-    return <ServiceSetUp />;
-  }
+  // if (isBoardingSelected) {
+  //   return <ServiceSetUp />;
+  // }
+
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(getUserServices());
+    setRefreshing(false);
+  }, [dispatch]);
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
+  
   return (
     <>
       {userServicesLoading && <AppActivityIndicator visible={true} />}
-      <View
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         style={[
           styles.rootContainer,
           {
             backgroundColor: colors.backgroundColor,
           },
-        ]}>
+        ]}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         {serviceData &&
           serviceData.map((item: any, index: number) => {
             return (
@@ -73,7 +95,7 @@ const ServiceSetting = () => {
                       },
                     }),
                   );
-                  setIsBoardingSelected(true);
+                  navigation.navigate('ServiceSetUp')
                 }}>
                 <View style={styles.flexContainer}>
                   <View style={styles.serviceContainer}>
@@ -109,7 +131,17 @@ const ServiceSetting = () => {
               </TouchableOpacity>
             );
           })}
-      </View>
+        <View style={styles.submitContainer}>
+          <ButtonCom
+            title={'Add new service'}
+            // loading={postLoading}
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={btnStyles.containerStyleFullWidth}
+            titleStyle={btnStyles.titleStyle}
+            onSelect={() => navigation.navigate('ServiceSelection')}
+          />
+        </View>
+      </ScrollView>
     </>
   );
 };
@@ -146,4 +178,8 @@ const styles = StyleSheet.create({
       SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '2%',
   },
   iconStyle: {},
+  submitContainer: {
+    paddingHorizontal: '20%',
+    paddingTop: 20,
+  },
 });

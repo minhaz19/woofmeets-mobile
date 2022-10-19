@@ -2,7 +2,6 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import SliderScreenParent from './SliderScreenParent';
 import BigText from '../../common/text/BigText';
-import ShortText from '../../common/text/ShortText';
 import {
   CustomerServiceSvg,
   GirlWithCatsSvg,
@@ -11,6 +10,7 @@ import {
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
+import DescriptionText from '../../common/text/DescriptionText';
 
 const SchedulePetSettings = () => {
   const data = [
@@ -53,7 +53,7 @@ const SchedulePetSettings = () => {
                 <View style={styles.icon}>{item.icon}</View>
               </View>
               <View style={styles.textContainer}>
-                <ShortText
+                <DescriptionText
                   text={item.description}
                   textStyle={styles.shortTextStyle}
                 />

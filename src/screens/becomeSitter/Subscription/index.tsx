@@ -36,6 +36,7 @@ const SubscriptionScreen = ({route}: Props) => {
     <Screen style={{flex: 1}}>
       {(loading || planLoading) && <AppActivityIndicator visible={true} />}
       <ScrollView
+        showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
         style={[
           styles.container,
           {

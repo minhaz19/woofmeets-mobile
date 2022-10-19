@@ -1,8 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getAllProvider} from './getAllProvider';
+import {getAllProvider, getAllProviderOneTime} from './getAllProvider';
 
 const initialState: any = {
-  allProvider: null,
+  allProvider: [],
+  message: '',
   error: null,
   loading: false,
 };
@@ -11,20 +12,42 @@ const allProviderSlice = createSlice({
   name: 'allProvider',
   initialState,
   reducers: {
-    // setAllProvider: (state, {payload}) => {
-    //   state.allProvider = payload;
+    // setAllProvider: (state, action) => {
+    //   //   state.allProvider = payload;
+    //   state.allProvider = action.payload.meta.total >
+    //     state.allProvider.length && [
+    //     ...action.payload.data,
+    //     ...state.allProvider,
+    //   ];
     // },
   },
 
   extraReducers(builder) {
+    builder
+      .addCase(getAllProviderOneTime.pending, state => {
+        state.loadingOneTime = true;
+        state.errorOneTime = null;
+      })
+      .addCase(getAllProviderOneTime.fulfilled, (state, {payload}) => {
+        state.allProvider = payload.data;
+        state.message = payload;
+        state.errorOneTime = payload;
+        state.loadingOneTime = false;
+      })
+      .addCase(getAllProviderOneTime.rejected, (state, {payload}) => {
+        state.loadingOneTime = false;
+        state.errorOneTime = payload;
+      });
     builder
       .addCase(getAllProvider.pending, state => {
         state.loading = true;
         state.error = null;
       })
       .addCase(getAllProvider.fulfilled, (state, {payload}) => {
+        state.allProvider = payload?.data && [...state.allProvider, ...payload.data];
+        state.message = payload;
+        state.error = payload;
         state.loading = false;
-        state.allProvider = payload;
       })
       .addCase(getAllProvider.rejected, (state, {payload}) => {
         state.loading = false;

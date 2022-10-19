@@ -1,4 +1,4 @@
-import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../constants/textScaling';
@@ -13,6 +13,7 @@ import { getSitterDetails, postSitterDetails } from '../../../store/slices/profi
 import { useDetailsInitalValue } from './useDetailsInitialValue';
 import { setProfileData } from '../../../store/slices/onBoarding/initial';
 import AppForm from '../../../components/common/Form/AppForm';
+import ScrollViewRapperRefresh from '../../../components/common/ScrollViewRapperRefresh';
 
 const SitterDetails = () => {
   const {colors} = useTheme();
@@ -35,20 +36,7 @@ const SitterDetails = () => {
   }, []);
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      }
-      style={[
-        styles.rootContainer,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
+    <ScrollViewRapperRefresh onRefresh={onRefresh} refreshing={refreshing}>
         <View style={styles.nameContainer}>
             <HeaderText
               text="Create Your Profile"
@@ -73,7 +61,7 @@ const SitterDetails = () => {
           </AppForm>
           </View>
       <BottomSpacing />
-    </ScrollView>
+    </ScrollViewRapperRefresh>
   );
 };
 

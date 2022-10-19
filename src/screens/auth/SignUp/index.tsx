@@ -1,10 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import Colors from '../../../constants/Colors';
 import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHeader';
@@ -18,6 +12,7 @@ import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/Sign
 import {useSignUp} from './utils/useSignUp';
 import {othersAuthIcons} from '../../../utils/config/Data/loginDatas';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import ScrollViewRapper from '../../../components/common/ScrollViewRapper';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
@@ -28,55 +23,41 @@ const SignUp = ({navigation}: Props) => {
 
   return (
     <>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={[
-          {
-            backgroundColor: isDarkMode
-              ? Colors.dark.lightDark
-              : Colors.background,
-          },
-        ]}>
-        <KeyboardAvoidingView
-          style={styles.container}
-          // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-          enabled={Platform.OS === 'ios' ? true : false}>
-          <View
-            style={[
-              styles.infoContainer,
-              {
-                backgroundColor: isDarkMode
-                  ? Colors.dark.lightDark
-                  : Colors.background,
-              },
-            ]}>
-            <AuthHeader
-              title={signUpInitalState.title}
-              subTitle={signUpInitalState.subTitle}
-              image={signUpInitalState.image}
+      <ScrollViewRapper extraHeight={40} extraScrollHeight={120}>
+        <View
+          style={[
+            styles.infoContainer,
+            {
+              backgroundColor: isDarkMode
+                ? Colors.dark.lightDark
+                : Colors.background,
+            },
+          ]}>
+          <AuthHeader
+            title={signUpInitalState.title}
+            subTitle={signUpInitalState.subTitle}
+            image={signUpInitalState.image}
+          />
+          <AppForm
+            initialValues={signupValue}
+            validationSchema={signUpValidationSchema}>
+            <SignUpAuthForm
+              handleSubmit={handleSubmit}
+              btnTitle="SIGN UP"
+              termsAndCond
+              loading={loading}
             />
-            <AppForm
-              initialValues={signupValue}
-              validationSchema={signUpValidationSchema}>
-              <SignUpAuthForm
-                handleSubmit={handleSubmit}
-                btnTitle="SIGN UP"
-                termsAndCond
-                loading={loading}
-              />
-            </AppForm>
-            <AuthFooter
-              icons={othersAuthIcons}
-              accountType="Already have an account? "
-              authType="LOGIN"
-              title="or login with"
-              navigateScreen="LogIn"
-            />
-            <View style={styles.view} />
-          </View>
-        </KeyboardAvoidingView>
-      </ScrollView>
+          </AppForm>
+          <AuthFooter
+            icons={othersAuthIcons}
+            accountType="Already have an account? "
+            authType="LOGIN"
+            title="or login with"
+            navigateScreen="LogIn"
+          />
+          <View style={styles.view} />
+        </View>
+      </ScrollViewRapper>
     </>
   );
 };
@@ -90,7 +71,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flexGrow: 1,
-
+    paddingTop: 60,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,

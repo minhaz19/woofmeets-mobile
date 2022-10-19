@@ -15,6 +15,7 @@ import {
   getCancellationPolicy,
   getSingleCancellationPolicy,
 } from '../../../../store/slices/onBoarding/setUpService/cancellationPolicy/getCancellationPolicy';
+import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
 
 const CancellationPolicy = () => {
   const {colors} = useTheme();
@@ -44,13 +45,8 @@ const CancellationPolicy = () => {
   return (
     <>
       {loading && <AppActivityIndicator visible={true} />}
-      <ScrollView
-        style={[
-          styles.rootContainer,
-          {backgroundColor: colors.backgroundColor},
-        ]}
-        showsVerticalScrollIndicator={false}
-        >
+      <ScrollViewRapper
+        style={styles.rootContainer}>
         <ReusableHeader
           itemId={itemId}
           name={name}
@@ -63,7 +59,7 @@ const CancellationPolicy = () => {
           policy={policy}
           singlePolicy={singleProviderPolicy}
         />
-      </ScrollView>
+      </ScrollViewRapper>
     </>
   );
 };

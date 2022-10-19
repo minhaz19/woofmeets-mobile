@@ -23,7 +23,7 @@ const AllProviderLoader = () => {
           speed={1}
           width={SCREEN_WIDTH}
           height={1280}
-          viewBox="5 -20 300 1280"
+          viewBox="30 -20 300 1280"
           backgroundColor={colors.loaderBackground}
           foregroundColor={colors.loaderForeground}>
           <Rect x="0" y="0" rx="4" ry="4" width="100" height="20" />
@@ -34,7 +34,7 @@ const AllProviderLoader = () => {
               y={item.y}
               rx="10"
               ry="10"
-              width={SCREEN_WIDTH - 50}
+              width="90%"
               height="140"
             />
           ))}

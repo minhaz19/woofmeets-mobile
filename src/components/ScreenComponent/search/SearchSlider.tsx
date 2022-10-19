@@ -4,7 +4,7 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Animated,
+  // Animated,
 } from 'react-native';
 import React, {useRef} from 'react';
 import {
@@ -12,19 +12,19 @@ import {
   MenWithDogSvg,
 } from '../../../screens/search/utils/SearchSliderSvg';
 import HeaderText from '../../common/text/HeaderText';
-import ShortText from '../../common/text/ShortText';
 import TitleText from '../../common/text/TitleText';
 import Colors from '../../../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
-import Paginator from './Paginator';
+// import Paginator from './Paginator';
+import DescriptionText from '../../common/text/DescriptionText';
 
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
 
 const SearchSlider = ({navigation}: Props) => {
-  const scrollX = useRef(new Animated.Value(0)).current;
+  // const scrollX = useRef(new Animated.Value(0)).current;
   const slideRef = useRef(null);
   const slidesData = [
     {
@@ -35,7 +35,7 @@ const SearchSlider = ({navigation}: Props) => {
       linkTitle: 'Check Now',
       icon: <MenWithDogSvg width={150} height={150} />,
       backgroundColor: '#DFFFFC',
-      screen: () => navigation.navigate('SafetyScreen'),
+      screen: () => navigation.navigate('ScreenSlider'),
     },
     {
       id: 2,
@@ -44,7 +44,7 @@ const SearchSlider = ({navigation}: Props) => {
       linkTitle: 'Browse Now',
       icon: <CatSliderSvg width={150} height={150} />,
       backgroundColor: '#FDDFE3',
-      screen: () => navigation.navigate('SchedulePetSettings'),
+      screen: () => navigation.navigate('ScreenSlider'),
     },
     {
       id: 3,
@@ -54,7 +54,7 @@ const SearchSlider = ({navigation}: Props) => {
       linkTitle: 'Check Now',
       icon: <MenWithDogSvg width={150} height={150} />,
       backgroundColor: '#FFF7DC',
-      screen: () => navigation.navigate('SchedulePetSettings'),
+      screen: () => navigation.navigate('ScreenSlider'),
     },
     {
       id: 4,
@@ -64,7 +64,7 @@ const SearchSlider = ({navigation}: Props) => {
       linkTitle: 'Check Now',
       icon: <MenWithDogSvg width={150} height={150} />,
       backgroundColor: '#E2EEFF',
-      screen: () => navigation.navigate('SchedulePetSettings'),
+      screen: () => navigation.navigate('ScreenSlider'),
     },
   ];
   return (
@@ -73,12 +73,12 @@ const SearchSlider = ({navigation}: Props) => {
         <ScrollView
           style={{flex: 1}}
           showsHorizontalScrollIndicator={false}
-          onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {x: scrollX}}}],
-            {
-              useNativeDriver: false,
-            },
-          )}
+          // onScroll={Animated.event(
+          //   [{nativeEvent: {contentOffset: {x: scrollX}}}],
+          //   {
+          //     useNativeDriver: false,
+          //   },
+          // )}
           pagingEnabled
           horizontal
           nestedScrollEnabled={true}
@@ -98,7 +98,7 @@ const SearchSlider = ({navigation}: Props) => {
                     text={item.title}
                     textStyle={styles.bigTextStyle}
                   />
-                  <ShortText
+                  <TitleText
                     text={item.description}
                     textStyle={styles.shortTextStyle}
                     ellipsizeMode={'tail'}
@@ -107,7 +107,7 @@ const SearchSlider = ({navigation}: Props) => {
                   <TouchableOpacity
                     style={styles.linkContainer}
                     onPress={item.screen}>
-                    <TitleText
+                    <DescriptionText
                       text={item.linkTitle}
                       textStyle={styles.linkTitleStyle}
                     />
@@ -132,7 +132,7 @@ const SearchSlider = ({navigation}: Props) => {
           })}
         </ScrollView>
       </View>
-      <Paginator data={slidesData} scrollX={scrollX} />
+      {/* <Paginator data={slidesData} scrollX={scrollX} /> */}
     </View>
   );
 };
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
   linkContainer: {
     flexDirection: 'row',
     paddingTop: 4,
+    alignItems: 'center',
   },
   shortTextStyle: {
     color: Colors.light.text,

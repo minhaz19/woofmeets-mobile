@@ -24,7 +24,6 @@ import ServiceSetting from '../components/ScreenComponent/setting/subProfile/Ser
 import ProfileModify from '../components/ScreenComponent/setting/subProfile/ProfileModify';
 import ManageBusiness from '../components/ScreenComponent/setting/subProfile/ManageBusiness';
 import SchedulePetSettings from '../components/ScreenComponent/search/SchedulePetSettings';
-import SafetyScreen from '../components/ScreenComponent/search/SafetyScreen';
 import AddPetCheckScreen from '../screens/pet/AddPet/AddPetCheck';
 import AddPetSubmit from '../screens/pet/AddPet/AddPetSubmit';
 import AddPetHome from '../screens/pet/AddPet/AddPetHome';
@@ -40,7 +39,8 @@ import ActivityScreen from '../screens/Inbox/activity/ActivityScreen';
 import CheckoutDetails from '../screens/checkout/CheckoutDetails';
 import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
 
-// import PetNavigatorFC from './PetNavigatorFS';
+import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
+import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -49,7 +49,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName={
-          // !props.previousLoggedIn ? 'BottomTabNavigator' : 'HomeProfile'
           props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
         }>
         <Stack.Screen
@@ -355,8 +354,8 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="SafetyScreen"
-          component={SafetyScreen}
+          name="ScreenSlider"
+          component={ScreenSlider}
           options={{headerShown: false}}
         />
         {/* Payment Navigations */}
@@ -404,12 +403,16 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         {/* <Stack.Screen
           name="ActivityScreen"
           component={ActivityScreen}
+        <Stack.Screen
+          name="ServiceSelection"
+          component={ServiceSelection}
           options={({navigation}) => ({
             title: '',
             header: () => (
               <HeaderWithBack
                 navigation={navigation}
                 title="Activity Screen"
+                title="Service Selection"
                 notification
               />
             ),
@@ -442,6 +445,20 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             title: '',
             header: () => (
               <HeaderWithBack navigation={navigation} title="Edit Details" />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSetUp"
+          component={ServiceSetUp}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Set Up"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}

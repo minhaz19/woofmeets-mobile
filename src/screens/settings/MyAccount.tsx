@@ -102,7 +102,7 @@ const MyAccount = (props: {
     <ScreenRapperGrey>
       {loading && <AppActivityIndicator visible={true} />}
 
-      <ScrollView style={styles.rootContainer}>
+      <ScrollView style={styles.rootContainer} showsVerticalScrollIndicator={false}>
         <SafeAreaView>
           <View style={styles.profileContainer}>
             <ProfileInfo />

@@ -1,4 +1,4 @@
-import {View, StyleSheet, Text, ScrollView, RefreshControl} from 'react-native';
+import {View, StyleSheet, Text, ScrollView, RefreshControl, KeyboardAvoidingView, Platform} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -15,6 +15,7 @@ import {
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {setProfileData} from '../../../store/slices/onBoarding/initial';
 import AppForm from '../../../components/common/Form/AppForm';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const ContactScreen = () => {
   const {colors} = useTheme();
@@ -37,7 +38,7 @@ const ContactScreen = () => {
   }, []);
 
   return (
-    <ScrollView
+    <KeyboardAwareScrollView
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       refreshControl={
@@ -48,7 +49,11 @@ const ContactScreen = () => {
         {
           backgroundColor: colors.backgroundColor,
         },
-      ]}>
+      ]}
+      extraHeight={100}
+      extraScrollHeight={200}
+      enableAutomaticScroll={true}
+      enableOnAndroid={true}>
       <AppForm
         initialValues={
           contact.contactInfo
@@ -95,12 +100,15 @@ const ContactScreen = () => {
       </View>
       <BottomSpacing />
       <BottomSpacing />
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   rootContainer: {
+    flex: 1,
+  },
+  container: {
     flex: 1,
   },
   topContainer: {

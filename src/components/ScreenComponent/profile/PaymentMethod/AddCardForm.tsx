@@ -1,16 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {useState, useEffect, useRef} from 'react';
+import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import methods from '../../../../api/methods';
 import Colors from '../../../../constants/Colors';
-import {useApi} from '../../../../utils/helpers/api/useApi';
-import {useNavigation} from '@react-navigation/native';
-
-import Ion from 'react-native-vector-icons/Ionicons';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
-import HeaderText from '../../../common/text/HeaderText';
-import ShortText from '../../../common/text/ShortText';
 import AppForm from '../../../common/Form/AppForm';
 import AppStripe from '../../../common/Stripe/AppStripe';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
@@ -20,9 +12,10 @@ import Text_Size from '../../../../constants/textScaling';
 import CardFormHeader from './components/CardFormHeader';
 import {useAddCardForm} from './utils/useAddCardForm';
 import AddCardFormBody from './components/AddCardFormBody';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const AddCardForm = ({navigation, route}: any) => {
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const {sequence} = route.params;
   const {handleValues, loading, tokenLoading} = useAddCardForm(
     navigation,
@@ -36,7 +29,11 @@ const AddCardForm = ({navigation, route}: any) => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView showsVerticalScrollIndicator={false}
+        extraHeight={100}
+        extraScrollHeight={200}
+        enableAutomaticScroll={true}
+        enableOnAndroid={true}>
         <CardFormHeader />
         <AppForm
           initialValues={debitAndCreditCard}
@@ -49,7 +46,7 @@ const AddCardForm = ({navigation, route}: any) => {
             />
           </AppStripe>
         </AppForm>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 };

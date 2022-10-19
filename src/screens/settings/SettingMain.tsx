@@ -1,4 +1,4 @@
-import {View, StyleSheet, ScrollView, useColorScheme} from 'react-native';
+import {View, StyleSheet, ScrollView, useColorScheme, Platform, Linking, Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   CallIcon,
@@ -45,6 +45,33 @@ const SettingMain = (props: { navigation: { navigate: (arg0: string) => any; dis
   useEffect(() => {
     getDecodedToken();
   }, []);
+
+  const makeCall = (phone: string | number) => {
+    let phoneNumber = '';
+    if (Platform.OS === 'android') {
+      phoneNumber = `tel:${phone}`;
+    } else {
+      phoneNumber = `telprompt:${phone}`;
+    }
+    Platform.OS === 'android'
+      ? Linking.openURL(phoneNumber)
+      : Linking.canOpenURL(phoneNumber)
+          .then(supported => {
+            if (!supported) {
+              Alert.alert('No phone available or no native support for IOS');
+            } else {
+              return Linking.openURL(phoneNumber)
+                .then(data => console.error('then', data))
+                .catch(() => {
+                  // throw err;
+                  Alert.alert(
+                    'No phone available or no native support for IOS',
+                  );
+                });
+            }
+          })
+          .catch(err => console.error('An error occurred', err));
+  };
 
   const loginData = [
     {
@@ -133,7 +160,9 @@ const SettingMain = (props: { navigation: { navigate: (arg0: string) => any; dis
       id: 1,
       title: 'Emergency hotline',
       icon: CallIcon,
-      screenName: () => {},
+      screenName: () => {
+        makeCall(999);
+      },
       opacity: 1,
     },
     {

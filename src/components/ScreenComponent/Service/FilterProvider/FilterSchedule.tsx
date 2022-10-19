@@ -4,6 +4,8 @@ import TitleText from '../../../common/text/TitleText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
+import {setScheduleId} from '../../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
+import {useAppDispatch} from '../../../../store/store';
 
 interface Props {
   title: string;
@@ -11,13 +13,9 @@ interface Props {
   name: string;
   setScheduleId?: (arg: number | null) => void;
 }
-const FilterSchedule = ({
-  title,
-  data,
-  name,
-  setScheduleId,
-}: Props) => {
+const FilterSchedule = ({title, data}: Props) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const dispatch = useAppDispatch();
   return (
     <View style={styles.container}>
       <TitleText textStyle={styles.titleText} text={title} />
@@ -26,7 +24,7 @@ const FilterSchedule = ({
           <Pressable
             onPress={() => {
               setActiveIndex(index);
-              setScheduleId && setScheduleId(index);
+              setScheduleId && dispatch(setScheduleId(index));
             }}
             style={[
               styles.tab,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import AppImagePicker from '../../../common/ImagePicker/AppImagePicker';
 import BottomSpacing from '../../../UI/BottomSpacing';
@@ -7,6 +7,7 @@ import {memo} from 'react';
 import {useFormContext} from 'react-hook-form';
 import AdditionalMedicationCheck from '../components/AdditionalMedicationCheck';
 import AdditionalButtonInputs from '../components/AdditionalButtonInputs';
+import ScrollViewRapper from '../../../common/ScrollViewRapper';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -23,11 +24,8 @@ const AddPetSubmitBody = ({handleSubmit, loading, opk}: Props) => {
   } = useFormContext();
   return (
     <View style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.inputContainer}>
+      <ScrollViewRapper>
         {/* <AddPetHeader /> */}
-
         <View>
           <AdditionalMedicationCheck
             errors={errors}
@@ -52,7 +50,7 @@ const AddPetSubmitBody = ({handleSubmit, loading, opk}: Props) => {
         </View>
 
         <BottomSpacing />
-      </ScrollView>
+      </ScrollViewRapper>
     </View>
   );
 };
@@ -63,7 +61,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  inputContainer: {flex: 1},
   spaceHeader: {
     paddingVertical: 10,
   },

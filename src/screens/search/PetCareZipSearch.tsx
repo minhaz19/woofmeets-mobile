@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  RefreshControl
+  RefreshControl,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Text_Size from '../../constants/textScaling';
@@ -23,12 +24,29 @@ import PetCard from '../../components/ScreenComponent/search/PetCard';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../store/store';
-import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
-import {getAllProvider} from '../../store/slices/Provider/allProvider/getAllProvider';
+import {
+  getAllProvider,
+  getAllProviderOneTime,
+} from '../../store/slices/Provider/allProvider/getAllProvider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ServiceTypesLoader from './ServiceTypesLoader';
 import {getServiceTypes} from '../../store/slices/profile/services';
 import {getAllPets} from '../../store/slices/pet/allPets/allPetsAction';
+import {
+  setIsService,
+  setSelectedPet,
+  setPetType,
+  setLocation,
+  setSelectedHome,
+  setMultiSliderValue,
+  setDropIn,
+  setDropOut,
+  setIsYardEnabled,
+  setServiceFrequency,
+  setScheduleId,
+  setFormattedData,
+} from '../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
+import {days} from '../../utils/config/Data/filterProviderDatas';
 
 const petData = [
   {
@@ -48,24 +66,21 @@ const petData = [
     slug: 'cat',
   },
 ];
-// const endPoint = '/provider';
 const PetCareZipSearch = (props: {
   navigation: {navigate: (arg0: string) => void};
 }) => {
   const {serviceTypes, loading: serviceTypesLoading} = useAppSelector(
     (state: any) => state?.services,
   );
-  const {pets, loading: petsLoading} = useAppSelector(
-    (state: any) => state?.allPets,
-  );
-  // const [postCode, setPostCode] = useState<number>();
-  const [errorMessage, setErrorMessage] = useState<string>();
+  const {pets} = useAppSelector((state: any) => state?.allPets);
+  const [errorMessage, setErrorMessage] = useState<any>();
+  const [errorLocation, setErrorLocation] = useState<any>();
   const [isMyPetEnabled, setIsMyPetEnabled] = useState(false);
-  const [petType, setPetType] = useState(petData);
+  const [selectPetType, setSelectPetType] = useState(petData);
   const [myPet, setMyPet] = useState<any[]>([]);
-  const [location, setLocation] = useState({
-    lat: 40.702078,
-    lng: -73.822156,
+  const [careLocation, setCareLocation] = useState({
+    lat: null,
+    lng: null,
   });
   const [sequence, setSequence] = useState<number>(0);
   const [serviceData, setServiceData] = useState({
@@ -98,7 +113,7 @@ const PetCareZipSearch = (props: {
 
   // select service Data
   const onPressService = (data: any) => {
-    setSequence(data?.id);
+    setSequence(data?.sequence);
     setServiceData({
       service: data?.slug,
       serviceId: data?.id,
@@ -118,14 +133,14 @@ const PetCareZipSearch = (props: {
       });
       setMyPet(myNewPet);
     } else {
-      const newPetType = petType.map((item: any) => {
+      const newPetType = selectPetType.map((item: any) => {
         if (item.id === id) {
           return {...item, selected: !item.selected};
         } else {
           return item;
         }
       });
-      setPetType(newPetType);
+      setSelectPetType(newPetType);
     }
   };
 
@@ -143,12 +158,12 @@ const PetCareZipSearch = (props: {
   const onPressAddress = (data: any, details: any) => {
     const lat = details.geometry.location.lat;
     const lng = details.geometry.location.lng;
-    setLocation({lat: lat, lng: lng});
+    setCareLocation({lat: lat, lng: lng});
+    setErrorLocation(null);
   };
-
   // submitting the data and get request
-  const handleSubmit = async () => {
-    const selectedPetType = petType
+  const handleSubmit = () => {
+    const selectedPetType = selectPetType
       ?.filter((item: any) => item.selected)
       .map((item: any) => item.slug);
     const selectedMyPet = myPet
@@ -160,46 +175,56 @@ const PetCareZipSearch = (props: {
         service: serviceData.service,
         serviceId: serviceData.serviceId,
         petsId: selectedMyPet.toString(),
-        lat: location.lat,
-        lng: location.lng,
+        lat: careLocation.lat,
+        lng: careLocation.lng,
+        page: 1,
+        limit: 10,
       };
     } else {
       formattedData = {
         service: serviceData.service,
         serviceId: serviceData.serviceId,
         pet_type: selectedPetType.toString(),
-        lat: location.lat,
-        lng: location.lng,
+        lat: careLocation.lat,
+        lng: careLocation.lng,
+        page: 1,
+        limit: 10,
       };
     }
-    if (formattedData.service) {
-      dispatch(getAllProvider(formattedData));
+    if (formattedData.service && formattedData.lat && formattedData.lng) {
+      dispatch(
+        setIsService({
+          service: serviceData.service,
+          serviceId: serviceData.serviceId,
+        }),
+      );
+      if (isMyPetEnabled) {
+        dispatch(setSelectedPet(myPet));
+      } else {
+        dispatch(setPetType(selectPetType));
+      }
+      dispatch(setFormattedData(formattedData));
+      dispatch(getAllProviderOneTime(formattedData));
+      dispatch(setLocation({lat: careLocation.lat, lng: careLocation.lng}));
+      dispatch(setSelectedHome(''));
+      dispatch(setMultiSliderValue([0, 150]));
+      dispatch(setDropIn(null));
+      dispatch(setDropOut(null));
+      dispatch(setIsYardEnabled(''));
+      dispatch(setServiceFrequency(days));
+      dispatch(setScheduleId(null));
       props.navigation.navigate('AllProvider');
     } else {
-      setErrorMessage('Service must be selected');
+      if (formattedData.service) {
+        setErrorLocation('Location must be selected');
+      } else {
+        setErrorMessage('Service must be selected');
+      }
     }
   };
   const RenderHeader = () => {
     return (
       <View>
-        {/* <TitleText text="I want" textStyle={styles.textHeader} />
-        <View
-          style={{
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-          }}>
-          {serviceTypes &&
-            serviceTypes.map((item: any) => (
-              <ServiceCard
-                key={item.id}
-                data={item}
-                noShadow
-                onPressEvent={onPressService}
-                sequence={sequence}
-              />
-            ))}
-        </View> */}
         {serviceTypesLoading || !serviceTypes ? (
           <ServiceTypesLoader />
         ) : (
@@ -212,7 +237,7 @@ const PetCareZipSearch = (props: {
                 justifyContent: 'center',
               }}>
               {serviceTypes &&
-                serviceTypes.map((item: any) => (
+                serviceTypes?.map((item: any) => (
                   <ServiceCard
                     key={item.id}
                     data={item}
@@ -265,7 +290,7 @@ const PetCareZipSearch = (props: {
                   onPressEvent={onPressPet}
                 />
               ))
-            : petType.map(item => (
+            : selectPetType.map(item => (
                 <PetCard
                   key={item.id}
                   data={item}
@@ -281,9 +306,6 @@ const PetCareZipSearch = (props: {
 
   return (
     <>
-      {/* {serviceTypesLoading && petsLoading && (
-        <AppActivityIndicator visible={true} />
-      )} */}
       <ScreenRapper rapperStyle={styles.rapperStyle}>
         <KeyboardAwareScrollView
           extraHeight={100}
@@ -312,23 +334,24 @@ const PetCareZipSearch = (props: {
                   onNotFound={() => console.log('no results')}
                   keyboardShouldPersistTaps={'always'}
                   keepResultsAfterBlur={true}
+                  enablePoweredByContainer={false}
                   styles={{
                     container: {
                       flex: 0,
                     },
                     description: {
                       color: colors.headerText,
-                      fontSize: Text_Size.Text_11,
+                      fontSize: Text_Size.Text_8,
                     },
                     textInput: {
                       backgroundColor: isDarkMode
                         ? Colors.dark.background
                         : Colors.light.background,
-                      height: 40,
+                      // height: 42,
                       borderRadius: 5,
                       paddingVertical: 5,
                       paddingHorizontal: 10,
-                      fontSize: Text_Size.Text_0,
+                      fontSize: Text_Size.Text_9,
                       borderColor: colors.borderColor,
                       borderWidth: 1,
                       flex: 1,
@@ -344,6 +367,7 @@ const PetCareZipSearch = (props: {
                       borderBottomLeftRadius: 5,
                       borderColor: '#c8c7cc',
                       borderTopWidth: 0.5,
+
                       backgroundColor: isDarkMode
                         ? Colors.dark.background
                         : Colors.light.background,
@@ -353,11 +377,13 @@ const PetCareZipSearch = (props: {
                         ? Colors.dark.background
                         : Colors.light.background,
                       padding: 13,
-                      height: 44,
+                      // height: 44,
+
                       flexDirection: 'row',
                     },
                   }}
                 />
+                {errorLocation && <ErrorMessage error={errorLocation} />}
                 <View style={styles.footerContainer}>
                   <ButtonCom
                     title="Search"
@@ -432,7 +458,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: '4%',
+    marginLeft: '4%',
+    width: '90%',
     marginTop: 10,
   },
   switchContainer: {

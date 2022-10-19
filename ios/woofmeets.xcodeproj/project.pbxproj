@@ -43,7 +43,11 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* woofmeetsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = woofmeetsTests.m; sourceTree = "<group>"; };
 		0F3D80E428F7F8D10088A30F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0FB7C54428FFA0CE00FFA285 /* woofmeetsRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = woofmeetsRelease.entitlements; path = woofmeets/woofmeetsRelease.entitlements; sourceTree = "<group>"; };
 		0FD670FB28DD64F100AAA2E4 /* Icon-App.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App.png"; sourceTree = "<group>"; };
+		0FDA428F28FEB5D100189599 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		0FDA429028FEB5D100189599 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		0FDA429128FEB5D200189599 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* woofmeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = woofmeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = woofmeets/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = woofmeets/AppDelegate.mm; sourceTree = "<group>"; };
@@ -112,6 +116,7 @@
 		13B07FAE1A68108700A75B9A /* woofmeets */ = {
 			isa = PBXGroup;
 			children = (
+				0FB7C54428FFA0CE00FFA285 /* woofmeetsRelease.entitlements */,
 				65DF9ADE28AC16C70010FB8F /* woofmeets.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				6523C05D28AC1D2F00599D01 /* File.swift */,
@@ -131,6 +136,9 @@
 			children = (
 				E12D905013724BA9B51E31CF /* OpenSans-Medium.ttf */,
 				4CD806669D844DEAB6E83110 /* Muli-Black.ttf */,
+				0FDA428F28FEB5D100189599 /* FontAwesome5_Brands.ttf */,
+				0FDA429028FEB5D100189599 /* FontAwesome5_Regular.ttf */,
+				0FDA429128FEB5D200189599 /* FontAwesome5_Solid.ttf */,
 				73686EA64C3049239D8FD23A /* Muli-Bold.ttf */,
 				7347E9F524F54D9780D1B215 /* Muli-ExtraBold.ttf */,
 				5D33DEF2170143F8B066280C /* Muli-ExtraLight.ttf */,
@@ -564,8 +572,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = woofmeets/woofmeets.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z88T9AD5MC;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z88T9AD5MC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = woofmeets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -580,6 +590,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.woofmeets.customer;
 				PRODUCT_NAME = woofmeets;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = WoofmeetsProvision;
 				SWIFT_OBJC_BRIDGING_HEADER = "woofmeets-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -593,7 +604,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = woofmeets/woofmeets.entitlements;
+				CODE_SIGN_ENTITLEMENTS = woofmeets/woofmeetsRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;

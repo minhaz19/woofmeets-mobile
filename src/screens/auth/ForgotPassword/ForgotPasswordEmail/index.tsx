@@ -17,6 +17,8 @@ import AppForm from '../../../../components/common/Form/AppForm';
 import {useFPEmail} from './utils/useFPEmail';
 import {AuthPassword} from '../../../../assets/svgs/SVG_LOGOS';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
+import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 const forgotPassData = {
   title: 'Forgot Password?',
 };
@@ -30,20 +32,8 @@ const ForgotPassword = ({navigation}: Props) => {
   const {isDarkMode} = useTheme();
   const {handleSubmit, loading} = useFPEmail(navigation);
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-      style={[
-        {
-          backgroundColor: isDarkMode
-            ? Colors.dark.lightDark
-            : Colors.background,
-        },
-      ]}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-        enabled={Platform.OS === 'ios' ? true : false}>
+    <ScrollViewRapper extraHeight={40} extraScrollHeight={120}>
+      <View style={styles.container}>
         <View
           style={[
             styles.infoContainer,
@@ -53,7 +43,7 @@ const ForgotPassword = ({navigation}: Props) => {
                 : Colors.background,
             },
           ]}>
-          <ImageAndTitle Icon={AuthPassword} title={forgotPassData.title} />
+          <ImageAndTitle Icon={AuthPassword} title={forgotPassData.title} id={0} />
           <AppForm
             initialValues={forgotPasswordValue}
             validationSchema={forgotPasswordValidationSchema}>
@@ -66,10 +56,9 @@ const ForgotPassword = ({navigation}: Props) => {
             />
           </AppForm>
           <View style={styles.view} />
-          {SCREEN_WIDTH > 800 && <BottomSpacing />}
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+    </ScrollViewRapper>
   );
 };
 
@@ -77,7 +66,7 @@ export default ForgotPassword;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: SCREEN_HEIGHT,
     justifyContent: 'center',
   },
   infoContainer: {
@@ -85,7 +74,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     padding: 20,
     bottom: 0,
-
     paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {height: 20},

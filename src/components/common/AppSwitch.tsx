@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
@@ -24,7 +24,7 @@ const AppSwitch = ({name, terms, auth, title}: Props) => {
         {terms && (
           <View style={styles.textContainer}>
             <ShortText textStyle={styles.text} text="Agree to" />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => Linking.openURL('https://stage.woofmeets.com/terms-and-conditions')}>
               <ShortText textStyle={styles.link} text="Terms and Conditions" />
             </TouchableOpacity>
           </View>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_0,
   },
   link: {
-    color: Colors.primary,
+    color: Colors.blue,
     fontSize: Text_Size.Text_0,
     textDecorationLine: 'underline',
   },

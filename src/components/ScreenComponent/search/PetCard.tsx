@@ -4,9 +4,9 @@ import React, {FC} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import {CatIcon, DogIcon} from '../../../assets/svgs/Services_SVG';
 import TitleText from '../../common/text/TitleText';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 interface Props {
   data: any;
@@ -17,12 +17,18 @@ interface Props {
 
 const PetCard: FC<Props> = props => {
   const {colors} = useTheme();
-  const getIcon = (iconId: number) => {
+  const getIcon = (iconId: number, selected: boolean) => {
     switch (iconId) {
       case 1:
-        return <DogIcon width={34} height={36} />;
+        return <FontAwesome5Icon
+            name="dog"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
+            color={selected ? 'white' : Colors.primary}/>;
       case 2:
-        return <CatIcon width={34} height={36} />;
+        return <FontAwesome5Icon
+        name="cat"
+        size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
+        color={selected ? 'white' : Colors.primary}/>;
     }
   };
 
@@ -37,29 +43,37 @@ const PetCard: FC<Props> = props => {
         style={[
           styles.container,
           {
-            backgroundColor: colors.backgroundColor,
+            backgroundColor: props.data.selected
+              ? Colors.primary
+              : Colors.light.background,
             borderWidth: props.data.selected ? 2 : 2,
-            borderColor:
-              props.data.selected
-                ? Colors.primary
-                : colors.borderColor,
+            borderColor: props.data.selected
+              ? Colors.primary
+              : colors.borderColor,
             width: props.divide ? SCREEN_WIDTH / 2 - 24 : SCREEN_WIDTH / 3 - 20,
             height: 'auto',
           },
         ]}>
         <View style={[styles.boxContainer, props.divide ? styles.pet : {}]}>
-          {props.data.icon && (
+
             <View style={styles.imageContainer}>
-              {getIcon(props.data.selected)}
+              {getIcon(props.data.id, props.data.selected)}
             </View>
-          )}
+
           <View style={[styles.textContainer]}>
-            <TitleText text={props.data.name} textStyle={styles.textStyle} />
+            <TitleText
+              text={props.data.name}
+              textStyle={{
+                ...styles.textStyle,
+                color:
+                  props.data.selected ? 'white' : 'black',
+                fontWeight:
+                  props.data.selected ? '800' : '500',
+              }}
+            />
           </View>
         </View>
-        {props.data.selected && (
-          <View style={styles.rightSelection} />
-        )}
+        {/* {props.data.selected && <View style={styles.rightSelection} />} */}
       </View>
     </AppTouchableOpacity>
   );
