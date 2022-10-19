@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -22,10 +23,10 @@ const MyPets = () => {
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
+
   const {setValue, getValues} = useFormContext();
   const {petsId: pp} = getValues();
   useEffect(() => {
-    console.log('rednzasdf');
     const modArray = allPets?.map((item: any, index: number) => {
       return {
         id: index + 1,
@@ -41,7 +42,7 @@ const MyPets = () => {
       text: '',
       new: true,
     });
-    setDatas(modArray);
+    modArray && setDatas(modArray);
   }, [allPets]);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
@@ -110,13 +111,23 @@ const MyPets = () => {
                       borderColor: item.active
                         ? Colors.primary
                         : colors.borderColor,
-                      backgroundColor: isDarkMode
+                      backgroundColor: item.active
+                        ? Colors.primary
+                        : isDarkMode
                         ? Colors.lightDark
-                        : Colors.primary,
+                        : Colors.background,
                     },
                   ]}>
                   {item.name && (
-                    <TitleText text={item.name} textStyle={styles.text} />
+                    <TitleText
+                      text={item.name}
+                      textStyle={{
+                        textAlign: 'center',
+                        paddingVertical: 10,
+                        fontWeight: 'bold',
+                        color: item.active ? Colors.background : Colors.text,
+                      }}
+                    />
                   )}
                 </AppTouchableOpacity>
               ),

@@ -3,9 +3,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Colors from '../../constants/Colors';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import Inbox from '../../screens/Inbox';
-import ActivityScreen from '../../screens/Inbox/activity/ActivityScreen';
-import CheckoutDetails from '../../screens/checkout/CheckoutDetails';
-import EditDetails from '../../screens/Inbox/ModifyAppointment';
 import ReportCardInitial from '../../screens/reports/Initial';
 import Appointment from '../../screens/Appointment';
 

@@ -1,5 +1,6 @@
 import {format} from 'date-fns';
 import {useEffect, useState} from 'react';
+import {useWatch} from 'react-hook-form';
 // import {useFormContext} from 'react-hook-form';
 // import Colors from '../../../constants/Colors';
 // import {storeMarkStyle} from '../../../store/slices/misc/markedStyle';
@@ -14,22 +15,15 @@ export const useHandleRange = (
 ) => {
   const [_markedStyle, setMarkedStyle] = useState({});
   // const [preMarked, setPremarked] = useState({});
-  const [singleSelect, setSingleSelect] = useState<string>('');
+  const {proposalStartDate, proposalEndDate, recurringStartDate} = useWatch();
   const [step, setSteps] = useState(1);
   const [dateRange, setDateRange] = useState<Date[]>([]);
   const [prevDate, setPrevDate] = useState<false | undefined | Date>();
-  const [startingDate, setStartingDate] = useState('');
-  const [endingDate, setEndingDate] = useState('');
   const [multiDate, setMultiDate] = useState<any>([]);
-  // const {getValues} = useFormContext();
-  // const {
-  //   selectedDate,
-  //   selectedRange,
-  //   multiDate: selectMultiDate,
-  //   proposalStartDate,
-  //   proposalEndDate,
-  // } = getValues();
-  // const dispatch = useAppDispatch();
+  const [singleSelect, setSingleSelect] = useState<string>(recurringStartDate);
+  const [startingDate, setStartingDate] = useState(proposalStartDate);
+  const [endingDate, setEndingDate] = useState(proposalEndDate);
+
   const handleDayPress = (date: any) => {
     if (type === 'SINGLE') {
       setSingleSelect(date.dateString);
@@ -44,8 +38,13 @@ export const useHandleRange = (
       );
 
       setMarkedStyle(styledMarkedRange);
+
+      const sortedDates = orderMultiDates.sort(
+        (a: string, b: string) => Date.parse(a) - Date.parse(b),
+      );
+      console.log('unSortedDates', sortedDates);
       setMultiDate([...multiDate, date.dateString]);
-      setValue && setValue('multiDate', orderMultiDates);
+      setValue && setValue('multiDate', sortedDates);
     } else if (type === 'RANGE') {
       const {end} = compareDate(date.dateString, step, setPrevDate);
 

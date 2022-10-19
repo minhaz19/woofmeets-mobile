@@ -49,7 +49,9 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
       Icon: getIcon(item.serviceTypeId),
     }));
     modData !== undefined && setSelectedService(modData[0]);
-  }, [providerServices]);
+    modData !== undefined &&
+      setValue('serviceTypeId', modData[0].serviceTypeId);
+  }, [providerServices, setValue]);
   const {isDarkMode, colors} = useTheme();
   return (
     <>

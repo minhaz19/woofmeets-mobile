@@ -12,7 +12,7 @@ import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
 import BScalendar from './components/BScalendar';
 import {useFormContext} from 'react-hook-form';
 
-const BoardingSitting = (props: any) => {
+const BoardingSitting = () => {
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
   const {getValues} = useFormContext();

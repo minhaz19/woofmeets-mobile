@@ -24,10 +24,9 @@ const DoggyDayCare = () => {
   const {setValue} = useFormContext();
 
   const {isDarkMode} = useTheme();
-  // const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {
-    proposalStartDate,
-    proposalEndDate,
+    multiDate,
+    recurringStartDate,
     dropOffStartTime,
     dropOffEndTime,
     pickUpStartTime,
@@ -72,8 +71,10 @@ const DoggyDayCare = () => {
             <TitleText textStyle={styles.titleText} text={'Dates'} />
             <DescriptionText
               text={
-                proposalStartDate !== ''
-                  ? `( From: ${proposalStartDate} To: ${proposalEndDate})`
+                isRecurring
+                  ? recurringStartDate
+                  : !isRecurring && multiDate.length !== 0
+                  ? multiDate?.join(' ')
                   : 'Tap to add dates'
               }
             />

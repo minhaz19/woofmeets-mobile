@@ -101,6 +101,8 @@ const appointmentInit = {
   firstMessage: '',
   recurringModDates: [],
   specificModDates: [],
+  recurringModDatesRef: [],
+  specificModDatesRef: [],
   multiDate: [],
   selectedRange: [],
   selectDate: [],

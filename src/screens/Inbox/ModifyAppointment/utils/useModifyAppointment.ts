@@ -1,27 +1,22 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import {useNavigation} from '@react-navigation/native';
-import {useEffect} from 'react';
 import {Alert} from 'react-native';
-import methods from '../../../api/methods';
-import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
-import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {useApi} from '../../../utils/helpers/api/useApi';
-import storage from '../../../utils/helpers/auth/storage';
+import methods from '../../../../api/methods';
+import {useAppSelector} from '../../../../store/store';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import storage from '../../../../utils/helpers/auth/storage';
 
-const endpoint = 'appointment/create/proposal';
-export const useAppointment = () => {
-  const {loading: btnLoading, request} = useApi(methods._post);
-  const dispatch = useAppDispatch();
-  const {providerServices, loading} = useAppSelector(
-    state => state.providerServices,
-  );
-  const navigation = useNavigation<any>();
+export const useModifyAppointment = (route: any) => {
+  const {proposal} = useAppSelector(state => state.proposal);
+  const {loading, request} = useApi(methods._put);
+  const {appointmentOpk} = route.params;
+  const endpoint = `/appointment/update/${appointmentOpk}/proposal`;
+  console.log('proposal', proposal);
   const handleSubmit = async (data: any) => {
     const user: any = await storage.getUser();
+    console.log('hello', appointmentOpk);
     const {
-      providerServiceId,
       petsId,
+      userId,
+      providerId,
       proposalStartDate,
       proposalEndDate,
       dropOffStartTime,
@@ -35,8 +30,6 @@ export const useAppointment = () => {
       recurringStartDate,
       isRecurring,
       visitLength,
-      firstMessage,
-      isRecivedPhotos,
       multiDate,
     } = data;
 
@@ -69,7 +62,7 @@ export const useAppointment = () => {
     ) {
       Alert.alert('You have to recurring days');
     } else if (
-      (serviceTypeId === 3 || serviceTypeId === 5) &&
+      (serviceTypeId === 3 || serviceTypeId === 4 || serviceTypeId === 5) &&
       isRecurring &&
       recurringStartDate === ''
     ) {
@@ -81,13 +74,13 @@ export const useAppointment = () => {
     ) {
       Alert.alert('You have select recurring time slots');
     } else if (
-      (serviceTypeId === 3 || serviceTypeId === 5) &&
+      (serviceTypeId === 3 || serviceTypeId === 4 || serviceTypeId === 5) &&
       !isRecurring &&
       multiDate.length === 0
     ) {
       Alert.alert('You have select specific dates');
     } else if (
-      (serviceTypeId === 3 || serviceTypeId === 5) &&
+      (serviceTypeId === 3 || serviceTypeId === 4 || serviceTypeId === 5) &&
       !isRecurring &&
       specificModDates.length === 0
     ) {
@@ -96,9 +89,8 @@ export const useAppointment = () => {
       Alert.alert('You have to select at least one pet');
     } else {
       const boardSittingPayload = {
-        providerServiceId: providerServiceId,
-        userId: user?.id,
-        providerId: providerServices[0].providerId,
+        proposedBy:
+          user?.id === userId ? 'USER' : user?.id === providerId && 'PROVIDER',
         petsId: petsId,
         dropOffStartTime: dropOffStartTime,
         dropOffEndTime: dropOffEndTime,
@@ -106,19 +98,16 @@ export const useAppointment = () => {
         pickUpEndTime: pickUpEndTime,
         proposalStartDate: proposalStartDate,
         proposalEndDate: proposalEndDate,
-        appointmentserviceType: 'NONE',
-        firstMessage: firstMessage,
-        isRecivedPhotos: isRecivedPhotos,
         formattedMessage: 'string',
+        appointmentserviceType: 'NONE',
       };
       const dropDogPayload = {
-        providerServiceId: providerServiceId,
-        userId: user?.id,
-        providerId: providerServices[0].providerId,
+        proposedBy:
+          user?.id === userId ? 'USER' : user?.id === providerId && 'PROVIDER',
         petsId: petsId,
         length: visitLength,
         isRecurring: isRecurring,
-
+        formattedMessage: 'string',
         appointmentserviceType:
           serviceTypeId === 3 ? 'VISIT' : serviceTypeId === 5 ? 'WALK' : 'NONE',
         proposalOtherDate: isRecurring ? recurringModDates : specificModDates,
@@ -126,17 +115,13 @@ export const useAppointment = () => {
           ? new Date(recurringStartDate).toISOString()
           : undefined,
         recurringSelectedDay: isRecurring ? recurringSelectedDay : [],
-        firstMessage: firstMessage,
-        isRecivedPhotos: isRecivedPhotos,
-        formattedMessage: 'string',
       };
       const doggyPayload = {
-        providerServiceId: providerServiceId,
-        userId: user?.id,
-        providerId: providerServices[0].providerId,
+        proposedBy:
+          user?.id === userId ? 'USER' : user?.id === providerId && 'PROVIDER',
         petsId: petsId,
         isRecurring: isRecurring,
-
+        formattedMessage: 'string',
         appointmentserviceType: 'NONE',
         dropOffStartTime: dropOffStartTime,
         dropOffEndTime: dropOffEndTime,
@@ -147,9 +132,6 @@ export const useAppointment = () => {
           ? new Date(recurringStartDate).toISOString()
           : undefined,
         recurringSelectedDay: isRecurring ? recurringSelectedDay : [],
-        firstMessage: firstMessage,
-        formattedMessage: 'string',
-        isRecivedPhotos: isRecivedPhotos,
       };
       const payload =
         serviceTypeId === 1 || serviceTypeId === 2
@@ -157,22 +139,11 @@ export const useAppointment = () => {
           : serviceTypeId === 3 || serviceTypeId === 5
           ? dropDogPayload
           : doggyPayload;
-      const response = await request(endpoint, payload);
-      response.ok &&
-        navigation.navigate('ActivityScreen', {
-          appointmentOpk: response.data.data.appointment.opk,
-          screen: 'Inbox',
-        });
-      console.log('res', payload, response);
+      const result = await request(endpoint, payload);
+
+      console.log('res mod', userId, providerId, user.id, payload, result);
     }
   };
-  useEffect(() => {
-    providerServices === null && dispatch(getProviderServices('dOkDx5rM'));
-    dispatch(getAllPets());
-  }, []);
-  return {
-    handleSubmit,
-    btnLoading,
-    loading,
-  };
+
+  return {handleSubmit, loading};
 };

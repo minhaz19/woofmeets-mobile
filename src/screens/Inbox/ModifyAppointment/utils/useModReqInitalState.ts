@@ -38,10 +38,13 @@ export const useModReqInitialState = () => {
       return {date: date?.toDateString(), day: dayName};
     });
 
-  const modMultiDates = proposedServiceInfo.proposalOtherDate.map(
+  const modMultiDates = proposedServiceInfo?.proposalOtherDate?.map(
     (item: {date: string}) => item.date,
   );
-  console.log('inital state', proposedServiceInfo, modMultiDates);
+  const modMultiDateTimes = proposedServiceInfo?.proposalOtherDate?.filter(
+    (item: {sameAsStartDate: boolean}) => item.sameAsStartDate === false,
+  );
+  console.log('inital state', proposedServiceInfo, modMultiDateTimes);
 
   return {
     providerServiceId: null,
@@ -88,13 +91,15 @@ export const useModReqInitialState = () => {
           (item: {petId: number}) => item.petId,
         )
       : [],
+    recurringModDatesRef: [],
+    specificModDatesRef: [],
     recurringModDates:
       proposedServiceInfo.isRecurring && proposedServiceInfo?.proposalOtherDate
-        ? proposedServiceInfo.proposalOtherDate
+        ? modMultiDateTimes
         : [],
     specificModDates:
       !proposedServiceInfo.isRecurring && proposedServiceInfo?.proposalOtherDate
-        ? proposedServiceInfo.proposalOtherDate
+        ? modMultiDateTimes
         : [],
     multiDate: !proposedServiceInfo.isRecurring ? modMultiDates : [],
     selectedRange: getDatesInRange(d1, d2),

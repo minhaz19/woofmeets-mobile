@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect,  useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
-import TimeMultiSlotPicker from '../../../common/TimeMultiSlotPicker';
+import TimeMultiSlotPicker from './TimeMultiSlotPicker';
 import DescriptionText from '../../../common/text/DescriptionText';
 import SwitchView from '../../../common/switch/SwitchView';
 import Text_Size from '../../../../constants/textScaling';
