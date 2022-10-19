@@ -90,7 +90,14 @@ const AppFormField = ({
                   onPressOut={onPressOut}
                   editable={editable}
                   onBlur={onBlur}
-                  value={value?.toString()}
+                  value={
+                    name == 'dob'
+                      ? value.replace(
+                          /^([\d]{2})([\d]{2})([\d]{4})$/,
+                          '$1/$2/$3',
+                        )
+                      : value?.toString()
+                  }
                   secureTextEntry={secureTextEntry}
                   error={errors[name]}
                   numberOfLines={numberOfLines && numberOfLines}
