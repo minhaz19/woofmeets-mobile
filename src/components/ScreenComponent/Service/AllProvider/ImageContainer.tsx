@@ -27,7 +27,7 @@ const ImageContainer = ({provider, rounded}: Props) => {
         source={{
           uri:
             provider?.user.image !== null
-              ? provider?.user.image
+              ? provider?.user?.image?.url
               : 'https://source.unsplash.com/random/800x800/?img=1',
         }}
         resizeMode="cover"

@@ -5,6 +5,8 @@ import Colors from '../../../constants/Colors';
 import {Dropdown} from 'react-native-element-dropdown';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {setIsService} from '../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 interface Props {
   name: string;
   data: any[];
@@ -13,7 +15,6 @@ interface Props {
   placeholder: string;
   onChange: (arg: any) => void;
   setSelectedService?: (arg: any) => void;
-  setIsService?: (arg: any) => void;
 }
 const AppSelect = ({
   data,
@@ -22,10 +23,11 @@ const AppSelect = ({
   disable = false,
   onChange,
   setSelectedService,
-  setIsService,
 }: Props) => {
   const {isDarkMode, colors} = useTheme();
+  const dispatch = useAppDispatch();
   const [value, setValuee] = useState(defaultText);
+  const {isService} = useAppSelector((state: any) => state.providerFilter);
   const [isFocus, setIsFocus] = useState(false);
   const renderItem = useCallback(
     (item: any) => {
@@ -60,7 +62,7 @@ const AppSelect = ({
         labelField="label"
         valueField="value"
         placeholder={!isFocus ? placeholder : '...'}
-        value={value}
+        value={isService ? isService?.service : value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         disable={disable}
@@ -70,7 +72,8 @@ const AppSelect = ({
           setIsFocus(false);
           onChange(item.value);
           setSelectedService && setSelectedService(item.id);
-          setIsService && setIsService({service: item.value, serviceId: item.id});
+          setIsService &&
+            dispatch(setIsService({service: item.value, serviceId: item.id}));
         }}
       />
     </View>

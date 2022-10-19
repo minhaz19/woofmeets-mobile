@@ -4,22 +4,35 @@ import Colors from '../../constants/Colors';
 import {Calendar} from 'react-native-calendars';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
+import {
+  setDropIn,
+  setDropOut,
+} from '../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
+import {useAppDispatch} from '../../store/store';
 interface Props {
   selectType?: string;
   value?: any;
-  setValue: (arg: string) => void;
+  dropOut?: boolean;
 }
-const DateRange = ({selectType = 'SINGLE', setValue, value}: Props) => {
+const DateRange = ({selectType = 'SINGLE', value, dropOut}: Props) => {
+  const dispatch = useAppDispatch();
   const {colors} = useTheme();
   const {handleDayPress, singleSelect, _markedStyle} =
     useHandleRange(selectType);
+  const handleSelectDate = (date: any) => {
+    if (dropOut) {
+      dispatch(setDropOut(date));
+    } else {
+      dispatch(setDropIn(date));
+    }
+  };
   return (
     <View>
       <Calendar
         style={styles.calenderStyles}
         onDayPress={data => {
           handleDayPress(data);
-          setValue(data.dateString);
+          handleSelectDate(data.dateString);
         }}
         markingType={'custom'}
         markedDates={{

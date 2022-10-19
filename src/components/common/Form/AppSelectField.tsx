@@ -15,7 +15,6 @@ interface Props {
   disable?: boolean;
   defaultText?: string;
   setSelectedService?: (arg: any) => void;
-  setIsService?: (arg: any) => void;
 }
 const AppSelectField = ({
   name,
@@ -26,7 +25,6 @@ const AppSelectField = ({
   disable,
   defaultText,
   setSelectedService,
-  setIsService,
 }: Props) => {
   return (
     <View>
@@ -46,7 +44,6 @@ const AppSelectField = ({
                 disable={disable}
                 onChange={onChange}
                 setSelectedService={setSelectedService}
-                setIsService={setIsService}
               />
               <ErrorMessage error={error?.message} />
             </>
