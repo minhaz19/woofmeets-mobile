@@ -36,7 +36,7 @@ const SitterInitialScreen = (props: {
         props.navigation.navigate('SitterLandingPage')
       }
     } else {
-      Alert.alert('Please Sign in to continue')
+      props.navigation.navigate('SignUp');
     }
   }
   

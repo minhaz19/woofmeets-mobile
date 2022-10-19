@@ -23,7 +23,7 @@ const SignUp = ({navigation}: Props) => {
 
   return (
     <>
-      <ScrollViewRapper extraHeight={40} extraScrollHeight={120}>
+      <ScrollViewRapper extraHeight={0} extraScrollHeight={0}>
         <View
           style={[
             styles.infoContainer,
@@ -55,7 +55,6 @@ const SignUp = ({navigation}: Props) => {
             title="or login with"
             navigateScreen="LogIn"
           />
-          <View style={styles.view} />
         </View>
       </ScrollViewRapper>
     </>
@@ -75,7 +74,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
-    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {
     height: 40,

@@ -45,7 +45,7 @@ const PetCard: FC<Props> = props => {
           {
             backgroundColor: props.data.selected
               ? Colors.primary
-              : Colors.light.background,
+              : colors.backgroundColor,
             borderWidth: props.data.selected ? 2 : 2,
             borderColor: props.data.selected
               ? Colors.primary
@@ -66,7 +66,7 @@ const PetCard: FC<Props> = props => {
               textStyle={{
                 ...styles.textStyle,
                 color:
-                  props.data.selected ? 'white' : 'black',
+                  props.data.selected ? 'white' : colors.headerText,
                 fontWeight:
                   props.data.selected ? '800' : '500',
               }}
