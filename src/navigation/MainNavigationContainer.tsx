@@ -41,6 +41,7 @@ import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
 
 import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
 import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
+import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -457,6 +458,21 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
               <HeaderWithBack
                 navigation={navigation}
                 title="Service Set Up"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSelection"
+          component={ServiceSelection}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Selection"
                 notification
               />
             ),
