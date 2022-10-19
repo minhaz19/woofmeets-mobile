@@ -29,6 +29,11 @@ import FilterSchedule from './FilterSchedule';
 import {Calendar, Repeat} from '../../../../assets/svgs/SVG_LOGOS';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
+import {
+  setIsYardEnabled,
+  setScheduleId,
+  setSelectedHome,
+} from '../../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
 
 const schedule = [
   {
@@ -48,24 +53,14 @@ interface Props {
   onPressAddress: (arg1: any, arg2: any) => void;
   onPress?: () => void;
   selectedPet?: any;
-  setSelectedPet: (arg0: any) => void;
   multiSliderValue: any;
-  setMultiSliderValue: (arg0: any) => void;
   selectedHome: any;
-  setSelectedHome: (arg0: any) => void;
   dropIn: any;
-  setDropIn: (arg0: any) => void;
   dropOut: any;
-  setDropOut: (arg0: any) => void;
   isService: any;
-  setIsService: (arg: any) => void;
   isYardEnabled: string;
-  setIsYardEnabled: (arg0: string) => void;
   serviceFrequency: any;
-  setServiceFrequency: (arg: any) => void;
   petType: any;
-  setPetType: (arg0: any) => void;
-  setScheduleId: (arg0: any) => void;
   scheduleId: any;
 }
 
@@ -73,31 +68,20 @@ const FilterProviderBody = ({
   handleSubmit,
   onPressAddress,
   selectedPet,
-  setSelectedPet,
   multiSliderValue,
-  setMultiSliderValue,
   selectedHome,
-  setSelectedHome,
   dropIn,
-  setDropIn,
   dropOut,
-  setDropOut,
   isService,
-  setIsService,
   isYardEnabled,
-  setIsYardEnabled,
   serviceFrequency,
-  setServiceFrequency,
   petType,
-  setPetType,
-  setScheduleId,
   scheduleId,
 }: Props) => {
   const {colors, isDarkMode} = useTheme();
   const dispatch = useAppDispatch();
   const [OpenDropIn, setOpenDropIn] = useState(false);
   const [OpenDropOut, setOpenDropOut] = useState(false);
-  // const [scheduleId, setScheduleId] = useState(null);
   const {control} = useForm();
   const {serviceTypes} = useAppSelector((state: any) => state?.services);
   const servicesData = serviceTypes.map((item: any) => {
@@ -116,9 +100,9 @@ const FilterProviderBody = ({
 
   useEffect(() => {
     if (isService.serviceId === 1 || isService.serviceId === 2) {
-      setScheduleId(null);
+      dispatch(setScheduleId(0));
     }
-  }, [isService.serviceId, setScheduleId]);
+  }, [dispatch, isService.serviceId]);
 
   const handleCancel = () => {
     dispatch(setOpenFilter(false));
@@ -133,7 +117,6 @@ const FilterProviderBody = ({
           data={servicesData}
           name={''}
           control={control}
-          setIsService={setIsService}
         />
         <TitleText textStyle={styles.label} text={'Location'} />
         <GooglePlacesAutocomplete
@@ -203,10 +186,7 @@ const FilterProviderBody = ({
               name="schedule"
             />
             {scheduleId === 1 && (
-              <FilterDaySelect
-                serviceFrequency={serviceFrequency}
-                setServiceFrequency={setServiceFrequency}
-              />
+              <FilterDaySelect serviceFrequency={serviceFrequency} />
             )}
           </>
         )}
@@ -229,27 +209,21 @@ const FilterProviderBody = ({
             </View>
           )}
         </View>
-        {OpenDropIn && <DateRange setValue={setDropIn} value={null} />}
-        {OpenDropOut && <DateRange setValue={setDropOut} value={dropIn} />}
+        {OpenDropIn && <DateRange value={null} />}
+        {OpenDropOut && <DateRange value={dropIn} dropOut={true} />}
         {selectedPet.length > 0 ? (
           <View>
             <TitleText textStyle={{...styles.label}} text="My Pet" />
-            <FilterMyPet
-              setSelectedPet={setSelectedPet}
-              selectedPet={selectedPet}
-            />
+            <FilterMyPet selectedPet={selectedPet} />
           </View>
         ) : (
           <View>
             <TitleText textStyle={{...styles.label}} text="Pet Type(s)" />
-            <FilterMyPet setSelectedPet={setPetType} selectedPet={petType} />
+            <FilterMyPet selectedPet={petType} />
           </View>
         )}
         <View>
-          <PriceRange
-            setMultiSliderValue={setMultiSliderValue}
-            multiSliderValue={multiSliderValue}
-          />
+          <PriceRange multiSliderValue={multiSliderValue} />
         </View>
         <TitleText textStyle={styles.title} text="Home Type" />
         <FlatList
@@ -264,7 +238,7 @@ const FilterProviderBody = ({
                 selected={selectedHome}
                 text={item.title}
                 slug={item.slug}
-                onPress={() => setSelectedHome(item.slug)}
+                onPress={() => dispatch(setSelectedHome(item.slug))}
               />
             );
           }}
@@ -278,7 +252,7 @@ const FilterProviderBody = ({
                   key={i}
                   isEnabled={switchItem.name === isYardEnabled ? true : false}
                   title={switchItem.title}
-                  onPress={() => setIsYardEnabled(switchItem.name)}
+                  onPress={() => dispatch(setIsYardEnabled(switchItem.name))}
                 />
               ))}
             </View>

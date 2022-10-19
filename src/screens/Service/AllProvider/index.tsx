@@ -1,100 +1,53 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import {
-  FlatList,
-  Platform,
-  RefreshControl,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
+import {FlatList, Platform, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Screen from '../../../components/common/Screen';
 import ShortText from '../../../components/common/text/ShortText';
 import Colors from '../../../constants/Colors';
 import ProviderList from '../../../components/ScreenComponent/Service/AllProvider/ProviderList';
-// import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
-// import {providers} from '../../../utils/config/Data/providers';
 import BottomHalfModal from '../../../components/UI/modal/BottomHalfModal';
 import FilterProvider from '../FilterProvider';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 import AllProviderLoader from './AllProviderLoadingUI';
-// import {getAllProvider} from '../../../store/slices/Provider/allProvider/getAllProvider';
+import {getAllProvider} from '../../../store/slices/Provider/allProvider/getAllProvider';
 interface Props {
   navigation: {
     navigate: (arg: string, arg1: {providerOpk: string}) => void;
   };
 }
 
-// const VIEWABILITY_CONFIG = {
-//   minimumViewTime: 3000,
-//   viewAreaCoveragePercentThreshold: 100,
-//   waitForInteraction: true,
-// };
-
-// const PAGINATION_LIMIT = 1;
-
-// const INITIAL_PARAMS = {
-//   data: {
-//     active: 1,
-//   },
-//   metadata: {
-//     pagination: {
-//       page: 1,
-//       limit: PAGINATION_LIMIT,
-//     },
-//   },
-//   restartPagination: true,
-// };
-
 const AllProvider = ({navigation}: Props) => {
-  // const [isRefreshing, setIsRefreshing] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit] = useState(2);
+  const [isLoading, setIsLoading] = useState(false);
   const filter = useAppSelector((state: any) => state.filter.isOpen);
-  // const {loading} = useAppSelector(state => state.providerProfile);
-  const {allProvider, loading: getLoading} = useAppSelector(
-    (state: any) => state.allProvider,
-  );
+  const {formattedData} = useAppSelector((state: any) => state.providerFilter);
+  const {
+    allProvider,
+    loading: getLoading,
+    message,
+  } = useAppSelector((state: any) => state.allProvider);
   const dispatch = useAppDispatch();
-  const providers = allProvider !== null && allProvider?.data;
+  const providers = allProvider !== null && allProvider;
 
-  // useEffect(() => {
-  //   // fetchActiveAds(INITIAL_PARAMS);
-  // }, []);
-  // useEffect(() => {
-  //   if (!getLoading) {
-  //     setIsRefreshing(false);
-  //   }
-  // }, [getLoading]);
+  const loadMoreItem = () => {
+    setCurrentPage(currentPage + 1);
+  };
+  let getApiData = formattedData;
 
-  // const loadMoreResults = () => {
-  //   const {page, per_page} = allProvider?.meta;
-  //   const nextPage = page + 1;
+  useEffect(() => {
+    setIsLoading(true);
+    getApiData['page'] = currentPage;
+    dispatch(getAllProvider(getApiData));
+    setIsLoading(false);
+  }, [currentPage]);
 
-  //   if (nextPage) {
-  //     const params = {
-  //       data: {
-  //         active: 1,
-  //       },
-  //       metadata: {
-  //         pagination: {
-  //           page: nextPage,
-  //           limit: PAGINATION_LIMIT,
-  //         },
-  //       },
-  //       restartPagination: false,
-  //     };
-  //     dispatch(getAllProvider(params));
-  //   }
-  // };
-
-  // const handleRefresh = () => {
-  //   setIsRefreshing(true);
-  //   getAllProvider(INITIAL_PARAMS);
-  // };
-
+  // console.log(providers);
   // render header
   const renderHeader = () => {
     return (
@@ -103,12 +56,23 @@ const AllProvider = ({navigation}: Props) => {
           paddingVertical: Platform.OS === 'ios' ? 10 : 0,
           color: Colors.gray,
         }}
-        text={
-          allProvider !== null
-            ? `${allProvider?.meta.per_page} Results`
-            : '20 Result'
-        }
+        text={providers ? `${providers.length} Results` : '0 Result'}
       />
+    );
+  };
+
+  const renderLoader = () => {
+    return (
+      <>
+        {isLoading ? (
+          <>
+            <DescriptionText text={'Loading...'} />
+            <BottomSpacing />
+          </>
+        ) : (
+          <BottomSpacing />
+        )}
+      </>
     );
   };
 
@@ -135,11 +99,10 @@ const AllProvider = ({navigation}: Props) => {
                   />
                 );
               }}
-              ListFooterComponent={<BottomSpacing />}
+              ListFooterComponent={renderLoader}
               ListHeaderComponent={renderHeader}
-              // viewabilityConfig={VIEWABILITY_CONFIG}
-              // onEndReached={loadMoreResults}
-              // onEndReachedThreshold={0.8}
+              onEndReached={loadMoreItem}
+              onEndReachedThreshold={0.8}
               // refreshControl={
               //   <RefreshControl
               //     refreshing={isRefreshing}
@@ -149,10 +112,7 @@ const AllProvider = ({navigation}: Props) => {
             />
           </>
         ) : (
-          <DescriptionText
-            text={allProvider}
-            textStyle={{textAlign: 'center'}}
-          />
+          <DescriptionText text={message} textStyle={{textAlign: 'center'}} />
         )}
         <BottomHalfModal isModalVisible={filter}>
           <FilterProvider />

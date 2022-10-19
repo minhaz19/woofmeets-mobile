@@ -4,14 +4,15 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
 import TitleText from '../../../common/text/TitleText';
-
+import {setServiceFrequency} from '../../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
+import { useAppDispatch } from '../../../../store/store';
 
 interface Props {
   serviceFrequency: any;
-  setServiceFrequency: (arg: any) => void;
 }
 
-const FilterDaySelect = ({serviceFrequency, setServiceFrequency}: Props) => {
+const FilterDaySelect = ({serviceFrequency}: Props) => {
+  const dispatch = useAppDispatch();
   const handleMultipleCheck = (id: number) => {
     const myNewPet = serviceFrequency.map((item: any) => {
       if (item.id === id) {
@@ -20,7 +21,7 @@ const FilterDaySelect = ({serviceFrequency, setServiceFrequency}: Props) => {
         return item;
       }
     });
-    setServiceFrequency(myNewPet);
+    dispatch(setServiceFrequency(myNewPet));
   };
   return (
     <View style={styles.container}>
