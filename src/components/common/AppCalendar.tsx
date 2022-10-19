@@ -26,7 +26,6 @@ Props) => {
     selectType,
     setValue,
   );
-  console.log('calendar');
 
   return (
     <View style={styles.contentContainer}>

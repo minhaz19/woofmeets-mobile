@@ -7,14 +7,11 @@ export const useTimeMultiSlotPicker = (singleItem: any, initalSlot: any) => {
 
   const [newData, setDatas] = useState<any>([]);
   useMemo(() => {
-    console.log('reloading day time slo');
     const times: any = []; // time array
     let tt = 0; // start time
     const ap = ['AM', 'PM']; // AM-PM
-    console.log('ind lop', initalSlot);
 
     for (let i = 0; tt < 24 * 60; i++) {
-      console.log('ind lop');
       const hh = Math.floor(tt / 60); // getting hours of day in 0-24 format
       const mm = tt % 60; // getting minutes of the hour in 0-55 format
       const individualSlot =
@@ -34,9 +31,7 @@ export const useTimeMultiSlotPicker = (singleItem: any, initalSlot: any) => {
     setDatas(times);
   }, [initalSlot, visitLength]);
 
-  console.log('calling');
   const handleMultipleCheck = (id: number) => {
-    console.log('reloading day time slo');
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].active = !newArray[index].active;
@@ -55,6 +50,5 @@ export const useTimeMultiSlotPicker = (singleItem: any, initalSlot: any) => {
       });
     }
   }
-  console.log('Dates', Dates);
   return {handleMultipleCheck, newData};
 };

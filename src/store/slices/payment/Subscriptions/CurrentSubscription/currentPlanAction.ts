@@ -9,7 +9,6 @@ export const getCurrentplan = createAsyncThunk(
       const response: ApiResponse<any> = await apiClient.get(
         '/subscriptions/my-current-subscription',
       );
-      console.log(response);
       if (!response.ok) {
         if (response.data) {
           // Alert.alert(response.data?.message);
@@ -21,7 +20,6 @@ export const getCurrentplan = createAsyncThunk(
         }
         throw new Error(response.data?.message);
       }
-      console.log('cur', response);
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {

@@ -77,7 +77,6 @@ const AllProvider = ({navigation}: Props) => {
     );
   };
 
-  console.log(allProvider);
   const renderLoader = () => {
     return (
       <>

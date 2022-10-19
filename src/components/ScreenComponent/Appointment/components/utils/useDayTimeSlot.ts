@@ -16,7 +16,6 @@ export const useDayTimeSlot = () => {
   } = useWatch();
   const [newData, setDatas] = useState(modData);
   const handleMultipleCheck = (id: number) => {
-    console.log('reloading day time slo');
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].active = !newArray[index].active;
@@ -53,7 +52,6 @@ export const useDayTimeSlot = () => {
     return recurring;
   };
   useEffect(() => {
-    console.log('1');
     if (isRecurring) {
       const recurring = getRecurringDays(
         repeatDate,
@@ -61,7 +59,6 @@ export const useDayTimeSlot = () => {
         proposalOtherDate,
       );
       setDatas(recurring);
-      console.log('recurring', recurring, repeatDate, recurringSelectedDay);
     } else if (!isRecurring) {
       const multi = multiDate?.map((item: any, index: number) => ({
         id: index + 1,
@@ -96,14 +93,12 @@ export const useDayTimeSlot = () => {
     proposalOtherDate,
   ]);
   useEffect(() => {
-    console.log('2');
     if (isRecurring) {
       const unMatched = newData?.filter((item: {date: string}) => {
         return !recurringModDatesRef?.some(
           (it: {date: string}) => item.date === it.date,
         );
       });
-      console.log('un matched', unMatched, newData, recurringModDatesRef);
       if (recurringModDatesRef?.length > 0) {
         const sameData = unMatched?.map((item: any) => ({
           date: item.date,
@@ -115,10 +110,6 @@ export const useDayTimeSlot = () => {
         sameData?.length > 0 &&
           recurringModDatesRef?.length > 0 &&
           setValue('recurringModDates', [...recurringModDatesRef, ...sameData]);
-        console.log('recurringModDates', sameData, recurringModDatesRef, [
-          ...recurringModDatesRef,
-          ...sameData,
-        ]);
       }
     } else if (!isRecurring) {
       const unMatched = newData?.filter((item: any) => {
@@ -139,19 +130,7 @@ export const useDayTimeSlot = () => {
           sameData?.length > 0 &&
           specificModDatesRef?.length > 0 &&
           setValue('specificModDates', [...specificModDatesRef, ...sameData]);
-        console.log('specificModDatesRef', [
-          ...specificModDatesRef,
-          ...sameData,
-        ]);
       }
-      console.log(
-        'rmd',
-
-        isRecurring,
-        newData,
-        specificModDatesRef,
-        unMatched,
-      );
     }
   }, [
     isRecurring,

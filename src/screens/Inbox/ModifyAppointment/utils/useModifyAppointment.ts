@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import {Alert} from 'react-native';
 import methods from '../../../../api/methods';
 import {useAppSelector} from '../../../../store/store';
@@ -9,10 +10,9 @@ export const useModifyAppointment = (route: any) => {
   const {loading, request} = useApi(methods._put);
   const {appointmentOpk} = route.params;
   const endpoint = `/appointment/update/${appointmentOpk}/proposal`;
-  console.log('proposal', proposal);
+  const navigation = useNavigation();
   const handleSubmit = async (data: any) => {
     const user: any = await storage.getUser();
-    console.log('hello', appointmentOpk);
     const {
       petsId,
       userId,
@@ -34,16 +34,13 @@ export const useModifyAppointment = (route: any) => {
     } = data;
 
     if (isRecurring && serviceTypeId === 4 && recurringStartDate === '') {
-      console.log('heere1');
       Alert.alert('You have to select recurring start date');
     } else if (serviceTypeId === 4 && !isRecurring && multiDate.length === 0) {
-      console.log('heere2');
       Alert.alert('You must select schedule dates');
     } else if (
       (serviceTypeId === 1 || serviceTypeId === 2) &&
       (proposalStartDate === '' || proposalEndDate === '')
     ) {
-      console.log('heer3e');
       Alert.alert('You must select schedule dates');
     } else if (
       (serviceTypeId === 1 ||
@@ -53,7 +50,6 @@ export const useModifyAppointment = (route: any) => {
         pickUpStartTime === '' ||
         pickUpEndTime === '')
     ) {
-      console.log('heere5');
       Alert.alert('You must select Drop-off & Pick-up times');
     } else if (
       (serviceTypeId === 3 || serviceTypeId === 5) &&
@@ -141,7 +137,9 @@ export const useModifyAppointment = (route: any) => {
           : doggyPayload;
       const result = await request(endpoint, payload);
 
-      console.log('res mod', userId, providerId, user.id, payload, result);
+      if (result.ok) {
+        navigation.navigate('Inbox');
+      }
     }
   };
 

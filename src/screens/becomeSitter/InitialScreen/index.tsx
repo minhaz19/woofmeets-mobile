@@ -32,7 +32,6 @@ const SitterInitialScreen = (props: {
   const handlePress = () => {
     if (isLoggedIn) {
       if (currentPlan.currentPlan) {
-        console.log(currentPlan);
       } else {
         props.navigation.navigate('SitterLandingPage')
       }

@@ -36,7 +36,6 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
   } = getValues();
   const {isDarkMode} = useTheme();
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  console.log('proposedServiceInfo', proposedServiceInfo);
   return (
     <View style={[styles.container]}>
       <TitleText textStyle={styles.headerText} text={'Schedule'} />

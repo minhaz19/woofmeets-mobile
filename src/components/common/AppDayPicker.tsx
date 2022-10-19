@@ -38,11 +38,8 @@ const AppDayPicker = () => {
           : false,
     }));
     setDatas(modDays);
-
-    console.log('AppDayPicker');
   }, []);
 
-  console.log('reloading AppDayPicker');
   return (
     <View style={styles.container}>
       <TitleText

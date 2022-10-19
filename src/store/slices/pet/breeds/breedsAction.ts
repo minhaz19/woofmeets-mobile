@@ -5,7 +5,6 @@ import apiClient from '../../../../api/client';
 export const getBreeds = createAsyncThunk('/pet/breeds', async () => {
   try {
     const response: ApiResponse<any> = await apiClient.get('/pet/breeds');
-    console.log('response', response);
     if (!response.ok) {
       if (response.data) {
         Alert.alert(response.data.message);
