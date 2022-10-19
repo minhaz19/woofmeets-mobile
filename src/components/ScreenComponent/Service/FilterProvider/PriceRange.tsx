@@ -8,14 +8,16 @@ import Text_Size from '../../../../constants/textScaling';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {Slider} from '@miblanchard/react-native-slider';
+import {setMultiSliderValue} from '../../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
+import {useAppDispatch} from '../../../../store/store';
 
 interface Props {
   multiSliderValue: any;
-  setMultiSliderValue: (arg0: any) => void;
 }
-const PriceRange = ({setMultiSliderValue, multiSliderValue}: Props) => {
+const PriceRange = ({multiSliderValue}: Props) => {
+  const dispatch = useAppDispatch();
   const multiSliderValuesChange = (values: any) => {
-    setMultiSliderValue(values);
+    dispatch(setMultiSliderValue(values));
   };
   return (
     <View>
