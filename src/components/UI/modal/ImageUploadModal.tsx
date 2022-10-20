@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   View,
-  Text,
   TouchableWithoutFeedback,
   Modal,
   TouchableOpacity,
@@ -12,6 +11,7 @@ import React from 'react';
 import * as ImagePicker from 'react-native-image-picker';
 import mime from 'mime';
 import Text_Size from '../../../constants/textScaling';
+import TitleText from '../../common/text/TitleText';
 interface OptionType {
   maxWidth: number;
   maxHeight: number;
@@ -139,7 +139,7 @@ const ImageUploadModal = (props: {
                   source={require('../../../assets/camera.png')}
                   style={styles.iconView}
                 />
-                <Text style={styles.modalText}>Open Camera</Text>
+                <TitleText text={'Open Camera'} textStyle={styles.modalText} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.iconContainer}
@@ -148,7 +148,7 @@ const ImageUploadModal = (props: {
                   source={require('../../../assets/image-gallery.png')}
                   style={styles.iconView}
                 />
-                <Text style={styles.modalText}>Choose from Gallery</Text>
+                <TitleText text={'Choose from Gallery'} textStyle={styles.modalText} />
               </TouchableOpacity>
             </View>
           </View>

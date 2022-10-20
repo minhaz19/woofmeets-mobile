@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {StyleSheet, Text, TextStyle, View} from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
+import {StyleSheet, TextStyle, View} from 'react-native';
+import React, {useMemo, useState} from 'react';
 import {CalendarList} from 'react-native-calendars';
-import {orderAndStyleRange} from '../../../../utils/helpers/CalendarRange/orderAndStyleRange';
 import {_dateRange} from '../../../../utils/helpers/datesArray';
 import {useHandleRange} from '../../../../utils/helpers/CalendarRange/useHandleRange';
 import Colors from '../../../../constants/Colors';
 import EditCart from './EditCart';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import TitleText from '../../../common/text/TitleText';
 
 const RANGE = 12;
 const selectType = 'RANGE';
@@ -185,8 +185,8 @@ function renderCustomHeader(date: any) {
 
   return (
     <View style={styles.header}>
-      <Text style={[styles.month, textStyle]}>{`${month}`}</Text>
-      <Text style={[styles.year, textStyle]}>{year}</Text>
+      <TitleText text={`${month}`} textStyle={{...styles.month, ...textStyle}} />
+      <TitleText text={year} textStyle={{...styles.year, ...textStyle}} />
     </View>
   );
 }

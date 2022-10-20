@@ -6,10 +6,11 @@ import {
   Button,
   Modal,
   Image,
-  Text,
   TouchableOpacity,
   Animated,
 } from 'react-native';
+import Text_Size from '../../../constants/textScaling';
+import BigText from '../text/BigText';
 interface Props {
   visible: boolean;
   children: any;
@@ -70,10 +71,7 @@ const AppAlert = () => {
             style={{height: 150, width: 150, marginVertical: 10}}
           />
         </View>
-
-        <Text style={{marginVertical: 30, fontSize: 20, textAlign: 'center'}}>
-          Congratulations registration was successful
-        </Text>
+        <BigText text="Congratulations registration was successful" textStyle={{marginVertical: 30, fontSize: Text_Size.Text_5, textAlign: 'center'}} />
       </ModalPoup>
       <Button title="Open Modal" onPress={() => setVisible(true)} />
     </View>
