@@ -4,8 +4,8 @@ export const useYourHomeInitialData = (homeData: any) => {
     (item: any) => item?.homeAttributeTypeId,
   );
   return {
-    homeType: data.homeType ? data.homeType : '',
-    yardType: data.yardType ? data.yardType : '',
+    homeType: data?.homeType ? data?.homeType : '',
+    yardType: data?.yardType ? data?.yardType : '',
     homeAttributes: id ? id : [],
   };
 };

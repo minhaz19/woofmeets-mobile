@@ -11,8 +11,9 @@ export const userLogin = createAsyncThunk(
         email,
         password,
       });
+
       if (!response.ok) {
-        if (response.data) {
+        if (response.data.message) {
           Alert.alert(response.data.message);
         } else if (response.problem === 'TIMEOUT_ERROR') {
           Alert.alert('Response Timeout! Please try again');
@@ -24,6 +25,7 @@ export const userLogin = createAsyncThunk(
       if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
       }
+
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {
@@ -50,7 +52,7 @@ export const registerUser = createAsyncThunk(
         password,
       });
       if (!response.ok) {
-        if (response.data) {
+        if (response.data.message) {
           Alert.alert(response.data.message);
         } else if (response.problem === 'TIMEOUT_ERROR') {
           Alert.alert('Response Timeout! Please try again');
@@ -82,7 +84,7 @@ export const providerAuth = createAsyncThunk(
         userInfo,
       );
       if (!response.ok) {
-        if (response.data) {
+        if (response.data.message) {
           Alert.alert(response.data.message);
         } else if (response.problem === 'TIMEOUT_ERROR') {
           Alert.alert('Response Timeout! Please try again');

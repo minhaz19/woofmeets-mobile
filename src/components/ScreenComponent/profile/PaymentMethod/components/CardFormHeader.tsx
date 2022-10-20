@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     fontSize: Text_Size.Text_3,
+    paddingBottom: 10,
   },
   leftContainer: {
     position: 'absolute',

@@ -6,7 +6,7 @@ import Colors from '../../../constants/Colors';
 import FilterProviderBody from '../../../components/ScreenComponent/Service/FilterProvider/FilterProviderBody';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {days} from '../../../utils/config/Data/filterProviderDatas';
-import {getAllProvider} from '../../../store/slices/Provider/allProvider/getAllProvider';
+import {getAllProviderOneTime} from '../../../store/slices/Provider/allProvider/getAllProvider';
 import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
 import {setOpenFilter} from '../../../store/slices/misc/openFilter';
 import {
@@ -124,7 +124,7 @@ const FilterProvider = () => {
       };
     }
     dispatch(setFormattedData(formattedData));
-    dispatch(getAllProvider(formattedData));
+    dispatch(getAllProviderOneTime(formattedData));
     dispatch(setOpenFilter(false));
   };
   const handleReset = () => {

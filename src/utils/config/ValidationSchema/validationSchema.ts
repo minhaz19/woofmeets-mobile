@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
-  password: Yup.string().required().min(8).label('Password'),
+  password: Yup.string().required().min(6).label('Password'),
 });
 
 const signUpValidationSchema = Yup.object().shape({
@@ -26,7 +26,7 @@ const signUpValidationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
   password: Yup.string()
     .required('No password provided.')
-    .min(8, 'Too short - should be min 8 character.')
+    .min(6, 'Too short - should be min 6 character.')
     .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   terms: Yup.boolean()
     .required('The terms and conditions must be accepted.')
@@ -34,10 +34,10 @@ const signUpValidationSchema = Yup.object().shape({
 });
 
 const setPasswordValidationSchema = Yup.object().shape({
-  oldPassword: Yup.string().required().min(8).label('Old Password'),
+  oldPassword: Yup.string().required().min(6).label('Old Password'),
   newPassword: Yup.string()
     .required('No password provided.')
-    .min(8, 'Too short - should be min 8 character.')
+    .min(6, 'Too short - should be min 6 character.')
     .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   confirmPassword: Yup.string()
     .label('confirm password')
@@ -47,7 +47,7 @@ const setPasswordValidationSchema = Yup.object().shape({
 const forgotPasswordResetValidationSchema = Yup.object().shape({
   newPassword: Yup.string()
     .required('No password provided.')
-    .min(8, 'Too short - should be min 8 character.')
+    .min(6, 'Too short - should be min 6 character.')
     .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   confirmPassword: Yup.string()
     .label('confirm password')
@@ -230,7 +230,7 @@ const appointmentValidationSchema = Yup.object().shape({
   dropOffEndTime: Yup.string(),
   pickUpStartTime: Yup.string(),
   pickUpEndTime: Yup.string(),
-  pets: Yup.array(),
+  petsId: Yup.array(),
   firstMessage: Yup.string(),
   isRecivedPhotos: Yup.boolean(),
   recurringStartDate: Yup.string(),
@@ -239,6 +239,32 @@ const appointmentValidationSchema = Yup.object().shape({
   proposalStartDate: Yup.string(),
   proposalEndDate: Yup.string(),
   proposalOtherDate: Yup.array(),
+  recurringModDates: Yup.array(),
+  specificModDates: Yup.array(),
+  multiDate: Yup.array(),
+  selectedRange: Yup.array(),
+  selectDate: Yup.array(),
+});
+const appointmentModifyValidationSchema = Yup.object().shape({
+  visitLength: Yup.number().nullable(true).typeError('A Number is Required'),
+  isRecurring: Yup.boolean(),
+  dropOffStartTime: Yup.string(),
+  dropOffEndTime: Yup.string(),
+  pickUpStartTime: Yup.string(),
+  pickUpEndTime: Yup.string(),
+  petsId: Yup.array(),
+  recurringStartDate: Yup.string(),
+  recurringSelectedDay: Yup.array(),
+  repeatDate: Yup.array(),
+  proposalStartDate: Yup.string(),
+  proposalEndDate: Yup.string(),
+  proposalOtherDate: Yup.array(),
+  recurringModDates: Yup.array(),
+  specificModDates: Yup.array(),
+  multiDate: Yup.array(),
+  selectedRange: Yup.array(),
+  selectDate: Yup.array(),
+  markedStyle: Yup.object(),
 });
 
 export {
@@ -260,4 +286,5 @@ export {
   planCheckoutValidationSchema,
   cardExpValidationSchema,
   appointmentValidationSchema,
+  appointmentModifyValidationSchema,
 };

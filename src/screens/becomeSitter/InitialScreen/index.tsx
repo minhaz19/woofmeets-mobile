@@ -32,12 +32,11 @@ const SitterInitialScreen = (props: {
   const handlePress = () => {
     if (isLoggedIn) {
       if (currentPlan.currentPlan) {
-        console.log(currentPlan);
       } else {
         props.navigation.navigate('SitterLandingPage')
       }
     } else {
-      Alert.alert('Please Sign in to continue')
+      props.navigation.navigate('SignUp');
     }
   }
   

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -8,40 +9,41 @@ import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
 import {Plus} from '../../../../assets/svgs/SVG_LOGOS';
 import DescriptionText from '../../../common/text/DescriptionText';
-import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
+import {useAppSelector} from '../../../../store/store';
 import {useNavigation} from '@react-navigation/native';
 import {useFormContext} from 'react-hook-form';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-var petIds: any[] = [];
+let petsId: any = [];
 const MyPets = () => {
-  const dispatch = useAppDispatch();
   const {pets: allPets} = useAppSelector(state => state.allPets);
-
   const [newData, setDatas] = useState<any>([]);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
-    const index = newArray.findIndex(item => item.id === id);
+    const index = newArray.findIndex(item => item.petId === id);
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-  const {setValue} = useFormContext();
+
+  const {setValue, getValues} = useFormContext();
+  const {petsId: pp} = getValues();
   useEffect(() => {
-    dispatch(getAllPets());
-    const modArray = allPets?.map((item: any, index: number) => ({
-      id: index + 1,
-      name: item.name,
-      petId: item.id,
-      active: false,
-    }));
+    const modArray = allPets?.map((item: any, index: number) => {
+      return {
+        id: index + 1,
+        name: item.name,
+        petId: item.id,
+        active:
+          pp.findIndex((it: number) => it === item.id) !== -1 ? true : false,
+      };
+    });
     modArray?.push({
       id: allPets.length,
       Icon: Plus,
       text: '',
       new: true,
     });
-    setDatas(modArray);
-  }, []);
+    modArray && setDatas(modArray);
+  }, [allPets]);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
   return (
@@ -58,7 +60,7 @@ const MyPets = () => {
               navigation.navigate('AddPetHome', {opk: 'Appointment'})
             }
             style={[styles.newPet]}>
-            <Plus fill="black" width={20} height={20} />
+            <Plus fill={colors.headerText} width={20} height={20} />
           </AppTouchableOpacity>
         </View>
       ) : (
@@ -93,15 +95,14 @@ const MyPets = () => {
                 <AppTouchableOpacity
                   key={index}
                   onPress={() => {
-                    handleMultipleCheck(item.id);
-                    const matchIndex = petIds.indexOf(item.id);
+                    handleMultipleCheck(item.petId);
+                    const matchIndex = petsId.indexOf(item.petId);
                     if (matchIndex === -1) {
-                      petIds.push(...petIds, item.id);
-                      setValue('petsId', petIds);
+                      petsId.push(item.petId);
                     } else {
-                      petIds.splice(matchIndex, 1);
-                      setValue('petsId', petIds);
+                      petsId.splice(matchIndex, 1);
                     }
+                    setValue('petsId', petsId);
                   }}
                   style={[
                     styles.pet,
@@ -109,13 +110,25 @@ const MyPets = () => {
                       borderColor: item.active
                         ? Colors.primary
                         : colors.borderColor,
-                      backgroundColor: isDarkMode
+                      backgroundColor: item.active
+                        ? Colors.primary
+                        : isDarkMode
                         ? Colors.lightDark
-                        : Colors.border,
+                        : Colors.background,
                     },
                   ]}>
                   {item.name && (
-                    <TitleText text={item.name} textStyle={styles.text} />
+                    <TitleText
+                      text={item.name}
+                      textStyle={{
+                        textAlign: 'center',
+                        paddingVertical: 10,
+                        fontWeight: 'bold',
+                        color: item.active
+                          ? Colors.background
+                          : colors.headerText,
+                      }}
+                    />
                   )}
                 </AppTouchableOpacity>
               ),

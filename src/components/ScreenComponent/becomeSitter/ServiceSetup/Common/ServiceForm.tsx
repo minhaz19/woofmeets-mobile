@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {Controller} from 'react-hook-form';
 import TitleText from '../../../../common/text/TitleText';
 import {InfoSvg} from '../../../Inbox/utils/SvgComponent/SvgComponent';
@@ -67,14 +67,15 @@ const ServiceForm = ({
   updateRates,
   checked,
 }: Props) => {
-  useMemo(() => {
+  useEffect(() => {
+    console.log('calling memo service from');
     name !== 'baserate' &&
       updateRates === false &&
       checked === false &&
       setValue!(name, convertedValue?.toFixed(2), {
         shouldValidate: errors[name] ? true : false,
       });
-  }, [name, updateRates, checked, setValue, convertedValue, errors]);
+  }, [name, updateRates, checked, convertedValue, errors]);
   return (
     <>
       <View>
@@ -102,12 +103,12 @@ const ServiceForm = ({
                 onBlur={onBlur}
                 value={
                   name === 'baserate' && value !== null
-                    ? value.toString()
+                    ? value?.toString()
                     : updateRates === false && baseRateWatch !== undefined
                     ? ((baseRateWatch! / 100) * percentage)
                         .toFixed(2)
                         .toString()
-                    : value !== null && value.toString()
+                    : value !== null && value?.toString()
                 }
                 error={error?.message}
                 textInputStyle={textInputStyle}

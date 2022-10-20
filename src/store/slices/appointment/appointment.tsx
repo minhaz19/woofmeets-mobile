@@ -1,11 +1,13 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import { ApiResponse } from 'apisauce';
+import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
 
 export const upcomingInboxFetch = createAsyncThunk(
   'appointment/upcomingInboxFetch',
   async ({statusId}: any, {rejectWithValue}) => {
-    const response: ApiResponse<any> = await apiClient.get(`/appointment/inbox?status=${statusId}`);
+    const response: ApiResponse<any> = await apiClient.get(
+      `/appointment/inbox?status=${statusId}`,
+    );
     if (!response.ok) {
       throw new Error(response.data.message);
     }

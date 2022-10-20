@@ -48,7 +48,9 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
       Icon: getIcon(item.serviceTypeId),
     }));
     modData !== undefined && setSelectedService(modData[0]);
-  }, [providerServices]);
+    modData !== undefined &&
+      setValue('serviceTypeId', modData[0].serviceTypeId);
+  }, [providerServices, setValue]);
   const {isDarkMode, colors} = useTheme();
   return (
     <>
@@ -91,6 +93,7 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
               onPress={() => {
                 setSelectedService(item);
                 setValue(name, item.id);
+                setValue('serviceTypeId', item.serviceTypeId);
                 setServiceId(item.serviceTypeId);
                 setVisible(false);
               }}>

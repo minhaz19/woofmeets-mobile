@@ -35,10 +35,13 @@ import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/Add
 import BasicPayment from '../components/ScreenComponent/becomeSitter/subscription/BasicPayment/BasicPayment';
 import Appointment from '../screens/Appointment';
 import SubscriptionScreen from '../screens/becomeSitter/Subscription';
+import ActivityScreen from '../screens/Inbox/activity/ActivityScreen';
+import CheckoutDetails from '../screens/checkout/CheckoutDetails';
+import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
+
 import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
-// import PetNavigatorFC from './PetNavigatorFS';
-import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
 import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
+import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -398,6 +401,9 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
+        {/* <Stack.Screen
+          name="ActivityScreen"
+          component={ActivityScreen}
         <Stack.Screen
           name="ServiceSelection"
           component={ServiceSelection}
@@ -406,11 +412,41 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             header: () => (
               <HeaderWithBack
                 navigation={navigation}
+                title="Activity Screen"
                 title="Service Selection"
                 notification
               />
             ),
             backgroundColor: Colors.primary,
+          })} */}
+        {/* /> */}
+
+        <Stack.Screen
+          name="ActivityScreen"
+          component={ActivityScreen}
+          options={() => ({
+            headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name="Checkout"
+          component={CheckoutDetails}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Checkout" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="EditDetails"
+          component={ModifyAppointment}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Edit Details" />
+            ),
           })}
         />
         <Stack.Screen
@@ -422,6 +458,21 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
               <HeaderWithBack
                 navigation={navigation}
                 title="Service Set Up"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSelection"
+          component={ServiceSelection}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Selection"
                 notification
               />
             ),

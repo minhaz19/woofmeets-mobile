@@ -4,19 +4,24 @@ import {CalendarList} from 'react-native-calendars';
 import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
 import Colors from '../../constants/Colors';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
+
 interface Props {
   range?: number;
   selectType: string;
   handlePress?: (arg: any) => void;
   setValue: (arg: string, arg2: any) => void;
+  name?: string;
+  markedStyle?: {};
 }
 const AppCalendar = ({
   range = 12,
   selectType,
   setValue,
   handlePress,
-}: Props) => {
+}: // markedStyle,
+Props) => {
   const {colors} = useTheme();
+  // const {markedStyle} = useAppSelector(state => state.markedStyle);
   const {handleDayPress, singleSelect, _markedStyle} = useHandleRange(
     selectType,
     setValue,
@@ -24,9 +29,6 @@ const AppCalendar = ({
 
   return (
     <View style={styles.contentContainer}>
-      {/* <AppTouchableOpacity onPress={() => reset()} style={styles.reset}>
-        <Text style={[styles.month, styles.textStyle]}>Reset</Text>
-      </AppTouchableOpacity> */}
       <CalendarList
         current={new Date().toString()}
         pastScrollRange={0}

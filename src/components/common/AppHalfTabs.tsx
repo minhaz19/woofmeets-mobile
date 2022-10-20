@@ -13,9 +13,16 @@ interface Props {
   name: string;
   setScheduleId?: (arg: number | null) => void;
   setVisitId?: (arg: number | null) => void;
+  defaultValue: number;
 }
-const AppHalfTabs = ({data, title, name, setScheduleId}: Props) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const AppHalfTabs = ({
+  data,
+  title,
+  name,
+  setScheduleId,
+  defaultValue,
+}: Props) => {
+  const [activeIndex, setActiveIndex] = useState(defaultValue);
   const {setValue} = useFormContext();
   const {isDarkMode, colors} = useTheme();
   return (

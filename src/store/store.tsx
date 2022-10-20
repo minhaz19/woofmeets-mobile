@@ -40,7 +40,9 @@ import currentPlanSlice from './slices/payment/Subscriptions/CurrentSubscription
 import providerServicesSlice from './slices/Appointment/ProviderServices/providerServicesSlice';
 import addressReducer from './slices/address/address';
 import appointmentSlice from './slices/Appointment/appointment';
+import markedStyle from './slices/misc/markedStyle';
 import ProviderFilterSlice from './slices/Provider/ProviderFilter/ProviderFilterSlice';
+import providerProposalSlice from './slices/Appointment/ProviderProposal/providerProposalSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -74,6 +76,8 @@ const appReducer = combineReducers({
   providerServices: providerServicesSlice,
   address: addressReducer,
   appointment: appointmentSlice,
+  proposal: providerProposalSlice,
+  markedStyle: markedStyle,
   providerFilter: ProviderFilterSlice,
 });
 

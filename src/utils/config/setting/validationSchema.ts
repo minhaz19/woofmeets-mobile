@@ -1,6 +1,6 @@
 import {parse} from 'date-fns';
 import * as Yup from 'yup';
-import { phoneNumberReg, emailReg, phoneNumberReg1 } from '../../../constants/regex';
+import {  emailReg, phoneNumberReg1 } from '../../../constants/regex';
 
 const basicInfoValidationSchema = Yup.object().shape({
   profileImage: Yup.string(),
@@ -13,16 +13,8 @@ const basicInfoValidationSchema = Yup.object().shape({
   countryId: Yup.number(),
   name: Yup.string().required('Name is required'),
   dob: Yup.date()
-    .transform(function (value, originalValue) {
-      if (this.isType(value)) {
-        return value;
-      }
-      const result = parse(originalValue, 'dd/MM/yyyy', new Date());
-      return result;
-    })
     .typeError('please enter a valid date')
     .required()
-    .min('1969-11-13', 'Date is too early'),
 });
 
 const contactValidationSchema = Yup.object().shape({

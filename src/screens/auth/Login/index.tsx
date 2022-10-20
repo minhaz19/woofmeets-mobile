@@ -18,7 +18,7 @@ import {
 import {loginValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+// import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {useLogin} from './utils/useLogin';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 interface Props {
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    paddingTop: 40,
   },
   infoContainer: {
     borderTopRightRadius: 30,

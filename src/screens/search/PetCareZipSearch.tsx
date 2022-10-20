@@ -308,8 +308,8 @@ const PetCareZipSearch = (props: {
     <>
       <ScreenRapper rapperStyle={styles.rapperStyle}>
         <KeyboardAwareScrollView
-          extraHeight={100}
-          extraScrollHeight={200}
+          extraHeight={80}
+          extraScrollHeight={120}
           enableAutomaticScroll={true}
           enableOnAndroid={true}
           // keyboardVerticalOffset={20}
@@ -334,23 +334,24 @@ const PetCareZipSearch = (props: {
                   onNotFound={() => console.log('no results')}
                   keyboardShouldPersistTaps={'always'}
                   keepResultsAfterBlur={true}
+                  enablePoweredByContainer={false}
                   styles={{
                     container: {
                       flex: 0,
                     },
                     description: {
                       color: colors.headerText,
-                      fontSize: Text_Size.Text_11,
+                      fontSize: Text_Size.Text_8,
                     },
                     textInput: {
                       backgroundColor: isDarkMode
                         ? Colors.dark.background
                         : Colors.light.background,
-                      height: 40,
+                      // height: 42,
                       borderRadius: 5,
                       paddingVertical: 5,
                       paddingHorizontal: 10,
-                      fontSize: Text_Size.Text_0,
+                      fontSize: Text_Size.Text_9,
                       borderColor: colors.borderColor,
                       borderWidth: 1,
                       flex: 1,
@@ -366,6 +367,7 @@ const PetCareZipSearch = (props: {
                       borderBottomLeftRadius: 5,
                       borderColor: '#c8c7cc',
                       borderTopWidth: 0.5,
+
                       backgroundColor: isDarkMode
                         ? Colors.dark.background
                         : Colors.light.background,
@@ -375,7 +377,8 @@ const PetCareZipSearch = (props: {
                         ? Colors.dark.background
                         : Colors.light.background,
                       padding: 13,
-                      height: 44,
+                      // height: 44,
+
                       flexDirection: 'row',
                     },
                   }}

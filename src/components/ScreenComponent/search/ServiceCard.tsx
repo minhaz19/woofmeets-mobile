@@ -98,7 +98,7 @@ const ServiceCard: FC<Props> = props => {
               textStyle={{
                 ...styles.textStyle,
                 color:
-                  props.sequence === props.data.sequence ? 'white' : 'black',
+                  props.sequence === props.data.sequence ? 'white' : colors.headerText,
                 fontWeight:
                   props.sequence === props.data.sequence ? '800' : '500',
               }}

@@ -12,6 +12,7 @@ import AppCalendar from '../../../common/AppCalendar';
 import {useFormContext} from 'react-hook-form';
 import ShortText from '../../../common/text/ShortText';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import {useAppSelector} from '../../../../store/store';
 interface Props {
   serviceId?: number;
   setValue: (arg: string, arg2: any) => void;
@@ -22,6 +23,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
   const {getValues} = useFormContext();
+  const {isRecurring} = getValues();
   const {
     proposalStartDate,
     proposalEndDate,
@@ -29,8 +31,11 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
     dropOffEndTime,
     pickUpStartTime,
     pickUpEndTime,
+    recurringStartDate,
+    multiDate,
   } = getValues();
   const {isDarkMode} = useTheme();
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   return (
     <View style={[styles.container]}>
       <TitleText textStyle={styles.headerText} text={'Schedule'} />
@@ -41,11 +46,15 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
             {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
           ]}
           onPress={() => setVisible(!visible)}>
-          <View>
+          <View style={styles.textWidth}>
             <TitleText textStyle={styles.titleText} text={'Dates'} />
             <DescriptionText
               text={
-                proposalStartDate !== ''
+                isRecurring && recurringStartDate !== ''
+                  ? recurringStartDate
+                  : !isRecurring && multiDate.length > 0
+                  ? multiDate?.join(' ')
+                  : proposalStartDate !== ''
                   ? `( From: ${proposalStartDate} To: ${proposalEndDate})`
                   : 'Tap to add dates'
               }
@@ -66,7 +75,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
             ]}
             onPress={() => setDropVisible(!dropVisible)}>
             <View>
-              <TitleText textStyle={{fontWeight: 'bold'}} text={'Drop-Off'} />
+              <TitleText textStyle={styles.done} text={'Drop-Off'} />
               <ShortText
                 textStyle={{}}
                 text={
@@ -99,7 +108,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
             ]}
             onPress={() => setPickVisible(!pickVisible)}>
             <View>
-              <TitleText textStyle={{fontWeight: 'bold'}} text={'Pick-Up'} />
+              <TitleText textStyle={styles.done} text={'Pick-Up'} />
               <ShortText
                 textStyle={{}}
                 text={
@@ -132,7 +141,22 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
           onPress={() => setVisible(!visible)}
         />
         <View style={styles.pickerContainer}>
-          <AppCalendar selectType="RANGE" setValue={setValue} />
+          <View style={styles.calHeader}>
+            <TitleText textStyle={styles.title} text={'Select date'} />
+            <AppTouchableOpacity onPress={() => setVisible(false)}>
+              <TitleText textStyle={styles.calDone} text={'Done'} />
+            </AppTouchableOpacity>
+          </View>
+          <AppCalendar
+            selectType={
+              serviceId === 4 && isRecurring
+                ? 'SINGLE'
+                : serviceId === 4 && !isRecurring
+                ? 'MULTI'
+                : 'RANGE'
+            }
+            setValue={setValue}
+          />
         </View>
       </Modal>
     </View>
@@ -187,10 +211,26 @@ const styles = StyleSheet.create({
     height: '80%',
     width: '100%',
     backgroundColor: 'white',
-    flexDirection: 'row',
   },
   bgContainer: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
+  calHeader: {
+    marginVertical: 20,
+    marginHorizontal: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: Text_Size.Text_3,
+  },
+  calDone: {
+    fontWeight: 'bold',
+    fontSize: Text_Size.Text_2,
+  },
+  done: {fontWeight: 'bold'},
+  textWidth: {width: '85%'},
 });

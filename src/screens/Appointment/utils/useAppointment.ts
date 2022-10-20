@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import {useNavigation} from '@react-navigation/native';
 import {useEffect} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../api/methods';
 import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
+import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import storage from '../../../utils/helpers/auth/storage';
@@ -14,49 +16,154 @@ export const useAppointment = () => {
   const {providerServices, loading} = useAppSelector(
     state => state.providerServices,
   );
+  const navigation = useNavigation<any>();
   const handleSubmit = async (data: any) => {
     const user: any = await storage.getUser();
-    // const boardingPayload = {
-    //   providerServiceId: data.providerServiceId,
-    //   userId: user?.id,
-    //   providerId: providerServices[0].providerId,
-    //   petsId: data.petsId,
-    //   providerTimeZone: 'string',
-    //   appointmentserviceType: 'NONE',
-    //   dropOffStartTime: data.dropOffStartTime,
-    //   dropOffEndTime: data.dropOffEndTime,
-    //   pickUpStartTime: data.pickUpStartTime,
-    //   pickUpEndTime: data.pickUpEndTime,
-    //   proposalStartDate: data.proposalStartDate,
-    //   proposalEndDate: data.proposalEndDate,
-    //   // proposalOtherDate: data.proposalEndDate,
-    //   // isRecurring: data.isRecurring,
-    //   // recurringStartDate: data.recurringStartDate,
-    //   // recurringSelectedDay: data.recurringSelectedDay,
-    //   firstMessage: data.firstMessage,
-    //   isRecivedPhotos: data.isRecivedPhotos,
-    // };
-    const payload = {
-      providerServiceId: data.providerServiceId,
-      userId: user?.id,
-      providerId: providerServices[0].providerId,
-      petsId: data.petsId,
-      length: data.visitLength,
-      isRecurring: data.isRecurring,
-      providerTimeZone: 'string',
-      appointmentserviceType: 'NONE',
-      proposalOtherDate: data.isRecurring ? [] : data.DIVspecificDates,
-      recurringStartDate: data.recurringStartDate,
-      recurringSelectedDay: data.recurringSelectedDay,
-      firstMessage: data.firstMessage,
-      isRecivedPhotos: data.isRecivedPhotos,
-    };
-    // const response = await request(endpoint, payload);
-    Alert.alert('Appointment under maintainance');
-    // console.log('res', response);
+    const {
+      providerServiceId,
+      petsId,
+      proposalStartDate,
+      proposalEndDate,
+      dropOffStartTime,
+      dropOffEndTime,
+      pickUpStartTime,
+      pickUpEndTime,
+      serviceTypeId,
+      specificModDates,
+      recurringModDates,
+      recurringSelectedDay,
+      recurringStartDate,
+      isRecurring,
+      visitLength,
+      firstMessage,
+      isRecivedPhotos,
+      multiDate,
+    } = data;
+
+    if (isRecurring && serviceTypeId === 4 && recurringStartDate === '') {
+      Alert.alert('You have to select recurring start date');
+    } else if (serviceTypeId === 4 && !isRecurring && multiDate.length === 0) {
+      Alert.alert('You must select schedule dates');
+    } else if (
+      (serviceTypeId === 1 || serviceTypeId === 2) &&
+      (proposalStartDate === '' || proposalEndDate === '')
+    ) {
+      Alert.alert('You must select schedule dates');
+    } else if (
+      (serviceTypeId === 1 ||
+        (serviceTypeId === 2 && serviceTypeId === 4 && isRecurring)) &&
+      (dropOffStartTime === '' ||
+        dropOffEndTime === '' ||
+        pickUpStartTime === '' ||
+        pickUpEndTime === '')
+    ) {
+      Alert.alert('You must select Drop-off & Pick-up times');
+    } else if (
+      (serviceTypeId === 3 || serviceTypeId === 5) &&
+      isRecurring &&
+      recurringSelectedDay.length === 0
+    ) {
+      Alert.alert('You have to recurring days');
+    } else if (
+      (serviceTypeId === 3 || serviceTypeId === 5) &&
+      isRecurring &&
+      recurringStartDate === ''
+    ) {
+      Alert.alert('You have recurring start date');
+    } else if (
+      (serviceTypeId === 3 || serviceTypeId === 5) &&
+      isRecurring &&
+      recurringModDates.length === 0
+    ) {
+      Alert.alert('You have select recurring time slots');
+    } else if (
+      (serviceTypeId === 3 || serviceTypeId === 5) &&
+      !isRecurring &&
+      multiDate.length === 0
+    ) {
+      Alert.alert('You have select specific dates');
+    } else if (
+      (serviceTypeId === 3 || serviceTypeId === 5) &&
+      !isRecurring &&
+      specificModDates.length === 0
+    ) {
+      Alert.alert('You have select walk / visit times');
+    } else if (petsId.length === 0 || petsId === undefined) {
+      Alert.alert('You have to select at least one pet');
+    } else {
+      const boardSittingPayload = {
+        providerServiceId: providerServiceId,
+        userId: user?.id,
+        providerId: providerServices[0].providerId,
+        petsId: petsId,
+        dropOffStartTime: dropOffStartTime,
+        dropOffEndTime: dropOffEndTime,
+        pickUpStartTime: pickUpStartTime,
+        pickUpEndTime: pickUpEndTime,
+        proposalStartDate: proposalStartDate,
+        proposalEndDate: proposalEndDate,
+        appointmentserviceType: 'NONE',
+        firstMessage: firstMessage,
+        isRecivedPhotos: isRecivedPhotos,
+        formattedMessage: 'string',
+      };
+      const dropDogPayload = {
+        providerServiceId: providerServiceId,
+        userId: user?.id,
+        providerId: providerServices[0].providerId,
+        petsId: petsId,
+        length: visitLength,
+        isRecurring: isRecurring,
+
+        appointmentserviceType:
+          serviceTypeId === 3 ? 'VISIT' : serviceTypeId === 5 ? 'WALK' : 'NONE',
+        proposalOtherDate: isRecurring ? recurringModDates : specificModDates,
+        recurringStartDate: isRecurring
+          ? new Date(recurringStartDate).toISOString()
+          : undefined,
+        recurringSelectedDay: isRecurring ? recurringSelectedDay : [],
+        firstMessage: firstMessage,
+        isRecivedPhotos: isRecivedPhotos,
+        formattedMessage: 'string',
+      };
+      const doggyPayload = {
+        providerServiceId: providerServiceId,
+        userId: user?.id,
+        providerId: providerServices[0].providerId,
+        petsId: petsId,
+        isRecurring: isRecurring,
+
+        appointmentserviceType: 'NONE',
+        dropOffStartTime: dropOffStartTime,
+        dropOffEndTime: dropOffEndTime,
+        pickUpStartTime: pickUpStartTime,
+        pickUpEndTime: pickUpEndTime,
+        proposalOtherDate: isRecurring ? recurringModDates : specificModDates,
+        recurringStartDate: isRecurring
+          ? new Date(recurringStartDate).toISOString()
+          : undefined,
+        recurringSelectedDay: isRecurring ? recurringSelectedDay : [],
+        firstMessage: firstMessage,
+        formattedMessage: 'string',
+        isRecivedPhotos: isRecivedPhotos,
+      };
+      const payload =
+        serviceTypeId === 1 || serviceTypeId === 2
+          ? boardSittingPayload
+          : serviceTypeId === 3 || serviceTypeId === 5
+          ? dropDogPayload
+          : doggyPayload;
+      const response = await request(endpoint, payload);
+      response.ok &&
+        navigation.navigate('ActivityScreen', {
+          appointmentOpk: response.data.data.appointment.opk,
+          screen: 'Inbox',
+        });
+    }
   };
   useEffect(() => {
-    providerServices === null && dispatch(getProviderServices('HFJHx6EP'));
+    providerServices === null && dispatch(getProviderServices('dOkDx5rM'));
+    dispatch(getAllPets());
   }, []);
   return {
     handleSubmit,

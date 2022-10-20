@@ -1,3 +1,4 @@
+
 import {yupResolver} from '@hookform/resolvers/yup';
 import React, {useEffect} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
@@ -13,7 +14,7 @@ const AppForm = ({
   children,
   initialValues,
   validationSchema,
-  enableReset = false,
+  enableReset,
 }: Props) => {
   const methods = useForm<FormData>({
     resolver: yupResolver(validationSchema),
@@ -23,8 +24,7 @@ const AppForm = ({
   const {reset} = methods;
   useEffect(() => {
     enableReset && reset(initialValues);
-  }, [enableReset, initialValues, reset]);
-
+  }, [initialValues, enableReset, reset]);
   return (
     <FormProvider {...methods}>
       <>{children}</>

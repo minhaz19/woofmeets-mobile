@@ -68,7 +68,8 @@ const MyAccount = (props: {
       id: 5,
       title: 'Current Plan',
       icon: Payment2Icon,
-      screenName: () => props.navigation.navigate('SubscriptionScreen'),
+      screenName: () =>
+        props.navigation.navigate('SubscriptionScreen', {opk: 'current_plan'}),
       details: 'Current Subscribe Plan',
       opacity: 1,
     },

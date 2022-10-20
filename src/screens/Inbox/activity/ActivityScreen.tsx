@@ -13,16 +13,20 @@ import ActivityHeader from '../../../components/ScreenComponent/activity/Activit
 import ShortText from '../../../components/common/text/ShortText';
 import HeaderText from '../../../components/common/text/HeaderText';
 import TitleText from '../../../components/common/text/TitleText';
-import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {CameraIcon, SendIcon} from '../../../assets/Inbox_SVG';
 import BottomHalfModal from '../../../components/UI/modal/BottomHalfModal';
 import Details from '../../../components/ScreenComponent/Inbox/Past/Details';
 import Text_Size from '../../../constants/textScaling';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {getProviderProposal} from '../../../store/slices/Appointment/ProviderProposal/getProviderProposal';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
 
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
+  route: {params: {appointmentOpk: string}};
 }) => {
   const {image} = {
     image: 'https://via.placeholder.com/40x40.png?',
@@ -34,8 +38,11 @@ const ActivityScreen = (props: {
   };
   const [message, setMessage] = useState('');
   const [paddingHeight, setPaddingHeight] = useState(0);
-  const scrollViewRef = useRef();
-
+  const scrollViewRef = useRef<any>();
+  const dispatch = useAppDispatch();
+  const {loading} = useAppSelector(state => state.proposal);
+  const {loading: petLoading} = useAppSelector(state => state.allPets);
+  const {appointmentOpk} = props.route.params;
   const sendMsg = async () => {};
 
   useEffect(() => {
@@ -56,135 +63,153 @@ const ActivityScreen = (props: {
       keyboardDidShowListener.remove();
     };
   }, []);
+  useEffect(() => {
+    dispatch(getProviderProposal(appointmentOpk));
+    dispatch(getAllPets());
+  }, []);
 
   const {colors} = useTheme();
   const [isDetailsModal, setIsDetailsModal] = useState(false);
 
   return (
-    <View style={{flex: 1, backgroundColor: Colors.background}}>
-      <SafeAreaView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
-          <>
-            <ActivityHeader setIsDetailsModal={setIsDetailsModal} />
-            <BottomHalfModal
-              isModalVisible={isDetailsModal}
-              setIsModalVisible={setIsDetailsModal}>
-              <Details setIsDetailsModal={setIsDetailsModal} />
-            </BottomHalfModal>
-            <ScrollView
-              showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
-              ref={scrollViewRef}
-              style={styles.scrollTop}
-              onContentSizeChange={() =>
-                scrollViewRef.current.scrollToEnd({animated: true})
-              }>
-              {conversation[0].messages === undefined ? (
-                <TitleText
-                  textStyle={styles.emptyContainer}
-                  text={`' '
-                The Conversation just got created, No texts yet...' '`}
-                />
-              ) : (
-                conversation[0].messages?.map((item, i) =>
-                  item.type === 'other' ? (
-                    // Sender
-                    <View key={i} style={styles.senderContainer}>
-                      <View
-                        style={[
-                          styles.sender,
-                          {backgroundColor: colors.inputLightBg},
-                        ]}>
-                        <TitleText text={item.msg} />
-                        <ShortText text="Jun 14, 9:27" />
-                      </View>
-                      <View style={styles.userIconView}>
-                        <Image
-                          source={{uri: currentUser.image}}
-                          style={[
-                            styles.imageStyle,
-                            {borderColor: colors.borderColor},
-                          ]}
-                        />
-                      </View>
-                    </View>
-                  ) : (
-                    // Receiver
-                    <View key={i} style={styles.receiverContainer}>
-                      <View style={styles.userIconViewReceiver}>
-                        <Image
-                          source={{uri: image}}
-                          style={[
-                            styles.imageStyle,
-                            {borderColor: colors.borderColor},
-                          ]}
-                        />
-                      </View>
-                      <View
-                        style={[
-                          styles.receiver,
-                          {backgroundColor: colors.inputLightBg},
-                        ]}>
-                        {item.title && <HeaderText text={item.title} />}
-                        <TitleText text={item.msg} />
-                        {item.details && (
-                          <View>
-                            <View style={styles.detailsImage}>
-                              <Image
-                                source={{uri: image}}
-                                style={[
-                                  styles.imageStyle,
-                                  {borderColor: colors.borderColor},
-                                ]}
-                              />
-                            </View>
-                            <TouchableOpacity
-                              onPress={() =>
-                                props.navigation.navigate('Checkout')
-                              }>
-                              <TitleText
-                                text="VIEW DETAILS"
-                                textStyle={styles.textDetailsStyle}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        )}
-                        {!item.details && <ShortText text="Jun 14, 9:27" />}
-                      </View>
-                    </View>
-                  ),
-                )
-              )}
-              <View style={{height: paddingHeight}} />
-            </ScrollView>
-            <View style={[styles.footer, {borderColor: colors.borderColor}]}>
-              <TouchableOpacity style={styles.cameraIconContainer}>
-                <CameraIcon />
-              </TouchableOpacity>
-              <TextInput
-                placeholder="Type Message..."
-                style={styles.textInput}
-                numberOfLines={10}
-                onChangeText={text => setMessage(text)}
-                value={message}
+    <>
+      {(loading || petLoading) && <AppActivityIndicator visible={true} />}
+      <View style={styles.rootContainer}>
+        <SafeAreaView>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={[
+              styles.container,
+              {backgroundColor: colors.backgroundColor},
+            ]}>
+            <>
+              <ActivityHeader
+                setIsDetailsModal={setIsDetailsModal}
+                opk={appointmentOpk}
               />
-              <TouchableOpacity
-                onPress={sendMsg}
-                activeOpacity={0.5}
-                style={{marginRight: 20}}>
-                <SendIcon height={20} width={20} fill={Colors.primary} />
-              </TouchableOpacity>
-            </View>
-            <BottomSpacing />
-          </>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </View>
+              <BottomHalfModal
+                isModalVisible={isDetailsModal}
+                setIsModalVisible={setIsDetailsModal}>
+                <Details
+                  setIsDetailsModal={setIsDetailsModal}
+                  setModalVisible={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                />
+              </BottomHalfModal>
+              <ScrollView
+                ref={scrollViewRef}
+                style={styles.scrollTop}
+                onContentSizeChange={() =>
+                  scrollViewRef.current.scrollToEnd({animated: true})
+                }>
+                {conversation[0].messages === undefined ? (
+                  <TitleText
+                    textStyle={styles.emptyContainer}
+                    text={`' '
+                The Conversation just got created, No texts yet...' '`}
+                  />
+                ) : (
+                  conversation[0].messages?.map((item, i) =>
+                    item.type === 'other' ? (
+                      // Sender
+                      <View key={i} style={styles.senderContainer}>
+                        <View
+                          style={[
+                            styles.sender,
+                            {backgroundColor: colors.inputLightBg},
+                          ]}>
+                          <TitleText text={item.msg} />
+                          <ShortText text="Jun 14, 9:27" />
+                        </View>
+                        <View style={styles.userIconView}>
+                          <Image
+                            source={{uri: currentUser.image}}
+                            style={[
+                              styles.imageStyle,
+                              {borderColor: colors.borderColor},
+                            ]}
+                          />
+                        </View>
+                      </View>
+                    ) : (
+                      // Receiver
+                      <View key={i} style={styles.receiverContainer}>
+                        <View style={styles.userIconViewReceiver}>
+                          <Image
+                            source={{uri: image}}
+                            style={[
+                              styles.imageStyle,
+                              {borderColor: colors.borderColor},
+                            ]}
+                          />
+                        </View>
+                        <View
+                          style={[
+                            styles.receiver,
+                            {backgroundColor: colors.inputLightBg},
+                          ]}>
+                          {item.title && <HeaderText text={item.title} />}
+                          <TitleText text={item.msg} />
+                          {item.details && (
+                            <View>
+                              <View style={styles.detailsImage}>
+                                <Image
+                                  source={{uri: image}}
+                                  style={[
+                                    styles.imageStyle,
+                                    {borderColor: colors.borderColor},
+                                  ]}
+                                />
+                              </View>
+                              <TouchableOpacity
+                                onPress={() =>
+                                  props.navigation.navigate('Checkout')
+                                }>
+                                <TitleText
+                                  text="VIEW DETAILS"
+                                  textStyle={styles.textDetailsStyle}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          )}
+                          {!item.details && <ShortText text="Jun 14, 9:27" />}
+                        </View>
+                      </View>
+                    ),
+                  )
+                )}
+                <View style={{height: paddingHeight}} />
+              </ScrollView>
+              <View style={[styles.footer, {borderColor: colors.borderColor}]}>
+                <TouchableOpacity style={styles.cameraIconContainer}>
+                  <CameraIcon />
+                </TouchableOpacity>
+                <TextInput
+                  placeholder="Type Message..."
+                  style={styles.textInput}
+                  numberOfLines={10}
+                  onChangeText={text => setMessage(text)}
+                  value={message}
+                />
+                <TouchableOpacity
+                  onPress={sendMsg}
+                  activeOpacity={0.5}
+                  style={styles.sendIcon}>
+                  <SendIcon height={20} width={20} fill={Colors.primary} />
+                </TouchableOpacity>
+              </View>
+              {/* <BottomSpacing /> */}
+            </>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
+      </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  rootContainer: {flex: 1, backgroundColor: Colors.background},
   headerTitle: {
     width: '100%',
     flexDirection: 'row',
@@ -298,6 +323,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 5,
   },
+  sendIcon: {marginRight: 20},
 });
 
 export default ActivityScreen;

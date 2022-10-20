@@ -1,10 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import Colors from '../../../constants/Colors';
 import AuthHeader from '../../../components/ScreenComponent/Auth/Common/AuthHeader';
@@ -29,41 +23,40 @@ const SignUp = ({navigation}: Props) => {
 
   return (
     <>
-        <ScrollViewRapper extraHeight={40} extraScrollHeight={120}>
-          <View
-            style={[
-              styles.infoContainer,
-              {
-                backgroundColor: isDarkMode
-                  ? Colors.dark.lightDark
-                  : Colors.background,
-              },
-            ]}>
-            <AuthHeader
-              title={signUpInitalState.title}
-              subTitle={signUpInitalState.subTitle}
-              image={signUpInitalState.image}
+      <ScrollViewRapper extraHeight={0} extraScrollHeight={0}>
+        <View
+          style={[
+            styles.infoContainer,
+            {
+              backgroundColor: isDarkMode
+                ? Colors.dark.lightDark
+                : Colors.background,
+            },
+          ]}>
+          <AuthHeader
+            title={signUpInitalState.title}
+            subTitle={signUpInitalState.subTitle}
+            image={signUpInitalState.image}
+          />
+          <AppForm
+            initialValues={signupValue}
+            validationSchema={signUpValidationSchema}>
+            <SignUpAuthForm
+              handleSubmit={handleSubmit}
+              btnTitle="SIGN UP"
+              termsAndCond
+              loading={loading}
             />
-            <AppForm
-              initialValues={signupValue}
-              validationSchema={signUpValidationSchema}>
-              <SignUpAuthForm
-                handleSubmit={handleSubmit}
-                btnTitle="SIGN UP"
-                termsAndCond
-                loading={loading}
-              />
-            </AppForm>
-            <AuthFooter
-              icons={othersAuthIcons}
-              accountType="Already have an account? "
-              authType="LOGIN"
-              title="or login with"
-              navigateScreen="LogIn"
-            />
-            <View style={styles.view} />
-          </View>
-        </ScrollViewRapper>
+          </AppForm>
+          <AuthFooter
+            icons={othersAuthIcons}
+            accountType="Already have an account? "
+            authType="LOGIN"
+            title="or login with"
+            navigateScreen="LogIn"
+          />
+        </View>
+      </ScrollViewRapper>
     </>
   );
 };
@@ -81,7 +74,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
-    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {
     height: 40,
