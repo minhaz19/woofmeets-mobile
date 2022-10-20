@@ -18,7 +18,7 @@ const ShortIconTitle = ({Icon, text, color, jCenter = false}: Props) => {
       ]}>
       <Icon fill={Colors.primary} width={13} height={13} />
       <ShortText
-        textStyle={{marginLeft: 3, color: color && color}}
+        textStyle={{marginLeft: 3}}
         text={text}
       />
     </View>
