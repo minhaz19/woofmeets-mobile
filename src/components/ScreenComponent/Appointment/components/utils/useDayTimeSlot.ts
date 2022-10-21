@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {useFormContext, useWatch} from 'react-hook-form';
 
 let modData: any = [];
@@ -7,13 +7,14 @@ export const useDayTimeSlot = () => {
   // const {DIVSpecificDate} = getValues();
 
   const {
-    recurringSelectedDay,
+    selectedDays,
     specificModDatesRef,
     recurringModDatesRef,
     isRecurring,
     repeatDate,
     multiDate,
-    proposalOtherDate,
+    proposalScheduleDate,
+    proposalRecurringDate,
   } = useWatch();
   const [newData, setDatas] = useState(modData);
   const handleMultipleCheck = (id: number) => {
@@ -31,62 +32,57 @@ export const useDayTimeSlot = () => {
       id: index + 1,
       date: item.day,
       active:
-        pod.length !== 0
-          ? pod.some(
+        pod && pod?.length !== 0
+          ? pod?.some(
               (elm: any) =>
                 elm.date === item.day && elm.sameAsStartDate === true,
             )
           : true,
       startDate:
-        pod.length !== 0
-          ? pod.some(
+        pod && pod?.length !== 0
+          ? pod?.some(
               (elm: any) => elm.date === item.day && elm?.startDate === true,
             )
           : index === 0
           ? true
           : false,
       initalSlot:
-        pod.length !== 0
+        pod && pod?.length !== 0
           ? pod?.find((elm: any) => elm.date === item.day)?.visitTime
           : [],
     }));
     return recurring;
   };
-  useEffect(() => {
+  useMemo(() => {
     if (isRecurring) {
       const recurring = getRecurringDays(
         repeatDate,
-        recurringSelectedDay,
-        proposalOtherDate,
+        selectedDays,
+        proposalRecurringDate,
       );
-      console.log(
-        'repease ',
-        repeatDate,
-        recurringSelectedDay,
-        proposalOtherDate,
-      );
+      console.log('repease ', repeatDate, selectedDays, proposalRecurringDate);
       setDatas(recurring);
     } else if (!isRecurring) {
       const multi = multiDate?.map((item: any, index: number) => ({
         id: index + 1,
         date: item,
         startDate:
-          proposalOtherDate.length !== 0
-            ? proposalOtherDate.some(
+          proposalRecurringDate && proposalScheduleDate?.length !== 0
+            ? proposalScheduleDate?.some(
                 (elm: any) => elm.date === item.day && elm?.startDate === true,
               )
             : index === 0
             ? true
             : false,
         active:
-          proposalOtherDate.length !== 0
-            ? proposalOtherDate.some(
+          proposalRecurringDate && proposalScheduleDate?.length !== 0
+            ? proposalScheduleDate?.some(
                 (elm: any) => elm.date === item && elm.sameAsStartDate === true,
               )
             : true,
         initalSlot:
-          proposalOtherDate.length !== 0
-            ? proposalOtherDate?.find((elm: any) => elm.date === item)
+          proposalRecurringDate && proposalScheduleDate?.length !== 0
+            ? proposalScheduleDate?.find((elm: any) => elm.date === item)
                 ?.visitTime
             : [],
       }));
@@ -95,11 +91,12 @@ export const useDayTimeSlot = () => {
   }, [
     isRecurring,
     repeatDate,
-    recurringSelectedDay,
+    selectedDays,
+    proposalRecurringDate,
     multiDate,
-    proposalOtherDate,
+    proposalScheduleDate,
   ]);
-  useEffect(() => {
+  useMemo(() => {
     if (isRecurring) {
       const unMatched = newData?.filter((item: {date: string}) => {
         return !recurringModDatesRef?.some(

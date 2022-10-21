@@ -29,7 +29,7 @@ export const useModReqInitialState = () => {
   const d2 = new Date(proposedServiceInfo?.proposalEndDate);
 
   const next6Days =
-    proposedServiceInfo.recurringStartDate !== undefined &&
+    proposedServiceInfo.recurringStartDate !== '' &&
     [...Array(7).keys()].map(index => {
       const date = new Date(proposedServiceInfo.recurringStartDate);
       date?.setDate(date.getDate() + index);
@@ -39,10 +39,35 @@ export const useModReqInitialState = () => {
     });
 
   const modMultiDates = proposedServiceInfo?.proposalOtherDate?.map(
-    (item: {date: string}) => item.date,
+    (item: {name: string}) => item.name,
   );
-  const modMultiDateTimes = proposedServiceInfo?.proposalOtherDate?.filter(
-    (item: {sameAsStartDate: boolean}) => item.sameAsStartDate === false,
+  const modRecurringSelectedDay = proposedServiceInfo.recurringSelectedDay?.map(
+    (item: any) => item.date,
+  );
+
+  const modProposalRecurringDate =
+    proposedServiceInfo?.recurringSelectedDay?.map((item: any) => ({
+      date: item?.date,
+      visitTime: item?.visits?.map((time: any) => time.time),
+      sameAsStartDate: item?.sameAsStartDate,
+      startDate: item?.startDate ? item.startDate : false,
+    }));
+  const modProposalScheduleDate = proposedServiceInfo?.proposalOtherDate?.map(
+    (item: any) => ({
+      date: item?.name,
+      visitTime: item?.visits?.map((time: any) => time.time),
+      sameAsStartDate: item?.sameAsStartDate,
+      startDate: item?.startDate ? item.startDate : false,
+    }),
+  );
+  console.log('init', proposedServiceInfo, modMultiDates);
+  const DoggySelected = dayss.filter(item =>
+    proposedServiceInfo?.recurringSelectedDay.includes(
+      item.substring(0, 3).toLowerCase(),
+    ),
+  );
+  const doggyMultiDate = proposedServiceInfo?.proposalOtherDate.map(
+    (di: {date: string}) => format(new Date(di.date), 'yyyy-MM-dd'),
   );
 
   return {
@@ -66,15 +91,18 @@ export const useModReqInitialState = () => {
       ? proposedServiceInfo.pickUpEndTime
       : '',
     recurringStartDate:
-      proposedServiceInfo?.recurringStartDate !== undefined
+      proposedServiceInfo?.recurringStartDate !== ''
         ? format(
             new Date(proposedServiceInfo?.recurringStartDate),
             'yyyy-MM-dd',
           )
         : '',
-    recurringSelectedDay: proposedServiceInfo?.recurringSelectedDay
-      ? proposedServiceInfo.recurringSelectedDay
-      : [],
+    selectedDays:
+      proposedServiceInfo.serviceTypeId === 4
+        ? DoggySelected
+        : proposedServiceInfo?.recurringSelectedDay
+        ? modRecurringSelectedDay
+        : [],
     repeatDate: next6Days ? next6Days : [],
     proposalStartDate: proposedServiceInfo?.proposalStartDate
       ? format(new Date(proposedServiceInfo?.proposalStartDate), 'yyyy-MM-dd')
@@ -82,9 +110,15 @@ export const useModReqInitialState = () => {
     proposalEndDate: proposedServiceInfo?.proposalEndDate
       ? format(new Date(proposedServiceInfo?.proposalEndDate), 'yyyy-MM-dd')
       : '',
-    proposalOtherDate: proposedServiceInfo?.proposalOtherDate
-      ? proposedServiceInfo.proposalOtherDate
-      : [],
+    proposalScheduleDate: modProposalScheduleDate,
+    proposalRecurringDate: modProposalRecurringDate,
+
+    // proposalScheduleDate: proposedServiceInfo?.proposalOtherDate
+    //   ? modProposalScheduleDate
+    //   : [],
+    // proposalRecurringDate: proposedServiceInfo?.proposalOtherDate
+    //   ? modProposalRecurringDate
+    //   : [],
     petsId: proposedServiceInfo?.appointmentPet
       ? proposedServiceInfo.appointmentPet.map(
           (item: {petId: number}) => item.petId,
@@ -93,14 +127,21 @@ export const useModReqInitialState = () => {
     recurringModDatesRef: [],
     specificModDatesRef: [],
     recurringModDates:
-      proposedServiceInfo.isRecurring && proposedServiceInfo?.proposalOtherDate
-        ? modMultiDateTimes
+      proposedServiceInfo.isRecurring &&
+      proposedServiceInfo?.recurringSelectedDay
+        ? proposedServiceInfo?.recurringSelectedDay
         : [],
     specificModDates:
       !proposedServiceInfo.isRecurring && proposedServiceInfo?.proposalOtherDate
-        ? modMultiDateTimes
+        ? proposedServiceInfo?.proposalOtherDate
         : [],
-    multiDate: !proposedServiceInfo.isRecurring ? modMultiDates : [],
+    multiDate:
+      proposedServiceInfo.serviceTypeId === 4 &&
+      !proposedServiceInfo.isRecurring
+        ? doggyMultiDate
+        : !proposedServiceInfo.isRecurring
+        ? modMultiDates
+        : [],
     selectedRange: getDatesInRange(d1, d2),
     selectDate: [],
     markedStyle: {},

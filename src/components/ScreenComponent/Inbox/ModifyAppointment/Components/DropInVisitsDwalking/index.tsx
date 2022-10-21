@@ -18,8 +18,8 @@ const DropInVisitWalking = () => {
   const [, setVisitId] = useState(null);
   const [scheduleId, setScheduleId] = useState(null);
   const {colors} = useTheme();
-  const {setValue, getValues} = useFormContext();
-  const {isRecurring, visitLength, recurringStartDate} = getValues();
+  const {setValue, watch} = useFormContext();
+  const {isRecurring, visitLength, recurringStartDate} = watch();
   const data = [
     {
       id: 1,
@@ -75,7 +75,7 @@ const DropInVisitWalking = () => {
         />
       </View>
       <BottomSheetCalendar
-        title={scheduleId === 0 ? 'Dates' : 'Start Date'}
+        title={!isRecurring ? 'Dates' : 'Start Date'}
         setValue={setValue}
         isRecurring={isRecurring}
         initalData={recurringStartDate}

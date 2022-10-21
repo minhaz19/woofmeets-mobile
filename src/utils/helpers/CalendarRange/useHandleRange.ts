@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useState} from 'react';
 import {useWatch} from 'react-hook-form';
 import {_dateRange} from '../datesArray';
@@ -81,7 +82,7 @@ export const useHandleRange = (
       setValue && setValue('proposalEndDate', endingDate);
       setValue && setValue('selectedRange', orderRange);
     }
-  }, [endingDate, setValue, startingDate, type]);
+  }, [endingDate, startingDate, type]);
 
   const reset = () => {
     setStartingDate('');

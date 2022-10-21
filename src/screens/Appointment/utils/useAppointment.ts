@@ -31,12 +31,13 @@ export const useAppointment = () => {
       serviceTypeId,
       specificModDates,
       recurringModDates,
-      recurringSelectedDay,
+
       recurringStartDate,
       isRecurring,
       visitLength,
       firstMessage,
       isRecivedPhotos,
+      selectedDays,
       multiDate,
     } = data;
 
@@ -61,7 +62,7 @@ export const useAppointment = () => {
     } else if (
       (serviceTypeId === 3 || serviceTypeId === 5) &&
       isRecurring &&
-      recurringSelectedDay.length === 0
+      selectedDays.length === 0
     ) {
       Alert.alert('You have to recurring days');
     } else if (
@@ -91,6 +92,33 @@ export const useAppointment = () => {
     } else if (petsId.length === 0 || petsId === undefined) {
       Alert.alert('You have to select at least one pet');
     } else {
+      const sortedSpecificModDates = specificModDates.map(
+        (item: any, i: number) => ({
+          id: i + 1,
+          date: new Date(item.date).toISOString(),
+          name: item.date,
+          startDate: item.startDate !== undefined ? item.startDate : false,
+          sameAsStartDate: item.sameAsStartDate,
+          visits: item.visitTime.map((time: string, index: number) => ({
+            id: index + 1,
+            time: time,
+          })),
+        }),
+      );
+      const sortedRecurringDates = recurringModDates.map(
+        (item: any, i: number) => ({
+          id: i + 1,
+          date: item.date,
+          name: item.date.substring(0, 3).toLowerCase(),
+          startDate: item.startDate !== undefined ? item.startDate : false,
+          sameAsStartDate: item.sameAsStartDate,
+          visits: item.visitTime.map((time: string, index: number) => ({
+            id: index + 1,
+            time: time,
+          })),
+        }),
+      );
+      console.log('sortedSpecificModDates', sortedSpecificModDates);
       const boardSittingPayload = {
         providerServiceId: providerServiceId,
         userId: user?.id,
@@ -107,46 +135,85 @@ export const useAppointment = () => {
         isRecivedPhotos: isRecivedPhotos,
         formattedMessage: 'string',
       };
-      const dropDogPayload = {
-        providerServiceId: providerServiceId,
-        userId: user?.id,
-        providerId: providerServices[0].providerId,
-        petsId: petsId,
-        length: visitLength,
-        isRecurring: isRecurring,
+      const dropDogPayload = isRecurring
+        ? {
+            providerServiceId: providerServiceId,
+            userId: user?.id,
+            providerId: providerServices[0].providerId,
+            petsId: petsId,
+            length: visitLength,
+            isRecurring: isRecurring,
 
-        appointmentserviceType:
-          serviceTypeId === 3 ? 'VISIT' : serviceTypeId === 5 ? 'WALK' : 'NONE',
-        proposalOtherDate: isRecurring ? recurringModDates : specificModDates,
-        recurringStartDate: isRecurring
-          ? new Date(recurringStartDate).toISOString()
-          : undefined,
-        recurringSelectedDay: isRecurring ? recurringSelectedDay : [],
-        firstMessage: firstMessage,
-        isRecivedPhotos: isRecivedPhotos,
-        formattedMessage: 'string',
-      };
-      const doggyPayload = {
-        providerServiceId: providerServiceId,
-        userId: user?.id,
-        providerId: providerServices[0].providerId,
-        petsId: petsId,
-        isRecurring: isRecurring,
+            appointmentserviceType:
+              serviceTypeId === 3
+                ? 'VISIT'
+                : serviceTypeId === 5
+                ? 'WALK'
+                : 'NONE',
+            recurringStartDate: new Date(recurringStartDate).toISOString(),
 
-        appointmentserviceType: 'NONE',
-        dropOffStartTime: dropOffStartTime,
-        dropOffEndTime: dropOffEndTime,
-        pickUpStartTime: pickUpStartTime,
-        pickUpEndTime: pickUpEndTime,
-        proposalOtherDate: isRecurring ? [] : multiDate,
-        recurringStartDate: isRecurring
-          ? new Date(recurringStartDate).toISOString()
-          : undefined,
-        recurringSelectedDay: isRecurring ? recurringSelectedDay : [],
-        firstMessage: firstMessage,
-        formattedMessage: 'string',
-        isRecivedPhotos: isRecivedPhotos,
-      };
+            recurringSelectedDay: sortedRecurringDates,
+            firstMessage: firstMessage,
+            isRecivedPhotos: isRecivedPhotos,
+            formattedMessage: 'string',
+          }
+        : {
+            providerServiceId: providerServiceId,
+            userId: user?.id,
+            providerId: providerServices[0].providerId,
+            petsId: petsId,
+            length: visitLength,
+            isRecurring: isRecurring,
+
+            appointmentserviceType:
+              serviceTypeId === 3
+                ? 'VISIT'
+                : serviceTypeId === 5
+                ? 'WALK'
+                : 'NONE',
+            proposalOtherDate: sortedSpecificModDates,
+            firstMessage: firstMessage,
+            isRecivedPhotos: isRecivedPhotos,
+            formattedMessage: 'string',
+          };
+      const doggyPayload = isRecurring
+        ? {
+            providerServiceId: providerServiceId,
+            userId: user?.id,
+            providerId: providerServices[0].providerId,
+            petsId: petsId,
+            isRecurring: isRecurring,
+            appointmentserviceType: 'NONE',
+            dropOffStartTime: dropOffStartTime,
+            dropOffEndTime: dropOffEndTime,
+            pickUpStartTime: pickUpStartTime,
+            pickUpEndTime: pickUpEndTime,
+            recurringStartDate: new Date(recurringStartDate).toISOString(),
+            recurringSelectedDay: selectedDays.map((item: string) =>
+              item.substring(0, 3).toLowerCase(),
+            ),
+            firstMessage: firstMessage,
+            formattedMessage: 'string',
+            isRecivedPhotos: isRecivedPhotos,
+          }
+        : {
+            providerServiceId: providerServiceId,
+            userId: user?.id,
+            providerId: providerServices[0].providerId,
+            petsId: petsId,
+            isRecurring: isRecurring,
+            appointmentserviceType: 'NONE',
+            dropOffStartTime: dropOffStartTime,
+            dropOffEndTime: dropOffEndTime,
+            pickUpStartTime: pickUpStartTime,
+            pickUpEndTime: pickUpEndTime,
+            proposalOtherDate: multiDate.map((item: string) => ({
+              date: new Date(item).toISOString(),
+            })),
+            firstMessage: firstMessage,
+            formattedMessage: 'string',
+            isRecivedPhotos: isRecivedPhotos,
+          };
       const payload =
         serviceTypeId === 1 || serviceTypeId === 2
           ? boardSittingPayload
@@ -154,11 +221,13 @@ export const useAppointment = () => {
           ? dropDogPayload
           : doggyPayload;
       const response = await request(endpoint, payload);
+      console.log('re', response);
       response.ok &&
         navigation.navigate('ActivityScreen', {
           appointmentOpk: response.data.data.appointment.opk,
           screen: 'Inbox',
         });
+      console.log('pay', payload);
     }
   };
   useEffect(() => {

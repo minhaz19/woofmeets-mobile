@@ -71,7 +71,7 @@ const DoggyDayCare = () => {
             <TitleText textStyle={styles.titleText} text={'Dates'} />
             <DescriptionText
               text={
-                isRecurring
+                isRecurring && recurringStartDate !== ''
                   ? recurringStartDate
                   : !isRecurring && multiDate.length !== 0
                   ? multiDate?.join(' ')

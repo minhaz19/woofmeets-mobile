@@ -1,4 +1,3 @@
-
 import {yupResolver} from '@hookform/resolvers/yup';
 import React, {useEffect} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
@@ -23,8 +22,19 @@ const AppForm = ({
   });
   const {reset} = methods;
   useEffect(() => {
-    enableReset && reset(initialValues);
-  }, [initialValues, enableReset, reset]);
+    let unmounted = false;
+    setTimeout(() => {
+      if (!unmounted) {
+        reset(initialValues);
+      }
+    }, 1000);
+    return () => {
+      unmounted === true;
+    };
+  }, []);
+  // useEffect(() => {
+  //   enableReset && reset(initialValues);
+  // }, [initialValues, enableReset, reset]);
   return (
     <FormProvider {...methods}>
       <>{children}</>

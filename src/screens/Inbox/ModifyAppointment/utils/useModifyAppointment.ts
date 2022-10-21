@@ -1,14 +1,15 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {Alert} from 'react-native';
 import methods from '../../../../api/methods';
-import {useAppSelector} from '../../../../store/store';
+import {useAppSelector, useAppDispatch} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import storage from '../../../../utils/helpers/auth/storage';
 
 export const useModifyAppointment = (route: any) => {
-  const {proposal} = useAppSelector(state => state.proposal);
+  const {} = useAppSelector(state => state.proposal);
   const {loading, request} = useApi(methods._put);
   const {appointmentOpk} = route.params;
+  const dispatch = useAppDispatch();
   const endpoint = `/appointment/update/${appointmentOpk}/proposal`;
   const navigation = useNavigation();
   const handleSubmit = async (data: any) => {
@@ -26,7 +27,7 @@ export const useModifyAppointment = (route: any) => {
       serviceTypeId,
       specificModDates,
       recurringModDates,
-      recurringSelectedDay,
+      selectedDays,
       recurringStartDate,
       isRecurring,
       visitLength,
@@ -54,7 +55,7 @@ export const useModifyAppointment = (route: any) => {
     } else if (
       (serviceTypeId === 3 || serviceTypeId === 5) &&
       isRecurring &&
-      recurringSelectedDay.length === 0
+      selectedDays.length === 0
     ) {
       Alert.alert('You have to recurring days');
     } else if (
@@ -97,38 +98,79 @@ export const useModifyAppointment = (route: any) => {
         formattedMessage: 'string',
         appointmentserviceType: 'NONE',
       };
-      const dropDogPayload = {
-        proposedBy:
-          user?.id === userId ? 'USER' : user?.id === providerId && 'PROVIDER',
-        petsId: petsId,
-        length: visitLength,
-        isRecurring: isRecurring,
-        formattedMessage: 'string',
-        appointmentserviceType:
-          serviceTypeId === 3 ? 'VISIT' : serviceTypeId === 5 ? 'WALK' : 'NONE',
-        proposalOtherDate: isRecurring ? recurringModDates : specificModDates,
-        recurringStartDate: isRecurring
-          ? new Date(recurringStartDate).toISOString()
-          : undefined,
-        recurringSelectedDay: isRecurring ? recurringSelectedDay : [],
-      };
-      const doggyPayload = {
-        proposedBy:
-          user?.id === userId ? 'USER' : user?.id === providerId && 'PROVIDER',
-        petsId: petsId,
-        isRecurring: isRecurring,
-        formattedMessage: 'string',
-        appointmentserviceType: 'NONE',
-        dropOffStartTime: dropOffStartTime,
-        dropOffEndTime: dropOffEndTime,
-        pickUpStartTime: pickUpStartTime,
-        pickUpEndTime: pickUpEndTime,
-        proposalOtherDate: isRecurring ? recurringModDates : specificModDates,
-        recurringStartDate: isRecurring
-          ? new Date(recurringStartDate).toISOString()
-          : undefined,
-        recurringSelectedDay: isRecurring ? recurringSelectedDay : [],
-      };
+      const dropDogPayload = isRecurring
+        ? {
+            proposedBy:
+              user?.id === userId
+                ? 'USER'
+                : user?.id === providerId && 'PROVIDER',
+            petsId: petsId,
+            length: visitLength,
+            isRecurring: isRecurring,
+            formattedMessage: 'string',
+            appointmentserviceType:
+              serviceTypeId === 3
+                ? 'VISIT'
+                : serviceTypeId === 5
+                ? 'WALK'
+                : 'NONE',
+            recurringStartDate: new Date(recurringStartDate).toISOString(),
+            proposalOtherDate: specificModDates,
+            recurringSelectedDay: recurringModDates,
+          }
+        : {
+            proposedBy:
+              user?.id === userId
+                ? 'USER'
+                : user?.id === providerId && 'PROVIDER',
+            petsId: petsId,
+            length: visitLength,
+            isRecurring: isRecurring,
+            formattedMessage: 'string',
+            appointmentserviceType:
+              serviceTypeId === 3
+                ? 'VISIT'
+                : serviceTypeId === 5
+                ? 'WALK'
+                : 'NONE',
+            proposalOtherDate: specificModDates,
+          };
+      const doggyPayload = isRecurring
+        ? {
+            proposedBy:
+              user?.id === userId
+                ? 'USER'
+                : user?.id === providerId && 'PROVIDER',
+            petsId: petsId,
+            isRecurring: isRecurring,
+            formattedMessage: 'string',
+            appointmentserviceType: 'NONE',
+            dropOffStartTime: dropOffStartTime,
+            dropOffEndTime: dropOffEndTime,
+            pickUpStartTime: pickUpStartTime,
+            pickUpEndTime: pickUpEndTime,
+            recurringStartDate: new Date(recurringStartDate).toISOString(),
+            recurringSelectedDay: selectedDays.map((item: string) =>
+              item.substring(0, 3).toLowerCase(),
+            ),
+          }
+        : {
+            proposedBy:
+              user?.id === userId
+                ? 'USER'
+                : user?.id === providerId && 'PROVIDER',
+            petsId: petsId,
+            isRecurring: isRecurring,
+            formattedMessage: 'string',
+            appointmentserviceType: 'NONE',
+            dropOffStartTime: dropOffStartTime,
+            dropOffEndTime: dropOffEndTime,
+            pickUpStartTime: pickUpStartTime,
+            pickUpEndTime: pickUpEndTime,
+            proposalOtherDate: multiDate.map((item: string) => ({
+              date: new Date(item).toISOString(),
+            })),
+          };
       const payload =
         serviceTypeId === 1 || serviceTypeId === 2
           ? boardSittingPayload
@@ -138,7 +180,8 @@ export const useModifyAppointment = (route: any) => {
       const result = await request(endpoint, payload);
 
       if (result.ok) {
-        navigation.navigate('Inbox');
+        navigation.navigate('ActivityScreen');
+        // dispatch(getProviderProviderPo);
       }
     }
   };

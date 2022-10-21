@@ -14,8 +14,8 @@ import Text_Size from '../../../../../../../constants/textScaling';
 const BScalendar = ({}) => {
   const [visible, setVisible] = useState(false);
   const {isDarkMode} = useTheme();
-  const {setValue, getValues} = useFormContext();
-  const {proposalStartDate, proposalEndDate} = getValues();
+  const {setValue, watch} = useFormContext();
+  const {proposalStartDate, proposalEndDate} = watch();
   return (
     <View>
       <AppTouchableOpacity
