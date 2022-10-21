@@ -42,6 +42,7 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
+  console.log('inbox', appointmentStatus, providerApntStatus);
 
   return (
     <>
@@ -51,7 +52,8 @@ const PendingStatus = ({statusType}: Props) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {appointmentStatus === null && statusType === 'USER' ? (
+        {(appointmentStatus === null || appointmentStatus === undefined) &&
+        statusType === 'USER' ? (
           <View style={styles.errorContainer}>
             <MessageNotSend
               svg={<UpcomingSvg width={200} height={200} />}
@@ -67,7 +69,9 @@ const PendingStatus = ({statusType}: Props) => {
               handleActivity={() => {}}
               handleDate={() => {}}
             />
-            {appointmentStatus !== null && statusType === 'USER' ? (
+            {appointmentStatus !== null &&
+            appointmentStatus !== undefined &&
+            statusType === 'USER' ? (
               appointmentStatus?.map((item: any) => {
                 return (
                   <ReusableCard
@@ -90,8 +94,10 @@ const PendingStatus = ({statusType}: Props) => {
                   />
                 );
               })
-            ) : providerApntStatus !== null && statusType === 'PROVIDER' ? (
-              appointmentStatus?.map((item: any) => {
+            ) : providerApntStatus !== null &&
+              providerApntStatus !== undefined &&
+              statusType === 'PROVIDER' ? (
+              providerApntStatus?.map((item: any) => {
                 return (
                   <ReusableCard
                     key={item.opk}

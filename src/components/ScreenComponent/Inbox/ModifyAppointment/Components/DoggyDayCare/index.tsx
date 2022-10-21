@@ -173,7 +173,10 @@ const DoggyDayCare = () => {
                 <TitleText textStyle={styles.calDone} text={'Done'} />
               </AppTouchableOpacity>
             </View>
-            <AppCalendar selectType={'SINGLE'} setValue={setValue} />
+            <AppCalendar
+              selectType={isRecurring ? 'SINGLE' : 'MULTI'}
+              setValue={setValue}
+            />
           </View>
         </Modal>
       </View>
