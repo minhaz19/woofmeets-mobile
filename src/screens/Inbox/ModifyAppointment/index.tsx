@@ -2,7 +2,7 @@ import {StyleSheet, SafeAreaView} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import AppForm from '../../../components/common/Form/AppForm';
-import ModifyRequestBody from '../../../components/ScreenComponent/Inbox/ModifyRequest/ModifyRequestBody';
+import ModifyRequestBody from '../../../components/ScreenComponent/Inbox/ModifyAppointment/ModifyRequestBody';
 import {appointmentModifyValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {useModReqInitialState} from './utils/useModReqInitalState';
 import {useModifyAppointment} from './utils/useModifyAppointment';

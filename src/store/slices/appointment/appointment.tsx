@@ -4,7 +4,7 @@ import apiClient from '../../../api/client';
 
 export const upcomingInboxFetch = createAsyncThunk(
   'appointment/upcomingInboxFetch',
-  async ({statusId}: any, {rejectWithValue}) => {
+  async ({statusId}: any) => {
     const response: ApiResponse<any> = await apiClient.get(
       `/appointment/inbox?status=${statusId}`,
     );

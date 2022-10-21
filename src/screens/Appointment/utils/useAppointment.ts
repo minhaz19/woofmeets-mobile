@@ -138,7 +138,7 @@ export const useAppointment = () => {
         dropOffEndTime: dropOffEndTime,
         pickUpStartTime: pickUpStartTime,
         pickUpEndTime: pickUpEndTime,
-        proposalOtherDate: isRecurring ? recurringModDates : specificModDates,
+        proposalOtherDate: isRecurring ? [] : multiDate,
         recurringStartDate: isRecurring
           ? new Date(recurringStartDate).toISOString()
           : undefined,

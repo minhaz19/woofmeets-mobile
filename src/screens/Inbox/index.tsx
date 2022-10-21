@@ -1,56 +1,83 @@
-import {StyleSheet, TouchableOpacity,  View} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
-import HeaderText from '../../components/common/text/HeaderText';
 import Colors from '../../constants/Colors';
-import Upcoming from '../../components/ScreenComponent/Inbox/Upcoming';
-import Pending from '../../components/ScreenComponent/Inbox/Pending';
-import Past from '../../components/ScreenComponent/Inbox/Past';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
+import {SCREEN_WIDTH} from '../../constants/WindowSize';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
+import TitleText from '../../components/common/text/TitleText';
+import PendingStatus from '../../components/ScreenComponent/Inbox/Pending';
+import ApprovedStatus from '../../components/ScreenComponent/Inbox/Approved';
+import CompletedStatus from '../../components/ScreenComponent/Inbox/Completed';
+import DeclinedStatus from '../../components/ScreenComponent/Inbox/Declined';
+import UserProviderInbox from '../../components/ScreenComponent/Inbox/utils/Common/UserProviderInbox';
 
 const data = [
   {
     id: 1,
-    title: 'Upcoming',
-    opacity: 1,
-  },
-  {
-    id: 2,
     title: 'Pending',
     opacity: 1,
   },
   {
+    id: 2,
+    title: 'Approved',
+    opacity: 1,
+  },
+  {
     id: 3,
-    title: 'Past',
+    title: 'Completed',
+    opacity: 1,
+  },
+  {
+    id: 4,
+    title: 'Declined',
     opacity: 1,
   },
 ];
 
 const Inbox = () => {
   const [showInbox, setShowInbox] = useState(1);
+  const [active, setActive] = useState('USER');
+  const {colors} = useTheme();
   return (
     <ScreenRapperGrey rapperStyle={styles.container}>
       <View style={styles.tabContainer}>
         {data.map((item, index) => {
           return (
-            <View key={index} style={styles.itemContainer}>
-              <TouchableOpacity
-                onPress={() => setShowInbox(item.id)}
-                style={showInbox === item.id && styles.bottom1}>
-                <HeaderText
+            <View
+              key={index}
+              style={[
+                styles.itemContainer,
+                {
+                  backgroundColor:
+                    showInbox === item.id ? Colors.background : Colors.primary,
+                  borderRightWidth: 1,
+                  borderRightColor: 'white',
+                },
+              ]}>
+              <TouchableOpacity onPress={() => setShowInbox(item.id)}>
+                <TitleText
                   text={item.title}
-                  textStyle={
-                    showInbox === item.id ? styles.text1 : styles.text2
-                  }
+                  textStyle={{
+                    fontWeight: '700',
+                    marginBottom: '1%',
+                    textAlign: 'center',
+                    color: showInbox === item.id ? colors.headerText : 'white',
+                  }}
                 />
               </TouchableOpacity>
             </View>
           );
         })}
       </View>
-      {showInbox === 1 && <Upcoming />}
-      {showInbox === 2 && <Pending />}
-      {showInbox === 3 && <Past />}
+      <View>
+        <UserProviderInbox setActive={setActive} active={active} />
+      </View>
+      {showInbox === 1 && <PendingStatus statusType={active} />}
+      {showInbox === 2 && <ApprovedStatus />}
+      {showInbox === 3 && <CompletedStatus />}
+      {showInbox === 4 && <DeclinedStatus />}
 
       <BottomSpacing />
     </ScreenRapperGrey>
@@ -63,17 +90,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
+    // marginHorizontal: 10,
   },
   tabContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
+
+    // paddingHorizontal: 20,
     justifyContent: 'space-between',
     alignItems: 'center',
+    // backgroundColor: 'black',
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    // paddingVertical: 5,
   },
   itemContainer: {
-    paddingTop: '4%',
+    paddingVertical: '2.5%',
+    width: SCREEN_WIDTH / 4,
 
-    alignSelf: 'center',
+    // alignSelf: 'center',
   },
   flexContainer: {
     flexDirection: 'row',

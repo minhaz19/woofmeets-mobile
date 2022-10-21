@@ -10,6 +10,9 @@ import BottomSpacing from '../../UI/BottomSpacing';
 import BottomSheetCalendar from '../../common/BottomSheetCalendar';
 import MyPets from './components/MyPets';
 import MessageCheck from './components/MessageCheck';
+import BoardingSitting from '../Inbox/ModifyAppointment/Components/BoardingSitting';
+import DropInVisitWalking from '../Inbox/ModifyAppointment/Components/DropInVisitsDwalking';
+import DoggyDayCare from '../Inbox/ModifyAppointment/Components/DoggyDayCare';
 interface Props {
   handleSubmit: (arg: any) => void;
   loading: boolean;
@@ -33,7 +36,10 @@ const AppointmentBody = ({handleSubmit, loading}: Props) => {
         setValue={setValue}
         setServiceId={setServiceId}
       />
-      {(serviceId === 1 || serviceId === 2) && (
+      {(serviceId === 1 || serviceId === 2) && <BoardingSitting />}
+      {(serviceId === 3 || serviceId === 5) && <DropInVisitWalking />}
+      {serviceId === 4 && <DoggyDayCare />}
+      {/* {(serviceId === 1 || serviceId === 2) && (
         <>
           <DateDropPick serviceId={serviceId} setValue={setValue} />
         </>
@@ -51,11 +57,11 @@ const AppointmentBody = ({handleSubmit, loading}: Props) => {
           )}
         </>
       )}
+      {serviceId === 4 && (
+        <DateDropPick serviceId={serviceId} setValue={setValue} />
+      )}
+      {(serviceId === 3 || serviceId === 5) && <DayTimeSlot />} */}
       <View style={styles.zIndex}>
-        {serviceId === 4 && (
-          <DateDropPick serviceId={serviceId} setValue={setValue} />
-        )}
-        {(serviceId === 3 || serviceId === 5) && <DayTimeSlot />}
         <MyPets />
         <MessageCheck errors={errors} control={control} setValue={setValue} />
         <SubmitButton

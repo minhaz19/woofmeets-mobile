@@ -58,6 +58,12 @@ export const useDayTimeSlot = () => {
         recurringSelectedDay,
         proposalOtherDate,
       );
+      console.log(
+        'repease ',
+        repeatDate,
+        recurringSelectedDay,
+        proposalOtherDate,
+      );
       setDatas(recurring);
     } else if (!isRecurring) {
       const multi = multiDate?.map((item: any, index: number) => ({
@@ -126,6 +132,7 @@ export const useDayTimeSlot = () => {
             : [],
           sameAsStartDate: true,
         }));
+
         sameData &&
           sameData?.length > 0 &&
           specificModDatesRef?.length > 0 &&
