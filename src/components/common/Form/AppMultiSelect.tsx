@@ -28,7 +28,7 @@ const AppMultiSelect = ({
     (item: any, index) => {
       return (
         <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
-          <Text style={styles.selectedTextStyle}>{item.label}</Text>
+          <TitleText textStyle={{...styles.selectedTextStyle, color: colors.headerText}} text={item.label} />
           {index === true ? (
             <Minus fill={Colors.primary} width={20} height={20} />
           ) : (
@@ -50,9 +50,9 @@ const AppMultiSelect = ({
             borderColor: isDarkMode ? Colors.gray : Colors.border,
           },
         ]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
+        placeholderStyle={{...styles.placeholderStyle, color: colors.descriptionText}}
+        selectedTextStyle={{...styles.selectedTextStyle, color: colors.headerText}}
+        inputSearchStyle={{...styles.inputSearchStyle, color: colors.headerText}}
         iconStyle={styles.iconStyle}
         data={data ? data : [{label: 'Item 1', value: '1'}]}
         labelField="label"
@@ -76,7 +76,7 @@ const AppMultiSelect = ({
             <TouchableOpacity onPress={() => unSelect && unSelect(item)}>
               <View style={styles.selectedStyle}>
                 <TitleText
-                  textStyle={styles.textSelectedStyle}
+                  textStyle={{...styles.textSelectedStyle, color: Colors.light.background}}
                   text={item?.label}
                 />
                 <Cross fill="white" />
@@ -147,6 +147,5 @@ const styles = StyleSheet.create({
   textSelectedStyle: {
     marginRight: 5,
     fontSize: Text_Size.Text_0,
-    color: Colors.background,
   },
 });

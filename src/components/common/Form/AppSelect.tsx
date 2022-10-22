@@ -7,6 +7,7 @@ import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {setIsService} from '../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
+import TitleText from '../text/TitleText';
 interface Props {
   name: string;
   data: any[];
@@ -33,7 +34,7 @@ const AppSelect = ({
     (item: any) => {
       return (
         <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
-          <Text style={styles.selectedTextStyle}>{item.label}</Text>
+          <TitleText textStyle={{...styles.selectedTextStyle, color: colors.headerText}} text={item.label} />
         </View>
       );
     },
@@ -49,9 +50,9 @@ const AppSelect = ({
             borderColor: isDarkMode ? Colors.gray : Colors.border,
           },
         ]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
+        placeholderStyle={{...styles.placeholderStyle, color: colors.descriptionText}}
+        selectedTextStyle={{...styles.selectedTextStyle, color: colors.headerText}}
+        inputSearchStyle={{...styles.inputSearchStyle, color: colors.headerText}}
         iconStyle={styles.iconStyle}
         containerStyle={{
           backgroundColor: colors.backgroundColor,
@@ -98,7 +99,9 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
-    color: 'gray',
+  },
+  itemTextStyle: {
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
   },
   selectedTextStyle: {
     fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
@@ -141,10 +144,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
-  },
-  textSelectedStyle: {
-    marginRight: 5,
-    fontSize: Text_Size.Text_0,
-    color: Colors.background,
   },
 });

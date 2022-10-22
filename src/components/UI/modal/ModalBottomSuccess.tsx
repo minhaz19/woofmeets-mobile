@@ -39,9 +39,7 @@ const ModalBottomView = (props: {
               <View style={designs.successContainer}>
                 <Success />
               </View>
-              <Text style={designs.textSuccess}>
-                {props.title ? props.title : 'Success'}
-              </Text>
+              <TitleText text={props.title ? props.title : 'Success'} textStyle={designs.textSuccess} />
               {!props.notButton && (
                 <ButtonCom
                   title="Continue"

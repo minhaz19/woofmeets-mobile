@@ -4,7 +4,6 @@ import AppCheckbox from '../../../common/Form/AppCheckbox';
 import TitleText from '../../../common/text/TitleText';
 import ShortText from '../../../common/text/ShortText';
 import Text_Size from '../../../../constants/textScaling';
-import {Text} from '@rneui/base';
 const serviceData = [
   {
     serivce: 'Boarding',
@@ -58,11 +57,8 @@ const ServiceSlot = () => {
               )}
             />
           </View>
-          {/* <View>
-            <IncreDecreButton />
-          </View> */}
           <View>
-            {item.active ? <Text>Available</Text> : <Text>Unavailable</Text>}
+            {item.active ? <TitleText text="Available" /> : <TitleText text="Unavailable" />}
           </View>
         </View>
       ))}

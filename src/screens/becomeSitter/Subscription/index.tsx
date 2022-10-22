@@ -12,6 +12,7 @@ import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import Screen from '../../../components/common/Screen';
 import Welcome from '../../../components/ScreenComponent/becomeSitter/subscription/Welcome/Welcome';
+import { useAppSelector } from '../../../store/store';
 interface Props {
   route: any;
 }
@@ -30,6 +31,8 @@ const SubscriptionScreen = ({route}: Props) => {
     ssLoading,
     cardLoading,
   } = useSubscription();
+  const {sitterData} = useAppSelector(state => state.initial);
+  console.log(sitterData);
   return (
     <Screen style={{flex: 1}}>
       {(loading || planLoading) && <AppActivityIndicator visible={true} />}

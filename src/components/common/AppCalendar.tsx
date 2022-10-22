@@ -1,9 +1,10 @@
-import {StyleSheet, Text, TextStyle, View} from 'react-native';
+import {StyleSheet, TextStyle, View} from 'react-native';
 import React from 'react';
 import {CalendarList} from 'react-native-calendars';
 import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
 import Colors from '../../constants/Colors';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
+import TitleText from './text/TitleText';
 
 interface Props {
   range?: number;
@@ -116,9 +117,8 @@ function renderCustomHeader(date: any) {
 
   return (
     <View style={styles.header}>
-      <Text style={[styles.month, textStyle]}>{`${month}`}</Text>
-
-      <Text style={[styles.year, textStyle]}>{year}</Text>
+      <TitleText text={`${month}`} textStyle={{...styles.month, ...textStyle}} />
+      <TitleText text={year} textStyle={{...styles.year, ...textStyle}} />
     </View>
   );
 }

@@ -1,4 +1,4 @@
-export const changeTextLetter = (name: string) => {
+const changeTextLetter = (name: string) => {
   const str = name;
   const arr = str.split(' ');
   for (var i = 0; i < arr.length; i++) {
@@ -7,3 +7,5 @@ export const changeTextLetter = (name: string) => {
   const str2 = arr.join(' ');
   return str2;
 };
+
+export default changeTextLetter;

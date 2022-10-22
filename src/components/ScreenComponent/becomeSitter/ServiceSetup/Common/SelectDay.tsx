@@ -6,6 +6,7 @@ import Card from '../../../../UI/Card';
 import { useTheme } from '../../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../../constants/Colors';
 import Text_Size from '../../../../../constants/textScaling';
+import TitleText from '../../../../common/text/TitleText';
 
 interface Props {
   title: string;
@@ -50,9 +51,7 @@ const SelectDay: FC<Props> = ({
                         borderColor: Colors.gray,
                       },
                 ]}>
-                <Text style={[styles.text, {color: colors.descriptionText}]}>
-                  {title}
-                </Text>
+                <TitleText textStyle={{...styles.text, color: colors.descriptionText}} text={title} />
               </View>
             </TouchableOpacity>
           </Card>

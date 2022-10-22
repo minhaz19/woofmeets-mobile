@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {StyleSheet, Text, View} from 'react-native';
-import React, {memo, useState} from 'react';
-import AppInputRange from '../../../common/Form/AppInputRange';
+import {StyleSheet, View} from 'react-native';
+import React, {memo} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import Text_Size from '../../../../constants/textScaling';
 import Colors from '../../../../constants/Colors';
@@ -24,9 +23,9 @@ const PriceRange = ({multiSliderValue}: Props) => {
       <TitleText textStyle={styles.title} text="Rate Per Night" />
       <View style={[styles.labelContainer]}>
         <View style={styles.labelArrow} />
-        <Text style={styles.label}>{multiSliderValue[0]} </Text>
-        <Text style={styles.label}> {' - '}</Text>
-        <Text style={styles.label}>{multiSliderValue[1]}</Text>
+        <TitleText textStyle={styles.label} text={multiSliderValue[0]} />
+        <TitleText textStyle={styles.label} text={' - '} />
+        <TitleText textStyle={styles.label} text={multiSliderValue[1]} />
       </View>
       <View style={styles.rangeContainer}>
         <Slider

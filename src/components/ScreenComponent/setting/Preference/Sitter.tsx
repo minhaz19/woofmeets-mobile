@@ -1,10 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
+import TitleText from '../../../common/text/TitleText';
 
 const Sitter = () => {
   return (
     <View>
-      <Text>Sitter</Text>
+      <TitleText text={'Sitter'} />
     </View>
   );
 };

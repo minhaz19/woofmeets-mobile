@@ -53,7 +53,7 @@ const Splash = ({}) => {
   };
 
   const _onDone = () => {
-    // setState({showRealApp: true});
+    setState({showRealApp: true});
   };
 
   const _renderDoneButton = () => {
