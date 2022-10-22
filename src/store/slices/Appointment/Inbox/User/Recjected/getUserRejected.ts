@@ -1,8 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
-import apiClient from '../../../../../api/client';
-export const getAppointmentStatus = createAsyncThunk(
+import apiClient from '../../../../../../api/client';
+export const getUserRejected = createAsyncThunk(
   '/appointment/inbox',
   async (statusId: string) => {
     try {

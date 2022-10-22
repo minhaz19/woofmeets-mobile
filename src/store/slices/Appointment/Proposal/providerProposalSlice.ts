@@ -36,7 +36,9 @@ const providerProposalSlice = createSlice({
           payload.data.appointment.providerService.serviceTypeId === 2
             ? {
                 userId: payload.data.appointment.user.id,
-                providerId: payload.data.appointment.provider.user.id,
+                providerId: payload.data.appointment.provider.id,
+                appointmentOpk: payload.data.appointment.opk,
+                proposedBy: payload.data.proposal.proposedBy,
                 serviceName:
                   payload.data.appointment.providerService.serviceType.name,
                 providerName:
@@ -46,6 +48,7 @@ const providerProposalSlice = createSlice({
                 image: payload.data.appointment.provider.user.image,
                 serviceTypeId:
                   payload.data.appointment.providerService.serviceTypeId,
+                petsInfo: payload.data.proposal.appointmentPet,
                 dropOffStartTime: payload.data.proposal.dropOffStartTime,
                 dropOffEndTime: payload.data.proposal.dropOffEndTime,
                 pickUpStartTime: payload.data.proposal.pickUpStartTime,
@@ -55,12 +58,16 @@ const providerProposalSlice = createSlice({
                 firstMessage: payload.data.proposal.firstMessage,
                 isRecivedPhotos: payload.data.proposal.isRecivedPhotos,
                 appointmentPet: payload.data.proposal.appointmentPet,
+                counter: payload.data.proposal.countered,
+                status: payload.data.appointment.status,
               }
             : payload.data.appointment.providerService.serviceTypeId === 3 ||
               payload.data.appointment.providerService.serviceTypeId === 5
             ? {
                 userId: payload.data.appointment.user.id,
-                providerId: payload.data.appointment.provider.user.id,
+                providerId: payload.data.appointment.provider.id,
+                appointmentOpk: payload.data.appointment.opk,
+                proposedBy: payload.data.proposal.proposedBy,
                 serviceName:
                   payload.data.appointment.providerService.serviceType.name,
                 serviceTypeId:
@@ -78,14 +85,19 @@ const providerProposalSlice = createSlice({
                 recurringSelectedDay:
                   payload.data.proposal.recurringSelectedDay,
                 proposalOtherDate: payload.data.proposal.proposalOtherDate,
+                petsInfo: payload.data.proposal.appointmentPet,
                 firstMessage: payload.data.proposal.firstMessage,
                 isRecivedPhotos: payload.data.proposal.isRecivedPhotos,
                 appointmentPet: payload.data.proposal.appointmentPet,
+                counter: payload.data.proposal.countered,
+                status: payload.data.appointment.status,
               }
             : payload.data.appointment.providerService.serviceTypeId === 4
             ? {
                 userId: payload.data.appointment.user.id,
-                providerId: payload.data.appointment.provider.user.id,
+                providerId: payload.data.appointment.provider.id,
+                appointmentOpk: payload.data.appointment.opk,
+                proposedBy: payload.data.proposal.proposedBy,
                 serviceName:
                   payload.data.appointment.providerService.serviceType.name,
                 serviceTypeId:
@@ -100,6 +112,7 @@ const providerProposalSlice = createSlice({
                 pickUpStartTime: payload.data.proposal.pickUpStartTime,
                 pickUpEndTime: payload.data.proposal.pickUpEndTime,
                 proposalOtherDate: payload.data.proposal.proposalOtherDate,
+                petsInfo: payload.data.proposal.appointmentPet,
                 isRecurring: payload.data.proposal.isRecurring,
                 recurringStartDate: payload.data.proposal.recurringStartDate,
                 recurringSelectedDay:
@@ -107,6 +120,8 @@ const providerProposalSlice = createSlice({
                 firstMessage: payload.data.proposal.firstMessage,
                 isRecivedPhotos: payload.data.proposal.isRecivedPhotos,
                 appointmentPet: payload.data.proposal.appointmentPet,
+                counter: payload.data.proposal.countered,
+                status: payload.data.appointment.status,
               }
             : null;
       })

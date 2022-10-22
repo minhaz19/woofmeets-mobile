@@ -23,6 +23,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
+import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -66,6 +67,7 @@ const ActivityScreen = (props: {
   useEffect(() => {
     dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAllPets());
+    dispatch(getWhoAmI());
   }, []);
 
   const {colors} = useTheme();

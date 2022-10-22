@@ -9,29 +9,37 @@ import {useNavigation} from '@react-navigation/native';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/getAppointmentStatus';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
-const DeclinedStatus = () => {
+import {getUserRejected} from '../../../../store/slices/Appointment/Inbox/User/Recjected/getUserRejected';
+import {getUserCanceled} from '../../../../store/slices/Appointment/Inbox/User/Cancelled/getUserCancelled';
+interface Props {
+  statusType: string;
+}
+const DeclinedStatus = ({statusType}: Props) => {
   let navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
-  const {appointmentStatus, loading} = useAppSelector(
-    state => state.appointmentStatus,
-  );
+  const [combineStatus, setCombineStatus] = useState<any>([]);
+  const {userCancelled, loading} = useAppSelector(state => state.userCancelled);
+  const {userRejected} = useAppSelector(state => state.userRejected);
 
   useEffect(() => {
-    appointmentStatus === null && dispatch(getAppointmentStatus('PROPOSAL'));
-  }, [dispatch, appointmentStatus]);
+    userRejected === null && dispatch(getUserRejected('REJECTED'));
+    userCancelled === null && dispatch(getUserCanceled('CANCELLED'));
+    setCombineStatus([...userCancelled, ...userRejected]);
+  }, [dispatch, userCancelled, userRejected]);
 
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
-    appointmentStatus === null && dispatch(getAppointmentStatus('PROPOSAL'));
+    userRejected === null && dispatch(getUserRejected('REJECTED'));
+    userCancelled === null && dispatch(getUserCanceled('CANCELLED'));
     setRefreshing(false);
   };
   useEffect(() => {
     onRefresh();
   }, []);
+  console.log('asdfasdf', combineStatus);
 
   return (
     <>
@@ -41,7 +49,7 @@ const DeclinedStatus = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {appointmentStatus === null ? (
+        {combineStatus === null && combineStatus !== undefined ? (
           <View style={styles.errorContainer}>
             <MessageNotSend
               svg={<UpcomingSvg width={200} height={200} />}
@@ -57,8 +65,8 @@ const DeclinedStatus = () => {
               handleActivity={() => {}}
               handleDate={() => {}}
             />
-            {appointmentStatus !== null ? (
-              appointmentStatus.map((item: any) => {
+            {combineStatus !== null && combineStatus !== undefined ? (
+              combineStatus.map((item: any) => {
                 return (
                   <ReusableCard
                     key={item.opk}

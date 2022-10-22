@@ -51,9 +51,9 @@ const Inbox = () => {
                 styles.itemContainer,
                 {
                   backgroundColor:
-                    showInbox === item.id ? Colors.background : Colors.primary,
+                    showInbox === item.id ? Colors.primary : Colors.background,
                   borderRightWidth: 1,
-                  borderRightColor: 'white',
+                  borderRightColor: Colors.primary,
                 },
               ]}>
               <TouchableOpacity onPress={() => setShowInbox(item.id)}>
@@ -63,7 +63,7 @@ const Inbox = () => {
                     fontWeight: '700',
                     marginBottom: '1%',
                     textAlign: 'center',
-                    color: showInbox === item.id ? colors.headerText : 'white',
+                    color: showInbox === item.id ? 'white' : colors.headerText,
                   }}
                 />
               </TouchableOpacity>
@@ -75,9 +75,9 @@ const Inbox = () => {
         <UserProviderInbox setActive={setActive} active={active} />
       </View>
       {showInbox === 1 && <PendingStatus statusType={active} />}
-      {showInbox === 2 && <ApprovedStatus />}
+      {showInbox === 2 && <ApprovedStatus statusType={active} />}
       {showInbox === 3 && <CompletedStatus />}
-      {showInbox === 4 && <DeclinedStatus />}
+      {showInbox === 4 && <DeclinedStatus statusType={active} />}
 
       <BottomSpacing />
     </ScreenRapperGrey>

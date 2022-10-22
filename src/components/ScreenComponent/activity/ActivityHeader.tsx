@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TitleText from '../../common/text/TitleText';
@@ -11,14 +11,46 @@ import HeaderText from '../../common/text/HeaderText';
 import DescriptionText from '../../common/text/DescriptionText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useAppSelector} from '../../../store/store';
-
+import {useApi} from '../../../utils/helpers/api/useApi';
+import methods from '../../../api/methods';
+const acceptEndpoint = '/appointment/accept/proposal/';
+const rejectEndpoint = '/appointment/cancel/';
 const ActivityHeader = (props: {
   setIsDetailsModal: (arg0: boolean) => void;
   opk: string;
 }) => {
   let navigation = useNavigation<any>();
   const {colors} = useTheme();
+  const {request} = useApi(methods._put);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  const user = useAppSelector(state => state.whoAmI);
+  const handleAccept = async () => {
+    const result = await request(acceptEndpoint + props.opk);
+    console.log('resut', result);
+    result.ok && navigation.navigate('Inbox');
+  };
+  console.log('user', user, proposedServiceInfo);
+  const handleReject = async () => {
+    Alert.alert(
+      'Cancel Appointment',
+      'Are you sure you want to decline this appointment',
+      [
+        {
+          text: 'No',
+          onPress: () => {},
+        },
+        {
+          text: 'Yes',
+          onPress: async () => {
+            const r = await request(rejectEndpoint + props.opk);
+            r.ok && navigation.navigate('Inbox');
+            console.log('d', r);
+          },
+        },
+      ],
+    );
+  };
+
   return (
     <View style={[styles.container, {borderColor: colors.borderColor}]}>
       <View style={styles.containerInner}>
@@ -68,39 +100,72 @@ const ActivityHeader = (props: {
       </View>
       <View style={styles.innerTwo}>
         <View style={styles.buttonContainer}>
+          {proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+          proposedServiceInfo?.userId === user?.user?.id ? (
+            <>
+              <TouchableOpacity
+                style={{width: SCREEN_WIDTH / 5}}
+                onPress={async () => {
+                  if (proposedServiceInfo.proposedBy === 'PROVIDER') {
+                    await request(
+                      acceptEndpoint + proposedServiceInfo.appointmentOpk,
+                    );
+                  }
+                  navigation.navigate('Checkout');
+                }}>
+                <TitleText
+                  text="Pay"
+                  textStyle={{
+                    ...styles.textStyle,
+                    textAlign: 'center',
+                    color: Colors.light.background,
+                  }}
+                />
+              </TouchableOpacity>
+              <View style={styles.divider} />
+            </>
+          ) : proposedServiceInfo?.proposedBy === 'USER' &&
+            proposedServiceInfo?.providerId === user?.user?.provider?.id ? (
+            <>
+              <TouchableOpacity
+                style={{width: SCREEN_WIDTH / 5}}
+                onPress={handleAccept}>
+                <TitleText
+                  text="Accept"
+                  textStyle={{
+                    ...styles.textStyle,
+                    textAlign: 'center',
+                    color: Colors.light.background,
+                  }}
+                />
+              </TouchableOpacity>
+              <View style={styles.divider} />
+            </>
+          ) : null}
+          {true && (
+            <>
+              <TouchableOpacity
+                style={{width: SCREEN_WIDTH / 5}}
+                onPress={() =>
+                  navigation.navigate('EditDetails', {
+                    appointmentOpk: props.opk,
+                  })
+                }>
+                <TitleText
+                  text="Modify"
+                  textStyle={{
+                    ...styles.textStyle,
+                    textAlign: 'center',
+                    color: Colors.light.background,
+                  }}
+                />
+              </TouchableOpacity>
+              <View style={styles.divider} />
+            </>
+          )}
           <TouchableOpacity
             style={{width: SCREEN_WIDTH / 5}}
-            onPress={() => navigation.navigate('Checkout')}>
-            <TitleText
-              text="Pay"
-              textStyle={{
-                ...styles.textStyle,
-                textAlign: 'center',
-                color: Colors.light.background,
-              }}
-            />
-          </TouchableOpacity>
-          <View style={styles.divider} />
-          <TouchableOpacity
-            style={{width: SCREEN_WIDTH / 5}}
-            onPress={() =>
-              navigation.navigate('EditDetails', {appointmentOpk: props.opk})
-            }>
-            <TitleText
-              text="Modify"
-              textStyle={{
-                ...styles.textStyle,
-                textAlign: 'center',
-                color: Colors.light.background,
-              }}
-            />
-          </TouchableOpacity>
-          <View style={styles.divider} />
-          <TouchableOpacity
-            style={{width: SCREEN_WIDTH / 5}}
-            onPress={() =>
-              navigation.navigate('EditDetails', {appointmentOpk: props.opk})
-            }>
+            onPress={handleReject}>
             <TitleText
               text="Decline"
               textStyle={{

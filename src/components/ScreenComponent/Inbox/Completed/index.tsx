@@ -9,7 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/getAppointmentStatus';
+import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 const CompletedStatus = () => {
   let navigation = useNavigation<any>();
@@ -57,7 +57,7 @@ const CompletedStatus = () => {
               handleActivity={() => {}}
               handleDate={() => {}}
             />
-            {appointmentStatus !== null ? (
+            {appointmentStatus !== null && appointmentStatus !== undefined ? (
               appointmentStatus.map((item: any) => {
                 return (
                   <ReusableCard

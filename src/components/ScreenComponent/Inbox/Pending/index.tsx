@@ -9,7 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/getAppointmentStatus';
+import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/getProviderApnt';
 interface Props {
@@ -28,8 +28,8 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     statusType === 'USER' && dispatch(getAppointmentStatus('PROPOSAL'));
     statusType === 'PROVIDER' && dispatch(getProviderApnt('PROPOSAL'));
-    console.log('status type', statusType, providerApntStatus);
   }, []);
+  console.log('status type', statusType, providerApntStatus);
 
   const [refreshing, setRefreshing] = useState(false);
 

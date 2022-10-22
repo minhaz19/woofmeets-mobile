@@ -15,7 +15,7 @@ export const useTimeMultiSlotPicker = (
     console.log('rendar multi');
     const times: any = []; // time array
     let tt = 0; // start time
-    const ap = ['AM', 'PM']; // AM-PM
+    const ap = [' AM', ' PM']; // AM-PM
 
     for (let i = 0; tt < 24 * 60; i++) {
       const hh = Math.floor(tt / 60); // getting hours of day in 0-24 format

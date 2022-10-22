@@ -42,8 +42,11 @@ import addressReducer from './slices/address/address';
 import markedStyle from './slices/misc/markedStyle';
 import ProviderFilterSlice from './slices/Provider/ProviderFilter/ProviderFilterSlice';
 import providerProposalSlice from './slices/Appointment/Proposal/providerProposalSlice';
-import appointmentStatusSlice from './slices/Appointment/Inbox/User/appointmentStatusSlice';
+import appointmentStatusSlice from './slices/Appointment/Inbox/User/Proposal/appointmentStatusSlice';
 import ProviderApntStatusSlice from './slices/Appointment/Inbox/Provider/providerApntStatusSlice';
+import userApmtRejectSlice from './slices/Appointment/Inbox/User/Recjected/userApmtRejectSlice';
+import userApmtCancelSlice from './slices/Appointment/Inbox/User/Cancelled/userApmtCancelSlice';
+import userAcceptedSlice from './slices/Appointment/Inbox/User/Accepted/userAcceptedSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -81,6 +84,9 @@ const appReducer = combineReducers({
   proposal: providerProposalSlice,
   markedStyle: markedStyle,
   providerFilter: ProviderFilterSlice,
+  userRejected: userApmtRejectSlice,
+  userCancelled: userApmtCancelSlice,
+  userAccepted: userAcceptedSlice,
 });
 
 const RootReducer = (

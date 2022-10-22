@@ -1,15 +1,14 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
-import apiClient from '../../../../api/client';
-export const getProviderProposal = createAsyncThunk(
-  '/appointment/{opk}/proposal',
-  async (opk: string) => {
+import apiClient from '../../../../../../api/client';
+export const getUserAccepted = createAsyncThunk(
+  '/appointment/inbox',
+  async (statusId: string) => {
     try {
       const response: ApiResponse<any> = await apiClient.get(
-        `/appointment/${opk}/proposal`,
+        `/appointment/inbox?status=${statusId}`,
       );
-      console.log('resss', response);
       if (!response.ok) {
         if (response.data) {
         } else if (response.problem === 'TIMEOUT_ERROR') {

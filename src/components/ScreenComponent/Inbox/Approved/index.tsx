@@ -9,24 +9,25 @@ import {useNavigation} from '@react-navigation/native';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/getAppointmentStatus';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
-const ApprovedStatus = () => {
+import {getUserAccepted} from '../../../../store/slices/Appointment/Inbox/User/Accepted/getUserAcceptedStatus';
+interface Props {
+  statusType: string;
+}
+const ApprovedStatus = ({statusType}: Props) => {
   let navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
-  const {appointmentStatus, loading} = useAppSelector(
-    state => state.appointmentStatus,
-  );
+  const {userAccepted, loading} = useAppSelector(state => state.userAccepted);
 
   useEffect(() => {
-    appointmentStatus === null && dispatch(getAppointmentStatus('PROPOSAL'));
-  }, [dispatch, appointmentStatus]);
+    userAccepted === null && dispatch(getUserAccepted('ACCEPTED'));
+  }, [dispatch, userAccepted]);
 
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
-    appointmentStatus === null && dispatch(getAppointmentStatus('PROPOSAL'));
+    userAccepted === null && dispatch(getUserAccepted('ACCEPTED'));
     setRefreshing(false);
   };
   useEffect(() => {
@@ -41,7 +42,7 @@ const ApprovedStatus = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {appointmentStatus === null ? (
+        {userAccepted === null ? (
           <View style={styles.errorContainer}>
             <MessageNotSend
               svg={<UpcomingSvg width={200} height={200} />}
@@ -57,8 +58,8 @@ const ApprovedStatus = () => {
               handleActivity={() => {}}
               handleDate={() => {}}
             />
-            {appointmentStatus !== null ? (
-              appointmentStatus.map((item: any) => {
+            {userAccepted !== null && userAccepted !== undefined ? (
+              userAccepted?.map((item: any) => {
                 return (
                   <ReusableCard
                     key={item.opk}

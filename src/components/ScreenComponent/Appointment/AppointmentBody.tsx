@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import { StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import SubmitButton from '../../common/Form/SubmitButton';
 import ServicePicker from './components/ServicePicker';
@@ -27,9 +27,7 @@ const AppointmentBody = ({handleSubmit, loading}: Props) => {
   // const {isRecurring, recurringStartDate} = watch();
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}>
+    <View style={styles.container}>
       <ServicePicker
         name="providerServiceId"
         setValue={setValue}
@@ -71,7 +69,7 @@ const AppointmentBody = ({handleSubmit, loading}: Props) => {
         <BottomSpacing />
         <BottomSpacing />
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
