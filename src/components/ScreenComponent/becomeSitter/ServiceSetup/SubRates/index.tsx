@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Colors from '../../../../../constants/Colors';
@@ -37,6 +37,7 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
     setUpdateRates,
     checked,
   } = useSubRates(rateFields, watch);
+  console.log('base', baseRateWatch);
   return (
     <View>
       <ServiceReusableModal
@@ -62,6 +63,7 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
             },
             index: number,
           ) => {
+            console.log('item', item.percentage);
             return (
               <View key={index}>
                 {item.slug === 'base-rate' && (
@@ -119,8 +121,10 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                     editable={updateRates}
                     control={control}
                     errors={errors}
-                    baseRateWatch={baseRateWatch}
-                    convertedValue={(baseRateWatch / 100) * item.percentage}
+                    baseRateWatch={Number(baseRateWatch)}
+                    convertedValue={
+                      Number(baseRateWatch) * Number(item.percentage)
+                    }
                     setValue={setValue}
                     updateRates={updateRates}
                     checked={checked}

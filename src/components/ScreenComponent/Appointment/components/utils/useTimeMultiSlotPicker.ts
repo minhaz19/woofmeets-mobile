@@ -2,14 +2,20 @@ import {useMemo, useState} from 'react';
 import {useWatch} from 'react-hook-form';
 
 let Dates: any = [];
-export const useTimeMultiSlotPicker = (singleItem: any, initalSlot: any) => {
+let Days: any = [];
+export const useTimeMultiSlotPicker = (
+  singleItem: any,
+  initalSlot: any,
+  isRecurring: boolean,
+) => {
   const {visitLength} = useWatch();
 
   const [newData, setDatas] = useState<any>([]);
   useMemo(() => {
+    console.log('rendar multi');
     const times: any = []; // time array
     let tt = 0; // start time
-    const ap = ['AM', 'PM']; // AM-PM
+    const ap = [' AM', ' PM']; // AM-PM
 
     for (let i = 0; tt < 24 * 60; i++) {
       const hh = Math.floor(tt / 60); // getting hours of day in 0-24 format
@@ -37,18 +43,33 @@ export const useTimeMultiSlotPicker = (singleItem: any, initalSlot: any) => {
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
+
   if (initalSlot?.length > 0) {
-    const matchIndex = Dates.findIndex(
-      (itm: {date: string}) => itm.date === singleItem.date,
-    );
-    if (matchIndex === -1) {
-      Dates.push({
-        date: singleItem.date,
-        visitTime: initalSlot,
-        sameAsStartDate: false,
-        startDate: singleItem.startDate,
-      });
+    if (isRecurring) {
+      const matchIndex = Days.findIndex(
+        (itm: {date: string}) => itm.date === singleItem.date,
+      );
+      if (matchIndex === -1) {
+        Days.push({
+          date: singleItem.date,
+          visitTime: initalSlot,
+          sameAsStartDate: false,
+          startDate: singleItem.startDate,
+        });
+      }
+    } else if (!isRecurring) {
+      const matchIndex = Dates.findIndex(
+        (itm: {date: string}) => itm.date === singleItem.date,
+      );
+      if (matchIndex === -1) {
+        Dates.push({
+          date: singleItem.date,
+          visitTime: initalSlot,
+          sameAsStartDate: false,
+          startDate: singleItem.startDate,
+        });
+      }
     }
   }
-  return {handleMultipleCheck, newData};
+  return {handleMultipleCheck, newData, Dates, Days};
 };

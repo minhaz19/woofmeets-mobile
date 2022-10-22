@@ -12,7 +12,6 @@ import AppCalendar from '../../../common/AppCalendar';
 import {useFormContext} from 'react-hook-form';
 import ShortText from '../../../common/text/ShortText';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import {useAppSelector} from '../../../../store/store';
 interface Props {
   serviceId?: number;
   setValue: (arg: string, arg2: any) => void;
@@ -35,7 +34,6 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
     multiDate,
   } = getValues();
   const {isDarkMode} = useTheme();
-  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   return (
     <View style={[styles.container]}>
       <TitleText textStyle={styles.headerText} text={'Schedule'} />

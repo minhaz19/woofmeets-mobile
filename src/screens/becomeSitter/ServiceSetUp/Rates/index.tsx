@@ -1,7 +1,6 @@
 import {ScrollView, StyleSheet} from 'react-native';
 import React from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import AppForm from '../../../../components/common/Form/AppForm';
 import SubRates from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubRates';
 import {BoardingSettingsSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
@@ -9,11 +8,8 @@ import {useServiceRateInit} from './utils/useServiceRateInit';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {useServiceRates} from './utils/useServiceRate';
 import {useAppSelector} from '../../../../store/store';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
 
 const Rates = () => {
-  const {colors} = useTheme();
   const {serviceSetup} = useAppSelector((state: { serviceSetup: any; }) => state?.serviceSetup);
   const {itemId, name, image, description} = serviceSetup.routeData;
   const {
