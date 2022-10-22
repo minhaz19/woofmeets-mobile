@@ -39,10 +39,14 @@ import cardsSlice from './slices/payment/PaymentCards/cardsSlice';
 import currentPlanSlice from './slices/payment/Subscriptions/CurrentSubscription/currentPlanSlice';
 import providerServicesSlice from './slices/Appointment/ProviderServices/providerServicesSlice';
 import addressReducer from './slices/address/address';
-import appointmentSlice from './slices/Appointment/appointment';
 import markedStyle from './slices/misc/markedStyle';
 import ProviderFilterSlice from './slices/Provider/ProviderFilter/ProviderFilterSlice';
-import providerProposalSlice from './slices/Appointment/ProviderProposal/providerProposalSlice';
+import providerProposalSlice from './slices/Appointment/Proposal/providerProposalSlice';
+import appointmentStatusSlice from './slices/Appointment/Inbox/User/Proposal/appointmentStatusSlice';
+import ProviderApntStatusSlice from './slices/Appointment/Inbox/Provider/providerApntStatusSlice';
+import userApmtRejectSlice from './slices/Appointment/Inbox/User/Recjected/userApmtRejectSlice';
+import userApmtCancelSlice from './slices/Appointment/Inbox/User/Cancelled/userApmtCancelSlice';
+import userAcceptedSlice from './slices/Appointment/Inbox/User/Accepted/userAcceptedSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -75,10 +79,14 @@ const appReducer = combineReducers({
   currentPlan: currentPlanSlice,
   providerServices: providerServicesSlice,
   address: addressReducer,
-  appointment: appointmentSlice,
+  appointmentStatus: appointmentStatusSlice,
+  providerApntStatus: ProviderApntStatusSlice,
   proposal: providerProposalSlice,
   markedStyle: markedStyle,
   providerFilter: ProviderFilterSlice,
+  userRejected: userApmtRejectSlice,
+  userCancelled: userApmtCancelSlice,
+  userAccepted: userAcceptedSlice,
 });
 
 const RootReducer = (

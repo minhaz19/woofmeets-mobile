@@ -25,17 +25,15 @@ const AppDayPicker = () => {
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-  const {setValue, getValues} = useFormContext();
-  const {recurringSelectedDay} = getValues();
+  const {setValue, watch} = useFormContext();
+  const {selectedDays: sDays} = watch();
   useEffect(() => {
     const modDays = day.map((item, index) => ({
       id: index + 1,
       day: item.charAt(0),
       value: item,
       active:
-        recurringSelectedDay.findIndex((it: string) => it === item) !== -1
-          ? true
-          : false,
+        sDays?.findIndex((it: string) => it === item) !== -1 ? true : false,
     }));
     setDatas(modDays);
   }, []);
@@ -62,7 +60,7 @@ const AppDayPicker = () => {
               } else {
                 selectedDays.splice(matchIndex, 1);
               }
-              setValue('recurringSelectedDay', selectedDays);
+              setValue('selectedDays', selectedDays);
               handleMultipleCheck(item.id);
             }}>
             <TitleText text={item.day} textStyle={styles.text} />
