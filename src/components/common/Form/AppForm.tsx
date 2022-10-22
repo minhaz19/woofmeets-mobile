@@ -27,7 +27,7 @@ const AppForm = ({
       if (!unmounted) {
         reset(initialValues);
       }
-    }, 1000);
+    }, 3000);
     return () => {
       unmounted === true;
     };
