@@ -42,6 +42,7 @@ import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
 import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
 import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
 import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
+import StripeOnboardScreen from '../screens/settings/Profile/StripeOnboardScreen';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -467,6 +468,21 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="ServiceSelection"
           component={ServiceSelection}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Selection"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+      <Stack.Screen
+          name="StripeOnboardScreen"
+          component={StripeOnboardScreen}
           options={({navigation}) => ({
             title: '',
             header: () => (

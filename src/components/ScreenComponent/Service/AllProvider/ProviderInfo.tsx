@@ -2,7 +2,6 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {MapMarker, RoundedCheckbox} from '../../../../assets/svgs/SVG_LOGOS';
 import ShortIconTitle from '../../../common/ShortIconTitle';
-import ShortText from '../../../common/text/ShortText';
 import Colors from '../../../../constants/Colors';
 import HeaderText from '../../../common/text/HeaderText';
 import {AirbnbRating} from 'react-native-ratings';

@@ -43,6 +43,7 @@ import appointmentSlice from './slices/Appointment/appointment';
 import markedStyle from './slices/misc/markedStyle';
 import ProviderFilterSlice from './slices/Provider/ProviderFilter/ProviderFilterSlice';
 import providerProposalSlice from './slices/Appointment/ProviderProposal/providerProposalSlice';
+import stripe from './slices/connect/stripe';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -79,6 +80,7 @@ const appReducer = combineReducers({
   proposal: providerProposalSlice,
   markedStyle: markedStyle,
   providerFilter: ProviderFilterSlice,
+  stripe: stripe,
 });
 
 const RootReducer = (

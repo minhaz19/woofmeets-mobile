@@ -1,4 +1,4 @@
-import {StyleSheet, View, TouchableOpacity, useColorScheme} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, useColorScheme, Alert, ScrollView} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import ProfileInfo from '../../../components/ScreenComponent/profile/BasicInfo/ProfileInfo';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -14,14 +14,21 @@ import { getProviderProfile } from '../../../store/slices/Provider/ProviderProfi
 import { useNavigation } from '@react-navigation/native';
 import jwtDecode from 'jwt-decode';
 import authStorage from '../../../utils/helpers/auth/storage';
+import TitleText from '../../../components/common/text/TitleText';
+import { getUserOnboardStatus } from '../../../store/slices/connect/stripe';
+import apiClient from '../../../api/client';
+import DescriptionText from '../../../components/common/text/DescriptionText';
 
 const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {colors} = useTheme();
   const isDarkMode = useColorScheme() === 'dark';
   const {loading} = useAppSelector(state => state.userProfile);
+  const {userOnboardStatus} = useAppSelector(state => state.stripe);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   useProfileData();
+
+  console.log('onboard',userOnboardStatus);
 
   const [token, setToken] = useState<any>();
   // const userInfo = useAppSelector(state => state.auth.userInfo);
@@ -36,10 +43,35 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   };
   useEffect(() => {
     getDecodedToken();
+    dispatch(getUserOnboardStatus())
   }, []);
 
+  const handleStripeConnect = async() => {
+    // props.navigation.navigate('StripeOnboardScreen', {url: 'https://google.com'});
+    // return (
+    //   <View style={{flex: 1}}>
+    //     <WebView source={{ uri: 'https://google.com'}} />
+    //   </View>
+    // )
+    const response = await apiClient.post('/stripe-connect/user-onboarding');
+    console.log(response.data?.data?.alreadyInitiated);
+    if (response.ok) {
+      if (response.data?.data?.alreadyInitiated) {
+        const response = await apiClient.post('/stripe-connect/user-onboarding/refresh-url', {
+          email: token.email,
+        });
+        console.log(response.data?.data?.url);
+        if (response.data?.data?.url) {
+          props.navigation.navigate('StripeOnboardScreen', {url: response.data?.data?.url});
+        }
+      }
+    } else {
+      Alert.alert(response?.data?.message)
+    }
+  }
+
   return (
-    <>
+    <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
       {loading && <AppActivityIndicator visible={true} />}
       <View
         style={[
@@ -48,6 +80,12 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
             backgroundColor: colors.backgroundColor,
           },
         ]}>
+        {!token?.provider && <View style={{paddingVertical: 20}}>
+          <TitleText 
+            textStyle={{color: Colors.blue, textAlign: 'center'}}
+            text={'Your sitter request status in under progress, you will be notified when your status changes'}
+          />
+        </View>}
         <View style={styles.headerContainer}>
           <View style={styles.profileContainer}>
             <ProfileInfo />
@@ -121,9 +159,13 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
               />
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={handleStripeConnect}>
+            <HeaderText text={'Stripe Connect'} textStyle={{color: 'blue'}} />
+          </TouchableOpacity>
+            <DescriptionText textStyle={{color: Colors.alert}} text={userOnboardStatus?.userStripeConnectAccount?.requirements?.errors[0]?.reason} />
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 };
 

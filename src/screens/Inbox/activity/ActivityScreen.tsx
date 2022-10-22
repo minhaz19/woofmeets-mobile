@@ -74,14 +74,11 @@ const ActivityScreen = (props: {
   return (
     <>
       {(loading || petLoading) && <AppActivityIndicator visible={true} />}
-      <View style={styles.rootContainer}>
+      <View style={{...styles.rootContainer, backgroundColor: colors.backgroundColor}}>
         <SafeAreaView>
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={[
-              styles.container,
-              {backgroundColor: colors.backgroundColor},
-            ]}>
+            style={styles.container}>
             <>
               <ActivityHeader
                 setIsDetailsModal={setIsDetailsModal}
@@ -209,7 +206,7 @@ const ActivityScreen = (props: {
 };
 
 const styles = StyleSheet.create({
-  rootContainer: {flex: 1, backgroundColor: Colors.background},
+  rootContainer: {flex: 1},
   headerTitle: {
     width: '100%',
     flexDirection: 'row',

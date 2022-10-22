@@ -29,9 +29,12 @@ const SitterInitialScreen = (props: {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const currentPlan = useAppSelector(state => state.currentPlan);
 
+  console.log(currentPlan);
+
   const handlePress = () => {
     if (isLoggedIn) {
-      if (currentPlan.currentPlan) {
+      if (currentPlan?.currentPlan?.subscriptionInfo?.status) {
+        props.navigation.navigate('Profile')
       } else {
         props.navigation.navigate('SitterLandingPage')
       }

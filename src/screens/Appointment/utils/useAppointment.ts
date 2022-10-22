@@ -154,6 +154,7 @@ export const useAppointment = () => {
           ? dropDogPayload
           : doggyPayload;
       const response = await request(endpoint, payload);
+      console.log('appointment res',response);
       response.ok &&
         navigation.navigate('ActivityScreen', {
           appointmentOpk: response.data.data.appointment.opk,
