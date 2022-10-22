@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ReusableCard from '../utils/Common/ReusableCard';
@@ -12,34 +11,57 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 import {getUserRejected} from '../../../../store/slices/Appointment/Inbox/User/Recjected/getUserRejected';
 import {getUserCanceled} from '../../../../store/slices/Appointment/Inbox/User/Cancelled/getUserCancelled';
+import {getProviderCancelled} from '../../../../store/slices/Appointment/Inbox/Provider/Cancelled/getProviderCancelled';
+import {getProviderRejected} from '../../../../store/slices/Appointment/Inbox/Provider/Recjected/getProviderRejected';
 interface Props {
   statusType: string;
 }
 const DeclinedStatus = ({statusType}: Props) => {
   let navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
-  const [combineStatus, setCombineStatus] = useState<any>([]);
+  const [combineStatusUser, setCombineStatusUser] = useState<any>([]);
+  const [combineStatusProvider, setCombineStatusProvider] = useState<any>([]);
   const {userCancelled, loading} = useAppSelector(state => state.userCancelled);
   const {userRejected} = useAppSelector(state => state.userRejected);
+  const {proivderCancelled} = useAppSelector(state => state.proivderCancelled);
+  const {providerRejected} = useAppSelector(state => state.providerRejected);
 
   useEffect(() => {
-    userRejected === null && dispatch(getUserRejected('REJECTED'));
-    userCancelled === null && dispatch(getUserCanceled('CANCELLED'));
-    setCombineStatus([...userCancelled, ...userRejected]);
-  }, [dispatch, userCancelled, userRejected]);
-
+    if (statusType === 'USER') {
+      userRejected === null && dispatch(getUserRejected('REJECTED'));
+      userCancelled === null && dispatch(getUserCanceled('CANCELLED'));
+      userCancelled &&
+        userRejected &&
+        setCombineStatusUser([...userCancelled, ...userRejected]);
+    } else if (statusType === 'PROVIDER') {
+      proivderCancelled === null && dispatch(getProviderCancelled('REJECTED'));
+      providerRejected === null && dispatch(getProviderRejected('CANCELLED'));
+      providerRejected && setCombineStatusProvider([...providerRejected]);
+    }
+  }, [statusType]);
+  console.log(
+    'userRejected',
+    proivderCancelled,
+    providerRejected,
+    combineStatusProvider,
+  );
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
-    userRejected === null && dispatch(getUserRejected('REJECTED'));
-    userCancelled === null && dispatch(getUserCanceled('CANCELLED'));
+    if (statusType === 'USER') {
+      userRejected === null && dispatch(getUserRejected('REJECTED'));
+      userCancelled === null && dispatch(getUserCanceled('CANCELLED'));
+    } else {
+      proivderCancelled === null && dispatch(getProviderCancelled('REJECTED'));
+      providerRejected === null && dispatch(getProviderRejected('CANCELLED'));
+    }
     setRefreshing(false);
   };
   useEffect(() => {
     onRefresh();
   }, []);
-  console.log('asdfasdf', combineStatus);
+  console.log('asdfasdf', combineStatusUser);
 
   return (
     <>
@@ -49,7 +71,7 @@ const DeclinedStatus = ({statusType}: Props) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {combineStatus === null && combineStatus !== undefined ? (
+        {combineStatusUser === null && combineStatusUser !== undefined ? (
           <View style={styles.errorContainer}>
             <MessageNotSend
               svg={<UpcomingSvg width={200} height={200} />}
@@ -65,8 +87,43 @@ const DeclinedStatus = ({statusType}: Props) => {
               handleActivity={() => {}}
               handleDate={() => {}}
             />
-            {combineStatus !== null && combineStatus !== undefined ? (
-              combineStatus.map((item: any) => {
+            {statusType === 'USER' &&
+            combineStatusUser !== null &&
+            combineStatusUser !== undefined ? (
+              combineStatusUser.map((item: any) => {
+                return (
+                  <ReusableCard
+                    key={item.opk}
+                    item={{
+                      name: `${item.provider.user.firstName} ${item.provider.user.lastName}`,
+                      image: item.provider.user.image,
+                      description: item?.appointmentProposal[0]?.firstMessage
+                        ? item?.appointmentProposal[0]?.firstMessage
+                        : 'No Mesaegs fonnd',
+                      boardingTime: item?.providerService?.serviceType?.name,
+                      // boardingTime: item?.appointmentProposal[0]
+                      //   ?.proposalStartDate
+                      //   ? `${item.appointmentProposal[0].proposalStartDate} to ${item.appointmentProposal[0].proposalEndDate} `
+                      //   : '',
+                      // pickUpStartTime: item?.appointmentProposal[0]
+                      //   ?.pickUpStartTime
+                      //   ? item.appointmentProposal[0].pickUpStartTime
+                      //   : '',
+                      status: item.status,
+                    }}
+                    buttonStyles={Colors.primary}
+                    handlePress={() =>
+                      navigation.navigate('ActivityScreen', {
+                        appointmentOpk: item.opk,
+                      })
+                    }
+                  />
+                );
+              })
+            ) : statusType === 'PROVIDER' &&
+              combineStatusProvider !== null &&
+              combineStatusProvider !== undefined ? (
+              combineStatusProvider.map((item: any) => {
                 return (
                   <ReusableCard
                     key={item.opk}

@@ -11,7 +11,7 @@ import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
-import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/getProviderApnt';
+import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 interface Props {
   statusType: string;
 }
