@@ -1,8 +1,9 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {Minus, Plus} from '../../assets/svgs/SVG_LOGOS';
 import Text_Size from '../../constants/textScaling';
 import Colors from '../../constants/Colors';
+import TitleText from './text/TitleText';
 
 const IncreDecreButton = () => {
   const [count, setCount] = useState(0);
@@ -27,7 +28,7 @@ const IncreDecreButton = () => {
         <Minus fill={'white'} width={25} height={25} />
       </TouchableOpacity>
       <View style={styles.value}>
-        <Text style={styles.text}>{count}</Text>
+        <TitleText textStyle={styles.text} text={count} />
       </View>
       <TouchableOpacity onPress={() => handleCount('plus')} style={styles.plus}>
         <Plus fill={'white'} width={25} height={25} />

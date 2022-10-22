@@ -19,6 +19,7 @@ export const useAppointment = () => {
   );
   const navigation = useNavigation<any>();
   const handleSubmit = async (data: any) => {
+    console.log('submitting')
     const user: any = await storage.getUser();
     const {
       providerServiceId,

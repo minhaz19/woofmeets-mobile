@@ -9,7 +9,7 @@ import {
 } from '../../../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../../../constants/Colors';
 import ShortText from '../../../../../common/text/ShortText';
-import {changeTextLetter} from '../../../../../common/ChangeTextLetter';
+import changeTextLetter from '../../../../../common/changeTextLetter';
 interface Props {
   name: string;
   nature?: string;

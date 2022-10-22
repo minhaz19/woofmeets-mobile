@@ -1,10 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import Colors from '../../../constants/Colors';
 import {Dropdown} from 'react-native-element-dropdown';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import TitleText from '../text/TitleText';
 
 interface Props {
   data: any[];
@@ -30,7 +31,7 @@ const AppTimeRangeSelect = ({
     (item: any) => {
       return (
         <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
-          <Text style={styles.selectedTextStyle}>{item.label}</Text>
+          <TitleText textStyle={styles.selectedTextStyle} text={item.label} />
         </View>
       );
     },

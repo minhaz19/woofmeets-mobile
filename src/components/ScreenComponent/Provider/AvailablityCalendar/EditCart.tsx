@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import Animated, {
   useAnimatedStyle,
@@ -7,7 +7,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import Text_Size from '../../../../constants/textScaling';
-import {Reset, Setting} from '../../../../assets/svgs/SVG_LOGOS';
+import {Setting} from '../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../constants/Colors';
 import ServiceSlotModal from './ServiceSlotModal';
 import ServiceDaySlotModal from './ServiceDaySlotModal';
@@ -39,7 +39,6 @@ const EditCart = ({startingDate, resetRange}: Props) => {
         <TouchableOpacity
           style={styles.editBtnContainer}
           onPress={() => setIsVisible(true)}>
-          {/* <Text style={styles.edit}>Edit</Text> */}
           <TitleText textStyle={styles.edit} text={'Edit'} />
         </TouchableOpacity>
       </View>

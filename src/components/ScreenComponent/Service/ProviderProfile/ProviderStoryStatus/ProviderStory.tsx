@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import Stories, {
   ICustomStoryView,
   IUserStory,
@@ -9,6 +9,7 @@ import Stories, {
 import {Cross} from '../../../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import {useAppSelector} from '../../../../../store/store';
+import TitleText from '../../../../common/text/TitleText';
 import StoryContainer from './StoryContainer';
 
 const ProviderStory = () => {
@@ -33,7 +34,7 @@ const ProviderStory = () => {
         onClose={(closedStory: IUserStory) => {}}
         customSwipeUpButton={() => (
           <View>
-            <Text>Swipe</Text>
+            <TitleText text={'Swipe'} />
           </View>
         )}
         customCloseButton={() => <Cross width={15} height={15} />}

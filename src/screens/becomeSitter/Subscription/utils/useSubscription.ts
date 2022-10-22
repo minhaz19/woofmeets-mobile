@@ -3,6 +3,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {ApiResponse} from 'apisauce';
 import {useEffect, useState} from 'react';
+import { Alert } from 'react-native';
 import methods from '../../../../api/methods';
 import {getCurrentplan} from '../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 import {getSubscription} from '../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
@@ -17,6 +18,7 @@ export const useSubscription = () => {
   const [ssLoading, setSSloading] = useState(false);
   const dispatch = useAppDispatch();
   const {loading, plans} = useAppSelector(state => state.subscription);
+  const {sitterData} = useAppSelector(state => state.initial);
 
   const {loading: planLoading, currentPlan} = useAppSelector(
     state => state.currentPlan,
@@ -40,29 +42,35 @@ export const useSubscription = () => {
     setSequence(id);
   };
   const handleSubmit = async () => {
-    if (sequence === 1) {
-      setSSloading(true);
-      const result: ApiResponse<any> = await methods._get(endpoint);
-
-      const cardResponse = await cardRequest(defaultCardEndpoint);
-      if (result.ok && cardResponse.ok) {
-        if (
-          result.data.data.needPayment === true &&
-          cardResponse.status === 200
-        ) {
-          navigation.navigate('PaymentMethod', {
-            sequence: sequence,
-          });
-          setSSloading(false);
-        } else if (result.data.data.needPayment === false) {
-          const cardId = cardResponse?.data?.data.id;
-          const subscriptionResult = await request(
-            `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
-          );
-          subscriptionResult.ok &&
-            (await dispatch(getCurrentplan()),
-            // @ts-ignore
-            navigation.navigate('SubscriptionScreen'));
+    if (sitterData[1].isCompleted && sitterData[2].isCompleted && sitterData[3].isCompleted) {
+      if (sequence === 1) {
+        setSSloading(true);
+        const result: ApiResponse<any> = await methods._get(endpoint);
+  
+        const cardResponse = await cardRequest(defaultCardEndpoint);
+        if (result.ok && cardResponse.ok) {
+          if (
+            result.data.data.needPayment === true &&
+            cardResponse.status === 200
+          ) {
+            navigation.navigate('PaymentMethod', {
+              sequence: sequence,
+            });
+            setSSloading(false);
+          } else if (result.data.data.needPayment === false) {
+            const cardId = cardResponse?.data?.data.id;
+            const subscriptionResult = await request(
+              `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+            );
+            subscriptionResult.ok &&
+              (await dispatch(getCurrentplan()),
+              // @ts-ignore
+              navigation.navigate('SubscriptionScreen'));
+            setSSloading(false);
+          }
+        } else {
+          // @ts-ignore
+          navigation.navigate('PaymentMethod', {sequence: sequence});
           setSSloading(false);
         }
       } else {
@@ -71,10 +79,9 @@ export const useSubscription = () => {
         setSSloading(false);
       }
     } else {
-      // @ts-ignore
-      navigation.navigate('PaymentMethod', {sequence: sequence});
-      setSSloading(false);
+      Alert.alert('Please complete all the steps first');
     }
+    
   };
   useEffect(() => {
     (currentPlan === null || currentPlan === undefined) &&

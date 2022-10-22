@@ -2,11 +2,9 @@
 import {
   StyleSheet,
   View,
-  TouchableOpacity,
   TextInput,
-  Text,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Colors from '../../../constants/Colors';
 import Svg, {Line} from 'react-native-svg';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -15,6 +13,7 @@ import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import Text_Size from '../../../constants/textScaling';
 import {useCodeCom} from '../../../utils/helpers/PriceRange/useCode';
 import {PanComponent} from '../../../utils/helpers/PriceRange/PanComponent';
+import TitleText from '../text/TitleText';
 interface Props {
   minValue: number;
   maxValue: number;
@@ -36,7 +35,6 @@ const AppInputRange = ({
 }: Props) => {
   const {Pan: Pan1, transx: x1} = PanComponent(0, MAX_WIDTH);
   const {Pan: Pan2, transx: x2} = PanComponent(MAX_WIDTH, MAX_WIDTH);
-  const [active, setActive] = useState<null | boolean>(null);
   const {offset, min, max} = useCodeCom(
     minValue,
     maxValue,
@@ -70,7 +68,7 @@ const AppInputRange = ({
             ref={min}
             style={styles.label}
           />
-          <Text style={styles.label}> {' - '}</Text>
+          <TitleText text=" - " textStyle={styles.label} />
           <AText
             defaultValue={'200'}
             editable={false}
@@ -145,7 +143,6 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: Text_Size.Text_1,
-    color: Colors.background,
     zIndex: 100,
     alignSelf: 'center',
   },

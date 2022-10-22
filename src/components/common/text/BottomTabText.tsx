@@ -1,7 +1,6 @@
 import {View, Text, StyleSheet, TextStyle} from 'react-native';
-import React, {ReactNode} from 'react';
+import React from 'react';
 import Text_Size from '../../../constants/textScaling';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
 
 const BottomTabText = (props: {
