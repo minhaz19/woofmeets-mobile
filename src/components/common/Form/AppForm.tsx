@@ -16,20 +16,20 @@ const AppForm = ({children, initialValues, validationSchema}: Props) => {
     defaultValues: initialValues,
   });
   const {reset} = methods;
-  useEffect(() => {
-    let unmounted = false;
-    setTimeout(() => {
-      if (!unmounted) {
-        reset(initialValues);
-      }
-    }, 1000);
-    return () => {
-      unmounted === true;
-    };
-  }, []);
   // useEffect(() => {
-  //   enableReset && reset(initialValues);
-  // }, [initialValues, enableReset, reset]);
+  //   let unmounted = false;
+  //   setTimeout(() => {
+  //     if (!unmounted) {
+  //       reset(initialValues);
+  //     }
+  //   }, 1000);
+  //   return () => {
+  //     unmounted === true;
+  //   };
+  // }, []);
+  useEffect(() => {
+    enableReset && reset(initialValues);
+  }, [initialValues, enableReset, reset]);
   return (
     <FormProvider {...methods}>
       <>{children}</>
