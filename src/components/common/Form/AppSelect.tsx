@@ -34,7 +34,7 @@ const AppSelect = ({
     (item: any) => {
       return (
         <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
-          <TitleText textStyle={{...styles.selectedTextStyle, color: colors.descriptionText}} text={item.label} />
+          <TitleText textStyle={{...styles.selectedTextStyle, color: colors.headerText}} text={item.label} />
         </View>
       );
     },

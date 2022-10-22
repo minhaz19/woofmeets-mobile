@@ -70,7 +70,7 @@ const BottomSheetCalendar = ({
                     ? multiDate.length !== 0
                       ? multiDate?.join(' ')
                       : 'Tap to add dates'
-                    : initalData !== '' && isRecurring === true
+                    : isRecurring && initalData !== ''
                     ? // : startDate !== '' && isRecurring === true
                       initalData
                     : 'Tap to add dates'

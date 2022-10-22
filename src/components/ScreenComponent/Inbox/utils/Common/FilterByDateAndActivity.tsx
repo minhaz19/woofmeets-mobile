@@ -75,7 +75,7 @@ export default FilterByDateAndActivity;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '6%' : '2%',
+    marginTop: SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '0%' : '2%',
   },
   flexContainer: {
     flexDirection: 'row',

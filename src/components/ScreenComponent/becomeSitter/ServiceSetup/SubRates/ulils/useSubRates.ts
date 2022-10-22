@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {useAppSelector} from '../../../../../../store/store';
 
 export const useSubRates = (rateFields: any, watch: any) => {
@@ -20,7 +20,7 @@ export const useSubRates = (rateFields: any, watch: any) => {
     }));
     setRates(modRates);
   }, [rateFields]);
-
+  console.log('reate fiels', rateFields);
   useMemo(() => {
     console.log('calling memo service tow');
     const checkFields = fieldValue?.map(

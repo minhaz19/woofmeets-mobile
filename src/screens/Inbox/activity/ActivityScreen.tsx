@@ -17,12 +17,13 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {CameraIcon, SendIcon} from '../../../assets/Inbox_SVG';
 import BottomHalfModal from '../../../components/UI/modal/BottomHalfModal';
-import Details from '../../../components/ScreenComponent/Inbox/Past/Details';
+import Details from '../../../components/ScreenComponent/Inbox/Draft/Past/Details';
 import Text_Size from '../../../constants/textScaling';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {getProviderProposal} from '../../../store/slices/Appointment/ProviderProposal/getProviderProposal';
+import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
+import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -66,6 +67,7 @@ const ActivityScreen = (props: {
   useEffect(() => {
     dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAllPets());
+    dispatch(getWhoAmI());
   }, []);
 
   const {colors} = useTheme();

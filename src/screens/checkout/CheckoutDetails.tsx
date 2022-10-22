@@ -16,7 +16,7 @@ import BigText from '../../components/common/text/BigText';
 import Text_Size from '../../constants/textScaling';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
-import Pricing from '../../components/ScreenComponent/Inbox/Past/Pricing';
+import Pricing from '../../components/ScreenComponent/Inbox/Draft/Past/Pricing';
 import ButtonCom from '../../components/UI/ButtonCom';
 import {btnStyles} from '../../constants/theme/common/buttonStyles';
 import BottomSpacingNav from '../../components/UI/BottomSpacingNav';

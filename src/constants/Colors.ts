@@ -38,6 +38,7 @@ export default {
   black: 'black',
   lightDark: '#242424',
   blue: 'blue',
+  // primary: '#0071FF',
   primary: '#FFA557',
   primaryLight: '#FFEDD5',
   secondary: '#FEF1E8',

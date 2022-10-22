@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import React from 'react';
 import AppForm from '../../components/common/Form/AppForm';
 import AppointmentBody from '../../components/ScreenComponent/Appointment/AppointmentBody';
@@ -7,9 +7,12 @@ import {appointmentValidationSchema} from '../../utils/config/ValidationSchema/v
 import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
 import {useAppointment} from './utils/useAppointment';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
+import {RefreshControl} from 'react-native-gesture-handler';
 const Appointment = () => {
-  const {handleSubmit, loading, btnLoading} = useAppointment();
+  const {handleSubmit, loading, btnLoading, refreshing, onRefresh} =
+    useAppointment();
   const {colors} = useTheme();
+
   return (
     <>
       {loading && <AppActivityIndicator visible />}
@@ -18,7 +21,13 @@ const Appointment = () => {
         <AppForm
           initialValues={appointmentInit}
           validationSchema={appointmentValidationSchema}>
-          <AppointmentBody handleSubmit={handleSubmit} loading={btnLoading} />
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
+            <AppointmentBody handleSubmit={handleSubmit} loading={btnLoading} />
+          </ScrollView>
         </AppForm>
       </SafeAreaView>
     </>

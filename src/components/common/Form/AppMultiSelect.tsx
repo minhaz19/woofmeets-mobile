@@ -28,7 +28,7 @@ const AppMultiSelect = ({
     (item: any, index) => {
       return (
         <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
-          <TitleText textStyle={{...styles.selectedTextStyle, color: colors.descriptionText}} text={item.label} />
+          <TitleText textStyle={{...styles.selectedTextStyle, color: colors.headerText}} text={item.label} />
           {index === true ? (
             <Minus fill={Colors.primary} width={20} height={20} />
           ) : (
@@ -76,7 +76,7 @@ const AppMultiSelect = ({
             <TouchableOpacity onPress={() => unSelect && unSelect(item)}>
               <View style={styles.selectedStyle}>
                 <TitleText
-                  textStyle={{...styles.textSelectedStyle, color: colors.descriptionText}}
+                  textStyle={{...styles.textSelectedStyle, color: Colors.light.background}}
                   text={item?.label}
                 />
                 <Cross fill="white" />
