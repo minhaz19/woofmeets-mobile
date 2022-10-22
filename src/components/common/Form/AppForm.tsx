@@ -9,12 +9,7 @@ interface Props {
   validationSchema: AnyObjectSchema | Lazy<any, unknown>;
   enableReset?: boolean;
 }
-const AppForm = ({
-  children,
-  initialValues,
-  validationSchema,
-  enableReset,
-}: Props) => {
+const AppForm = ({children, initialValues, validationSchema}: Props) => {
   const methods = useForm<FormData>({
     resolver: yupResolver(validationSchema),
     mode: 'onChange',

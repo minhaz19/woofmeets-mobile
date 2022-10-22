@@ -2,16 +2,10 @@ import {useAppSelector} from '../../../../../store/store';
 
 export const useServiceRateInit = () => {
   const {fieldValue} = useAppSelector(state => state.fieldValue);
-  const {ratesMeta} = useAppSelector(
-    state => state.serviceRates,
-  );
+  const {ratesMeta} = useAppSelector(state => state.serviceRates);
   const baseRate =
     ratesMeta !== null && ratesMeta !== undefined && ratesMeta['base-rate'];
-  console.log(
-    'something',
-    Number(baseRate * Number(ratesMeta['holiday-rate'])),
-    ratesMeta['holiday-rate'],
-  );
+
   return {
     baserate:
       fieldValue && fieldValue.length > 0
