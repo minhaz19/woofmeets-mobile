@@ -12,13 +12,21 @@ import Colors from '../../../../constants/Colors';
 import ServiceSlotModal from './ServiceSlotModal';
 import ServiceDaySlotModal from './ServiceDaySlotModal';
 import TitleText from '../../../common/text/TitleText';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
+import {useAppSelector} from '../../../../store/store';
 interface Props {
   startingDate: string;
+  endingDate: string;
   resetRange: () => void;
 }
-const EditCart = ({startingDate, resetRange}: Props) => {
+const endpoint = 'https://api-stg.woofmeets.com/v2/unavailability';
+const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDayVisible, setIsDayVisible] = useState(false);
+  const {userServices} = useAppSelector(state => state.services);
+  console.log('user', userServices);
+  const {request} = useApi(methods._post);
   const offset = useSharedValue(0);
   const animatedStyles = useAnimatedStyle(() => {
     return {
@@ -29,11 +37,35 @@ const EditCart = ({startingDate, resetRange}: Props) => {
   useMemo(() => {
     offset.value = withSpring(startingDate ? 10 / 100 : 300);
   }, [startingDate, offset]);
-  const handlePress = () => {};
+  const handlePress = async (selectedService: any) => {
+    const payload = {
+      from: new Date(startingDate).toISOString(),
+      to: new Date(endingDate).toISOString(),
+      providerServiceIds: selectedService,
+    };
+    console.log('ads', payload);
+    const result = await request(endpoint, payload);
+    console.log('single one', payload, result);
+  };
+  const handleMAUnavailable = async () => {
+    const payload = {
+      from: new Date(startingDate).toISOString(),
+      to: new Date(endingDate).toISOString(),
+      providerServiceIds: userServices.map((item: {id: number}) => item.id),
+    };
+    const result = await request(endpoint, payload);
+    console.log('pay', payload, result);
+  };
+  const handleDayAvailability = (data: any) => {
+    console.log('data', data);
+  };
+
   return (
     <Animated.View style={[styles.editContainer, animatedStyles]}>
       <View style={styles.availablity}>
-        <TouchableOpacity style={styles.markContainer}>
+        <TouchableOpacity
+          style={styles.markContainer}
+          onPress={handleMAUnavailable}>
           <TitleText textStyle={styles.mark} text={'Mark as unavailable'} />
         </TouchableOpacity>
         <TouchableOpacity
@@ -49,6 +81,8 @@ const EditCart = ({startingDate, resetRange}: Props) => {
         <Setting fill="white" width={20} height={20} />
       </TouchableOpacity>
       <ServiceSlotModal
+        startingDate={startingDate}
+        endingDate={endingDate}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         onPress={handlePress}
@@ -56,7 +90,7 @@ const EditCart = ({startingDate, resetRange}: Props) => {
       <ServiceDaySlotModal
         isVisible={isDayVisible}
         setIsVisible={setIsDayVisible}
-        onPress={handlePress}
+        onPress={handleDayAvailability}
       />
     </Animated.View>
   );

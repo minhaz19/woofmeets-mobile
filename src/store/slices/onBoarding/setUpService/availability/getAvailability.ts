@@ -4,6 +4,7 @@ import apiClient from '../../../../../api/client';
 export const getAvailability = createAsyncThunk(
   '/availability',
   async (id: string) => {
+    console.log('id', id);
     try {
       const response: ApiResponse<any> = await apiClient.get(
         `/availability/service/${id}`,

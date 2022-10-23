@@ -40,7 +40,7 @@ const AvailablityCalendar = () => {
     singleSelect,
     startingDate,
     _markedStyle,
-
+    endingDate,
     reset,
     handleDayPress,
   } = useHandleRange(selectType);
@@ -143,7 +143,11 @@ const AvailablityCalendar = () => {
           textDayHeaderFontSize: 14,
         }}
       />
-      <EditCart startingDate={startingDate} resetRange={reset} />
+      <EditCart
+        startingDate={startingDate}
+        endingDate={endingDate}
+        resetRange={reset}
+      />
     </View>
   );
 };
@@ -185,7 +189,10 @@ function renderCustomHeader(date: any) {
 
   return (
     <View style={styles.header}>
-      <TitleText text={`${month}`} textStyle={{...styles.month, ...textStyle}} />
+      <TitleText
+        text={`${month}`}
+        textStyle={{...styles.month, ...textStyle}}
+      />
       <TitleText text={year} textStyle={{...styles.year, ...textStyle}} />
     </View>
   );

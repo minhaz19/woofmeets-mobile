@@ -1,66 +1,70 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
-import AppCheckbox from '../../../common/Form/AppCheckbox';
+import React, {useEffect, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import ShortText from '../../../common/text/ShortText';
 import Text_Size from '../../../../constants/textScaling';
-const serviceData = [
-  {
-    serivce: 'Boarding',
-    active: false,
-    id: 0,
-  },
-  {
-    serivce: 'House Sitting',
-    active: false,
-    id: 1,
-  },
-  {
-    serivce: 'Drop-In Visits',
-    active: false,
-    id: 2,
-  },
-  {
-    serivce: 'Doggy Day Care',
-    active: false,
-    id: 3,
-  },
-  {
-    serivce: 'Dog Walking',
-    active: false,
-    id: 4,
-  },
-];
-const ServiceSlot = () => {
-  const [servcies, setServices] = useState<any>(serviceData);
-
+import {useAppSelector} from '../../../../store/store';
+import Colors from '../../../../constants/Colors';
+import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
+interface Props {
+  setSelectedService: any;
+}
+let modSelectedService: any = [];
+const ServiceSlot = ({setSelectedService}: Props) => {
+  const {userServices} = useAppSelector(state => state.services);
+  const [servcies, setServices] = useState<any>([]);
   const handleOnChange = (id: number) => {
     const newHoliday = [...servcies];
     const index = newHoliday.findIndex(item => item.id === id);
     newHoliday[index].active = !newHoliday[index].active;
     setServices(newHoliday);
+    const matchIndex = modSelectedService?.indexOf(id);
+    if (matchIndex === -1) {
+      modSelectedService.push(id);
+    } else {
+      modSelectedService.splice(matchIndex, 1);
+    }
+    setSelectedService([...modSelectedService]);
   };
+  useEffect(() => {
+    const modService = userServices.map((item: any) => ({
+      service: item.serviceType.name,
+      id: item.id,
+      active: false,
+    }));
+    console.log('item', userServices, modService);
+    setServices(modService);
+  }, [userServices]);
   return (
     <View style={styles.parent}>
       {servcies.map((item: any, index: number) => (
-        <View key={index} style={styles.container}>
+        <AppTouchableOpacity
+          onPress={() => handleOnChange(item.id)}
+          key={index}
+          style={styles.container}>
           <View style={styles.serviceContainer}>
-            <AppCheckbox
-              active={item.active}
-              radio
-              onPress={() => handleOnChange(item.id)}
-              Comp={() => (
-                <View style={styles.textContainer}>
-                  <TitleText textStyle={styles.title} text={item.serivce} />
-                  <ShortText text={'0 of 5 booked '} />
-                </View>
-              )}
-            />
+            <View>
+              <View style={styles.textContainer}>
+                <TitleText textStyle={styles.title} text={item.service} />
+                <ShortText text={'Tab to mark unavailable'} />
+              </View>
+            </View>
           </View>
-          <View>
-            {item.active ? <TitleText text="Available" /> : <TitleText text="Unavailable" />}
+          <View style={styles.btnCont}>
+            {item.active ? (
+              <View style={styles.unMarkBtn}>
+                <TitleText
+                  textStyle={styles.btnText}
+                  text="Unmark Unavailable"
+                />
+              </View>
+            ) : (
+              <View style={styles.markBtn}>
+                <TitleText textStyle={styles.btnText} text="Mark Unavailable" />
+              </View>
+            )}
           </View>
-        </View>
+        </AppTouchableOpacity>
       ))}
     </View>
   );
@@ -79,11 +83,32 @@ const styles = StyleSheet.create({
   },
   serviceContainer: {
     flexDirection: 'row',
-    flex: 1,
+    paddingVertical: 10,
+    // flex: 1,
   },
   textContainer: {
-    marginLeft: 10,
-    flex: 1,
+    // marginLeft: 10,
+    // flex: 1,
   },
   title: {fontWeight: 'bold', fontSize: Text_Size.Text_1},
+  unMarkBtn: {
+    paddingVertical: 10,
+    backgroundColor: Colors.gray,
+    flex: 0,
+    paddingHorizontal: 4,
+    borderRadius: 10,
+  },
+  markBtn: {
+    paddingVertical: 10,
+    backgroundColor: Colors.green,
+    flex: 0,
+    paddingHorizontal: 4,
+    borderRadius: 10,
+  },
+  btnText: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  btnCont: {flex: 1, marginLeft: 20},
 });
