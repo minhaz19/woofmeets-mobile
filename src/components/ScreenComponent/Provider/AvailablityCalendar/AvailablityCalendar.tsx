@@ -50,7 +50,7 @@ const AvailablityCalendar = () => {
       [dateArray[i]]: {
         customStyles: {
           container: {
-            backgroundColor: Colors.primary,
+            backgroundColor: Colors.dark.background,
             elevation: 2,
             // borderRadius: 10,
             width: '100%',
@@ -88,7 +88,7 @@ const AvailablityCalendar = () => {
           [singleSelect]: {
             customStyles: {
               container: {
-                backgroundColor: Colors.primary,
+                backgroundColor: Colors.dark.background,
                 elevation: 2,
                 borderRadius: 10,
 
@@ -108,7 +108,7 @@ const AvailablityCalendar = () => {
               header: {
                 dayHeader: {
                   fontWeight: 'bold',
-                  color: Colors.primary,
+                  color: Colors.dark.background,
                 },
               },
             },
@@ -120,15 +120,15 @@ const AvailablityCalendar = () => {
               borderWidth: 0.8,
             },
             todayText: {
-              color: Colors.primary,
+              color: Colors.dark.background,
               fontWeight: '800',
             },
           },
           backgroundColor: colors.backgroundColor,
           calendarBackground: colors.backgroundColor,
-          selectedDayBackgroundColor: Colors.primary,
+          selectedDayBackgroundColor: Colors.dark.background,
           selectedDayTextColor: Colors.headerText,
-          todayTextColor: Colors.primary,
+          todayTextColor: Colors.dark.background,
           dayTextColor: colors.headerText,
           textDisabledColor: Colors.gray,
           arrowColor: Colors.headerText,
@@ -152,28 +152,28 @@ const AvailablityCalendar = () => {
   );
 };
 
-const theme = {
-  stylesheet: {
-    calendar: {
-      header: {
-        dayHeader: {
-          fontWeight: '600',
-          color: '#48BFE3',
-        },
-      },
-    },
-  },
-  'stylesheet.day.basic': {
-    today: {
-      borderColor: '#48BFE3',
-      borderWidth: 0.8,
-    },
-    todayText: {
-      color: '#5390D9',
-      fontWeight: '800',
-    },
-  },
-};
+// const theme = {
+//   stylesheet: {
+//     calendar: {
+//       header: {
+//         dayHeader: {
+//           fontWeight: '600',
+//           color: '#48BFE3',
+//         },
+//       },
+//     },
+//   },
+//   'stylesheet.day.basic': {
+//     today: {
+//       borderColor: '#48BFE3',
+//       borderWidth: 0.8,
+//     },
+//     todayText: {
+//       color: '#5390D9',
+//       fontWeight: '800',
+//     },
+//   },
+// };
 
 function renderCustomHeader(date: any) {
   const header = date.toString('MMMM yyyy');
@@ -183,7 +183,7 @@ function renderCustomHeader(date: any) {
     fontWeight: 'bold',
     paddingTop: 10,
     paddingBottom: 10,
-    color: Colors.primary,
+    color: Colors.dark.background,
     paddingRight: 5,
   };
 

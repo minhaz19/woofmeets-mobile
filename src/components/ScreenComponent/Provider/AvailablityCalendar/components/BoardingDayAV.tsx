@@ -3,22 +3,23 @@ import {Pressable, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import TitleText from '../../../../common/text/TitleText';
 import Text_Size from '../../../../../constants/textScaling';
-import {useFormContext} from 'react-hook-form';
 
 interface Props {
   title: string;
   serviceTypeId: number;
   data: any;
+  setValue: (arg1: string, ar2: any) => void;
 }
-const BoardingDayAV = ({title, data}: Props) => {
+const BoardingDayAV = ({title, data, setValue}: Props) => {
   const [days, setDays] = useState(data.days[0]);
-  const {setValue} = useFormContext();
+  //   const {setValue} = useFormContext();
   const handleMultiSelect = (id: number) => {
     const newHoliday = [...days];
     const index = newHoliday.findIndex(item => item.id === id);
     newHoliday[index].active = !newHoliday[index].active;
     const modDays = newHoliday.map(day => ({
       [day.key]: day.active,
+      putServiceId: day.putServiceId,
     }));
     //@ts-ignore
     const daysPayload = Object.assign(...modDays);

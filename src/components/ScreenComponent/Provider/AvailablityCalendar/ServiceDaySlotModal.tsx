@@ -5,28 +5,39 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
 import ServiceDaySlot from './ServiceDaySlot';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import {FormProvider, useForm} from 'react-hook-form';
-import {useAvailabilityDayInit} from './utils/useAVDinitState';
-// import BottomHalfModal from '../../../UI/modal/BottomHalfModal';
-// import BottomHalfModalLite from '../../../UI/modal/BottomHalfModalLite';
+import {useForm} from 'react-hook-form';
+import {availabilityDayInit} from './utils/availabilityinitState';
+import {useAppSelector} from '../../../../store/store';
 interface Props {
   isVisible: boolean;
   setIsVisible: (arg: boolean) => void;
   onPress: (data: any) => void;
 }
 const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
+  const {userServices} = useAppSelector(state => state.services);
+  const [initalState, setInitalState] = useState({});
   const {colors} = useTheme();
+
   const methods = useForm({
     mode: 'onSubmit',
-    defaultValues: useAvailabilityDayInit(),
+    defaultValues: initalState,
   });
-  const {handleSubmit} = methods;
-  console.log('useAvailabilityDayInit', useAvailabilityDayInit());
+  const {handleSubmit, setValue, reset} = methods;
+  useEffect(() => {
+    const init = availabilityDayInit(userServices);
+    setInitalState(init);
+    console.log('ini', init);
+  }, [userServices]);
+  useEffect(() => {
+    if (initalState) {
+      reset(availabilityDayInit(userServices));
+    }
+  }, [initalState, reset, userServices]);
   return (
     <View>
       <Modal animated transparent visible={isVisible} animationType="fade">
@@ -35,29 +46,29 @@ const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
           onPress={() => setIsVisible(!isVisible)}
         />
 
-        <FormProvider {...methods}>
-          <View
-            style={[
-              styles.pickerContainer,
-              {
-                backgroundColor: colors.backgroundColor,
-              },
-            ]}>
-            <View style={styles.btnContainer}>
-              <TouchableOpacity
-                style={styles.cancelBtn}
-                onPress={() => setIsVisible(false)}>
-                <TitleText text="Cancel" textStyle={styles.text} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.saveBtn}
-                onPress={handleSubmit(onPress)}>
-                <TitleText text="Save" textStyle={styles.text} />
-              </TouchableOpacity>
-            </View>
-            <ServiceDaySlot />
+        {/* <FormProvider {...methods}> */}
+        <View
+          style={[
+            styles.pickerContainer,
+            {
+              backgroundColor: colors.backgroundColor,
+            },
+          ]}>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              style={styles.cancelBtn}
+              onPress={() => setIsVisible(false)}>
+              <TitleText text="Cancel" textStyle={styles.text} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.saveBtn}
+              onPress={handleSubmit(onPress)}>
+              <TitleText text="Save" textStyle={styles.text} />
+            </TouchableOpacity>
           </View>
-        </FormProvider>
+          <ServiceDaySlot setValue={setValue} />
+        </View>
+        {/* </FormProvider> */}
       </Modal>
     </View>
   );

@@ -20,13 +20,16 @@ interface Props {
   endingDate: string;
   resetRange: () => void;
 }
-const endpoint = 'https://api-stg.woofmeets.com/v2/unavailability';
+const dayAvEndpoint = '/availability/';
+const unavailabilityEndpoint =
+  'https://api-stg.woofmeets.com/v2/unavailability';
+const availablityEndpoint = '/availability/add-dates';
 const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDayVisible, setIsDayVisible] = useState(false);
   const {userServices} = useAppSelector(state => state.services);
-  console.log('user', userServices);
   const {request} = useApi(methods._post);
+  const {request: putRequest} = useApi(methods._put);
   const offset = useSharedValue(0);
   const animatedStyles = useAnimatedStyle(() => {
     return {
@@ -37,27 +40,59 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
   useMemo(() => {
     offset.value = withSpring(startingDate ? 10 / 100 : 300);
   }, [startingDate, offset]);
-  const handlePress = async (selectedService: any) => {
+
+  const handleUnavailable = async (selectedService: any) => {
     const payload = {
       from: new Date(startingDate).toISOString(),
-      to: new Date(endingDate).toISOString(),
+      to: endingDate !== undefined ? new Date(endingDate).toISOString() : '',
       providerServiceIds: selectedService,
     };
-    console.log('ads', payload);
-    const result = await request(endpoint, payload);
-    console.log('single one', payload, result);
+
+    const result = await request(unavailabilityEndpoint, payload);
+    console.log('handleUnavailable', payload, result);
   };
+
+  const handleAvailable = async () => {
+    const payload = {
+      from: new Date(startingDate).toISOString(),
+      to: endingDate !== undefined ? new Date(endingDate).toISOString() : '',
+      providerServiceIds: userServices.map((item: {id: number}) => item.id),
+    };
+    const result = await request(availablityEndpoint, payload);
+    console.log('handleAvailable', payload, result);
+  };
+
   const handleMAUnavailable = async () => {
     const payload = {
       from: new Date(startingDate).toISOString(),
-      to: new Date(endingDate).toISOString(),
+      to: endingDate !== undefined ? new Date(endingDate).toISOString() : '',
       providerServiceIds: userServices.map((item: {id: number}) => item.id),
     };
-    const result = await request(endpoint, payload);
-    console.log('pay', payload, result);
+    const result = await request(unavailabilityEndpoint, payload);
+    console.log('handleMAUnavailable', payload, result);
   };
+
   const handleDayAvailability = (data: any) => {
-    console.log('data', data);
+    const modData = Object.keys(data).map(key => {
+      return data[key];
+    });
+    console.log('mod', modData);
+    modData.map(async item => {
+      const payload = {
+        sat: item.sat,
+        sun: item.sun,
+        mon: item.mon,
+        wed: item.wed,
+        thu: item.thu,
+        tue: item.tue,
+        fri: item.fri,
+        pottyBreak: 'string',
+        fulltime: true,
+      };
+      const r = await putRequest(dayAvEndpoint + item.putServiceId, payload);
+      console.log('rrrr', r, item, payload);
+    });
+    console.log('handleDayAvailability', modData);
   };
 
   return (
@@ -85,7 +120,8 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
         endingDate={endingDate}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
-        onPress={handlePress}
+        handleUnavailable={handleUnavailable}
+        handleAvailable={handleAvailable}
       />
       <ServiceDaySlotModal
         isVisible={isDayVisible}

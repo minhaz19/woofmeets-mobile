@@ -53,14 +53,11 @@ const ServiceSlot = ({setSelectedService}: Props) => {
           <View style={styles.btnCont}>
             {item.active ? (
               <View style={styles.unMarkBtn}>
-                <TitleText
-                  textStyle={styles.btnText}
-                  text="Unmark Unavailable"
-                />
+                <TitleText textStyle={styles.btnText} text="Deselect" />
               </View>
             ) : (
               <View style={styles.markBtn}>
-                <TitleText textStyle={styles.btnText} text="Mark Unavailable" />
+                <TitleText textStyle={styles.btnText} text="Select" />
               </View>
             )}
           </View>
@@ -80,6 +77,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     width: '100%',
+    // backgroundColor: Colors.primary,
   },
   serviceContainer: {
     flexDirection: 'row',
@@ -100,7 +98,7 @@ const styles = StyleSheet.create({
   },
   markBtn: {
     paddingVertical: 10,
-    backgroundColor: Colors.green,
+    backgroundColor: Colors.primary,
     flex: 0,
     paddingHorizontal: 4,
     borderRadius: 10,
@@ -110,5 +108,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
-  btnCont: {flex: 1, marginLeft: 20},
+  btnCont: {width: '40%', marginLeft: 20},
 });

@@ -2,30 +2,32 @@ import React from 'react';
 
 import BoardingDayAV from './components/BoardingDayAV';
 import {useAppSelector} from '../../../../store/store';
-
-const ServiceDaySlot = () => {
+interface Props {
+  setValue: any;
+}
+const ServiceDaySlot = ({setValue}: Props) => {
   const {userServices} = useAppSelector(state => state.services);
   const modDays = userServices.map((item: any) => ({
     id: item.serviceTypeId,
     days:
       item.AvailableDay.length !== 0
         ? item.AvailableDay.map((d: any) => [
-            {id: 1, label: 'M', active: d.mon, key: 'mon'},
-            {id: 2, label: 'T', active: d.tue, key: 'tue'},
-            {id: 3, label: 'W', active: d.wed, key: 'wed'},
-            {id: 4, label: 'T', active: d.thu, key: 'thu'},
-            {id: 5, label: 'F', active: d.fri, key: 'fri'},
-            {id: 6, label: 'S', active: d.sat, key: 'sat'},
-            {id: 7, label: 'S', active: d.sun, key: 'sun'},
+            {id: 1, label: 'M', putServiceId: d.id, active: d.mon, key: 'mon'},
+            {id: 2, label: 'T', putServiceId: d.id, active: d.tue, key: 'tue'},
+            {id: 3, label: 'W', putServiceId: d.id, active: d.wed, key: 'wed'},
+            {id: 4, label: 'T', putServiceId: d.id, active: d.thu, key: 'thu'},
+            {id: 5, label: 'F', putServiceId: d.id, active: d.fri, key: 'fri'},
+            {id: 6, label: 'S', putServiceId: d.id, active: d.sat, key: 'sat'},
+            {id: 7, label: 'S', putServiceId: d.id, active: d.sun, key: 'sun'},
           ])
         : [
-            {id: 1, label: 'M', active: false, key: 'mon'},
-            {id: 2, label: 'T', active: false, key: 'tue'},
-            {id: 3, label: 'W', active: false, key: 'wed'},
-            {id: 4, label: 'T', active: false, key: 'thu'},
-            {id: 5, label: 'F', active: false, key: 'fri'},
-            {id: 6, label: 'S', active: false, key: 'sat'},
-            {id: 7, label: 'S', active: false, key: 'sun'},
+            {id: 1, label: 'M', putServiceId: null, active: false, key: 'mon'},
+            {id: 2, label: 'T', putServiceId: null, active: false, key: 'tue'},
+            {id: 3, label: 'W', putServiceId: null, active: false, key: 'wed'},
+            {id: 4, label: 'T', putServiceId: null, active: false, key: 'thu'},
+            {id: 5, label: 'F', putServiceId: null, active: false, key: 'fri'},
+            {id: 6, label: 'S', putServiceId: null, active: false, key: 'sat'},
+            {id: 7, label: 'S', putServiceId: null, active: false, key: 'sun'},
           ],
   }));
   return (
@@ -36,6 +38,7 @@ const ServiceDaySlot = () => {
           title={item.serviceType.name}
           serviceTypeId={item.serviceTypeId}
           data={modDays[index]}
+          setValue={setValue}
         />
       ))}
     </>
