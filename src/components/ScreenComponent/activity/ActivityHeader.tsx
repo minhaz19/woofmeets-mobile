@@ -26,8 +26,8 @@ const ActivityHeader = (props: {
   const user = useAppSelector(state => state.whoAmI);
   const handleAccept = async () => {
     const result = await request(acceptEndpoint + props.opk);
-    console.log('resut', result);
-    result.ok && navigation.navigate('Inbox');
+    console.log('provider resut', result);
+    // result.ok && navigation.navigate('Inbox');
   };
   console.log('user', user, proposedServiceInfo);
   const handleReject = async () => {

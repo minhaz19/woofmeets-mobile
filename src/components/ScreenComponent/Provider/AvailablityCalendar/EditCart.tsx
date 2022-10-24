@@ -44,7 +44,10 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
   const handleUnavailable = async (selectedService: any) => {
     const payload = {
       from: new Date(startingDate).toISOString(),
-      to: endingDate !== undefined ? new Date(endingDate).toISOString() : '',
+      to:
+        endingDate !== undefined && endingDate !== ''
+          ? new Date(endingDate).toISOString()
+          : null,
       providerServiceIds: selectedService,
     };
 
@@ -52,11 +55,14 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
     console.log('handleUnavailable', payload, result);
   };
 
-  const handleAvailable = async () => {
+  const handleAvailable = async (selectedService: any) => {
     const payload = {
       from: new Date(startingDate).toISOString(),
-      to: endingDate !== undefined ? new Date(endingDate).toISOString() : '',
-      providerServiceIds: userServices.map((item: {id: number}) => item.id),
+      to:
+        endingDate !== undefined && endingDate !== ''
+          ? new Date(endingDate).toISOString()
+          : null,
+      providerServiceIds: selectedService,
     };
     const result = await request(availablityEndpoint, payload);
     console.log('handleAvailable', payload, result);
@@ -65,10 +71,25 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
   const handleMAUnavailable = async () => {
     const payload = {
       from: new Date(startingDate).toISOString(),
-      to: endingDate !== undefined ? new Date(endingDate).toISOString() : '',
+      to:
+        endingDate !== undefined && endingDate !== ''
+          ? new Date(endingDate).toISOString()
+          : null,
       providerServiceIds: userServices.map((item: {id: number}) => item.id),
     };
     const result = await request(unavailabilityEndpoint, payload);
+    console.log('handleMAUnavailable', payload, result);
+  };
+  const handleMAAvailable = async () => {
+    const payload = {
+      from: new Date(startingDate).toISOString(),
+      to:
+        endingDate !== undefined && endingDate !== ''
+          ? new Date(endingDate).toISOString()
+          : null,
+      providerServiceIds: userServices.map((item: {id: number}) => item.id),
+    };
+    const result = await request(dayAvEndpoint, payload);
     console.log('handleMAUnavailable', payload, result);
   };
 
@@ -98,11 +119,19 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
   return (
     <Animated.View style={[styles.editContainer, animatedStyles]}>
       <View style={styles.availablity}>
-        <TouchableOpacity
-          style={styles.markContainer}
-          onPress={handleMAUnavailable}>
-          <TitleText textStyle={styles.mark} text={'Mark as unavailable'} />
-        </TouchableOpacity>
+        {true ? (
+          <TouchableOpacity
+            style={styles.markContainer}
+            onPress={handleMAUnavailable}>
+            <TitleText textStyle={styles.mark} text={'Mark as unavailable'} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={styles.markContainer}
+            onPress={handleMAAvailable}>
+            <TitleText textStyle={styles.mark} text={'Mark as Available'} />
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           style={styles.editBtnContainer}
           onPress={() => setIsVisible(true)}>
