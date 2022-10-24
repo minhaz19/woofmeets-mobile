@@ -39,7 +39,7 @@ const DeclinedStatus = ({statusType}: Props) => {
       providerRejected && setCombineStatusProvider([...providerRejected]);
     }
   }, [statusType]);
- 
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {

@@ -1,5 +1,5 @@
-import { View, StyleSheet } from 'react-native';
-import React from 'react';
+import { View, StyleSheet, Alert } from 'react-native';
+import React, {useEffect, useState} from 'react';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
 import DescriptionText from '../../components/common/text/DescriptionText';
@@ -7,9 +7,59 @@ import { useTheme } from '../../constants/theme/hooks/useTheme';
 import IOSButton from '../../components/UI/IOSButton';
 import { ReceivePaymentsIcon } from '../../assets/svgs/Misc_LOGOS';
 import Colors from '../../constants/Colors';
+import apiClient from '../../api/client';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useNavigation } from '@react-navigation/native';
+import jwtDecode from 'jwt-decode';
+import authStorage from '../../utils/helpers/auth/storage';
+import { getUserOnboardStatus } from '../../store/slices/connect/stripe';
 
 const ReceivePayments = () => {
   const {colors} = useTheme();
+  const {userOnboardStatus} = useAppSelector(state => state.stripe);
+  const navigation = useNavigation();
+  const dispatch = useAppDispatch();
+
+  console.log('onboard',userOnboardStatus);
+
+  const [token, setToken] = useState<any>();
+  // const userInfo = useAppSelector(state => state.auth.userInfo);
+
+  const getDecodedToken = async () => {
+    const tok: any = await authStorage.getToken();
+    if (tok) {
+      const decode: any = await jwtDecode(tok);
+      setToken(decode);
+      return decode;
+    }
+  };
+  useEffect(() => {
+    getDecodedToken();
+    dispatch(getUserOnboardStatus())
+  }, []);
+  const handleStripeConnect = async() => {
+    // props.navigation.navigate('StripeOnboardScreen', {url: 'https://google.com'});
+    // return (
+    //   <View style={{flex: 1}}>
+    //     <WebView source={{ uri: 'https://google.com'}} />
+    //   </View>
+    // )
+    const response = await apiClient.post('/stripe-connect/user-onboarding');
+    console.log(response.data?.data?.alreadyInitiated);
+    if (response.ok) {
+      if (response.data?.data?.alreadyInitiated) {
+        const response = await apiClient.post('/stripe-connect/user-onboarding/refresh-url', {
+          email: token.email,
+        });
+        console.log(response.data?.data?.url);
+        if (response.data?.data?.url) {
+          navigation.navigate('StripeOnboardScreen', {url: response.data?.data?.url});
+        }
+      }
+    } else {
+      Alert.alert(response?.data?.message)
+    }
+  }
   return (
     <View style={[styles.container, {backgroundColor: colors.backgroundColor}]} >
       <View style={styles.textContainer}>
@@ -28,7 +78,7 @@ const ReceivePayments = () => {
         />
         <IOSButton
             containerStyle={styles.containerStyleSmall}
-            onSelect={() => {}}
+            onSelect={handleStripeConnect}
             textAlignment={{
               backgroundColor: colors.backgroundColor,
               borderColor: colors.borderColor,
@@ -43,6 +93,7 @@ const ReceivePayments = () => {
             }}
             title={'Connect to stripe'}
           />
+        <DescriptionText textStyle={{color: Colors.alert}} text={userOnboardStatus?.userStripeConnectAccount?.requirements?.errors[0]?.reason} />
       </View>
     </View>
   );
