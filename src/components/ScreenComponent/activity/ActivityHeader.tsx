@@ -44,7 +44,6 @@ const ActivityHeader = (props: {
           onPress: async () => {
             const r = await request(rejectEndpoint + props.opk);
             r.ok && navigation.navigate('Inbox');
-           
           },
         },
       ],

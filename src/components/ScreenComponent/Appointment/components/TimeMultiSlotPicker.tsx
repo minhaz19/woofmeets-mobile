@@ -53,7 +53,7 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                     found[0].visitTime.splice(matchIndex, 1);
                   }
                 }
-            
+
                 setValue('recurringModDatesRef', Days);
               } else if (!isRecurring) {
                 const matchDate = Dates?.findIndex(
@@ -81,7 +81,6 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                     found[0].visitTime.splice(matchIndex, 1);
                   }
                 }
-              
 
                 setValue('specificModDatesRef', Dates);
               }
