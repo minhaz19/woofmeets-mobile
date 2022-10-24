@@ -14,7 +14,6 @@ export const availabilityDayInit = (userServices: any) => {
   const dogWalking = userServices?.find(
     (item: {serviceTypeId: number}) => item.serviceTypeId === 5,
   );
-  console.log('baro', boarding);
   return {
     '1': {
       sat:

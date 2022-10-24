@@ -12,7 +12,7 @@ export const useTimeMultiSlotPicker = (
 
   const [newData, setDatas] = useState<any>([]);
   useMemo(() => {
-    console.log('rendar multi');
+
     const times: any = []; // time array
     let tt = 0; // start time
     const ap = [' AM', ' PM']; // AM-PM

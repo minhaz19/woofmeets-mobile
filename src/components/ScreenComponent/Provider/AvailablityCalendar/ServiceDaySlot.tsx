@@ -7,7 +7,7 @@ interface Props {
 }
 const ServiceDaySlot = ({setValue}: Props) => {
   const {userServices} = useAppSelector(state => state.services);
-  const modDays = userServices.map((item: any) => ({
+  const modDays = userServices?.map((item: any) => ({
     id: item.serviceTypeId,
     days:
       item.AvailableDay.length !== 0
@@ -21,18 +21,62 @@ const ServiceDaySlot = ({setValue}: Props) => {
             {id: 7, label: 'S', putServiceId: d.id, active: d.sun, key: 'sun'},
           ])
         : [
-            {id: 1, label: 'M', putServiceId: null, active: false, key: 'mon'},
-            {id: 2, label: 'T', putServiceId: null, active: false, key: 'tue'},
-            {id: 3, label: 'W', putServiceId: null, active: false, key: 'wed'},
-            {id: 4, label: 'T', putServiceId: null, active: false, key: 'thu'},
-            {id: 5, label: 'F', putServiceId: null, active: false, key: 'fri'},
-            {id: 6, label: 'S', putServiceId: null, active: false, key: 'sat'},
-            {id: 7, label: 'S', putServiceId: null, active: false, key: 'sun'},
+            [
+              {
+                id: 1,
+                label: 'M',
+                putServiceId: null,
+                active: false,
+                key: 'mon',
+              },
+              {
+                id: 2,
+                label: 'T',
+                putServiceId: null,
+                active: false,
+                key: 'tue',
+              },
+              {
+                id: 3,
+                label: 'W',
+                putServiceId: null,
+                active: false,
+                key: 'wed',
+              },
+              {
+                id: 4,
+                label: 'T',
+                putServiceId: null,
+                active: false,
+                key: 'thu',
+              },
+              {
+                id: 5,
+                label: 'F',
+                putServiceId: null,
+                active: false,
+                key: 'fri',
+              },
+              {
+                id: 6,
+                label: 'S',
+                putServiceId: null,
+                active: false,
+                key: 'sat',
+              },
+              {
+                id: 7,
+                label: 'S',
+                putServiceId: null,
+                active: false,
+                key: 'sun',
+              },
+            ],
           ],
   }));
   return (
     <>
-      {userServices.map((item: any, index: number) => (
+      {userServices?.map((item: any, index: number) => (
         <BoardingDayAV
           key={index}
           title={item.serviceType.name}

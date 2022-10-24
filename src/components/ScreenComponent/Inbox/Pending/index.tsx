@@ -29,7 +29,6 @@ const PendingStatus = ({statusType}: Props) => {
     statusType === 'USER' && dispatch(getAppointmentStatus('PROPOSAL'));
     statusType === 'PROVIDER' && dispatch(getProviderApnt('PROPOSAL'));
   }, []);
-  console.log('status type', statusType, providerApntStatus);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -42,7 +41,6 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
-  console.log('inbox', appointmentStatus, providerApntStatus);
 
   return (
     <>

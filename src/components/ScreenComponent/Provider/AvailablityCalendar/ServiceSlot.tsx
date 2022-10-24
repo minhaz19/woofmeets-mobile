@@ -27,17 +27,17 @@ const ServiceSlot = ({setSelectedService}: Props) => {
     setSelectedService([...modSelectedService]);
   };
   useEffect(() => {
-    const modService = userServices.map((item: any) => ({
+    const modService = userServices?.map((item: any) => ({
       service: item.serviceType.name,
       id: item.id,
       active: false,
     }));
-    console.log('item', userServices, modService);
+
     setServices(modService);
   }, [userServices]);
   return (
     <View style={styles.parent}>
-      {servcies.map((item: any, index: number) => (
+      {servcies?.map((item: any, index: number) => (
         <AppTouchableOpacity
           onPress={() => handleOnChange(item.id)}
           key={index}

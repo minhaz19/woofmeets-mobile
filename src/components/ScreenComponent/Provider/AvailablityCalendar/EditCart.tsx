@@ -18,15 +18,22 @@ import {useAppSelector} from '../../../../store/store';
 interface Props {
   startingDate: string;
   endingDate: string;
-  resetRange: () => void;
+  // resetRange: () => void;
+  setIsDayVisible: (arg: boolean) => void;
+  isDayVisible: boolean;
 }
 const dayAvEndpoint = '/availability/';
 const unavailabilityEndpoint =
   'https://api-stg.woofmeets.com/v2/unavailability';
 const availablityEndpoint = '/availability/add-dates';
-const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
+const EditCart = ({
+  startingDate,
+  endingDate,
+  setIsDayVisible,
+  isDayVisible,
+}: Props) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isDayVisible, setIsDayVisible] = useState(false);
+
   const {userServices} = useAppSelector(state => state.services);
   const {request} = useApi(methods._post);
   const {request: putRequest} = useApi(methods._put);
@@ -52,7 +59,6 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
     };
 
     const result = await request(unavailabilityEndpoint, payload);
-    console.log('handleUnavailable', payload, result);
   };
 
   const handleAvailable = async (selectedService: any) => {
@@ -65,7 +71,6 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
       providerServiceIds: selectedService,
     };
     const result = await request(availablityEndpoint, payload);
-    console.log('handleAvailable', payload, result);
   };
 
   const handleMAUnavailable = async () => {
@@ -78,7 +83,6 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
       providerServiceIds: userServices.map((item: {id: number}) => item.id),
     };
     const result = await request(unavailabilityEndpoint, payload);
-    console.log('handleMAUnavailable', payload, result);
   };
   const handleMAAvailable = async () => {
     const payload = {
@@ -90,14 +94,12 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
       providerServiceIds: userServices.map((item: {id: number}) => item.id),
     };
     const result = await request(dayAvEndpoint, payload);
-    console.log('handleMAUnavailable', payload, result);
   };
 
   const handleDayAvailability = (data: any) => {
     const modData = Object.keys(data).map(key => {
       return data[key];
     });
-    console.log('mod', modData);
     modData.map(async item => {
       const payload = {
         sat: item.sat,
@@ -111,9 +113,7 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
         fulltime: true,
       };
       const r = await putRequest(dayAvEndpoint + item.putServiceId, payload);
-      console.log('rrrr', r, item, payload);
     });
-    console.log('handleDayAvailability', modData);
   };
 
   return (
@@ -138,12 +138,11 @@ const EditCart = ({startingDate, endingDate, resetRange}: Props) => {
           <TitleText textStyle={styles.edit} text={'Edit'} />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.icon}
         onPress={() => setIsDayVisible(true)}>
-        {/* <Reset width={30} height={20} fill={'white'} /> */}
         <Setting fill="white" width={20} height={20} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <ServiceSlotModal
         startingDate={startingDate}
         endingDate={endingDate}
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderRightColor: 'white',
     paddingVertical: 10,
-    width: '70%',
+    width: '75%',
   },
   mark: {
     fontSize: Text_Size.Text_0,
@@ -193,17 +192,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   editBtnContainer: {
-    borderRightWidth: 1,
-    borderRightColor: 'white',
+    // borderRightWidth: 1,
+    // borderRightColor: 'white',
     paddingVertical: 10,
-    width: '22%',
+    // width: '2%',
     alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
   edit: {
     fontSize: Text_Size.Text_0,
     color: Colors.background,
     fontWeight: 'bold',
     alignItems: 'center',
+    textAlign: 'center',
   },
   icon: {
     paddingRight: 25,

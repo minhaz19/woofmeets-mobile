@@ -11,7 +11,7 @@ interface Props {
   setValue: (arg1: string, ar2: any) => void;
 }
 const BoardingDayAV = ({title, data, setValue}: Props) => {
-  const [days, setDays] = useState(data.days[0]);
+  const [days, setDays] = useState(data.days.length > 0 ? data.days[0] : []);
   //   const {setValue} = useFormContext();
   const handleMultiSelect = (id: number) => {
     const newHoliday = [...days];
@@ -23,12 +23,10 @@ const BoardingDayAV = ({title, data, setValue}: Props) => {
     }));
     //@ts-ignore
     const daysPayload = Object.assign(...modDays);
-    console.log('daysPayload', daysPayload);
     setValue(String(data.id), daysPayload);
     setDays(newHoliday);
     setValue;
   };
-  console.log('d', days);
   return (
     <View style={styles.parent}>
       <View>
@@ -40,7 +38,7 @@ const BoardingDayAV = ({title, data, setValue}: Props) => {
           </View>
         </View>
         <View style={styles.multiSelect}>
-          {days.map((it: any, i: number) => (
+          {days?.map((it: any, i: number) => (
             <Pressable
               onPress={() => handleMultiSelect(it.id)}
               key={i}

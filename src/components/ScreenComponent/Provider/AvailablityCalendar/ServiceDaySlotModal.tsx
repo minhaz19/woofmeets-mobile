@@ -31,7 +31,6 @@ const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
   useEffect(() => {
     const init = availabilityDayInit(userServices);
     setInitalState(init);
-    console.log('ini', init);
   }, [userServices]);
   useEffect(() => {
     if (initalState) {

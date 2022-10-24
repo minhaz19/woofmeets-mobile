@@ -9,7 +9,6 @@ export const getProviderApnt = createAsyncThunk(
       const response: ApiResponse<any> = await apiClient.get(
         `/appointment/provider/inbox?status=${statusId}`,
       );
-      console.log('st', response);
       if (!response.ok) {
         if (response.data) {
         } else if (response.problem === 'TIMEOUT_ERROR') {

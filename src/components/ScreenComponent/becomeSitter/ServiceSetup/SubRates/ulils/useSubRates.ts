@@ -13,16 +13,13 @@ export const useSubRates = (rateFields: any, watch: any) => {
     setShowAdditionalRates(!showAdditionalRates);
   };
   useMemo(() => {
-    console.log('calling memo service one');
     const modRates = rateFields?.map((item: any) => ({
       ...item,
       percentage: Number(item.percentage),
     }));
     setRates(modRates);
   }, [rateFields]);
-  console.log('reate fiels', rateFields);
   useMemo(() => {
-    console.log('calling memo service tow');
     const checkFields = fieldValue?.map(
       (_: any, index: number) =>
         (fieldValue[0].amount / 100) * (index * 5) === fieldValue[index].amount,
@@ -40,7 +37,6 @@ export const useSubRates = (rateFields: any, watch: any) => {
   }, [fieldValue]);
 
   useMemo(() => {
-    console.log('calling memo service three');
     if (checked === true) {
       if (updateRates === false) {
         setChecked(false);
