@@ -39,12 +39,7 @@ const DeclinedStatus = ({statusType}: Props) => {
       providerRejected && setCombineStatusProvider([...providerRejected]);
     }
   }, [statusType]);
-  console.log(
-    'userRejected',
-    proivderCancelled,
-    providerRejected,
-    combineStatusProvider,
-  );
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
@@ -61,7 +56,6 @@ const DeclinedStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
-  console.log('asdfasdf', combineStatusUser);
 
   return (
     <>

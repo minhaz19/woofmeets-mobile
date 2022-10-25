@@ -21,7 +21,6 @@ export const postUserOnboarding = createAsyncThunk(
     'stripe/getUserOnboardStatus',
     async () => {
         const response: ApiResponse<any> = await apiClient.get('/stripe-connect/user-onboard-status');
-        console.log(response);
         if (!response.ok) {
           throw new Error(response.data.message);
         }
@@ -62,7 +61,6 @@ const stripe = createSlice({
         state.error = null;
       })
       .addCase(getUserOnboardStatus.fulfilled, (state, {payload}) => {
-        console.log(payload)
         state.loading = false;
         state.userOnboardStatus = payload.data;
         state.error = null;

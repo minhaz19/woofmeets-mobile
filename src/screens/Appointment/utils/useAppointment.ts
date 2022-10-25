@@ -19,7 +19,6 @@ export const useAppointment = () => {
   );
   const navigation = useNavigation<any>();
   const handleSubmit = async (data: any) => {
-    console.log('submitting')
     const user: any = await storage.getUser();
     const {
       providerServiceId,
@@ -124,13 +123,11 @@ export const useAppointment = () => {
         };
 
         const response = await request(endpoint, boardSittingPayload);
-        console.log('re', response);
         response.ok &&
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,
             screen: 'Inbox',
           });
-        console.log('pay', boardSittingPayload);
       } else if (serviceTypeId === 3 || serviceTypeId === 5) {
         const sortedSpecificModDates = !isRecurring
           ? specificModDates.map((item: any, i: number) => ({
@@ -232,13 +229,11 @@ export const useAppointment = () => {
               formattedMessage: dropInVisitFT,
             };
         const response = await request(endpoint, dropDogPayload);
-        console.log('re', response);
         response.ok &&
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,
             screen: 'Inbox',
           });
-        console.log('pay', dropDogPayload);
       } else if (serviceTypeId === 4) {
         const DoggyDayFT = isRecurring
           ? `Doggy Day Care Proposal:  \n Repeat service starting from : ${recurringStartDate}  \n 
@@ -289,13 +284,11 @@ export const useAppointment = () => {
               isRecivedPhotos: isRecivedPhotos,
             };
         const response = await request(endpoint, doggyPayload);
-        console.log('re', response);
         response.ok &&
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,
             screen: 'Inbox',
           });
-        console.log('pay', doggyPayload);
       }
     }
   };

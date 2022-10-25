@@ -60,7 +60,6 @@ export const useDayTimeSlot = () => {
         selectedDays,
         proposalRecurringDate,
       );
-      console.log('repease ', repeatDate, selectedDays, proposalRecurringDate);
       setDatas(recurring);
     } else if (!isRecurring) {
       const multi = multiDate?.map((item: any, index: number) => ({
