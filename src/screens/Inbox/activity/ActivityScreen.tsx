@@ -76,7 +76,11 @@ const ActivityScreen = (props: {
   return (
     <>
       {(loading || petLoading) && <AppActivityIndicator visible={true} />}
-      <View style={{...styles.rootContainer, backgroundColor: colors.backgroundColor}}>
+      <View
+        style={{
+          ...styles.rootContainer,
+          backgroundColor: colors.backgroundColor,
+        }}>
         <SafeAreaView>
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

@@ -14,7 +14,6 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
     initalSlot,
     isRecurring,
   );
-  console.log('new Daaat', Dates);
   return (
     <View style={styles.container}>
       <TitleText textStyle={{}} text={''} />
@@ -54,7 +53,7 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                     found[0].visitTime.splice(matchIndex, 1);
                   }
                 }
-                console.log('Days', Days);
+
                 setValue('recurringModDatesRef', Days);
               } else if (!isRecurring) {
                 const matchDate = Dates?.findIndex(
@@ -82,7 +81,6 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                     found[0].visitTime.splice(matchIndex, 1);
                   }
                 }
-                console.log('dates', Dates);
 
                 setValue('specificModDatesRef', Dates);
               }

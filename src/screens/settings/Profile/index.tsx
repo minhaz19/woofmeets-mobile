@@ -28,7 +28,6 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const dispatch = useAppDispatch();
   useProfileData();
 
-  console.log('onboard',userOnboardStatus);
 
   const [token, setToken] = useState<any>();
   // const userInfo = useAppSelector(state => state.auth.userInfo);
@@ -54,13 +53,11 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     //   </View>
     // )
     const response = await apiClient.post('/stripe-connect/user-onboarding');
-    console.log(response.data?.data?.alreadyInitiated);
     if (response.ok) {
       if (response.data?.data?.alreadyInitiated) {
         const response = await apiClient.post('/stripe-connect/user-onboarding/refresh-url', {
           email: token.email,
         });
-        console.log(response.data?.data?.url);
         if (response.data?.data?.url) {
           props.navigation.navigate('StripeOnboardScreen', {url: response.data?.data?.url});
         }

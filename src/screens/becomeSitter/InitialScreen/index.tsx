@@ -29,7 +29,6 @@ const SitterInitialScreen = (props: {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const currentPlan = useAppSelector(state => state.currentPlan);
 
-  console.log(currentPlan);
 
   const handlePress = () => {
     if (isLoggedIn) {

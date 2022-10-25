@@ -37,7 +37,6 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
     setUpdateRates,
     checked,
   } = useSubRates(rateFields, watch);
-  console.log('base', baseRateWatch);
   return (
     <View>
       <ServiceReusableModal
@@ -63,7 +62,6 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
             },
             index: number,
           ) => {
-            console.log('item', item.percentage);
             return (
               <View key={index}>
                 {item.slug === 'base-rate' && (

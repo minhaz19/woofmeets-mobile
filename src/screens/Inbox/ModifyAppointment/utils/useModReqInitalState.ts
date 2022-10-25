@@ -65,7 +65,6 @@ export const useModReqInitialState = () => {
       startDate: item?.startDate ? item.startDate : false,
     }),
   );
-  console.log('init', proposedServiceInfo, modMultiDates);
   const DoggySelected = dayss.filter(item =>
     proposedServiceInfo?.recurringSelectedDay?.includes(
       item.substring(0, 3).toLowerCase(),
