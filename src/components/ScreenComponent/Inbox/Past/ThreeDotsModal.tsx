@@ -5,8 +5,11 @@ import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpac
 import {SCREEN_HEIGHT} from '../../../../constants/WindowSize';
 import HeaderText from '../../../common/text/HeaderText';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import {CallSvg} from '../../../../screens/settings/Profile/utils/ProfileSvg';
 import IOSButton from '../../../UI/IOSButton';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Colors from '../../../../constants/Colors';
+import Entypo from 'react-native-vector-icons/Entypo';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   setIsReviewModal: (value: boolean) => void;
@@ -16,23 +19,18 @@ interface Props {
 
 const ThreeDotsModal: FC<Props> = props => {
   const {colors} = useTheme();
+  const navigation = useNavigation();
   const modalData = [
-    {
-      id: 1,
-      name: 'Call Meer',
-      icon: <CallSvg height={20} width={20} />,
-      screen: () => {},
-    },
     {
       id: 2,
       name: 'Report',
-      icon: <CallSvg height={20} width={20} />,
-      screen: () => {},
+      icon: <Entypo name="documents" size={24} color={Colors.primary}/>,
+      screen: () => {navigation.navigate('ReportCardInitial')},
     },
     {
       id: 3,
       name: 'Review',
-      icon: <CallSvg height={20} width={20} />,
+      icon: <MaterialIcons name="rate-review" size={24} color={Colors.primary}/>,
       screen: () => {
         props.setIsReviewModal(true);
         props.setIsThreeDotsModal(false);

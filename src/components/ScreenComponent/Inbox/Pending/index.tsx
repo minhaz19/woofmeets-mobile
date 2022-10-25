@@ -12,6 +12,7 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
+import BottomSpacing from '../../../UI/BottomSpacing';
 interface Props {
   statusType: string;
 }
@@ -28,7 +29,7 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     statusType === 'USER' && dispatch(getAppointmentStatus('PROPOSAL'));
     statusType === 'PROVIDER' && dispatch(getProviderApnt('PROPOSAL'));
-  }, []);
+  }, [statusType]);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -129,7 +130,8 @@ const PendingStatus = ({statusType}: Props) => {
           </View>
         )}
 
-        <BottomSpacingNav />
+        <BottomSpacing />
+        <BottomSpacing />
       </ScrollView>
     </>
   );

@@ -45,7 +45,7 @@ const ActivityScreen = (props: {
   const dispatch = useAppDispatch();
   const {loading} = useAppSelector(state => state.proposal);
   const {loading: petLoading} = useAppSelector(state => state.allPets);
-  // const {appointmentOpk} = props.route.params;
+  const {appointmentOpk} = props.route.params;
   const sendMsg = async () => {};
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const ActivityScreen = (props: {
     };
   }, []);
   useEffect(() => {
-    // dispatch(getProviderProposal(appointmentOpk));
+    dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAllPets());
     dispatch(getWhoAmI());
   }, []);
@@ -93,8 +93,7 @@ const ActivityScreen = (props: {
               <ActivityHeader
                 setIsDetailsModal={setIsDetailsModal}
                 setIsThreeDotsModal={setIsThreeDotsModal}
-                // opk={appointmentOpk}
-                opk={null}
+                opk={appointmentOpk}
               />
               <BottomHalfModal
                 isModalVisible={isDetailsModal}

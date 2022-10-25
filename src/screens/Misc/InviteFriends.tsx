@@ -18,7 +18,7 @@ const InviteFriends = () => {
       <View style={styles.textContainer}>
         <HeaderText text="Everybody wins" textStyle={styles.headerText} />
         <DescriptionText
-          text="Invite a friend to Rover and they'll get $20 toward their first booking. Once they book, you'll get a $20 credit!"
+          text="Invite a friend to Woofmeets and they'll get $20 toward their first booking. Once they book, you'll get a $20 credit!"
           textStyle={{
             ...styles.textStyle,
             color: colors.descriptionText,

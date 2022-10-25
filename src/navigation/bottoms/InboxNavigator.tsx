@@ -11,7 +11,7 @@ const Stack1 = createStackNavigator();
 
 const InboxNavigator = () => {
   return (
-    <Stack1.Navigator initialRouteName="ActivityScreen">
+    <Stack1.Navigator initialRouteName="Inbox">
       <Stack1.Screen
         name="Inbox"
         component={Inbox}
@@ -34,13 +34,13 @@ const InboxNavigator = () => {
           headerShown: false,
         })}
       />
-      <Stack1.Screen
+      {/* <Stack1.Screen
         name="ActivityScreen"
         component={ActivityScreen}
         options={() => ({
           headerShown: false,
         })}
-      />
+      /> */}
       {/* <Stack1.Screen
         name="Checkout"
         component={CheckoutDetails}
