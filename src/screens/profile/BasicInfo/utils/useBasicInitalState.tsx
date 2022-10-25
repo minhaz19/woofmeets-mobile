@@ -2,7 +2,6 @@ import {useAppSelector} from '../../../../store/store';
 
 export const useBasicInitalState = () => {
   const {userInfo} = useAppSelector(state => state.userProfile);
-  console.log(userInfo)
   const basicInitalState = {
     profileImage: userInfo?.image?.url ? userInfo?.image?.url : '',
     addressLine1: userInfo?.basicInfo?.addressLine1

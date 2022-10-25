@@ -12,19 +12,16 @@ const ProviderProfile = () => {
   const _renderHeader = () => null;
   const _renderFooter = () => (
     <View
-      style={[
-        styles.infoContianer,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
+      style={styles.infoContianer}>
       <ProviderHeader />
       <ProviderTab />
       <ProviderFooter />
     </View>
   );
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {
+      backgroundColor: colors.backgroundColor,
+    }]}>
       <FlatList
         data={[1, 2, 3]}
         keyExtractor={(_, i) => i.toString()}
