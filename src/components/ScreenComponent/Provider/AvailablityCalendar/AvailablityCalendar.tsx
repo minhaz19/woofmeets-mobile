@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {StyleSheet, TextStyle, View} from 'react-native';
+import {Platform, StyleSheet, TextStyle, View} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {CalendarList} from 'react-native-calendars';
 import {_dateRange} from '../../../../utils/helpers/datesArray';
@@ -53,7 +53,7 @@ const AvailablityCalendar = () => {
       [dateArray[i]]: {
         customStyles: {
           container: {
-            backgroundColor: Colors.dark.background,
+            backgroundColor: Colors.primary,
             elevation: 2,
             // borderRadius: 10,
             width: '100%',
@@ -85,7 +85,7 @@ const AvailablityCalendar = () => {
           textStyle={styles.headerText}
         />
         <AppTouchableOpacity onPress={() => setIsDayVisible(true)}>
-          <Setting width={30} height={30} fill={'black'} />
+          <Setting width={30} height={30} fill={colors.headerText} />
         </AppTouchableOpacity>
       </View>
       <CalendarList
@@ -100,7 +100,7 @@ const AvailablityCalendar = () => {
           [singleSelect]: {
             customStyles: {
               container: {
-                backgroundColor: Colors.dark.background,
+                backgroundColor: Colors.primary,
                 elevation: 2,
                 borderRadius: 10,
 
@@ -120,7 +120,7 @@ const AvailablityCalendar = () => {
               header: {
                 dayHeader: {
                   fontWeight: 'bold',
-                  color: Colors.dark.background,
+                  color: Colors.primary,
                 },
               },
             },
@@ -132,15 +132,15 @@ const AvailablityCalendar = () => {
               borderWidth: 0.8,
             },
             todayText: {
-              color: Colors.dark.background,
+              color: Colors.primary,
               fontWeight: '800',
             },
           },
           backgroundColor: colors.backgroundColor,
           calendarBackground: colors.backgroundColor,
-          selectedDayBackgroundColor: Colors.dark.background,
+          selectedDayBackgroundColor: Colors.primary,
           selectedDayTextColor: Colors.headerText,
-          todayTextColor: Colors.dark.background,
+          todayTextColor: Colors.primary,
           dayTextColor: colors.headerText,
           textDisabledColor: Colors.gray,
           arrowColor: Colors.headerText,
@@ -173,7 +173,7 @@ function renderCustomHeader(date: any) {
     fontWeight: 'bold',
     paddingTop: 10,
     paddingBottom: 10,
-    color: Colors.dark.background,
+    color: Colors.primary,
     paddingRight: 5,
   };
 
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: Platform.OS === 'ios' ? 10 : 15,
     marginBottom: 20,
     marginTop: 10,
   },

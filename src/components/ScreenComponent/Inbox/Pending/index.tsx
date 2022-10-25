@@ -6,7 +6,6 @@ import {UpcomingSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
 import Colors from '../../../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
-import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
@@ -42,6 +41,7 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
+  console.log('info', appointmentStatus, providerApntStatus);
 
   return (
     <>
@@ -64,10 +64,6 @@ const PendingStatus = ({statusType}: Props) => {
           </View>
         ) : (
           <View style={styles.container}>
-            <FilterByDateAndActivity
-              handleActivity={() => {}}
-              handleDate={() => {}}
-            />
             {appointmentStatus !== null &&
             appointmentStatus !== undefined &&
             statusType === 'USER' ? (
@@ -101,8 +97,8 @@ const PendingStatus = ({statusType}: Props) => {
                   <ReusableCard
                     key={item.opk}
                     item={{
-                      name: `${item.provider.user.firstName} ${item.provider.user.lastName}`,
-                      image: item.provider.user.image,
+                      name: `${item.user.firstName} ${item.user.lastName}`,
+                      image: item.user.image,
                       description: item?.appointmentProposal[0]?.firstMessage
                         ? item?.appointmentProposal[0]?.firstMessage
                         : 'No Mesaegs fonnd',

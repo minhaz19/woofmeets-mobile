@@ -45,6 +45,10 @@ const providerProposalSlice = createSlice({
                   payload.data.appointment.provider.user?.firstName +
                   ' ' +
                   payload.data.appointment.provider.user?.lastName,
+                userName:
+                  payload.data.appointment.user?.firstName +
+                  ' ' +
+                  payload.data.appointment.user?.lastName,
                 image: payload.data.appointment.provider.user.image,
                 serviceTypeId:
                   payload.data.appointment.providerService.serviceTypeId,
@@ -76,6 +80,10 @@ const providerProposalSlice = createSlice({
                   payload.data.appointment.provider.user.firstName +
                   ' ' +
                   payload.data.appointment.provider.user.lastName,
+                userName:
+                  payload.data.appointment.user?.firstName +
+                  ' ' +
+                  payload.data.appointment.user?.lastName,
                 image: payload.data.appointment.provider.user.image,
                 appointmentserviceType:
                   payload.data.proposal.appointmentserviceType,
@@ -106,6 +114,10 @@ const providerProposalSlice = createSlice({
                   payload.data.appointment.provider.user.firstName +
                   ' ' +
                   payload.data.appointment.provider.user.lastName,
+                userName:
+                  payload.data.appointment.user?.firstName +
+                  ' ' +
+                  payload.data.appointment.user?.lastName,
                 image: payload.data.appointment.provider.user.image,
                 dropOffStartTime: payload.data.proposal.dropOffStartTime,
                 dropOffEndTime: payload.data.proposal.dropOffEndTime,
