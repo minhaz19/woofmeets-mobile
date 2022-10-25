@@ -3,7 +3,7 @@ import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../../../../api/client';
 export const getProviderCancelled = createAsyncThunk(
-  '/appointment/provider/cal',
+  '/appointment/provider/inbox/cancel',
   async (statusId: string) => {
     try {
       const response: ApiResponse<any> = await apiClient.get(

@@ -91,6 +91,8 @@ export const useAppointment = () => {
       Alert.alert('You have select walk / visit times');
     } else if (petsId.length === 0 || petsId === undefined) {
       Alert.alert('You have to select at least one pet');
+    } else if (firstMessage === '') {
+      Alert.alert('You have to provider a message to Provider');
     } else {
       if (serviceTypeId === 1 || serviceTypeId === 2) {
         const boardingSittingFT = `${

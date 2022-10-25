@@ -12,7 +12,7 @@ import BottomSpacing from '../../../../UI/BottomSpacing';
 interface Props {
   setIsPayment?: (value: boolean) => void;
   setIsDetailsModal?: (value: boolean) => void;
-  setModalVisible: (arg1: boolean) => void;
+  setModalVisible?: (arg1: boolean) => void;
 }
 
 const Details: FC<Props> = props => {
