@@ -59,6 +59,7 @@ const EditCart = ({
     };
 
     const result = await request(unavailabilityEndpoint, payload);
+    result.ok && setIsVisible(false);
   };
 
   const handleAvailable = async (selectedService: any) => {
@@ -71,6 +72,7 @@ const EditCart = ({
       providerServiceIds: selectedService,
     };
     const result = await request(availablityEndpoint, payload);
+    result.ok && setIsVisible(false);
   };
 
   const handleMAUnavailable = async () => {
@@ -93,7 +95,7 @@ const EditCart = ({
           : null,
       providerServiceIds: userServices.map((item: {id: number}) => item.id),
     };
-    const result = await request(dayAvEndpoint, payload);
+    await request(dayAvEndpoint, payload);
   };
 
   const handleDayAvailability = (data: any) => {
@@ -113,6 +115,7 @@ const EditCart = ({
         fulltime: true,
       };
       const r = await putRequest(dayAvEndpoint + item.putServiceId, payload);
+      r.ok && setIsDayVisible(false);
     });
   };
 
@@ -138,11 +141,7 @@ const EditCart = ({
           <TitleText textStyle={styles.edit} text={'Edit'} />
         </TouchableOpacity>
       </View>
-      {/* <TouchableOpacity
-        style={styles.icon}
-        onPress={() => setIsDayVisible(true)}>
-        <Setting fill="white" width={20} height={20} />
-      </TouchableOpacity> */}
+
       <ServiceSlotModal
         startingDate={startingDate}
         endingDate={endingDate}

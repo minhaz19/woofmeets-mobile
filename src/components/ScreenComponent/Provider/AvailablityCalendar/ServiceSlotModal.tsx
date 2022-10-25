@@ -35,7 +35,11 @@ const ServiceSlotModal = ({
           </TouchableOpacity>
           <TouchableOpacity style={styles.saveBtn}>
             <TitleText
-              text={endingDate !== undefined ? endingDate : 'Not Selected'}
+              text={
+                endingDate !== undefined && endingDate !== ''
+                  ? endingDate
+                  : 'Not Selected'
+              }
               textStyle={styles.text}
             />
           </TouchableOpacity>

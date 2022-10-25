@@ -5,7 +5,6 @@ import methods from '../../../../api/methods';
 import {getProviderProposal} from '../../../../store/slices/Appointment/Proposal/getProviderProposal';
 import {useAppSelector, useAppDispatch} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
-import storage from '../../../../utils/helpers/auth/storage';
 
 export const useModifyAppointment = (route: any) => {
   const {} = useAppSelector(state => state.proposal);
@@ -14,8 +13,9 @@ export const useModifyAppointment = (route: any) => {
   const dispatch = useAppDispatch();
   const endpoint = `/appointment/update/${appointmentOpk}/proposal`;
   const navigation = useNavigation<any>();
+  const {user} = useAppSelector(state => state.whoAmI);
   const handleSubmit = async (data: any) => {
-    const user: any = await storage.getUser();
+    // const user: any = await storage.getUser();
     const {
       petsId,
       userId,
@@ -205,7 +205,7 @@ export const useModifyAppointment = (route: any) => {
               proposedBy:
                 user?.id === userId
                   ? 'USER'
-                  : user?.id === providerId && 'PROVIDER',
+                  : user?.provider?.id === providerId && 'PROVIDER',
               petsId: petsId,
               length: visitLength,
               isRecurring: isRecurring,
@@ -226,7 +226,7 @@ export const useModifyAppointment = (route: any) => {
             appointmentOpk: result.data.data.appointment.opk,
           });
         }
-      } else if (serviceTypeId === 5) {
+      } else if (serviceTypeId === 4) {
         const DoggyDayFT = isRecurring
           ? `Doggy Day Care Proposal:  \n Repeat service starting from : ${recurringStartDate}  \n 
           Drop-off: ${dropOffStartTime} - ${dropOffEndTime} \n
@@ -260,7 +260,9 @@ export const useModifyAppointment = (route: any) => {
               proposedBy:
                 user?.id === userId
                   ? 'USER'
-                  : user?.id === providerId && 'PROVIDER',
+                  : user?.provider?.id === providerId
+                  ? 'PROVIDER'
+                  : null,
               petsId: petsId,
               isRecurring: isRecurring,
               formattedMessage: DoggyDayFT,

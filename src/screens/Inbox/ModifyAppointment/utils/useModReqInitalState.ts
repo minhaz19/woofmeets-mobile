@@ -117,11 +117,13 @@ export const useModReqInitialState = () => {
       : '',
     proposalScheduleDate: modProposalScheduleDate,
     proposalRecurringDate: modProposalRecurringDate,
-    petsId: proposedServiceInfo?.appointmentPet
-      ? proposedServiceInfo.appointmentPet.map(
-          (item: {petId: number}) => item.petId,
-        )
-      : [],
+    petsId:
+      proposedServiceInfo?.appointmentPet &&
+      proposedServiceInfo?.appointmentPet.length > 0
+        ? proposedServiceInfo.appointmentPet.map(
+            (item: {petId: number}) => item.petId,
+          )
+        : [],
     recurringModDatesRef: [],
     specificModDatesRef: [],
     recurringModDates:
