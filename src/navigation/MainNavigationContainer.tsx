@@ -488,7 +488,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             header: () => (
               <HeaderWithBack
                 navigation={navigation}
-                title="Service Selection"
+                title="Get paid by woofmeets"
                 notification
               />
             ),

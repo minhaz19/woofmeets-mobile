@@ -2,6 +2,7 @@ import {useAppSelector} from '../../../../store/store';
 
 export const useBasicInitalState = () => {
   const {userInfo} = useAppSelector(state => state.userProfile);
+  console.log(userInfo)
   const basicInitalState = {
     profileImage: userInfo?.image?.url ? userInfo?.image?.url : '',
     addressLine1: userInfo?.basicInfo?.addressLine1
@@ -13,7 +14,7 @@ export const useBasicInitalState = () => {
     city: userInfo?.basicInfo?.city ? userInfo?.basicInfo?.city : '',
     state: userInfo?.basicInfo?.state ? userInfo?.basicInfo?.state : '',
     street: userInfo?.basicInfo?.street ? userInfo?.basicInfo?.street : '',
-    zipCode: userInfo?.basicInfo?.state ? userInfo?.basicInfo?.state : '',
+    zipCode: userInfo?.basicInfo?.zipCode ? userInfo?.basicInfo?.zipCode : '',
     countryId: 1,
     name:
       userInfo?.firstName || userInfo?.lastName

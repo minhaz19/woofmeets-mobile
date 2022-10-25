@@ -223,22 +223,22 @@ const SettingMain = (props: { navigation: { navigate: (arg0: string) => any; dis
       screenName: () => props.navigation.navigate('ProviderAvailablity'),
       opacity: 1,
     },
-    {
-      id: 2,
-      title: 'Manage services',
-      icon: HelpIcon,
-      screenName: () => {},
-      rightIcon: true,
-      opacity: 1,
-    },
-    {
-      id: 3,
-      title: 'Promote your business',
-      icon: HelpIcon,
-      screenName: () => {},
-      rightIcon: true,
-      opacity: 1,
-    },
+    // {
+    //   id: 2,
+    //   title: 'Manage services',
+    //   icon: HelpIcon,
+    //   screenName: () => {},
+    //   rightIcon: true,
+    //   opacity: 1,
+    // },
+    // {
+    //   id: 3,
+    //   title: 'Promote your business',
+    //   icon: HelpIcon,
+    //   screenName: () => {},
+    //   rightIcon: true,
+    //   opacity: 1,
+    // },
   ];
 
   const backgroundStyle = {
