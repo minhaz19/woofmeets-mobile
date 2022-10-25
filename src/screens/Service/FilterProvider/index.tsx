@@ -128,7 +128,7 @@ const FilterProvider = () => {
     dispatch(setOpenFilter(false));
   };
   const handleReset = () => {
-    dispatch(setLocation({lat: 40.702078, lng: -73.822156}));
+    dispatch(setLocation({lat: null, lng: null}));
     dispatch(setSelectedPet(pets));
     dispatch(setSelectedHome(''));
     dispatch(setMultiSliderValue([0, 150]));

@@ -22,7 +22,7 @@ interface Props {
   textAlignment: ViewStyle | undefined;
   isLeftIcon?: any;
   titleStyle: TextStyle | undefined;
-  title: String | undefined;
+  title: any;
   icon?: any;
   loading?: boolean;
   color?: string;

@@ -741,6 +741,7 @@ export const Reviews = (props: SvgProps) => (
     xmlns="http://www.w3.org/2000/svg"
     width={22.454}
     height={22.454}
+    viewBox="0 0 22.454 22.454"
     {...props}>
     <Defs>
       <ClipPath id="a">

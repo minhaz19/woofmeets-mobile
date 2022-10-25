@@ -1,9 +1,8 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Colors from '../../constants/Colors';
 import {Calendar} from 'react-native-calendars';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
-import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
 import {
   setDropIn,
   setDropOut,
@@ -14,11 +13,10 @@ interface Props {
   value?: any;
   dropOut?: boolean;
 }
-const DateRange = ({selectType = 'SINGLE', value, dropOut}: Props) => {
+const DateRange = ({value, dropOut}: Props) => {
+  const [singleSelect, setSingleSelect] = useState<string>('');
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
-  const {handleDayPress, singleSelect, _markedStyle} =
-    useHandleRange(selectType);
   const handleSelectDate = (date: any) => {
     if (dropOut) {
       dispatch(setDropOut(date));
@@ -31,12 +29,12 @@ const DateRange = ({selectType = 'SINGLE', value, dropOut}: Props) => {
       <Calendar
         style={styles.calenderStyles}
         onDayPress={data => {
-          handleDayPress(data);
+          setSingleSelect(data.dateString);
           handleSelectDate(data.dateString);
         }}
         markingType={'custom'}
         markedDates={{
-          ..._markedStyle,
+          // ..._markedStyle,
           [singleSelect]: {
             customStyles: {
               container: {

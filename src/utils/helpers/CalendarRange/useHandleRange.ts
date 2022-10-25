@@ -9,6 +9,7 @@ export const useHandleRange = (
   type: string,
   setValue?: (arg: string, arg2: any) => void,
 ) => {
+  console.log('useHandleRange',type);
   const [_markedStyle, setMarkedStyle] = useState({});
   const {proposalStartDate, proposalEndDate, recurringStartDate} = useWatch();
   const [step, setSteps] = useState(1);

@@ -5,8 +5,8 @@ import {getAllPets} from '../../pet/allPets/allPetsAction';
 
 const initialState: any = {
   location: {
-    lat: 40.702078,
-    lng: -73.822156,
+    lat: null,
+    lng: null,
   },
   selectedPet: [],
   selectedHome: '',
