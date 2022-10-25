@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   text1: {
-    fontWeight: '600',
+    fontWeight: '700',
     borderBottomWidth: 2,
     borderBottomColor: Colors.primary,
     paddingBottom: '2%',

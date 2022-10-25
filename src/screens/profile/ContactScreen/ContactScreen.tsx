@@ -80,7 +80,7 @@ const ContactScreen = () => {
             <Text
               style={[
                 styles.details,
-                {color: Colors.primary, textDecorationLine: 'underline'},
+                {color: Colors.blue, textDecorationLine: 'underline'},
               ]}>
               Terms of Service
             </Text>
@@ -91,7 +91,7 @@ const ContactScreen = () => {
             <Text
               style={[
                 styles.details,
-                {color: Colors.primary, textDecorationLine: 'underline'},
+                {color: Colors.blue, textDecorationLine: 'underline'},
               ]}>
               Privacy
             </Text>
