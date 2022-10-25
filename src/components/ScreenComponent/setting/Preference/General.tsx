@@ -121,9 +121,9 @@ const General = () => {
           </View>
         );
       })}
-      <TouchableOpacity onPress={() => {}}>
+      {/* <TouchableOpacity onPress={() => {}}>
         <DescriptionText text={'Deactivate Account'} textStyle={styles.input} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View style={styles.footerContainer}>
         <ButtonCom
           title={'Save Setting'}
@@ -133,6 +133,7 @@ const General = () => {
           onSelect={() => {}}
         />
       </View>
+      <BottomSpacing />
       <BottomSpacing />
     </ScrollView>
   );

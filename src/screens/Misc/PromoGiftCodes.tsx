@@ -29,7 +29,7 @@ const PromoGiftCodes = () => {
             onSelect={() => {}}
             textAlignment={{
               backgroundColor: colors.backgroundColor,
-              borderColor: colors.borderColor,
+              borderColor: Colors.blue,
               borderWidth: 1,
               borderRadius: 100,
               flexDirection: 'column',
@@ -37,7 +37,7 @@ const PromoGiftCodes = () => {
               alignItems: 'center',
             }}
             titleStyle={{
-              color: colors.lightText,
+              color: Colors.blue,
             }}
             title={'Apply'}
           />

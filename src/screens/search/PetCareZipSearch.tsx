@@ -25,7 +25,6 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {
-  getAllProvider,
   getAllProviderOneTime,
 } from '../../store/slices/Provider/allProvider/getAllProvider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -288,6 +287,7 @@ const PetCareZipSearch = (props: {
                   data={item}
                   noShadow
                   onPressEvent={onPressPet}
+                  divide={2}
                 />
               ))
             : selectPetType.map(item => (
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginLeft: '4%',
     width: '90%',
-    marginTop: 10,
+    marginVertical: 10,
   },
   switchContainer: {
     flexDirection: 'row',

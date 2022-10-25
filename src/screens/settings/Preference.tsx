@@ -1,18 +1,12 @@
 import {StyleSheet, ScrollView, Linking} from 'react-native';
 import React from 'react';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
 import PreferenceItem from '../../components/ScreenComponent/setting/Preference/PreferenceItem';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
 import Text_Size from '../../constants/textScaling';
-import {useAppDispatch} from '../../store/store';
-import {logout} from '../../store/slices/auth/userSlice';
-import methods from '../../api/methods';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 
 const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
-  const {colors} = useTheme();
-  const dispatch = useAppDispatch();
   const supportData = [
     {
       id: 1,
@@ -24,21 +18,21 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 3,
       title: 'Terms of Service',
       screenName: () => Linking.openURL('https://stage.woofmeets.com/terms-and-conditions'),
-      details: 'https://www.google.com',
+      details: 'https://stage.woofmeets.com/terms-and-conditions',
       opacity: 1,
     },
     {
       id: 4,
       title: 'Privacy Policy',
       screenName: () => Linking.openURL('https://stage.woofmeets.com/privacy-policy'),
-      details: 'https://www.google.com',
+      details: 'https://stage.woofmeets.com/terms-and-conditions',
       opacity: 1,
     },
     {
       id: 5,
       title: 'Version',
       screenName: () => {},
-      details: '1.0.3.6 - beta',
+      details: '1.0.5.10 - beta',
       opacity: 1,
     },
   ];
