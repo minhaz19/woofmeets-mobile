@@ -4,52 +4,40 @@ import ReusableCard from '../utils/Common/ReusableCard';
 import {UpcomingSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
 import Colors from '../../../../constants/Colors';
-import {useNavigation} from '@react-navigation/native';
-import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
-import {getUserRejected} from '../../../../store/slices/Appointment/Inbox/User/Recjected/getUserRejected';
 import {getUserCanceled} from '../../../../store/slices/Appointment/Inbox/User/Cancelled/getUserCancelled';
 import {getProviderCancelled} from '../../../../store/slices/Appointment/Inbox/Provider/Cancelled/getProviderCancelled';
-import {getProviderRejected} from '../../../../store/slices/Appointment/Inbox/Provider/Recjected/getProviderRejected';
+import BottomHalfModal from '../../../UI/modal/BottomHalfModal';
+import Details from '../Draft/Past/Details';
 interface Props {
   statusType: string;
 }
 const DeclinedStatus = ({statusType}: Props) => {
-  let navigation = useNavigation<any>();
+  const [isVisible, setIsVisible] = useState(false);
   const dispatch = useAppDispatch();
   const [combineStatusUser, setCombineStatusUser] = useState<any>([]);
   const [combineStatusProvider, setCombineStatusProvider] = useState<any>([]);
   const {userCancelled, loading} = useAppSelector(state => state.userCancelled);
-  const {userRejected} = useAppSelector(state => state.userRejected);
-  const {proivderCancelled} = useAppSelector(state => state.proivderCancelled);
-  const {providerRejected} = useAppSelector(state => state.providerRejected);
-
+  const {providerCancelled} = useAppSelector(state => state.providerCancelled);
   useEffect(() => {
     if (statusType === 'USER') {
-      userRejected === null && dispatch(getUserRejected('REJECTED'));
-      userCancelled === null && dispatch(getUserCanceled('CANCELLED'));
-      userCancelled &&
-        userRejected &&
-        setCombineStatusUser([...userCancelled, ...userRejected]);
+      dispatch(getUserCanceled('CANCELLED'));
+      userCancelled && setCombineStatusUser([...userCancelled]);
     } else if (statusType === 'PROVIDER') {
-      proivderCancelled === null && dispatch(getProviderCancelled('REJECTED'));
-      providerRejected === null && dispatch(getProviderRejected('CANCELLED'));
-      providerRejected && setCombineStatusProvider([...providerRejected]);
+      dispatch(getProviderCancelled('CANCELLED'));
+      providerCancelled && setCombineStatusProvider([...providerCancelled]);
     }
   }, [statusType]);
 
   const [refreshing, setRefreshing] = useState(false);
-
   const onRefresh = () => {
     setRefreshing(true);
     if (statusType === 'USER') {
-      userRejected === null && dispatch(getUserRejected('REJECTED'));
-      userCancelled === null && dispatch(getUserCanceled('CANCELLED'));
+      dispatch(getUserCanceled('CANCELLED'));
     } else {
-      proivderCancelled === null && dispatch(getProviderCancelled('REJECTED'));
-      providerRejected === null && dispatch(getProviderRejected('CANCELLED'));
+      dispatch(getProviderCancelled('CANCELLED'));
     }
     setRefreshing(false);
   };
@@ -65,7 +53,12 @@ const DeclinedStatus = ({statusType}: Props) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {combineStatusUser === null && combineStatusUser !== undefined ? (
+        {(statusType === 'USER' &&
+          combineStatusUser.length === 0 &&
+          combineStatusUser !== undefined) ||
+        (statusType === 'PROVIDER' &&
+          combineStatusProvider.length === 0 &&
+          combineStatusProvider !== undefined) ? (
           <View style={styles.errorContainer}>
             <MessageNotSend
               svg={<UpcomingSvg width={200} height={200} />}
@@ -77,10 +70,6 @@ const DeclinedStatus = ({statusType}: Props) => {
           </View>
         ) : (
           <View style={styles.container}>
-            <FilterByDateAndActivity
-              handleActivity={() => {}}
-              handleDate={() => {}}
-            />
             {statusType === 'USER' &&
             combineStatusUser !== null &&
             combineStatusUser !== undefined ? (
@@ -106,11 +95,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                       status: item.status,
                     }}
                     buttonStyles={Colors.primary}
-                    handlePress={() =>
-                      navigation.navigate('ActivityScreen', {
-                        appointmentOpk: item.opk,
-                      })
-                    }
+                    handlePress={() => setIsVisible(true)}
                   />
                 );
               })
@@ -139,11 +124,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                       status: item.status,
                     }}
                     buttonStyles={Colors.primary}
-                    handlePress={() =>
-                      navigation.navigate('ActivityScreen', {
-                        appointmentOpk: item.opk,
-                      })
-                    }
+                    handlePress={() => setIsVisible(true)}
                   />
                 );
               })
@@ -161,6 +142,11 @@ const DeclinedStatus = ({statusType}: Props) => {
 
         <BottomSpacingNav />
       </ScrollView>
+      <BottomHalfModal
+        isModalVisible={isVisible}
+        setIsModalVisible={setIsVisible}>
+        <Details setIsDetailsModal={setIsVisible} />
+      </BottomHalfModal>
     </>
   );
 };

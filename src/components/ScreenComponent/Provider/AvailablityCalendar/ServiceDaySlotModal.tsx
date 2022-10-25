@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect,  useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
 import ServiceDaySlot from './ServiceDaySlot';
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     flexDirection: 'column',
-    borderTopWidth: 2,
-    borderTopColor: Colors.background,
+    // borderTopWidth: 2,
+    // borderTopColor: Colors.background,
   },
 });
