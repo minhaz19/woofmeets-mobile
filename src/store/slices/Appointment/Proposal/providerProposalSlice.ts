@@ -45,6 +45,10 @@ const providerProposalSlice = createSlice({
                   payload.data.appointment.provider.user?.firstName +
                   ' ' +
                   payload.data.appointment.provider.user?.lastName,
+                userName:
+                  payload.data.appointment.user?.firstName +
+                  ' ' +
+                  payload.data.appointment.user?.lastName,
                 image: payload.data.appointment.provider.user.image,
                 serviceTypeId:
                   payload.data.appointment.providerService.serviceTypeId,

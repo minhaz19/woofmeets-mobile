@@ -21,9 +21,17 @@ interface Props {
   setActive: (arg: string) => void;
 }
 const UserProviderInbox = ({active, setActive}: Props) => {
-  const {colors} = useTheme();
+  const {colors, isDarkMode} = useTheme();
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkMode
+            ? Colors.dark.lightDark
+            : Colors.primaryLight,
+        },
+      ]}>
       {data.map((item, index) => (
         <AppTouchableOpacity
           onPress={() => {
@@ -33,10 +41,14 @@ const UserProviderInbox = ({active, setActive}: Props) => {
           style={{
             paddingVertical: 10,
             backgroundColor:
-              active === item.id ? Colors.primary : Colors.primaryLight,
+              active === item.id
+                ? Colors.primary
+                : isDarkMode
+                ? Colors.dark.lightDark
+                : Colors.primaryLight,
             width: '46%',
             margin: '2%',
-            borderRadius: 10,
+            borderRadius: 6,
           }}>
           <TitleText
             textStyle={{
@@ -61,8 +73,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: '3%',
-    borderRadius: 20,
-    backgroundColor: Colors.primaryLight,
+    borderRadius: 10,
+
     marginVertical: 20,
   },
 });

@@ -5,7 +5,7 @@ import ShortText from '../../../common/text/ShortText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppSelector} from '../../../../store/store';
-import changeTextLetter from '../../../common/changeTextLetter';
+import changeTextLetter from '../../../../components/common/changeTextLetter';
 const img =
   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 const ProfileInfo = () => {
@@ -27,7 +27,7 @@ const ProfileInfo = () => {
           <HeaderText
             text={`${
               userInfo?.firstName
-                ? changeTextLetter(userInfo?.firstName) +
+                ? userInfo?.firstName +
                   ' ' +
                   changeTextLetter(userInfo?.lastName)
                 : 'loading...'

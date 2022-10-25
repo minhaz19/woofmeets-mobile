@@ -3,6 +3,8 @@ import {Pressable, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import TitleText from '../../../../common/text/TitleText';
 import Text_Size from '../../../../../constants/textScaling';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+import Colors from '../../../../../constants/Colors';
 
 interface Props {
   title: string;
@@ -12,6 +14,7 @@ interface Props {
 }
 const BoardingDayAV = ({title, data, setValue}: Props) => {
   const [days, setDays] = useState(data.days.length > 0 ? data.days[0] : []);
+  const {isDarkMode} = useTheme();
   //   const {setValue} = useFormContext();
   const handleMultiSelect = (id: number) => {
     const newHoliday = [...days];
@@ -48,11 +51,16 @@ const BoardingDayAV = ({title, data, setValue}: Props) => {
                 marginHorizontal: 3,
                 padding: 10,
                 borderRadius: 6,
-                backgroundColor: it.active ? 'black' : 'white',
+                backgroundColor: it.active
+                  ? isDarkMode
+                    ? Colors.primary
+                    : 'black'
+                  : Colors.background,
               }}>
               <TitleText
                 textStyle={{
                   textAlign: 'center',
+                  fontWeight: 'bold',
                   color: it.active ? 'white' : 'black',
                 }}
                 text={it.label}

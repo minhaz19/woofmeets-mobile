@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import Animated, {
   useAnimatedStyle,
@@ -15,6 +16,8 @@ import TitleText from '../../../common/text/TitleText';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
 import {useAppSelector} from '../../../../store/store';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 interface Props {
   startingDate: string;
   endingDate: string;
@@ -33,6 +36,7 @@ const EditCart = ({
   isDayVisible,
 }: Props) => {
   const [isVisible, setIsVisible] = useState(false);
+  const {colors, isDarkMode} = useTheme();
 
   const {userServices} = useAppSelector(state => state.services);
   const {request} = useApi(methods._post);
@@ -120,26 +124,70 @@ const EditCart = ({
   };
 
   return (
-    <Animated.View style={[styles.editContainer, animatedStyles]}>
+    <Animated.View
+      style={[
+        styles.editContainer,
+        {
+          backgroundColor: isDarkMode ? Colors.background : Colors.black,
+        },
+        animatedStyles,
+      ]}>
       <View style={styles.availablity}>
         {true ? (
-          <TouchableOpacity
-            style={styles.markContainer}
+          <AppTouchableOpacity
+            style={[
+              styles.markContainer,
+              {
+                borderRightWidth: 1,
+                borderRightColor: isDarkMode ? Colors.text : Colors.background,
+              },
+            ]}
             onPress={handleMAUnavailable}>
-            <TitleText textStyle={styles.mark} text={'Mark as unavailable'} />
-          </TouchableOpacity>
+            <TitleText
+              textStyle={{
+                color: isDarkMode ? Colors.text : Colors.background,
+                fontSize: Text_Size.Text_0,
+                fontWeight: 'bold',
+                textAlign: 'center',
+              }}
+              text={'Mark as unavailable'}
+            />
+          </AppTouchableOpacity>
         ) : (
-          <TouchableOpacity
-            style={styles.markContainer}
+          <AppTouchableOpacity
+            style={[
+              styles.markContainer,
+              {
+                borderRightWidth: 1,
+                borderRightColor: isDarkMode ? Colors.text : Colors.background,
+              },
+            ]}
             onPress={handleMAAvailable}>
-            <TitleText textStyle={styles.mark} text={'Mark as Available'} />
-          </TouchableOpacity>
+            <TitleText
+              textStyle={{
+                color: isDarkMode ? Colors.text : Colors.background,
+                fontSize: Text_Size.Text_0,
+                fontWeight: 'bold',
+                textAlign: 'center',
+              }}
+              text={'Mark as Available'}
+            />
+          </AppTouchableOpacity>
         )}
-        <TouchableOpacity
+        <AppTouchableOpacity
           style={styles.editBtnContainer}
           onPress={() => setIsVisible(true)}>
-          <TitleText textStyle={styles.edit} text={'Edit'} />
-        </TouchableOpacity>
+          <TitleText
+            textStyle={{
+              color: isDarkMode ? Colors.text : Colors.background,
+              fontSize: Text_Size.Text_0,
+              fontWeight: 'bold',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}
+            text={'Edit'}
+          />
+        </AppTouchableOpacity>
       </View>
       <ServiceSlotModal
         startingDate={startingDate}
@@ -163,8 +211,8 @@ export default EditCart;
 const styles = StyleSheet.create({
   editContainer: {
     position: 'absolute',
-    bottom: '10%',
-    backgroundColor: Colors.black,
+    bottom: Platform.OS === 'ios' ? '10%' : '12%',
+
     width: '90%',
     marginHorizontal: 20,
     borderRadius: 10,

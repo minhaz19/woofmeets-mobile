@@ -43,7 +43,7 @@ const ActivityHeader = (props: {
           text: 'Yes',
           onPress: async () => {
             const r = await request(rejectEndpoint + props.opk);
-           
+
             if (r.ok) {
               // dispatch(getUserP);
               navigation.navigate('Inbox');
@@ -72,7 +72,13 @@ const ActivityHeader = (props: {
           </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
             <View style={styles.titleMargin}>
-              <HeaderText text={proposedServiceInfo?.providerName} />
+              <HeaderText
+                text={
+                  proposedServiceInfo?.providerId === user?.user?.provider?.id
+                    ? proposedServiceInfo?.providerName
+                    : proposedServiceInfo?.userName
+                }
+              />
               <DescriptionText
                 text={
                   proposedServiceInfo?.serviceTypeId === 1 ||
@@ -117,7 +123,6 @@ const ActivityHeader = (props: {
                       acceptEndpoint + proposedServiceInfo.appointmentOpk,
                     );
                     r.ok && navigation.navigate('Checkout');
-                   
                   }
                   navigation.navigate('Checkout');
                 }}>
