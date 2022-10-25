@@ -26,10 +26,10 @@ const ActivityHeader = (props: {
   const user = useAppSelector(state => state.whoAmI);
   const handleAccept = async () => {
     const result = await request(acceptEndpoint + props.opk);
-    console.log('resut', result);
-    result.ok && navigation.navigate('Inbox');
+
+    // result.ok && navigation.navigate('Inbox');
   };
-  console.log('user', user, proposedServiceInfo);
+
   const handleReject = async () => {
     Alert.alert(
       'Cancel Appointment',
@@ -44,7 +44,6 @@ const ActivityHeader = (props: {
           onPress: async () => {
             const r = await request(rejectEndpoint + props.opk);
             r.ok && navigation.navigate('Inbox');
-            console.log('d', r);
           },
         },
       ],
@@ -100,13 +99,14 @@ const ActivityHeader = (props: {
       </View>
       <View style={styles.innerTwo}>
         <View style={styles.buttonContainer}>
-          {proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+          {proposedServiceInfo?.proposedBy === 'USER' &&
+          proposedServiceInfo?.status === 'ACCEPTED' &&
           proposedServiceInfo?.userId === user?.user?.id ? (
             <>
               <TouchableOpacity
                 style={{width: SCREEN_WIDTH / 5}}
                 onPress={async () => {
-                  if (proposedServiceInfo.proposedBy === 'PROVIDER') {
+                  if (proposedServiceInfo?.proposedBy === 'PROVIDER') {
                     await request(
                       acceptEndpoint + proposedServiceInfo.appointmentOpk,
                     );
@@ -125,6 +125,7 @@ const ActivityHeader = (props: {
               <View style={styles.divider} />
             </>
           ) : proposedServiceInfo?.proposedBy === 'USER' &&
+            proposedServiceInfo?.status === 'PROPOSAL' &&
             proposedServiceInfo?.providerId === user?.user?.provider?.id ? (
             <>
               <TouchableOpacity
@@ -141,8 +142,26 @@ const ActivityHeader = (props: {
               </TouchableOpacity>
               <View style={styles.divider} />
             </>
+          ) : proposedServiceInfo?.proposedBy === 'USER' &&
+            proposedServiceInfo?.status === 'ACCEPTED' &&
+            proposedServiceInfo?.providerId === user?.user?.provider?.id ? (
+            <>
+              <TouchableOpacity
+                style={{width: SCREEN_WIDTH / 5}}
+                onPress={() => Alert.alert('Proposal Already Accepted!')}>
+                <TitleText
+                  text="Accepted"
+                  textStyle={{
+                    ...styles.textStyle,
+                    textAlign: 'center',
+                    color: Colors.light.background,
+                  }}
+                />
+              </TouchableOpacity>
+              <View style={styles.divider} />
+            </>
           ) : null}
-          {true && (
+          {proposedServiceInfo?.status === 'PROPOSAL' && (
             <>
               <TouchableOpacity
                 style={{width: SCREEN_WIDTH / 5}}
@@ -165,7 +184,11 @@ const ActivityHeader = (props: {
           )}
           <TouchableOpacity
             style={{width: SCREEN_WIDTH / 5}}
-            onPress={handleReject}>
+            onPress={() => {
+              proposedServiceInfo?.status === 'ACCEPTED'
+                ? Alert.alert('You have already accepted the proposal')
+                : handleReject();
+            }}>
             <TitleText
               text="Decline"
               textStyle={{

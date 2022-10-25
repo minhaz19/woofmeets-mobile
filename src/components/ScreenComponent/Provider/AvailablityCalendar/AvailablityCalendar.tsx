@@ -8,6 +8,9 @@ import Colors from '../../../../constants/Colors';
 import EditCart from './EditCart';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import TitleText from '../../../common/text/TitleText';
+import {Setting} from '../../../../assets/svgs/SVG_LOGOS';
+import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
+import Text_Size from '../../../../constants/textScaling';
 
 const RANGE = 12;
 const selectType = 'RANGE';
@@ -35,12 +38,12 @@ const dateArray = [
 const AvailablityCalendar = () => {
   const {colors} = useTheme();
   const [preMarked, setPremarked] = useState({});
-
+  const [isDayVisible, setIsDayVisible] = useState(false);
   const {
     singleSelect,
     startingDate,
     _markedStyle,
-
+    endingDate,
     reset,
     handleDayPress,
   } = useHandleRange(selectType);
@@ -50,7 +53,7 @@ const AvailablityCalendar = () => {
       [dateArray[i]]: {
         customStyles: {
           container: {
-            backgroundColor: Colors.primary,
+            backgroundColor: Colors.dark.background,
             elevation: 2,
             // borderRadius: 10,
             width: '100%',
@@ -76,6 +79,15 @@ const AvailablityCalendar = () => {
   }, []);
   return (
     <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <TitleText
+          text={'Provider Availability : '}
+          textStyle={styles.headerText}
+        />
+        <AppTouchableOpacity onPress={() => setIsDayVisible(true)}>
+          <Setting width={30} height={30} fill={'black'} />
+        </AppTouchableOpacity>
+      </View>
       <CalendarList
         current={new Date().toString()}
         pastScrollRange={0}
@@ -88,7 +100,7 @@ const AvailablityCalendar = () => {
           [singleSelect]: {
             customStyles: {
               container: {
-                backgroundColor: Colors.primary,
+                backgroundColor: Colors.dark.background,
                 elevation: 2,
                 borderRadius: 10,
 
@@ -108,7 +120,7 @@ const AvailablityCalendar = () => {
               header: {
                 dayHeader: {
                   fontWeight: 'bold',
-                  color: Colors.primary,
+                  color: Colors.dark.background,
                 },
               },
             },
@@ -120,15 +132,15 @@ const AvailablityCalendar = () => {
               borderWidth: 0.8,
             },
             todayText: {
-              color: Colors.primary,
+              color: Colors.dark.background,
               fontWeight: '800',
             },
           },
           backgroundColor: colors.backgroundColor,
           calendarBackground: colors.backgroundColor,
-          selectedDayBackgroundColor: Colors.primary,
+          selectedDayBackgroundColor: Colors.dark.background,
           selectedDayTextColor: Colors.headerText,
-          todayTextColor: Colors.primary,
+          todayTextColor: Colors.dark.background,
           dayTextColor: colors.headerText,
           textDisabledColor: Colors.gray,
           arrowColor: Colors.headerText,
@@ -143,32 +155,14 @@ const AvailablityCalendar = () => {
           textDayHeaderFontSize: 14,
         }}
       />
-      <EditCart startingDate={startingDate} resetRange={reset} />
+      <EditCart
+        startingDate={startingDate}
+        endingDate={endingDate}
+        setIsDayVisible={setIsDayVisible}
+        isDayVisible={isDayVisible}
+      />
     </View>
   );
-};
-
-const theme = {
-  stylesheet: {
-    calendar: {
-      header: {
-        dayHeader: {
-          fontWeight: '600',
-          color: '#48BFE3',
-        },
-      },
-    },
-  },
-  'stylesheet.day.basic': {
-    today: {
-      borderColor: '#48BFE3',
-      borderWidth: 0.8,
-    },
-    todayText: {
-      color: '#5390D9',
-      fontWeight: '800',
-    },
-  },
 };
 
 function renderCustomHeader(date: any) {
@@ -179,13 +173,16 @@ function renderCustomHeader(date: any) {
     fontWeight: 'bold',
     paddingTop: 10,
     paddingBottom: 10,
-    color: Colors.primary,
+    color: Colors.dark.background,
     paddingRight: 5,
   };
 
   return (
     <View style={styles.header}>
-      <TitleText text={`${month}`} textStyle={{...styles.month, ...textStyle}} />
+      <TitleText
+        text={`${month}`}
+        textStyle={{...styles.month, ...textStyle}}
+      />
       <TitleText text={year} textStyle={{...styles.year, ...textStyle}} />
     </View>
   );
@@ -207,5 +204,17 @@ const styles = StyleSheet.create({
   },
   year: {
     marginRight: 5,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  headerText: {
+    fontWeight: 'bold',
+    fontSize: Text_Size.Text_3,
   },
 });

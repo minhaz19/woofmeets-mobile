@@ -68,14 +68,13 @@ const ServiceForm = ({
   checked,
 }: Props) => {
   useEffect(() => {
-    console.log('calling memo service from');
+   
     name !== 'baserate' &&
       updateRates === false &&
       checked === false &&
       setValue!(name, convertedValue?.toFixed(2), {
         shouldValidate: errors[name] ? true : false,
       });
-    console.log('convertedValue', name, convertedValue);
   }, [name, updateRates, checked, setValue, convertedValue, errors]);
   return (
     <>

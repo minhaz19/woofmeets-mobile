@@ -32,7 +32,6 @@ const SubscriptionScreen = ({route}: Props) => {
     cardLoading,
   } = useSubscription();
   const {sitterData} = useAppSelector(state => state.initial);
-  console.log(sitterData);
   return (
     <Screen style={{flex: 1}}>
       {(loading || planLoading) && <AppActivityIndicator visible={true} />}

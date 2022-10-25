@@ -1,14 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import AppForm from '../../../components/common/Form/AppForm';
 import Screen from '../../../components/common/Screen';
 import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar/AvailablityCalendar';
 import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {getUserServices} from '../../../store/slices/profile/services';
+import {useAppDispatch} from '../../../store/store';
 import {providerAvailablityValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 
 const ProviderAvailablity = () => {
+  const dispatch = useAppDispatch();
   const {isDarkMode} = useTheme();
+  useEffect(() => {
+    dispatch(getUserServices());
+  }, []);
   return (
     <Screen
       style={[

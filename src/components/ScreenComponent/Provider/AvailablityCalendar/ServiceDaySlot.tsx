@@ -1,123 +1,141 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
-import AppCheckbox from '../../../common/Form/AppCheckbox';
-import TitleText from '../../../common/text/TitleText';
-import ShortText from '../../../common/text/ShortText';
-import Text_Size from '../../../../constants/textScaling';
-import {Text} from '@rneui/base';
-import SwitchView from '../../../common/switch/SwitchView';
-import {Switch} from '../../../common/switch/Switch';
-import AppSwitch from '../../../common/AppSwitch';
-import AppMultiSelectField from '../../../common/Form/AppMultiSelectField';
-import {useForm} from 'react-hook-form';
-const serviceData = [
-  {
-    serivce: 'Boarding',
-    active: false,
-    id: 0,
-  },
-  {
-    serivce: 'House Sitting',
-    active: false,
-    id: 1,
-  },
-  {
-    serivce: 'Drop-In Visits',
-    active: false,
-    id: 2,
-  },
-  {
-    serivce: 'Doggy Day Care',
-    active: false,
-    id: 3,
-  },
-  {
-    serivce: 'Dog Walking',
-    active: false,
-    id: 4,
-  },
-];
-const data = [
-  {label: 'Saturday', value: '1'},
-  {label: 'Sunday', value: '2'},
-  {label: 'Monday', value: '3'},
-  {label: 'Tuesday', value: '4'},
-  {label: 'Wednesday', value: '4'},
-  {label: 'Thursday', value: '5'},
-  {label: 'Friday', value: '6'},
-];
-const ServiceDaySlot = () => {
-  const [servcies, setServices] = useState<any>(serviceData);
+import React from 'react';
 
-  const handleOnChange = (id: number) => {
-    const newHoliday = [...servcies];
-    const index = newHoliday.findIndex(item => item.id === id);
-    newHoliday[index].active = !newHoliday[index].active;
-    setServices(newHoliday);
-  };
-  const {control, setValue} = useForm();
+import BoardingDayAV from './components/BoardingDayAV';
+import {useAppSelector} from '../../../../store/store';
+interface Props {
+  setValue: any;
+}
+const ServiceDaySlot = ({setValue}: Props) => {
+  const {userServices} = useAppSelector(state => state.services);
+  const modDays = userServices?.map((item: any) => ({
+    id: item.serviceTypeId,
+    days:
+      item.AvailableDay.length !== 0
+        ? item.AvailableDay.map((d: any) => [
+            {id: 1, label: 'M', putServiceId: d.id, active: d.mon, key: 'mon'},
+            {id: 2, label: 'T', putServiceId: d.id, active: d.tue, key: 'tue'},
+            {id: 3, label: 'W', putServiceId: d.id, active: d.wed, key: 'wed'},
+            {id: 4, label: 'T', putServiceId: d.id, active: d.thu, key: 'thu'},
+            {id: 5, label: 'F', putServiceId: d.id, active: d.fri, key: 'fri'},
+            {id: 6, label: 'S', putServiceId: d.id, active: d.sat, key: 'sat'},
+            {id: 7, label: 'S', putServiceId: d.id, active: d.sun, key: 'sun'},
+          ])
+        : [
+            [
+              {
+                id: 1,
+                label: 'M',
+                putServiceId: null,
+                active: false,
+                key: 'mon',
+              },
+              {
+                id: 2,
+                label: 'T',
+                putServiceId: null,
+                active: false,
+                key: 'tue',
+              },
+              {
+                id: 3,
+                label: 'W',
+                putServiceId: null,
+                active: false,
+                key: 'wed',
+              },
+              {
+                id: 4,
+                label: 'T',
+                putServiceId: null,
+                active: false,
+                key: 'thu',
+              },
+              {
+                id: 5,
+                label: 'F',
+                putServiceId: null,
+                active: false,
+                key: 'fri',
+              },
+              {
+                id: 6,
+                label: 'S',
+                putServiceId: null,
+                active: false,
+                key: 'sat',
+              },
+              {
+                id: 7,
+                label: 'S',
+                putServiceId: null,
+                active: false,
+                key: 'sun',
+              },
+            ],
+          ],
+  }));
   return (
-    <View style={styles.parent}>
-      {servcies.map((item: any, index: number) => (
-        <View key={index}>
-          <View key={index} style={styles.container}>
-            <View style={styles.serviceContainer}>
-              <View style={styles.textContainer}>
-                <TitleText textStyle={styles.title} text={item.serivce} />
-                {/* <ShortText text={'0 of 5 booked '} /> */}
-              </View>
-            </View>
-            <View>
-              <SwitchView
-                isActive={item.active}
-                activeText=""
-                inActiveText=""
-                onSelect={() => {
-                  handleOnChange(item.id);
-                }}
-              />
-            </View>
-          </View>
-          <View style={styles.multiSelect}>
-            {item.active && (
-              <AppMultiSelectField
-                title="Breeds"
-                name={''}
-                control={control}
-                setValue={setValue}
-                placeholder="Select Breeds"
-                data={data}
-                // search={false}
-              />
-            )}
-          </View>
-        </View>
+    <>
+      {userServices?.map((item: any, index: number) => (
+        <BoardingDayAV
+          key={index}
+          title={item.serviceType.name}
+          serviceTypeId={item.serviceTypeId}
+          data={modDays[index]}
+          setValue={setValue}
+        />
       ))}
-    </View>
+    </>
   );
 };
 
 export default ServiceDaySlot;
 
-const styles = StyleSheet.create({
-  parent: {width: '100%', padding: 10},
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 10,
-    width: '100%',
-  },
-  serviceContainer: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  textContainer: {
-    marginLeft: 10,
-    flex: 1,
-  },
-  title: {fontWeight: 'bold', fontSize: Text_Size.Text_1},
-  multiSelect: {
-    paddingHorizontal: 10,
-  },
-});
+// {/* <View style={styles.parent}>
+//       {servcies.map((item: any, index: number) => (
+//         <View key={index}>
+//           <View key={index} style={styles.container}>
+//             <View style={styles.serviceContainer}>
+//               <View style={styles.textContainer}>
+//                 <TitleText textStyle={styles.title} text={item.serivce} />
+//                 {/* <ShortText text={'0 of 5 booked '} /> */}
+//               </View>
+//             </View>
+//             <View>
+//               <SwitchView
+//                 isActive={item.active}
+//                 activeText=""
+//                 inActiveText=""
+//                 onSelect={() => {
+//                   handleOnChange(item.id);
+//                 }}
+//               />
+//             </View>
+//           </View>
+//           <View style={styles.multiSelect}>
+//             {days.map((it: any, i: number) => (
+//               <Pressable
+//                 onPress={() => handleMultiSelect(it.id)}
+//                 key={i}
+//                 style={{
+//                   flex: 1,
+//                   borderWidth: 2,
+//                   marginHorizontal: 3,
+//                   padding: 10,
+//                   borderRadius: 6,
+//                   backgroundColor: it.active ? 'black' : 'white',
+//                 }}>
+//                 <TitleText
+//                   textStyle={{
+//                     textAlign: 'center',
+//                     color: it.active ? 'white' : 'black',
+//                   }}
+//                   text={it.label}
+//                 />
+//               </Pressable>
+//             ))}
+//             {/* {item.active && <View></View>} */}
+//           </View>
+//         </View>
+//       ))}
+//     </View> */}

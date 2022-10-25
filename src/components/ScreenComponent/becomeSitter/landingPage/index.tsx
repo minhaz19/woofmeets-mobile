@@ -13,7 +13,7 @@ const LandingCard = (props: { item: { inProgress: any; isCompleted: any; title: 
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const handleSubmit = async() => {
-    console.log(id);
+   
       setLoading(true);
       dispatch(setCurrentScreen({pass: id-1}));
       setLoading(false);
