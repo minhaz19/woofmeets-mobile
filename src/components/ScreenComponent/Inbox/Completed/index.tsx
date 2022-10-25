@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ReusableCard from '../utils/Common/ReusableCard';
@@ -8,25 +8,18 @@ import Colors from '../../../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import FilterByDateAndActivity from '../utils/Common/FilterByDateAndActivity';
 import BottomSpacingNav from '../../../UI/BottomSpacingNav';
-import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
-import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
+import {useAppDispatch} from '../../../../store/store';
 const CompletedStatus = () => {
   let navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
-  const {appointmentStatus, loading} = useAppSelector(
-    state => state.appointmentStatus,
-  );
 
-  useEffect(() => {
-    appointmentStatus === null && dispatch(getAppointmentStatus('PROPOSAL'));
-  }, [dispatch, appointmentStatus]);
+  useEffect(() => {}, [dispatch]);
 
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
-    appointmentStatus === null && dispatch(getAppointmentStatus('PROPOSAL'));
+
     setRefreshing(false);
   };
   useEffect(() => {
@@ -35,13 +28,12 @@ const CompletedStatus = () => {
 
   return (
     <>
-      {loading && <AppActivityIndicator visible={true} />}
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {appointmentStatus === null ? (
+        {true ? (
           <View style={styles.errorContainer}>
             <MessageNotSend
               svg={<UpcomingSvg width={200} height={200} />}
@@ -57,8 +49,8 @@ const CompletedStatus = () => {
               handleActivity={() => {}}
               handleDate={() => {}}
             />
-            {appointmentStatus !== null && appointmentStatus !== undefined ? (
-              appointmentStatus.map((item: any) => {
+            {true ? (
+              [].map((item: any) => {
                 return (
                   <ReusableCard
                     key={item.opk}

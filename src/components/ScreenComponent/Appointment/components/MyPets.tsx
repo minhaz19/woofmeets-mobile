@@ -23,32 +23,95 @@ const MyPets = () => {
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-
-  const {setValue, getValues} = useFormContext();
-  const {petsId: pp} = getValues();
+  const user = useAppSelector(state => state.whoAmI);
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  const {petsInfo, providerId} = proposedServiceInfo;
+  const {setValue, watch} = useFormContext();
+  const {petsId: pp} = watch();
   useEffect(() => {
-    const modArray = allPets?.map((item: any, index: number) => {
-      return {
+    if (providerId === user?.user.provider.id) {
+      const modArray = petsInfo.map((item: any, index: number) => ({
         id: index + 1,
-        name: item.name,
-        petId: item.id,
+        name: item.pet.name,
+        petId: item.petId,
         active:
-          pp.findIndex((it: number) => it === item.id) !== -1 ? true : false,
-      };
-    });
-    modArray?.push({
-      id: allPets.length,
-      Icon: Plus,
-      text: '',
-      new: true,
-    });
-    modArray && setDatas(modArray);
-  }, [allPets]);
+          pp.findIndex((it: number) => it === item.petId) !== -1 ? true : false,
+      }));
+      setDatas(modArray);
+      petsId = [...pp];
+    } else {
+      const modArray = allPets?.map((item: any, index: number) => {
+        return {
+          id: index + 1,
+          name: item.name,
+          petId: item.id,
+          active:
+            pp.findIndex((it: number) => it === item.id) !== -1 ? true : false,
+        };
+      });
+      modArray?.push({
+        id: allPets.length,
+        Icon: Plus,
+        text: '',
+        new: true,
+      });
+      modArray && setDatas(modArray);
+    }
+  }, [allPets, providerId, user, petsInfo]);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
   return (
     <>
-      {allPets === null || allPets === undefined ? (
+      {proposedServiceInfo.providerId === user?.user?.provider?.id ? (
+        <>
+          <View style={styles.headerContainer}>
+            <TitleText textStyle={styles.headerText} text={'Client Pets'} />
+          </View>
+          <View style={[styles.container]}>
+            {newData?.map((item: any, index: number) => (
+              <AppTouchableOpacity
+                key={index}
+                onPress={() => {
+                  handleMultipleCheck(item.petId);
+                  const matchIndex = petsId.indexOf(item.petId);
+                  if (matchIndex === -1) {
+                    petsId.push(item.petId);
+                  } else {
+                    petsId.splice(matchIndex, 1);
+                  }
+                  setValue('petsId', petsId);
+                }}
+                style={[
+                  styles.pet,
+                  {
+                    borderColor: item.active
+                      ? Colors.primary
+                      : colors.borderColor,
+                    backgroundColor: item.active
+                      ? Colors.primary
+                      : isDarkMode
+                      ? Colors.lightDark
+                      : Colors.background,
+                  },
+                ]}>
+                {item.name && (
+                  <TitleText
+                    text={item.name}
+                    textStyle={{
+                      textAlign: 'center',
+                      paddingVertical: 10,
+                      fontWeight: 'bold',
+                      color: item.active
+                        ? Colors.background
+                        : colors.headerText,
+                    }}
+                  />
+                )}
+              </AppTouchableOpacity>
+            ))}
+          </View>
+        </>
+      ) : allPets === null || allPets === undefined ? (
         <View>
           <TitleText textStyle={styles.headerText} text={'Your Pets'} />
           <DescriptionText
@@ -83,6 +146,7 @@ const MyPets = () => {
                         ? Colors.lightDark
                         : colors.borderColor,
                       borderColor: colors.borderColor,
+                      padding: 6,
                     },
                   ]}>
                   <item.Icon

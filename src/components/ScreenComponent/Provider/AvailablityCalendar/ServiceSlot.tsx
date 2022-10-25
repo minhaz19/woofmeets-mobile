@@ -5,7 +5,8 @@ import ShortText from '../../../common/text/ShortText';
 import Text_Size from '../../../../constants/textScaling';
 import {useAppSelector} from '../../../../store/store';
 import Colors from '../../../../constants/Colors';
-import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
+import AppCheckbox from '../../../common/Form/AppCheckbox';
+
 interface Props {
   setSelectedService: any;
 }
@@ -38,30 +39,44 @@ const ServiceSlot = ({setSelectedService}: Props) => {
   return (
     <View style={styles.parent}>
       {servcies?.map((item: any, index: number) => (
-        <AppTouchableOpacity
-          onPress={() => handleOnChange(item.id)}
-          key={index}
-          style={styles.container}>
-          <View style={styles.serviceContainer}>
-            <View>
-              <View style={styles.textContainer}>
-                <TitleText textStyle={styles.title} text={item.service} />
-                <ShortText text={'Tab to mark unavailable'} />
-              </View>
+        <>
+          <View key={index} style={styles.container}>
+            <View style={styles.serviceContainer}>
+              <AppCheckbox
+                active={item.active}
+                radio
+                onPress={() => handleOnChange(item.id)}
+                Comp={() => (
+                  <View style={styles.serviceContainer}>
+                    <View>
+                      <View style={styles.textContainer}>
+                        <TitleText
+                          textStyle={styles.title}
+                          text={item.service}
+                        />
+                        <ShortText text={'Tab to mark unavailable'} />
+                      </View>
+                    </View>
+                    {/* <View style={styles.btnCont}>
+                      {item.active ? (
+                        <View style={styles.unMarkBtn}>
+                          <TitleText
+                            textStyle={styles.btnText}
+                            text="Deselect"
+                          />
+                        </View>
+                      ) : (
+                        <View style={styles.markBtn}>
+                          <TitleText textStyle={styles.btnText} text="Select" />
+                        </View>
+                      )}
+                    </View> */}
+                  </View>
+                )}
+              />
             </View>
           </View>
-          <View style={styles.btnCont}>
-            {item.active ? (
-              <View style={styles.unMarkBtn}>
-                <TitleText textStyle={styles.btnText} text="Deselect" />
-              </View>
-            ) : (
-              <View style={styles.markBtn}>
-                <TitleText textStyle={styles.btnText} text="Select" />
-              </View>
-            )}
-          </View>
-        </AppTouchableOpacity>
+        </>
       ))}
     </View>
   );
@@ -81,7 +96,6 @@ const styles = StyleSheet.create({
   },
   serviceContainer: {
     flexDirection: 'row',
-    paddingVertical: 10,
     // flex: 1,
   },
   textContainer: {

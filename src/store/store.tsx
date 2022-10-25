@@ -45,12 +45,8 @@ import stripe from './slices/connect/stripe';
 import providerProposalSlice from './slices/Appointment/Proposal/providerProposalSlice';
 import appointmentStatusSlice from './slices/Appointment/Inbox/User/Proposal/appointmentStatusSlice';
 import ProviderApntStatusSlice from './slices/Appointment/Inbox/Provider/Pending/providerApntStatusSlice';
-import userApmtRejectSlice from './slices/Appointment/Inbox/User/Recjected/userApmtRejectSlice';
 import userApmtCancelSlice from './slices/Appointment/Inbox/User/Cancelled/userApmtCancelSlice';
-import userAcceptedSlice from './slices/Appointment/Inbox/User/Accepted/userAcceptedSlice';
-import providerApmtRejectSlice from './slices/Appointment/Inbox/Provider/Recjected/providerApmtRejectSlice';
 import providerApmtCancelSlice from './slices/Appointment/Inbox/Provider/Cancelled/providerApmtCancelSlice';
-import providerAcceptedSlice from './slices/Appointment/Inbox/Provider/Accepted/providerAcceptedSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -89,12 +85,8 @@ const appReducer = combineReducers({
   stripe: stripe,
   appointmentStatus: appointmentStatusSlice,
   providerApntStatus: ProviderApntStatusSlice,
-  userRejected: userApmtRejectSlice,
   userCancelled: userApmtCancelSlice,
-  userAccepted: userAcceptedSlice,
-  providerAccepted: providerAcceptedSlice,
-  providerRejected: providerApmtRejectSlice,
-  proivderCancelled: providerApmtCancelSlice,
+  providerCancelled: providerApmtCancelSlice,
 });
 
 const RootReducer = (

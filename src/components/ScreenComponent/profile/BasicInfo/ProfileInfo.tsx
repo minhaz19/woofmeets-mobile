@@ -27,7 +27,9 @@ const ProfileInfo = () => {
           <HeaderText
             text={`${
               userInfo?.firstName
-                ? changeTextLetter(userInfo?.firstName) + ' ' + changeTextLetter(userInfo?.lastName)
+                ? changeTextLetter(userInfo?.firstName) +
+                  ' ' +
+                  changeTextLetter(userInfo?.lastName)
                 : 'loading...'
             }`}
           />

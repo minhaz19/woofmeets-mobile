@@ -34,8 +34,8 @@ const PendingStatus = ({statusType}: Props) => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    appointmentStatus === null && dispatch(getAppointmentStatus('PROPOSAL'));
-    providerApntStatus === null && dispatch(getProviderApnt('PROPOSAL'));
+    statusType === 'USER' && dispatch(getAppointmentStatus('PROPOSAL'));
+    statusType === 'PROVIDER' && dispatch(getProviderApnt('PROPOSAL'));
     setRefreshing(false);
   };
   useEffect(() => {
