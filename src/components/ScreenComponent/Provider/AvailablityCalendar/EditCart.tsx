@@ -141,7 +141,6 @@ const EditCart = ({
           <TitleText textStyle={styles.edit} text={'Edit'} />
         </TouchableOpacity>
       </View>
-
       <ServiceSlotModal
         startingDate={startingDate}
         endingDate={endingDate}

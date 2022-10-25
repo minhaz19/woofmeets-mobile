@@ -22,7 +22,6 @@ const ReceivePayments = () => {
 
 
   const [token, setToken] = useState<any>();
-  // const userInfo = useAppSelector(state => state.auth.userInfo);
 
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
@@ -37,12 +36,6 @@ const ReceivePayments = () => {
     dispatch(getUserOnboardStatus())
   }, []);
   const handleStripeConnect = async() => {
-    // props.navigation.navigate('StripeOnboardScreen', {url: 'https://google.com'});
-    // return (
-    //   <View style={{flex: 1}}>
-    //     <WebView source={{ uri: 'https://google.com'}} />
-    //   </View>
-    // )
     const response = await apiClient.post('/stripe-connect/user-onboarding');
     if (response.ok) {
       if (response.data?.data?.alreadyInitiated) {
@@ -63,22 +56,33 @@ const ReceivePayments = () => {
         <View style={styles.SvgContainer}>
           <ReceivePaymentsIcon />
         </View>
-        <View style={styles.warningTextContainer}>
-          <HeaderText text="Your Woofmeets account is NOT enabled to receive payments yet" textStyle={{...styles.warningText,  color: Colors.alert}} />
-        </View>
-        <DescriptionText
-          textStyle={styles.textStyle}
-          text="Get funds directly deposited into your bank account, with no additional fees. Rover uses Stripe, one of the most popular payment platforms, to transfer your Rover earnings to your bank account."
-        />
-        <DescriptionText
-          text="Set up your Stripe account seamlessly with one click and at no additional cost to you."
-        />
+        {
+          userOnboardStatus?.userStripeConnectAccount?.requirements?.errors?.length === 0 ? (
+            <View style={styles.warningTextContainer}>
+              <HeaderText text="Your Woofmeets account is enabled to receive payments" textStyle={{...styles.warningText,  color: Colors.alert}} />
+            </View>
+          ) : (
+            <View>
+              <View style={styles.warningTextContainer}>
+                <HeaderText text="Your Woofmeets account is NOT enabled to receive payments yet" textStyle={{...styles.warningText,  color: Colors.alert}} />
+              </View>
+              <DescriptionText
+                textStyle={styles.textStyle}
+                text="Get funds directly deposited into your bank account, with no additional fees. Rover uses Stripe, one of the most popular payment platforms, to transfer your Rover earnings to your bank account."
+              />
+              <DescriptionText
+                text="Set up your Stripe account seamlessly with one click and at no additional cost to you."
+              />
+            </View>
+          )
+        }
+        
         <IOSButton
             containerStyle={styles.containerStyleSmall}
             onSelect={handleStripeConnect}
             textAlignment={{
               backgroundColor: colors.backgroundColor,
-              borderColor: colors.borderColor,
+              borderColor: Colors.blue,
               borderWidth: 1,
               borderRadius: 100,
               flexDirection: 'column',
@@ -86,9 +90,9 @@ const ReceivePayments = () => {
               alignItems: 'center',
             }}
             titleStyle={{
-              color: colors.lightText,
+              color: Colors.blue,
             }}
-            title={'Connect to stripe'}
+            title={userOnboardStatus?.userStripeConnectAccount?.requirements?.errors?.length === 0 ? 'View connected account' : 'Connect to stripe'}
           />
         <DescriptionText textStyle={{color: Colors.alert}} text={userOnboardStatus?.userStripeConnectAccount?.requirements?.errors[0]?.reason} />
       </View>

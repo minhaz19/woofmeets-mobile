@@ -163,7 +163,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
                 <ActivityIndicator size="small" />
               ) : (
                 <IOSButton
-                  title={'Change Phone Number'}
+                  title={'Verify Phone Number'}
                   textAlignment={btnStyles.textAlignment}
                   containerStyle={btnStyles.containerStyleFullWidth}
                   titleStyle={styles.titleStyle}
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     paddingVertical: '6%',
   },
   titleStyle: {
-    color: Colors.primary,
+    color: Colors.blue,
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: Text_Size.Text_1,

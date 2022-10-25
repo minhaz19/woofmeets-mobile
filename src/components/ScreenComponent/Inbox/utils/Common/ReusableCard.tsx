@@ -39,7 +39,7 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
       }}>
       <TouchableOpacity onPress={handlePress}>
         <View style={styles.flexContainer}>
-          <View style={styles.imageContainer}>
+          <View style={{...styles.imageContainer, borderColor: colors.borderColor}}>
             <Image
               source={{uri: item?.image}}
               style={styles.image}
@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
   imageContainer: {
     marginRight: 10,
     width: '15%',
-    borderRadius: 30,
+    borderRadius: 10,
+    borderWidth: 1,
     overflow: 'hidden',
   },
   detailsContainer: {

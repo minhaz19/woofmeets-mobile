@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   placeholderStyle: {
-    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_11 : Text_Size.Text_12,
     color: 'gray',
   },
   selectedTextStyle: {

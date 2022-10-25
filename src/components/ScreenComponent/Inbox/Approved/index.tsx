@@ -18,7 +18,6 @@ const ApprovedStatus = ({statusType}: Props) => {
 
   const onRefresh = () => {
     setRefreshing(true);
-
     setRefreshing(false);
   };
   useEffect(() => {
@@ -80,6 +79,37 @@ const ApprovedStatus = ({statusType}: Props) => {
                 );
               })
             ) : true && statusType === 'PROVIDER' ? (
+              []?.map((item: any) => {
+                return (
+                  <ReusableCard
+                    key={item.opk}
+                    item={{
+                      name: `${item.provider.user.firstName} ${item.provider.user.lastName}`,
+                      image: item.provider.user.image,
+                      description: item?.appointmentProposal[0]?.firstMessage
+                        ? item?.appointmentProposal[0]?.firstMessage
+                        : 'No Mesaegs fonnd',
+                      boardingTime: item?.providerService?.serviceType?.name,
+                      // boardingTime: item?.appointmentProposal[0]
+                      //   ?.proposalStartDate
+                      //   ? `${item.appointmentProposal[0].proposalStartDate} to ${item.appointmentProposal[0].proposalEndDate} `
+                      //   : '',
+                      // pickUpStartTime: item?.appointmentProposal[0]
+                      //   ?.pickUpStartTime
+                      //   ? item.appointmentProposal[0].pickUpStartTime
+                      //   : '',
+                      status: item.status,
+                    }}
+                    buttonStyles={Colors.primary}
+                    handlePress={() =>
+                      navigation.navigate('ActivityScreen', {
+                        appointmentOpk: item.opk,
+                      })
+                    }
+                  />
+                );
+              })
+            ) : statusType === 'PROVIDER' ? (
               []?.map((item: any) => {
                 return (
                   <ReusableCard
