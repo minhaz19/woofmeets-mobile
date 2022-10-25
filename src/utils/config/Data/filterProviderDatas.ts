@@ -143,8 +143,8 @@ export const homeType = [
   },
   {
     type: FarmSvg,
-    title: 'Farm',
-    slug: 'FARM',
+    title: 'Business',
+    slug: 'BUSINESS',
   },
 ];
 

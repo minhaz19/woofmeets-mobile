@@ -24,9 +24,7 @@ import PetCard from '../../components/ScreenComponent/search/PetCard';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../store/store';
-import {
-  getAllProviderOneTime,
-} from '../../store/slices/Provider/allProvider/getAllProvider';
+import {getAllProviderOneTime} from '../../store/slices/Provider/allProvider/getAllProvider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ServiceTypesLoader from './ServiceTypesLoader';
 import {getServiceTypes} from '../../store/slices/profile/services';
@@ -78,8 +76,8 @@ const PetCareZipSearch = (props: {
   const [selectPetType, setSelectPetType] = useState(petData);
   const [myPet, setMyPet] = useState<any[]>([]);
   const [careLocation, setCareLocation] = useState({
-    lat: null,
-    lng: null,
+    lat: 40.702078,
+    lng: -73.822156,
   });
   const [sequence, setSequence] = useState<number>(0);
   const [serviceData, setServiceData] = useState({

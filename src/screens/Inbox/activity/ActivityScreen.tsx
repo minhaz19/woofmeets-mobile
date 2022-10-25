@@ -23,6 +23,8 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
+import ThreeDotsModal from '../../../components/ScreenComponent/Inbox/Past/ThreeDotsModal';
+import Review from '../../../components/ScreenComponent/Inbox/Past/Review';
 import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 
 const ActivityScreen = (props: {
@@ -43,7 +45,7 @@ const ActivityScreen = (props: {
   const dispatch = useAppDispatch();
   const {loading} = useAppSelector(state => state.proposal);
   const {loading: petLoading} = useAppSelector(state => state.allPets);
-  const {appointmentOpk} = props.route.params;
+  // const {appointmentOpk} = props.route.params;
   const sendMsg = async () => {};
 
   useEffect(() => {
@@ -65,13 +67,15 @@ const ActivityScreen = (props: {
     };
   }, []);
   useEffect(() => {
-    dispatch(getProviderProposal(appointmentOpk));
+    // dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAllPets());
     dispatch(getWhoAmI());
   }, []);
 
   const {colors} = useTheme();
   const [isDetailsModal, setIsDetailsModal] = useState(false);
+  const [isThreeDotsModal, setIsThreeDotsModal] = useState(false);
+  const [isReviewModal, setIsReviewModal] = useState(false);
 
   return (
     <>
@@ -88,13 +92,36 @@ const ActivityScreen = (props: {
             <>
               <ActivityHeader
                 setIsDetailsModal={setIsDetailsModal}
-                opk={appointmentOpk}
+                setIsThreeDotsModal={setIsThreeDotsModal}
+                // opk={appointmentOpk}
+                opk={null}
               />
               <BottomHalfModal
                 isModalVisible={isDetailsModal}
                 setIsModalVisible={setIsDetailsModal}>
                 <Details
                   setIsDetailsModal={setIsDetailsModal}
+                  setModalVisible={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                />
+              </BottomHalfModal>
+              <BottomHalfModal
+                isModalVisible={isThreeDotsModal}
+                setIsModalVisible={setIsThreeDotsModal}>
+                <ThreeDotsModal
+                  setIsThreeDotsModal={setIsThreeDotsModal}
+                  setIsReviewModal={setIsReviewModal}
+                  setModalVisible={function (): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                />
+              </BottomHalfModal>
+              <BottomHalfModal
+                isModalVisible={isReviewModal}
+                setIsModalVisible={setIsReviewModal}>
+                <Review
+                  setIsReviewModal={setIsReviewModal}
                   setModalVisible={function (): void {
                     throw new Error('Function not implemented.');
                   }}
