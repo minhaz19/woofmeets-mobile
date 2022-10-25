@@ -1,6 +1,6 @@
 import React from 'react';
 import ContentLoader, {Rect} from 'react-content-loader/native';
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -23,7 +23,7 @@ const AllProviderLoader = () => {
           speed={1}
           width={SCREEN_WIDTH}
           height={1280}
-          viewBox="30 -20 300 1280"
+          viewBox={`${Platform.OS === 'android' ? 10 : 30} -20 300 1280`}
           backgroundColor={colors.loaderBackground}
           foregroundColor={colors.loaderForeground}>
           <Rect x="0" y="0" rx="4" ry="4" width="100" height="20" />
