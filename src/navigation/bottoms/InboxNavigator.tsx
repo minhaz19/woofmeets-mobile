@@ -5,6 +5,7 @@ import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import Inbox from '../../screens/Inbox';
 import ReportCardInitial from '../../screens/reports/Initial';
 import Appointment from '../../screens/Appointment';
+import ActivityScreen from '../../screens/Inbox/activity/ActivityScreen';
 
 const Stack1 = createStackNavigator();
 

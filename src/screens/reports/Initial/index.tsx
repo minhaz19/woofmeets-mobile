@@ -182,7 +182,7 @@ const ReportCardInitial = () => {
         </View>
         <View style={{paddingHorizontal: 15, paddingTop: 15}}>
           <HeaderText text="Your Pets" textStyle={{paddingBottom: 10}} />
-          {pets.map(
+          {pets?.map(
             (item: {id: number; name: string; profile_image: {url: any}}) => (
               <ImageAndTitle
                 id={item.id}

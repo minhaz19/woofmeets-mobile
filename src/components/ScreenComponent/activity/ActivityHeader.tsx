@@ -17,7 +17,8 @@ const acceptEndpoint = '/appointment/accept/proposal/';
 const rejectEndpoint = '/appointment/cancel/';
 const ActivityHeader = (props: {
   setIsDetailsModal: (arg0: boolean) => void;
-  opk: string;
+  setIsThreeDotsModal: (arg0: boolean) => void;
+  opk?: any;
 }) => {
   let navigation = useNavigation<any>();
   const {colors} = useTheme();
@@ -43,7 +44,6 @@ const ActivityHeader = (props: {
           text: 'Yes',
           onPress: async () => {
             const r = await request(rejectEndpoint + props.opk);
-
             if (r.ok) {
               // dispatch(getUserP);
               navigation.navigate('Inbox');
@@ -53,7 +53,7 @@ const ActivityHeader = (props: {
       ],
     );
   };
-
+  console.log('provider user', proposedServiceInfo);
   return (
     <View style={[styles.container, {borderColor: colors.borderColor}]}>
       <View style={styles.containerInner}>
@@ -75,8 +75,8 @@ const ActivityHeader = (props: {
               <HeaderText
                 text={
                   proposedServiceInfo?.providerId === user?.user?.provider?.id
-                    ? proposedServiceInfo?.providerName
-                    : proposedServiceInfo?.userName
+                    ? proposedServiceInfo?.userName
+                    : proposedServiceInfo?.providerName
                 }
               />
               <DescriptionText
@@ -99,7 +99,9 @@ const ActivityHeader = (props: {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.leftContainer}>
+        <TouchableOpacity
+          style={styles.leftContainer}
+          onPress={() => props.setIsThreeDotsModal(true)}>
           <Entypo
             name="dots-three-vertical"
             size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
