@@ -8,7 +8,7 @@ export const YourHomeData = [
     options: [
       {id: 7, type: 'House', value: 'HOUSE'},
       {id: 8, type: 'Apartment', value: 'APARTMENT'},
-      {id: 9, type: 'Farm', value: 'FARM'},
+      {id: 9, type: 'Business', value: 'BUSINESS'},
     ],
   },
   {

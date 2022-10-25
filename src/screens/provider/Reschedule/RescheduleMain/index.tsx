@@ -1,6 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet, FlatList} from 'react-native';
 import React, {useState} from 'react';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../../components/UI/BottomSpacing';
 import RescheduleList from '../../../../components/ScreenComponent/Provider/Reschedule/RescheduleList';
 import {rescheduleData} from '../utils/rescheduleData';
@@ -14,10 +14,7 @@ const RescheduleMain = () => {
   const [viewDetails, setViewDetails] = useState<boolean>(true);
 
   return (
-    <ScreenRapperGrey
-      rapperStyle={
-        styles.container
-      }>
+    <ScreenRapperGrey rapperStyle={styles.container}>
       <View>
         <FlatList
           showsVerticalScrollIndicator={false}

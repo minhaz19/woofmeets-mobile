@@ -4,6 +4,7 @@ import React from 'react';
 import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../constants/textScaling';
+import {format} from 'date-fns';
 
 interface Props {
   placeholder: string;
@@ -13,37 +14,37 @@ interface Props {
 
 const CalendarInput = ({placeholder, value, setOpenCal}: Props) => {
   const {colors, isDarkMode} = useTheme();
+  const isoDate = new Date(value).toISOString();
+  const usaFormateData = format(new Date(isoDate), 'MM-dd-yyyy');
   return (
-    <View>
-      <Pressable
-        onPress={setOpenCal}
-        style={[
-          styles.container,
-          {
-            backgroundColor: isDarkMode
-              ? colors.lightBackgroundColor
-              : colors.backgroundColor,
-            borderColor: isDarkMode ? Colors.gray : Colors.border,
-          },
-        ]}>
-        <View pointerEvents="none">
-          <TextInput
-            placeholderTextColor={Colors.gray}
-            placeholder={placeholder}
-            style={[
-              styles.text,
-              {
-                alignSelf: 'flex-start',
-                height: 40,
-                flex: 1,
-                color: isDarkMode ? Colors.gray : Colors.black,
-              },
-            ]}
-            value={value}
-          />
-        </View>
-      </Pressable>
-    </View>
+    <Pressable
+      onPress={setOpenCal}
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkMode
+            ? colors.lightBackgroundColor
+            : colors.backgroundColor,
+          borderColor: isDarkMode ? Colors.gray : Colors.border,
+        },
+      ]}>
+      <View pointerEvents="none">
+        <TextInput
+          placeholderTextColor={Colors.gray}
+          placeholder={placeholder}
+          style={[
+            styles.text,
+            {
+              alignSelf: 'flex-start',
+              height: 40,
+              flex: 1,
+              color: isDarkMode ? Colors.gray : Colors.black,
+            },
+          ]}
+          value={value !== null ? usaFormateData : undefined}
+        />
+      </View>
+    </Pressable>
   );
 };
 
@@ -60,8 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    width: '90%',
+    width: '100%',
     fontSize: Text_Size.Text_9,
-    flex: 0,
   },
 });

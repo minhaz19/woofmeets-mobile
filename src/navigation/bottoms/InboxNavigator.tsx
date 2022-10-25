@@ -5,12 +5,13 @@ import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import Inbox from '../../screens/Inbox';
 import ReportCardInitial from '../../screens/reports/Initial';
 import Appointment from '../../screens/Appointment';
+import ActivityScreen from '../../screens/Inbox/activity/ActivityScreen';
 
 const Stack1 = createStackNavigator();
 
 const InboxNavigator = () => {
   return (
-    <Stack1.Navigator initialRouteName="Inbox">
+    <Stack1.Navigator initialRouteName="ActivityScreen">
       <Stack1.Screen
         name="Inbox"
         component={Inbox}
@@ -33,13 +34,13 @@ const InboxNavigator = () => {
           headerShown: false,
         })}
       />
-      {/* <Stack1.Screen
+      <Stack1.Screen
         name="ActivityScreen"
         component={ActivityScreen}
         options={() => ({
           headerShown: false,
         })}
-      /> */}
+      />
       {/* <Stack1.Screen
         name="Checkout"
         component={CheckoutDetails}

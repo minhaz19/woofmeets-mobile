@@ -17,7 +17,8 @@ const acceptEndpoint = '/appointment/accept/proposal/';
 const rejectEndpoint = '/appointment/cancel/';
 const ActivityHeader = (props: {
   setIsDetailsModal: (arg0: boolean) => void;
-  opk: string;
+  setIsThreeDotsModal: (arg0: boolean) => void;
+  opk?: any;
 }) => {
   let navigation = useNavigation<any>();
   const {colors} = useTheme();
@@ -93,7 +94,9 @@ const ActivityHeader = (props: {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.leftContainer}>
+        <TouchableOpacity
+          style={styles.leftContainer}
+          onPress={() => props.setIsThreeDotsModal(true)}>
           <Entypo
             name="dots-three-vertical"
             size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
