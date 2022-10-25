@@ -39,7 +39,7 @@ const data = [
 const Inbox = () => {
   const [showInbox, setShowInbox] = useState(1);
   const [active, setActive] = useState('USER');
-  const {colors} = useTheme();
+  const {colors, isDarkMode} = useTheme();
   return (
     <ScreenRapperGrey rapperStyle={styles.container}>
       <View style={styles.tabContainer}>
@@ -51,7 +51,11 @@ const Inbox = () => {
                 styles.itemContainer,
                 {
                   backgroundColor:
-                    showInbox === item.id ? Colors.primary : Colors.background,
+                    showInbox === item.id
+                      ? Colors.primary
+                      : isDarkMode
+                      ? Colors.dark.lightDark
+                      : Colors.background,
                   borderRightWidth: 1,
                   borderRightColor: Colors.primary,
                 },

@@ -107,8 +107,8 @@ const DeclinedStatus = ({statusType}: Props) => {
                   <ReusableCard
                     key={item.opk}
                     item={{
-                      name: `${item.provider.user.firstName} ${item.provider.user.lastName}`,
-                      image: item.provider.user.image,
+                      name: `${item.user.firstName} ${item.user.lastName}`,
+                      image: item.user.image,
                       description: item?.appointmentProposal[0]?.firstMessage
                         ? item?.appointmentProposal[0]?.firstMessage
                         : 'No Mesaegs fonnd',
