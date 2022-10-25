@@ -28,7 +28,7 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     statusType === 'USER' && dispatch(getAppointmentStatus('PROPOSAL'));
     statusType === 'PROVIDER' && dispatch(getProviderApnt('PROPOSAL'));
-  }, []);
+  }, [statusType]);
 
   const [refreshing, setRefreshing] = useState(false);
 

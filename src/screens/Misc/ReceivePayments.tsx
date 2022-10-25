@@ -68,7 +68,7 @@ const ReceivePayments = () => {
               </View>
               <DescriptionText
                 textStyle={styles.textStyle}
-                text="Get funds directly deposited into your bank account, with no additional fees. Rover uses Stripe, one of the most popular payment platforms, to transfer your Rover earnings to your bank account."
+                text="Get funds directly deposited into your bank account, with no additional fees. Woofmeets uses Stripe, one of the most popular payment platforms, to transfer your Woofmeets earnings to your bank account."
               />
               <DescriptionText
                 text="Set up your Stripe account seamlessly with one click and at no additional cost to you."
