@@ -11,15 +11,22 @@ import { useAppSelector } from '../../../store/store';
 import SendMessage from './SendMessage';
 import { apiMsg } from '../../../api/client';
 import { formatDistance, subDays } from 'date-fns';
+import storage from '../../../utils/helpers/auth/storage';
 
 const Messages = (props: { roomId: any; }) => {
     const {colors} = useTheme();
     const [socket, setSocket] = useState<any>(null);
-    const {userInfo} = useAppSelector(state => state.auth);
     const [messages, setMessages] = useState([]);
     const [isLoadingMsg, setIsLoadingMsg] = useState<boolean>(false);
-    // console.log('msg', props.roomId)
-
+    const [user, setUser] = useState();
+    const getToken = async() => {
+      const decoded: any = await storage.getUser();
+      setUser(decoded);
+    }
+    useEffect(() => {
+      getToken()
+    }, [])
+    // console.log('msg-----', messages, user?.id)
     const getPreviousMessages = async () => {
       const slug = `/v1/messages/group/${props.roomId}`
       setIsLoadingMsg(true);
@@ -50,9 +57,9 @@ const Messages = (props: { roomId: any; }) => {
 
     useEffect(() => {
       if (socket !== null) {
-        socket.emit('user', userInfo?.userInfo?.id);
+        socket.emit('user', user?.id);
       }
-    }, [userInfo, socket]);
+    }, [user, socket]);
     
     const {image} = {
         image: 'https://via.placeholder.com/40x40.png?',
@@ -105,7 +112,7 @@ const Messages = (props: { roomId: any; }) => {
         />
       ) : (
         messages?.map((item: any, i) =>
-          item.sender === userInfo?.userInfo?.id ? (
+          item.sender === user?.id ? (
             // Sender
             <View key={i} style={styles.senderContainer}>
               <View
@@ -176,7 +183,7 @@ const Messages = (props: { roomId: any; }) => {
     )}
     <View style={{height: paddingHeight}} />
     </ScrollView>
-    <SendMessage roomId={props.roomId} setMessages={setMessages} socket={socket} />
+    <SendMessage roomId={props.roomId} setMessages={setMessages} socket={socket} user={user} />
     </View>
   )
 }

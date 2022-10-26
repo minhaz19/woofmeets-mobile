@@ -48,7 +48,7 @@ const SearchSlider = ({navigation}: Props) => {
     },
     {
       id: 3,
-      title: 'Check out local Caregiver s',
+      title: 'Check out local pet sitters',
       description:
         "We work resolutely to guarantee tails keep swaying and pet owners' minds are at ease.",
       linkTitle: 'Check Now',
@@ -58,7 +58,7 @@ const SearchSlider = ({navigation}: Props) => {
     },
     {
       id: 4,
-      title: 'Check out local Caregiver s',
+      title: 'Check out local pet sitters',
       description:
         "We work resolutely to guarantee tails keep swaying and pet owners' minds are at ease.",
       linkTitle: 'Check Now',

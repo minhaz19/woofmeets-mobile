@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   GestureResponderEvent,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   CallSvg,
   FileTextSvg,
@@ -17,11 +17,14 @@ import {ProfileIcon} from '../../../../assets/svgs/Setting_SVG';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../../../constants/Colors';
+import { getSitterDetails } from '../../../../store/slices/profile/details';
+import { useAppDispatch } from '../../../../store/store';
 
 const ProfileModify = (props: {
   navigation: {navigate: (arg0: string) => any};
 }) => {
   const {colors} = useTheme();
+  const dispatch = useAppDispatch();
   const modifyProfileData = [
     {
       id: 1,
@@ -54,6 +57,10 @@ const ProfileModify = (props: {
       screen: () => props.navigation.navigate('PetScreens'),
     },
   ];
+
+  useEffect(() => {
+    dispatch(getSitterDetails());
+  }, [])
   return (
     <View
       style={[

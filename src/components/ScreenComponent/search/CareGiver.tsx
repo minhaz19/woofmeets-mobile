@@ -2,7 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {
   CustomerServiceSvg,
-  GirlWithCatsSvg,
+  CareGiverSvg,
   TwentyFourBySevenSvg,
 } from './utils/SearchBoxCardSvg';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -40,7 +40,7 @@ const CareGiver = () => {
   return (
     <SliderScreenParent>
       <View style={styles.imageContainer}>
-        <GirlWithCatsSvg style={styles.image} />
+        <CareGiverSvg style={styles.image} width={250} height={200}/>
       </View>
       <BigText text={'Finding a Pet Sitter.'} textStyle={styles.bigTextStyle} />
       {data.map((item: any) => {
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     height: '40%',
   },
   image: {
-    width: '100%',
-    height: '100%',
+    // width: '100%',
+    // height: '100%',
   },
   flexContainer: {
     flexDirection: 'row',

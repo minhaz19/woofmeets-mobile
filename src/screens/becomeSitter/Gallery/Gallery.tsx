@@ -30,9 +30,11 @@ import {setProfileData} from '../../../store/slices/onBoarding/initial';
 import {useAppDispatch} from '../../../store/store';
 import apiClient from '../../../api/client';
 import {ApiResponse} from 'apisauce';
+import { useNavigation } from '@react-navigation/native';
 
 const Gallery = () => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
   const [photo, setPhoto] = useState<any>([]);
   const [getLoading, setGetLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -47,7 +49,8 @@ const Gallery = () => {
   const {colors, isDarkMode} = useTheme();
 
   const onHandleGallery = () => {
-    dispatch(setProfileData({pass: 3}));
+    // dispatch(setProfileData({pass: 3}));
+    navigation.goBack()
   };
 
   // Get all image

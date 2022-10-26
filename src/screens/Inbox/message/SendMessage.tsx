@@ -4,16 +4,14 @@ import { CameraIcon, SendIcon } from '../../../assets/Inbox_SVG'
 import styles from '../activity/styles'
 import Colors from '../../../constants/Colors'
 import { useTheme } from '../../../constants/theme/hooks/useTheme'
-import { useAppSelector } from '../../../store/store'
 
-const SendMessage = ({roomId, setMessages, socket}) => {
+const SendMessage = ({roomId, setMessages, socket, user}) => {
     const {colors} = useTheme();
-    const {userInfo} = useAppSelector(state => state.auth);
     const [content, setContent] = useState({ text: '', image: '' });
     const handleSubmit = () => {
         if (content?.text || content?.image) {
           const data = {
-            sender: userInfo?.userInfo?.id,
+            sender: user?.id,
             group: roomId,
             // content: content?.text.replace(/<[^>]*>?/gm, ''),
             content: content?.text,

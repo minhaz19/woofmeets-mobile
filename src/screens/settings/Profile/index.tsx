@@ -16,22 +16,17 @@ import jwtDecode from 'jwt-decode';
 import authStorage from '../../../utils/helpers/auth/storage';
 import TitleText from '../../../components/common/text/TitleText';
 import { getUserOnboardStatus } from '../../../store/slices/connect/stripe';
-import apiClient from '../../../api/client';
-import DescriptionText from '../../../components/common/text/DescriptionText';
 
-const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
+const Profile = (props: {navigation: {navigate: (arg0: string, arg1?: any) => any}}) => {
   const {colors} = useTheme();
   const isDarkMode = useColorScheme() === 'dark';
   const {loading} = useAppSelector(state => state.userProfile);
-  const {userOnboardStatus} = useAppSelector(state => state.stripe);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   useProfileData();
 
 
   const [token, setToken] = useState<any>();
-  // const userInfo = useAppSelector(state => state.auth.userInfo);
-
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {
@@ -45,38 +40,11 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     dispatch(getUserOnboardStatus())
   }, []);
 
-  const handleStripeConnect = async() => {
-    // props.navigation.navigate('StripeOnboardScreen', {url: 'https://google.com'});
-    // return (
-    //   <View style={{flex: 1}}>
-    //     <WebView source={{ uri: 'https://google.com'}} />
-    //   </View>
-    // )
-    const response = await apiClient.post('/stripe-connect/user-onboarding');
-    if (response.ok) {
-      if (response.data?.data?.alreadyInitiated) {
-        const response = await apiClient.post('/stripe-connect/user-onboarding/refresh-url', {
-          email: token.email,
-        });
-        if (response.data?.data?.url) {
-          props.navigation.navigate('StripeOnboardScreen', {url: response.data?.data?.url});
-        }
-      }
-    } else {
-      Alert.alert(response?.data?.message)
-    }
-  }
-
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, backgroundColor: colors.backgroundColor}}>
       {loading && <AppActivityIndicator visible={true} />}
       <View
-        style={[
-          styles.rootContainer,
-          {
-            backgroundColor: colors.backgroundColor,
-          },
-        ]}>
+        style={styles.rootContainer}>
         {!token?.provider && <View style={{paddingVertical: 20}}>
           <TitleText 
             textStyle={{color: Colors.blue, textAlign: 'center'}}
@@ -156,10 +124,6 @@ const Profile = (props: {navigation: {navigate: (arg0: string) => any}}) => {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleStripeConnect}>
-            <HeaderText text={'Stripe Connect'} textStyle={{color: 'blue'}} />
-          </TouchableOpacity>
-            <DescriptionText textStyle={{color: Colors.alert}} text={userOnboardStatus?.userStripeConnectAccount?.requirements?.errors[0]?.reason} />
         </View>
       </View>
     </ScrollView>
