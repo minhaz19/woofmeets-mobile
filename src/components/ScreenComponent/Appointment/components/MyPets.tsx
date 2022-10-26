@@ -14,7 +14,10 @@ import {useNavigation} from '@react-navigation/native';
 import {useFormContext} from 'react-hook-form';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 let petsId: any = [];
-const MyPets = () => {
+interface Props {
+  appointmentType: string;
+}
+const MyPets = ({appointmentType}: Props) => {
   const {pets: allPets} = useAppSelector(state => state.allPets);
   const [newData, setDatas] = useState<any>([]);
   const handleMultipleCheck = (id: number) => {
@@ -25,12 +28,13 @@ const MyPets = () => {
   };
   const user = useAppSelector(state => state.whoAmI);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  const {petsInfo, providerId} = proposedServiceInfo;
+  const petsInfo = proposedServiceInfo?.petsInfo;
+  const providerId = proposedServiceInfo?.providerId;
   const {setValue, watch} = useFormContext();
   const {petsId: pp} = watch();
   useEffect(() => {
-    if (providerId === user?.user.provider.id) {
-      const modArray = petsInfo.map((item: any, index: number) => ({
+    if (providerId === user?.user?.provider?.id) {
+      const modArray = petsInfo?.map((item: any, index: number) => ({
         id: index + 1,
         name: item.pet.name,
         petId: item.petId,
@@ -62,7 +66,8 @@ const MyPets = () => {
   const {isDarkMode, colors} = useTheme();
   return (
     <>
-      {proposedServiceInfo.providerId === user?.user?.provider?.id ? (
+      {appointmentType !== 'create' &&
+      proposedServiceInfo?.providerId === user?.user?.provider?.id ? (
         <>
           <View style={styles.headerContainer}>
             <TitleText textStyle={styles.headerText} text={'Client Pets'} />
