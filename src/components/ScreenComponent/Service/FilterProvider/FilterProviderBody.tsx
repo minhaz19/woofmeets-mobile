@@ -211,7 +211,7 @@ const FilterProviderBody = ({
         </View>
         {OpenDropIn && <DateRange value={null} />}
         {OpenDropOut && <DateRange value={dropIn} dropOut={true} />}
-        {selectedPet.length > 0 ? (
+        {selectedPet && selectedPet?.length > 0 ? (
           <View>
             <TitleText textStyle={{...styles.label}} text="My Pet" />
             <FilterMyPet selectedPet={selectedPet} />
