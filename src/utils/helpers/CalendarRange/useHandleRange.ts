@@ -25,9 +25,11 @@ export const useHandleRange = (
   const [endingDate, setEndingDate] = useState(proposalEndDate);
 
   useEffect(() => {
-    orderMultiDates = [...rr];
-    const {styledMarkedRange} = orderAndStyleRange([...rr], 'MULTI');
-    setMarkedStyle(styledMarkedRange);
+    if (type === 'MULTI') {
+      orderMultiDates = [...rr];
+      const {styledMarkedRange} = orderAndStyleRange([...rr], 'MULTI');
+      setMarkedStyle(styledMarkedRange);
+    }
   }, []);
   const handleDayPress = (date: any) => {
     if (type === 'SINGLE') {
