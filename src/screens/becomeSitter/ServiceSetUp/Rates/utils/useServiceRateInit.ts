@@ -5,66 +5,66 @@ export const useServiceRateInit = () => {
   const {ratesMeta} = useAppSelector(state => state.serviceRates);
   const baseRate =
     ratesMeta !== null && ratesMeta !== undefined && ratesMeta['base-rate'];
-
+  console.log('field Value', fieldValue);
   return {
     baserate:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 1)
-            .amount
+            ?.amount
         : baseRate,
     holidayrate:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 3)
-            .amount
+            ?.amount
         : baseRate.length > 0
         ? Number(baseRate) * Number(ratesMeta['holiday-rate'])
         : null,
     additionaldog:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 2)
-            .amount
+            ?.amount
         : baseRate.length > 0
         ? Number(baseRate) * Number(ratesMeta['additional-dog'])
         : null,
     puppyrate:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 5)
-            .amount
+            ?.amount
         : baseRate.length > 0
         ? Number(baseRate) * Number(ratesMeta['puppy-rate'])
         : null,
     catcare:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 4)
-            .amount
+            ?.amount
         : baseRate.length > 0
         ? Number(baseRate) * Number(ratesMeta['cat-care'])
         : null,
     additionalcat:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 6)
-            .amount
+            ?.amount
         : baseRate.length > 0
         ? Number(baseRate) * Number(ratesMeta['additional-cat'])
         : null,
     bathgroomingrate:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 8)
-            .amount
+            ?.amount
         : baseRate.length > 0
         ? Number(baseRate) * Number(ratesMeta['bath-grooming-rate'])
         : null,
     extendedCare:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 9)
-            .amount
+            ?.amount
         : baseRate.length > 0
         ? Number(baseRate) * Number(ratesMeta['extended-Care'])
         : null,
     extendedstayrate:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 7)
-            .amount
+            ?.amount
         : baseRate.length > 0
         ? Number(baseRate) * Number(ratesMeta['extended-stay-rate'])
         : null,

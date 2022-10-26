@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../constants/textScaling';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
-import { useAppDispatch } from '../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 import HeaderText from '../../../components/common/text/HeaderText';
 import TitleText from '../../../components/common/text/TitleText';
 import DescriptionText from '../../../components/common/text/DescriptionText';
@@ -18,8 +18,10 @@ import ScrollViewRapperRefresh from '../../../components/common/ScrollViewRapper
 const SitterDetails = () => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
+  const sitterInfo = useAppSelector(state => state.details.sitterInfo?.providerDetails);
   const sitterDetailsSubmit = (sitterData: any) => {
-    dispatch(postSitterDetails(sitterData));
+    const method = sitterInfo ? 'patch' : 'post';
+    dispatch(postSitterDetails({sitterData, method}));
     dispatch(setProfileData({pass: 2}));
     // new update onboarding
     dispatch(setSitterData({pass: 2}));

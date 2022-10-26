@@ -14,26 +14,40 @@ export const postSitterDetails = createAsyncThunk(
       environmentDescription,
       scheduleDescription,
     }: any,
-    {rejectWithValue},
+    method: any,
   ) => {
+    const dispatch = useAppDispatch();
     const body = {
       headline: headline,
       yearsOfExperience: yearsOfExperience,
       experienceDescription: experienceDescription,
       environmentDescription: environmentDescription,
       scheduleDescription: scheduleDescription,
+      dogsExperience: "string",
+      walkingExperience: "string",
+      requestedDogInfo: "string",
+      about: "string",
+      skills: [
+        1,2
+      ]
     };
     try {
-      const response: ApiResponse<any> = await apiClient.post(
+      const response: ApiResponse<any> = await 
+      method === 'post' ? apiClient.post(
+        '/user-profile/provider-details',
+        body,
+      ) : apiClient.patch(
         '/user-profile/provider-details',
         body,
       );
+      console.log(response);
       if (!response.ok) {
         throw new Error(response.data.message);
       }
       if (response.ok) {
         // const dispatch = useAppDispatch();
         // dispatch(setProfileData({pass:2}));
+        dispatch(getSitterDetails());
         return response.data;
       }
     } catch (error: any) {
