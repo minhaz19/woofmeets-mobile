@@ -49,8 +49,9 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
     }));
     modData !== undefined && setSelectedService(modData[0]);
     modData !== undefined &&
-      setValue('serviceTypeId', modData[0].serviceTypeId);
-  }, [providerServices, setValue]);
+      (setValue('serviceTypeId', modData[0].serviceTypeId),
+      setValue(name, modData[0].id));
+  }, [name, providerServices, setValue]);
   const {isDarkMode, colors} = useTheme();
   return (
     <>
@@ -88,7 +89,13 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
               key={index}
               style={[
                 styles.sectionContainer,
-                {backgroundColor: isDarkMode ? Colors.lightDark : Colors.iosBG},
+                {
+                  backgroundColor: isDarkMode
+                    ? Colors.lightDark
+                    : Colors.background,
+
+                  borderColor: colors.borderColor,
+                },
               ]}
               onPress={() => {
                 setSelectedService(item);
@@ -148,15 +155,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     marginBottom: 10,
+    borderWidth: 1,
 
-    shadowOpacity: 0.08,
-    shadowOffset: {
-      width: 0,
-      height: 20,
-    },
-    shadowRadius: 10,
-    // Shadow for Android
-    elevation: 5,
+    // shadowOpacity: 0.08,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 20,
+    // },
+    // shadowRadius: 10,
+    // // Shadow for Android
+    // elevation: 5,
   },
   titleText: {
     fontWeight: 'bold',

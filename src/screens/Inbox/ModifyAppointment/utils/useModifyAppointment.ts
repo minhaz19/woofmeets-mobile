@@ -90,15 +90,15 @@ export const useModifyAppointment = (route: any) => {
       if (serviceTypeId === 1 || serviceTypeId === 2) {
         const boardingSittingFT = `${
           serviceTypeId === 1
-            ? 'Boarding Proposal: '
-            : 'House Sitting Proposal:'
-        } \n starting from ${format(
+            ? 'Boarding Proposal: \n'
+            : 'House Sitting Proposal:\n'
+        }Starting from:\n ${format(
           new Date(proposalStartDate),
           'iii LLL d',
-        )} ${pickUpStartTime} - ${pickUpEndTime} \n ending at : \n ${format(
+        )} ${pickUpStartTime} - ${pickUpEndTime} \n ending at:\n ${format(
           new Date(proposalEndDate),
           'iii LLL d',
-        )} at ${dropOffStartTime} - ${dropOffEndTime} `;
+        )} at ${dropOffStartTime} - ${dropOffEndTime}`;
 
         const boardSittingPayload = {
           proposedBy:
@@ -152,30 +152,30 @@ export const useModifyAppointment = (route: any) => {
         const dropInVisitFT =
           serviceTypeId === 3
             ? isRecurring
-              ? `Drop In Visit Proposal:  \n Repeat service starting from : ${recurringStartDate}  \n ${recurringModDates.map(
+              ? `Drop In Visit Proposal:\nRepeat service starting from: ${recurringStartDate}\n${recurringModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} visits on: ${
+                    `${item.visitTime.length} Visits on: ${
                       item.date
                     } at ${item.visitTime.join(', ')}`,
                 )}  `
-              : `Drop In Visit Proposal:  \n  ${specificModDates.map(
+              : `Drop In Visit Proposal:\n${specificModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} visits on: ${format(
+                    `${item.visitTime.length} Visits on: ${format(
                       new Date(item.date),
                       'iii, LLL d',
                     )} at ${item.visitTime.join(', ')}`,
                 )}  `
             : serviceTypeId === 5
             ? isRecurring
-              ? `Dog Walking Proposal:  \n Repeat service starting from : ${recurringStartDate}  \n ${recurringModDates.map(
+              ? `Dog Walking Proposal:\nRepeat service starting from: ${recurringStartDate}\n${recurringModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} visits on: ${
+                    `${item.visitTime.length} Visits on: ${
                       item.date
                     } at ${item.visitTime.join(', ')}`,
                 )}  `
-              : `Dog Walking Proposal:  \n  ${specificModDates.map(
+              : `Dog Walking Proposal:\n${specificModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} visits on: ${format(
+                    `${item.visitTime.length} Visits on: ${format(
                       new Date(item.date),
                       'iii, LLL d',
                     )} at ${item.visitTime.join(', ')}`,
@@ -228,14 +228,14 @@ export const useModifyAppointment = (route: any) => {
         }
       } else if (serviceTypeId === 4) {
         const DoggyDayFT = isRecurring
-          ? `Doggy Day Care Proposal:  \n Repeat service starting from : ${recurringStartDate}  \n 
-          Drop-off: ${dropOffStartTime} - ${dropOffEndTime} \n
-          Pick-Up: ${pickUpStartTime} - ${pickUpEndTime}  `
-          : `Doggy Day Care Proposal:   \n  
-          One time servcie on : \n
-          ${multiDate.join(', ')} \n
+          ? `Doggy Day Care Proposal:\nRepeat service starting from: ${recurringStartDate}\n 
+          Drop-off: ${dropOffStartTime} - ${dropOffEndTime}\n
+          Pick-Up: ${pickUpStartTime} - ${pickUpEndTime}`
+          : `Doggy Day Care Proposal:\n  
+          One time servcie on:\n
+          ${multiDate.join(', ')}\n
             Drop-off: ${dropOffStartTime} - ${dropOffEndTime} \n
-          Pick-Up: ${pickUpStartTime} - ${pickUpEndTime}  `;
+          Pick-Up: ${pickUpStartTime} - ${pickUpEndTime}`;
 
         const doggyPayload = isRecurring
           ? {

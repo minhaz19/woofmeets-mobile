@@ -4,13 +4,16 @@ import {
   GestureResponderEvent,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Colors from '../../../../../constants/Colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ShortText from '../../../../common/text/ShortText';
-import { useAppDispatch } from '../../../../../store/store';
-import { setBoardingScreen, setProfileScreen } from '../../../../../store/slices/onBoarding/initial';
-import { useTheme } from '../../../../../constants/theme/hooks/useTheme';
+import {useAppDispatch} from '../../../../../store/store';
+import {
+  setBoardingScreen,
+  setProfileScreen,
+} from '../../../../../store/slices/onBoarding/initial';
+import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
 const ProfileItemCard = (props: {
   title: string;
@@ -24,15 +27,15 @@ const ProfileItemCard = (props: {
   const [loading, setLoading] = useState<boolean>(false);
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     setLoading(true);
     if (props.isBoarding) {
-      dispatch(setBoardingScreen({pass: props.id-1}));
+      dispatch(setBoardingScreen({pass: props.id - 1}));
     } else {
-      dispatch(setProfileScreen({pass: props.id-1}));
+      dispatch(setProfileScreen({pass: props.id - 1}));
     }
     setLoading(false);
-}
+  };
   const CompletedIcon = () => {
     return (
       <View style={styles.iconContainer} key={props.id}>
@@ -69,7 +72,6 @@ const ProfileItemCard = (props: {
         } else {
           return <UnCompletedIcon />;
         }
-        
     }
   };
   return (
@@ -92,7 +94,10 @@ const ProfileItemCard = (props: {
       )}
       <ShortText
         text={props.title}
-        textStyle={{...styles.textStyle, color: props.inProgress ? Colors.primary : colors.descriptionText}}
+        textStyle={{
+          ...styles.textStyle,
+          color: props.inProgress ? Colors.primary : colors.descriptionText,
+        }}
       />
     </TouchableOpacity>
   );
