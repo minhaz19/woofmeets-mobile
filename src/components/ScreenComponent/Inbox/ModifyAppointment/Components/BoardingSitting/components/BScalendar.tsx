@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import AppTouchableOpacity from '../../../../../../common/AppClickEvents/AppTouchableOpacity';
@@ -13,7 +14,7 @@ import Text_Size from '../../../../../../../constants/textScaling';
 
 const BScalendar = ({}) => {
   const [visible, setVisible] = useState(false);
-  const {isDarkMode} = useTheme();
+  const {isDarkMode, colors} = useTheme();
   const {setValue, watch} = useFormContext();
   const {proposalStartDate, proposalEndDate} = watch();
   return (
@@ -43,11 +44,31 @@ const BScalendar = ({}) => {
           style={styles.bgContainer}
           onPress={() => setVisible(!visible)}
         />
-        <View style={styles.pickerContainer}>
+        <View
+          style={[
+            styles.pickerContainer,
+            {
+              backgroundColor: colors.backgroundColor,
+            },
+          ]}>
           <View style={styles.calHeader}>
-            <TitleText textStyle={styles.title} text={'Select date'} />
+            <TitleText
+              textStyle={{
+                fontWeight: 'bold',
+                fontSize: Text_Size.Text_3,
+                color: colors.headerText,
+              }}
+              text={'Select date'}
+            />
             <AppTouchableOpacity onPress={() => setVisible(false)}>
-              <TitleText textStyle={styles.calDone} text={'Done'} />
+              <TitleText
+                textStyle={{
+                  fontWeight: 'bold',
+                  fontSize: Text_Size.Text_2,
+                  color: colors.headerText,
+                }}
+                text={'Done'}
+              />
             </AppTouchableOpacity>
           </View>
           <AppCalendar
