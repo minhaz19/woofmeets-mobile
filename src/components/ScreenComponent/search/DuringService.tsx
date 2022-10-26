@@ -11,6 +11,7 @@ import {
 } from './utils/SearchBoxCardSvg';
 import SliderScreenParent from './SliderScreenParent';
 import Text_Size from '../../../constants/textScaling';
+import AnimatedLottieView from 'lottie-react-native';
 
 const DuringService = () => {
   const data = [
@@ -40,7 +41,12 @@ const DuringService = () => {
   return (
     <SliderScreenParent>
       <View style={styles.imageContainer}>
-        <GirlWithCatsSvg style={styles.image} />
+        <AnimatedLottieView
+          autoPlay
+          loop={true}
+          source={require('../../../assets/animatedLottie/customerSupport.json')}
+          style={styles.image}
+        />
       </View>
       <BigText text={'During your service'} textStyle={styles.bigTextStyle} />
       {data.map((item: any) => {
@@ -73,6 +79,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+    alignSelf: 'center',
   },
   flexContainer: {
     flexDirection: 'row',

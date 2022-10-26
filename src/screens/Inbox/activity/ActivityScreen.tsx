@@ -83,6 +83,7 @@ const ActivityScreen = (props: {
                 setIsModalVisible={setIsReviewModal}>
                 <Review
                   setIsReviewModal={setIsReviewModal}
+                  appointmentOpk={appointmentOpk}
                   setModalVisible={function (): void {
                     throw new Error('Function not implemented.');
                   }}
