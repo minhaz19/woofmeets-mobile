@@ -6,12 +6,12 @@ import {UpcomingSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
 import Colors from '../../../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
-import BottomSpacingNav from '../../../UI/BottomSpacingNav';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import BottomSpacing from '../../../UI/BottomSpacing';
+import {format} from 'date-fns';
 interface Props {
   statusType: string;
 }
@@ -41,7 +41,7 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
-  console.log('info', appointmentStatus, providerApntStatus);
+  console.log('info', appointmentStatus);
 
   return (
     <>
@@ -68,14 +68,46 @@ const PendingStatus = ({statusType}: Props) => {
             appointmentStatus !== undefined &&
             statusType === 'USER' ? (
               appointmentStatus?.map((item: any) => {
+                const serviceTypeId = item?.providerService?.serviceTypeId;
+                const proposalDate = item.appointmentProposal[0];
+                const isRecurring = item.appointmentProposal[0]?.isRecurring;
                 return (
                   <ReusableCard
                     key={item.opk}
                     item={{
                       name: `${item.provider.user.firstName} ${item.provider.user.lastName}`,
                       image: item.provider.user.image,
-                      description: item?.appointmentProposal[0]?.firstMessage
-                        ? item?.appointmentProposal[0]?.firstMessage
+                      description: item?.providerService
+                        ? serviceTypeId === 1 || serviceTypeId === 2
+                          ? `Starting From:  ${format(
+                              new Date(proposalDate.proposalStartDate),
+                              'iii LLL d',
+                            )}`
+                          : serviceTypeId === 3 || serviceTypeId === 5
+                          ? isRecurring
+                            ? `Starting From:  ${format(
+                                new Date(proposalDate.recurringStartDate),
+                                'iii LLL d',
+                              )}`
+                            : `Starting From:  ${format(
+                                new Date(
+                                  proposalDate.proposalOtherDate[0].date,
+                                ),
+                                'iii LLL d',
+                              )}`
+                          : serviceTypeId === 4
+                          ? isRecurring
+                            ? `Starting From:  ${format(
+                                new Date(proposalDate.recurringStartDate),
+                                'iii LLL d',
+                              )}`
+                            : `Starting From:  ${format(
+                                new Date(
+                                  proposalDate.proposalOtherDate[0].date,
+                                ),
+                                'iii LLL d',
+                              )}`
+                          : ''
                         : 'No Mesaegs fonnd',
                       boardingTime: item?.providerService?.serviceType?.name,
                       status: item.status,

@@ -13,6 +13,7 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useAppSelector} from '../../../store/store';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
+import {format} from 'date-fns';
 const acceptEndpoint = '/appointment/accept/proposal/';
 const rejectEndpoint = '/appointment/cancel/';
 const ActivityHeader = (props: {
@@ -45,7 +46,6 @@ const ActivityHeader = (props: {
           onPress: async () => {
             const r = await request(rejectEndpoint + props.opk);
             if (r.ok) {
-              // dispatch(getUserP);
               navigation.navigate('Inbox');
             }
           },
@@ -84,15 +84,44 @@ const ActivityHeader = (props: {
                   proposedServiceInfo?.serviceTypeId === 1 ||
                   proposedServiceInfo?.serviceTypeId === 2
                     ? proposedServiceInfo?.serviceName +
-                      ' on ' +
-                      proposedServiceInfo?.proposalStartDate +
-                      '-' +
-                      proposedServiceInfo?.proposalEndDate
+                      ' from:  ' +
+                      format(
+                        new Date(proposedServiceInfo.proposalStartDate),
+                        'iii LLL d',
+                      )
                     : proposedServiceInfo?.serviceTypeId === 3 ||
                       proposedServiceInfo?.serviceTypeId === 5
-                    ? proposedServiceInfo?.serviceName
+                    ? proposedServiceInfo.isRecurring
+                      ? proposedServiceInfo?.serviceName +
+                        ' from:  ' +
+                        format(
+                          new Date(proposedServiceInfo.recurringStartDate),
+                          'iii LLL d',
+                        )
+                      : proposedServiceInfo?.serviceName +
+                        ' from:  ' +
+                        format(
+                          new Date(
+                            proposedServiceInfo.proposalOtherDate[0].date,
+                          ),
+                          'iii LLL d',
+                        )
                     : proposedServiceInfo?.serviceTypeId === 4
-                    ? proposedServiceInfo?.serviceName
+                    ? proposedServiceInfo.isRecurring
+                      ? proposedServiceInfo?.serviceName +
+                        ' from:  ' +
+                        format(
+                          new Date(proposedServiceInfo.recurringStartDate),
+                          'iii LLL d',
+                        )
+                      : proposedServiceInfo?.serviceName +
+                        ' from:  ' +
+                        format(
+                          new Date(
+                            proposedServiceInfo.proposalOtherDate[0].date,
+                          ),
+                          'iii LLL d',
+                        )
                     : ''
                 }
               />

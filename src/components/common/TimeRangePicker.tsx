@@ -13,6 +13,8 @@ interface Props {
   title: string;
   startName: string;
   endName: string;
+  defaultFrom: string;
+  defaultTo: string;
 }
 
 var x = 60; //minutes interval
@@ -37,9 +39,11 @@ const TimeSlotPicker = ({
   title,
   startName,
   endName,
+  defaultFrom,
+  defaultTo,
 }: Props) => {
-  const [fromTime, setFromTime] = useState<string>('');
-  const [toTime, setToTime] = useState<string>('');
+  const [fromTime, setFromTime] = useState<string>(defaultFrom);
+  const [toTime, setToTime] = useState<string>(defaultTo);
   const {setValue} = useFormContext();
   const {colors, isDarkMode} = useTheme();
   useEffect(() => {

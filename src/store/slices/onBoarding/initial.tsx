@@ -220,11 +220,11 @@ const contact = createSlice({
         //     newArray[action.payload.pass].inProgress = true;
         //   }
         // } else {
-          newArray.map(v => {
-            v.inProgress = false;
-            return v;
-          });
-          newArray[action.payload.pass].inProgress = true;
+        newArray.map(v => {
+          v.inProgress = false;
+          return v;
+        });
+        newArray[action.payload.pass].inProgress = true;
         // }
       }
       state.sitterData = newArray;

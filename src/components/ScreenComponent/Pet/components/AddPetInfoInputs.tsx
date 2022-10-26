@@ -27,7 +27,6 @@ const AddPetInfoInputs = ({errors, control}: Props) => {
                   textContentType={'none'}
                   name={item.name}
                   label={item.title}
-                  flex={item.flex}
                   key={index}
                   errors={errors}
                   control={control}

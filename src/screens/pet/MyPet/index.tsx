@@ -14,12 +14,15 @@ interface Props {
   navigation: {
     navigate: (arg0: string, arg1: {opk: string | null}) => void;
   };
+  onBoarding?: boolean;
 }
 
-const MyPet = ({navigation}: Props) => {
+const MyPet = ({navigation, onBoarding}: Props) => {
   const {colors} = useTheme();
-  const {loading, singlePetLoading, onPress, petList} =
-    useMyPetUtils(navigation);
+  const {loading, singlePetLoading, onPress, petList} = useMyPetUtils(
+    navigation,
+    onBoarding,
+  );
   return (
     <>
       {(loading || singlePetLoading) && <AppActivityIndicator visible={true} />}

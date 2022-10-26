@@ -8,6 +8,7 @@ export const useAddPetUtils = (
   navigation: any,
   routeData: any,
   opk: string | null,
+  onBoarding: boolean,
 ) => {
   const dispatch = useAppDispatch();
   const {request, loading: Ploading} = useApi(addPetApi);
@@ -17,7 +18,11 @@ export const useAddPetUtils = (
     const result = await request(payload, opk);
 
     if (result.ok) {
-      if (opk === 'Appointment') {
+      console.log('onboarding', onBoarding);
+      if (onBoarding === true) {
+        dispatch(getAllPets());
+        navigation.navigate('SitterLandingPage');
+      } else if (opk === 'Appointment') {
         dispatch(getAllPets());
         navigation.navigate('Appointment', {appointmentType: 'create'});
       } else {

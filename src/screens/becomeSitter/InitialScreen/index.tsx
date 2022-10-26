@@ -15,7 +15,7 @@ import {bulletData1, bulletData2, bulletData3} from './data';
 import {styles} from './styles';
 import {getOnboardingProgress} from '../../../store/slices/onBoarding/initial';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import { getCurrentplan } from '../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
+import {getCurrentplan} from '../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 
 const SitterInitialScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -29,19 +29,18 @@ const SitterInitialScreen = (props: {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const currentPlan = useAppSelector(state => state.currentPlan);
 
-
   const handlePress = () => {
     if (isLoggedIn) {
       if (currentPlan?.currentPlan?.subscriptionInfo?.status) {
-        props.navigation.navigate('Profile')
+        props.navigation.navigate('Profile');
       } else {
-        props.navigation.navigate('SitterLandingPage')
+        props.navigation.navigate('SitterLandingPage');
       }
     } else {
       props.navigation.navigate('SignUp');
     }
-  }
-  
+  };
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
