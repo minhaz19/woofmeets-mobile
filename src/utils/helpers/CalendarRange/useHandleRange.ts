@@ -9,7 +9,6 @@ export const useHandleRange = (
   type: string,
   setValue?: (arg: string, arg2: any) => void,
 ) => {
-  console.log('useHandleRange', type);
   const [_markedStyle, setMarkedStyle] = useState({});
   const {
     proposalStartDate,
@@ -29,7 +28,6 @@ export const useHandleRange = (
     orderMultiDates = [...rr];
     const {styledMarkedRange} = orderAndStyleRange([...rr], 'MULTI');
     setMarkedStyle(styledMarkedRange);
-    console.log('asdfasdf', orderMultiDates);
   }, []);
   const handleDayPress = (date: any) => {
     if (type === 'SINGLE') {
@@ -42,7 +40,6 @@ export const useHandleRange = (
       } else {
         orderMultiDates.splice(matchIndex, 1);
       }
-      console.log('orderMultiDates', orderMultiDates);
       const {styledMarkedRange} = orderAndStyleRange(orderMultiDates, 'MULTI');
 
       setMarkedStyle(styledMarkedRange);

@@ -9,7 +9,6 @@ export const getProviderProposal = createAsyncThunk(
       const response: ApiResponse<any> = await apiClient.get(
         `/appointment/${opk}/proposal`,
       );
-      console.log('meta', response);
       if (!response.ok) {
         if (response.data) {
         } else if (response.problem === 'TIMEOUT_ERROR') {

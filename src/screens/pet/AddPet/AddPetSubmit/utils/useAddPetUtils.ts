@@ -18,7 +18,6 @@ export const useAddPetUtils = (
     const result = await request(payload, opk);
 
     if (result.ok) {
-      console.log('onboarding', onBoarding);
       if (onBoarding === true) {
         dispatch(getAllPets());
         navigation.navigate('SitterLandingPage');

@@ -4,11 +4,17 @@ import BottomSpacing from '../../../../UI/BottomSpacing';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {useNavigation} from '@react-navigation/native';
+import {useAppSelector} from '../../../../../store/store';
 
 const ProviderFooter = () => {
   const navigation = useNavigation<any>();
+  const {isLoggedIn} = useAppSelector(state => state.auth);
   const handleSubmit = () => {
-    navigation.navigate('Appointment', {appointmentType: 'create'});
+    if (isLoggedIn) {
+      navigation.navigate('Appointment', {appointmentType: 'create'});
+    } else {
+      navigation.navigate('SignUp');
+    }
   };
   return (
     <View style={styles.container}>

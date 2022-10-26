@@ -328,8 +328,8 @@ const PetCareZipSearch = (props: {
                   onPress={onPressAddress}
                   query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo'}}
                   fetchDetails={true}
-                  onFail={error => console.log(error)}
-                  onNotFound={() => console.log('no results')}
+                  onFail={() => {}}
+                  onNotFound={() => {}}
                   keyboardShouldPersistTaps={'always'}
                   keepResultsAfterBlur={true}
                   enablePoweredByContainer={false}
