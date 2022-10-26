@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import TitleText from '../../../common/text/TitleText';
 import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
@@ -64,7 +64,7 @@ const MyPets = ({appointmentType}: Props) => {
       });
       modArray && setDatas(modArray);
     }
-  }, [allPets, providerId, user, petsInfo]);
+  }, [allPets, petsInfo]);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
   return (
@@ -212,7 +212,7 @@ const MyPets = ({appointmentType}: Props) => {
   );
 };
 
-export default MyPets;
+export default memo(MyPets);
 
 const styles = StyleSheet.create({
   headerContainer: {

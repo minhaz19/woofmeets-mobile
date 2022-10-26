@@ -124,17 +124,54 @@ const PendingStatus = ({statusType}: Props) => {
               providerApntStatus !== undefined &&
               statusType === 'PROVIDER' ? (
               providerApntStatus?.map((item: any) => {
+                const serviceTypeId = item?.providerService?.serviceTypeId;
+                const proposalDate = item.appointmentProposal[0];
+                const isRecurring = item.appointmentProposal[0]?.isRecurring;
                 return (
                   <ReusableCard
                     key={item.opk}
                     item={{
                       name: `${item.user.firstName} ${item.user.lastName}`,
                       image: item.user.image,
-                      description: item?.appointmentProposal[0]?.firstMessage
-                        ? item?.appointmentProposal[0]?.firstMessage
+                      description: item?.providerService
+                        ? serviceTypeId === 1 || serviceTypeId === 2
+                          ? `Starting From:  ${format(
+                              new Date(proposalDate.proposalStartDate),
+                              'iii LLL d',
+                            )}`
+                          : serviceTypeId === 3 || serviceTypeId === 5
+                          ? isRecurring
+                            ? `Starting From:  ${format(
+                                new Date(proposalDate.recurringStartDate),
+                                'iii LLL d',
+                              )}`
+                            : `Starting From:  ${format(
+                                new Date(
+                                  proposalDate.proposalOtherDate[0].date,
+                                ),
+                                'iii LLL d',
+                              )}`
+                          : serviceTypeId === 4
+                          ? isRecurring
+                            ? `Starting From:  ${format(
+                                new Date(proposalDate.recurringStartDate),
+                                'iii LLL d',
+                              )}`
+                            : `Starting From:  ${format(
+                                new Date(
+                                  proposalDate.proposalOtherDate[0].date,
+                                ),
+                                'iii LLL d',
+                              )}`
+                          : ''
                         : 'No Mesaegs fonnd',
                       boardingTime: item?.providerService?.serviceType?.name,
                       status: item.status,
+                      // description: item?.appointmentProposal[0]?.firstMessage
+                      //   ? item?.appointmentProposal[0]?.firstMessage
+                      //   : 'No Mesaegs fonnd',
+                      // boardingTime: item?.providerService?.serviceType?.name,
+                      // status: item.status,
                     }}
                     buttonStyles={Colors.primary}
                     handlePress={() =>

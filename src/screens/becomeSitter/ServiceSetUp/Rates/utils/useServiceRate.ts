@@ -35,7 +35,7 @@ export const useServiceRates = (serviceSetup: any) => {
   );
   rateFieldId &&
     fieldValue &&
-    fieldValue.map(
+    fieldValue?.map(
       (item: {id: number}, index: number) =>
         (rateFieldId[index].putId = item.id),
     );
@@ -44,7 +44,7 @@ export const useServiceRates = (serviceSetup: any) => {
       serviceRate: [],
     };
     rateFieldId &&
-      rateFieldId.forEach(
+      rateFieldId?.forEach(
         (element: {postId: number; name: string; putId: number}) => {
           Object.keys(e).map(item => {
             if (item === element.name) {

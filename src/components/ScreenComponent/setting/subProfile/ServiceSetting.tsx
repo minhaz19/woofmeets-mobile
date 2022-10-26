@@ -1,4 +1,10 @@
-import {StyleSheet, View, TouchableOpacity, ScrollView, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   BoardingIcon,
@@ -18,9 +24,10 @@ import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 // import ServiceSetUp from '../../../../screens/becomeSitter/ServiceSetUp';
 import {setServiceSetup} from '../../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 import ButtonCom from '../../../UI/ButtonCom';
-import { btnStyles } from '../../../../constants/theme/common/buttonStyles';
-import { useNavigation } from '@react-navigation/native';
-import { getUserServices } from '../../../../store/slices/profile/services';
+import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
+import {useNavigation} from '@react-navigation/native';
+import {getUserServices} from '../../../../store/slices/profile/services';
+import {setCurrentScreen} from '../../../../store/slices/onBoarding/initial';
 
 const ServiceSetting = () => {
   // const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
@@ -60,7 +67,6 @@ const ServiceSetting = () => {
   useEffect(() => {
     onRefresh();
   }, []);
-  
   return (
     <>
       {userServicesLoading && <AppActivityIndicator visible={true} />}
@@ -95,7 +101,8 @@ const ServiceSetting = () => {
                       },
                     }),
                   );
-                  navigation.navigate('ServiceSetUp')
+                  dispatch(setCurrentScreen({pass: 1}));
+                  navigation.navigate('ServiceSetUp');
                 }}>
                 <View style={styles.flexContainer}>
                   <View style={styles.serviceContainer}>

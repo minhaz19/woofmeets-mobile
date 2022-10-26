@@ -26,17 +26,17 @@ export const useModReqInitialState = () => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
 
   if (
-    proposedServiceInfo.serviceTypeId === 3 ||
-    proposedServiceInfo.serviceTypeId === 5
+    proposedServiceInfo?.serviceTypeId === 3 ||
+    proposedServiceInfo?.serviceTypeId === 5
   ) {
   }
   const d1 = new Date(proposedServiceInfo?.proposalStartDate);
   const d2 = new Date(proposedServiceInfo?.proposalEndDate);
 
   const next6Days =
-    proposedServiceInfo.recurringStartDate !== '' &&
+    proposedServiceInfo?.recurringStartDate !== '' &&
     [...Array(7).keys()].map(index => {
-      const date = new Date(proposedServiceInfo.recurringStartDate);
+      const date = new Date(proposedServiceInfo?.recurringStartDate);
       date?.setDate(date.getDate() + index);
       var d = new Date(date);
       var dayName = dayss[d.getDay()];
@@ -46,9 +46,8 @@ export const useModReqInitialState = () => {
   const modMultiDates = proposedServiceInfo?.proposalOtherDate?.map(
     (item: {name: string}) => item.name,
   );
-  const modRecurringSelectedDay = proposedServiceInfo.recurringSelectedDay?.map(
-    (item: any) => item.date,
-  );
+  const modRecurringSelectedDay =
+    proposedServiceInfo?.recurringSelectedDay?.map((item: any) => item.date);
 
   const modProposalRecurringDate =
     proposedServiceInfo?.recurringSelectedDay?.map((item: any) => ({
@@ -79,8 +78,8 @@ export const useModReqInitialState = () => {
     userId: proposedServiceInfo?.userId,
     providerId: proposedServiceInfo?.providerId,
     serviceTypeId: proposedServiceInfo?.serviceTypeId,
-    visitLength: proposedServiceInfo.length,
-    isRecurring: proposedServiceInfo.isRecurring,
+    visitLength: proposedServiceInfo?.length,
+    isRecurring: proposedServiceInfo?.isRecurring,
 
     dropOffStartTime: proposedServiceInfo?.dropOffStartTime
       ? proposedServiceInfo.dropOffStartTime
@@ -103,7 +102,7 @@ export const useModReqInitialState = () => {
           )
         : '',
     selectedDays:
-      proposedServiceInfo.serviceTypeId === 4
+      proposedServiceInfo?.serviceTypeId === 4
         ? DoggySelected
         : proposedServiceInfo?.recurringSelectedDay
         ? modRecurringSelectedDay
@@ -127,16 +126,17 @@ export const useModReqInitialState = () => {
     recurringModDatesRef: [],
     specificModDatesRef: [],
     recurringModDates:
-      proposedServiceInfo.isRecurring &&
+      proposedServiceInfo?.isRecurring &&
       proposedServiceInfo?.recurringSelectedDay
         ? proposedServiceInfo?.recurringSelectedDay
         : [],
     specificModDates:
-      !proposedServiceInfo.isRecurring && proposedServiceInfo?.proposalOtherDate
+      !proposedServiceInfo?.isRecurring &&
+      proposedServiceInfo?.proposalOtherDate
         ? proposedServiceInfo?.proposalOtherDate
         : [],
     multiDate:
-      proposedServiceInfo.serviceTypeId === 4 &&
+      proposedServiceInfo?.serviceTypeId === 4 &&
       !proposedServiceInfo.isRecurring
         ? doggyMultiDate
         : !proposedServiceInfo.isRecurring

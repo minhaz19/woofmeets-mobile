@@ -10,14 +10,17 @@ import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {getServiceTypes, getUserServices} from '../../../store/slices/profile/services';
+import {
+  getServiceTypes,
+  getUserServices,
+} from '../../../store/slices/profile/services';
 import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {setSitterData} from '../../../store/slices/onBoarding/initial';
 import jwtDecode from 'jwt-decode';
 import authStorage from '../../../utils/helpers/auth/storage';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 interface Props {
   item: any;
 }
@@ -66,10 +69,10 @@ const ServiceSelection = () => {
       return decode;
     }
   };
-  
+
   useEffect(() => {
     getDecodedToken();
-  }, [])
+  }, []);
 
   const onPressEvent = (id: number) => {
     setSequence(id);
@@ -140,7 +143,14 @@ const ServiceSelection = () => {
   const renderFooter = () => {
     return (
       <View style={styles.footerContainer}>
-          <DescriptionText text={error} textStyle={{color: Colors.alert, paddingVertical: 5, textAlign: 'center'}}/>
+        <DescriptionText
+          text={error}
+          textStyle={{
+            color: Colors.alert,
+            paddingVertical: 5,
+            textAlign: 'center',
+          }}
+        />
         <ButtonCom
           title="Save and Continue"
           textAlignment={btnStyles.textAlignment}

@@ -48,17 +48,25 @@ const TimeSlotPicker = ({
   const {colors, isDarkMode} = useTheme();
   const handleFrom = (itemValue: string) => {
     const findIndex = times.findIndex((item: string) => item === itemValue);
-    findIndex !== -1 && setToTime(times[findIndex + 1]);
+    if (findIndex !== -1 && findIndex !== times.length - 1) {
+      setToTime(times[findIndex + 1]);
+      setValue(endName, times[findIndex + 1]);
+    } else if (findIndex === times.length - 1) {
+      setToTime(times[0]);
+      setValue(endName, times[0]);
+    }
     setValue(startName, itemValue);
     setFromTime(itemValue);
-    setValue(endName, times[findIndex + 1]);
   };
   const handleTo = (itemValue: string) => {
     const startIndex = times.findIndex((item: string) => item === fromTime);
     const endIndex = times.findIndex((item: string) => item === itemValue);
-    if (startIndex >= endIndex) {
+    if (startIndex >= endIndex && endIndex !== 0) {
       setFromTime(times[endIndex - 1]);
       setValue(startName, times[endIndex - 1]);
+    } else if (endIndex === 0) {
+      setFromTime(times[times.length - 1]);
+      setValue(startName, times[times.length]);
     }
     setValue(endName, itemValue);
     setToTime(itemValue);
