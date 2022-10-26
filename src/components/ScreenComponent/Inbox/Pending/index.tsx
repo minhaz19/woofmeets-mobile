@@ -41,7 +41,7 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
-  console.log('info', appointmentStatus);
+  console.log('info', providerApntStatus);
 
   return (
     <>

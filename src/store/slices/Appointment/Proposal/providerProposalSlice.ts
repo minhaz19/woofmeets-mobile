@@ -24,116 +24,118 @@ const providerProposalSlice = createSlice({
         state.error = null;
       })
       .addCase(getProviderProposal.fulfilled, (state, {payload}) => {
+        const modpayload = payload?.data;
         state.loading = false;
-        state.proposal = payload.data;
-        state.providerInfo = payload.data.appointment.provider.user;
+        state.proposal = modpayload;
+        state.providerInfo = modpayload.appointment.provider.user;
         state.proposedService =
-          payload.data.appointment.providerService.serviceType;
-        state.userInfo = payload.data.appointment.user;
-        state.proposalInfo = payload.data.proposal;
+          modpayload.appointment.providerService.serviceType;
+        state.userInfo = modpayload.appointment.user;
+        state.proposalInfo = modpayload.proposal;
         state.proposedServiceInfo =
-          payload.data.appointment.providerService.serviceTypeId === 1 ||
-          payload.data.appointment.providerService.serviceTypeId === 2
+          modpayload.appointment.providerService.serviceTypeId === 1 ||
+          modpayload.appointment.providerService.serviceTypeId === 2
             ? {
-                userId: payload.data.appointment.user.id,
-                providerId: payload.data.appointment.provider.id,
-                appointmentOpk: payload.data.appointment.opk,
-                proposedBy: payload.data.proposal.proposedBy,
+                userId: modpayload.appointment.user.id,
+                providerId: modpayload.appointment.provider.id,
+                appointmentOpk: modpayload.appointment.opk,
+                proposedBy: modpayload.proposal.proposedBy,
                 serviceName:
-                  payload.data.appointment.providerService.serviceType.name,
+                  modpayload.appointment.providerService.serviceType.name,
                 providerName:
-                  payload.data.appointment.provider.user?.firstName +
+                  modpayload.appointment.provider.user?.firstName +
                   ' ' +
-                  payload.data.appointment.provider.user?.lastName,
+                  modpayload.appointment.provider.user?.lastName,
                 userName:
-                  payload.data.appointment.user?.firstName +
+                  modpayload.appointment.user?.firstName +
                   ' ' +
-                  payload.data.appointment.user?.lastName,
-                image: payload.data.appointment.provider.user.image,
+                  modpayload.appointment.user?.lastName,
+                image: modpayload.appointment.provider.user.image,
                 serviceTypeId:
-                  payload.data.appointment.providerService.serviceTypeId,
-                petsInfo: payload.data.proposal.appointmentPet,
-                dropOffStartTime: payload.data.proposal.dropOffStartTime,
-                dropOffEndTime: payload.data.proposal.dropOffEndTime,
-                pickUpStartTime: payload.data.proposal.pickUpStartTime,
-                pickUpEndTime: payload.data.proposal.pickUpEndTime,
-                proposalStartDate: payload.data.proposal.proposalStartDate,
-                proposalEndDate: payload.data.proposal.proposalEndDate,
-                firstMessage: payload.data.proposal.firstMessage,
-                isRecivedPhotos: payload.data.proposal.isRecivedPhotos,
-                appointmentPet: payload.data.proposal.appointmentPet,
-                counter: payload.data.proposal.countered,
-                status: payload.data.appointment.status,
+                  modpayload.appointment.providerService.serviceTypeId,
+                petsInfo: modpayload.proposal.appointmentPet,
+                dropOffStartTime: modpayload.proposal.dropOffStartTime,
+                dropOffEndTime: modpayload.proposal.dropOffEndTime,
+                pickUpStartTime: modpayload.proposal.pickUpStartTime,
+                pickUpEndTime: modpayload.proposal.pickUpEndTime,
+                proposalStartDate: modpayload.proposal.proposalStartDate,
+                proposalEndDate: modpayload.proposal.proposalEndDate,
+                firstMessage: modpayload.proposal.firstMessage,
+                isRecivedPhotos: modpayload.proposal.isRecivedPhotos,
+                appointmentPet: modpayload.proposal.appointmentPet,
+                counter: modpayload.proposal.countered,
+                status: modpayload.appointment.status,
+                formattedMessage: modpayload.proposal.meta.formattedMessage,
               }
-            : payload.data.appointment.providerService.serviceTypeId === 3 ||
-              payload.data.appointment.providerService.serviceTypeId === 5
+            : modpayload.appointment.providerService.serviceTypeId === 3 ||
+              modpayload.appointment.providerService.serviceTypeId === 5
             ? {
-                userId: payload.data.appointment.user.id,
-                providerId: payload.data.appointment.provider.id,
-                appointmentOpk: payload.data.appointment.opk,
-                proposedBy: payload.data.proposal.proposedBy,
+                userId: modpayload.appointment.user.id,
+                providerId: modpayload.appointment.provider.id,
+                appointmentOpk: modpayload.appointment.opk,
+                proposedBy: modpayload.proposal.proposedBy,
                 serviceName:
-                  payload.data.appointment.providerService.serviceType.name,
+                  modpayload.appointment.providerService.serviceType.name,
                 serviceTypeId:
-                  payload.data.appointment.providerService.serviceTypeId,
+                  modpayload.appointment.providerService.serviceTypeId,
                 providerName:
-                  payload.data.appointment.provider.user.firstName +
+                  modpayload.appointment.provider.user.firstName +
                   ' ' +
-                  payload.data.appointment.provider.user.lastName,
+                  modpayload.appointment.provider.user.lastName,
                 userName:
-                  payload.data.appointment.user?.firstName +
+                  modpayload.appointment.user?.firstName +
                   ' ' +
-                  payload.data.appointment.user?.lastName,
-                image: payload.data.appointment.provider.user.image,
+                  modpayload.appointment.user?.lastName,
+                image: modpayload.appointment.provider.user.image,
                 appointmentserviceType:
-                  payload.data.proposal.appointmentserviceType,
-                isRecurring: payload.data.proposal.isRecurring,
-                length: payload.data.proposal.length,
-                recurringStartDate: payload.data.proposal.recurringStartDate,
-                recurringSelectedDay:
-                  payload.data.proposal.recurringSelectedDay,
-                proposalOtherDate: payload.data.proposal.proposalOtherDate,
-                petsInfo: payload.data.proposal.appointmentPet,
-                firstMessage: payload.data.proposal.firstMessage,
-                isRecivedPhotos: payload.data.proposal.isRecivedPhotos,
-                appointmentPet: payload.data.proposal.appointmentPet,
-                counter: payload.data.proposal.countered,
-                status: payload.data.appointment.status,
+                  modpayload.proposal.appointmentserviceType,
+                isRecurring: modpayload.proposal.isRecurring,
+                length: modpayload.proposal.length,
+                recurringStartDate: modpayload.proposal.recurringStartDate,
+                recurringSelectedDay: modpayload.proposal.recurringSelectedDay,
+                proposalOtherDate: modpayload.proposal.proposalOtherDate,
+                petsInfo: modpayload.proposal.appointmentPet,
+                firstMessage: modpayload.proposal.firstMessage,
+                isRecivedPhotos: modpayload.proposal.isRecivedPhotos,
+                appointmentPet: modpayload.proposal.appointmentPet,
+                counter: modpayload.proposal.countered,
+                status: modpayload.appointment.status,
+                formattedMessage: modpayload.proposal.meta.formattedMessage,
               }
-            : payload.data.appointment.providerService.serviceTypeId === 4
+            : modpayload.appointment.providerService.serviceTypeId === 4
             ? {
-                userId: payload.data.appointment.user.id,
-                providerId: payload.data.appointment.provider.id,
-                appointmentOpk: payload.data.appointment.opk,
-                proposedBy: payload.data.proposal.proposedBy,
+                userId: modpayload.appointment.user.id,
+                providerId: modpayload.appointment.provider.id,
+                appointmentOpk: modpayload.appointment.opk,
+                proposedBy: modpayload.proposal.proposedBy,
                 serviceName:
-                  payload.data.appointment.providerService.serviceType.name,
+                  modpayload.appointment.providerService.serviceType.name,
                 serviceTypeId:
-                  payload.data.appointment.providerService.serviceTypeId,
+                  modpayload.appointment.providerService.serviceTypeId,
                 providerName:
-                  payload.data.appointment.provider.user.firstName +
+                  modpayload.appointment.provider.user.firstName +
                   ' ' +
-                  payload.data.appointment.provider.user.lastName,
+                  modpayload.appointment.provider.user.lastName,
                 userName:
-                  payload.data.appointment.user?.firstName +
+                  modpayload.appointment.user?.firstName +
                   ' ' +
-                  payload.data.appointment.user?.lastName,
-                image: payload.data.appointment.provider.user.image,
-                dropOffStartTime: payload.data.proposal.dropOffStartTime,
-                dropOffEndTime: payload.data.proposal.dropOffEndTime,
-                pickUpStartTime: payload.data.proposal.pickUpStartTime,
-                pickUpEndTime: payload.data.proposal.pickUpEndTime,
-                proposalOtherDate: payload.data.proposal.proposalOtherDate,
-                petsInfo: payload.data.proposal.appointmentPet,
-                isRecurring: payload.data.proposal.isRecurring,
-                recurringStartDate: payload.data.proposal.recurringStartDate,
-                recurringSelectedDay:
-                  payload.data.proposal.recurringSelectedDay,
-                firstMessage: payload.data.proposal.firstMessage,
-                isRecivedPhotos: payload.data.proposal.isRecivedPhotos,
-                appointmentPet: payload.data.proposal.appointmentPet,
-                counter: payload.data.proposal.countered,
-                status: payload.data.appointment.status,
+                  modpayload.appointment.user?.lastName,
+                image: modpayload.appointment.provider.user.image,
+                dropOffStartTime: modpayload.proposal.dropOffStartTime,
+                dropOffEndTime: modpayload.proposal.dropOffEndTime,
+                pickUpStartTime: modpayload.proposal.pickUpStartTime,
+                pickUpEndTime: modpayload.proposal.pickUpEndTime,
+                proposalOtherDate: modpayload.proposal.proposalOtherDate,
+                petsInfo: modpayload.proposal.appointmentPet,
+                isRecurring: modpayload.proposal.isRecurring,
+                recurringStartDate: modpayload.proposal.recurringStartDate,
+                recurringSelectedDay: modpayload.proposal.recurringSelectedDay,
+                firstMessage: modpayload.proposal.firstMessage,
+                isRecivedPhotos: modpayload.proposal.isRecivedPhotos,
+                appointmentPet: modpayload.proposal.appointmentPet,
+                counter: modpayload.proposal.countered,
+                status: modpayload.appointment.status,
+                formattedMessage: modpayload.proposal.meta.formattedMessage,
               }
             : null;
       })
