@@ -14,7 +14,7 @@ const ProviderProfileInfo = () => {
           name={`${profileInfo?.firstName + ' ' + profileInfo?.lastName}`}
           rating={profileInfo?.rating ? profileInfo?.rating : 0}
           distance={`${
-            profileInfo.address !== null
+            profileInfo?.address !== null
               ? profileInfo?.address?.state +
                 ', ' +
                 profileInfo?.address?.country.name
