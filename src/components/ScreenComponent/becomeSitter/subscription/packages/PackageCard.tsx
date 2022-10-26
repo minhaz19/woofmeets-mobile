@@ -100,6 +100,12 @@ const PackageCard = (props: {
           }}>
           <View style={styles.textPortion}>
             <BigText text={props.item.title} textStyle={styles.biggerText} />
+            {props.item.title == 'Basic' && (
+              <BigText
+                text={'$35.00 (one-time)'}
+                textStyle={styles.biggerText1}
+              />
+            )}
             <TouchableOpacity
               style={styles.detailsWrap}
               onPress={() => setIsModalVisible(!isModalVisible)}>
@@ -121,10 +127,12 @@ const PackageCard = (props: {
             <TitleText text={props.item.description} />
           </View>
           <View style={styles.textPortion2}>
-            <BigText
-              text={`$${props.item.price}`}
-              textStyle={styles.biggerText}
-            />
+            <View style={{flexDirection: 'row'}}>
+              <BigText
+                text={`$${props.item.price} `}
+                textStyle={styles.biggerText}
+              />
+            </View>
             <View style={styles.textPortion3}>
               <DescriptionText text="(per month)" />
             </View>
@@ -162,6 +170,10 @@ const styles = StyleSheet.create({
   },
   biggerText: {
     fontSize: Text_Size.Text_2,
+  },
+  biggerText1: {
+    fontSize: Text_Size.Text_2,
+    color: Colors.primary,
   },
   headerText: {
     fontSize: Text_Size.Text_4,

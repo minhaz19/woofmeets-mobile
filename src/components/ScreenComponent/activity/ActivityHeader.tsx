@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
   },
   titleMargin: {
     marginLeft: 10,
+    width: '84%',
   },
   leftContainer: {
     paddingTop: 4,

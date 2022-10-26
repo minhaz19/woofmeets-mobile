@@ -18,9 +18,9 @@ const basicInfoValidationSchema = Yup.object().shape({
 });
 
 const contactValidationSchema = Yup.object().shape({
-  emergencyContactName: Yup.string().required('Emergency Contact Name is required'),
-  email: Yup.string().required('Email is required').matches(emailReg, 'Please Input a valid E-mail address'),
-  emergencyPhone: Yup.string().matches(phoneNumberReg1, 'Please input a valid phone number').required('Phone Number is required'),
+  emergencyContactName: Yup.string(),
+  email: Yup.string(),
+  emergencyPhone: Yup.string(),
 });
 
 export {basicInfoValidationSchema, contactValidationSchema};

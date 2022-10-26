@@ -11,7 +11,7 @@ import { sitterDetailsValidationSchema } from '../../../utils/config/becomeSitte
 import SitterDetailsInput from '../../../components/ScreenComponent/becomeSitter/details/SitterDetailsInput';
 import { getSitterDetails, postSitterDetails } from '../../../store/slices/profile/details';
 import { useDetailsInitalValue } from './useDetailsInitialValue';
-import { setProfileData } from '../../../store/slices/onBoarding/initial';
+import { setProfileData, setSitterData } from '../../../store/slices/onBoarding/initial';
 import AppForm from '../../../components/common/Form/AppForm';
 import ScrollViewRapperRefresh from '../../../components/common/ScrollViewRapperRefresh';
 
@@ -20,7 +20,9 @@ const SitterDetails = () => {
   const dispatch = useAppDispatch();
   const sitterDetailsSubmit = (sitterData: any) => {
     dispatch(postSitterDetails(sitterData));
-    dispatch(setProfileData({pass:2}))
+    dispatch(setProfileData({pass: 2}));
+    // new update onboarding
+    dispatch(setSitterData({pass: 2}));
   };
 
   const [refreshing, setRefreshing] = useState(false);

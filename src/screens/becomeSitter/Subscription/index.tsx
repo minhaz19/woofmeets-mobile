@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import PackageCard from '../../../components/ScreenComponent/becomeSitter/subscription/packages/PackageCard';
 import TitleText from '../../../components/common/text/TitleText';
@@ -13,6 +13,9 @@ import ButtonCom from '../../../components/UI/ButtonCom';
 import Screen from '../../../components/common/Screen';
 import Welcome from '../../../components/ScreenComponent/becomeSitter/subscription/Welcome/Welcome';
 import { useAppSelector } from '../../../store/store';
+import Colors from '../../../constants/Colors';
+import { QuestionIcon } from '../../../assets/svgs/SVG_LOGOS';
+import DescriptionText from '../../../components/common/text/DescriptionText';
 interface Props {
   route: any;
 }
@@ -31,7 +34,7 @@ const SubscriptionScreen = ({route}: Props) => {
     ssLoading,
     cardLoading,
   } = useSubscription();
-  const {sitterData} = useAppSelector(state => state.initial);
+  const [basicQuestionModal, setBasicQuestionModal] = useState(false);
   return (
     <Screen style={{flex: 1}}>
       {(loading || planLoading) && <AppActivityIndicator visible={true} />}
@@ -61,10 +64,22 @@ const SubscriptionScreen = ({route}: Props) => {
               text="Choose a subscription that works for you"
               textStyle={styles.textStyle}
             />
-            <TitleText
-              text="Lorem ipsum description about the subscription packs"
-              textStyle={{...styles.textStyle, paddingBottom: 10}}
-            />
+            <TouchableOpacity 
+              style={{flexDirection: 'row', alignItems: 'center', width: '90%'}}
+              onPress={() => setBasicQuestionModal(!basicQuestionModal)}
+            >
+              <QuestionIcon fill={Colors.primary} />
+              <TitleText
+                text="Why do we charge you $35 USD as part of the basic plan?"
+                textStyle={{...styles.textStyle1, paddingBottom: 10}}
+              />
+            </TouchableOpacity>
+            {basicQuestionModal && (
+              <DescriptionText text={`The reason why we charge you $35 as part of the Basic tier plan is that it costs that amount to run a background check on you. This is a fundamental part of the hiring process that we can’t neglect. It’s something that all of our clients will expect before we make you a part of our pet-sitting community.
+              You should also understand that if you want to avoid this one-time fee, you can sign up for one of our Premium tiers instead. With those tiers, we waive the $35 fee. Note that you will receive a confirmation email after you make your one-time payment.`}
+              />
+            )}
+            <View style={{paddingTop: 10}} />
             {formattedPackageRate?.map((item: any) => (
               <PackageCard
                 item={item}
@@ -105,6 +120,11 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     paddingTop: 10,
+  },
+  textStyle1: {
+    paddingTop: 10,
+    color: Colors.primary,
+    paddingLeft: 10,
   },
 });
 
