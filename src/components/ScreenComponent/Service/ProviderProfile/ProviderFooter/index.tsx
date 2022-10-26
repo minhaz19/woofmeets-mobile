@@ -6,9 +6,9 @@ import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {useNavigation} from '@react-navigation/native';
 
 const ProviderFooter = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const handleSubmit = () => {
-    navigation.navigate('Appointment');
+    navigation.navigate('Appointment', {appointmentType: 'create'});
   };
   return (
     <View style={styles.container}>
