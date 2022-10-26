@@ -17,8 +17,7 @@ export const postSitterDetails = createAsyncThunk(
     }: any,
     method: any,
   ) => {
-    const dispatch = useAppDispatch();
-    console.log('---hd',headline, mtd)
+    // const dispatch = useAppDispatch();
     const body = {
       headline: headline,
       yearsOfExperience: yearsOfExperience,
@@ -28,37 +27,33 @@ export const postSitterDetails = createAsyncThunk(
       about: "string",
       skills: [1,2]
     };
-    
-    console.log(body);
     try {
-      if (mtd === 'post') {
-        const response: ApiResponse<any> = await apiClient.post(
-          '/user-profile/provider-details',
-          body,
-        );
-        console.log(response);
-        if (!response.ok) {
-          throw new Error(response.data.message);
-        }
-        if (response.ok) {
-          // const dispatch = useAppDispatch();
-          // dispatch(setProfileData({pass:2}));
-          dispatch(getSitterDetails());
-          return response.data;
-        }
-      } else {
+      if (mtd === 'patch') {
         const response: ApiResponse<any> = await apiClient.patch(
           '/user-profile/provider-details',
           body,
         );
-        console.log(response);
         if (!response.ok) {
           throw new Error(response.data.message);
         }
         if (response.ok) {
           // const dispatch = useAppDispatch();
           // dispatch(setProfileData({pass:2}));
-          dispatch(getSitterDetails());
+          // dispatch(getSitterDetails());
+          return response.data;
+        }
+      } else {
+        const response: ApiResponse<any> = await apiClient.post(
+          '/user-profile/provider-details',
+          body,
+        );
+        if (!response.ok) {
+          throw new Error(response.data.message);
+        }
+        if (response.ok) {
+          // const dispatch = useAppDispatch();
+          // dispatch(setProfileData({pass:2}));
+          // dispatch(getSitterDetails());
           return response.data;
         }
       }
@@ -126,4 +121,4 @@ const details = createSlice({
 
 export const {} = details.actions;
 
-export default details.reducer;
+export default details.reducer; 
