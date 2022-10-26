@@ -67,7 +67,6 @@ const MyPets = ({appointmentType}: Props) => {
   }, [allPets, providerId, user, petsInfo]);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
-  console.log('my', allPets);
   return (
     <>
       {appointmentType !== 'create' &&
