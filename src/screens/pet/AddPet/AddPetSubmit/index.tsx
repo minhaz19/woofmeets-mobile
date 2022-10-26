@@ -14,12 +14,20 @@ interface Props {
   navigation: {
     navigate: (arg: string) => void;
   };
-  route: RouteProp<{params: {opk: string | null; data: any}}, 'params'>;
+  route: RouteProp<
+    {params: {opk: string | null; data: any; onBoarding: boolean}},
+    'params'
+  >;
 }
 const AddPetSubmit = ({route, navigation}: Props) => {
   const {isDarkMode} = useTheme();
-  const {opk, data} = route.params;
-  const {Ploading, handleSubmit} = useAddPetUtils(navigation, data, opk!);
+  const {opk, data, onBoarding} = route.params;
+  const {Ploading, handleSubmit} = useAddPetUtils(
+    navigation,
+    data,
+    opk!,
+    onBoarding,
+  );
   return (
     <>
       <Screen

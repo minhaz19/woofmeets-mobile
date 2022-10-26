@@ -11,17 +11,20 @@ const ProviderProfile = () => {
   const {colors} = useTheme();
   const _renderHeader = () => null;
   const _renderFooter = () => (
-    <View
-      style={styles.infoContianer}>
+    <View style={styles.infoContianer}>
       <ProviderHeader />
       <ProviderTab />
       <ProviderFooter />
     </View>
   );
   return (
-    <View style={[styles.container, {
-      backgroundColor: colors.backgroundColor,
-    }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: colors.backgroundColor,
+        },
+      ]}>
       <FlatList
         data={[1, 2, 3]}
         keyExtractor={(_, i) => i.toString()}

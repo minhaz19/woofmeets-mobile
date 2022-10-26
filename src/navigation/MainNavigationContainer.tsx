@@ -38,7 +38,6 @@ import SubscriptionScreen from '../screens/becomeSitter/Subscription';
 import ActivityScreen from '../screens/Inbox/activity/ActivityScreen';
 import CheckoutDetails from '../screens/checkout/CheckoutDetails';
 import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
-
 import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
 import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
 import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
@@ -480,7 +479,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
-      <Stack.Screen
+        <Stack.Screen
           name="StripeOnboardScreen"
           component={StripeOnboardScreen}
           options={({navigation}) => ({

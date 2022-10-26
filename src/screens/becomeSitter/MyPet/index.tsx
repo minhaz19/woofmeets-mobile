@@ -1,16 +1,17 @@
 import {View, StyleSheet} from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import Text_Size from '../../../constants/textScaling';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
-import { useAppDispatch } from '../../../store/store';
-import { getSitterDetails } from '../../../store/slices/profile/details';
+import {useAppDispatch} from '../../../store/store';
+import {getSitterDetails} from '../../../store/slices/profile/details';
 import MyPet from '../../pet/MyPet';
 import ButtonCom from '../../../components/UI/ButtonCom';
-import { btnStyles } from '../../../constants/theme/common/buttonStyles';
-import { useNavigation } from '@react-navigation/native';
-import { setProfileData, setSitterData } from '../../../store/slices/onBoarding/initial';
-
+import {btnStyles} from '../../../constants/theme/common/buttonStyles';
+import {useNavigation} from '@react-navigation/native';
+import {
+  setProfileData,
+  setSitterData,
+} from '../../../store/slices/onBoarding/initial';
 
 const OnboardingMyPetScreen = () => {
   const {colors} = useTheme();
@@ -32,7 +33,7 @@ const OnboardingMyPetScreen = () => {
   const handleSubmit = () => {
     dispatch(setProfileData({pass: 4}));
     dispatch(setSitterData({pass: 2}));
-  }
+  };
 
   return (
     <View
@@ -42,17 +43,17 @@ const OnboardingMyPetScreen = () => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-        <MyPet navigation={navigation} />
-        <View style={styles.footerContainer}>
-            <ButtonCom
-                title="Save & Continue"
-                textAlignment={btnStyles.textAlignment}
-                containerStyle={btnStyles.containerStyleFullWidth}
-                titleStyle={btnStyles.titleStyle}
-                onSelect={handleSubmit}
-                //   loading={loading}
-            />
-        </View>
+      <MyPet navigation={navigation} onBoarding={true} />
+      <View style={styles.footerContainer}>
+        <ButtonCom
+          title="Save & Continue"
+          textAlignment={btnStyles.textAlignment}
+          containerStyle={btnStyles.containerStyleFullWidth}
+          titleStyle={btnStyles.titleStyle}
+          onSelect={handleSubmit}
+          //   loading={loading}
+        />
+      </View>
       <BottomSpacing />
     </View>
   );

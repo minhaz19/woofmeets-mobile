@@ -20,15 +20,21 @@ const PetCard: FC<Props> = props => {
   const getIcon = (iconId: number, selected: boolean) => {
     switch (iconId) {
       case 1:
-        return <FontAwesome5Icon
+        return (
+          <FontAwesome5Icon
             name="dog"
             size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
-            color={selected ? 'white' : Colors.primary}/>;
+            color={selected ? 'white' : Colors.primary}
+          />
+        );
       case 2:
-        return <FontAwesome5Icon
-        name="cat"
-        size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
-        color={selected ? 'white' : Colors.primary}/>;
+        return (
+          <FontAwesome5Icon
+            name="cat"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
+            color={selected ? 'white' : Colors.primary}
+          />
+        );
     }
   };
 
@@ -55,20 +61,17 @@ const PetCard: FC<Props> = props => {
           },
         ]}>
         <View style={[styles.boxContainer, props.divide ? styles.pet : {}]}>
-
-            <View style={styles.imageContainer}>
-              {getIcon(props.data.id, props.data.selected)}
-            </View>
+          <View style={styles.imageContainer}>
+            {getIcon(props.data.id, props.data.selected)}
+          </View>
 
           <View style={[styles.textContainer]}>
             <TitleText
               text={props.data.name}
               textStyle={{
                 ...styles.textStyle,
-                color:
-                  props.data.selected ? 'white' : colors.headerText,
-                fontWeight:
-                  props.data.selected ? '800' : '500',
+                color: props.data.selected ? 'white' : colors.headerText,
+                fontWeight: props.data.selected ? '800' : '500',
               }}
             />
           </View>
@@ -87,6 +90,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 5,
     paddingVertical: 6,
+    marginBottom: 10,
   },
   boxContainer: {
     alignItems: 'center',

@@ -17,6 +17,7 @@ interface Props {
   ageYear?: number;
   gender?: string;
   profile_image?: string;
+
   dataList?: [
     {
       id: string;

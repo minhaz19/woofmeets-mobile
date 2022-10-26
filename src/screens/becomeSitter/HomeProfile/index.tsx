@@ -36,7 +36,9 @@ const HomeProfile = () => {
   const [isServiceModalVisible, setIsServiceModalVisible] =
     useState<boolean>(false);
   const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
-  const boardingSelection = useAppSelector(state => state.initial.boardingSelection);
+  const boardingSelection = useAppSelector(
+    state => state.initial.boardingSelection,
+  );
   const dispatch = useAppDispatch();
 
   const onServicePostHandle = async () => {

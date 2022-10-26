@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Modal, Platform, Pressable, StyleSheet, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import TitleText from './text/TitleText';
 import Text_Size from '../../constants/textScaling';
@@ -13,6 +13,8 @@ interface Props {
   title: string;
   startName: string;
   endName: string;
+  defaultFrom: string;
+  defaultTo: string;
 }
 
 var x = 60; //minutes interval
@@ -37,15 +39,31 @@ const TimeSlotPicker = ({
   title,
   startName,
   endName,
+  defaultFrom,
+  defaultTo,
 }: Props) => {
-  const [fromTime, setFromTime] = useState<string>('');
-  const [toTime, setToTime] = useState<string>('');
+  const [fromTime, setFromTime] = useState<string>(defaultFrom);
+  const [toTime, setToTime] = useState<string>(defaultTo);
   const {setValue} = useFormContext();
   const {colors, isDarkMode} = useTheme();
-  useEffect(() => {
-    setValue(startName, fromTime);
-    setValue(endName, toTime);
-  }, [endName, fromTime, setValue, startName, toTime]);
+  const handleFrom = (itemValue: string) => {
+    const findIndex = times.findIndex((item: string) => item === itemValue);
+    findIndex !== -1 && setToTime(times[findIndex + 1]);
+    setValue(startName, itemValue);
+    setFromTime(itemValue);
+    setValue(endName, times[findIndex + 1]);
+  };
+  const handleTo = (itemValue: string) => {
+    const startIndex = times.findIndex((item: string) => item === fromTime);
+    const endIndex = times.findIndex((item: string) => item === itemValue);
+    if (startIndex >= endIndex) {
+      setFromTime(times[endIndex - 1]);
+      setValue(startName, times[endIndex - 1]);
+    }
+    setValue(endName, itemValue);
+    setToTime(itemValue);
+  };
+
   return (
     <View>
       <Modal animated transparent visible={visible} animationType="fade">
@@ -76,9 +94,7 @@ const TimeSlotPicker = ({
           ]}>
           <View style={styles.halfCont}>
             <TitleText text={'From'} textStyle={styles.title} />
-            <Picker
-              selectedValue={fromTime}
-              onValueChange={itemValue => setFromTime(itemValue)}>
+            <Picker selectedValue={fromTime} onValueChange={handleFrom}>
               {times.map((item: string, index: number) => (
                 <Picker.Item value={item} label={item.toString()} key={index} />
               ))}
@@ -86,9 +102,7 @@ const TimeSlotPicker = ({
           </View>
           <View style={styles.halfCont}>
             <TitleText text={'To'} textStyle={styles.title} />
-            <Picker
-              selectedValue={toTime}
-              onValueChange={itemValue => setToTime(itemValue)}>
+            <Picker selectedValue={toTime} onValueChange={handleTo}>
               {times.map((item: string, index: number) => (
                 <Picker.Item value={item} label={item.toString()} key={index} />
               ))}

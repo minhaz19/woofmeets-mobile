@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import BottomSpacing from '../../../components/UI/BottomSpacing';

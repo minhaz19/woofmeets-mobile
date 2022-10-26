@@ -120,6 +120,8 @@ const DoggyDayCare = () => {
               title={'Drop Off Time Slot ⏰'}
               startName={'dropOffStartTime'}
               endName={'dropOffEndTime'}
+              defaultFrom={dropOffStartTime}
+              defaultTo={dropOffEndTime}
             />
           </>
           <>
@@ -157,6 +159,8 @@ const DoggyDayCare = () => {
               title={'Pick Up Time Slot ⏰'}
               startName={'pickUpStartTime'}
               endName={'pickUpEndTime'}
+              defaultFrom={pickUpStartTime}
+              defaultTo={pickUpEndTime}
             />
           </>
         </View>

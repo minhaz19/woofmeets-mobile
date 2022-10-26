@@ -9,7 +9,6 @@ import {useDayTimeSlot} from './utils/useDayTimeSlot';
 
 const DayTimeSlot = () => {
   const {newData, isRecurring, handleMultipleCheck} = useDayTimeSlot();
-
   return (
     <View>
       {newData?.map((item: any, index: number) => (
@@ -33,7 +32,13 @@ const DayTimeSlot = () => {
             <View style={styles.section}>
               <TitleText textStyle={styles.day} text={item.date} />
               <View style={styles.checkContainer}>
-                <DescriptionText text={`Use same walk times as ${item.day}`} />
+                <DescriptionText
+                  text={`Use same walk times as ${
+                    item.active
+                      ? newData.find((it: any) => it.startDate === true).date
+                      : item.date
+                  }`}
+                />
                 <SwitchView
                   isActive={item.active}
                   activeText=""
