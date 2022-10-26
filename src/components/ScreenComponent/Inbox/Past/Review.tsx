@@ -10,11 +10,15 @@ import ButtonCom from '../../../UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
 import IOSButton from '../../../UI/IOSButton';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
 
 interface Props {
   setIsReviewModal: (value: boolean) => void;
   setModalVisible: (arg1: boolean) => void;
+  appointmentOpk: string;
 }
+
 const Review: FC<Props> = props => {
   const {colors, isDarkMode} = useTheme();
   const [isRatings, setIsRatings] = useState(0);
@@ -24,16 +28,22 @@ const Review: FC<Props> = props => {
     setIsRatings(value);
     setErrorMessage(null);
   };
-  const handleSubmit = () => {
+  const endPoint = '/review';
+  const {loading, request} = useApi(methods._post);
+  const handleSubmit = async () => {
     let formattedData;
     if (isRatings === 0) {
       setErrorMessage('please select ratings');
     } else {
       formattedData = {
-        appointmentId: 0,
+        appointmentId: 1,
         rating: isRatings,
         comment: isText,
       };
+    }
+    const result = await request(endPoint, formattedData);
+    if (result.ok) {
+      props.setIsReviewModal(false);
     }
   };
   return (
@@ -70,7 +80,7 @@ const Review: FC<Props> = props => {
         containerStyle={btnStyles.containerStyleFullWidth}
         titleStyle={btnStyles.titleStyle}
         onSelect={handleSubmit}
-        //    loading={loading}
+        loading={loading}
       />
       <IOSButton
         containerStyle={styles.containerStyleSmall}
