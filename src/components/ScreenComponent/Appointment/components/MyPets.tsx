@@ -33,7 +33,10 @@ const MyPets = ({appointmentType}: Props) => {
   const {setValue, watch} = useFormContext();
   const {petsId: pp} = watch();
   useEffect(() => {
-    if (providerId === user?.user?.provider?.id) {
+    if (
+      providerId === user?.user?.provider?.id &&
+      appointmentType !== 'create'
+    ) {
       const modArray = petsInfo?.map((item: any, index: number) => ({
         id: index + 1,
         name: item.pet.name,
@@ -64,6 +67,7 @@ const MyPets = ({appointmentType}: Props) => {
   }, [allPets, providerId, user, petsInfo]);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
+  console.log('my', allPets);
   return (
     <>
       {appointmentType !== 'create' &&

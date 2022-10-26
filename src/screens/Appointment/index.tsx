@@ -8,11 +8,14 @@ import AppActivityIndicator from '../../components/common/Loaders/AppActivityInd
 import {useAppointment} from './utils/useAppointment';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import {RefreshControl} from 'react-native-gesture-handler';
-const Appointment = ({route}) => {
+interface Props {
+  route: any;
+}
+const Appointment = ({route}: Props) => {
   const {handleSubmit, loading, btnLoading, refreshing, onRefresh} =
     useAppointment();
   const {colors} = useTheme();
-const {appointmentType} = route.params;
+  const {appointmentType} = route.params;
   return (
     <>
       {loading && <AppActivityIndicator visible />}
