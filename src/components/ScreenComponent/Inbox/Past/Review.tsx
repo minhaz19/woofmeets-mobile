@@ -35,7 +35,6 @@ const Review: FC<Props> = props => {
         comment: isText,
       };
     }
-    console.log(formattedData);
   };
   return (
     <>

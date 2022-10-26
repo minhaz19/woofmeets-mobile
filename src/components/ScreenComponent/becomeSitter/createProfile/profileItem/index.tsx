@@ -101,7 +101,7 @@ const ProfileItemCard = (props: {
 const styles = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   cardContainer: {
     width: '100%',

@@ -13,6 +13,7 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useAppSelector} from '../../../store/store';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
+import { format } from 'date-fns';
 const acceptEndpoint = '/appointment/accept/proposal/';
 const rejectEndpoint = '/appointment/cancel/';
 const ActivityHeader = (props: {
@@ -53,7 +54,6 @@ const ActivityHeader = (props: {
       ],
     );
   };
-  console.log('provider user', proposedServiceInfo);
   return (
     <View style={[styles.container, {borderColor: colors.borderColor}]}>
       <View style={styles.containerInner}>
@@ -85,9 +85,9 @@ const ActivityHeader = (props: {
                   proposedServiceInfo?.serviceTypeId === 2
                     ? proposedServiceInfo?.serviceName +
                       ' on ' +
-                      proposedServiceInfo?.proposalStartDate +
+                      format(new Date(proposedServiceInfo?.proposalStartDate), 'PP') +
                       '-' +
-                      proposedServiceInfo?.proposalEndDate
+                      format(new Date(proposedServiceInfo?.proposalEndDate), 'PP')
                     : proposedServiceInfo?.serviceTypeId === 3 ||
                       proposedServiceInfo?.serviceTypeId === 5
                     ? proposedServiceInfo?.serviceName
@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
   },
   titleMargin: {
     marginLeft: 10,
+    width: '84%',
   },
   leftContainer: {
     paddingTop: 4,
