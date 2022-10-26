@@ -20,8 +20,11 @@ const SitterDetails = () => {
   const dispatch = useAppDispatch();
   const sitterInfo = useAppSelector(state => state.details.sitterInfo?.providerDetails);
   const sitterDetailsSubmit = (sitterData: any) => {
-    const method = sitterInfo ? 'patch' : 'post';
-    dispatch(postSitterDetails({sitterData, method}));
+    console.log('logging');
+    const mtd = sitterInfo ? 'patch' : 'post';
+    const data = {...sitterData, mtd}
+    dispatch(postSitterDetails(data));
+    console.log('logging1');
     dispatch(setProfileData({pass: 2}));
     // new update onboarding
     dispatch(setSitterData({pass: 2}));

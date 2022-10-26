@@ -13,49 +13,57 @@ export const postSitterDetails = createAsyncThunk(
       experienceDescription,
       environmentDescription,
       scheduleDescription,
+      mtd
     }: any,
     method: any,
   ) => {
     const dispatch = useAppDispatch();
+    console.log('---hd',headline, mtd)
     const body = {
       headline: headline,
       yearsOfExperience: yearsOfExperience,
       experienceDescription: experienceDescription,
       environmentDescription: environmentDescription,
       scheduleDescription: scheduleDescription,
-      dogsExperience: "string",
-      walkingExperience: "string",
-      requestedDogInfo: "string",
       about: "string",
-      skills: [
-        1,2
-      ]
+      skills: [1,2]
     };
+    
+    console.log(body);
     try {
-      const response: ApiResponse<any> = await 
-      method === 'post' ? apiClient.post(
-        '/user-profile/provider-details',
-        body,
-      ) : apiClient.patch(
-        '/user-profile/provider-details',
-        body,
-      );
-      console.log(response);
-      if (!response.ok) {
-        throw new Error(response.data.message);
-      }
-      if (response.ok) {
-        // const dispatch = useAppDispatch();
-        // dispatch(setProfileData({pass:2}));
-        dispatch(getSitterDetails());
-        return response.data;
-      }
-    } catch (error: any) {
-      if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message);
+      if (mtd === 'post') {
+        const response: ApiResponse<any> = await apiClient.post(
+          '/user-profile/provider-details',
+          body,
+        );
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(response.data.message);
+        }
+        if (response.ok) {
+          // const dispatch = useAppDispatch();
+          // dispatch(setProfileData({pass:2}));
+          dispatch(getSitterDetails());
+          return response.data;
+        }
       } else {
-        return rejectWithValue(error.message);
+        const response: ApiResponse<any> = await apiClient.patch(
+          '/user-profile/provider-details',
+          body,
+        );
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(response.data.message);
+        }
+        if (response.ok) {
+          // const dispatch = useAppDispatch();
+          // dispatch(setProfileData({pass:2}));
+          dispatch(getSitterDetails());
+          return response.data;
+        }
       }
+
+    } catch (error: any) {
     }
   },
 );
