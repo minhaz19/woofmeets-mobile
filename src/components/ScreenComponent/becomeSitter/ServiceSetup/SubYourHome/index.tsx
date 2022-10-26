@@ -68,7 +68,7 @@ const SubYourHome = ({handlePost, postLoading, attributes}: Props) => {
           </TouchableOpacity>
         </View>
         <View>
-          {YourHomeData.map((data: any, index: number) => {
+          {YourHomeData?.map((data: any, index: number) => {
             return (
               <View key={index} style={{marginTop: 10}}>
                 <HeaderText text={data?.title} />
@@ -101,7 +101,7 @@ const SubYourHome = ({handlePost, postLoading, attributes}: Props) => {
             );
           })}
         </View>
-        {attributes.length > 0 && (
+        {attributes?.length > 0 && (
           <View>
             <HeaderText
               text={attributes[0].displayName}

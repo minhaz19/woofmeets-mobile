@@ -44,8 +44,7 @@ const YourHome = () => {
           styles.rootContainer,
           {backgroundColor: colors.backgroundColor},
         ]}
-        showsVerticalScrollIndicator={false}
-        >
+        showsVerticalScrollIndicator={false}>
         <ReusableHeader
           itemId={itemId}
           name={name}

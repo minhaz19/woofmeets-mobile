@@ -66,9 +66,9 @@ export const useDayTimeSlot = () => {
         id: index + 1,
         date: item,
         startDate:
-          proposalRecurringDate && proposalScheduleDate?.length !== 0
+          proposalScheduleDate && proposalScheduleDate?.length !== 0
             ? proposalScheduleDate?.some(
-                (elm: any) => elm.date === item.day && elm?.startDate === true,
+                (elm: any) => elm.date === item && elm?.startDate === true,
               )
             : index === 0
             ? true

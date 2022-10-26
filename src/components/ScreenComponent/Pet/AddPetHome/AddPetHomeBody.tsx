@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import AddPetImage from '../components/AddPetImage';
 import BottomSpacing from '../../../UI/BottomSpacing';

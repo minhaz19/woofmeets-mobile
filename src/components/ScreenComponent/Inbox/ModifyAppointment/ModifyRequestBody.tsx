@@ -24,7 +24,7 @@ const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
       {(serviceId === 3 || serviceId === 5) && <DropInVisitWalking />}
       {serviceId === 4 && <DoggyDayCare />}
 
-      <MyPets />
+      <MyPets appointmentType={''} />
 
       <SubmitButton
         title="Submit Proposal"

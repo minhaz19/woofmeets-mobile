@@ -10,9 +10,6 @@ import HeaderText from '../../components/common/text/HeaderText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import MiddleModal from '../../components/UI/modal/MiddleModal';
 import messaging from '@react-native-firebase/messaging';
-import baseUrl from '../../utils/helpers/httpRequest';
-import { ApiResponse } from 'apisauce';
-import apiClient from '../../api/client';
 
 const Notifications = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);

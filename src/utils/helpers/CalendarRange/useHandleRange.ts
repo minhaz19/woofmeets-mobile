@@ -4,13 +4,18 @@ import {useWatch} from 'react-hook-form';
 import {_dateRange} from '../datesArray';
 import {compareDate} from './compareDate';
 import {orderAndStyleRange} from './orderAndStyleRange';
-
+let orderMultiDates: any = [];
 export const useHandleRange = (
   type: string,
   setValue?: (arg: string, arg2: any) => void,
 ) => {
   const [_markedStyle, setMarkedStyle] = useState({});
-  const {proposalStartDate, proposalEndDate, recurringStartDate} = useWatch();
+  const {
+    proposalStartDate,
+    proposalEndDate,
+    recurringStartDate,
+    multiDate: rr,
+  } = useWatch();
   const [step, setSteps] = useState(1);
   const [dateRange, setDateRange] = useState<Date[]>([]);
   const [prevDate, setPrevDate] = useState<false | undefined | Date>();
@@ -19,15 +24,23 @@ export const useHandleRange = (
   const [startingDate, setStartingDate] = useState(proposalStartDate);
   const [endingDate, setEndingDate] = useState(proposalEndDate);
 
+  useEffect(() => {
+    orderMultiDates = [...rr];
+    const {styledMarkedRange} = orderAndStyleRange([...rr], 'MULTI');
+    setMarkedStyle(styledMarkedRange);
+  }, []);
   const handleDayPress = (date: any) => {
     if (type === 'SINGLE') {
       setSingleSelect(date.dateString);
       setValue && setValue('recurringStartDate', date.dateString);
     } else if (type === 'MULTI') {
-      const {styledMarkedRange, orderMultiDates} = orderAndStyleRange(
-        date,
-        'MULTI',
-      );
+      const matchIndex = orderMultiDates?.indexOf(date.dateString);
+      if (matchIndex === -1) {
+        orderMultiDates.push(date.dateString);
+      } else {
+        orderMultiDates.splice(matchIndex, 1);
+      }
+      const {styledMarkedRange} = orderAndStyleRange(orderMultiDates, 'MULTI');
 
       setMarkedStyle(styledMarkedRange);
 

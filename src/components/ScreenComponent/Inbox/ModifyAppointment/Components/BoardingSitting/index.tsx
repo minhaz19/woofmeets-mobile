@@ -15,14 +15,11 @@ import {useFormContext} from 'react-hook-form';
 const BoardingSitting = () => {
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
-  const {getValues} = useFormContext();
-  const {
-    proposalStartDate,
-    dropOffStartTime,
-    dropOffEndTime,
-    pickUpStartTime,
-    pickUpEndTime,
-  } = getValues();
+  const {watch} = useFormContext();
+  const {dropOffStartTime, dropOffEndTime, pickUpStartTime, pickUpEndTime} =
+    watch();
+  // const {dropOffStartTime, dropOffEndTime, pickUpStartTime, pickUpEndTime} =
+  //   getValues();
 
   const {isDarkMode} = useTheme();
 
@@ -62,6 +59,8 @@ const BoardingSitting = () => {
             title={'Drop Off Time Slot ⏰'}
             startName={'dropOffStartTime'}
             endName={'dropOffEndTime'}
+            defaultFrom={dropOffStartTime}
+            defaultTo={dropOffEndTime}
           />
         </>
         <>
@@ -95,6 +94,8 @@ const BoardingSitting = () => {
             title={'Pick Up Time Slot ⏰'}
             startName={'pickUpStartTime'}
             endName={'pickUpEndTime'}
+            defaultFrom={pickUpStartTime}
+            defaultTo={pickUpEndTime}
           />
         </>
       </View>
