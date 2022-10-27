@@ -19,12 +19,12 @@ const Messages = (props: { roomId: any; }) => {
     const [messages, setMessages] = useState([]);
     const [isLoadingMsg, setIsLoadingMsg] = useState<boolean>(false);
     const [user, setUser] = useState();
-    const getToken = async() => {
+    const getTokenDecoded = async() => {
       const decoded: any = await storage.getUser();
       setUser(decoded);
     }
     useEffect(() => {
-      getToken()
+      getTokenDecoded()
     }, [])
     // console.log('msg-----', messages, user?.id)
     const getPreviousMessages = async () => {

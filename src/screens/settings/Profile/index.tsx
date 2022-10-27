@@ -27,6 +27,7 @@ const Profile = (props: {navigation: {navigate: (arg0: string, arg1?: any) => an
 
 
   const [token, setToken] = useState<any>();
+  console.log(token);
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {

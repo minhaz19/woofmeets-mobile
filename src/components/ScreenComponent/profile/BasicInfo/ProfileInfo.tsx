@@ -11,6 +11,7 @@ const img =
 const ProfileInfo = () => {
   const {colors} = useTheme();
   const {userInfo} = useAppSelector(state => state.userProfile);
+  console.log('userinfo',userInfo);
   return (
     <View style={styles.topContainer}>
       <View
