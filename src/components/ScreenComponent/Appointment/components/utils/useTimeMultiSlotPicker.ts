@@ -12,7 +12,6 @@ export const useTimeMultiSlotPicker = (
 
   const [newData, setDatas] = useState<any>([]);
   useMemo(() => {
-
     const times: any = []; // time array
     let tt = 0; // start time
     const ap = [' AM', ' PM']; // AM-PM
@@ -43,7 +42,7 @@ export const useTimeMultiSlotPicker = (
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-
+  console.log('init', singleItem);
   if (initalSlot?.length > 0) {
     if (isRecurring) {
       const matchIndex = Days.findIndex(
@@ -71,5 +70,6 @@ export const useTimeMultiSlotPicker = (
       }
     }
   }
+  console.log('DDD', Dates);
   return {handleMultipleCheck, newData, Dates, Days};
 };

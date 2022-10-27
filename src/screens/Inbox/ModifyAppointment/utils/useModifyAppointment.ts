@@ -123,6 +123,7 @@ export const useModifyAppointment = (route: any) => {
           });
         }
       } else if (serviceTypeId === 3 || serviceTypeId === 5) {
+        console.log('specificModDates', specificModDates);
         const sortedSpecificModDates = !isRecurring
           ? specificModDates.map((item: any, i: number) => ({
               id: i + 1,
@@ -218,14 +219,15 @@ export const useModifyAppointment = (route: any) => {
                   : 'NONE',
               proposalOtherDate: sortedSpecificModDates,
             };
-        const result = await request(endpoint, dropDogPayload);
+        console.log('doggy payload', dropDogPayload);
+        // const result = await request(endpoint, dropDogPayload);
 
-        if (result.ok) {
-          dispatch(getProviderProposal(result.data.data.appointment.opk));
-          navigation.navigate('ActivityScreen', {
-            appointmentOpk: result.data.data.appointment.opk,
-          });
-        }
+        // if (result.ok) {
+        //   dispatch(getProviderProposal(result.data.data.appointment.opk));
+        //   navigation.navigate('ActivityScreen', {
+        //     appointmentOpk: result.data.data.appointment.opk,
+        //   });
+        // }
       } else if (serviceTypeId === 4) {
         const DoggyDayFT = isRecurring
           ? `Doggy Day Care Proposal:\nRepeat service starting from: ${recurringStartDate}\n 

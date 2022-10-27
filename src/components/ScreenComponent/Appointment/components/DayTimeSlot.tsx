@@ -9,6 +9,7 @@ import {useDayTimeSlot} from './utils/useDayTimeSlot';
 
 const DayTimeSlot = () => {
   const {newData, isRecurring, handleMultipleCheck} = useDayTimeSlot();
+  console.log('new ', newData);
   return (
     <View>
       {newData?.map((item: any, index: number) => (

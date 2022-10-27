@@ -22,6 +22,9 @@ export const useDayTimeSlot = () => {
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
+    if (isRecurring) {
+    } else if (!isRecurring) {
+    }
   };
   const getRecurringDays = (rd: any, rsd: any, pod: any) => {
     const output = rd?.filter((obj: any) => {
@@ -120,7 +123,7 @@ export const useDayTimeSlot = () => {
           (it: {date: string}) => item.date === it.date,
         );
       });
-
+      console.log('un matched', 's', specificModDatesRef, 'u', unMatched);
       if (specificModDatesRef && specificModDatesRef?.length > 0) {
         const sameData = unMatched?.map((item: any) => ({
           date: item.date,
