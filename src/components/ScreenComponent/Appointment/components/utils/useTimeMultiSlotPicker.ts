@@ -42,7 +42,6 @@ export const useTimeMultiSlotPicker = (
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-  console.log('init', singleItem);
   if (initalSlot?.length > 0) {
     if (isRecurring) {
       const matchIndex = Days.findIndex(
@@ -52,7 +51,7 @@ export const useTimeMultiSlotPicker = (
         Days.push({
           date: singleItem.date,
           visitTime: initalSlot,
-          sameAsStartDate: false,
+
           startDate: singleItem.startDate,
         });
       }
@@ -64,7 +63,6 @@ export const useTimeMultiSlotPicker = (
         Dates.push({
           date: singleItem.date,
           visitTime: initalSlot,
-          sameAsStartDate: false,
           startDate: singleItem.startDate,
         });
       }

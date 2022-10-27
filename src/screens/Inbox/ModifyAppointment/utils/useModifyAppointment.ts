@@ -220,14 +220,14 @@ export const useModifyAppointment = (route: any) => {
               proposalOtherDate: sortedSpecificModDates,
             };
         console.log('doggy payload', dropDogPayload);
-        // const result = await request(endpoint, dropDogPayload);
+        const result = await request(endpoint, dropDogPayload);
 
-        // if (result.ok) {
-        //   dispatch(getProviderProposal(result.data.data.appointment.opk));
-        //   navigation.navigate('ActivityScreen', {
-        //     appointmentOpk: result.data.data.appointment.opk,
-        //   });
-        // }
+        if (result.ok) {
+          dispatch(getProviderProposal(result.data.data.appointment.opk));
+          navigation.navigate('ActivityScreen', {
+            appointmentOpk: result.data.data.appointment.opk,
+          });
+        }
       } else if (serviceTypeId === 4) {
         const DoggyDayFT = isRecurring
           ? `Doggy Day Care Proposal:\nRepeat service starting from: ${recurringStartDate}\n 

@@ -1,5 +1,13 @@
-import {StyleSheet, View, TouchableOpacity, useColorScheme, Alert, ScrollView} from 'react-native';
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  useColorScheme,
+  Alert,
+  ScrollView,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import ProfileInfo from '../../../components/ScreenComponent/profile/BasicInfo/ProfileInfo';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -10,21 +18,24 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 import HeaderText from '../../../components/common/text/HeaderText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ShortText from '../../../components/common/text/ShortText';
-import { getProviderProfile } from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
-import { useNavigation } from '@react-navigation/native';
+import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
+import {useNavigation} from '@react-navigation/native';
 import jwtDecode from 'jwt-decode';
 import authStorage from '../../../utils/helpers/auth/storage';
 import TitleText from '../../../components/common/text/TitleText';
-import { getUserOnboardStatus } from '../../../store/slices/connect/stripe';
+import {getUserOnboardStatus} from '../../../store/slices/connect/stripe';
+import {getUserServices} from '../../../store/slices/profile/services';
+import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 
-const Profile = (props: {navigation: {navigate: (arg0: string, arg1?: any) => any}}) => {
+const Profile = (props: {
+  navigation: {navigate: (arg0: string, arg1?: any) => any};
+}) => {
   const {colors} = useTheme();
   const isDarkMode = useColorScheme() === 'dark';
   const {loading} = useAppSelector(state => state.userProfile);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  useProfileData();
-
+  // useProfileData();
 
   const [token, setToken] = useState<any>();
   const getDecodedToken = async () => {
@@ -37,20 +48,26 @@ const Profile = (props: {navigation: {navigate: (arg0: string, arg1?: any) => an
   };
   useEffect(() => {
     getDecodedToken();
-    dispatch(getUserOnboardStatus())
+    dispatch(getUserOnboardStatus());
+    dispatch(getUserServices());
+    dispatch(getUserProfileInfo());
   }, []);
-
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, backgroundColor: colors.backgroundColor}}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{flex: 1, backgroundColor: colors.backgroundColor}}>
       {loading && <AppActivityIndicator visible={true} />}
-      <View
-        style={styles.rootContainer}>
-        {!token?.provider && <View style={{paddingVertical: 20}}>
-          <TitleText 
-            textStyle={{color: Colors.blue, textAlign: 'center'}}
-            text={'Your sitter request status in under progress, you will be notified when your status changes'}
-          />
-        </View>}
+      <View style={styles.rootContainer}>
+        {!token?.provider && (
+          <View style={{paddingVertical: 20}}>
+            <TitleText
+              textStyle={{color: Colors.blue, textAlign: 'center'}}
+              text={
+                'Your sitter request status in under progress, you will be notified when your status changes'
+              }
+            />
+          </View>
+        )}
         <View style={styles.headerContainer}>
           <View style={styles.profileContainer}>
             <ProfileInfo />

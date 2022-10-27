@@ -15,7 +15,7 @@ const Appointment = ({route}: Props) => {
   const {handleSubmit, loading, btnLoading, refreshing, onRefresh} =
     useAppointment();
   const {colors} = useTheme();
-  const {appointmentType} = route.params;
+  const {appointmentType} = route?.params;
   return (
     <>
       {loading && <AppActivityIndicator visible />}
