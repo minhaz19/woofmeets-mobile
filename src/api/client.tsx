@@ -13,22 +13,12 @@ apiClient.addAsyncRequestTransform(async request => {
     return;
   }
   request.headers['access-token'] = authToken;
-  // request.headers.Authorization = 'Bearer ' + authToken;
+  request.headers.Authorization = 'Bearer ' + authToken;
 });
 
 export const apiMsg = create({
   baseURL: 'https://msg.hirebeet.com',
   timeout: 30000,
 });
-
-// apiMsg.addAsyncRequestTransform(async request => {
-//   const authToken = await authStorage.getToken();
-//   if (!authToken) {
-//     return;
-//   }
-//   request.headers['access-token'] = authToken;
-//   // request.headers.Authorization = 'Bearer ' + authToken;
-// });
-
 
 export default apiClient;

@@ -9,7 +9,8 @@ const sitterDetailsValidationSchema = Yup.object().shape({
   experienceDescription: Yup.string().required('This field is required'),
   environmentDescription: Yup.string().required('This field is required'),
   scheduleDescription: Yup.string().required('This field is required'),
-  // about: Yup.string(),
+  // about: Yup.string().required('This field is required'),
+  // skills: 
 });
 
 export {sitterDetailsValidationSchema};
