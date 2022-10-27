@@ -28,6 +28,7 @@ import {
 import {setServiceSetup} from '../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 import ServiceSetUp from '../ServiceSetUp';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import ServiceReusableModal from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/Common/ServiceReusableModal';
 
 const HomeProfile = () => {
   const [, setLoading] = useState<boolean>(false);
@@ -108,7 +109,7 @@ const HomeProfile = () => {
               backgroundColor: colors.backgroundColor,
             },
           ]}>
-          <ModalBottomView
+          {/* <ModalBottomView
             isModalVisible={modalVisible}
             setIsModalVisible={setModalVisible}>
             <HeaderText text={modalData[0].title} />
@@ -123,7 +124,13 @@ const HomeProfile = () => {
                 setModalVisible(!modalVisible);
               }}
             />
-          </ModalBottomView>
+          </ModalBottomView> */}
+          <ServiceReusableModal
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            question="Where are the rest of my services?"
+            description="You may notice during the signup process that you can only see one of the services you decided to offer clients. This is normal. We will run a background check on you once you’ve set up your profile. Assuming we accept you to join the Woofmeets team, you’ll be able to come back to your dashboard and set up the rest of your services."
+          />
           <ModalBottomView
             isModalVisible={isServiceModalVisible}
             setIsModalVisible={setIsServiceModalVisible}>

@@ -16,6 +16,7 @@ import {styles} from './styles';
 import {getOnboardingProgress} from '../../../store/slices/onBoarding/initial';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getCurrentplan} from '../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
+import { getSkillsData } from '../../../store/slices/profile/details';
 
 const SitterInitialScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -25,6 +26,7 @@ const SitterInitialScreen = (props: {
   useEffect(() => {
     dispatch(getOnboardingProgress());
     dispatch(getCurrentplan());
+    dispatch(getSkillsData());
   }, []);
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const currentPlan = useAppSelector(state => state.currentPlan);

@@ -1,5 +1,5 @@
 export const availabilityInput = {
-  title: 'Are you home full - time during the week?',
+  title: 'Are you home full-time during the week?',
   name: 'fulltime',
   id: 100,
   radio: true,
@@ -20,10 +20,10 @@ export const availabilityInput = {
   ],
 };
 export const availabilitySelectDay = {
-  title: 'What days of the week will you typically be available for Boarding?',
+  title: 'What days of the week will you typically be available?',
   name: 'selectDay',
   subtitle:
-    'Select the days you are typically available. You can update your calendar at any time.',
+    'This will update your generic availability. You can edit any date individually by going to your calendar.',
   id: 101,
   options: [
     {id: 29, type: 'Sat', value: null, name: 'sat'},
@@ -36,7 +36,7 @@ export const availabilitySelectDay = {
   ],
 };
 export const availabilityHomeFullTimeInDay = {
-  title: 'How frequently can you provide potty break?',
+  title: 'How frequently can you provide potty breaks?',
   name: 'pottyBreak',
   id: 102,
   radio: true,

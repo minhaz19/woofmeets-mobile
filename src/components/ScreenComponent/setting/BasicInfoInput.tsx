@@ -7,7 +7,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
 import Text_Size from '../../../constants/textScaling';
@@ -17,13 +17,15 @@ import BottomSpacing from '../../UI/BottomSpacing';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useFormContext} from 'react-hook-form';
 import {contries} from '../../../utils/config/Data/AddPetData';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AppSelectField from '../../common/Form/AppSelectField';
 import {
   basicInfoInput,
   locationInput,
 } from '../../../utils/config/Data/basicInfoDatas';
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
+import { getUserProfileInfo } from '../../../store/slices/userProfile/userProfileAction';
+import DescriptionText from '../../common/text/DescriptionText';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -41,6 +43,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     control,
     formState: {errors},
   } = useFormContext();
+  const dispatch = useAppDispatch();
   const renderHeader = useCallback(() => {
     return (
       <>
@@ -79,9 +82,10 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
           </View>
           <View style={styles.nameContainer}>
             <HeaderText
-              text="Location Information"
+              text="Add your address"
               textStyle={styles.textStyle}
             />
+            <DescriptionText text={'Your address is only shown to your client when their pet stays in your home'} />
           </View>
         </View>
       </>
@@ -98,8 +102,22 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
       </View>
     );
   }, [handleSubmit, loading]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async() => {
+    setRefreshing(true);
+    await dispatch(getUserProfileInfo());
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
+
   return (
         <KeyboardAwareFlatList
+          refreshing={refreshing}
+          onRefresh={onRefresh}
           data={locationInput}
           horizontal={false}
           extraHeight={60}
@@ -174,7 +192,6 @@ const styles = StyleSheet.create({
   textInputStyle: {},
   nameContainer: {
     paddingVertical: SCREEN_WIDTH <= 800 ? '5%' : '3%',
-    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   textStyle: {

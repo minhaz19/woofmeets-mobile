@@ -27,11 +27,11 @@ const ContactScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const contact = useAppSelector(state => state.contact);
 
-  const onRefresh = useCallback(() => {
+  const onRefresh = async() => {
     setRefreshing(true);
-    dispatch(getContactInfo());
+    await dispatch(getContactInfo());
     setRefreshing(false);
-  }, [dispatch]);
+  };
 
   useEffect(() => {
     onRefresh();
@@ -59,7 +59,6 @@ const ContactScreen = () => {
           contact.contactInfo
             ? {
                 emergencyContactName: contact.contactInfo.name,
-                email: contact.contactInfo.email,
                 phone: contact.contactInfo.phone,
                 emergencyPhone: contact.contactInfo.phone,
               }

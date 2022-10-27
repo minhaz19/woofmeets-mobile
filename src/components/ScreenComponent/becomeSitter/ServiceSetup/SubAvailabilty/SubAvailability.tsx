@@ -45,10 +45,12 @@ const SubAvailability = ({handlePost, loading}: Props) => {
       <ServiceReusableModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        question={'Why is availability important?'}
+        description={'Letting your potential clients know about your availability is a crucial part of setting up your profile that you should not overlook. Allowing pet owners who are browsing the Woofmeets site a chance to see your weekly schedule is the first step toward seeing whether you’re going to be compatible with them. Be sure to immediately update the availability on your profile for each day if you ever want to make any changes.'}
       />
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
-          <BigText text={'Pet Preference'} textStyle={styles.headerText} />
+          <BigText text={'Availability'} textStyle={styles.headerText} />
           <TouchableOpacity
             onPress={() => setModalVisible(true)}
             style={styles.iconContainer}>

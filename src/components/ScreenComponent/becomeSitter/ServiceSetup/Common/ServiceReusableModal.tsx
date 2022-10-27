@@ -12,8 +12,10 @@ import BottomSpacing from '../../../../UI/BottomSpacing';
 interface Props {
   modalVisible: boolean;
   setModalVisible: (arg1: boolean) => void;
+  question?: string;
+  description?: string;
 }
-const ServiceReusableModal = ({modalVisible, setModalVisible}: Props) => {
+const ServiceReusableModal = ({modalVisible, setModalVisible, question, description}: Props) => {
   const modalData = [
     {
       id: 1,
@@ -31,10 +33,10 @@ const ServiceReusableModal = ({modalVisible, setModalVisible}: Props) => {
       <ModalBottomView
         isModalVisible={modalVisible}
         setIsModalVisible={setModalVisible}>
-        <HeaderText text={modalData[0].title} />
+        <HeaderText text={question} />
         <Divider />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <DescriptionText text={modalData[0].text} />
+          <DescriptionText text={description} />
           <IOSButton
             title={'Close'}
             textAlignment={btnStyles.textAlignment}

@@ -59,6 +59,8 @@ const SubCancellationPolicy = ({
       <ServiceReusableModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        question="What is cancellation policy?"
+        description="Every sitter should decide how much advance notice they need if a customer wants to cancel. Try to select a timeframe that’s reasonable for both yourself and your prospective clients."
       />
       <View style={styles.flexContainer}>
         <BigText text={'Cancellation policy'} textStyle={styles.headerText} />
