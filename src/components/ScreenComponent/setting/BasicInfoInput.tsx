@@ -1,12 +1,4 @@
-import {
-  FlatList,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
@@ -23,9 +15,11 @@ import {
   basicInfoInput,
   locationInput,
 } from '../../../utils/config/Data/basicInfoDatas';
-import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
-import { getUserProfileInfo } from '../../../store/slices/userProfile/userProfileAction';
+import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
+import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 import DescriptionText from '../../common/text/DescriptionText';
+import GoogleAutoComplete from '../../common/GoogleAutoComplete';
+import {states} from '../../../screens/profile/BasicInfo/utils/basicInfoState';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -41,9 +35,30 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   const lastName = userInfo?.lastName;
   const {
     control,
+    setValue,
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
+
+  const onPressAddress = (data: any, details: any) => {
+    const lat = details.geometry.location.lat;
+    const lng = details.geometry.location.lng;
+    const zipCode = details?.address_components.find((addressComponent: any) =>
+      addressComponent.types.includes('postal_code'),
+    )?.short_name;
+    const city = details?.address_components.find((addressComponent: any) =>
+      addressComponent.types.includes('locality'),
+    )?.short_name;
+    const state = details?.address_components.find((addressComponent: any) =>
+      addressComponent.types.includes('administrative_area_level_1'),
+    )?.long_name;
+    setValue('addressLine1', details?.formatted_address);
+    setValue('lat', lat);
+    setValue('lng', lng);
+    setValue('city', city);
+    setValue('state', state);
+    setValue('zipCode', zipCode);
+  };
   const renderHeader = useCallback(() => {
     return (
       <>
@@ -81,11 +96,12 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
             />
           </View>
           <View style={styles.nameContainer}>
-            <HeaderText
-              text="Add your address"
-              textStyle={styles.textStyle}
+            <HeaderText text="Add your address" textStyle={styles.textStyle} />
+            <DescriptionText
+              text={
+                'Your address is only shown to your client when their pet stays in your home'
+              }
             />
-            <DescriptionText text={'Your address is only shown to your client when their pet stays in your home'} />
           </View>
         </View>
       </>
@@ -104,7 +120,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   }, [handleSubmit, loading]);
   const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = async() => {
+  const onRefresh = async () => {
     setRefreshing(true);
     await dispatch(getUserProfileInfo());
     setRefreshing(false);
@@ -113,59 +129,70 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
-
+  // : item.name === 'state' ? (
+  //   <AppSelectField
+  //     label={item.title}
+  //     name={item.name}
+  //     data={states}
+  //     control={control}
+  //     placeholder={item.placeholder}
+  //   />
+  // )
   return (
-        <KeyboardAwareFlatList
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          data={locationInput}
-          horizontal={false}
-          extraHeight={60}
-          extraScrollHeight={120}
-          showsVerticalScrollIndicator={false}
-          renderItem={useCallback(
-            ({item}) => {
-              return (
-                <>
-                  {!item.select && (
-                    <View style={styles.inputContainer}>
-                      <AppFormField
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        keyboardType={'default'}
-                        placeholder={item.placeholder}
-                        textContentType={'none'}
-                        name={item.name}
-                        label={item.title}
-                        textInputStyle={styles.textInputStyle}
-                        control={control}
-                        errors={errors}
-                        // defaultValue={basicInfo?.[item.name]}
-                      />
-                    </View>
+    <KeyboardAwareFlatList
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      data={locationInput}
+      horizontal={false}
+      extraHeight={60}
+      extraScrollHeight={120}
+      showsVerticalScrollIndicator={false}
+      renderItem={useCallback(
+        ({item}) => {
+          return (
+            <>
+              {!item.select && (
+                <View style={styles.inputContainer}>
+                  {item.name === 'addressLine1' ? (
+                    <GoogleAutoComplete onPressAddress={onPressAddress} />
+                  ) : (
+                    <AppFormField
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      keyboardType={'default'}
+                      placeholder={item.placeholder}
+                      textContentType={'none'}
+                      name={item.name}
+                      label={item.title}
+                      textInputStyle={styles.textInputStyle}
+                      control={control}
+                      errors={errors}
+                      // defaultValue={basicInfo?.[item.name]}
+                    />
                   )}
-                  {item.select && (
-                    <View style={styles.selectContainer}>
-                      <AppSelectField
-                        label={item.title}
-                        name={item.name}
-                        data={contries}
-                        disable={true}
-                        control={control}
-                        placeholder={'USA'}
-                        defaultText="USA"
-                      />
-                    </View>
-                  )}
-                </>
-              );
-            },
-            [control, errors],
-          )}
-          keyExtractor={(item, index) => item.name + index.toString()}
-          ListHeaderComponent={renderHeader}
-          ListFooterComponent={renderFooter}
-        >
+                </View>
+              )}
+              {item.select && (
+                <View style={styles.selectContainer}>
+                  <AppSelectField
+                    label={item.title}
+                    name={item.name}
+                    data={contries}
+                    disable={true}
+                    control={control}
+                    placeholder={'USA'}
+                    defaultText="USA"
+                  />
+                </View>
+              )}
+            </>
+          );
+        },
+        [control, errors],
+      )}
+      keyExtractor={(item, index) => item.name + index.toString()}
+      ListHeaderComponent={renderHeader}
+      ListFooterComponent={renderFooter}>
       <BottomSpacing />
     </KeyboardAwareFlatList>
   );

@@ -22,6 +22,8 @@ export const useBasicInitalState = () => {
     dob: userInfo?.basicInfo?.dob
       ? new Date(userInfo?.basicInfo?.dob)?.toDateString()
       : '',
+    latitude: 0,
+    longitude: 0,
   };
   return basicInitalState;
 };

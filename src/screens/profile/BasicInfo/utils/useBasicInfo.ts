@@ -1,6 +1,6 @@
 import {Alert} from 'react-native';
 import methods from '../../../../api/methods';
-import { setProfileData } from '../../../../store/slices/onBoarding/initial';
+import {setProfileData} from '../../../../store/slices/onBoarding/initial';
 import {getUserProfileInfo} from '../../../../store/slices/userProfile/userProfileAction';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
@@ -15,14 +15,17 @@ export const useBasicInfo = () => {
   const handleSubmit = async (e: any) => {
     const formatedPayload = {
       addressLine1: e.addressLine1,
-      addressLine2: e.addressLine2,
-      street: e.street,
+      // addressLine2: e.addressLine2,
+      // street: e.street,
       city: e.city,
       state: e.state,
       zipCode: e.zipCode,
       countryId: e.countryId,
       dob: e.dob,
+      latitude: e.lat,
+      longitude: e.lng,
     };
+    console.log(formatedPayload);
     const result = await request(slug, formatedPayload);
     if (result.ok) {
       Alert.alert('Information Updated!');

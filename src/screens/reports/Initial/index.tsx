@@ -5,7 +5,7 @@ import BottomSpacing from '../../../components/UI/BottomSpacing';
 import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 import InputItem from '../../../components/ScreenComponent/reports/Cards/InputItem';
 import StaticMap from '../map/NavigateMap';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import getLiveLocation from '../map/helperFunction/useGetLiveLocation';
 import MiddleModal from '../../../components/UI/modal/MiddleModal';
 import SwitchView from '../../../components/common/switch/SwitchView';
@@ -22,6 +22,7 @@ import TitleText from '../../../components/common/text/TitleText';
 import BigText from '../../../components/common/text/BigText';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
+import {setIsSelectedPet} from '../../../store/slices/reportCard/reportCardSlice';
 
 const ReportCardInitial = () => {
   const [items] = useState([
@@ -83,10 +84,12 @@ const ReportCardInitial = () => {
     state => state.address.currentUserLocation,
   );
   useEffect(() => {}, [currentUserLocation]);
+  const dispatch = useAppDispatch();
   const {pets, loading: petsLoading} = useAppSelector(
     (state: any) => state?.allPets,
   );
-
+  const {isSelectedPet} = useAppSelector((state: any) => state?.reportCard);
+  console.log(isSelectedPet);
   const onPressService = (data: any) => {
     setSequence(data?.id);
     setIsModalVisible(true);
@@ -110,60 +113,46 @@ const ReportCardInitial = () => {
               textStyle={{textAlign: 'center', width: '100%', paddingTop: 20}}
             />
             <ScrollView showsHorizontalScrollIndicator={false}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingVertical: 10,
-                  width: '100%',
-                  paddingHorizontal: '5%',
-                }}>
-                <View style={{paddingRight: 10}}>
-                  <ImageAndTitle
-                    title={'Lili'}
-                    rowImage
-                    image={
-                      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-                    }
-                  />
-                </View>
-                <SwitchView
-                  isActive={isSendEmailInNewMessage}
-                  activeText=""
-                  inActiveText=""
-                  onSelect={is => {
-                    setIsSendEmailInNewMessage(is);
-                  }}
-                />
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingVertical: 10,
-                  width: '100%',
-                  paddingHorizontal: '5%',
-                }}>
-                <View style={{paddingRight: 10}}>
-                  <ImageAndTitle
-                    title={'Lili'}
-                    rowImage
-                    image={
-                      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-                    }
-                  />
-                </View>
-                <SwitchView
-                  isActive={isSendEmailInNewMessage}
-                  activeText=""
-                  inActiveText=""
-                  onSelect={is => {
-                    setIsSendEmailInNewMessage(is);
-                  }}
-                />
-              </View>
+              {pets?.map(
+                (item: {
+                  id: number;
+                  name: string;
+                  profile_image: {url: any};
+                }) => {
+                  return (
+                    <View
+                      key={item?.id}
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        paddingVertical: 10,
+                        width: '100%',
+                        paddingHorizontal: '5%',
+                      }}>
+                      <View style={{paddingRight: 10}}>
+                        <ImageAndTitle
+                          title={item.name}
+                          rowImage
+                          image={
+                            item.profile_image
+                              ? item.profile_image.url
+                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+                          }
+                        />
+                      </View>
+                      <SwitchView
+                        isActive={isSelectedPet === item.id ? true : false}
+                        activeText=""
+                        inActiveText=""
+                        onSelect={() => {
+                          dispatch(setIsSelectedPet(item?.id));
+                        }}
+                      />
+                    </View>
+                  );
+                },
+              )}
             </ScrollView>
           </View>
         </MiddleModal>
@@ -186,6 +175,7 @@ const ReportCardInitial = () => {
           {pets?.map(
             (item: {id: number; name: string; profile_image: {url: any}}) => (
               <ImageAndTitle
+                key={item.id}
                 id={item.id}
                 title={item.name}
                 rowImage

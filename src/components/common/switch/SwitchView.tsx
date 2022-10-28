@@ -4,15 +4,15 @@ import Colors from '../../../constants/Colors';
 
 const SwitchView = (props: {
   isActive: boolean;
-  onSelect: ((...args: any[]) => any);
+  onSelect: (...args: any[]) => any;
   activeText: string | null | undefined;
   inActiveText: string | null | undefined;
 }) => {
   return (
     <View>
       <Switch
-        trackColor={{ false: "#D9D9D9", true: "#FFF2E9" }}
-        thumbColor={props.isActive ? "#FF7C38" : "#f4f3f4"}
+        trackColor={{false: '#D9D9D9', true: '#FFF2E9'}}
+        thumbColor={props.isActive ? '#FF7C38' : '#f4f3f4'}
         ios_backgroundColor="#D9D9D9"
         onValueChange={props.onSelect}
         value={props.isActive}

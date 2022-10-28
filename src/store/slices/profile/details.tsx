@@ -1,8 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
-import { useAppDispatch } from '../../store';
-import { setProfileData } from '../onBoarding/initial';
 
 export const postSitterDetails = createAsyncThunk(
   'details/postSitterDetails',
@@ -15,7 +13,7 @@ export const postSitterDetails = createAsyncThunk(
       scheduleDescription,
       mtd,
       skill,
-      about
+      about,
     }: any,
     method: any,
   ) => {
@@ -27,7 +25,7 @@ export const postSitterDetails = createAsyncThunk(
       environmentDescription: environmentDescription,
       scheduleDescription: scheduleDescription,
       about: about,
-      skills: skill
+      skills: skill,
     };
     try {
       if (mtd === 'patch') {
@@ -59,9 +57,7 @@ export const postSitterDetails = createAsyncThunk(
           return response.data;
         }
       }
-
-    } catch (error: any) {
-    }
+    } catch (error: any) {}
   },
 );
 
@@ -84,6 +80,7 @@ export const getSitterDetails = createAsyncThunk(
     const response: ApiResponse<any> = await apiClient.get(
       '/user-profile/provider-details',
     );
+    console.log(response);
     if (!response.ok) {
       throw new Error(response.data.message);
     }
@@ -152,4 +149,4 @@ const details = createSlice({
 
 export const {} = details.actions;
 
-export default details.reducer; 
+export default details.reducer;
