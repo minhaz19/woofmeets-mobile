@@ -1,6 +1,5 @@
 import {create} from 'apisauce';
 import authStorage from '../utils/helpers/auth/storage';
-import { msgUrl } from '../utils/helpers/httpRequest';
 
 const apiClient = create({
   baseURL: 'https://api-stg.woofmeets.com/v1',

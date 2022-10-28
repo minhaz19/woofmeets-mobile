@@ -12,7 +12,6 @@ export const useTimeMultiSlotPicker = (
 
   const [newData, setDatas] = useState<any>([]);
   useMemo(() => {
-
     const times: any = []; // time array
     let tt = 0; // start time
     const ap = [' AM', ' PM']; // AM-PM
@@ -43,7 +42,6 @@ export const useTimeMultiSlotPicker = (
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-
   if (initalSlot?.length > 0) {
     if (isRecurring) {
       const matchIndex = Days.findIndex(
@@ -53,8 +51,7 @@ export const useTimeMultiSlotPicker = (
         Days.push({
           date: singleItem.date,
           visitTime: initalSlot,
-          sameAsStartDate: false,
-          startDate: singleItem.startDate,
+          // startDate: singleItem.startDate,
         });
       }
     } else if (!isRecurring) {
@@ -65,11 +62,11 @@ export const useTimeMultiSlotPicker = (
         Dates.push({
           date: singleItem.date,
           visitTime: initalSlot,
-          sameAsStartDate: false,
-          startDate: singleItem.startDate,
+          // startDate: singleItem.startDate,
         });
       }
     }
   }
+  console.log('DDD', Dates);
   return {handleMultipleCheck, newData, Dates, Days};
 };

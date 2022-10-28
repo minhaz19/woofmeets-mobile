@@ -10,12 +10,15 @@ import {useNavigation} from '@react-navigation/native';
 import HeaderText from '../../common/text/HeaderText';
 import DescriptionText from '../../common/text/DescriptionText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import {format} from 'date-fns';
+import {getAppointmentStatus} from '../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
+import {getProviderApnt} from '../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
+import changeTextLetter from '../../common/changeTextLetter';
 const acceptEndpoint = '/appointment/accept/proposal/';
-const rejectEndpoint = '/appointment/cancel/';
+const rejectEndpoint = '/appointment/proposal/reject/';
 const ActivityHeader = (props: {
   setIsDetailsModal: (arg0: boolean) => void;
   setIsThreeDotsModal: (arg0: boolean) => void;
@@ -24,12 +27,17 @@ const ActivityHeader = (props: {
   let navigation = useNavigation<any>();
   const {colors} = useTheme();
   const {request} = useApi(methods._put);
+  const dispatch = useAppDispatch();
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const user = useAppSelector(state => state.whoAmI);
   const handleAccept = async () => {
     const result = await request(acceptEndpoint + props.opk);
 
-    result.ok && navigation.navigate('Inbox');
+    if (result.ok) {
+      dispatch(getAppointmentStatus('PROPOSAL'));
+      dispatch(getProviderApnt('PROPOSAL'));
+      navigation.navigate('Inbox');
+    }
   };
 
   const handleReject = async () => {
@@ -46,6 +54,8 @@ const ActivityHeader = (props: {
           onPress: async () => {
             const r = await request(rejectEndpoint + props.opk);
             if (r.ok) {
+              dispatch(getAppointmentStatus('PROPOSAL'));
+              dispatch(getProviderApnt('PROPOSAL'));
               navigation.navigate('Inbox');
             }
           },
@@ -53,6 +63,7 @@ const ActivityHeader = (props: {
       ],
     );
   };
+  console.log('p', proposedServiceInfo);
   return (
     <View style={[styles.container, {borderColor: colors.borderColor}]}>
       <View style={styles.containerInner}>
@@ -74,8 +85,8 @@ const ActivityHeader = (props: {
               <HeaderText
                 text={
                   proposedServiceInfo?.providerId === user?.user?.provider?.id
-                    ? proposedServiceInfo?.userName
-                    : proposedServiceInfo?.providerName
+                    ? changeTextLetter(proposedServiceInfo?.userName)
+                    : changeTextLetter(proposedServiceInfo?.providerName)
                 }
               />
               <DescriptionText
@@ -139,27 +150,37 @@ const ActivityHeader = (props: {
       </View>
       <View style={styles.innerTwo}>
         <View style={styles.buttonContainer}>
-          {((proposedServiceInfo?.proposedBy === 'USER' &&
+          {(proposedServiceInfo?.proposedBy === 'USER' &&
             proposedServiceInfo?.status === 'ACCEPTED') ||
-            (proposedServiceInfo?.proposedBy === 'PROVIDER' &&
-              proposedServiceInfo?.status !== 'ACCEPTED')) &&
-          proposedServiceInfo?.userId === user?.user?.id ? (
+          (proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+            (proposedServiceInfo?.status === 'ACCEPTED' ||
+              proposedServiceInfo?.status === 'PROPOSAL') &&
+            proposedServiceInfo?.userId === user?.user?.id) ? (
             <>
               <TouchableOpacity
-                style={{width: SCREEN_WIDTH / 5}}
+                // style={{width: SCREEN_WIDTH / 5}}
                 onPress={async () => {
-                  if (proposedServiceInfo?.proposedBy === 'PROVIDER') {
+                  if (
+                    proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+                    proposedServiceInfo?.status !== 'ACCEPTED'
+                  ) {
                     const r = await request(
                       acceptEndpoint + proposedServiceInfo.appointmentOpk,
                     );
-                    r.ok && navigation.navigate('Checkout');
+                    if (r.ok) {
+                      navigation.navigate('Checkout');
+                    }
+                  } else {
+                    navigation.navigate('Checkout');
                   }
-                  navigation.navigate('Checkout');
                 }}>
                 <TitleText
                   text={
-                    proposedServiceInfo?.proposedBy === 'PROVIDER'
+                    proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+                    proposedServiceInfo?.status !== 'ACCEPTED'
                       ? 'Accept'
+                      : proposedServiceInfo?.status === 'ACCEPTED'
+                      ? 'Pay Now'
                       : 'Pay'
                   }
                   textStyle={{
@@ -169,15 +190,16 @@ const ActivityHeader = (props: {
                   }}
                 />
               </TouchableOpacity>
-              <View style={styles.divider} />
+              {(proposedServiceInfo?.status === 'PROPOSAL' ||
+                proposedServiceInfo?.status === 'ACCEPTED') && (
+                <View style={styles.divider} />
+              )}
             </>
           ) : proposedServiceInfo?.proposedBy === 'USER' &&
             proposedServiceInfo?.status === 'PROPOSAL' &&
             proposedServiceInfo?.providerId === user?.user?.provider?.id ? (
             <>
-              <TouchableOpacity
-                style={{width: SCREEN_WIDTH / 5}}
-                onPress={handleAccept}>
+              <TouchableOpacity onPress={handleAccept}>
                 <TitleText
                   text="Accept"
                   textStyle={{
@@ -192,7 +214,7 @@ const ActivityHeader = (props: {
           ) : proposedServiceInfo?.status === 'ACCEPTED' ? (
             <>
               <TouchableOpacity
-                style={{width: SCREEN_WIDTH / 5}}
+                // style={{width: SCREEN_WIDTH / 5}}
                 onPress={() => Alert.alert('Proposal Already Accepted!')}>
                 <TitleText
                   text="Accepted"
@@ -203,13 +225,13 @@ const ActivityHeader = (props: {
                   }}
                 />
               </TouchableOpacity>
-              <View style={styles.divider} />
+              {/* <View style={styles.divider} /> */}
             </>
           ) : null}
           {proposedServiceInfo?.status === 'PROPOSAL' && (
             <>
               <TouchableOpacity
-                style={{width: SCREEN_WIDTH / 5}}
+                // style={{width: SCREEN_WIDTH / 5}}
                 onPress={() =>
                   navigation.navigate('EditDetails', {
                     appointmentOpk: props.opk,
@@ -227,23 +249,21 @@ const ActivityHeader = (props: {
               <View style={styles.divider} />
             </>
           )}
-          <TouchableOpacity
-            style={{width: SCREEN_WIDTH / 5}}
-            onPress={() => {
-              // proposedServiceInfo?.status === 'ACCEPTED'
-              //   ? Alert.alert('You have already accepted the proposal')
-              //   : handleReject();
-              handleReject();
-            }}>
-            <TitleText
-              text="Decline"
-              textStyle={{
-                ...styles.textStyle,
-                textAlign: 'center',
-                color: Colors.light.background,
-              }}
-            />
-          </TouchableOpacity>
+          {(proposedServiceInfo?.status === 'PROPOSAL' ||
+            proposedServiceInfo?.status === 'ACCEPTED') && (
+            <TouchableOpacity
+              // style={{width: SCREEN_WIDTH / 5}}
+              onPress={handleReject}>
+              <TitleText
+                text="Decline"
+                textStyle={{
+                  ...styles.textStyle,
+                  textAlign: 'center',
+                  color: Colors.light.background,
+                }}
+              />
+            </TouchableOpacity>
+          )}
         </View>
         <TouchableOpacity
           onPress={() => props.setIsDetailsModal(true)}

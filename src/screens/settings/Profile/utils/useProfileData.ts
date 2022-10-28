@@ -5,9 +5,6 @@ import {useAppDispatch} from '../../../../store/store';
 
 export const useProfileData = () => {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getUserServices());
-    dispatch(getUserProfileInfo());
-  }, [dispatch]);
+  useEffect(() => {}, [dispatch]);
   return {};
 };

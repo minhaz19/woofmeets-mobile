@@ -25,13 +25,14 @@ const serviceRateFieldSlice = createSlice({
         state.serviceData = payload.data;
         state.ratesMeta = payload.data.filter(
           (item: any) => item.serviceRateType.slug === 'base-rate',
-        )[0].serviceRateType.meta;
+        )[0].ServiceType.meta;
         state.serviceRateFields = payload.data?.map((item: any) => ({
           ...item.serviceRateType,
           rateId: item.id,
+          rateUnitLabel: item.ServiceType.unitlabel,
           percentage: payload.data.filter(
             (it: any) => it.serviceRateType.slug === 'base-rate',
-          )[0].serviceRateType.meta[`${item.serviceRateType.slug}`],
+          )[0].ServiceType.meta[`${item.serviceRateType.slug}`],
         }));
       })
       .addCase(getServiceRateFields.rejected, (state, {payload}) => {

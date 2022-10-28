@@ -12,6 +12,7 @@ import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import {format} from 'date-fns';
+import changeTextLetter from '../../../common/changeTextLetter';
 interface Props {
   statusType: string;
 }
@@ -74,7 +75,9 @@ const PendingStatus = ({statusType}: Props) => {
                   <ReusableCard
                     key={item.opk}
                     item={{
-                      name: `${item.provider.user.firstName} ${item.provider.user.lastName}`,
+                      name: changeTextLetter(
+                        `${item.provider.user.firstName} ${item.provider.user.lastName}`,
+                      ),
                       image: item.provider.user.image,
                       description: item?.providerService
                         ? serviceTypeId === 1 || serviceTypeId === 2
@@ -131,7 +134,9 @@ const PendingStatus = ({statusType}: Props) => {
                   <ReusableCard
                     key={item.opk}
                     item={{
-                      name: `${item.user.firstName} ${item.user.lastName}`,
+                      name: changeTextLetter(
+                        `${item.user.firstName} ${item.user.lastName}`,
+                      ),
                       image: item.user.image,
                       description: item?.providerService
                         ? serviceTypeId === 1 || serviceTypeId === 2

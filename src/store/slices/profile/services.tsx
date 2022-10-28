@@ -61,7 +61,7 @@ const services = createSlice({
         state.loading = false;
         state.error = payload;
       })
-      .addCase(getUserServices.pending, (state, {payload}) => {
+      .addCase(getUserServices.pending, state => {
         state.userServicesLoading = true;
         state.userServicesError = null;
       })

@@ -18,7 +18,6 @@ import FilterProvider from '../FilterProvider';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
 import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
-import DescriptionText from '../../../components/common/text/DescriptionText';
 import AllProviderLoader from './AllProviderLoadingUI';
 import {getAllProvider} from '../../../store/slices/Provider/allProvider/getAllProvider';
 import {SCREEN_HEIGHT} from '../../../constants/WindowSize';

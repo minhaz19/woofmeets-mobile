@@ -9,11 +9,11 @@ import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 const data = [
   {
     id: 'USER',
-    title: 'User',
+    title: 'Pet Owner',
   },
   {
     id: 'PROVIDER',
-    title: 'Provider',
+    title: 'Pet Sitter',
   },
 ];
 interface Props {

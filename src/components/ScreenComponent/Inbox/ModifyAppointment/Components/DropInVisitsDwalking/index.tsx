@@ -13,8 +13,10 @@ import AppDayPicker from '../../../../../common/AppDayPicker';
 import TitleText from '../../../../../common/text/TitleText';
 import Text_Size from '../../../../../../constants/textScaling';
 import DayTimeSlot from '../../../../Appointment/components/DayTimeSlot';
-
-const DropInVisitWalking = () => {
+interface Props {
+  appointmentType: string;
+}
+const DropInVisitWalking = ({appointmentType}: Props) => {
   const [, setVisitId] = useState(null);
   const [scheduleId, setScheduleId] = useState(null);
   const {colors} = useTheme();
@@ -50,23 +52,26 @@ const DropInVisitWalking = () => {
   ];
   return (
     <View style={styles.container}>
-      <AppHalfTabs
-        title="Visit Length"
-        data={data}
-        //@ts-ignore
-        setVisitId={setVisitId}
-        name="visitLength"
-        defaultValue={visitLength === 30 ? 0 : 1}
-      />
-
-      <AppHalfTabs
-        title="Schedule"
-        data={schedule}
-        //@ts-ignore
-        setScheduleId={setScheduleId}
-        name="isRecurring"
-        defaultValue={isRecurring ? 1 : 0}
-      />
+      {appointmentType === 'create' && (
+        <>
+          <AppHalfTabs
+            title="Visit Length"
+            data={data}
+            //@ts-ignore
+            setVisitId={setVisitId}
+            name="visitLength"
+            defaultValue={visitLength === 30 ? 0 : 1}
+          />
+          <AppHalfTabs
+            title="Schedule"
+            data={schedule}
+            //@ts-ignore
+            setScheduleId={setScheduleId}
+            name="isRecurring"
+            defaultValue={isRecurring ? 1 : 0}
+          />
+        </>
+      )}
       {isRecurring && recurringStartDate !== '' && <AppDayPicker />}
       <View>
         <TitleText

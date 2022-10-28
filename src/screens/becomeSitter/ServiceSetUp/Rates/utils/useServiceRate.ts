@@ -44,6 +44,7 @@ export const useServiceRates = (serviceSetup: any) => {
       serviceRate: [],
     };
     rateFieldId &&
+      rateFieldId.length !== 0 &&
       rateFieldId?.forEach(
         (element: {postId: number; name: string; putId: number}) => {
           Object.keys(e).map(item => {
@@ -60,6 +61,7 @@ export const useServiceRates = (serviceSetup: any) => {
           });
         },
       );
+    console.log('payload', payload);
     const result = await request(payload);
 
     if (result.ok) {

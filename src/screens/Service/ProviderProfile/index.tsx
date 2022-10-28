@@ -6,15 +6,18 @@ import ProviderTab from '../../../components/ScreenComponent/Service/ProviderPro
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 // import ProviderStory from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderStoryStatus/ProviderStory';
-
-const ProviderProfile = () => {
+interface Props {
+  route: any;
+}
+const ProviderProfile = ({route}: Props) => {
+  const providerOpk = route?.params?.providerOpk;
   const {colors} = useTheme();
   const _renderHeader = () => null;
   const _renderFooter = () => (
     <View style={styles.infoContianer}>
       <ProviderHeader />
       <ProviderTab />
-      <ProviderFooter />
+      <ProviderFooter providerOpk={providerOpk} />
     </View>
   );
   return (
