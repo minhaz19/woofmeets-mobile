@@ -4,16 +4,16 @@ export const locationInput = [
     placeholder: 'Enter Address Line 1',
     name: 'addressLine1',
   },
-  {
-    title: 'Address Line 2',
-    placeholder: 'Enter Address Line 2',
-    name: 'addressLine2',
-  },
-  {
-    title: 'Street',
-    placeholder: 'Enter Street or Road no. ',
-    name: 'street',
-  },
+  // {
+  //   title: 'Address Line 2',
+  //   placeholder: 'Enter Address Line 2',
+  //   name: 'addressLine2',
+  // },
+  // {
+  //   title: 'Street',
+  //   placeholder: 'Enter Street or Road no. ',
+  //   name: 'street',
+  // },
   {
     title: 'City',
     placeholder: 'Enter City',

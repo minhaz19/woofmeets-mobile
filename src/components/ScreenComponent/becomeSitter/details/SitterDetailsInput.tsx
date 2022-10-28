@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import AppFormField from '../../../common/Form/AppFormField';
@@ -8,11 +9,11 @@ import {useFormContext} from 'react-hook-form';
 import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import ServiceCheckbox from '../ServiceSetup/Common/ServiceCheckbox';
-import { skillsData } from '../../../../screens/becomeSitter/Details/utils/SkillsData';
+import {skillsData} from '../../../../screens/becomeSitter/Details/utils/SkillsData';
 import DescriptionText from '../../../common/text/DescriptionText';
-import { SCREEN_WIDTH } from '../../../../constants/WindowSize';
-import { useHandleMultipleActiveCheck } from '../../../../screens/becomeSitter/Details/utils/HandleCheck';
-import { useAppSelector } from '../../../../store/store';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import {useHandleMultipleActiveCheck} from '../../../../screens/becomeSitter/Details/utils/HandleCheck';
+import {useAppSelector} from '../../../../store/store';
 
 const sitterDetailsInputValue = [
   {
@@ -23,12 +24,14 @@ const sitterDetailsInputValue = [
   {
     title: 'Write an eye-catching headline',
     name: 'headline',
-    description: 'Make your headline short, descriptive and genuine. Try to encapsulate in a single sentence why you’re the best pet-sitting candidate for the job. Your headline’s creativity will help it stand out.',
+    description:
+      'Make your headline short, descriptive and genuine. Try to encapsulate in a single sentence why you’re the best pet-sitting candidate for the job. Your headline’s creativity will help it stand out.',
     numberOfLines: 1,
   },
   {
     title: 'Write something about your self',
-    description: 'What’s something special or unique about yourself that will impress pet owners? Here’s your opportunity to describe why animals mean so much to you.',
+    description:
+      'What’s something special or unique about yourself that will impress pet owners? Here’s your opportunity to describe why animals mean so much to you.',
     name: 'about',
     numberOfLines: 1,
   },
@@ -55,7 +58,7 @@ This is where you should talk about the practical application of pet care skills
   },
 ];
 
-const SitterDetailsInput = (props: {handleSubmit: any, isLoading: boolean}) => {
+const SitterDetailsInput = (props: {handleSubmit: any; isLoading: boolean}) => {
   const {
     control,
     setValue,
@@ -65,9 +68,8 @@ const SitterDetailsInput = (props: {handleSubmit: any, isLoading: boolean}) => {
   const data = getValues();
   const {colors, isDarkMode} = useTheme();
   const skillsDetailsData = useAppSelector(state => state.details.skillsData);
-  const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
-    skillsDetailsData,
-  );
+  const {newData, handleMultipleCheck} =
+    useHandleMultipleActiveCheck(skillsDetailsData);
 
   return (
     <View style={styles.container}>
@@ -106,43 +108,39 @@ const SitterDetailsInput = (props: {handleSubmit: any, isLoading: boolean}) => {
           })}
         </View>
         <View style={{marginTop: '3%'}}>
-            <HeaderText
-              text={skillsData.title}
-              textStyle={styles.subHeaderText}
+          <HeaderText
+            text={skillsData.title}
+            textStyle={styles.subHeaderText}
+          />
+          {skillsData.subtitle && (
+            <DescriptionText
+              text={skillsData.subtitle}
+              textStyle={{
+                ...styles.subHeaderText,
+                color: colors.descriptionText,
+              }}
             />
-            {skillsData.subtitle && (
-              <DescriptionText
-                text={skillsData.subtitle}
-                textStyle={{
-                  ...styles.subHeaderText,
-                  color: colors.descriptionText,
-                }}
-              />
-            )}
-            <View style={styles.dayBoxContainer}>
-              {newData && newData?.map(
-                (
-                  item,
-                  index: React.Key | null | undefined,
-                ) => (
-                  <ServiceCheckbox
-                    title={item.title}
-                    key={index}
-                    square
-                    typeKey={item.id}
-                    active={data[item.slug]}
-                    onPress={() => {
-                      handleMultipleCheck(item.id);
-                      setValue(item.slug, item.active);
-                    }}
-                    name={item.slug}
-                    control={control}
-                  />
-                ),
-              )}
-            </View>
-            {/* <ErrorMessage error={errors[skillsData.name!]?.message} /> */}
+          )}
+          <View style={styles.dayBoxContainer}>
+            {newData &&
+              newData?.map((item, index: React.Key | null | undefined) => (
+                <ServiceCheckbox
+                  title={item.title}
+                  key={index}
+                  square
+                  typeKey={item.id}
+                  active={data[item.slug]}
+                  onPress={() => {
+                    handleMultipleCheck(item.id);
+                    setValue(item.slug, item.active);
+                  }}
+                  name={item.slug}
+                  control={control}
+                />
+              ))}
           </View>
+          {/* <ErrorMessage error={errors[skillsData.name!]?.message} /> */}
+        </View>
         <View style={styles.footerContainer}>
           <SubmitButton
             title="Save"

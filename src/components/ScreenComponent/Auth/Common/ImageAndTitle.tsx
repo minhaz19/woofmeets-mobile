@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../../constants/textScaling';
@@ -5,7 +6,7 @@ import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 interface Props {
-  id: number;
+  id?: number;
   Icon?: any;
   title: string;
   subTitle?: string;

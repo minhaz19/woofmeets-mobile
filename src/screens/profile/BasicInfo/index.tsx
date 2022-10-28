@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {View, StyleSheet} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
