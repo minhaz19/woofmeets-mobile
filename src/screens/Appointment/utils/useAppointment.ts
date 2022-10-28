@@ -280,6 +280,7 @@ export const useAppointment = () => {
               formattedMessage: DoggyDayFT,
               isRecivedPhotos: isRecivedPhotos,
             };
+        console.log('asdfasdf', doggyPayload);
         const response = await request(endpoint, doggyPayload);
         response.ok &&
           navigation.navigate('ActivityScreen', {
@@ -296,7 +297,7 @@ export const useAppointment = () => {
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
     setRefreshing(true);
-    // dispatch(getProviderServices('EtD85E1m'));
+    dispatch(getProviderServices('EtD85E1m'));
     dispatch(getAllPets());
     setRefreshing(false);
   };

@@ -35,8 +35,10 @@ const AppointmentBody = ({handleSubmit, loading, appointmentType}: Props) => {
         setServiceId={setServiceId}
       />
       {(serviceId === 1 || serviceId === 2) && <BoardingSitting />}
-      {(serviceId === 3 || serviceId === 5) && <DropInVisitWalking />}
-      {serviceId === 4 && <DoggyDayCare />}
+      {(serviceId === 3 || serviceId === 5) && (
+        <DropInVisitWalking appointmentType="create" />
+      )}
+      {serviceId === 4 && <DoggyDayCare appointmentType="create" />}
 
       <View style={styles.zIndex}>
         <MyPets appointmentType={appointmentType} />

@@ -16,7 +16,10 @@ import ShortText from '../../../../../common/text/ShortText';
 import AppCalendar from '../../../../../common/AppCalendar';
 import Text_Size from '../../../../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
-const DoggyDayCare = () => {
+interface Props {
+  appointmentType: string;
+}
+const DoggyDayCare = ({appointmentType}: Props) => {
   const [setScheduleId] = useState(null);
   const [visible, setVisible] = useState(false);
   const [dropVisible, setDropVisible] = useState(false);
@@ -49,14 +52,16 @@ const DoggyDayCare = () => {
   ];
   return (
     <View style={styles.container}>
-      <AppHalfTabs
-        title="Schedule"
-        data={schedule}
-        //@ts-ignore
-        setScheduleId={setScheduleId}
-        defaultValue={isRecurring ? 1 : 0}
-        name="isRecurring"
-      />
+      {appointmentType === 'create' && (
+        <AppHalfTabs
+          title="Schedule"
+          data={schedule}
+          //@ts-ignore
+          setScheduleId={setScheduleId}
+          defaultValue={isRecurring ? 1 : 0}
+          name="isRecurring"
+        />
+      )}
       {isRecurring && <AppDayPicker />}
       <View style={[styles.sContainer]}>
         <TitleText textStyle={styles.headerText} text={'Schedule'} />

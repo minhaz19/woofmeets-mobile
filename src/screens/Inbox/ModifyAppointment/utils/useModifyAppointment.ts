@@ -165,7 +165,7 @@ export const useModifyAppointment = (route: any) => {
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.join(', ')
                         : item.visitTime.join(', ')
-                    }`,
+                    }\n`,
                 )}  `
               : `Drop In Visit Proposal:\n${specificModDates.map(
                   (item: any) =>

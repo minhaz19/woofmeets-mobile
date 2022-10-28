@@ -23,8 +23,10 @@ const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}>
       {(serviceId === 1 || serviceId === 2) && <BoardingSitting />}
-      {(serviceId === 3 || serviceId === 5) && <DropInVisitWalking />}
-      {serviceId === 4 && <DoggyDayCare />}
+      {(serviceId === 3 || serviceId === 5) && (
+        <DropInVisitWalking appointmentType={'modify'} />
+      )}
+      {serviceId === 4 && <DoggyDayCare appointmentType={'modify'} />}
 
       <MyPets appointmentType={''} />
 

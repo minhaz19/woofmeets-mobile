@@ -180,7 +180,7 @@ const ActivityHeader = (props: {
                     proposedServiceInfo?.status !== 'ACCEPTED'
                       ? 'Accept'
                       : proposedServiceInfo?.status === 'ACCEPTED'
-                      ? 'Make Payment'
+                      ? 'Pay Now'
                       : 'Pay'
                   }
                   textStyle={{
@@ -190,7 +190,8 @@ const ActivityHeader = (props: {
                   }}
                 />
               </TouchableOpacity>
-              {proposedServiceInfo?.status === 'PROPOSAL' && (
+              {(proposedServiceInfo?.status === 'PROPOSAL' ||
+                proposedServiceInfo?.status === 'ACCEPTED') && (
                 <View style={styles.divider} />
               )}
             </>
@@ -248,7 +249,8 @@ const ActivityHeader = (props: {
               <View style={styles.divider} />
             </>
           )}
-          {proposedServiceInfo?.status === 'PROPOSAL' && (
+          {(proposedServiceInfo?.status === 'PROPOSAL' ||
+            proposedServiceInfo?.status === 'ACCEPTED') && (
             <TouchableOpacity
               // style={{width: SCREEN_WIDTH / 5}}
               onPress={handleReject}>

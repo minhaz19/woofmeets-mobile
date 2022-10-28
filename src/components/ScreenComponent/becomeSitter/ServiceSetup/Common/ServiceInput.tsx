@@ -7,6 +7,7 @@ import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
 import TitleText from '../../../../common/text/TitleText';
 import Text_Size from '../../../../../constants/textScaling';
+import changeTextLetter from '../../../../common/changeTextLetter';
 
 const ServiceInput = ({...otherProps}) => {
   const {isDarkMode, colors} = useTheme();
@@ -35,7 +36,10 @@ const ServiceInput = ({...otherProps}) => {
             {...otherProps}
           />
         </View>
-        <TitleText text={'/night'} textStyle={{...styles.headerText}} />
+        <TitleText
+          text={changeTextLetter(`/ ${otherProps.unit}`)}
+          textStyle={{...styles.headerText}}
+        />
       </View>
       {!otherProps.icon ? (
         <ShortText

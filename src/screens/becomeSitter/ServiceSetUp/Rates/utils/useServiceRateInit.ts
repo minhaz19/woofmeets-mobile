@@ -68,5 +68,13 @@ export const useServiceRateInit = () => {
         : baseRate.length > 0
         ? Number(baseRate) * Number(ratesMeta['extended-stay-rate'])
         : null,
+    sixtyminutes:
+      fieldValue && fieldValue.length > 0
+        ? fieldValue.find(
+            (item: {modRatesId: number}) => item.modRatesId === 12,
+          )?.amount
+        : baseRate.length > 0
+        ? Number(baseRate) * Number(ratesMeta['sixty-minutes'])
+        : null,
   };
 };
