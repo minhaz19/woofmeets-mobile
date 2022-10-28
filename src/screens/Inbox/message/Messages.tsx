@@ -13,7 +13,7 @@ import { apiMsg } from '../../../api/client';
 import { formatDistance, subDays } from 'date-fns';
 import storage from '../../../utils/helpers/auth/storage';
 
-const Messages = (props: { roomId: any; }) => {
+const Messages = (props: { roomId: any; opk: any}) => {
     const {colors} = useTheme();
     const [socket, setSocket] = useState<any>(null);
     const [messages, setMessages] = useState([]);
@@ -37,6 +37,8 @@ const Messages = (props: { roomId: any; }) => {
         setIsLoadingMsg(false);
       }
     }
+
+    console.log('messages',messages);
 
     useEffect(() => {
       if (socket === null) {
@@ -121,6 +123,10 @@ const Messages = (props: { roomId: any; }) => {
                   {backgroundColor: colors.inputLightBg},
                 ]}>
                 <TitleText text={item.content} />
+                {item.attachmentType === 'image' && <Image 
+                source={{uri: item.attachment}}
+                style={styles.image}
+                />}
                 <ShortText text={formatDistance(subDays(new Date(item?.createdAt), 0), new Date(), { addSuffix: true })} />
               </View>
               <View style={styles.userIconView}>
@@ -152,6 +158,10 @@ const Messages = (props: { roomId: any; }) => {
                 ]}>
                 {/* {item?.content && <HeaderText text={item?.content} />} */}
                 <TitleText text={item.content} />
+                {item.attachmentType === 'image' && <Image 
+                source={{uri: item.attachment}}
+                style={styles.image}
+                />}
                 {item?.details && (
                   <View>
                     <View style={styles.detailsImage}>
@@ -183,7 +193,7 @@ const Messages = (props: { roomId: any; }) => {
     )}
     <View style={{height: paddingHeight}} />
     </ScrollView>
-    <SendMessage roomId={props.roomId} setMessages={setMessages} socket={socket} user={user} />
+    <SendMessage roomId={props.roomId} setMessages={setMessages} socket={socket} user={user} opk={props.opk} />
     </View>
   )
 }
