@@ -24,7 +24,7 @@ import {useAppSelector} from '../../../../store/store';
 interface Props {
   setIsReviewModal: (value: boolean) => void;
   setModalVisible: (arg1: boolean) => void;
-  appointmentOpk: string;
+  appointmentId: string;
 }
 
 const Review: FC<Props> = props => {
@@ -49,13 +49,13 @@ const Review: FC<Props> = props => {
     let formattedData;
     if (user?.provider?.isApproved) {
       formattedData = {
-        appointmentId: 1,
+        appointmentId: props.appointmentId,
         rating: isRatings,
         comment: isText,
       };
     } else {
       formattedData = {
-        appointmentId: 1,
+        appointmentId: props.appointmentId,
         rating: isRatings,
         comment: isText,
         providerServiceRating: isEnjoyRating,

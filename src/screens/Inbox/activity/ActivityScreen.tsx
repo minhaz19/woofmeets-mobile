@@ -45,6 +45,7 @@ const ActivityScreen = (props: {
   useEffect(() => {
     onRefresh();
   }, []);
+  console.log('proposal', proposal);
   return (
     <>
       {(loading || petLoading) && <AppActivityIndicator visible={true} />}
@@ -89,13 +90,16 @@ const ActivityScreen = (props: {
                 setIsModalVisible={setIsReviewModal}>
                 <Review
                   setIsReviewModal={setIsReviewModal}
-                  appointmentOpk={appointmentOpk}
+                  appointmentId={proposal.appointment.id}
                   setModalVisible={function (): void {
                     throw new Error('Function not implemented.');
                   }}
                 />
               </BottomHalfModal>
-              <Messages roomId={proposal?.appointment?.messageGroupId} opk={appointmentOpk} />
+              <Messages
+                roomId={proposal?.appointment?.messageGroupId}
+                opk={appointmentOpk}
+              />
             </>
           </KeyboardAvoidingView>
         </SafeAreaView>

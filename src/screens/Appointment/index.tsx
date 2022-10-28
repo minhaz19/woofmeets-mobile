@@ -12,10 +12,10 @@ interface Props {
   route: any;
 }
 const Appointment = ({route}: Props) => {
-  const {handleSubmit, loading, btnLoading, refreshing, onRefresh} =
-    useAppointment();
   const {colors} = useTheme();
-  const {appointmentType} = route?.params;
+  const {appointmentType, providerOpk} = route?.params;
+  const {handleSubmit, loading, btnLoading, refreshing, onRefresh} =
+    useAppointment(providerOpk);
   return (
     <>
       {loading && <AppActivityIndicator visible />}

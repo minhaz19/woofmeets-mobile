@@ -11,7 +11,7 @@ import {useApi} from '../../../utils/helpers/api/useApi';
 import storage from '../../../utils/helpers/auth/storage';
 
 const endpoint = 'appointment/create/proposal';
-export const useAppointment = () => {
+export const useAppointment = (providerOpk: string) => {
   const {loading: btnLoading, request} = useApi(methods._post);
   const dispatch = useAppDispatch();
   const {providerServices, loading} = useAppSelector(
@@ -291,13 +291,13 @@ export const useAppointment = () => {
     }
   };
   useEffect(() => {
-    providerServices === null && dispatch(getProviderServices('EtD85E1m'));
+    providerServices === null && dispatch(getProviderServices(providerOpk));
     dispatch(getAllPets());
   }, []);
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
     setRefreshing(true);
-    dispatch(getProviderServices('EtD85E1m'));
+    dispatch(getProviderServices(providerOpk));
     dispatch(getAllPets());
     setRefreshing(false);
   };
