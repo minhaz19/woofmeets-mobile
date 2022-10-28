@@ -15,7 +15,12 @@ interface Props {
   question?: string;
   description?: string;
 }
-const ServiceReusableModal = ({modalVisible, setModalVisible, question, description}: Props) => {
+const ServiceReusableModal = ({
+  modalVisible,
+  setModalVisible,
+  question,
+  description,
+}: Props) => {
   return (
     <View>
       <ModalBottomView
@@ -24,7 +29,7 @@ const ServiceReusableModal = ({modalVisible, setModalVisible, question, descript
         <HeaderText text={question} />
         <Divider />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <DescriptionText text={description} />
+          {description && <DescriptionText text={description} />}
           <IOSButton
             title={'Close'}
             textAlignment={btnStyles.textAlignment}

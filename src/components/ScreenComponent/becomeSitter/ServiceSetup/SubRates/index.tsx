@@ -37,6 +37,7 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
     setUpdateRates,
     checked,
   } = useSubRates(rateFields, watch);
+  console.log('watch', updateRates);
   return (
     <View>
       <ServiceReusableModal
@@ -61,6 +62,9 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
               name: string;
               unitLabel: string;
               percentage: number;
+              rateUnitLabel: string;
+              helpText: string;
+              convertedValue: number;
             },
             index: number,
           ) => {
@@ -88,6 +92,9 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                       errors={errors}
                       editable={true}
                       setValue={setValue}
+                      unit={item.rateUnitLabel}
+                      icon={false}
+                      helpText={item.helpText}
                     />
                     <AppCheckboxField
                       title={'Update my additional rates based on my base rate'}
@@ -122,12 +129,13 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                     control={control}
                     errors={errors}
                     baseRateWatch={Number(baseRateWatch)}
-                    convertedValue={
-                      Number(baseRateWatch) * Number(item.percentage)
-                    }
+                    convertedValue={item.convertedValue}
                     setValue={setValue}
                     updateRates={updateRates}
                     checked={checked}
+                    unit={item.rateUnitLabel}
+                    icon={true}
+                    helpText={item.helpText}
                   />
                 )}
               </View>

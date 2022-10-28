@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import PackageCard from '../../../components/ScreenComponent/becomeSitter/subscription/packages/PackageCard';
 import TitleText from '../../../components/common/text/TitleText';
@@ -12,9 +12,9 @@ import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import Screen from '../../../components/common/Screen';
 import Welcome from '../../../components/ScreenComponent/becomeSitter/subscription/Welcome/Welcome';
-import { useAppSelector } from '../../../store/store';
+import {useAppSelector} from '../../../store/store';
 import Colors from '../../../constants/Colors';
-import { QuestionIcon } from '../../../assets/svgs/SVG_LOGOS';
+import {QuestionIcon} from '../../../assets/svgs/SVG_LOGOS';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 interface Props {
   route: any;
@@ -43,7 +43,8 @@ const SubscriptionScreen = ({route}: Props) => {
     <Screen style={{flex: 1}}>
       {(loading || planLoading) && <AppActivityIndicator visible={true} />}
       <ScrollView
-        showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         style={[
           styles.container,
           {
@@ -69,10 +70,9 @@ const SubscriptionScreen = ({route}: Props) => {
               textStyle={styles.textStyle}
             />
             {/* No 1 */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={{flexDirection: 'row', alignItems: 'center', width: '90%'}}
-              onPress={() => setFaq1(!faq1)}
-            >
+              onPress={() => setFaq1(!faq1)}>
               <QuestionIcon fill={Colors.primary} />
               <TitleText
                 text="So, How Does the Basic Plan Work?"
@@ -80,16 +80,16 @@ const SubscriptionScreen = ({route}: Props) => {
               />
             </TouchableOpacity>
             {faq1 && (
-              <DescriptionText text={`The Basic Woofmeets plan is simple and straightforward. With this tier, we will run a basic background check for a one-time fee of $35. If you get a Premium subscription (starting from 1st November), that includes an enhanced background check. In other words, if you select any of the Premium plans, you don’t need to pay that one-time background check fee.
+              <DescriptionText
+                text={`The Basic Woofmeets plan is simple and straightforward. With this tier, we will run a basic background check for a one-time fee of $35. If you get a Premium subscription (starting from 1st November), that includes an enhanced background check. In other words, if you select any of the Premium plans, you don’t need to pay that one-time background check fee.
 
 You can upgrade, downgrade or cancel at any time with just a few clicks.`}
               />
             )}
             {/* No 2 */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={{flexDirection: 'row', alignItems: 'center', width: '90%'}}
-              onPress={() => setFaq2(!faq2)}
-            >
+              onPress={() => setFaq2(!faq2)}>
               <QuestionIcon fill={Colors.primary} />
               <TitleText
                 text="Why do you need a credit card for the basic plan?"
@@ -97,14 +97,14 @@ You can upgrade, downgrade or cancel at any time with just a few clicks.`}
               />
             </TouchableOpacity>
             {faq2 && (
-              <DescriptionText text={`Your credit card is necessary for us to charge you for the one-time $35 background check fee that is part of the Basic tier.`}
+              <DescriptionText
+                text={`Your credit card is necessary for us to charge you for the one-time $35 background check fee that is part of the Basic tier.`}
               />
             )}
             {/* No 3 */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={{flexDirection: 'row', alignItems: 'center', width: '90%'}}
-              onPress={() => setFaq3(!faq3)}
-            >
+              onPress={() => setFaq3(!faq3)}>
               <QuestionIcon fill={Colors.primary} />
               <TitleText
                 text="How do I cancel if I'm not satisfied with my experience as a woofmeets sitter"
@@ -112,16 +112,16 @@ You can upgrade, downgrade or cancel at any time with just a few clicks.`}
               />
             </TouchableOpacity>
             {faq3 && (
-              <DescriptionText text={`We make it simple to upgrade, downgrade, or cancel if you’re not happy with your experience working with Woofmeets. If you cancel your Premium plan, we will automatically downgrade you to a Basic plan. If this happens, we will not charge you the $35 for a background check since you’re coming from a plan where we would have already run an enhanced background check.
+              <DescriptionText
+                text={`We make it simple to upgrade, downgrade, or cancel if you’re not happy with your experience working with Woofmeets. If you cancel your Premium plan, we will automatically downgrade you to a Basic plan. If this happens, we will not charge you the $35 for a background check since you’re coming from a plan where we would have already run an enhanced background check.
 
 Please note that you are paying for plans on a monthly basis, so any part of that month for which you have already paid will not be refunded.`}
               />
             )}
             {/* No 4  */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={{flexDirection: 'row', alignItems: 'center', width: '90%'}}
-              onPress={() => setBasicQuestionModal(!basicQuestionModal)}
-            >
+              onPress={() => setBasicQuestionModal(!basicQuestionModal)}>
               <QuestionIcon fill={Colors.primary} />
               <TitleText
                 text="Why do we charge you $35 USD as part of the basic plan?"
@@ -129,7 +129,8 @@ Please note that you are paying for plans on a monthly basis, so any part of tha
               />
             </TouchableOpacity>
             {basicQuestionModal && (
-              <DescriptionText text={`The reason why we charge you $35 as part of the Basic tier plan is that it costs that amount to run a background check on you. This is a fundamental part of the hiring process that we can’t neglect. It’s something that all of our clients will expect before we make you a part of our pet-sitting community.
+              <DescriptionText
+                text={`The reason why we charge you $35 as part of the Basic tier plan is that it costs that amount to run a background check on you. This is a fundamental part of the hiring process that we can’t neglect. It’s something that all of our clients will expect before we make you a part of our pet-sitting community.
 
 You should also understand that if you want to avoid this one-time fee, you can sign up for one of our Premium tiers instead. With those tiers, we waive the $35 fee. Note that you will receive a confirmation email after you make your one-time payment.`}
               />
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     color: Colors.primary,
     paddingLeft: 10,
+    fontWeight: 'bold',
   },
 });
 

@@ -11,7 +11,7 @@ import {useApi} from '../../../utils/helpers/api/useApi';
 import storage from '../../../utils/helpers/auth/storage';
 
 const endpoint = 'appointment/create/proposal';
-export const useAppointment = () => {
+export const useAppointment = (providerOpk: string) => {
   const {loading: btnLoading, request} = useApi(methods._post);
   const dispatch = useAppDispatch();
   const {providerServices, loading} = useAppSelector(
@@ -135,9 +135,8 @@ export const useAppointment = () => {
           ? specificModDates.map((item: any, i: number) => ({
               id: i + 1,
               date: new Date(item.date).toISOString(),
-              name: item.date,
+              name: format(new Date(item.date), 'yyyy-MM-dd'),
               startDate: item.startDate !== undefined ? item.startDate : false,
-              sameAsStartDate: item.sameAsStartDate,
               visits: item.visitTime.map((time: string, index: number) => ({
                 id: index + 1,
                 time: time,
@@ -150,7 +149,6 @@ export const useAppointment = () => {
               date: item.date,
               name: item.date.substring(0, 3).toLowerCase(),
               startDate: item.startDate !== undefined ? item.startDate : false,
-              sameAsStartDate: item.sameAsStartDate,
               visits: item.visitTime.map((time: string, index: number) => ({
                 id: index + 1,
                 time: time,
@@ -238,14 +236,11 @@ export const useAppointment = () => {
           });
       } else if (serviceTypeId === 4) {
         const DoggyDayFT = isRecurring
-          ? `Doggy Day Care Proposal:\nRepeat service starting from: ${recurringStartDate}\n 
-          Drop-off: ${dropOffStartTime} - ${dropOffEndTime}\n
-          Pick-Up: ${pickUpStartTime} - ${pickUpEndTime}`
-          : `Doggy Day Care Proposal:\n  
-          One time servcie on: \n
-          ${multiDate.join(', ')}\n
-            Drop-off: ${dropOffStartTime} - ${dropOffEndTime}\n
-          Pick-Up: ${pickUpStartTime} - ${pickUpEndTime}`;
+          ? `Doggy Day Care Proposal:\nRepeat service starting from: ${recurringStartDate}\nDrop-off: ${dropOffStartTime} - ${dropOffEndTime}\nPick-Up: ${pickUpStartTime} - ${pickUpEndTime}`
+          : `Doggy Day Care Proposal:\nOne time servcie on: \n
+          ${multiDate.join(
+            ', ',
+          )}\nDrop-off: ${dropOffStartTime} - ${dropOffEndTime}\nPick-Up: ${pickUpStartTime} - ${pickUpEndTime}`;
 
         const doggyPayload = isRecurring
           ? {
@@ -285,6 +280,7 @@ export const useAppointment = () => {
               formattedMessage: DoggyDayFT,
               isRecivedPhotos: isRecivedPhotos,
             };
+        console.log('asdfasdf', doggyPayload);
         const response = await request(endpoint, doggyPayload);
         response.ok &&
           navigation.navigate('ActivityScreen', {
@@ -295,13 +291,13 @@ export const useAppointment = () => {
     }
   };
   useEffect(() => {
-    providerServices === null && dispatch(getProviderServices('EtD85E1m'));
+    providerServices === null && dispatch(getProviderServices(providerOpk));
     dispatch(getAllPets());
   }, []);
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
     setRefreshing(true);
-    dispatch(getProviderServices('EtD85E1m'));
+    dispatch(getProviderServices(providerOpk));
     dispatch(getAllPets());
     setRefreshing(false);
   };

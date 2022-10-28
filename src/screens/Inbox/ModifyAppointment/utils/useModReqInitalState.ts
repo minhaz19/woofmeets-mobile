@@ -46,6 +46,7 @@ export const useModReqInitialState = () => {
   const modMultiDates = proposedServiceInfo?.proposalOtherDate?.map(
     (item: {name: string}) => item.name,
   );
+  console.log('init', proposedServiceInfo?.proposalOtherDate);
   const modRecurringSelectedDay =
     proposedServiceInfo?.recurringSelectedDay?.map((item: any) => item.date);
 
@@ -53,15 +54,13 @@ export const useModReqInitialState = () => {
     proposedServiceInfo?.recurringSelectedDay?.map((item: any) => ({
       date: item?.date,
       visitTime: item?.visits?.map((time: any) => time.time),
-      sameAsStartDate: item?.sameAsStartDate,
-      startDate: item?.startDate ? item.startDate : false,
+      // startDate: item?.startDate ? item.startDate : false,
     }));
   const modProposalScheduleDate = proposedServiceInfo?.proposalOtherDate?.map(
     (item: any) => ({
       date: item?.name,
       visitTime: item?.visits?.map((time: any) => time.time),
-      sameAsStartDate: item?.sameAsStartDate,
-      startDate: item?.startDate ? item.startDate : false,
+      // startDate: item?.startDate ? item.startDate : false,
     }),
   );
   const DoggySelected = dayss.filter(item =>
@@ -123,8 +122,6 @@ export const useModReqInitialState = () => {
             (item: {petId: number}) => item.petId,
           )
         : [],
-    recurringModDatesRef: [],
-    specificModDatesRef: [],
     recurringModDates:
       proposedServiceInfo?.isRecurring &&
       proposedServiceInfo?.recurringSelectedDay
@@ -144,6 +141,5 @@ export const useModReqInitialState = () => {
         : [],
     selectedRange: getDatesInRange(d1, d2),
     selectDate: [],
-    markedStyle: {},
   };
 };

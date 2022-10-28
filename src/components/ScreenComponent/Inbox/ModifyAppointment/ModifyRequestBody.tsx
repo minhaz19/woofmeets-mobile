@@ -14,15 +14,19 @@ interface Props {
 const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {serviceTypeId: serviceId} = proposedServiceInfo;
-  const {} = useFormContext();
-
+  const {
+    formState: {isDirty},
+  } = useFormContext();
+  console.log('isDirty', isDirty);
   return (
     <ScrollView
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}>
       {(serviceId === 1 || serviceId === 2) && <BoardingSitting />}
-      {(serviceId === 3 || serviceId === 5) && <DropInVisitWalking />}
-      {serviceId === 4 && <DoggyDayCare />}
+      {(serviceId === 3 || serviceId === 5) && (
+        <DropInVisitWalking appointmentType={'modify'} />
+      )}
+      {serviceId === 4 && <DoggyDayCare appointmentType={'modify'} />}
 
       <MyPets appointmentType={''} />
 

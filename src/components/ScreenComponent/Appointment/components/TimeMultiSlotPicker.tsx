@@ -35,9 +35,8 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                   Days.push({
                     date: singleItem.date,
                     visitTime: [item.slot],
-                    sameAsStartDate: false,
-                    startDate:
-                      matchDate === -1 && Days.length === 0 ? true : false,
+                    // startDate:
+                    //   matchDate === -1 && Days.length === 0 ? true : false,
                   });
                 } else {
                   const found = Days.filter(
@@ -53,8 +52,7 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                     found[0].visitTime.splice(matchIndex, 1);
                   }
                 }
-
-                setValue('recurringModDatesRef', Days);
+                setValue('recurringModDates', Days);
               } else if (!isRecurring) {
                 const matchDate = Dates?.findIndex(
                   (it: {date: string}) => it.date === singleItem.date,
@@ -63,15 +61,14 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                   Dates.push({
                     date: singleItem.date,
                     visitTime: [item.slot],
-                    sameAsStartDate: false,
-                    startDate:
-                      matchDate === -1 && Dates.length === 0 ? true : false,
+                    // startDate:
+                    //   matchDate === -1 && Dates.length === 0 ? true : false,
                   });
                 } else {
                   const found = Dates.filter(
                     (obj: any) => obj.date === singleItem.date,
                   );
-
+                  console.log('fount', found);
                   const matchIndex = found[0].visitTime?.findIndex(
                     (it: {visitTime: string}) => it === item.slot,
                   );
@@ -81,8 +78,7 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                     found[0].visitTime.splice(matchIndex, 1);
                   }
                 }
-
-                setValue('specificModDatesRef', Dates);
+                setValue('specificModDates', Dates);
               }
             }}
             style={[

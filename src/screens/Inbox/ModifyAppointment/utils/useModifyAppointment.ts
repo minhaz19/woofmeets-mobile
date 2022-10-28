@@ -127,58 +127,89 @@ export const useModifyAppointment = (route: any) => {
           ? specificModDates.map((item: any, i: number) => ({
               id: i + 1,
               date: new Date(item.date).toISOString(),
-              name: item.date,
-              startDate: item.startDate !== undefined ? item.startDate : false,
-              sameAsStartDate: item.sameAsStartDate,
-              visits: item.visitTime.map((time: string, index: number) => ({
-                id: index + 1,
-                time: time,
-              })),
+              name: format(new Date(item.date), 'yyyy-MM-dd'),
+              visits:
+                item?.visits && item?.visits.length !== 0
+                  ? item.visits
+                  : item.visitTime.map((time: string, index: number) => ({
+                      id: index + 1,
+                      time: time,
+                    })),
             }))
           : [];
         const sortedRecurringDates = isRecurring
-          ? recurringModDates.map((item: any, i: number) => ({
+          ? recurringModDates?.map((item: any, i: number) => ({
               id: i + 1,
               date: item.date,
               name: item.date.substring(0, 3).toLowerCase(),
-              startDate: item.startDate !== undefined ? item.startDate : false,
-              sameAsStartDate: item.sameAsStartDate,
-              visits: item.visitTime.map((time: string, index: number) => ({
-                id: index + 1,
-                time: time,
-              })),
+              visits:
+                item?.visits && item?.visits.length !== 0
+                  ? item.visits
+                  : item?.visitTime?.map((time: string, index: number) => ({
+                      id: index + 1,
+                      time: time,
+                    })),
             }))
           : [];
+        console.log('rr', recurringModDates);
         const dropInVisitFT =
           serviceTypeId === 3
             ? isRecurring
-              ? `Drop In Visit Proposal:\nRepeat service starting from: ${recurringStartDate}\n${recurringModDates.map(
+              ? `Drop In Visit Proposal:\nRepeat service starting from: ${recurringStartDate}\n${recurringModDates?.map(
                   (item: any) =>
-                    `${item.visitTime.length} Visits on: ${
-                      item.date
-                    } at ${item.visitTime.join(', ')}`,
+                    `${
+                      item?.visits && item?.visits.length !== 0
+                        ? item?.visits.length
+                        : item.visitTime.length
+                    } Visits on: ${item.date} at ${
+                      item?.visits && item?.visits.length !== 0
+                        ? item?.visits.join(', ')
+                        : item.visitTime.join(', ')
+                    }\n`,
                 )}  `
               : `Drop In Visit Proposal:\n${specificModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} Visits on: ${format(
+                    `${
+                      item?.visits && item?.visits.length !== 0
+                        ? item?.visits.length
+                        : item.visitTime.length
+                    } Visits on: ${format(
                       new Date(item.date),
                       'iii, LLL d',
-                    )} at ${item.visitTime.join(', ')}`,
+                    )} at ${
+                      item?.visits && item?.visits.length !== 0
+                        ? item?.visits.join(', ')
+                        : item.visitTime.join(', ')
+                    }`,
                 )}  `
             : serviceTypeId === 5
             ? isRecurring
               ? `Dog Walking Proposal:\nRepeat service starting from: ${recurringStartDate}\n${recurringModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} Visits on: ${
-                      item.date
-                    } at ${item.visitTime.join(', ')}`,
+                    `${
+                      item?.visits && item?.visits.length !== 0
+                        ? item?.visits.length
+                        : item.visitTime.length
+                    } Visits on: ${item.date} at ${
+                      item?.visits && item?.visits.length !== 0
+                        ? item?.visits.join(', ')
+                        : item.visitTime.join(', ')
+                    }`,
                 )}  `
               : `Dog Walking Proposal:\n${specificModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} Visits on: ${format(
+                    `${
+                      item?.visits && item?.visits.length !== 0
+                        ? item?.visits.length
+                        : item.visitTime.length
+                    } Visits on: ${format(
                       new Date(item.date),
                       'iii, LLL d',
-                    )} at ${item.visitTime.join(', ')}`,
+                    )} at ${
+                      item?.visits && item?.visits.length !== 0
+                        ? item?.visits.join(', ')
+                        : item.visitTime.join(', ')
+                    }`,
                 )}  `
             : null;
 
@@ -219,6 +250,7 @@ export const useModifyAppointment = (route: any) => {
               proposalOtherDate: sortedSpecificModDates,
             };
         const result = await request(endpoint, dropDogPayload);
+        console.log('doggy payload', dropDogPayload, result);
 
         if (result.ok) {
           dispatch(getProviderProposal(result.data.data.appointment.opk));
@@ -228,14 +260,11 @@ export const useModifyAppointment = (route: any) => {
         }
       } else if (serviceTypeId === 4) {
         const DoggyDayFT = isRecurring
-          ? `Doggy Day Care Proposal:\nRepeat service starting from: ${recurringStartDate}\n 
-          Drop-off: ${dropOffStartTime} - ${dropOffEndTime}\n
-          Pick-Up: ${pickUpStartTime} - ${pickUpEndTime}`
-          : `Doggy Day Care Proposal:\n  
-          One time servcie on:\n
-          ${multiDate.join(', ')}\n
-            Drop-off: ${dropOffStartTime} - ${dropOffEndTime} \n
-          Pick-Up: ${pickUpStartTime} - ${pickUpEndTime}`;
+          ? `Doggy Day Care Proposal:\nRepeat service starting from: ${recurringStartDate}\nDrop-off: ${dropOffStartTime} - ${dropOffEndTime}\nPick-Up: ${pickUpStartTime} - ${pickUpEndTime}`
+          : `Doggy Day Care Proposal:\nOne time servcie on:\n
+          ${multiDate.join(
+            ', ',
+          )}\nDrop-off: ${dropOffStartTime} - ${dropOffEndTime}\nPick-Up: ${pickUpStartTime} - ${pickUpEndTime}`;
 
         const doggyPayload = isRecurring
           ? {
