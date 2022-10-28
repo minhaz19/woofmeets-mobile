@@ -10,6 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../../../constants/Colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation } from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 interface Props {
   setIsReviewModal: (value: boolean) => void;
@@ -34,6 +35,14 @@ const ThreeDotsModal: FC<Props> = props => {
       screen: () => {
         props.setIsReviewModal(true);
         props.setIsThreeDotsModal(false);
+      },
+    },
+    {
+      id: 4,
+      name: 'Zoom',
+      icon: <FontAwesome name="video-camera" size={24} color={Colors.primary}/>,
+      screen: () => {
+        
       },
     },
   ];
