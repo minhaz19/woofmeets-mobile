@@ -11,7 +11,6 @@ interface Props {
 }
 const ProviderProfile = ({route}: Props) => {
   const providerOpk = route?.params?.providerOpk;
-  console.log('core profile', providerOpk);
   const {colors} = useTheme();
   const _renderHeader = () => null;
   const _renderFooter = () => (

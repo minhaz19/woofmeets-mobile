@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Keyboard,
   ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import styles from '../activity/styles';
@@ -18,16 +19,13 @@ import SendMessage from './SendMessage';
 import {apiMsg} from '../../../api/client';
 import {formatDistance, subDays} from 'date-fns';
 import storage from '../../../utils/helpers/auth/storage';
-import {RefreshControl} from 'react-native-gesture-handler';
+import {useAppDispatch} from '../../../store/store';
+import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 
-const Messages = (props: {
-  roomId: any;
-  opk: any;
-  onRefresh: any;
-  refreshing: any;
-}) => {
+const Messages = (props: {roomId: any; opk: any}) => {
   const {colors} = useTheme();
   const [socket, setSocket] = useState<any>(null);
+  const dispatch = useAppDispatch();
   const [messages, setMessages] = useState([]);
   const [isLoadingMsg, setIsLoadingMsg] = useState<boolean>(false);
   const [user, setUser] = useState();
@@ -49,6 +47,17 @@ const Messages = (props: {
       setIsLoadingMsg(false);
     }
   };
+
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    setRefreshing(true);
+    getPreviousMessages();
+    dispatch(getProviderProposal(props.opk));
+    setRefreshing(false);
+  };
+  useEffect(() => {
+    onRefresh();
+  }, []);
 
   useEffect(() => {
     if (socket === null) {
@@ -106,15 +115,12 @@ const Messages = (props: {
     <View style={{flex: 1}}>
       <ScrollView
         ref={scrollViewRef}
-        refreshControl={
-          <RefreshControl
-            refreshing={props.refreshing}
-            onRefresh={props.onRefresh}
-          />
-        }
         style={styles.scrollTop}
         onContentSizeChange={() =>
           scrollViewRef.current.scrollToEnd({animated: true})
+        }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         {isLoadingMsg ? (
           <View
