@@ -1,9 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  ViewStyle,
-  useColorScheme,
-} from 'react-native';
+import {View, StyleSheet, ViewStyle, useColorScheme} from 'react-native';
 import React from 'react';
 import Colors from '../../constants/Colors';
 
@@ -18,16 +13,13 @@ const ScreenRapperGrey = (props: {
     | undefined;
 }) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = {backgroundColor: isDarkMode
-    ? Colors.dark.background
-    : Colors.light.inputBackground}
+  const backgroundStyle = {
+    backgroundColor: isDarkMode
+      ? Colors.dark.background
+      : Colors.light.inputBackground,
+  };
   return (
-    <View
-      style={[
-        styles.container,
-        backgroundStyle,
-        props?.rapperStyle,
-      ]}>
+    <View style={[styles.container, backgroundStyle, props?.rapperStyle]}>
       {props.children}
     </View>
   );

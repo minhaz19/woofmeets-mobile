@@ -47,6 +47,7 @@ import appointmentStatusSlice from './slices/Appointment/Inbox/User/Proposal/app
 import ProviderApntStatusSlice from './slices/Appointment/Inbox/Provider/Pending/providerApntStatusSlice';
 import userApmtCancelSlice from './slices/Appointment/Inbox/User/Cancelled/userApmtCancelSlice';
 import providerApmtCancelSlice from './slices/Appointment/Inbox/Provider/Cancelled/providerApmtCancelSlice';
+import reportCardSlice from './slices/reportCard/reportCardSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -87,6 +88,7 @@ const appReducer = combineReducers({
   providerApntStatus: ProviderApntStatusSlice,
   userCancelled: userApmtCancelSlice,
   providerCancelled: providerApmtCancelSlice,
+  reportCard: reportCardSlice,
 });
 
 const RootReducer = (
