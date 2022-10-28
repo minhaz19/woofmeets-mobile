@@ -25,7 +25,6 @@ export const useBasicInfo = () => {
       latitude: e.lat,
       longitude: e.lng,
     };
-    console.log(formatedPayload);
     const result = await request(slug, formatedPayload);
     if (result.ok) {
       Alert.alert('Information Updated!');

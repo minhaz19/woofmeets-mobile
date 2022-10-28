@@ -62,7 +62,6 @@ const Review: FC<Props> = props => {
         providerServiceComment: enjoyText,
       };
     }
-    console.log(formattedData);
     const result = await request(endPoint, formattedData);
     if (result.ok) {
       props.setIsReviewModal(false);

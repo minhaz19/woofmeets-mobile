@@ -19,8 +19,6 @@ export const prepareRatesSSP = async (
     `/v1/service-rates/type-has-rate/${serviceTypeId}`,
   );
 
-  // console.log(serviceRateTypes)
-
   // props for avarage rate and auto calculation percentage
   const baseRate_meta = serviceRateTypes.find(
     rate => rate.serviceRateType.slug === 'base-rate',
@@ -36,8 +34,6 @@ export const prepareRatesSSP = async (
     rateId: serviceRate.id,
     amount: 0,
   }));
-
-  console.log(rates);
 
   ssp.props['userHasCreatedRates'] = false;
 
@@ -65,7 +61,7 @@ export const prepareRatesSSP = async (
     ssp.props['userHasCreatedRates'] = true;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   }
 

@@ -31,7 +31,6 @@ const MyPets = ({appointmentType}: Props) => {
   const providerId = proposedServiceInfo?.providerId;
   const {setValue, watch} = useFormContext();
   const {petsId: pp} = watch();
-  // console.log('pp', pp);
   useEffect(() => {
     petsId = [...pp];
     if (
@@ -46,9 +45,7 @@ const MyPets = ({appointmentType}: Props) => {
           pp.findIndex((it: number) => it === item.petId) !== -1 ? true : false,
       }));
       setDatas(modArray);
-      console.log('top');
     } else {
-      console.log('bottom');
       const modArray = allPets?.map((item: any, index: number) => {
         return {
           id: index + 1,
@@ -66,7 +63,6 @@ const MyPets = ({appointmentType}: Props) => {
       });
       modArray && setDatas(modArray);
     }
-    console.log('pp asdf', appointmentType, pp);
   }, [allPets]);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();

@@ -151,7 +151,6 @@ export const useModifyAppointment = (route: any) => {
                     })),
             }))
           : [];
-        console.log('rr', recurringModDates);
         const dropInVisitFT =
           serviceTypeId === 3
             ? isRecurring
@@ -250,7 +249,6 @@ export const useModifyAppointment = (route: any) => {
               proposalOtherDate: sortedSpecificModDates,
             };
         const result = await request(endpoint, dropDogPayload);
-        console.log('doggy payload', dropDogPayload, result);
 
         if (result.ok) {
           dispatch(getProviderProposal(result.data.data.appointment.opk));

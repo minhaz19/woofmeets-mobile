@@ -9,7 +9,6 @@ export const getServiceRateFields = createAsyncThunk(
       const response: ApiResponse<any> = await apiClient.get(
         `/service-rates/type-has-rate/${id}`,
       );
-      console.log('ratessss', response);
       if (!response.ok) {
         if (response.data) {
           Alert.alert(response.data.message);

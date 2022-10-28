@@ -61,7 +61,6 @@ export const useServiceRates = (serviceSetup: any) => {
           });
         },
       );
-    console.log('payload', payload);
     const result = await request(payload);
 
     if (result.ok) {
