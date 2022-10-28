@@ -1,4 +1,4 @@
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
@@ -10,7 +10,6 @@ import {USAFlag} from '../../../assets/svgs/Setting_SVG';
 import IOSButton from '../../UI/IOSButton';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import Colors from '../../../constants/Colors';
-import BottomHalfModal from '../../UI/modal/BottomHalfModal';
 import AuthForm from '../Auth/Common/AuthForm';
 import {ApiResponse} from 'apisauce';
 import apiClient from '../../../api/client';
@@ -22,18 +21,17 @@ import AppForm from '../../common/Form/AppForm';
 import {otpValue} from '../../../utils/config/initalValues/initalValues';
 import {otpValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {phoneNumberReg} from '../../../constants/regex';
-import {useAppSelector} from '../../../store/store';
+import {useAppSelector, useAppDispatch} from '../../../store/store';
+import { getContactInfo } from '../../../store/slices/profile/contact';
+import MiddleModal from '../../UI/modal/MiddleModal';
+import { QuestionIcon } from '../../../assets/svgs/SVG_LOGOS';
+import ServiceReusableModal from '../becomeSitter/ServiceSetup/Common/ServiceReusableModal';
 
 const contactInput = [
   {
     title: 'Emergency Contact Name',
     placeholder: 'Enter Emergency Contact Name',
     name: 'emergencyContactName',
-  },
-  {
-    title: 'Email',
-    placeholder: 'Enter Email',
-    name: 'email',
   },
   {
     title: 'Phone number',
@@ -47,10 +45,14 @@ const ContactInput = (props: {handleSubmit: any}) => {
     control,
     formState: {errors},
   } = useFormContext();
+  const dispatch = useAppDispatch();
   const contact = useAppSelector(state => state.contact);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [textInput, setTextInput] = useState(
     contact.phoneNumber ? contact.phoneNumber : '+1',
   );
+  const [globalError, setGlobalError] = useState('');
+  const [otpVerificationStatus, setOtpVerificationStatus] = useState(contact.phoneNumber ? true : false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPhoneLoading, setIsPhoneLoading] = useState(false);
   const [phoneNumberError, setPhoneNumberError] = useState<string | null>();
@@ -105,13 +107,15 @@ const ContactInput = (props: {handleSubmit: any}) => {
     });
 
     if (result.ok) {
+      setOtpVerificationStatus(true);
+      dispatch(getContactInfo());
       setIsModalVisible(!isModalVisible);
     }
   };
 
   return (
     <View style={styles.container}>
-      <BottomHalfModal
+      <MiddleModal
         isModalVisible={isModalVisible}
         setIsModalVisible={() => {
           setIsModalVisible(!isModalVisible);
@@ -131,20 +135,32 @@ const ContactInput = (props: {handleSubmit: any}) => {
             loading={loading}
           />
         </AppForm>
-      </BottomHalfModal>
+      </MiddleModal>
       <View style={styles.inputContainer}>
+        <ServiceReusableModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          question="How is my phone number used?"
+          description="Woofmeets needs to have a phone number for you on file as one of the methods for contacting you. If we ever need to speak to you, we will endeavor to reach out via email. If that method proves ineffective, we may use the phone number we have on file."
+        />
         <View>
           <View style={styles.nameContainer}>
             <HeaderText
               text="Add your phone number"
               textStyle={styles.textStyle}
             />
+            <TouchableOpacity
+              onPress={() => setModalVisible(true)}
+              style={styles.iconContainer}>
+              <QuestionIcon fill={Colors.primary} />
+            </TouchableOpacity>
           </View>
           {
             <View>
               <InputText
                 title={'Your Phone Number'}
                 placeholder={'Phone Number'}
+                description={"WoofMeet requires a verified phone number to keep your account safe and for important updates. We'll send a code via text message."}
                 value={textInput}
                 setValue={setTextInput}
                 leftIcon={<USAFlag height={24} width={24} />}
@@ -153,6 +169,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
                   mobilevalidate(number);
                 }}
               />
+              <TitleText text={globalError} textStyle={{color: Colors.alert}}/>
               {phoneNumberError && (
                 <DescriptionText
                   text={phoneNumberError}
@@ -172,12 +189,14 @@ const ContactInput = (props: {handleSubmit: any}) => {
               )}
             </View>
           }
-          <View style={styles.nameContainer}>
+          <View style={{paddingBottom: 10}}>
             <HeaderText
-              text="Add Emergency Contact"
+              text="Emergency Contact"
               textStyle={styles.textStyle}
             />
+            <DescriptionText text={"Who can we contact, other than you, in case of an emergency?"} />
           </View>
+          
           {contactInput.map((item, index) => {
             return (
               <View key={index}>
@@ -200,7 +219,14 @@ const ContactInput = (props: {handleSubmit: any}) => {
         <View style={styles.footerContainer}>
           <SubmitButton
             title="Save"
-            onPress={props.handleSubmit}
+            onPress={() => {
+              if (otpVerificationStatus) {
+                setGlobalError('')
+                props.handleSubmit()
+              } else {
+                setGlobalError('Please submit and verify phone number');
+              }
+            }}
             loading={contact.loading}
           />
         </View>
@@ -214,6 +240,9 @@ export default ContactInput;
 const styles = StyleSheet.create({
   container: {
     marginTop: '5%',
+  },
+  container1: {
+   flex: 1,
   },
   inputContainer: {marginHorizontal: 20},
   textInputStyle: {},
@@ -243,5 +272,8 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: Colors.alert,
+  },
+  iconContainer: {
+    paddingLeft: 10,
   },
 });

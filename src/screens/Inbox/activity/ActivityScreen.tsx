@@ -95,11 +95,7 @@ const ActivityScreen = (props: {
                   }}
                 />
               </BottomHalfModal>
-              <Messages
-                roomId={proposal?.appointment?.messageGroupId}
-                onRefresh={onRefresh}
-                refreshing={refreshing}
-              />
+              <Messages roomId={proposal?.appointment?.messageGroupId} opk={appointmentOpk} />
             </>
           </KeyboardAvoidingView>
         </SafeAreaView>

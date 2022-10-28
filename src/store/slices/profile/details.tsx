@@ -13,7 +13,9 @@ export const postSitterDetails = createAsyncThunk(
       experienceDescription,
       environmentDescription,
       scheduleDescription,
-      mtd
+      mtd,
+      skill,
+      about
     }: any,
     method: any,
   ) => {
@@ -24,8 +26,8 @@ export const postSitterDetails = createAsyncThunk(
       experienceDescription: experienceDescription,
       environmentDescription: environmentDescription,
       scheduleDescription: scheduleDescription,
-      about: "string",
-      skills: [1,2]
+      about: about,
+      skills: skill
     };
     try {
       if (mtd === 'patch') {
@@ -63,6 +65,19 @@ export const postSitterDetails = createAsyncThunk(
   },
 );
 
+export const getSkillsData = createAsyncThunk(
+  'details/getSkillsData',
+  async () => {
+    const response: ApiResponse<any> = await apiClient.get(
+      '/user-profile/profile-skill-types',
+    );
+    if (!response.ok) {
+      throw new Error(response.data.message);
+    }
+    return response.data;
+  },
+);
+
 export const getSitterDetails = createAsyncThunk(
   'details/getSitterDetails',
   async () => {
@@ -78,8 +93,11 @@ export const getSitterDetails = createAsyncThunk(
 
 const initialState: any = {
   sitterInfo: null,
+  sitterInfoPost: null,
+  skillsData: null,
   error: null,
   loading: false,
+  loadingSitter: false,
   success: false,
 };
 
@@ -91,16 +109,16 @@ const details = createSlice({
   extraReducers(builder) {
     builder
       .addCase(postSitterDetails.pending, state => {
-        state.loading = true;
+        state.loadingSitter = true;
         state.error = null;
       })
       .addCase(postSitterDetails.fulfilled, (state, {payload}) => {
-        state.loading = false;
-        state.sitterInfo = payload;
+        state.loadingSitter = false;
+        state.sitterInfoPost = payload;
         state.error = null;
       })
       .addCase(postSitterDetails.rejected, (state, {payload}) => {
-        state.loading = false;
+        state.loadingSitter = false;
         state.error = payload;
       })
       .addCase(getSitterDetails.pending, state => {
@@ -113,6 +131,19 @@ const details = createSlice({
         state.error = null;
       })
       .addCase(getSitterDetails.rejected, (state, {payload}) => {
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(getSkillsData.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSkillsData.fulfilled, (state, {payload}) => {
+        state.loading = false;
+        state.skillsData = payload.data;
+        state.error = null;
+      })
+      .addCase(getSkillsData.rejected, (state, {payload}) => {
         state.loading = false;
         state.error = payload;
       });

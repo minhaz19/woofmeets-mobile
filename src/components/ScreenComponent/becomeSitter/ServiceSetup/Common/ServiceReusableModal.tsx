@@ -29,7 +29,7 @@ const ServiceReusableModal = ({
         <HeaderText text={question} />
         <Divider />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <DescriptionText text={description} />
+          {description && <DescriptionText text={description} />}
           <IOSButton
             title={'Close'}
             textAlignment={btnStyles.textAlignment}

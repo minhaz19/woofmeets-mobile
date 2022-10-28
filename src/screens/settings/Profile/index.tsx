@@ -24,8 +24,7 @@ import jwtDecode from 'jwt-decode';
 import authStorage from '../../../utils/helpers/auth/storage';
 import TitleText from '../../../components/common/text/TitleText';
 import {getUserOnboardStatus} from '../../../store/slices/connect/stripe';
-import {getUserServices} from '../../../store/slices/profile/services';
-import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
+import {getSkillsData} from '../../../store/slices/profile/details';
 
 const Profile = (props: {
   navigation: {navigate: (arg0: string, arg1?: any) => any};
@@ -38,7 +37,6 @@ const Profile = (props: {
   // useProfileData();
 
   const [token, setToken] = useState<any>();
-  console.log(token);
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {
@@ -50,8 +48,7 @@ const Profile = (props: {
   useEffect(() => {
     getDecodedToken();
     dispatch(getUserOnboardStatus());
-    dispatch(getUserServices());
-    dispatch(getUserProfileInfo());
+    dispatch(getSkillsData());
   }, []);
   return (
     <ScrollView
@@ -63,9 +60,7 @@ const Profile = (props: {
           <View style={{paddingVertical: 20}}>
             <TitleText
               textStyle={{color: Colors.blue, textAlign: 'center'}}
-              text={
-                'Your sitter request status in under progress, you will be notified when your status changes'
-              }
+              text={'Your sitter request status in under review'}
             />
           </View>
         )}

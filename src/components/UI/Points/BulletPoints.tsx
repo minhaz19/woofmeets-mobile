@@ -1,10 +1,10 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TextStyle} from 'react-native';
 import React from 'react';
 import TitleText from '../../common/text/TitleText';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Colors from '../../../constants/Colors';
 
-const BulletPoints = (props: {text: string}) => {
+const BulletPoints = (props: {text: string, textStyle?: TextStyle}) => {
   return (
     <View style={styles.lineContainer}>
       <Entypo
@@ -13,7 +13,7 @@ const BulletPoints = (props: {text: string}) => {
         color={Colors.green}
         style={styles.iconStyle}
       />
-      <TitleText text={props.text} textStyle={styles.textStyle} />
+      <TitleText text={props.text} textStyle={{...styles.textStyle, ...props.textStyle}} />
     </View>
   );
 };

@@ -18,13 +18,8 @@ import SendMessage from './SendMessage';
 import {apiMsg} from '../../../api/client';
 import {formatDistance, subDays} from 'date-fns';
 import storage from '../../../utils/helpers/auth/storage';
-import {RefreshControl} from 'react-native-gesture-handler';
 
-const Messages = (props: {
-  roomId: any;
-  refreshing: boolean;
-  onRefresh: () => void;
-}) => {
+const Messages = (props: {roomId: any; opk: any}) => {
   const {colors} = useTheme();
   const [socket, setSocket] = useState<any>(null);
   const [messages, setMessages] = useState([]);
@@ -48,6 +43,8 @@ const Messages = (props: {
       setIsLoadingMsg(false);
     }
   };
+
+  console.log('messages', messages);
 
   useEffect(() => {
     if (socket === null) {
@@ -106,12 +103,6 @@ const Messages = (props: {
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollTop}
-        refreshControl={
-          <RefreshControl
-            refreshing={props.refreshing}
-            onRefresh={props.onRefresh}
-          />
-        }
         onContentSizeChange={() =>
           scrollViewRef.current.scrollToEnd({animated: true})
         }>
@@ -141,6 +132,12 @@ const Messages = (props: {
                     {backgroundColor: colors.inputLightBg},
                   ]}>
                   <TitleText text={item.content} />
+                  {item.attachmentType === 'image' && (
+                    <Image
+                      source={{uri: item.attachment}}
+                      style={styles.image}
+                    />
+                  )}
                   <ShortText
                     text={formatDistance(
                       subDays(new Date(item?.createdAt), 0),
@@ -178,6 +175,12 @@ const Messages = (props: {
                   ]}>
                   {/* {item?.content && <HeaderText text={item?.content} />} */}
                   <TitleText text={item.content} />
+                  {item.attachmentType === 'image' && (
+                    <Image
+                      source={{uri: item.attachment}}
+                      style={styles.image}
+                    />
+                  )}
                   {item?.details && (
                     <View>
                       <View style={styles.detailsImage}>
@@ -219,6 +222,7 @@ const Messages = (props: {
         setMessages={setMessages}
         socket={socket}
         user={user}
+        opk={props.opk}
       />
     </View>
   );

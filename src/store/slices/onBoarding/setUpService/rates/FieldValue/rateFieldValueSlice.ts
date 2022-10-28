@@ -27,12 +27,11 @@ const serviceRateFieldSlice = createSlice({
             amount: number;
             serviceTypeRate: {serviceRateTypeId: number};
           }) => {
-            // const c = payload?.data.find(
-            //   (it: any) =>
-            //     it?.serviceTypeRate?.serviceRateTypeId ===
-            //     item?.serviceTypeRate?.serviceRateTypeId,
-            // )?.serviceTypeRate?.serviceRateTypeId;
-            // console.log('check', c);
+            const c = payload?.data.find(
+              (it: any) =>
+                it?.serviceTypeRate?.serviceRateTypeId ===
+                item?.serviceTypeRate?.serviceRateTypeId,
+            )?.serviceTypeRate?.serviceRateTypeId;
             return {
               id: item.id,
               modRatesId: payload?.data.find(

@@ -43,6 +43,8 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
       <ServiceReusableModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        question="Need help with rates?"
+        description="If you click the box that says “Update my additional rates based on my pay rate,” the system will automatically update the rest of your rates based on the hourly base rate you set. Some pet sitters find that to be a convenient feature. However, it’s not required that you use it. Instead, you can always fill out those additional rates yourself. Make sure that the base rate and additional rates you’ve set are not unreasonable, though. If you’re not sure what a reasonable hourly rate would be for something like dog walking, have a look at what other sitters are requesting and model your own rates based on that. Your aim is to make yourself affordable to pet owners."
       />
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
