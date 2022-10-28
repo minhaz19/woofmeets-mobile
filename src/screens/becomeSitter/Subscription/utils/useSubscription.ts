@@ -30,7 +30,7 @@ export const useSubscription = () => {
     id: item.id,
     sequence: item.id,
     title: item.name[0].toUpperCase() + item.name.slice(1),
-    description: 'Only 9% Service Fee For All Unlimited Appointments',
+    description: 'Unlimited appointments only at 9% service charge for each appointment.',
     price: item.MembershipPlanPrices[0].rate,
     annualRate: item.annualRate,
     details: item.features?.map((des: any, i: number) => ({

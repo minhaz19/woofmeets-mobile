@@ -1,5 +1,5 @@
 import {View, StyleSheet} from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../constants/textScaling';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
@@ -9,21 +9,31 @@ import TitleText from '../../../components/common/text/TitleText';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 import { sitterDetailsValidationSchema } from '../../../utils/config/becomeSitter/validationSchema';
 import SitterDetailsInput from '../../../components/ScreenComponent/becomeSitter/details/SitterDetailsInput';
-import { getSitterDetails, postSitterDetails } from '../../../store/slices/profile/details';
+import { getSitterDetails, getSkillsData, postSitterDetails } from '../../../store/slices/profile/details';
 import { useDetailsInitalValue } from './useDetailsInitialValue';
 import { setProfileData, setSitterData } from '../../../store/slices/onBoarding/initial';
 import AppForm from '../../../components/common/Form/AppForm';
 import ScrollViewRapperRefresh from '../../../components/common/ScrollViewRapperRefresh';
+import BulletPoints from '../../../components/UI/Points/BulletPoints';
 
 const SitterDetails = () => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const sitterInfo = useAppSelector(state => state.details.sitterInfo?.providerDetails);
-  const sitterDetailsSubmit = (sitterData: any) => {
+  const sitterDetailsSubmit = async (sitterData: any) => {
+    setIsLoading(true)
     const mtd = sitterInfo ? 'patch' : 'post';
-    const data = {...sitterData, mtd}
-    console.log(data);
-    dispatch(postSitterDetails(data));
+    const skill: any[] = [];
+    sitterData?.skills?.map((item: { active: boolean; id: any; }) => {
+      if (item.active === true) {
+        skill.push(item.id)
+      }
+    })
+    const data = {...sitterData, mtd, skill}
+    await dispatch(postSitterDetails(data));
+    await dispatch(getSitterDetails());
+    setIsLoading(false)
     dispatch(setProfileData({pass: 2}));
     // new update onboarding
     dispatch(setSitterData({pass: 2}));
@@ -31,11 +41,12 @@ const SitterDetails = () => {
 
   const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = useCallback(() => {
+  const onRefresh = async() => {
     setRefreshing(true);
-    dispatch(getSitterDetails());
+    await dispatch(getSitterDetails());
+    await dispatch(getSkillsData());
     setRefreshing(false);
-  }, [dispatch]);
+  };
 
   useEffect(() => {
     onRefresh();
@@ -60,10 +71,18 @@ const SitterDetails = () => {
               text="Quick tips:"
               textStyle={styles.details}
             />
+            <BulletPoints
+              textStyle={{color: colors.descriptionText}}
+              text={'We recommend keeping personal identifiers—like your last name or workplace—out of your profile.'}
+            />
+            <BulletPoints
+              textStyle={{color: colors.descriptionText}}
+              text={`This is a chance to let your potential clients know how much animals mean to you and why you’re the ideal candidate to care for their pets. Be honest about your background with animals, and don’t embellish any of your experiences caring for them.`}
+            />
           <AppForm
             initialValues={useDetailsInitalValue()}
             validationSchema={sitterDetailsValidationSchema}>
-            <SitterDetailsInput handleSubmit={sitterDetailsSubmit} />
+            <SitterDetailsInput handleSubmit={sitterDetailsSubmit} isLoading={isLoading} />
           </AppForm>
           </View>
       <BottomSpacing />

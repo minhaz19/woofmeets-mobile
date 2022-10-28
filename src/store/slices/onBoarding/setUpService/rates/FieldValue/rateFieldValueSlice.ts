@@ -32,7 +32,6 @@ const serviceRateFieldSlice = createSlice({
                 it?.serviceTypeRate?.serviceRateTypeId ===
                 item?.serviceTypeRate?.serviceRateTypeId,
             )?.serviceTypeRate?.serviceRateTypeId;
-            console.log('check', c);
             return {
               id: item.id,
               modRatesId: payload?.data.find(

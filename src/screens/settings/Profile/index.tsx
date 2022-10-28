@@ -16,6 +16,7 @@ import jwtDecode from 'jwt-decode';
 import authStorage from '../../../utils/helpers/auth/storage';
 import TitleText from '../../../components/common/text/TitleText';
 import { getUserOnboardStatus } from '../../../store/slices/connect/stripe';
+import { getSkillsData } from '../../../store/slices/profile/details';
 
 const Profile = (props: {navigation: {navigate: (arg0: string, arg1?: any) => any}}) => {
   const {colors} = useTheme();
@@ -27,7 +28,6 @@ const Profile = (props: {navigation: {navigate: (arg0: string, arg1?: any) => an
 
 
   const [token, setToken] = useState<any>();
-  console.log(token);
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {
@@ -39,6 +39,7 @@ const Profile = (props: {navigation: {navigate: (arg0: string, arg1?: any) => an
   useEffect(() => {
     getDecodedToken();
     dispatch(getUserOnboardStatus())
+    dispatch(getSkillsData());
   }, []);
 
   return (
@@ -49,7 +50,7 @@ const Profile = (props: {navigation: {navigate: (arg0: string, arg1?: any) => an
         {!token?.provider && <View style={{paddingVertical: 20}}>
           <TitleText 
             textStyle={{color: Colors.blue, textAlign: 'center'}}
-            text={'Your sitter request status in under progress, you will be notified when your status changes'}
+            text={'Your sitter request status in under review'}
           />
         </View>}
         <View style={styles.headerContainer}>

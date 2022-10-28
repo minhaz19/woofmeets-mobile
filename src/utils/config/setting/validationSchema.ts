@@ -19,7 +19,6 @@ const basicInfoValidationSchema = Yup.object().shape({
 
 const contactValidationSchema = Yup.object().shape({
   emergencyContactName: Yup.string(),
-  email: Yup.string(),
   emergencyPhone: Yup.string(),
 });
 
