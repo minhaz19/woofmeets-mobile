@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Keyboard,
   ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import styles from '../activity/styles';
@@ -13,11 +14,12 @@ import ShortText from '../../../components/common/text/ShortText';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import io from 'socket.io-client';
-import {msgUrl} from '../../../utils/helpers/httpRequest';
+import { msgUrl } from '../../../utils/helpers/httpRequest';
 import SendMessage from './SendMessage';
 import {apiMsg} from '../../../api/client';
 import {formatDistance, subDays} from 'date-fns';
 import storage from '../../../utils/helpers/auth/storage';
+import { useAppDispatch } from '../../../store/store';
 
 const Messages = (props: {roomId: any; opk: any}) => {
   const {colors} = useTheme();
@@ -44,7 +46,15 @@ const Messages = (props: {roomId: any; opk: any}) => {
     }
   };
 
-  console.log('messages', messages);
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    setRefreshing(true);
+    getPreviousMessages();
+    setRefreshing(false);
+  };
+  useEffect(() => {
+    onRefresh();
+  }, []);
 
   useEffect(() => {
     if (socket === null) {
@@ -105,6 +115,12 @@ const Messages = (props: {roomId: any; opk: any}) => {
         style={styles.scrollTop}
         onContentSizeChange={() =>
           scrollViewRef.current.scrollToEnd({animated: true})
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
         }>
         {isLoadingMsg ? (
           <View

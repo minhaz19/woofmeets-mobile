@@ -22,8 +22,10 @@ const ProviderInfo = ({
 Props) => {
   function getMonthAndDat(date: string | number | Date) {
     const dateStr = new Date(date).toDateString();
-    const dateStrArr = dateStr.split(' ');
-    return dateStrArr;
+    if (dateStr) {
+      const dateStrArr = dateStr?.split(' ');
+      return dateStrArr;
+    }
   }
   const startDate = getMonthAndDat(
     new Date(availability && availability.dates[0]),

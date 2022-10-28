@@ -39,10 +39,8 @@ const SendMessage = ({roomId, setMessages, socket, user, opk}) => {
     const uploadImage = async (_e: any) => {
       const uploadEndPoint = `/appointment/message/upload-file/${opk}`
       const result = await uploadRequest(uploadEndPoint, _e);
-      console.log('result',result);
       try {
         setPhoto(result.data[0].url);
-        console.log('url',result.data[0].url);
         const data = {
           sender: user?.id,
           group: roomId,

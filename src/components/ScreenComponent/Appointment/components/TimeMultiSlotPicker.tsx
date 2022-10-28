@@ -68,7 +68,6 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                   const found = Dates.filter(
                     (obj: any) => obj.date === singleItem.date,
                   );
-                  console.log('fount', found);
                   const matchIndex = found[0].visitTime?.findIndex(
                     (it: {visitTime: string}) => it === item.slot,
                   );

@@ -14,7 +14,6 @@ interface Props {
 const ModifyAppointment = ({route}: Props) => {
   const {colors} = useTheme();
   const {loading, handleSubmit} = useModifyAppointment(route);
-  console.log('loading');
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
