@@ -61,10 +61,3 @@ const styles = StyleSheet.create({
   },
   zIndex: {zIndex: -1},
 });
-// <FlatList
-//   data={[]}
-//   renderItem={null}
-//   contentContainerStyle={styles.container}
-//   showsVerticalScrollIndicator={false}
-//   ListEmptyComponent={  //   }
-// />

@@ -35,9 +35,8 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                   Days.push({
                     date: singleItem.date,
                     visitTime: [item.slot],
-                    sameAsStartDate: false,
-                    startDate:
-                      matchDate === -1 && Days.length === 0 ? true : false,
+                    // startDate:
+                    //   matchDate === -1 && Days.length === 0 ? true : false,
                   });
                 } else {
                   const found = Days.filter(
@@ -58,14 +57,12 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                 const matchDate = Dates?.findIndex(
                   (it: {date: string}) => it.date === singleItem.date,
                 );
-                console.log('matched date', matchDate);
                 if (matchDate === -1) {
                   Dates.push({
                     date: singleItem.date,
                     visitTime: [item.slot],
-                    sameAsStartDate: false,
-                    startDate:
-                      matchDate === -1 && Dates.length === 0 ? true : false,
+                    // startDate:
+                    //   matchDate === -1 && Dates.length === 0 ? true : false,
                   });
                 } else {
                   const found = Dates.filter(

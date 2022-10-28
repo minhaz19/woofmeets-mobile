@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import {KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView, View} from 'react-native';
 import ActivityHeader from '../../../components/ScreenComponent/activity/ActivityHeader';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -38,7 +35,16 @@ const ActivityScreen = (props: {
   const [isDetailsModal, setIsDetailsModal] = useState(false);
   const [isThreeDotsModal, setIsThreeDotsModal] = useState(false);
   const [isReviewModal, setIsReviewModal] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(getProviderProposal(appointmentOpk));
+    setRefreshing(false);
+  };
+  useEffect(() => {
+    onRefresh();
+  }, []);
   return (
     <>
       {(loading || petLoading) && <AppActivityIndicator visible={true} />}
@@ -89,7 +95,11 @@ const ActivityScreen = (props: {
                   }}
                 />
               </BottomHalfModal>
-              <Messages roomId={proposal?.appointment?.messageGroupId} />
+              <Messages
+                roomId={proposal?.appointment?.messageGroupId}
+                onRefresh={onRefresh}
+                refreshing={refreshing}
+              />
             </>
           </KeyboardAvoidingView>
         </SafeAreaView>

@@ -27,7 +27,7 @@ const ServiceNavigator = () => {
   };
   getDecodedToken();
   return (
-    <Stack1.Navigator initialRouteName="PetCareZipSearch">
+    <Stack1.Navigator initialRouteName="ProviderAvailablity">
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}

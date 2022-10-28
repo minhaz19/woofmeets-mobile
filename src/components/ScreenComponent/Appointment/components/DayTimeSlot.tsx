@@ -16,11 +16,7 @@ const DayTimeSlot = () => {
             <TitleText textStyle={styles.day} text={item.date} />
             <View style={styles.checkContainer}>
               <DescriptionText
-                text={`Use same walk times as ${
-                  item.active
-                    ? newData.find((it: any) => it.startDate === true).date
-                    : item.date
-                }`}
+                text={`Please select the time slots for ${item.date}`}
               />
             </View>
 

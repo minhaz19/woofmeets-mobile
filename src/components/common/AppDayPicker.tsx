@@ -28,6 +28,8 @@ const AppDayPicker = () => {
   const {setValue, watch} = useFormContext();
   const {selectedDays: sDays} = watch();
   useEffect(() => {
+    console.log('selectedDays', sDays);
+    selectedDays = [...sDays];
     const modDays = day.map((item, index) => ({
       id: index + 1,
       day: item.charAt(0),

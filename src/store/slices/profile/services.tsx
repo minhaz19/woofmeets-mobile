@@ -20,7 +20,7 @@ export const getUserServices = createAsyncThunk(
     const response: ApiResponse<any> = await apiClient.get(
       '/provider-services',
     );
-    console.log('get user', response);
+    console.log('pro-ser', response);
     if (!response.ok) {
       Alert.alert(response.data.message);
       throw new Error(response.data.message);
@@ -62,7 +62,7 @@ const services = createSlice({
         state.loading = false;
         state.error = payload;
       })
-      .addCase(getUserServices.pending, (state, {payload}) => {
+      .addCase(getUserServices.pending, state => {
         state.userServicesLoading = true;
         state.userServicesError = null;
       })

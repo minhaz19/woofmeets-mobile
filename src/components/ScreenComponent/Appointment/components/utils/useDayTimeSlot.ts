@@ -22,14 +22,14 @@ export const useDayTimeSlot = () => {
     const recurring = output?.map((item: any, index: number) => ({
       id: index + 1,
       date: item.day,
-      startDate:
-        pod && pod?.length !== 0
-          ? pod?.some(
-              (elm: any) => elm.date === item.day && elm?.startDate === true,
-            )
-          : index === 0
-          ? true
-          : false,
+      // startDate:
+      //   pod && pod?.length !== 0
+      //     ? pod?.some(
+      //         (elm: any) => elm.date === item.day && elm?.startDate === true,
+      //       )
+      //     : index === 0
+      //     ? true
+      //     : false,
       initalSlot:
         pod && pod?.length !== 0
           ? pod?.find((elm: any) => elm.date === item.day)?.visitTime
@@ -49,15 +49,6 @@ export const useDayTimeSlot = () => {
       const multi = multiDate?.map((item: any, index: number) => ({
         id: index + 1,
         date: item,
-        startDate:
-          proposalScheduleDate && proposalScheduleDate?.length !== 0
-            ? proposalScheduleDate?.some(
-                (elm: any) => elm.date === item && elm?.startDate === true,
-              )
-            : index === 0
-            ? true
-            : false,
-
         initalSlot:
           proposalRecurringDate && proposalScheduleDate?.length !== 0
             ? proposalScheduleDate?.find((elm: any) => elm.date === item)
@@ -65,6 +56,7 @@ export const useDayTimeSlot = () => {
             : [],
       }));
       setDatas(multi);
+      console.log('mulit', multiDate, multi);
     }
   }, [
     isRecurring,

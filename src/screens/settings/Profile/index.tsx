@@ -38,6 +38,7 @@ const Profile = (props: {
   // useProfileData();
 
   const [token, setToken] = useState<any>();
+  console.log(token);
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {

@@ -51,8 +51,7 @@ export const useTimeMultiSlotPicker = (
         Days.push({
           date: singleItem.date,
           visitTime: initalSlot,
-
-          startDate: singleItem.startDate,
+          // startDate: singleItem.startDate,
         });
       }
     } else if (!isRecurring) {
@@ -63,7 +62,7 @@ export const useTimeMultiSlotPicker = (
         Dates.push({
           date: singleItem.date,
           visitTime: initalSlot,
-          startDate: singleItem.startDate,
+          // startDate: singleItem.startDate,
         });
       }
     }
