@@ -37,7 +37,6 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
     setUpdateRates,
     checked,
   } = useSubRates(rateFields, watch);
-  console.log('watch', updateRates);
   return (
     <View>
       <ServiceReusableModal

@@ -67,6 +67,5 @@ export const useTimeMultiSlotPicker = (
       }
     }
   }
-  console.log('DDD', Dates);
   return {handleMultipleCheck, newData, Dates, Days};
 };

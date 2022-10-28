@@ -37,7 +37,6 @@ export const prepareRatesSSP = async (
     amount: 0,
   }));
 
-  console.log(rates);
 
   ssp.props['userHasCreatedRates'] = false;
 
@@ -65,7 +64,6 @@ export const prepareRatesSSP = async (
     ssp.props['userHasCreatedRates'] = true;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
-      console.log(error.response.data);
     }
   }
 

@@ -16,6 +16,7 @@ const Appointment = ({route}: Props) => {
   const {appointmentType, providerOpk} = route?.params;
   const {handleSubmit, loading, btnLoading, refreshing, onRefresh} =
     useAppointment(providerOpk);
+  console.log('ppp', providerOpk);
   return (
     <>
       {loading && <AppActivityIndicator visible />}

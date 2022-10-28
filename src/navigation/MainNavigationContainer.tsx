@@ -8,7 +8,6 @@ import HeaderWithBack from '../components/common/header/HeaderWithBack';
 import Colors from '../constants/Colors';
 import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
 import SitterInitialScreen from '../screens/becomeSitter/InitialScreen';
-import ProviderNavigator from './ProviderNavigator';
 import InviteFriends from '../screens/Misc/InviteFriends';
 import PromoGiftCodes from '../screens/Misc/PromoGiftCodes';
 import ReceivePayments from '../screens/Misc/ReceivePayments';
@@ -42,6 +41,8 @@ import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
 import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
 import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
 import StripeOnboardScreen from '../screens/settings/Profile/StripeOnboardScreen';
+import ProviderProfile from '../screens/Service/ProviderProfile';
+import ProviderCalendar from '../screens/Service/ProviderCalender';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -67,11 +68,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           component={GuestBottomTabNavigator}
           options={{headerShown: false}}
         />
-        <Stack.Screen
-          name="ProviderNavigator"
-          component={ProviderNavigator}
-          options={{headerShown: false}}
-        />
+
         <Stack.Screen
           name="Notifications"
           component={Notifications}
@@ -489,6 +486,51 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 navigation={navigation}
                 title="Get paid by woofmeets"
                 notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+
+        <Stack.Screen
+          name="ProviderProfile"
+          component={ProviderProfile}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Provider Profile"
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        {/* <Stack.Screen
+          name="Appointment"
+          component={Appointment}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Create Appointment"
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        /> */}
+
+        <Stack.Screen
+          name="ProviderCalendar"
+          component={ProviderCalendar}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Calendar"
+                notification={true}
               />
             ),
             backgroundColor: Colors.primary,

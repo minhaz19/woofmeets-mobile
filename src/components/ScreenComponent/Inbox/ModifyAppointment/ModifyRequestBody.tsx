@@ -17,7 +17,6 @@ const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
   const {
     formState: {isDirty},
   } = useFormContext();
-  console.log('isDirty', isDirty);
   return (
     <ScrollView
       contentContainerStyle={styles.container}

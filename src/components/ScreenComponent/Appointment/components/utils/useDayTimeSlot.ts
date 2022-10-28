@@ -56,7 +56,6 @@ export const useDayTimeSlot = () => {
             : [],
       }));
       setDatas(multi);
-      console.log('mulit', multiDate, multi);
     }
   }, [
     isRecurring,

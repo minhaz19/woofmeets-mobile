@@ -63,7 +63,6 @@ const ActivityHeader = (props: {
       ],
     );
   };
-  console.log('p', proposedServiceInfo);
   return (
     <View style={[styles.container, {borderColor: colors.borderColor}]}>
       <View style={styles.containerInner}>

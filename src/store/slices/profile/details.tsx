@@ -80,7 +80,6 @@ export const getSitterDetails = createAsyncThunk(
     const response: ApiResponse<any> = await apiClient.get(
       '/user-profile/provider-details',
     );
-    console.log(response);
     if (!response.ok) {
       throw new Error(response.data.message);
     }

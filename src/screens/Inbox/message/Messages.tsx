@@ -18,8 +18,14 @@ import SendMessage from './SendMessage';
 import {apiMsg} from '../../../api/client';
 import {formatDistance, subDays} from 'date-fns';
 import storage from '../../../utils/helpers/auth/storage';
+import {RefreshControl} from 'react-native-gesture-handler';
 
-const Messages = (props: {roomId: any; opk: any}) => {
+const Messages = (props: {
+  roomId: any;
+  opk: any;
+  onRefresh: any;
+  refreshing: any;
+}) => {
   const {colors} = useTheme();
   const [socket, setSocket] = useState<any>(null);
   const [messages, setMessages] = useState([]);
@@ -43,8 +49,6 @@ const Messages = (props: {roomId: any; opk: any}) => {
       setIsLoadingMsg(false);
     }
   };
-
-  console.log('messages', messages);
 
   useEffect(() => {
     if (socket === null) {
@@ -102,6 +106,12 @@ const Messages = (props: {roomId: any; opk: any}) => {
     <View style={{flex: 1}}>
       <ScrollView
         ref={scrollViewRef}
+        refreshControl={
+          <RefreshControl
+            refreshing={props.refreshing}
+            onRefresh={props.onRefresh}
+          />
+        }
         style={styles.scrollTop}
         onContentSizeChange={() =>
           scrollViewRef.current.scrollToEnd({animated: true})

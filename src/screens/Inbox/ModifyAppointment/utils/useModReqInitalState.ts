@@ -46,7 +46,6 @@ export const useModReqInitialState = () => {
   const modMultiDates = proposedServiceInfo?.proposalOtherDate?.map(
     (item: {name: string}) => item.name,
   );
-  console.log('init', proposedServiceInfo?.proposalOtherDate);
   const modRecurringSelectedDay =
     proposedServiceInfo?.recurringSelectedDay?.map((item: any) => item.date);
 

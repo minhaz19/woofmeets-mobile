@@ -96,7 +96,6 @@ export const useSubRates = (rateFields: any, watch: any) => {
     // }
 
     const validateCheck = areEqual(submittedValue, calculatedValue);
-    console.log('val', validateCheck);
     if (validateCheck === true) {
       setChecked(true);
       setUpdateRates(false);
@@ -117,7 +116,6 @@ export const useSubRates = (rateFields: any, watch: any) => {
       }
     }
   }, [checked, updateRates]);
-  console.log('cu', checked, updateRates);
   return {
     baseRateWatch,
     handlePress,

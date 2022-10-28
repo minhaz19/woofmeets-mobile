@@ -89,7 +89,6 @@ const ReportCardInitial = () => {
     (state: any) => state?.allPets,
   );
   const {isSelectedPet} = useAppSelector((state: any) => state?.reportCard);
-  console.log(isSelectedPet);
   const onPressService = (data: any) => {
     setSequence(data?.id);
     setIsModalVisible(true);

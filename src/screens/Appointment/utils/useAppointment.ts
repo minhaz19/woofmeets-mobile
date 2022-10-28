@@ -280,12 +280,11 @@ export const useAppointment = (providerOpk: string) => {
               formattedMessage: DoggyDayFT,
               isRecivedPhotos: isRecivedPhotos,
             };
-        console.log('asdfasdf', doggyPayload);
         const response = await request(endpoint, doggyPayload);
         response.ok &&
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,
-            screen: 'Inbox',
+            // screen: 'Inbox',
           });
       }
     }
