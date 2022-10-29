@@ -26,18 +26,23 @@ export const useServiceRates = (serviceSetup: any) => {
   };
   const {loading: btnLoading, request} = useApi(addRateApi);
   const rateFieldId = serviceRateFields?.map(
-    (item: {slug: string; rateId: number}) => {
+    (item: {slug: string; rateId: number; id: number}) => {
       return {
         name: item.slug.replace('-', '').replace('-', ''),
         postId: item.rateId,
+        rateTypeId: item.id,
       };
     },
   );
   rateFieldId &&
     fieldValue &&
     fieldValue?.map(
-      (item: {id: number}, index: number) =>
-        (rateFieldId[index].putId = item.id),
+      (item: {id: number; modRatesId: number}) =>
+        (rateFieldId[
+          rateFieldId.findIndex(
+            (elm: any) => elm.rateTypeId === item.modRatesId,
+          )
+        ].putId = item.id),
     );
   const handleRates = async (e: any) => {
     let payload: any = {

@@ -46,6 +46,7 @@ const providerProposalSlice = createSlice({
                   modpayload.appointment.provider.user?.firstName +
                   ' ' +
                   modpayload.appointment.provider.user?.lastName,
+                providerServiceId: modpayload.appointment.providerService.id,
                 userName:
                   modpayload.appointment.user?.firstName +
                   ' ' +
@@ -82,6 +83,7 @@ const providerProposalSlice = createSlice({
                   modpayload.appointment.provider.user.firstName +
                   ' ' +
                   modpayload.appointment.provider.user.lastName,
+                providerServiceId: modpayload.appointment.providerService.id,
                 userName:
                   modpayload.appointment.user?.firstName +
                   ' ' +
@@ -116,6 +118,7 @@ const providerProposalSlice = createSlice({
                   modpayload.appointment.provider.user.firstName +
                   ' ' +
                   modpayload.appointment.provider.user.lastName,
+                providerServiceId: modpayload.appointment.providerService.id,
                 userName:
                   modpayload.appointment.user?.firstName +
                   ' ' +

@@ -58,7 +58,7 @@ const ServiceForm = ({
   subTitle,
   textInputStyle,
   auth,
-  percentage,
+
   additionalRates,
   handlePress,
   showAdditionalRates,
@@ -76,12 +76,14 @@ const ServiceForm = ({
   useEffect(() => {
     name !== 'baserate' &&
       updateRates === false &&
-      checked === false &&
-      setValue!(name, convertedValue?.toFixed(2), {
+      // checked === false &&
+      setValue &&
+      setValue(name, convertedValue, {
         shouldValidate: errors[name] ? true : false,
       });
   }, [name, updateRates, checked, setValue, convertedValue, errors]);
   const [isVisible, setIsVisible] = useState(false);
+  console.log('ccc', convertedValue);
   return (
     <>
       <View>
@@ -113,10 +115,11 @@ const ServiceForm = ({
                   name === 'baserate' && value !== null
                     ? value?.toString()
                     : updateRates === false && baseRateWatch !== undefined
-                    ? (Number(baseRateWatch!) * Number(percentage))
-                        .toFixed(2)
-                        .toString()
-                    : value !== null && value?.toString()
+                    ? convertedValue.toString()
+                    : // ? (Number(baseRateWatch!) * Number(percentage))
+                      //     .toFixed(2)
+                      //     .toString()
+                      value !== null && value?.toString()
                 }
                 error={error?.message}
                 textInputStyle={textInputStyle}

@@ -18,6 +18,8 @@ import methods from '../../../../api/methods';
 import {useAppSelector} from '../../../../store/store';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
+import {useProviderAvailability} from './utils/useProviderAvailability';
+import {format} from 'date-fns';
 interface Props {
   startingDate: string;
   endingDate: string;
@@ -39,6 +41,7 @@ const EditCart = ({
   const {colors, isDarkMode} = useTheme();
 
   const {userServices} = useAppSelector(state => state.services);
+  const {getAvailablity} = useProviderAvailability();
   const {request} = useApi(methods._post);
   const {request: putRequest} = useApi(methods._put);
   const offset = useSharedValue(0);
@@ -76,6 +79,7 @@ const EditCart = ({
       providerServiceIds: selectedService,
     };
     const result = await request(availablityEndpoint, payload);
+    console.log('r', result);
     result.ok && setIsVisible(false);
   };
 
@@ -104,22 +108,37 @@ const EditCart = ({
 
   const handleDayAvailability = (data: any) => {
     const modData = Object.keys(data).map(key => {
-      return data[key];
+      return data[key].putServiceId !== null ? data[key] : null;
     });
     modData.map(async item => {
-      const payload = {
-        sat: item.sat,
-        sun: item.sun,
-        mon: item.mon,
-        wed: item.wed,
-        thu: item.thu,
-        tue: item.tue,
-        fri: item.fri,
-        pottyBreak: 'string',
-        fulltime: true,
-      };
-      const r = await putRequest(dayAvEndpoint + item.putServiceId, payload);
-      r.ok && setIsDayVisible(false);
+      const payload =
+        item === null
+          ? null
+          : {
+              sat: item.sat,
+              sun: item.sun,
+              mon: item.mon,
+              wed: item.wed,
+              thu: item.thu,
+              tue: item.tue,
+              fri: item.fri,
+              pottyBreak: 'string',
+              fulltime: true,
+            };
+      const r =
+        payload !== null
+          ? await putRequest(dayAvEndpoint + item.putServiceId, payload)
+          : null;
+      if (r !== null && r.ok) {
+        const monthData = {
+          year: new Date().getFullYear(),
+          month: new Date().getMonth() + 1,
+          dateString: format(new Date(), 'yyyy-MM-dd'),
+        };
+        getAvailablity(monthData, 'current');
+        setIsDayVisible(false);
+        console.log('rrrr', monthData);
+      }
     });
   };
 
