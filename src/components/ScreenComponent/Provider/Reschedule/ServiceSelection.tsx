@@ -1,4 +1,10 @@
-import {StyleSheet, TouchableOpacity, View, Image, useColorScheme} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Image,
+  useColorScheme,
+} from 'react-native';
 import React from 'react';
 import Ion from 'react-native-vector-icons/Ionicons';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
@@ -16,15 +22,15 @@ interface Props {
   setModalVisible: (arg1: boolean) => void;
   setViewDetails: (arg1: boolean) => void;
 }
- 
+
 const ServiceSelection = ({setModalVisible, setViewDetails}: Props) => {
   const {colors} = useTheme();
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode
       ? colors.lightBackgroundColor
-      : colors.backgroundColor
-  }
+      : colors.backgroundColor,
+  };
   const dispatch = useAppDispatch();
   const {selectedItem} = useAppSelector((state: any) => state.reschedule);
 
@@ -49,11 +55,14 @@ const ServiceSelection = ({setModalVisible, setViewDetails}: Props) => {
           return (
             <View key={item.id}>
               <TouchableOpacity
-                style={[styles.selectionContainer,{
-                  backgroundColor: backgroundStyle.backgroundColor,
-                  borderWidth: 1,
-                  borderColor: colors.borderColor,
-                }]}
+                style={[
+                  styles.selectionContainer,
+                  {
+                    backgroundColor: backgroundStyle.backgroundColor,
+                    borderWidth: 1,
+                    borderColor: colors.borderColor,
+                  },
+                ]}
                 onPress={() => {
                   setViewDetails(false);
                   dispatch(
@@ -71,11 +80,18 @@ const ServiceSelection = ({setModalVisible, setViewDetails}: Props) => {
                     style={styles.image}
                   />
                 </View>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '85%'}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: '85%',
+                  }}>
                   <TitleText text={item.name} textStyle={styles.textHeader} />
                   <MaterialCommunityIcons
                     name="chevron-right"
-                    size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
+                    size={
+                      SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32
+                    }
                     style={styles.iconStyle}
                     color={Colors.subText}
                   />

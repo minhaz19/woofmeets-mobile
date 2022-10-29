@@ -284,7 +284,7 @@ export const useAppointment = (providerOpk: string) => {
         response.ok &&
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,
-            screen: 'Inbox',
+            // screen: 'Inbox',
           });
       }
     }
