@@ -14,16 +14,18 @@ import ShortText from '../../../components/common/text/ShortText';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import io from 'socket.io-client';
-import { msgUrl } from '../../../utils/helpers/httpRequest';
+import {msgUrl} from '../../../utils/helpers/httpRequest';
 import SendMessage from './SendMessage';
 import {apiMsg} from '../../../api/client';
 import {formatDistance, subDays} from 'date-fns';
 import storage from '../../../utils/helpers/auth/storage';
-import { useAppDispatch } from '../../../store/store';
+import {useAppDispatch} from '../../../store/store';
+import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 
 const Messages = (props: {roomId: any; opk: any}) => {
   const {colors} = useTheme();
   const [socket, setSocket] = useState<any>(null);
+  const dispatch = useAppDispatch();
   const [messages, setMessages] = useState([]);
   const [isLoadingMsg, setIsLoadingMsg] = useState<boolean>(false);
   const [user, setUser] = useState();
@@ -50,6 +52,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
   const onRefresh = () => {
     setRefreshing(true);
     getPreviousMessages();
+    dispatch(getProviderProposal(props.opk));
     setRefreshing(false);
   };
   useEffect(() => {
@@ -117,10 +120,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
           scrollViewRef.current.scrollToEnd({animated: true})
         }
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         {isLoadingMsg ? (
           <View

@@ -63,7 +63,6 @@ const AllProvider = ({navigation}: Props) => {
   useEffect(() => {
     getMoreProviderData();
   }, [currentPage]);
-
   const renderHeader = () => {
     return (
       <ShortText
@@ -114,7 +113,7 @@ const AllProvider = ({navigation}: Props) => {
                       await dispatch(
                         getProviderProfile(item.provider?.user?.opk),
                       );
-                      navigation.navigate('ProviderNavigator', {
+                      navigation.navigate('ProviderProfile', {
                         providerOpk: item.provider?.user?.opk,
                       });
                     }}

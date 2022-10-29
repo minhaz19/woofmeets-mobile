@@ -35,16 +35,7 @@ const ActivityScreen = (props: {
   const [isDetailsModal, setIsDetailsModal] = useState(false);
   const [isThreeDotsModal, setIsThreeDotsModal] = useState(false);
   const [isReviewModal, setIsReviewModal] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    dispatch(getProviderProposal(appointmentOpk));
-    setRefreshing(false);
-  };
-  useEffect(() => {
-    onRefresh();
-  }, []);
   return (
     <>
       {(loading || petLoading) && <AppActivityIndicator visible={true} />}

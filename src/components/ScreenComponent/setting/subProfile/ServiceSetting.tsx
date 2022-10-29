@@ -138,7 +138,7 @@ const ServiceSetting = () => {
               </TouchableOpacity>
             );
           })}
-        {/* <View style={styles.submitContainer}>
+        <View style={styles.submitContainer}>
           <ButtonCom
             title={'Add new service'}
             // loading={postLoading}
@@ -147,7 +147,7 @@ const ServiceSetting = () => {
             titleStyle={btnStyles.titleStyle}
             onSelect={() => navigation.navigate('ServiceSelection')}
           />
-        </View> */}
+        </View>
       </ScrollView>
     </>
   );
