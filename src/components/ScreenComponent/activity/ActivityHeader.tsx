@@ -53,16 +53,20 @@ const ActivityHeader = (props: {
           text: 'Yes',
           onPress: async () => {
             const r = await request(rejectEndpoint + props.opk);
+            console.log('r', r.data);
             if (r.ok) {
               dispatch(getAppointmentStatus('PROPOSAL'));
               dispatch(getProviderApnt('PROPOSAL'));
               navigation.navigate('Inbox');
+            } else if (!r.ok) {
+              Alert.alert(r.data.message);
             }
           },
         },
       ],
     );
   };
+
   return (
     <View style={[styles.container, {borderColor: colors.borderColor}]}>
       <View style={styles.containerInner}>
@@ -149,12 +153,12 @@ const ActivityHeader = (props: {
       </View>
       <View style={styles.innerTwo}>
         <View style={styles.buttonContainer}>
-          {(proposedServiceInfo?.proposedBy === 'USER' &&
+          {((proposedServiceInfo?.proposedBy === 'USER' &&
             proposedServiceInfo?.status === 'ACCEPTED') ||
-          (proposedServiceInfo?.proposedBy === 'PROVIDER' &&
-            (proposedServiceInfo?.status === 'ACCEPTED' ||
-              proposedServiceInfo?.status === 'PROPOSAL') &&
-            proposedServiceInfo?.userId === user?.user?.id) ? (
+            (proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+              (proposedServiceInfo?.status === 'ACCEPTED' ||
+                proposedServiceInfo?.status === 'PROPOSAL'))) &&
+          proposedServiceInfo?.userId === user?.user?.id ? (
             <>
               <TouchableOpacity
                 // style={{width: SCREEN_WIDTH / 5}}
