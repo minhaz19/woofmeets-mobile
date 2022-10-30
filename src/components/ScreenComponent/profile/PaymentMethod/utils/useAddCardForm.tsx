@@ -10,7 +10,10 @@ import {useApi} from '../../../../../utils/helpers/api/useApi';
 const customerEndPoint = '/stripe-payment-method/customers';
 const endpoint = '/stripe-payment-method/add-card';
 const subscriptionEndpoint = '/subscriptions/subscribe';
-export const useAddCardForm = (navigation: any, sequence: number | null) => {
+export const useAddCardForm = (
+  navigation: any,
+  sequence: number | null | string,
+) => {
   const [tokenLoading, setTokenLoading] = useState(false);
   const [customerId, setCustomerId] = useState<string | null | undefined>('');
   const {request, loading} = useApi(methods._post);
@@ -61,6 +64,12 @@ export const useAddCardForm = (navigation: any, sequence: number | null) => {
             `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
           );
           res.ok && navigation.navigate('SubscriptionScreen');
+        } else if (sequence === 'Appointment') {
+          // const res = await request(
+          //   `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+          // );
+          // res.ok && navigation.navigate('Checkout');
+          Alert.alert('Add navigation after payment');
         } else {
           navigation.navigate('PaymentMethod', {sequence: null});
         }

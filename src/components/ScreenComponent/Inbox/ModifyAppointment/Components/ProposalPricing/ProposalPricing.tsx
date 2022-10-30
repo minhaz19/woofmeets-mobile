@@ -7,25 +7,6 @@ import Colors from '../../../../../../constants/Colors';
 import ShortText from '../../../../../common/text/ShortText';
 import changeTextLetter from '../../../../../common/changeTextLetter';
 import {useProposalPricing} from './utils/useProposalPricing';
-// const getEndpoint = '/appointment/getAppointmentPrice/';
-//   const {request} = useApi(methods._get);
-//   const callApi = async () => {
-//     const result = await request(
-//       getEndpoint + proposedServiceInfo.appointmentOpk,
-//     );
-
-//     setPricingInfo([
-//       ...result.data.petsRates,
-//       {
-//         id: result.data.petsRates.length,
-//         subTotal: result.data.subTotal,
-//         name: 'subTotal',
-//       },
-//     ]);
-//   };
-//   useEffect(() => {
-//     callApi();
-//   }, []);
 
 const ProposalPricing = () => {
   const {pricingInfo, proposedServiceInfo} = useProposalPricing();

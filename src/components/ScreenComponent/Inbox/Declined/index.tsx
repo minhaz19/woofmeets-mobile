@@ -10,7 +10,7 @@ import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 import {getUserCanceled} from '../../../../store/slices/Appointment/Inbox/User/Cancelled/getUserCancelled';
 import {getProviderCancelled} from '../../../../store/slices/Appointment/Inbox/Provider/Cancelled/getProviderCancelled';
 import BottomHalfModal from '../../../UI/modal/BottomHalfModal';
-import Details from '../Draft/Past/Details';
+import Details from '../Details/Details';
 import {format} from 'date-fns';
 import changeTextLetter from '../../../common/changeTextLetter';
 interface Props {

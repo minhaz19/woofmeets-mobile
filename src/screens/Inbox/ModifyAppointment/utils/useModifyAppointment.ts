@@ -259,10 +259,8 @@ export const useModifyAppointment = (route: any) => {
       } else if (serviceTypeId === 4) {
         const DoggyDayFT = isRecurring
           ? `Doggy Day Care Proposal:\nRepeat service starting from: ${recurringStartDate}\nDrop-off: ${dropOffStartTime} - ${dropOffEndTime}\nPick-Up: ${pickUpStartTime} - ${pickUpEndTime}`
-          : `Doggy Day Care Proposal:\nOne time servcie on:\n
-          ${multiDate.join(
-            ', ',
-          )}\nDrop-off: ${dropOffStartTime} - ${dropOffEndTime}\nPick-Up: ${pickUpStartTime} - ${pickUpEndTime}`;
+          : `Doggy Day Care Proposal:\nOne time servcie on:\n${multiDate.join(
+              ', ',)}\nDrop-off: ${dropOffStartTime} - ${dropOffEndTime}\nPick-Up: ${pickUpStartTime} - ${pickUpEndTime}`;
 
         const doggyPayload = isRecurring
           ? {

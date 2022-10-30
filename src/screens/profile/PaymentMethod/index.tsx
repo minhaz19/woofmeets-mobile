@@ -8,12 +8,13 @@ import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import NoCards from '../../../components/ScreenComponent/profile/PaymentMethod/NoCards';
 import {getCurrentplan} from '../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
+import {Alert} from 'react-native';
 const endpoint = '/stripe-payment-method/default-card-info';
 interface Props {
   navigation: any;
   route: {
     params: {
-      sequence: number | null;
+      sequence: number | null | string;
     };
   };
 }
@@ -33,6 +34,8 @@ const PaymentMethods = ({route, navigation}: Props) => {
         sequence: sequence,
         cardId: selectedCard !== null ? selectedCard : CardId,
       });
+    } else if (sequence === 'Appointment') {
+      Alert.alert('Add Api and navigate screen');
     } else {
       const selectCardId = selectedCard !== null ? selectedCard : CardId;
       const result = await postRequest(

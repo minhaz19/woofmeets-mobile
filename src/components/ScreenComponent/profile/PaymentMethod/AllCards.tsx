@@ -25,7 +25,7 @@ interface Props {
   cards: any;
   CardId: null | number;
   onPress?: () => void;
-  sequence: number | null;
+  sequence: number | null | string;
   loading: boolean;
   setSelectedCard: (arg: number) => void;
 }

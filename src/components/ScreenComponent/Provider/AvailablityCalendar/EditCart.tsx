@@ -137,7 +137,6 @@ const EditCart = ({
         };
         getAvailablity(monthData, 'current');
         setIsDayVisible(false);
-        console.log('rrrr', monthData);
       }
     });
   };
@@ -257,10 +256,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   editBtnContainer: {
-    // borderRightWidth: 1,
-    // borderRightColor: 'white',
     paddingVertical: 10,
-    // width: '2%',
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,

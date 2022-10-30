@@ -3,7 +3,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {ApiResponse} from 'apisauce';
 import {useEffect, useState} from 'react';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 import methods from '../../../../api/methods';
 import {getCurrentplan} from '../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 import {getSubscription} from '../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
@@ -30,7 +30,8 @@ export const useSubscription = () => {
     id: item.id,
     sequence: item.id,
     title: item.name[0].toUpperCase() + item.name.slice(1),
-    description: 'Unlimited appointments only at 9% service charge for each appointment.',
+    description:
+      'Unlimited appointments only at 9% service charge for each appointment.',
     price: item.MembershipPlanPrices[0].rate,
     annualRate: item.annualRate,
     details: item.features?.map((des: any, i: number) => ({
@@ -42,11 +43,15 @@ export const useSubscription = () => {
     setSequence(id);
   };
   const handleSubmit = async () => {
-    if (sitterData[1].isCompleted && sitterData[2].isCompleted && sitterData[3].isCompleted) {
+    if (
+      sitterData[1].isCompleted &&
+      sitterData[2].isCompleted &&
+      sitterData[3].isCompleted
+    ) {
       if (sequence === 1) {
         setSSloading(true);
         const result: ApiResponse<any> = await methods._get(endpoint);
-  
+
         const cardResponse = await cardRequest(defaultCardEndpoint);
         if (result.ok && cardResponse.ok) {
           if (
@@ -81,7 +86,6 @@ export const useSubscription = () => {
     } else {
       Alert.alert('Please complete all the steps first');
     }
-    
   };
   useEffect(() => {
     (currentPlan === null || currentPlan === undefined) &&
