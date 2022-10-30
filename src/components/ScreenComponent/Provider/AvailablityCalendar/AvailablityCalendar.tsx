@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Platform, StyleSheet, View} from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Calendar} from 'react-native-calendars';
 import {_dateRange} from '../../../../utils/helpers/datesArray';
 import {useHandleRange} from '../../../../utils/helpers/CalendarRange/useHandleRange';
@@ -22,14 +22,9 @@ const AvailablityCalendar = () => {
   const [preMarked, setPremarked] = useState({});
   const [isDayVisible, setIsDayVisible] = useState(false);
   const {loading, availabileDates, getAvailablity} = useProviderAvailability();
-  const {
-    singleSelect,
-    startingDate,
-    _markedStyle,
-    endingDate,
-
-    handleDayPress,
-  } = useHandleRange(selectType);
+  const [foundAvailable, setFoundAvailable] = useState(false);
+  const {singleSelect, startingDate, _markedStyle, endingDate, handleDayPress} =
+    useHandleRange(selectType);
 
   useMemo(() => {
     const preStyled = availabileDates.map((_: string, i: number) => ({
@@ -65,6 +60,10 @@ const AvailablityCalendar = () => {
     today.setHours(0, 0, 0, 0);
     return date < today;
   }
+  useEffect(() => {
+    const matchIndex = availabileDates.findIndex(item => item === startingDate);
+    matchIndex !== -1 ? setFoundAvailable(true) : setFoundAvailable(false);
+  }, [availabileDates, startingDate]);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -141,6 +140,7 @@ const AvailablityCalendar = () => {
         endingDate={endingDate}
         setIsDayVisible={setIsDayVisible}
         isDayVisible={isDayVisible}
+        foundAvailable={foundAvailable}
       />
     </View>
   );

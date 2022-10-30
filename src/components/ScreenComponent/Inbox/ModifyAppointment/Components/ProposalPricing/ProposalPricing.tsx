@@ -10,6 +10,7 @@ import {useProposalPricing} from './utils/useProposalPricing';
 
 const ProposalPricing = () => {
   const {pricingInfo, proposedServiceInfo} = useProposalPricing();
+
   return (
     <View>
       <TitleText text={'Pricing Summary'} textStyle={styles.titleText} />

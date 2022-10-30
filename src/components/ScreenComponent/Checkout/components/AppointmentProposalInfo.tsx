@@ -44,11 +44,11 @@ const AppointmentProposalInfo = () => {
             />
             <TitleText
               text={`Proposal Start Time: ${proposedServiceInfo.proposalStartDate}`}
-              textStyle={styles.textPadding}
+              textStyle={{paddingVertical: 2}}
             />
             <TitleText
               text={`Proposal End Time: ${proposedServiceInfo.proposalEndDate}`}
-              textStyle={styles.textPadding}
+              textStyle={{paddingVertical: 2}}
             />
             <TitleText
               text={`Pick-Up Time: ${
@@ -56,7 +56,7 @@ const AppointmentProposalInfo = () => {
                 ' - ' +
                 proposedServiceInfo.dropOffEndTime
               } `}
-              textStyle={{paddingVertical: 4}}
+              textStyle={{paddingVertical: 2}}
             />
             <TitleText
               text={`Pick-Up Time: ${
@@ -64,7 +64,7 @@ const AppointmentProposalInfo = () => {
                 ' - ' +
                 proposedServiceInfo.pickUpEndTime
               }`}
-              textStyle={{paddingVertical: 4}}
+              textStyle={{paddingVertical: 2}}
             />
           </>
         ) : proposedServiceInfo.serviceTypeId === 3 ||

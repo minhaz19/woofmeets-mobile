@@ -26,6 +26,7 @@ interface Props {
   // resetRange: () => void;
   setIsDayVisible: (arg: boolean) => void;
   isDayVisible: boolean;
+  foundAvailable: boolean;
 }
 const dayAvEndpoint = '/availability/';
 const unavailabilityEndpoint =
@@ -36,6 +37,7 @@ const EditCart = ({
   endingDate,
   setIsDayVisible,
   isDayVisible,
+  foundAvailable,
 }: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const {colors, isDarkMode} = useTheme();
@@ -93,17 +95,35 @@ const EditCart = ({
       providerServiceIds: userServices.map((item: {id: number}) => item.id),
     };
     const result = await request(unavailabilityEndpoint, payload);
+    if (result.ok) {
+      const monthData = {
+        year: new Date(startingDate).getFullYear(),
+        month: new Date(startingDate).getMonth() + 1,
+        dateString: format(new Date(startingDate), 'yyyy-MM-dd'),
+      };
+      getAvailablity(monthData, 'current');
+    }
   };
   const handleMAAvailable = async () => {
     const payload = {
+      providerServiceIds: userServices.map((item: {id: number}) => item.id),
       from: new Date(startingDate).toISOString(),
       to:
         endingDate !== undefined && endingDate !== ''
           ? new Date(endingDate).toISOString()
           : null,
-      providerServiceIds: userServices.map((item: {id: number}) => item.id),
     };
-    await request(dayAvEndpoint, payload);
+
+    const result = await request(availablityEndpoint, payload);
+    console.log('r', payload, result);
+    if (result.ok) {
+      const monthData = {
+        year: new Date(startingDate).getFullYear(),
+        month: new Date(startingDate).getMonth() + 1,
+        dateString: format(new Date(startingDate), 'yyyy-MM-dd'),
+      };
+      getAvailablity(monthData, 'next');
+    }
   };
 
   const handleDayAvailability = (data: any) => {
@@ -151,7 +171,7 @@ const EditCart = ({
         animatedStyles,
       ]}>
       <View style={styles.availablity}>
-        {true ? (
+        {foundAvailable ? (
           <AppTouchableOpacity
             style={[
               styles.markContainer,

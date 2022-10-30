@@ -9,18 +9,21 @@ import DescriptionText from '../../../common/text/DescriptionText';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppSelector} from '../../../../store/store';
 import changeTextLetter from '../../../common/changeTextLetter';
-
-const Pricing = () => {
+import ShortText from '../../../common/text/ShortText';
+interface Props {
+  screen: string;
+}
+const Pricing = ({screen}: Props) => {
   const {colors} = useTheme();
   const {proposalPricing} = useAppSelector(state => state.proposalPricing);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-
+  console.log('propproposalPricingo', proposalPricing, screen);
   return (
     <View>
       <HeaderText text={'Charges & Services'} textStyle={styles._textHeader} />
       {proposalPricing?.petsRates?.map((item: any, index: number) => {
         return (
-          <View key={index} style={styles.mapContainer}>
+          <View key={index} style={[styles.mapContainer]}>
             <View style={styles.flexContainer}>
               <HeaderText
                 text={changeTextLetter(item.name)}
@@ -32,9 +35,9 @@ const Pricing = () => {
               />
             </View>
 
-            <HeaderText
+            <ShortText
               text={`Applied ${item?.rate.name}`}
-              textStyle={{fontWeight: '500'}}
+              textStyle={{fontWeight: 'bold'}}
             />
 
             <DescriptionText
@@ -71,15 +74,59 @@ const Pricing = () => {
       />
       <View style={styles.totalContainer}>
         <HeaderText
+          text={'Calculated Pricing: '}
+          textStyle={{
+            color: colors.descriptionText,
+            fontWeight: '400',
+            fontSize: Text_Size.Text_2,
+            marginBottom: 10,
+            marginLeft: 0,
+          }}
+        />
+        <HeaderText
+          text={`$${proposalPricing?.subTotal}`}
+          textStyle={{
+            fontSize: Text_Size.Text_2,
+          }}
+        />
+      </View>
+      <View style={[styles.totalContainer]}>
+        <View>
+          <HeaderText
+            text={'Service fee: '}
+            textStyle={{
+              color: colors.descriptionText,
+              fontWeight: '400',
+              fontSize: Text_Size.Text_2,
+              marginLeft: 0,
+            }}
+          />
+          <ShortText text={`10% of $${proposalPricing?.subTotal}`} />
+        </View>
+        <HeaderText
+          text={`$${(
+            proposalPricing?.total - proposalPricing?.subTotal
+          ).toFixed(2)}`}
+          textStyle={{
+            fontSize: Text_Size.Text_2,
+          }}
+        />
+      </View>
+      <View
+        style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+      />
+      <View style={styles.totalContainer}>
+        <HeaderText
           text={'Total Pricing: '}
           textStyle={{
             color: colors.descriptionText,
             fontWeight: '400',
             fontSize: Text_Size.Text_2,
+            marginLeft: 0,
           }}
         />
         <HeaderText
-          text={proposalPricing?.subTotal}
+          text={`$${proposalPricing?.total}`}
           textStyle={{
             fontSize: Text_Size.Text_2,
           }}
@@ -132,7 +179,7 @@ const styles = StyleSheet.create({
   totalContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
 });
 

@@ -77,6 +77,7 @@ const providerProposalSlice = createSlice({
                 counter: modpayload.proposal.countered,
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
+                billing: modpayload.appointment.billing,
               }
             : modpayload.appointment.providerService.serviceTypeId === 3 ||
               modpayload.appointment.providerService.serviceTypeId === 5
@@ -123,6 +124,7 @@ const providerProposalSlice = createSlice({
                 counter: modpayload.proposal.countered,
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
+                billing: modpayload.appointment.billing,
               }
             : modpayload.appointment.providerService.serviceTypeId === 4
             ? {
@@ -169,6 +171,7 @@ const providerProposalSlice = createSlice({
                 counter: modpayload.proposal.countered,
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
+                billing: modpayload.appointment.billing,
               }
             : null;
       })

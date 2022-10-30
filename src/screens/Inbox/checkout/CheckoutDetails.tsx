@@ -28,6 +28,7 @@ const CheckoutDetails = () => {
   const handlePayment = () => {
     navigation.navigate('PaymentMethod', {sequence: 'Appointment'});
   };
+  console.log('proposedServiceInfo', proposedServiceInfo);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -38,7 +39,7 @@ const CheckoutDetails = () => {
           {/* Appointment Proposal infos */}
           <AppointmentProposalInfo />
           {/* Charges & Services */}
-          <Pricing />
+          <Pricing screen="checkout" />
           {/* <PromoCode /> */}
           <BottomSpacing />
         </View>
