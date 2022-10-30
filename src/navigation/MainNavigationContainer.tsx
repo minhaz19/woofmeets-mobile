@@ -69,6 +69,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           component={GuestBottomTabNavigator}
           options={{headerShown: false}}
         />
+
         <Stack.Screen
           name="Notifications"
           component={Notifications}
@@ -488,6 +489,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
+
         <Stack.Screen
           name="ProviderProfile"
           component={ProviderProfile}
@@ -516,6 +518,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         /> */}
+
         <Stack.Screen
           name="ProviderCalendar"
           component={ProviderCalendar}
