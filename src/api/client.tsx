@@ -20,4 +20,18 @@ export const apiMsg = create({
   timeout: 30000,
 });
 
+export const apiNotification = create({
+  baseURL: 'https://msg.hirebeet.com',
+  timeout: 30000,
+});
+
+apiNotification.addAsyncRequestTransform(async request => {
+  const authToken = await authStorage.getToken();
+  if (!authToken) {
+    return;
+  }
+  // request.headers['access-token'] = authToken;
+  request.headers.Authorization = authToken;
+});
+
 export default apiClient;
