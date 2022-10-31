@@ -9,9 +9,10 @@ import {useApi} from '../../../../../utils/helpers/api/useApi';
 
 const customerEndPoint = '/stripe-payment-method/customers';
 const endpoint = '/stripe-payment-method/add-card';
-const subscriptionEndpoint = '/subscriptions/subscribe';
-// import {v4 as uuidv4} from 'uuid';
+const subscriptionEndpoint =
+  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
 import apiClient from '../../../../../api/client';
+import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 const uuid = Math.random().toString(36).substring(2, 36);
 export const useAddCardForm = (
   navigation: any,
@@ -21,6 +22,9 @@ export const useAddCardForm = (
   const [appointmentLoading, setAppointmentLoading] = useState(false);
   const [customerId, setCustomerId] = useState<string | null | undefined>('');
   const {request, loading} = useApi(methods._post);
+  const {request: idemRequest, loading: idemLoading} = useApi(
+    methods._idempt_post,
+  );
   const dispatch = useAppDispatch();
   const {request: getReq} = useApi(methods._get);
   const cd = async () => {
@@ -65,10 +69,45 @@ export const useAddCardForm = (
             cardId: cardId,
           });
         } else if (sequence === 2 || sequence === 3) {
-          const res = await request(
-            `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+          const subsRes = await idemRequest(
+            `${subscriptionEndpoint}priceId=${sequence}&cardId=${cardId}`,
+            {},
+            uuid,
           );
-          res.ok && navigation.navigate('SubscriptionScreen');
+          subsRes.ok &&
+            (dispatch(getCurrentplan()),
+            navigation.navigate('SubscriptionScreen'));
+          // if (subsRes.ok) {
+          //   if (subsRes.ok && subsRes?.data.data.requiresAction === true) {
+          //     try {
+          //       const clientScreet = subsRes.data.data.clientSecret;
+          //       const {paymentIntent, error: dsError}: any =
+          //         await confirmPayment(clientScreet);
+          //       console.log('paymentIntent res', paymentIntent, dsError);
+          //       if (dsError.code === 'Failed') {
+          //         return Alert.alert(dsError.localizedMessage);
+          //       }
+
+          //       paymentIntent?.status === 'Succeeded' &&
+          //         (dispatch(getCurrentplan()),
+          //         navigation.navigate('SubscriptionScreen'));
+          //     } catch (er: any) {
+          //       Alert.alert(er.message);
+          //     }
+          //   } else if (
+          //     subsRes.ok &&
+          //     subsRes?.data.data.requiresAction === false
+          //   ) {
+          //     dispatch(getCurrentplan());
+          //     navigation.navigate('SubscriptionScreen');
+          //   }
+          // } else if (!subsRes.ok && subsRes.status === 400) {
+          //   Alert.alert(
+          //     'We are unable to proccess your payment request right now, Please reload the application and try again ',
+          //   );
+          // } else if (!subsRes.ok && subsRes.status === 409) {
+          //   Alert.alert(subsRes?.data?.message);
+          // }
         } else if (sequence === 'Appointment') {
           setAppointmentLoading(true);
 
@@ -131,5 +170,5 @@ export const useAddCardForm = (
       dispatch(getCards());
     }
   };
-  return {handleValues, tokenLoading, loading, appointmentLoading};
+  return {handleValues, tokenLoading, loading, idemLoading, appointmentLoading};
 };

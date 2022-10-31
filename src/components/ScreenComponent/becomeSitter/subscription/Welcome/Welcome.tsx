@@ -47,6 +47,7 @@ const Welcome = (props: any) => {
             const result = await methods._delete(
               endpoint + props.subscriptionId,
             );
+            console.log('res', result);
             result.ok &&
               (navigation.navigate('SubscriptionScreen'),
               dispatch(getCurrentplan()),
@@ -56,6 +57,9 @@ const Welcome = (props: any) => {
         },
       ],
     );
+  };
+  const hanldeUpgrade = () => {
+    navigation.navigate('SubscriptionScreen');
   };
   useEffect(() => {
     let runTime = setTimeout(() => setShow(false), 3000);
@@ -240,14 +244,25 @@ const Welcome = (props: any) => {
       <View>
         {/* */}
         {opk === 'current_plan' ? (
-          <ButtonCom
-            title="Cancel Plan"
-            textAlignment={btnStyles.textAlignment}
-            containerStyle={btnStyles.containerStyleFullWidth}
-            titleStyle={btnStyles.titleStyle}
-            onSelect={handleSubmit}
-            loading={loading}
-          />
+          props.subscriptionId === 1 ? (
+            <ButtonCom
+              title="Upgrage Plan"
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={btnStyles.containerStyleFullWidth}
+              titleStyle={btnStyles.titleStyle}
+              onSelect={hanldeUpgrade}
+              loading={loading}
+            />
+          ) : (
+            <ButtonCom
+              title="Cancel Plan"
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={btnStyles.containerStyleFullWidth}
+              titleStyle={btnStyles.titleStyle}
+              onSelect={handleSubmit}
+              loading={loading}
+            />
+          )
         ) : (
           <ButtonCom
             title="Go Home"

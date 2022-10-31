@@ -30,6 +30,7 @@ const SubscriptionScreen = ({route}: Props) => {
     ssLoading,
     cardLoading,
   } = useSubscription();
+  console.log('current', currentPlan, formattedPackageRate);
   return (
     <Screen style={{flex: 1}}>
       {(loading || planLoading) && <AppActivityIndicator visible={true} />}
@@ -47,7 +48,10 @@ const SubscriptionScreen = ({route}: Props) => {
             <Welcome
               item={currentPlan?.subscriptionInfo?.membershipPlanPrice}
               opk={opk}
-              subscriptionId={currentPlan?.subscriptionInfo?.id}
+              subscriptionId={
+                currentPlan?.subscriptionInfo?.membershipPlanPrice
+                  .membershipPlanId
+              }
             />
           </>
         ) : (

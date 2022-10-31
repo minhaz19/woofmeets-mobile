@@ -44,9 +44,10 @@ export const useSubscription = () => {
   };
   const handleSubmit = async () => {
     if (
-      sitterData[1].isCompleted &&
-      sitterData[2].isCompleted &&
-      sitterData[3].isCompleted
+      // sitterData[1].isCompleted &&
+      // sitterData[2].isCompleted &&
+      // sitterData[3].isCompleted
+      true
     ) {
       if (sequence === 1) {
         setSSloading(true);
