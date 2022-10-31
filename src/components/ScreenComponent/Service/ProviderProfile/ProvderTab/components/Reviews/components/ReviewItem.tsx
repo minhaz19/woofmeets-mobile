@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import TitleText from '../../../../../../../common/text/TitleText';
@@ -5,8 +6,13 @@ import ShortText from '../../../../../../../common/text/ShortText';
 import Colors from '../../../../../../../../constants/Colors';
 import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
 import {colors} from '../../../../../../../../constants/theme/textTheme';
+import changeTextLetter from '../../../../../../../common/changeTextLetter';
+import {format} from 'date-fns';
 
-const ReviewItem = () => {
+interface Props {
+  item: any;
+}
+const ReviewItem = ({item}: Props) => {
   const {isDarkMode} = useTheme();
   return (
     <View
@@ -25,16 +31,25 @@ const ReviewItem = () => {
           {borderWidth: 1, borderColor: colors.borderColor},
         ]}
         source={{
-          uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3280&q=80',
+          uri: item.image
+            ? item?.image?.avatar.url
+            : 'https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg',
         }}
       />
       <View style={styles.textContainer}>
-        <TitleText textStyle={styles.title} text="Hero Alom" />
-        <ShortText textStyle={styles.shortTitle} text={'03.09.2022'} />
-        <ShortText
-          textStyle={styles.description}
-          text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,"
+        <TitleText
+          textStyle={styles.title}
+          text={
+            changeTextLetter(item?.reviewedByIdUser?.firstName) +
+            ' ' +
+            changeTextLetter(item?.reviewedByIdUser?.lastName)
+          }
         />
+        <ShortText
+          textStyle={styles.shortTitle}
+          text={format(new Date(item?.createdAt), 'MM-dd-yyy')}
+        />
+        <ShortText textStyle={styles.description} text={item?.comment} />
       </View>
     </View>
   );

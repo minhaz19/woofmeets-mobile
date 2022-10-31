@@ -9,13 +9,14 @@ import IOSButton from '../../../UI/IOSButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../../../constants/Colors';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 interface Props {
   setIsReviewModal: (value: boolean) => void;
   setIsThreeDotsModal: (value: boolean) => void;
   setModalVisible: (arg1: boolean) => void;
+  isReviewed: any;
 }
 
 const ThreeDotsModal: FC<Props> = props => {
@@ -25,25 +26,29 @@ const ThreeDotsModal: FC<Props> = props => {
     {
       id: 2,
       name: 'Report',
-      icon: <Entypo name="documents" size={24} color={Colors.primary}/>,
-      screen: () => {navigation.navigate('ReportCardInitial')},
+      icon: <Entypo name="documents" size={24} color={Colors.primary} />,
+      screen: () => {
+        navigation.navigate('ReportCardInitial');
+      },
     },
     {
       id: 3,
-      name: 'Review',
-      icon: <MaterialIcons name="rate-review" size={24} color={Colors.primary}/>,
+      name: props.isReviewed.length > 0 ? 'Already reviewed' : 'Review',
+      icon: (
+        <MaterialIcons name="rate-review" size={24} color={Colors.primary} />
+      ),
       screen: () => {
-        props.setIsReviewModal(true);
-        props.setIsThreeDotsModal(false);
+        props.isReviewed.length === 0 && props.setIsReviewModal(true);
+        props.isReviewed.length === 0 && props.setIsThreeDotsModal(false);
       },
     },
     {
       id: 4,
       name: 'Zoom',
-      icon: <FontAwesome name="video-camera" size={24} color={Colors.primary}/>,
-      screen: () => {
-        
-      },
+      icon: (
+        <FontAwesome name="video-camera" size={24} color={Colors.primary} />
+      ),
+      screen: () => {},
     },
   ];
   return (

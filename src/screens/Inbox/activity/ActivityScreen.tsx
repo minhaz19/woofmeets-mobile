@@ -23,12 +23,18 @@ const ActivityScreen = (props: {
   const {loading, proposal} = useAppSelector(state => state.proposal);
   const {loading: petLoading} = useAppSelector(state => state.allPets);
   const {appointmentOpk} = props.route.params;
+  console.log(appointmentOpk);
 
   useEffect(() => {
     dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAllPets());
     dispatch(getWhoAmI());
   }, []);
+
+  console.log(
+    '-------==============>',
+    proposal?.review,
+  );
 
   const {colors} = useTheme();
   const [isDetailsModal, setIsDetailsModal] = useState(false);
@@ -69,6 +75,7 @@ const ActivityScreen = (props: {
                 <ThreeDotsModal
                   setIsThreeDotsModal={setIsThreeDotsModal}
                   setIsReviewModal={setIsReviewModal}
+                  isReviewed={proposal?.review}
                   setModalVisible={function (): void {
                     throw new Error('Function not implemented.');
                   }}

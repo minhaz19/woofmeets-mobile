@@ -47,11 +47,11 @@ import appointmentStatusSlice from './slices/Appointment/Inbox/User/Proposal/app
 import ProviderApntStatusSlice from './slices/Appointment/Inbox/Provider/Pending/providerApntStatusSlice';
 import userApmtCancelSlice from './slices/Appointment/Inbox/User/Cancelled/userApmtCancelSlice';
 import providerApmtCancelSlice from './slices/Appointment/Inbox/Provider/Cancelled/providerApmtCancelSlice';
-import proposalPricingSlice from './slices/Appointment/Details/proposalPricingSlice';
 import reportCardSlice from './slices/reportCard/reportCardSlice';
 import availableDaySlice from './slices/Provider/Unavailability/availableDaySlice';
 import pInprogressApntSlice from './slices/Appointment/Inbox/Provider/InProgress/pInprogressApntSlice';
 import inprogressApntSlice from './slices/Appointment/Inbox/User/InProgress/inprogressApntSlice';
+import proposalPricingSlice from './slices/Appointment/Details/proposalPricingSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
