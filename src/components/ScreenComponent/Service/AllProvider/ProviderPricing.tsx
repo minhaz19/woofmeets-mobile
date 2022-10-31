@@ -8,7 +8,7 @@ interface Props {
   pricing: any;
 }
 const ProviderPricing = ({pricing}: Props) => {
-  const price = pricing.length > 0 ? pricing[0].amount : 100;
+  const price = pricing.length > 0 ? pricing[0].amount : 0;
   return (
     <View style={styles.container}>
       <TitleText
