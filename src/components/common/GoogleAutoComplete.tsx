@@ -4,17 +4,30 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
+import {useAppSelector} from '../../store/store';
+import TitleText from './text/TitleText';
 
 interface Props {
   onPressAddress: (data: any, details: any) => void;
+  label?: string;
+  placeholder: string;
 }
 
-const GoogleAutoComplete = ({onPressAddress}: Props) => {
+const GoogleAutoComplete = ({onPressAddress, label, placeholder}: Props) => {
   const {colors, isDarkMode} = useTheme();
+  const {userInfo} = useAppSelector(state => state.userProfile);
   return (
     <View>
+      {label && <TitleText textStyle={styles.label} text={label} />}
       <GooglePlacesAutocomplete
-        placeholder="Type a place"
+        // ref={ref => {
+        //   ref?.setAddressText('hello world');
+        // }}
+        placeholder={
+          userInfo?.basicInfo?.addressLine1
+            ? userInfo?.basicInfo?.addressLine1
+            : placeholder
+        }
         onPress={onPressAddress}
         query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo'}}
         fetchDetails={true}
@@ -36,7 +49,7 @@ const GoogleAutoComplete = ({onPressAddress}: Props) => {
               ? Colors.dark.background
               : Colors.light.background,
             // height: 42,
-            borderRadius: 5,
+            borderRadius: 1,
             paddingVertical: 5,
             paddingHorizontal: 10,
             fontSize: Text_Size.Text_9,
@@ -77,4 +90,10 @@ const GoogleAutoComplete = ({onPressAddress}: Props) => {
 
 export default GoogleAutoComplete;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  label: {
+    fontSize: Text_Size.Text_1,
+    fontWeight: '600',
+    marginBottom: 10,
+  },
+});
