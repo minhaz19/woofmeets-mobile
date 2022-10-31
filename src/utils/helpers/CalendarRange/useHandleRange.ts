@@ -88,6 +88,7 @@ export const useHandleRange = (
       const {styledMarkedRange, orderRange} = orderAndStyleRange(
         range,
         'RANGE',
+        'black',
       );
       setMarkedStyle(styledMarkedRange);
       // dispatch(storeMarkStyle(styledMarkedRange));

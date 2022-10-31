@@ -55,7 +55,6 @@ const ActivityHeader = (props: {
           text: 'Yes',
           onPress: async () => {
             const r = await request(rejectEndpoint + props.opk);
-            console.log('r', r.data);
             if (r.ok) {
               dispatch(getAppointmentStatus('PROPOSAL'));
               dispatch(getProviderApnt('PROPOSAL'));

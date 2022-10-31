@@ -28,6 +28,5 @@ export const useProviderAvailability = () => {
       uniqueChars && setAvailableDates(uniqueChars);
     }
   };
-
   return {availabileDates, getAvailablity, loading};
 };

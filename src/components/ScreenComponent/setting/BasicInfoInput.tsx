@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
@@ -19,6 +20,8 @@ import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 import DescriptionText from '../../common/text/DescriptionText';
 import GoogleAutoComplete from '../../common/GoogleAutoComplete';
+import AppSelectState from '../../common/Form/AppSelectState';
+import CustomStateChange from './CustomStateChange';
 import {states} from '../../../screens/profile/BasicInfo/utils/basicInfoState';
 
 interface Props {
@@ -27,6 +30,8 @@ interface Props {
 }
 
 const BasicInfoInput = ({handleSubmit, loading}: Props) => {
+  const [dropVisible, setDropVisible] = useState(false);
+  const [isState, setIsState] = useState(null);
   const {loading: gLoading, userInfo} = useAppSelector(
     state => state?.userProfile,
   );
@@ -36,10 +41,12 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   const {
     control,
     setValue,
+    getValues,
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
-
+  const basicData = getValues();
+  // add google address
   const onPressAddress = (data: any, details: any) => {
     const lat = details.geometry.location.lat;
     const lng = details.geometry.location.lng;
@@ -129,15 +136,6 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
-  // : item.name === 'state' ? (
-  //   <AppSelectField
-  //     label={item.title}
-  //     name={item.name}
-  //     data={states}
-  //     control={control}
-  //     placeholder={item.placeholder}
-  //   />
-  // )
   return (
     <KeyboardAwareFlatList
       refreshing={refreshing}
@@ -154,7 +152,22 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
               {!item.select && (
                 <View style={styles.inputContainer}>
                   {item.name === 'addressLine1' ? (
-                    <GoogleAutoComplete onPressAddress={onPressAddress} />
+                    <GoogleAutoComplete
+                      onPressAddress={onPressAddress}
+                      label={item.title}
+                      placeholder={item.placeholder}
+                    />
+                  ) : item.name === 'state' ? (
+                    <AppSelectState
+                      placeholder={item.placeholder}
+                      setOpenDropDown={() => setDropVisible(!dropVisible)}
+                      label={item.title}
+                      isState={isState}
+                      dropVisible={dropVisible}
+                      control={control}
+                      name={item.name}
+                      errors={errors}
+                    />
                   ) : (
                     <AppFormField
                       autoCapitalize="none"
@@ -185,10 +198,20 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                   />
                 </View>
               )}
+              <CustomStateChange
+                visible={dropVisible}
+                setVisible={setDropVisible}
+                title={'Select State'}
+                setValue={setValue}
+                setIsState={setIsState}
+                name={'state'}
+                data={states}
+                value={basicData.state}
+              />
             </>
           );
         },
-        [control, errors],
+        [control, dropVisible, errors, getValues, setValue],
       )}
       keyExtractor={(item, index) => item.name + index.toString()}
       ListHeaderComponent={renderHeader}

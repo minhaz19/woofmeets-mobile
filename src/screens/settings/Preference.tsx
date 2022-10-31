@@ -5,26 +5,34 @@ import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
 import Text_Size from '../../constants/textScaling';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
+import {useAppDispatch} from '../../store/store';
+import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
 
 const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
+  const dispatch = useAppDispatch();
   const supportData = [
     {
       id: 1,
       title: 'Account Setting',
-      screenName: () => props.navigation.navigate('AccountSetting'),
+      screenName: () => {
+        props.navigation.navigate('AccountSetting');
+        dispatch(getWhoAmI());
+      },
       opacity: 1,
     },
     {
       id: 3,
       title: 'Terms of Service',
-      screenName: () => Linking.openURL('https://stage.woofmeets.com/terms-and-conditions'),
+      screenName: () =>
+        Linking.openURL('https://stage.woofmeets.com/terms-and-conditions'),
       details: 'https://stage.woofmeets.com/terms-and-conditions',
       opacity: 1,
     },
     {
       id: 4,
       title: 'Privacy Policy',
-      screenName: () => Linking.openURL('https://stage.woofmeets.com/privacy-policy'),
+      screenName: () =>
+        Linking.openURL('https://stage.woofmeets.com/privacy-policy'),
       details: 'https://stage.woofmeets.com/terms-and-conditions',
       opacity: 1,
     },
@@ -38,17 +46,15 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   ];
   return (
     <ScreenRapperGrey>
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={[
-        styles.container,
-      ]}>
-      <HeaderText text="General" textStyle={styles.textContainer} />
-      {supportData?.map(item => (
-        <PreferenceItem key={item.id} data={item} />
-      ))}
-      <HeaderText text="Woofmeets" textStyle={styles.bottomTextContainer} />
-    </ScrollView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={[styles.container]}>
+        <HeaderText text="General" textStyle={styles.textContainer} />
+        {supportData?.map(item => (
+          <PreferenceItem key={item.id} data={item} />
+        ))}
+        <HeaderText text="Woofmeets" textStyle={styles.bottomTextContainer} />
+      </ScrollView>
     </ScreenRapperGrey>
   );
 };

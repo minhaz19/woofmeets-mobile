@@ -136,13 +136,14 @@ export const ArrowRight = (props: SvgProps) => (
     xmlns="http://www.w3.org/2000/svg"
     width={7.557}
     height={14.121}
+    viewBox="0 0 7.557 14.121"
     {...props}>
     <G data-name="Component 129 \u2013 19">
       <Path
         data-name="Path 1778"
         d="m1.06 1.06 5.747 6-5.747 6"
         fill="none"
-        stroke="#d9d9d9"
+        stroke="#9ea5b0"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={1.5}
