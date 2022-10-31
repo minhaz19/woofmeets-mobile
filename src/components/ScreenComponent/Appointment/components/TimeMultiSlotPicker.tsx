@@ -14,7 +14,6 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
     initalSlot,
     isRecurring,
   );
-  console.log('time slot', Days);
   return (
     <View style={styles.container}>
       <TitleText textStyle={{}} text={''} />

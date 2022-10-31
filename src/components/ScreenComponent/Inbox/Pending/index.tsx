@@ -42,8 +42,6 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
-  console.log('inbox check', providerApntStatus, appointmentStatus);
-  console.log('inbox check', providerApntStatus, appointmentStatus);
 
   return (
     <>
@@ -73,10 +71,7 @@ const PendingStatus = ({statusType}: Props) => {
                 const serviceTypeId = item?.providerService?.serviceTypeId;
                 const proposalDate = item.appointmentProposal[0];
                 const isRecurring = item.appointmentProposal[0]?.isRecurring;
-                console.log(
-                  'proposalVisits[0]',
-                  proposalDate?.proposalVisits[0]?.date,
-                );
+ 
                 return (
                   <ReusableCard
                     key={item.opk}

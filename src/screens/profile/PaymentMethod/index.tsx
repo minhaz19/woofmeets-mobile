@@ -21,7 +21,7 @@ interface Props {
     };
   };
 }
-const uuid = uuidv4();
+const uuid = Math.random().toString(36).substring(2, 36);
 const subscriptionEndpoint = '/subscriptions/subscribe/';
 const PaymentMethods = ({route, navigation}: Props) => {
   const dispatch = useAppDispatch();
@@ -33,7 +33,6 @@ const PaymentMethods = ({route, navigation}: Props) => {
   const {loading: Hloading, request: postRequest} = useApi(methods._post);
   const {sequence} = route.params;
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  console.log('payment methods', proposedServiceInfo.billing);
   const handlePayment = async () => {
     if (sequence === 1) {
       navigation.navigate('BasicPayment', {
@@ -52,39 +51,31 @@ const PaymentMethods = ({route, navigation}: Props) => {
           },
         },
       );
-      console.log('r', result);
 
       if (result.ok) {
-        if (
-          result.ok &&
-          result.status === 201 &&
-          result?.data.data.requiresAction === true
-        ) {
+        if (result.ok && result?.data.data.requiresAction === true) {
           try {
             const clientScreet = result.data.data.clientSecret;
-            const r: any = await confirmPayment(clientScreet);
-            r?.error?.code === 'Failed' &&
-              Alert.alert(r?.error?.localizedMessage);
-            console.log('inside', r);
+            const {paymentIntent, error: dsError}: any = await confirmPayment(
+              clientScreet,
+            );
+            dsError.code === 'Failed' && Alert.alert(dsError.localizedMessage);
             setAppointmentLoading(false);
-            r.paymentIntent?.status === 'Succeeded' &&
+            paymentIntent?.status === 'Succeeded' &&
               navigation.navigate('AppointmentSuccess');
           } catch (er: any) {
             setAppointmentLoading(false);
             Alert.alert(er.message);
-            console.log('err', er);
           }
-        } else if (
-          result.ok &&
-          result.status === 201 &&
-          result?.data.data.requiresAction === false
-        ) {
+        } else if (result.ok && result?.data.data.requiresAction === false) {
           setAppointmentLoading(false);
           navigation.navigate('AppointmentSuccess');
         }
       } else if (!result.ok && result.status === 400) {
         setAppointmentLoading(false);
-        Alert.alert(result?.data?.message);
+        Alert.alert(
+          'We are unable to proccess your payment request right now, Please reload the application and try again ',
+        );
       } else if (!result.ok && result.status === 409) {
         setAppointmentLoading(false);
         Alert.alert(result?.data?.message);

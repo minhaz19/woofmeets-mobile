@@ -124,7 +124,6 @@ export const useAppointment = (providerOpk: string) => {
           formattedMessage: boardingSittingFT,
         };
 
-        console.log('bboardSittingPayload', boardSittingPayload);
 
         const response = await request(endpoint, boardSittingPayload);
         response.ok &&
@@ -230,7 +229,6 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
             };
-        console.log('doggyPayload', dropDogPayload);
         const response = await request(endpoint, dropDogPayload);
         response.ok &&
           navigation.navigate('ActivityScreen', {
@@ -283,7 +281,6 @@ export const useAppointment = (providerOpk: string) => {
               formattedMessage: DoggyDayFT,
               isRecivedPhotos: isRecivedPhotos,
             };
-        console.log('doggyPayload', doggyPayload);
         const response = await request(endpoint, doggyPayload);
         response.ok &&
           navigation.navigate('ActivityScreen', {
@@ -293,10 +290,6 @@ export const useAppointment = (providerOpk: string) => {
       }
     }
   };
-  console.log(
-    'asdadgdsfgasdfas',
-    format(new Date(), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
-  );
   useEffect(() => {
     providerServices === null && dispatch(getProviderServices(providerOpk));
     dispatch(getAllPets());

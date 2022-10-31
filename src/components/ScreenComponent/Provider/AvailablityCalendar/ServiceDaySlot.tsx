@@ -7,8 +7,6 @@ interface Props {
 }
 const ServiceDaySlot = ({setValue}: Props) => {
   const {serviceDays} = useAppSelector(state => state.serviceDays);
-  // const {userServices} = useAppSelector(state => state.services);
-  console.log('user service', serviceDays);
   const modDays = serviceDays?.map((item: any) => ({
     id: item.service.serviceTypeId,
     days: [

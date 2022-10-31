@@ -84,7 +84,6 @@ const AvailablityCalendar = () => {
   useEffect(() => {
     setAvailableDays(availabileDates);
     setModMarkDate(_markedStyle);
-    console.log('newly get data', availabileDates, _markedStyle);
   }, [availabileDates, _markedStyle]);
   // console.log(
   //   '  setAvailableDays(availabileDates);',
@@ -108,7 +107,7 @@ const AvailablityCalendar = () => {
         futureScrollRange={RANGE}
         onDayPress={handleDayPress}
         markingType={'custom'}
-        hideExtraDays={true}
+        // hideExtraDays={true}
         markedDates={{
           ...preMarked,
           ...modMarkDate,

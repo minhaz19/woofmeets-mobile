@@ -242,7 +242,6 @@ export const useModifyAppointment = (route: any) => {
                   : 'NONE',
               proposalVisits: sortedSpecificModDates,
             };
-        console.log('geo geo', dropDogPayload);
         const result = await request(endpoint, dropDogPayload);
 
         if (result.ok) {

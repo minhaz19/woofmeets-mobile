@@ -68,7 +68,6 @@ export const useServiceRates = (serviceSetup: any) => {
         },
       );
     const result = await request(payload);
-    console.log('reslult', result);
     if (result.ok) {
       dispatch(setBoardingSelection({pass: 0}));
       dispatch(getRateFieldValue(providerServicesId));

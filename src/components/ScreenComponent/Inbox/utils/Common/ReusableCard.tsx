@@ -29,7 +29,6 @@ interface Props {
 
 const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
   const {isDarkMode, colors} = useTheme();
-  console.log('image', item.image);
   return (
     <Card
       style={{

@@ -10,9 +10,9 @@ import {useApi} from '../../../../../utils/helpers/api/useApi';
 const customerEndPoint = '/stripe-payment-method/customers';
 const endpoint = '/stripe-payment-method/add-card';
 const subscriptionEndpoint = '/subscriptions/subscribe';
-import {v4 as uuidv4} from 'uuid';
+// import {v4 as uuidv4} from 'uuid';
 import apiClient from '../../../../../api/client';
-const uuid = uuidv4();
+const uuid = Math.random().toString(36).substring(2, 36);
 export const useAddCardForm = (
   navigation: any,
   sequence: number | null | string,
@@ -81,7 +81,6 @@ export const useAddCardForm = (
               },
             },
           );
-          console.log('appointment respnse', uuid, appointmentResult, cardId);
 
           if (appointmentResult.ok) {
             if (
@@ -98,10 +97,8 @@ export const useAddCardForm = (
                 setAppointmentLoading(false);
                 paymentIntent?.status === 'Succeeded' &&
                   navigation.navigate('AppointmentSuccess');
-                console.log('r tyr', paymentIntent);
               } catch (er) {
                 setAppointmentLoading(false);
-                console.log('error', er);
               }
             } else if (
               appointmentResult.ok &&
@@ -117,7 +114,9 @@ export const useAddCardForm = (
             appointmentResult.status === 400
           ) {
             setAppointmentLoading(false);
-            Alert.alert(appointmentResult?.data?.message);
+            Alert.alert(
+              'We are unable to proccess your payment request right now, Please reload the application and try again ',
+            );
           } else if (
             !appointmentResult.ok &&
             appointmentResult.status === 409

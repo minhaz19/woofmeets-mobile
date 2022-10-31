@@ -100,7 +100,6 @@ const EditCart = ({
       providerServiceIds: selectedService,
     };
     const result = await request(availablityEndpoint, payload);
-    console.log('r', result);
     if (result.ok) {
       setIsVisible(false);
       const monthData = {
@@ -144,8 +143,6 @@ const EditCart = ({
     };
 
     const result = await request(availablityEndpoint, payload);
-    // console.log('r', payload, result);
-    console.log('avai', result);
     if (result.ok) {
       const monthData = {
         year: new Date(startingDate).getFullYear(),
@@ -205,7 +202,6 @@ const EditCart = ({
   useEffect(() => {
     setModMarkDate(_markedStyle);
     setAvailableDays(availabileDates);
-    console.log('is it hitting', availabileDates, _markedStyle);
   }, [_markedStyle, availabileDates, setAvailableDays, setModMarkDate]);
   return (
     <Animated.View

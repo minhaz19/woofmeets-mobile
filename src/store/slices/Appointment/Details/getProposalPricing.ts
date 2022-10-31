@@ -9,7 +9,6 @@ export const getProposalPricing = createAsyncThunk(
       const response: ApiResponse<any> = await apiClient.get(
         `/appointment/get-price/${opk}`,
       );
-      console.log('res pricing', response.data);
       if (!response.ok) {
         if (response.data) {
         } else if (response.problem === 'TIMEOUT_ERROR') {

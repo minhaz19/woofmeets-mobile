@@ -18,7 +18,6 @@ export const useProviderAvailability = () => {
           endDate,
         ).toISOString()}`,
     );
-    console.log('hitting post api', startDate, endDate, result);
     if (result.ok) {
       const allDates = result.data.data?.map((item: any) => [
         ...new Set([...new Set(item.availability.dates)]),

@@ -27,7 +27,6 @@ const serviceRateFieldSlice = createSlice({
             amount: number;
             serviceTypeRate: {serviceRateTypeId: number};
           }) => {
-            console.log('item', item);
             return {
               id: item.id,
               modRatesId: item?.serviceTypeRate?.serviceRateTypeId,

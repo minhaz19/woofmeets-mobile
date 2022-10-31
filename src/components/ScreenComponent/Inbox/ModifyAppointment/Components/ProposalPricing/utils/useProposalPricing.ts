@@ -13,7 +13,6 @@ const vistWalkEndpoint = '/appointment/visit-walk/get-modified-price';
 export const useProposalPricing = () => {
   const [pricingInfo, setPricingInfo] = useState<any>([]);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  console.log('proposedServiceInfo', proposedServiceInfo);
   const {request: postRequest} = useApi(methods._post);
 
   const {
@@ -33,7 +32,6 @@ export const useProposalPricing = () => {
   } = useWatch();
 
   useMemo(async () => {
-    console.log('is it calling init');
     if (
       proposedServiceInfo.serviceTypeId === 1 ||
       proposedServiceInfo.serviceTypeId === 2
@@ -52,7 +50,6 @@ export const useProposalPricing = () => {
         timeZone: 'Asia/Dhaka',
       };
       const result = await postRequest(boardingHouseEndpoint, payload);
-      console.log('r', result);
       setPricingInfo([
         ...result.data.petsRates,
         {
@@ -81,9 +78,7 @@ export const useProposalPricing = () => {
           })),
           timeZone: 'Asia/Dhaka',
         };
-        console.log('recurringModDates', recurringModDates, payload);
         const result = await postRequest(vistWalkEndpoint, payload);
-        console.log('res', payload, result);
         setPricingInfo([
           ...result.data.petsRates,
           {
@@ -104,9 +99,7 @@ export const useProposalPricing = () => {
             visits: item.visits,
           })),
         };
-        console.log('proposedServiceInfo', payload);
         const result = await postRequest(vistWalkEndpoint, payload);
-        console.log('res', payload, result);
         setPricingInfo([
           ...result.data.petsRates,
           {
@@ -137,9 +130,7 @@ export const useProposalPricing = () => {
             pickUpEndTime: pickUpEndTime,
           },
         };
-        console.log('res', payload);
         const result = await postRequest(dayCareEndpoint, payload);
-        console.log('res', payload, result);
         setPricingInfo([
           ...result.data.petsRates,
           {
@@ -163,7 +154,6 @@ export const useProposalPricing = () => {
           },
         };
         const result = await postRequest(dayCareEndpoint, payload);
-        console.log('res', payload, result);
         setPricingInfo([
           ...result.data.petsRates,
           {

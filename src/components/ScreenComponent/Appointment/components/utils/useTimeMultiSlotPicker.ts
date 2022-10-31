@@ -11,7 +11,6 @@ export const useTimeMultiSlotPicker = (
   const {visitLength} = useWatch();
 
   const [newData, setDatas] = useState<any>([]);
-  console.log('inside', initalSlot, singleItem);
   useMemo(() => {
     const times: any = []; // time array
     let tt = 0; // start time

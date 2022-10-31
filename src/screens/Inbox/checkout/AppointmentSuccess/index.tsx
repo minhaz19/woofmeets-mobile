@@ -66,7 +66,7 @@ const AppointmentSuccess = () => {
           />
         </AppTouchableOpacity>
         <AppTouchableOpacity
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('Inbox')}
           style={{
             width: '80%',
             backgroundColor: Colors.primary,
@@ -80,7 +80,7 @@ const AppointmentSuccess = () => {
               color: Colors.background,
               fontWeight: 'bold',
             }}
-            text={'Go Back'}
+            text={'Go Home'}
           />
         </AppTouchableOpacity>
       </ScrollView>

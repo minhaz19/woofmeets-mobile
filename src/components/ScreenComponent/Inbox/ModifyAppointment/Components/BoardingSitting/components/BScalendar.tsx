@@ -74,7 +74,6 @@ const BScalendar = ({}) => {
           <AppCalendar
             selectType={'RANGE'}
             setValue={setValue}
-            // markedStyle={markedStyle}
           />
         </View>
       </Modal>

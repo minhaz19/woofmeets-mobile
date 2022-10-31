@@ -1,7 +1,6 @@
 import {format} from 'date-fns';
 
 export const getSelectedDates = (payload: any, currentMonth: string) => {
-  console.log('cur', currentMonth);
   const startDate = format(
     currentMonth === 'current'
       ? new Date()
@@ -19,7 +18,6 @@ export const getSelectedDates = (payload: any, currentMonth: string) => {
   //   new Date(payload.year, payload.month, 0),
   //   'yyyy-MM-dd',
   // );
-  console.log('start end', startDate, endDate);
   return {
     startDate,
     endDate,

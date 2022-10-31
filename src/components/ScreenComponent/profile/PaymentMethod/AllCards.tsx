@@ -68,7 +68,6 @@ const AllCards = ({
   const [active, setActive] = useState(true);
   const [cardIndex, setActiveCardIndex] = useState<null | number>(0);
 
-  console.log('sequence', sequence);
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>

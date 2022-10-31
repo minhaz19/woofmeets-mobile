@@ -67,7 +67,6 @@ export const useModReqInitialState = () => {
       item.substring(0, 3).toLowerCase(),
     ),
   );
-  console.log('item', proposedServiceInfo);
   return {
     providerServiceId: null,
     userId: proposedServiceInfo?.userId,

@@ -21,7 +21,6 @@ const ActivityScreen = (props: {
 }) => {
   const dispatch = useAppDispatch();
   const {loading, proposal} = useAppSelector(state => state.proposal);
-  // console.log('proposal', proposal?.appointment?.messageGroupId);
   const {loading: petLoading} = useAppSelector(state => state.allPets);
   const {appointmentOpk} = props.route.params;
 
