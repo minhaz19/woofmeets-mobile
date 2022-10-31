@@ -18,7 +18,7 @@ export const useProviderAvailability = () => {
           endDate,
         ).toISOString()}`,
     );
-    console.log('result', startDate, endDate, result);
+    console.log('hitting post api', startDate, endDate, result);
     if (result.ok) {
       const allDates = result.data.data?.map((item: any) => [
         ...new Set([...new Set(item.availability.dates)]),
@@ -28,32 +28,6 @@ export const useProviderAvailability = () => {
       uniqueChars && setAvailableDates(uniqueChars);
     }
   };
-  // const getCurrentMonthDate = (fullYear?: boolean) => {
-  //   const monthData: any = {
-  //     month: null,
-  //     year: null,
-  //     dateString: null,
-  //   };
-  //   if (
-  //     monthRef?.month === today.getMonth() + 1 ||
-  //     monthRef === null ||
-  //     fullYear === true
-  //   ) {
-  //     monthData.month = today.getMonth() + 1;
-  //     monthData.year = today.getFullYear();
-  //     monthData.dateString = format(today, 'yyyy-MM-dd');
-  //   } else {
-  //     monthData.month = monthRef.month;
-  //     monthData.year = monthRef.year;
-  //     monthData.dateString = null;
-  //   }
 
-  //   return monthData;
-  // };
-
-  //   useMemo(() => {
-  //     const monthData = getCurrentMonthDate();
-  //     getAvailablity(monthData, 'current');
-  //   }, []);
   return {availabileDates, getAvailablity, loading};
 };

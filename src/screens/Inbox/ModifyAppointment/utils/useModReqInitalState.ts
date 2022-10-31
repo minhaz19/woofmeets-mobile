@@ -33,6 +33,7 @@ export const useModReqInitialState = () => {
   const d1 = new Date(proposedServiceInfo?.proposalStartDate);
   const d2 = new Date(proposedServiceInfo?.proposalEndDate);
 
+  console.log('item', proposedServiceInfo);
   const next6Days =
     proposedServiceInfo?.recurringStartDate !== '' &&
     [...Array(7).keys()].map(index => {
@@ -67,9 +68,7 @@ export const useModReqInitialState = () => {
       item.substring(0, 3).toLowerCase(),
     ),
   );
-  const doggyMultiDate = proposedServiceInfo?.proposalOtherDate?.map(
-    (di: {date: string}) => format(new Date(di.date), 'yyyy-MM-dd'),
-  );
+  // const doggyMultiDate =
 
   return {
     providerServiceId: null,
@@ -134,7 +133,9 @@ export const useModReqInitialState = () => {
     multiDate:
       proposedServiceInfo?.serviceTypeId === 4 &&
       !proposedServiceInfo.isRecurring
-        ? doggyMultiDate
+        ? proposedServiceInfo?.proposalOtherDate?.map((di: {date: string}) =>
+            format(new Date(di.date), 'yyyy-MM-dd'),
+          )
         : !proposedServiceInfo.isRecurring
         ? modMultiDates
         : [],

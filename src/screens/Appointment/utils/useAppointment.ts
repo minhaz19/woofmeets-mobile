@@ -116,13 +116,15 @@ export const useAppointment = (providerOpk: string) => {
           dropOffEndTime: dropOffEndTime,
           pickUpStartTime: pickUpStartTime,
           pickUpEndTime: pickUpEndTime,
-          proposalStartDate: proposalStartDate,
-          proposalEndDate: proposalEndDate,
+          proposalStartDate: new Date(proposalStartDate).toISOString(),
+          proposalEndDate: new Date(proposalEndDate).toISOString(),
           appointmentserviceType: 'NONE',
           firstMessage: firstMessage,
           isRecivedPhotos: isRecivedPhotos,
           formattedMessage: boardingSittingFT,
         };
+
+        console.log('bboardSittingPayload', boardSittingPayload);
 
         const response = await request(endpoint, boardSittingPayload);
         response.ok &&
@@ -204,7 +206,7 @@ export const useAppointment = (providerOpk: string) => {
                   : 'NONE',
               recurringStartDate: new Date(recurringStartDate).toISOString(),
 
-              recurringSelectedDay: sortedRecurringDates,
+              proposalVisits: sortedRecurringDates,
               firstMessage: firstMessage,
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
@@ -223,11 +225,12 @@ export const useAppointment = (providerOpk: string) => {
                   : serviceTypeId === 5
                   ? 'WALK'
                   : 'NONE',
-              proposalOtherDate: sortedSpecificModDates,
+              proposalVisits: sortedSpecificModDates,
               firstMessage: firstMessage,
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
             };
+        console.log('doggyPayload', dropDogPayload);
         const response = await request(endpoint, dropDogPayload);
         response.ok &&
           navigation.navigate('ActivityScreen', {
@@ -273,13 +276,14 @@ export const useAppointment = (providerOpk: string) => {
               dropOffEndTime: dropOffEndTime,
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
-              proposalOtherDate: multiDate.map((item: string) => ({
-                date: new Date(item).toISOString(),
-              })),
+              proposalOtherDate: multiDate.map((item: string) =>
+                new Date(item).toISOString(),
+              ),
               firstMessage: firstMessage,
               formattedMessage: DoggyDayFT,
               isRecivedPhotos: isRecivedPhotos,
             };
+        console.log('doggyPayload', doggyPayload);
         const response = await request(endpoint, doggyPayload);
         response.ok &&
           navigation.navigate('ActivityScreen', {
@@ -289,6 +293,10 @@ export const useAppointment = (providerOpk: string) => {
       }
     }
   };
+  console.log(
+    'asdadgdsfgasdfas',
+    format(new Date(), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
+  );
   useEffect(() => {
     providerServices === null && dispatch(getProviderServices(providerOpk));
     dispatch(getAllPets());

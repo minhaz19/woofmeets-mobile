@@ -88,7 +88,6 @@ export const useHandleRange = (
       const {styledMarkedRange, orderRange} = orderAndStyleRange(
         range,
         'RANGE',
-        'black',
       );
       setMarkedStyle(styledMarkedRange);
       // dispatch(storeMarkStyle(styledMarkedRange));
@@ -112,6 +111,13 @@ export const useHandleRange = (
     setValue && setValue('proposalEndDate', '');
     setValue && setValue('multiDate', []);
   };
+  const resetSelection = () => {
+    setStartingDate('');
+    setEndingDate('');
+    setSingleSelect('');
+    setMarkedStyle({});
+    setSteps(1);
+  };
   return {
     handleDayPress,
     _markedStyle,
@@ -120,5 +126,7 @@ export const useHandleRange = (
     endingDate,
     dateRange,
     reset,
+    resetSelection,
+    setMarkedStyle,
   };
 };

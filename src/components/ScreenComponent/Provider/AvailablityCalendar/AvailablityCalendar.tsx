@@ -12,23 +12,33 @@ import {Setting} from '../../../../assets/svgs/SVG_LOGOS';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import Text_Size from '../../../../constants/textScaling';
 import {useProviderAvailability} from './utils/useProviderAvailability';
+import {getAvailableDays} from '../../../../store/slices/Provider/Unavailability/getAvailableDay';
+import format from 'date-fns/format';
+import {useAppDispatch} from '../../../../store/store';
 
 const RANGE = 12;
 const today = new Date();
 const selectType = 'RANGE';
-
+function isBeforeToday(date: Date) {
+  today.setHours(0, 0, 0, 0);
+  return date < today;
+}
 const AvailablityCalendar = () => {
   const {colors} = useTheme();
   const [preMarked, setPremarked] = useState({});
   const [isDayVisible, setIsDayVisible] = useState(false);
+  const [availabledays, setAvailableDays] = useState([]);
+  const [modMarkDate, setModMarkDate] = useState({});
+  const [monthRef, setMonthRef] = useState({});
   const {loading, availabileDates, getAvailablity} = useProviderAvailability();
+
   const [foundAvailable, setFoundAvailable] = useState(false);
   const {singleSelect, startingDate, _markedStyle, endingDate, handleDayPress} =
     useHandleRange(selectType);
-
+  const dispatch = useAppDispatch();
   useMemo(() => {
-    const preStyled = availabileDates.map((_: string, i: number) => ({
-      [availabileDates[i]]: {
+    const preStyled = availabledays.map((_: string, i: number) => ({
+      [availabledays[i]]: {
         customStyles: {
           container: {
             backgroundColor: Colors.primary,
@@ -54,16 +64,33 @@ const AvailablityCalendar = () => {
           (preStyledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
       );
     b && setPremarked(preStyledMarkedRange);
-  }, [availabileDates]);
+  }, [availabledays]);
 
-  function isBeforeToday(date: Date) {
-    today.setHours(0, 0, 0, 0);
-    return date < today;
-  }
   useEffect(() => {
     const matchIndex = availabileDates.findIndex(item => item === startingDate);
     matchIndex !== -1 ? setFoundAvailable(true) : setFoundAvailable(false);
   }, [availabileDates, startingDate]);
+  useEffect(() => {
+    // dispatch(getUserServices());
+    dispatch(getAvailableDays());
+    const monthData = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      dateString: format(new Date(), 'yyyy-MM-dd'),
+    };
+    getAvailablity(monthData, 'current');
+  }, []);
+
+  useEffect(() => {
+    setAvailableDays(availabileDates);
+    setModMarkDate(_markedStyle);
+    console.log('newly get data', availabileDates, _markedStyle);
+  }, [availabileDates, _markedStyle]);
+  // console.log(
+  //   '  setAvailableDays(availabileDates);',
+  //   availabileDates,
+  //   _markedStyle,
+  // );
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -81,9 +108,10 @@ const AvailablityCalendar = () => {
         futureScrollRange={RANGE}
         onDayPress={handleDayPress}
         markingType={'custom'}
+        hideExtraDays={true}
         markedDates={{
           ...preMarked,
-          ..._markedStyle,
+          ...modMarkDate,
           [singleSelect]: {
             customStyles: {
               container: {
@@ -104,6 +132,7 @@ const AvailablityCalendar = () => {
         minDate={today.toString()}
         enableSwipeMonths
         onMonthChange={monthData => {
+          setMonthRef(monthData);
           if (monthData.month === today.getMonth() + 1) {
             getAvailablity(monthData, 'current');
           } else if (isBeforeToday(new Date(monthData.dateString))) {
@@ -141,6 +170,9 @@ const AvailablityCalendar = () => {
         setIsDayVisible={setIsDayVisible}
         isDayVisible={isDayVisible}
         foundAvailable={foundAvailable}
+        setAvailableDays={setAvailableDays}
+        setModMarkDate={setModMarkDate}
+        monthRef={monthRef}
       />
     </View>
   );

@@ -3,7 +3,7 @@
 import Colors from '../../../constants/Colors';
 
 // const orderMultiDates: any = [];
-export const orderAndStyleRange = (range: any, type: string, color: string) => {
+export const orderAndStyleRange = (range: any, type: string) => {
   let orderRange: any = [];
   let styledMarkedRange: any = {};
   if (type === 'RANGE') {

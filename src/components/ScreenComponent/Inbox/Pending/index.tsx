@@ -42,6 +42,7 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
+  console.log('inbox check', providerApntStatus, appointmentStatus);
 
   return (
     <>
@@ -71,6 +72,10 @@ const PendingStatus = ({statusType}: Props) => {
                 const serviceTypeId = item?.providerService?.serviceTypeId;
                 const proposalDate = item.appointmentProposal[0];
                 const isRecurring = item.appointmentProposal[0]?.isRecurring;
+                console.log(
+                  'proposalVisits[0]',
+                  proposalDate?.proposalVisits[0]?.date,
+                );
                 return (
                   <ReusableCard
                     key={item.opk}
@@ -91,12 +96,17 @@ const PendingStatus = ({statusType}: Props) => {
                                 new Date(proposalDate.recurringStartDate),
                                 'iii LLL d',
                               )}`
-                            : `Starting From:  ${format(
-                                new Date(
-                                  proposalDate.proposalOtherDate[0].date,
-                                ),
-                                'iii LLL d',
-                              )}`
+                            : `Starting From:  ${
+                                proposalDate?.proposalVisits[0]?.date ===
+                                undefined
+                                  ? ''
+                                  : format(
+                                      new Date(
+                                        proposalDate?.proposalVisits[0]?.date,
+                                      ),
+                                      'iii LLL d',
+                                    )
+                              }`
                           : serviceTypeId === 4
                           ? isRecurring
                             ? `Starting From:  ${format(
@@ -104,9 +114,7 @@ const PendingStatus = ({statusType}: Props) => {
                                 'iii LLL d',
                               )}`
                             : `Starting From:  ${format(
-                                new Date(
-                                  proposalDate.proposalOtherDate[0].date,
-                                ),
+                                new Date(),
                                 'iii LLL d',
                               )}`
                           : ''
@@ -151,9 +159,7 @@ const PendingStatus = ({statusType}: Props) => {
                                 'iii LLL d',
                               )}`
                             : `Starting From:  ${format(
-                                new Date(
-                                  proposalDate.proposalOtherDate[0].date,
-                                ),
+                                new Date(proposalDate.proposalVisits[0].date),
                                 'iii LLL d',
                               )}`
                           : serviceTypeId === 4
@@ -163,9 +169,7 @@ const PendingStatus = ({statusType}: Props) => {
                                 'iii LLL d',
                               )}`
                             : `Starting From:  ${format(
-                                new Date(
-                                  proposalDate.proposalOtherDate[0].date,
-                                ),
+                                new Date(proposalDate.proposalVisits[0].date),
                                 'iii LLL d',
                               )}`
                           : ''
