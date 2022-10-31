@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
-import { useTheme } from '../../../constants/theme/hooks/useTheme';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import IOSButton from '../IOSButton';
 
 const MiddleModal = (props: {
@@ -36,28 +36,35 @@ const MiddleModal = (props: {
         animationType="fade"
         transparent={true}
         visible={props.isModalVisible}>
-        <TouchableWithoutFeedback disabled={props.notOutsidePress ? true : false} onPress={() => props.setIsModalVisible(false)}>
+        <TouchableWithoutFeedback
+          disabled={props.notOutsidePress ? true : false}
+          onPress={() => props.setIsModalVisible(false)}>
           <View style={styles.centeredView}>
-            <View style={[styles.modalView, {
-              backgroundColor: colors.backgroundColor,
+            <View
+              style={[
+                styles.modalView,
+                {
+                  backgroundColor: colors.backgroundColor,
                   minHeight: props.height ? props.height : '20%',
-            }]}>{props.children}
+                },
+              ]}>
+              {props.children}
               {/*Bottom Buttons */}
               {props.isButton && (
-                <View style={{flexDirection: 'row', width: '100%',}}>
-                  <IOSButton 
-                    containerStyle={styles.containerStyle} 
+                <View style={{flexDirection: 'row', width: '100%'}}>
+                  <IOSButton
+                    containerStyle={styles.containerStyle}
                     onSelect={() => props.setIsModalVisible(false)}
-                    textAlignment={styles.textAlignment} 
-                    titleStyle={styles.textStyle} 
-                    title={'Cancel'} 
+                    textAlignment={styles.textAlignment}
+                    titleStyle={styles.textStyle}
+                    title={'Cancel'}
                   />
-                  <IOSButton 
-                    containerStyle={styles.containerStyle} 
+                  <IOSButton
+                    containerStyle={styles.containerStyle}
                     onSelect={() => props.setIsModalVisible(false)}
-                    textAlignment={styles.textAlignment} 
-                    titleStyle={styles.textStyle} 
-                    title={'Okay'} 
+                    textAlignment={styles.textAlignment}
+                    titleStyle={styles.textStyle}
+                    title={'Okay'}
                   />
                 </View>
               )}

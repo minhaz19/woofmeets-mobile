@@ -12,17 +12,14 @@ interface Props {
   handlePress?: (arg: any) => void;
   setValue: (arg: string, arg2: any) => void;
   name?: string;
-  markedStyle?: {};
 }
 const AppCalendar = ({
   range = 12,
   selectType,
   setValue,
   handlePress,
-}: // markedStyle,
-Props) => {
+}: Props) => {
   const {colors} = useTheme();
-  // const {markedStyle} = useAppSelector(state => state.markedStyle);
   const {handleDayPress, singleSelect, _markedStyle} = useHandleRange(
     selectType,
     setValue,
@@ -117,7 +114,10 @@ function renderCustomHeader(date: any) {
 
   return (
     <View style={styles.header}>
-      <TitleText text={`${month}`} textStyle={{...styles.month, ...textStyle}} />
+      <TitleText
+        text={`${month}`}
+        textStyle={{...styles.month, ...textStyle}}
+      />
       <TitleText text={year} textStyle={{...styles.year, ...textStyle}} />
     </View>
   );

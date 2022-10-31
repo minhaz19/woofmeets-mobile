@@ -11,7 +11,6 @@ const img =
 const ApntProviderProfileInfo = () => {
   const {colors} = useTheme();
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  console.log('pp', proposedServiceInfo);
   return (
     <View style={styles.topContainer}>
       <View

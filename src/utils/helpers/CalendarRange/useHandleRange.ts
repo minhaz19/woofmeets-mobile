@@ -112,6 +112,13 @@ export const useHandleRange = (
     setValue && setValue('proposalEndDate', '');
     setValue && setValue('multiDate', []);
   };
+  const resetSelection = () => {
+    setStartingDate('');
+    setEndingDate('');
+    setSingleSelect('');
+    setMarkedStyle({});
+    setSteps(1);
+  };
   return {
     handleDayPress,
     _markedStyle,
@@ -120,5 +127,7 @@ export const useHandleRange = (
     endingDate,
     dateRange,
     reset,
+    resetSelection,
+    setMarkedStyle,
   };
 };

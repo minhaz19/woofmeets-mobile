@@ -79,7 +79,12 @@ const AllCards = ({
           {newCard.map((card: any, index: number) => (
             <View key={index}>
               {card.addCard === true ? (
-                <ListItem key={index} newCard Icon={getIcon(card.brand)} />
+                <ListItem
+                  key={index}
+                  newCard
+                  Icon={getIcon(card.brand)}
+                  sequence={sequence}
+                />
               ) : (
                 <ListItem
                   key={index}
@@ -89,6 +94,7 @@ const AllCards = ({
                     setActiveCardIndex(index);
                     setSelectedCard(card.id);
                   }}
+                  sequence={sequence}
                   defaultCard={card.id === CardId ? true : false}
                   activeCard={index === cardIndex ? true : false}
                   handleUpdate={id => {

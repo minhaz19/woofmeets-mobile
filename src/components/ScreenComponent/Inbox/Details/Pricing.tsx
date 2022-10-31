@@ -17,7 +17,6 @@ const Pricing = ({screen}: Props) => {
   const {colors} = useTheme();
   const {proposalPricing} = useAppSelector(state => state.proposalPricing);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  console.log('propproposalPricingo', proposalPricing, screen);
   return (
     <View>
       <HeaderText text={'Charges & Services'} textStyle={styles._textHeader} />

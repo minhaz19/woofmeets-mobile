@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useEffect,  useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import TimeMultiSlotPicker from './TimeMultiSlotPicker';
 import DescriptionText from '../../../common/text/DescriptionText';
@@ -61,7 +61,7 @@ const DayTimeSlot = () => {
       if (recurringModDates?.length !== 0) {
         const sameData = unMatched?.map((item: any) => ({
           date: item.date,
-          visitTime: recurringModDates ? recurringModDates[0].visitTime : [],
+          visits: recurringModDates ? recurringModDates[0].visits : [],
         }));
         sameData?.length > 0 &&
           recurringModDates?.length > 0 &&
@@ -76,7 +76,7 @@ const DayTimeSlot = () => {
       if (specificModDates && specificModDates?.length > 0) {
         const sameData = unMatched?.map((item: any) => ({
           date: item,
-          visitTime: specificModDates ? specificModDates[0].visitTime : [],
+          visits: specificModDates ? specificModDates[0].visits : [],
         }));
         sameData?.length > 0 &&
           specificModDates?.length > 0 &&

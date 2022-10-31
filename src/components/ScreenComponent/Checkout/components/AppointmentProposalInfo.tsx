@@ -12,7 +12,6 @@ import Colors from '../../../../constants/Colors';
 const AppointmentProposalInfo = () => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {user} = useAppSelector(state => state.whoAmI);
-  console.log('user', proposedServiceInfo);
   return (
     <View>
       <BigText text="Review and Payment" />

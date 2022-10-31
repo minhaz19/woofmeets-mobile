@@ -71,6 +71,7 @@ const PendingStatus = ({statusType}: Props) => {
                 const serviceTypeId = item?.providerService?.serviceTypeId;
                 const proposalDate = item.appointmentProposal[0];
                 const isRecurring = item.appointmentProposal[0]?.isRecurring;
+ 
                 return (
                   <ReusableCard
                     key={item.opk}
@@ -92,9 +93,7 @@ const PendingStatus = ({statusType}: Props) => {
                                 'iii LLL d',
                               )}`
                             : `Starting From:  ${format(
-                                new Date(
-                                  proposalDate.proposalOtherDate[0].date,
-                                ),
+                                new Date(proposalDate?.proposalVisits[0]?.date),
                                 'iii LLL d',
                               )}`
                           : serviceTypeId === 4
@@ -105,7 +104,7 @@ const PendingStatus = ({statusType}: Props) => {
                               )}`
                             : `Starting From:  ${format(
                                 new Date(
-                                  proposalDate.proposalOtherDate[0].date,
+                                  proposalDate?.proposalOtherDate[0]?.date,
                                 ),
                                 'iii LLL d',
                               )}`
@@ -151,9 +150,7 @@ const PendingStatus = ({statusType}: Props) => {
                                 'iii LLL d',
                               )}`
                             : `Starting From:  ${format(
-                                new Date(
-                                  proposalDate.proposalOtherDate[0].date,
-                                ),
+                                new Date(proposalDate.proposalVisits[0].date),
                                 'iii LLL d',
                               )}`
                           : serviceTypeId === 4
@@ -164,7 +161,7 @@ const PendingStatus = ({statusType}: Props) => {
                               )}`
                             : `Starting From:  ${format(
                                 new Date(
-                                  proposalDate.proposalOtherDate[0].date,
+                                  proposalDate?.proposalOtherDate[0]?.date,
                                 ),
                                 'iii LLL d',
                               )}`
@@ -172,11 +169,6 @@ const PendingStatus = ({statusType}: Props) => {
                         : 'No Mesaegs fonnd',
                       boardingTime: item?.providerService?.serviceType?.name,
                       status: item.status,
-                      // description: item?.appointmentProposal[0]?.firstMessage
-                      //   ? item?.appointmentProposal[0]?.firstMessage
-                      //   : 'No Mesaegs fonnd',
-                      // boardingTime: item?.providerService?.serviceType?.name,
-                      // status: item.status,
                     }}
                     buttonStyles={Colors.primary}
                     handlePress={() =>

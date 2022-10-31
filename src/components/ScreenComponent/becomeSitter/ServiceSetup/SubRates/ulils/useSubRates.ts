@@ -61,7 +61,6 @@ export const useSubRates = (rateFields: any, watch: any) => {
       serviceTypeId: elm.id,
       percentage: elm.percentage,
     }));
-    console.log('base Rate', baseRateWatch);
     const submittedValue = fieldValue?.map((item: any) => item.amount);
     const calculatedValue = checkCheck?.map((it: any) => {
       return Number(
@@ -71,13 +70,7 @@ export const useSubRates = (rateFields: any, watch: any) => {
       );
     });
 
-    console.log(
-      'calculatedValue',
 
-      submittedValue,
-      checkCheck,
-      calculatedValue,
-    );
     const validateCheck =
       submittedValue === undefined
         ? null

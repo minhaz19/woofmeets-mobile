@@ -52,13 +52,13 @@ export const useModReqInitialState = () => {
   const modProposalRecurringDate =
     proposedServiceInfo?.recurringSelectedDay?.map((item: any) => ({
       date: item?.date,
-      visitTime: item?.visits?.map((time: any) => time.time),
+      visits: item?.visits?.map((it: any) => it.time),
       // startDate: item?.startDate ? item.startDate : false,
     }));
   const modProposalScheduleDate = proposedServiceInfo?.proposalOtherDate?.map(
     (item: any) => ({
       date: item?.name,
-      visitTime: item?.visits?.map((time: any) => time.time),
+      visits: item?.visits?.map((it: any) => it.time),
       // startDate: item?.startDate ? item.startDate : false,
     }),
   );
@@ -67,10 +67,6 @@ export const useModReqInitialState = () => {
       item.substring(0, 3).toLowerCase(),
     ),
   );
-  const doggyMultiDate = proposedServiceInfo?.proposalOtherDate?.map(
-    (di: {date: string}) => format(new Date(di.date), 'yyyy-MM-dd'),
-  );
-
   return {
     providerServiceId: null,
     userId: proposedServiceInfo?.userId,
@@ -124,17 +120,26 @@ export const useModReqInitialState = () => {
     recurringModDates:
       proposedServiceInfo?.isRecurring &&
       proposedServiceInfo?.recurringSelectedDay
-        ? proposedServiceInfo?.recurringSelectedDay
+        ? proposedServiceInfo?.recurringSelectedDay.map((it: any) => ({
+            date: it?.date,
+            visits: it?.visits?.map((vis: any) => vis.time),
+          }))
         : [],
     specificModDates:
       !proposedServiceInfo?.isRecurring &&
       proposedServiceInfo?.proposalOtherDate
-        ? proposedServiceInfo?.proposalOtherDate
+        ? proposedServiceInfo?.proposalOtherDate.map((it: any) => ({
+            date: it?.date,
+            name: it?.name,
+            visits: it?.visits?.map((vis: any) => vis.time),
+          }))
         : [],
     multiDate:
       proposedServiceInfo?.serviceTypeId === 4 &&
       !proposedServiceInfo.isRecurring
-        ? doggyMultiDate
+        ? proposedServiceInfo?.proposalOtherDate?.map((di: {date: string}) =>
+            format(new Date(di.date), 'yyyy-MM-dd'),
+          )
         : !proposedServiceInfo.isRecurring
         ? modMultiDates
         : [],

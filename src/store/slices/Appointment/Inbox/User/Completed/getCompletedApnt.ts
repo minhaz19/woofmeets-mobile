@@ -2,12 +2,12 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../../../../api/client';
-export const getProviderAccepted = createAsyncThunk(
-  '/appointment/provider/inbox',
+export const getCompletedApnt = createAsyncThunk(
+  '/appointment/inbox',
   async (statusId: string) => {
     try {
       const response: ApiResponse<any> = await apiClient.get(
-        `/appointment/provider/inbox?status=${statusId}`,
+        `/appointment/inbox?status=${statusId}`,
       );
       if (!response.ok) {
         if (response.data) {

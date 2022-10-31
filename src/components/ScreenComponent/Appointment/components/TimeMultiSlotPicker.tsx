@@ -34,22 +34,20 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                 if (matchDate === -1) {
                   Days.push({
                     date: singleItem.date,
-                    visitTime: [item.slot],
-                    // startDate:
-                    //   matchDate === -1 && Days.length === 0 ? true : false,
+                    visits: [item.slot],
                   });
                 } else {
                   const found = Days.filter(
                     (obj: any) => obj.date === singleItem.date,
                   );
 
-                  const matchIndex = found[0].visitTime?.findIndex(
-                    (it: {visitTime: string}) => it === item.slot,
+                  const matchIndex = found[0].visits?.findIndex(
+                    (it: {visits: string}) => it === item.slot,
                   );
                   if (matchIndex === -1) {
-                    found[0].visitTime.push(item.slot);
+                    found[0].visits.push(item.slot);
                   } else {
-                    found[0].visitTime.splice(matchIndex, 1);
+                    found[0].visits.splice(matchIndex, 1);
                   }
                 }
                 setValue('recurringModDates', Days);
@@ -60,7 +58,7 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                 if (matchDate === -1) {
                   Dates.push({
                     date: singleItem.date,
-                    visitTime: [item.slot],
+                    visits: [item.slot],
                     // startDate:
                     //   matchDate === -1 && Dates.length === 0 ? true : false,
                   });
@@ -68,13 +66,13 @@ const TimeMultiSlotPicker = ({isRecurring, singleItem, initalSlot}: any) => {
                   const found = Dates.filter(
                     (obj: any) => obj.date === singleItem.date,
                   );
-                  const matchIndex = found[0].visitTime?.findIndex(
-                    (it: {visitTime: string}) => it === item.slot,
+                  const matchIndex = found[0].visits?.findIndex(
+                    (it: {visits: string}) => it === item.slot,
                   );
                   if (matchIndex === -1) {
-                    found[0].visitTime.push(item.slot);
+                    found[0].visits.push(item.slot);
                   } else {
-                    found[0].visitTime.splice(matchIndex, 1);
+                    found[0].visits.splice(matchIndex, 1);
                   }
                 }
                 setValue('specificModDates', Dates);

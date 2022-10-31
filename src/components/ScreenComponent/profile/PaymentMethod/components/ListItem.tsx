@@ -22,6 +22,7 @@ interface Props {
   onPress?: () => void;
   activeCard?: boolean;
   handleUpdate?: (arg: number) => void;
+  sequence: number | string | null;
 }
 type StackParamList = {
   AddCardForm: {foo: string; onBar: () => void} | undefined;
@@ -35,6 +36,7 @@ const ListItem = ({
   newCard = false,
   defaultCard = false,
   activeCard = false,
+  sequence,
 }: // handleUpdate,
 Props) => {
   const navigation = useNavigation<NavigationProps>();
@@ -97,7 +99,11 @@ Props) => {
                 : colors.backgroundColor,
             },
           ]}
-          onPress={() => navigation.navigate('AddCardForm', {sequence: null})}>
+          onPress={() =>
+            navigation.navigate('AddCardForm', {
+              sequence: sequence !== null ? sequence : null,
+            })
+          }>
           <View style={[styles.task, {justifyContent: 'center'}]}>
             {Icon}
             <TitleText textStyle={styles.text} text={'Add New Card'} />

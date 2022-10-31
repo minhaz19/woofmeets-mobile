@@ -20,12 +20,6 @@ const ProviderAvailablity = () => {
   useEffect(() => {
     dispatch(getUserServices());
     dispatch(getAvailableDays());
-    const monthData = {
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-      dateString: format(new Date(), 'yyyy-MM-dd'),
-    };
-    getAvailablity(monthData, 'current');
   }, []);
   // const [refreshing, setRefreshing] = useState(false);
 

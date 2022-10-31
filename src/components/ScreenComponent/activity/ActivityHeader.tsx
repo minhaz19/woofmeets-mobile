@@ -17,7 +17,7 @@ import {format} from 'date-fns';
 import {getAppointmentStatus} from '../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 import {getProviderApnt} from '../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import changeTextLetter from '../../common/changeTextLetter';
-
+import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 const acceptEndpoint = '/appointment/accept/proposal/';
 const rejectEndpoint = '/appointment/proposal/reject/';
 const ActivityHeader = (props: {
@@ -35,6 +35,7 @@ const ActivityHeader = (props: {
     const result = await request(acceptEndpoint + props.opk);
 
     if (result.ok) {
+      dispatch(getProviderProposal(proposedServiceInfo.appointmentOpk));
       dispatch(getAppointmentStatus('PROPOSAL'));
       dispatch(getProviderApnt('PROPOSAL'));
       navigation.navigate('Inbox');
@@ -171,6 +172,9 @@ const ActivityHeader = (props: {
                       acceptEndpoint + proposedServiceInfo.appointmentOpk,
                     );
                     if (r.ok) {
+                      dispatch(
+                        getProviderProposal(proposedServiceInfo.appointmentOpk),
+                      );
                       navigation.navigate('Checkout');
                     }
                   } else {

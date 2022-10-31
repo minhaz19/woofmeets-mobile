@@ -16,6 +16,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProposalPricing} from '../../../store/slices/Appointment/Details/getProposalPricing';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {useNavigation} from '@react-navigation/native';
+import AppStripe from '../../../components/common/Stripe/AppStripe';
 
 const CheckoutDetails = () => {
   const {colors} = useTheme();
@@ -28,32 +29,33 @@ const CheckoutDetails = () => {
   const handlePayment = () => {
     navigation.navigate('PaymentMethod', {sequence: 'Appointment'});
   };
-  console.log('proposedServiceInfo', proposedServiceInfo);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}
       keyboardVerticalOffset={120}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.innerContainer}>
-          {/* Appointment Proposal infos */}
-          <AppointmentProposalInfo />
-          {/* Charges & Services */}
-          <Pricing screen="checkout" />
-          {/* <PromoCode /> */}
-          <BottomSpacing />
-        </View>
-        <View style={styles.footerContainer}>
-          <ButtonCom
-            title="Add to Pay"
-            textAlignment={btnStyles.textAlignment}
-            containerStyle={btnStyles.containerStyleFullWidth}
-            titleStyle={btnStyles.titleStyle}
-            onSelect={handlePayment}
-          />
-        </View>
-        <BottomSpacingNav />
-      </ScrollView>
+      <AppStripe>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.innerContainer}>
+            {/* Appointment Proposal infos */}
+            <AppointmentProposalInfo />
+            {/* Charges & Services */}
+            <Pricing screen="checkout" />
+            {/* <PromoCode /> */}
+            <BottomSpacing />
+          </View>
+          <View style={styles.footerContainer}>
+            <ButtonCom
+              title="Procced To Payment"
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={btnStyles.containerStyleFullWidth}
+              titleStyle={btnStyles.titleStyle}
+              onSelect={handlePayment}
+            />
+          </View>
+          <BottomSpacingNav />
+        </ScrollView>
+      </AppStripe>
     </KeyboardAvoidingView>
   );
 };
