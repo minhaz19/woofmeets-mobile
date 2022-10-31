@@ -1,36 +1,63 @@
-import {StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import {RefreshControl, StyleSheet} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import SubAvailability from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubAvailabilty/SubAvailability';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import AppForm from '../../../../components/common/Form/AppForm';
 import {useAvailabilityUtils} from './utils/useAvailabilityUtils';
 import {
   AvailabilityInitialValues,
   availabilityValidation,
 } from './utils/AvailabilityInitialValues';
-import {useAppSelector} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { getAvailability } from '../../../../store/slices/onBoarding/setUpService/availability/getAvailability';
+import { useTheme } from '../../../../constants/theme/hooks/useTheme';
 
 const Availability = () => {
   const {colors} = useTheme();
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {itemId, name, image, description, service} = serviceSetup.routeData;
-  const serviceId = service.map((data: {id: any}) => data.id);
+  const providerServiceId = service.map((data: {providerServiceId: any}) => data.providerServiceId);
 
   const {availability, loading} = useAppSelector(
     (state: any) => state?.availability,
   );
   // hook for post/put
-  const {handlePost, isLoading} = useAvailabilityUtils(serviceId[0]);
+  const {handlePost, isLoading} = useAvailabilityUtils(providerServiceId[0]);
+  const [refreshing, setRefreshing] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await dispatch(getAvailability(providerServiceId[0]));
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
+  
   return (
     <>
       {loading && <AppActivityIndicator visible={true} />}
-      <ScrollViewRapper
-        style={
-          styles.rootContainer
-        }>
+      <KeyboardAwareScrollView
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+      style={[
+        styles.rootContainer,
+        {
+          backgroundColor: colors.backgroundColor,
+        },
+      ]}
+      extraHeight={100}
+      extraScrollHeight={200}
+      enableAutomaticScroll={true}
+      enableOnAndroid={true}>
         <ReusableHeader
           itemId={itemId}
           name={name}
@@ -39,7 +66,7 @@ const Availability = () => {
         />
         <AppForm
           initialValues={AvailabilityInitialValues(
-            serviceId[0],
+            providerServiceId[0],
             availability,
             itemId,
           )}
@@ -47,7 +74,7 @@ const Availability = () => {
           enableReset>
           <SubAvailability handlePost={handlePost} loading={isLoading} />
         </AppForm>
-      </ScrollViewRapper>
+      </KeyboardAwareScrollView>
     </>
   );
 };

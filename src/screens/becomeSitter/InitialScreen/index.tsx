@@ -54,7 +54,8 @@ const SitterInitialScreen = (props: {
       ]}>
       <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
+          // source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
+          source={require('../../../assets/image/onboarding/pet-with-owner.jpeg')}
           style={styles.image}
         />
       </View>
@@ -81,7 +82,7 @@ const SitterInitialScreen = (props: {
         {/* Flexibility */}
         <HeaderText
           textStyle={styles.titleStylePadding}
-          text="Flexibility puts you in Control"
+          text="Be Your Own Boss"
         />
         {/* Bullets */}
         {bulletData1.map(item => (
@@ -93,16 +94,17 @@ const SitterInitialScreen = (props: {
       {/* Image Quotes 1 */}
       <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
+          source={require('../../../assets/image/onboarding/testimonial-dogs.jpg')}
+          // source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
           style={styles.image}
         />
       </View>
       <CardQuotes
-        comment="It's easy . I go to the calendar and mark myself as available when I want to be ."
-        writter="Cari C ., Plano TX"
+        comment="Woofmeets makes it easy to earn. There's a holiday rate every month!"
+        writter="Evelyn Rodriguez"
       />
       {/* Tools to success */}
-      <View style={styles.innerContainer}>
+      {/* <View style={styles.innerContainer}>
         <HeaderText
           textStyle={styles.titleStylePadding2}
           text="The tools to succeed"
@@ -111,9 +113,9 @@ const SitterInitialScreen = (props: {
           <BulletPoints text={item.text} key={item.id} />
         ))}
       </View>
-      <View style={styles.verticalPadding} />
+      <View style={styles.verticalPadding} /> */}
       {/* Image Quotes 2 */}
-      <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
+      {/* <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
           source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
           style={styles.image}
@@ -122,7 +124,7 @@ const SitterInitialScreen = (props: {
       <CardQuotes
         comment="Thanks to the Woofmeets App, I know about mu business requests immediately and I'm quick to respond!"
         writter="Carol U., Atlanta GA"
-      />
+      /> */}
       {/* How it works */}
       <View style={styles.innerContainer}>
         <HeaderText textStyle={styles.titleStylePadding2} text="How it Works" />
@@ -141,12 +143,12 @@ const SitterInitialScreen = (props: {
       <View style={styles.innerContainer}>
         <HeaderText
           textStyle={styles.titleStyle}
-          text="Safety first. Always."
+          text="What are Woofmeets requirement?"
         />
-        <TitleText
+        {/* <TitleText
           textStyle={styles.titleStylePaddingMedium}
           text="We work tirelessly to ensure tails keep wagging and pet owner's minds are at ease."
-        />
+        /> */}
         {bulletData3.map(item => (
           <BulletPoints text={item.text} key={item.id} />
         ))}

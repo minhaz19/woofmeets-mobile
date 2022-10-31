@@ -12,7 +12,6 @@ interface Props {
 }
 const ProviderImageContainer = ({image, rounded}: Props) => {
   const {colors} = useTheme();
-  console.log(image);
   return (
     <View
       style={[

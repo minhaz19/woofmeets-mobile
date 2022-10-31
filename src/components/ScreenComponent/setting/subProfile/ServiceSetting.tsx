@@ -67,6 +67,7 @@ const ServiceSetting = () => {
   useEffect(() => {
     onRefresh();
   }, []);
+  console.log('1', serviceData);
   return (
     <>
       {userServicesLoading && <AppActivityIndicator visible={true} />}
@@ -88,6 +89,7 @@ const ServiceSetting = () => {
               <TouchableOpacity
                 key={index}
                 onPress={() => {
+                  console.log('2', item?.AvailableDay);
                   dispatch(
                     setServiceSetup({
                       routeData: {
@@ -102,7 +104,7 @@ const ServiceSetting = () => {
                     }),
                   );
                   dispatch(setCurrentScreen({pass: 1}));
-                  navigation.navigate('ServiceSetUp');
+                  navigation.navigate('SingleServiceLanding');
                 }}>
                 <View style={styles.flexContainer}>
                   <View style={styles.serviceContainer}>
