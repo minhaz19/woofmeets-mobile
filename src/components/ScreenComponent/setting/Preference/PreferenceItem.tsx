@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   GestureResponderEvent,
   StyleSheet,
@@ -25,17 +26,20 @@ interface PreferenceItemProps {
 const PreferenceItem: FC<PreferenceItemProps> = ({data}) => {
   const {colors} = useTheme();
   const isDarkMode = useColorScheme();
-  const backgroundStyle = {   backgroundColor: isDarkMode
-    ? colors.lightBackgroundColor
-    : colors.backgroundColor}
+  const backgroundStyle = {
+    backgroundColor: isDarkMode
+      ? colors.lightBackgroundColor
+      : colors.backgroundColor,
+  };
   return (
-    <View style={{
-      backgroundColor: backgroundStyle.backgroundColor,
-      borderBottomWidth: 1,
-      borderTopWidth: data.id === 1 ? 1 : 0,
-      borderColor: colors.borderColor,
+    <View
+      style={{
+        backgroundColor: backgroundStyle.backgroundColor,
+        borderBottomWidth: 1,
+        borderTopWidth: data.id === 1 ? 1 : 0,
+        borderColor: colors.borderColor,
       }}>
-      <TouchableOpacity onPress={data.screenName} >
+      <TouchableOpacity onPress={data.screenName}>
         <View style={styles.container}>
           <HeaderText text={data.title} />
           {data.details && <DescriptionText text={data.details} />}

@@ -12,72 +12,75 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {colors} from '../../../../constants/theme/textTheme';
 import Colors from '../../../../constants/Colors';
 import AppSelectField from '../../../common/Form/AppSelectField';
-import {useForm} from 'react-hook-form';
+import AppSelectState from '../../../common/Form/AppSelectState';
+import CustomStateChange from '../CustomStateChange';
+import {useFormContext} from 'react-hook-form';
+import {timeZones} from './utils/timeZones';
+import SubmitButton from '../../../common/Form/SubmitButton';
 
-const countries = [
-  {
-    value: 'Egypt',
-    label: 'Egypt',
-  },
-  {
-    value: 'Bangladesh',
-    label: 'Bangladesh',
-  },
-  {
-    value: 'India',
-    label: 'India',
-  },
-  {
-    value: 'Pakistan',
-    label: 'Pakistan',
-  },
-];
+interface Props {
+  handleSubmit: (value: any) => void;
+  loading: boolean;
+}
 
-const General = () => {
-  const [textInput, setTextInput] = useState('');
-  const [isQuickHour, setIsQuickHour] = useState(false);
-  const {control} = useForm();
-  const tempData = [
-    {
-      id: 2,
-      title: 'Quick Hours',
-      icon: true,
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      input: false,
-      iconComponent: (
-        <SwitchView
-          isActive={isQuickHour}
-          activeText=""
-          inActiveText=""
-          onSelect={is => {
-            setIsQuickHour(is);
-          }}
-        />
-      ),
-    },
-    {
-      id: 3,
-      title: 'Private Woofmeets Number',
-      icon: false,
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      input: true,
-      iconComponent: '',
-    },
-  ];
+const General = ({handleSubmit, loading}: Props) => {
+  // const [textInput, setTextInput] = useState('');
+  // const [isQuickHour, setIsQuickHour] = useState(false);
+  const [dropVisible, setDropVisible] = useState(false);
+  const {control, setValue, getValues} = useFormContext();
+  const timezoneData = getValues();
+
+  // const tempData = [
+  //   {
+  //     id: 2,
+  //     title: 'Quick Hours',
+  //     icon: true,
+  //     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+  //     input: false,
+  //     iconComponent: (
+  //       <SwitchView
+  //         isActive={isQuickHour}
+  //         activeText=""
+  //         inActiveText=""
+  //         onSelect={is => {
+  //           setIsQuickHour(is);
+  //         }}
+  //       />
+  //     ),
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Private Woofmeets Number',
+  //     icon: false,
+  //     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+  //     input: true,
+  //     iconComponent: '',
+  //   },
+  // ];
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}>
+      <CustomStateChange
+        visible={dropVisible}
+        setVisible={setDropVisible}
+        title={'Select State'}
+        setValue={setValue}
+        name={'timezone'}
+        data={timeZones}
+        value={timezoneData.timezone}
+      />
       <View style={[styles.container]}>
-        <AppSelectField
-          label="Time Zone"
+        <AppSelectState
           placeholder={'Select time zone'}
-          data={countries}
-          name={''}
+          setOpenDropDown={() => setDropVisible(!dropVisible)}
+          label={'Time Zone'}
+          dropVisible={dropVisible}
           control={control}
+          name={'timezone'}
         />
       </View>
-      <View style={[styles.container]}>
+      {/* <View style={[styles.container]}>
         <InputText
           title={'Your Mobile Number'}
           description={
@@ -87,8 +90,8 @@ const General = () => {
           value={textInput}
           setValue={setTextInput}
         />
-      </View>
-      {tempData.map((item, index) => {
+      </View> */}
+      {/* {tempData.map((item, index) => {
         return (
           <View key={index}>
             <View
@@ -120,17 +123,15 @@ const General = () => {
             )}
           </View>
         );
-      })}
+      })} */}
       {/* <TouchableOpacity onPress={() => {}}>
         <DescriptionText text={'Deactivate Account'} textStyle={styles.input} />
       </TouchableOpacity> */}
       <View style={styles.footerContainer}>
-        <ButtonCom
-          title={'Save Setting'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={() => {}}
+        <SubmitButton
+          title="Save Settings"
+          onPress={handleSubmit}
+          loading={loading}
         />
       </View>
       <BottomSpacing />

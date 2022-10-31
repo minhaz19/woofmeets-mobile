@@ -17,6 +17,7 @@ import {format} from 'date-fns';
 import {getAppointmentStatus} from '../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 import {getProviderApnt} from '../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import changeTextLetter from '../../common/changeTextLetter';
+
 const acceptEndpoint = '/appointment/accept/proposal/';
 const rejectEndpoint = '/appointment/proposal/reject/';
 const ActivityHeader = (props: {
@@ -53,7 +54,6 @@ const ActivityHeader = (props: {
           text: 'Yes',
           onPress: async () => {
             const r = await request(rejectEndpoint + props.opk);
-            console.log('r', r.data);
             if (r.ok) {
               dispatch(getAppointmentStatus('PROPOSAL'));
               dispatch(getProviderApnt('PROPOSAL'));

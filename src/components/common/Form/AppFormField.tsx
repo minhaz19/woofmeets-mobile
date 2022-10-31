@@ -94,7 +94,7 @@ const AppFormField = ({
                   editable={editable}
                   onBlur={onBlur}
                   value={
-                    name == 'dob'
+                    name === 'dob'
                       ? value.replace(
                           /^([\d]{2})([\d]{2})([\d]{4})$/,
                           '$1/$2/$3',
