@@ -11,8 +11,10 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 
 const endpoint = '/subscriptions/check-basic-verification-payment';
-const subscriptionEndpoint = '/subscriptions/subscribe/';
+const subscriptionEndpoint =
+  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
 const defaultCardEndpoint = '/stripe-payment-method/default-card-info';
+const uuid = Math.random().toString(36).substring(2, 36);
 export const useSubscription = () => {
   const [sequence, setSequence] = useState<number>(0);
   const [ssLoading, setSSloading] = useState(false);
@@ -23,7 +25,7 @@ export const useSubscription = () => {
   const {loading: planLoading, currentPlan} = useAppSelector(
     state => state.currentPlan,
   );
-  const {loading: pLoading, request} = useApi(methods._post);
+  const {loading: pLoading, request} = useApi(methods._idempt_post);
   const {loading: cardLoading, request: cardRequest} = useApi(methods._get);
   const navigation = useNavigation<any>();
   const formattedPackageRate = plans?.map((item: any) => ({
@@ -66,7 +68,9 @@ export const useSubscription = () => {
           } else if (result.data.data.needPayment === false) {
             const cardId = cardResponse?.data?.data.id;
             const subscriptionResult = await request(
-              `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+              `${subscriptionEndpoint}priceId=${sequence}&cardId=${cardId}`,
+              {},
+              uuid,
             );
             subscriptionResult.ok &&
               (await dispatch(getCurrentplan()),

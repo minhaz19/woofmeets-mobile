@@ -69,9 +69,9 @@ const BasicPayment = ({route, navigation}: Props) => {
             console.log('pay res', res);
 
             if (res.ok) {
-              navigation.navigate('SubscriptionScreen');
               dispatch(getCurrentplan());
               dispatch(getSubscription());
+              navigation.navigate('SubscriptionScreen');
             }
           }
         } catch (er: any) {
@@ -79,16 +79,16 @@ const BasicPayment = ({route, navigation}: Props) => {
           Alert.alert(er.message);
         }
       } else if (result.ok && result?.data.data.requiresAction === false) {
-        setIdemLoading(false);
         const res = await request(
-          `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+          `${subscriptionEndpoint}priceId=${sequence}&cardId=${cardId}`,
           {},
           uuid,
         );
+        setIdemLoading(false);
         if (res.ok) {
-          navigation.navigate('SubscriptionScreen');
           dispatch(getCurrentplan());
           dispatch(getSubscription());
+          navigation.navigate('SubscriptionScreen');
         }
       }
     } else if (!result.ok && result.status === 400) {
@@ -137,7 +137,7 @@ const BasicPayment = ({route, navigation}: Props) => {
         containerStyle={btnStyles.containerStyleFullWidth}
         titleStyle={btnStyles.titleStyle}
         onSelect={handleSubmit}
-        loading={loading}
+        loading={loading || idemLoading}
       />
     </View>
   );

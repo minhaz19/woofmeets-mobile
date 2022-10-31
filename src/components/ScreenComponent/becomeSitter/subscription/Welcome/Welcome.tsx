@@ -49,9 +49,9 @@ const Welcome = (props: any) => {
             );
             console.log('res', result);
             result.ok &&
-              (navigation.navigate('SubscriptionScreen'),
-              dispatch(getCurrentplan()),
-              dispatch(getSubscription()));
+              (dispatch(getCurrentplan()),
+              dispatch(getSubscription()),
+              navigation.navigate('SubscriptionScreen'));
             setLoading(false);
           },
         },
