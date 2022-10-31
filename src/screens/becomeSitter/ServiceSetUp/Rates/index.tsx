@@ -1,5 +1,5 @@
-import {ScrollView, StyleSheet} from 'react-native';
-import React from 'react';
+import {RefreshControl, ScrollView, StyleSheet} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import AppForm from '../../../../components/common/Form/AppForm';
 import SubRates from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubRates';
@@ -7,11 +7,18 @@ import {BoardingSettingsSchema} from '../../../../utils/config/ValidationSchema/
 import {useServiceRateInit} from './utils/useServiceRateInit';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {useServiceRates} from './utils/useServiceRate';
-import {useAppSelector} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { getServiceRateFields } from '../../../../store/slices/onBoarding/setUpService/rates/Field/serviceRateFieldAction';
+import { getRateFieldValue } from '../../../../store/slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueAction';
+import { useTheme } from '../../../../constants/theme/hooks/useTheme';
 
 const Rates = () => {
   const {serviceSetup} = useAppSelector((state: { serviceSetup: any; }) => state?.serviceSetup);
-  const {itemId, name, image, description} = serviceSetup.routeData;
+  const {itemId, name, image, description, serviceId, providerServicesId} = serviceSetup.routeData;
+  const {colors} = useTheme()
+  const dispatch = useAppDispatch();
+  const [refreshing, setRefreshing] = useState(false);
   const {
     handleRates,
     loading,
@@ -20,14 +27,36 @@ const Rates = () => {
     serviceRateFields,
   } = useServiceRates(serviceSetup);
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    dispatch(getServiceRateFields(serviceId));
+    dispatch(getRateFieldValue(providerServicesId));
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
+
   return (
     <>
       {(loading || fLoading) && <AppActivityIndicator visible={true} />}
-      <ScrollView
-        showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
-        style={
-          styles.rootContainer
-        }>
+      <KeyboardAwareScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        style={[
+          styles.rootContainer,
+          {
+            backgroundColor: colors.backgroundColor,
+          },
+        ]}
+        extraHeight={100}
+        extraScrollHeight={200}
+        enableAutomaticScroll={true}
+        enableOnAndroid={true}>
         <ReusableHeader
           itemId={itemId}
           name={name}
@@ -44,7 +73,7 @@ const Rates = () => {
             loading={btnLoading}
           />
         </AppForm>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </>
   );
 };

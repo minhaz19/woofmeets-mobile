@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import HeaderText from '../../../components/common/text/HeaderText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -21,6 +21,7 @@ import {setSitterData} from '../../../store/slices/onBoarding/initial';
 import jwtDecode from 'jwt-decode';
 import authStorage from '../../../utils/helpers/auth/storage';
 import {useNavigation} from '@react-navigation/native';
+import ServiceReusableModal from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/Common/ServiceReusableModal';
 interface Props {
   item: any;
 }
@@ -35,6 +36,7 @@ const ServiceSelection = () => {
   const oldUser = useAppSelector(state => state.initial.oldUser);
 
   const dispatch = useAppDispatch();
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<any>('');
@@ -117,14 +119,25 @@ const ServiceSelection = () => {
   const renderHeader = () => {
     return (
       <View style={styles.innerViewContainer}>
+        <ServiceReusableModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          question="Which services should I choose?"
+          description={`Which Services Should I Choose?
+          You should select any services that you feel you would be able to comfortably provide for Woofmeets customers and their pets. Some examples might be walks, feedings, cleaning litter boxes, etc. Remember, if you don’t feel up to providing a particular pet service for any reason, you should not offer it to our clients.
+          Able to Host Pets in Your Home?
+          We recommend choosing Boarding and Doggy Day Care for the best chance at top earnings.Many of our clients are looking for individuals who can either board their pets or cater to their needs during the days when they are at work.
+          Is It Possible to Modify the Services I’ve Chosen to Provide?
+          You can always modify the services you’ve chosen to provide for clients after we’ve accepted you to become a part of the Woofmeets team. If you no longer want to offer particular services, you can do that. If you feel you’re ready to start offering services that you didn’t when you originally signed up, that’s fine too. Remember, you’re potentially setting yourself up to make the most money as a pet care provider if you offer a diverse range of options for your clients.`}
+        />
         <HeaderText text="Service Selection" />
-        <View style={styles.viewQuestionStyle}>
+        <TouchableOpacity style={styles.viewQuestionStyle} onPress={() => setModalVisible(true)}>
           <MaterialIcons name="error" size={14} color={Colors.primary} />
           <ShortText
             textStyle={{...styles.shortText, color: Colors.primary}}
             text="Which services should I choose?"
           />
-        </View>
+        </TouchableOpacity>
         <DescriptionText
           textStyle={styles.descriptionStyle}
           text="1. Select at least one service you’re interested in. You can always add more later."

@@ -24,16 +24,16 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 3,
       title: 'Terms of Service',
       screenName: () =>
-        Linking.openURL('https://stage.woofmeets.com/terms-and-conditions'),
-      details: 'https://stage.woofmeets.com/terms-and-conditions',
+        Linking.openURL('https://woofmeets.com/terms-and-conditions'),
+      details: 'https://woofmeets.com/terms-and-conditions',
       opacity: 1,
     },
     {
       id: 4,
       title: 'Privacy Policy',
       screenName: () =>
-        Linking.openURL('https://stage.woofmeets.com/privacy-policy'),
-      details: 'https://stage.woofmeets.com/terms-and-conditions',
+        Linking.openURL('https://woofmeets.com/privacy-policy'),
+      details: 'https://woofmeets.com/terms-and-conditions',
       opacity: 1,
     },
     {

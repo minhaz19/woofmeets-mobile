@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import React, {useEffect} from 'react';
+import {RefreshControl, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
@@ -15,6 +15,8 @@ import {
   getSingleCancellationPolicy,
 } from '../../../../store/slices/onBoarding/setUpService/cancellationPolicy/getCancellationPolicy';
 import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useTheme } from '../../../../constants/theme/hooks/useTheme';
 
 const CancellationPolicy = () => {
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
@@ -23,28 +25,56 @@ const CancellationPolicy = () => {
   );
   const {itemId, name, image, description} = serviceSetup.routeData;
   const dispatch = useAppDispatch();
+  const {colors} = useTheme();
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    policy === null && dispatch(getCancellationPolicy());
-    singleProviderPolicy === null && dispatch(getSingleCancellationPolicy());
-  }, [dispatch, policy, singleProviderPolicy]);
+  // useEffect(() => {
+  //   policy === null && dispatch(getCancellationPolicy());
+  //   singleProviderPolicy === null && dispatch(getSingleCancellationPolicy());
+  // }, [dispatch, policy, singleProviderPolicy]);
 
   // post policy id
   const {request: postRequest, loading: postLoading} = useApi(methods._post);
   const handlePolicy = async (e: any) => {
     const postPoint = `/cancellation-policy/provider-policy/${e.policyId}`;
     const result = await postRequest(postPoint);
+    console.log(result);
     if (result?.data?.data) {
       dispatch(setBoardingSelection({pass: 2}));
       dispatch(setSitterData({pass: 1}));
     }
   };
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await dispatch(getCancellationPolicy());
+    await dispatch(getSingleCancellationPolicy());
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
+
   return (
     <>
       {loading && <AppActivityIndicator visible={true} />}
-      <ScrollViewRapper
-        style={styles.rootContainer}>
+      <KeyboardAwareScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        style={[
+          styles.rootContainer,
+          {
+            backgroundColor: colors.backgroundColor,
+          },
+        ]}
+        extraHeight={100}
+        extraScrollHeight={200}
+        enableAutomaticScroll={true}
+        enableOnAndroid={true}>
         <ReusableHeader
           itemId={itemId}
           name={name}
@@ -57,7 +87,7 @@ const CancellationPolicy = () => {
           policy={policy}
           singlePolicy={singleProviderPolicy}
         />
-      </ScrollViewRapper>
+      </KeyboardAwareScrollView>
     </>
   );
 };

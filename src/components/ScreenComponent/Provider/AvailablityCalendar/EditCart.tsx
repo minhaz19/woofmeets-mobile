@@ -22,6 +22,7 @@ import {useProviderAvailability} from './utils/useProviderAvailability';
 import {format} from 'date-fns';
 import {useHandleRange} from '../../../../utils/helpers/CalendarRange/useHandleRange';
 import {getAvailableDays} from '../../../../store/slices/Provider/Unavailability/getAvailableDay';
+import baseUrl from '../../../../utils/helpers/httpRequest';
 interface Props {
   startingDate: string;
   endingDate: string;
@@ -35,7 +36,7 @@ interface Props {
 }
 const dayAvEndpoint = '/availability/';
 const unavailabilityEndpoint =
-  'https://api-stg.woofmeets.com/v2/unavailability';
+  `${baseUrl}/v2/unavailability`;
 const availablityEndpoint = '/availability/add-dates';
 const EditCart = ({
   startingDate,
