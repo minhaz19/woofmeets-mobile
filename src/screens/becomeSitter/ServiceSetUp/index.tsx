@@ -20,6 +20,7 @@ const ServiceSetUp = () => {
   const {service} = servicesData;
   const providerServiceId =
     service && service.map((data: {id: string}) => data.id);
+    console.log('prov scre', servicesData, providerServiceId)
   const {availability, loading: availabilityLoader} = useAppSelector(
     (state: any) => state?.availability,
   );

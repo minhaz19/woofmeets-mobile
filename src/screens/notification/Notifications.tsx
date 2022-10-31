@@ -7,9 +7,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import TitleText from '../../components/common/text/TitleText';
 import DescriptionText from '../../components/common/text/DescriptionText';
 import HeaderText from '../../components/common/text/HeaderText';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
-import MiddleModal from '../../components/UI/modal/MiddleModal';
+import {useTheme} from '../../constants/theme/hooks/useTheme'; 
 import messaging from '@react-native-firebase/messaging';
+import { ApiResponse } from 'apisauce';
+import { apiNotification } from '../../api/client';
+import authStorage from '../../utils/helpers/auth/storage';
 
 const Notifications = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -77,16 +79,16 @@ const Notifications = () => {
     }
 
     try {
+      await authStorage.getToken();
       messaging()
         .getToken()
-        .then(async (token: any) => {
-          // const response: ApiResponse<any> = await apiClient.get('/fcm-tokens', {
-          //   token: token,
-          // });
-          // console.log(token);
+        .then(async (deviceToken: any) => {
+          const response: ApiResponse<any> = await apiNotification.post('/v1/push-notifications', {
+            registrationToken: deviceToken,
+          });
         });
     } catch (error) {
-      // console.log('myMethod: ', 'Error after getToken: ', error);
+      console.log('myMethod: ', 'Error after getToken: ', error);
     }
   };
 
@@ -135,12 +137,12 @@ const Notifications = () => {
           opacity: isModalVisible ? 0.4 : 1,
         },
       ]}>
-      <MiddleModal
+      {/* <MiddleModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
         onBlur={undefined}>
         <TitleText text="Hello this is a new notification" />
-      </MiddleModal>
+      </MiddleModal> */}
       {notifi?.length > 0 && (
         <FlatList
           data={notifi}

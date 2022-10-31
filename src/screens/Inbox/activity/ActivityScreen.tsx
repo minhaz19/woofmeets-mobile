@@ -31,16 +31,19 @@ const ActivityScreen = (props: {
     dispatch(getWhoAmI());
   }, []);
 
-  console.log(
-    '-------==============>',
-    proposal?.review,
-  );
-
   const {colors} = useTheme();
   const [isDetailsModal, setIsDetailsModal] = useState(false);
   const [isThreeDotsModal, setIsThreeDotsModal] = useState(false);
   const [isReviewModal, setIsReviewModal] = useState(false);
 
+  const onRefresh = () => {
+    dispatch(getProviderProposal(appointmentOpk));
+    dispatch(getAllPets());
+    dispatch(getWhoAmI());
+  };
+  useEffect(() => {
+    onRefresh();
+  }, []);
   return (
     <>
       {(loading || petLoading) && <AppActivityIndicator visible={true} />}

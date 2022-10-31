@@ -42,6 +42,10 @@ import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
 import StripeOnboardScreen from '../screens/settings/Profile/StripeOnboardScreen';
 import ProviderProfile from '../screens/Service/ProviderProfile';
 import ProviderCalendar from '../screens/Service/ProviderCalender';
+import SingleServiceLanding from '../components/ScreenComponent/setting/subProfile/service/SingleServiceLanding';
+import Rates from '../screens/becomeSitter/ServiceSetUp/Rates';
+import Availability from '../screens/becomeSitter/ServiceSetUp/Availability/Availability';
+import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy/CancellationPolicy';
 import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
 import CheckoutDetails from '../screens/Inbox/checkout/CheckoutDetails';
 const Stack = createStackNavigator();
@@ -248,7 +252,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         /> */}
         <Stack.Screen
           name="AddPetHome"
-          component={AddPetHome}
+          getComponent={AddPetHome}
           options={({navigation, route}) => ({
             title: '',
             header: () => (
@@ -295,6 +299,66 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 onPress={() => {
                   _deleteSinglePet(dispatch, navigation, route);
                 }}
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SingleServiceLanding"
+          component={SingleServiceLanding}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Setup"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="RatesScreen"
+          component={Rates}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Setup"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AvailabilityScreen"
+          component={Availability}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Setup"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="CancellationPolicyScreen"
+          component={CancellationPolicy}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Setup"
+                notification
               />
             ),
             backgroundColor: Colors.primary,
