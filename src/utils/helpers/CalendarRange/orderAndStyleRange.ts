@@ -3,7 +3,7 @@
 import Colors from '../../../constants/Colors';
 
 // const orderMultiDates: any = [];
-export const orderAndStyleRange = (range: any, type: string) => {
+export const orderAndStyleRange = (range: any, type: string, color: string) => {
   let orderRange: any = [];
   let styledMarkedRange: any = {};
   if (type === 'RANGE') {
@@ -34,7 +34,7 @@ export const orderAndStyleRange = (range: any, type: string) => {
         [orderRange[i]]: {
           customStyles: {
             container: {
-              backgroundColor: Colors.primary,
+              backgroundColor: 'black',
               elevation: 2,
               borderRadius: 0,
               borderBottomLeftRadius: i === 0 ? 30 : 0,

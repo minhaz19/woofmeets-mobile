@@ -13,7 +13,7 @@ interface Props {
   setValue: (arg1: string, ar2: any) => void;
 }
 const BoardingDayAV = ({title, data, setValue}: Props) => {
-  const [days, setDays] = useState(data.days.length > 0 ? data.days[0] : []);
+  const [days, setDays] = useState(data.days.length > 0 ? data.days : []);
   const {isDarkMode} = useTheme();
   //   const {setValue} = useFormContext();
   const handleMultiSelect = (id: number) => {
@@ -30,6 +30,7 @@ const BoardingDayAV = ({title, data, setValue}: Props) => {
     setDays(newHoliday);
     setValue;
   };
+  console.log('days', data, days);
   return (
     <View style={styles.parent}>
       <View>

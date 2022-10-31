@@ -7,6 +7,7 @@ import BoardingSitting from './Components/BoardingSitting';
 import DropInVisitWalking from './Components/DropInVisitsDwalking';
 import DoggyDayCare from './Components/DoggyDayCare';
 import {useFormContext} from 'react-hook-form';
+import ProposalPricing from './Components/ProposalPricing/ProposalPricing';
 interface Props {
   handleSubmit: (arg: any) => void;
   loading: boolean;
@@ -14,9 +15,7 @@ interface Props {
 const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {serviceTypeId: serviceId} = proposedServiceInfo;
-  const {
-    formState: {isDirty},
-  } = useFormContext();
+  const {} = useFormContext();
   return (
     <ScrollView
       contentContainerStyle={styles.container}
@@ -28,7 +27,7 @@ const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
       {serviceId === 4 && <DoggyDayCare appointmentType={'modify'} />}
 
       <MyPets appointmentType={''} />
-
+      <ProposalPricing />
       <SubmitButton
         title="Submit Proposal"
         onPress={handleSubmit}

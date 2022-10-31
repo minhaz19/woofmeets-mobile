@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Platform, StyleSheet, TextStyle, View} from 'react-native';
-import React, {useMemo, useState} from 'react';
-import {CalendarList} from 'react-native-calendars';
+import {Platform, StyleSheet, View} from 'react-native';
+import React, {useEffect, useMemo, useState} from 'react';
+import {Calendar} from 'react-native-calendars';
 import {_dateRange} from '../../../../utils/helpers/datesArray';
 import {useHandleRange} from '../../../../utils/helpers/CalendarRange/useHandleRange';
 import Colors from '../../../../constants/Colors';
@@ -11,46 +11,24 @@ import TitleText from '../../../common/text/TitleText';
 import {Setting} from '../../../../assets/svgs/SVG_LOGOS';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import Text_Size from '../../../../constants/textScaling';
+import {useProviderAvailability} from './utils/useProviderAvailability';
 
 const RANGE = 12;
+const today = new Date();
 const selectType = 'RANGE';
-const dateArray = [
-  '2022-09-20',
-  '2022-09-22',
-  '2022-09-23',
-  '2022-09-24',
-  '2022-09-25',
-  '2022-09-26',
-  '2022-09-27',
-  '2022-09-29',
-  '2022-10-01',
-  '2022-10-02',
-  '2022-10-03',
-  '2022-10-04',
-  '2022-10-05',
-  '2022-10-06',
-  '2022-10-10',
-  '2022-10-12',
-  '2022-10-13',
-  '2022-10-15',
-  '2022-10-16',
-];
+
 const AvailablityCalendar = () => {
   const {colors} = useTheme();
   const [preMarked, setPremarked] = useState({});
   const [isDayVisible, setIsDayVisible] = useState(false);
-  const {
-    singleSelect,
-    startingDate,
-    _markedStyle,
-    endingDate,
-    reset,
-    handleDayPress,
-  } = useHandleRange(selectType);
+  const {loading, availabileDates, getAvailablity} = useProviderAvailability();
+  const [foundAvailable, setFoundAvailable] = useState(false);
+  const {singleSelect, startingDate, _markedStyle, endingDate, handleDayPress} =
+    useHandleRange(selectType);
 
   useMemo(() => {
-    const preStyled = dateArray.map((_: string, i: number) => ({
-      [dateArray[i]]: {
+    const preStyled = availabileDates.map((_: string, i: number) => ({
+      [availabileDates[i]]: {
         customStyles: {
           container: {
             backgroundColor: Colors.primary,
@@ -76,7 +54,16 @@ const AvailablityCalendar = () => {
           (preStyledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
       );
     b && setPremarked(preStyledMarkedRange);
-  }, []);
+  }, [availabileDates]);
+
+  function isBeforeToday(date: Date) {
+    today.setHours(0, 0, 0, 0);
+    return date < today;
+  }
+  useEffect(() => {
+    const matchIndex = availabileDates.findIndex(item => item === startingDate);
+    matchIndex !== -1 ? setFoundAvailable(true) : setFoundAvailable(false);
+  }, [availabileDates, startingDate]);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -88,15 +75,15 @@ const AvailablityCalendar = () => {
           <Setting width={30} height={30} fill={colors.headerText} />
         </AppTouchableOpacity>
       </View>
-      <CalendarList
+      <Calendar
         current={new Date().toString()}
         pastScrollRange={0}
         futureScrollRange={RANGE}
         onDayPress={handleDayPress}
         markingType={'custom'}
         markedDates={{
-          ..._markedStyle,
           ...preMarked,
+          ..._markedStyle,
           [singleSelect]: {
             customStyles: {
               container: {
@@ -113,29 +100,22 @@ const AvailablityCalendar = () => {
             },
           },
         }}
-        renderHeader={renderCustomHeader}
+        style={styles.calenderStyles}
+        minDate={today.toString()}
+        enableSwipeMonths
+        onMonthChange={monthData => {
+          if (monthData.month === today.getMonth() + 1) {
+            getAvailablity(monthData, 'current');
+          } else if (isBeforeToday(new Date(monthData.dateString))) {
+            return;
+          } else {
+            getAvailablity(monthData, 'next');
+          }
+        }}
+        displayLoadingIndicator={loading}
+        onPressArrowLeft={subtractMonth => subtractMonth()}
+        onPressArrowRight={addMonth => addMonth()}
         theme={{
-          stylesheet: {
-            calendar: {
-              header: {
-                dayHeader: {
-                  fontWeight: 'bold',
-                  color: Colors.primary,
-                },
-              },
-            },
-          },
-          // @ts-ignore
-          'stylesheet.day.basic': {
-            today: {
-              borderColor: Colors.border,
-              borderWidth: 0.8,
-            },
-            todayText: {
-              color: Colors.primary,
-              fontWeight: '800',
-            },
-          },
           backgroundColor: colors.backgroundColor,
           calendarBackground: colors.backgroundColor,
           selectedDayBackgroundColor: Colors.primary,
@@ -160,38 +140,21 @@ const AvailablityCalendar = () => {
         endingDate={endingDate}
         setIsDayVisible={setIsDayVisible}
         isDayVisible={isDayVisible}
+        foundAvailable={foundAvailable}
       />
     </View>
   );
 };
 
-function renderCustomHeader(date: any) {
-  const header = date.toString('MMMM yyyy');
-  const [month, year] = header.split(' ');
-  const textStyle: TextStyle = {
-    fontSize: 18,
-    fontWeight: 'bold',
-    paddingTop: 10,
-    paddingBottom: 10,
-    color: Colors.primary,
-    paddingRight: 5,
-  };
-
-  return (
-    <View style={styles.header}>
-      <TitleText
-        text={`${month}`}
-        textStyle={{...styles.month, ...textStyle}}
-      />
-      <TitleText text={year} textStyle={{...styles.year, ...textStyle}} />
-    </View>
-  );
-}
-
 export default AvailablityCalendar;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
+  calenderStyles: {
+    marginHorizontal: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
   header: {
     flexDirection: 'row',
     width: '100%',

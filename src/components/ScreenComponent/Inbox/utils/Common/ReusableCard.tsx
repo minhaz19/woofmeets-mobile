@@ -29,6 +29,7 @@ interface Props {
 
 const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
   const {isDarkMode, colors} = useTheme();
+  console.log('image', item.image);
   return (
     <Card
       style={{
@@ -39,9 +40,10 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
       }}>
       <TouchableOpacity onPress={handlePress}>
         <View style={styles.flexContainer}>
-          <View style={{...styles.imageContainer, borderColor: colors.borderColor}}>
+          <View
+            style={{...styles.imageContainer, borderColor: colors.borderColor}}>
             <Image
-              source={{uri: item?.image}}
+              source={{uri: item?.image?.url}}
               style={styles.image}
               resizeMode="cover"
             />

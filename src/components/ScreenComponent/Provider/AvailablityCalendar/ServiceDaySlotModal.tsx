@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect,  useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
 import ServiceDaySlot from './ServiceDaySlot';
@@ -19,7 +19,8 @@ interface Props {
   onPress: (data: any) => void;
 }
 const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
-  const {userServices} = useAppSelector(state => state.services);
+  const {serviceDays} = useAppSelector(state => state.serviceDays);
+  // const {userServices} = useAppSelector(state => state.services);
   const [initalState, setInitalState] = useState({});
   const {colors} = useTheme();
 
@@ -29,14 +30,14 @@ const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
   });
   const {handleSubmit, setValue, reset} = methods;
   useEffect(() => {
-    const init = availabilityDayInit(userServices);
+    const init = availabilityDayInit(serviceDays);
     setInitalState(init);
-  }, [userServices]);
+  }, [serviceDays]);
   useEffect(() => {
     if (initalState) {
-      reset(availabilityDayInit(userServices));
+      reset(availabilityDayInit(serviceDays));
     }
-  }, [initalState, reset, userServices]);
+  }, [initalState, reset, serviceDays]);
   return (
     <View>
       <Modal animated transparent visible={isVisible} animationType="fade">
@@ -45,7 +46,6 @@ const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
           onPress={() => setIsVisible(!isVisible)}
         />
 
-        {/* <FormProvider {...methods}> */}
         <View
           style={[
             styles.pickerContainer,
@@ -67,7 +67,6 @@ const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
           </View>
           <ServiceDaySlot setValue={setValue} />
         </View>
-        {/* </FormProvider> */}
       </Modal>
     </View>
   );

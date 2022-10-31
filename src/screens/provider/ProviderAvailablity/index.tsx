@@ -1,20 +1,49 @@
-import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import format from 'date-fns/format';
+import React, {useEffect, useState} from 'react';
+import {RefreshControl, ScrollView, StyleSheet} from 'react-native';
 import AppForm from '../../../components/common/Form/AppForm';
 import Screen from '../../../components/common/Screen';
 import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar/AvailablityCalendar';
+import {useProviderAvailability} from '../../../components/ScreenComponent/Provider/AvailablityCalendar/utils/useProviderAvailability';
 import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {getUserServices} from '../../../store/slices/profile/services';
+import {getAvailableDays} from '../../../store/slices/Provider/Unavailability/getAvailableDay';
 import {useAppDispatch} from '../../../store/store';
 import {providerAvailablityValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 
 const ProviderAvailablity = () => {
   const dispatch = useAppDispatch();
   const {isDarkMode} = useTheme();
+  const {getAvailablity} = useProviderAvailability();
+  // const {} =
   useEffect(() => {
     dispatch(getUserServices());
+    dispatch(getAvailableDays());
+    const monthData = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      dateString: format(new Date(), 'yyyy-MM-dd'),
+    };
+    getAvailablity(monthData, 'current');
   }, []);
+  // const [refreshing, setRefreshing] = useState(false);
+
+  // const onRefresh = () => {
+  //   setRefreshing(true);
+  //   dispatch(getUserServices());
+  //   dispatch(getAvailableDays());
+  //   const monthData = {
+  //     year: new Date().getFullYear(),
+  //     month: new Date().getMonth() + 1,
+  //     dateString: format(new Date(), 'yyyy-MM-dd'),
+  //   };
+  //   getAvailablity(monthData, 'current');
+  //   setRefreshing(false);
+  // };
+  // useEffect(() => {
+  //   onRefresh();
+  // }, []);
   return (
     <Screen
       style={[
@@ -30,7 +59,13 @@ const ProviderAvailablity = () => {
         initialValues={{
           dateRange: '',
         }}>
+        {/* <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }> */}
         <AvailablityCalendar />
+        {/* </ScrollView> */}
       </AppForm>
     </Screen>
   );

@@ -35,7 +35,7 @@ import BasicPayment from '../components/ScreenComponent/becomeSitter/subscriptio
 import Appointment from '../screens/Appointment';
 import SubscriptionScreen from '../screens/becomeSitter/Subscription';
 import ActivityScreen from '../screens/Inbox/activity/ActivityScreen';
-import CheckoutDetails from '../screens/checkout/CheckoutDetails';
+import CheckoutDetails from '../screens/Inbox/checkout/CheckoutDetails';
 import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
 import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
 import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
@@ -43,6 +43,7 @@ import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
 import StripeOnboardScreen from '../screens/settings/Profile/StripeOnboardScreen';
 import ProviderProfile from '../screens/Service/ProviderProfile';
 import ProviderCalendar from '../screens/Service/ProviderCalender';
+import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -120,7 +121,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
-
         <Stack.Screen
           name="SitterServiceNavigator"
           component={ServiceNavigator}
@@ -130,7 +130,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
-
         <Stack.Screen
           name="PhoneNumberSitter"
           component={PhoneNumberSitter}
@@ -417,7 +416,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })} */}
         {/* /> */}
-
         <Stack.Screen
           name="ActivityScreen"
           component={ActivityScreen}
@@ -534,6 +532,13 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
               />
             ),
             backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AppointmentSuccess"
+          component={AppointmentSuccess}
+          options={() => ({
+            headerShown: false,
           })}
         />
       </Stack.Navigator>

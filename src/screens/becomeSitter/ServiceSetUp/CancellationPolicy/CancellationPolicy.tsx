@@ -1,7 +1,6 @@
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
 import SubCancellationPolicy from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubCancellationPolicy';
@@ -18,7 +17,6 @@ import {
 import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
 
 const CancellationPolicy = () => {
-  const {colors} = useTheme();
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {policy, singleProviderPolicy, loading} = useAppSelector(
     (state: any) => state?.cancellationPolicy,

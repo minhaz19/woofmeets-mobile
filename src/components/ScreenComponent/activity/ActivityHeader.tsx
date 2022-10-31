@@ -230,6 +230,22 @@ const ActivityHeader = (props: {
               </TouchableOpacity>
               {/* <View style={styles.divider} /> */}
             </>
+          ) : proposedServiceInfo?.status === 'PAID' ? (
+            <>
+              <TouchableOpacity
+                // style={{width: SCREEN_WIDTH / 5}}
+                onPress={() => navigation.navigate('AppointmentSuccess')}>
+                <TitleText
+                  text="Paid Successfully"
+                  textStyle={{
+                    ...styles.textStyle,
+                    textAlign: 'center',
+                    color: Colors.light.background,
+                  }}
+                />
+              </TouchableOpacity>
+              {/* <View style={styles.divider} /> */}
+            </>
           ) : null}
           {proposedServiceInfo?.status === 'PROPOSAL' && (
             <>
