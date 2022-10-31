@@ -20,7 +20,7 @@ const ImageContainer = ({provider, rounded}: Props) => {
             ? SCREEN_WIDTH > 800
               ? SCREEN_WIDTH / 10
               : SCREEN_WIDTH / 8
-            : SCREEN_HEIGHT / 10.5,
+            : SCREEN_HEIGHT / 10,
         },
       ]}>
       <Image
@@ -28,7 +28,7 @@ const ImageContainer = ({provider, rounded}: Props) => {
           uri:
             provider?.user.image !== null
               ? provider?.user?.image?.url
-              : 'https://source.unsplash.com/random/800x800/?img=1',
+              : 'https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg',
         }}
         resizeMode="cover"
         style={[styles.image, {borderRadius: rounded ? 100 : 50}]}

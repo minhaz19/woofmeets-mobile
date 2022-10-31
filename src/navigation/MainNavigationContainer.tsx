@@ -35,7 +35,6 @@ import BasicPayment from '../components/ScreenComponent/becomeSitter/subscriptio
 import Appointment from '../screens/Appointment';
 import SubscriptionScreen from '../screens/becomeSitter/Subscription';
 import ActivityScreen from '../screens/Inbox/activity/ActivityScreen';
-import CheckoutDetails from '../screens/Inbox/checkout/CheckoutDetails';
 import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
 import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
 import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
@@ -44,6 +43,7 @@ import StripeOnboardScreen from '../screens/settings/Profile/StripeOnboardScreen
 import ProviderProfile from '../screens/Service/ProviderProfile';
 import ProviderCalendar from '../screens/Service/ProviderCalender';
 import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
+import CheckoutDetails from '../screens/Inbox/checkout/CheckoutDetails';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {

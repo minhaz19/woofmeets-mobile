@@ -5,21 +5,26 @@ import ShortIconTitle from '../../../common/ShortIconTitle';
 import Colors from '../../../../constants/Colors';
 import HeaderText from '../../../common/text/HeaderText';
 import {AirbnbRating} from 'react-native-ratings';
+import ShortText from '../../../common/text/ShortText';
 interface Props {
   user: any;
-  rating: number;
+  rating: number | null;
   distance: any;
   availability?: any;
-  repeatClient?: string;
   nature: string;
+  headline?: any;
+  expYears?: any;
+  repeatClient?: any;
 }
 const ProviderInfo = ({
   user,
   rating,
   distance,
   availability,
-}: // repeatClient,
-Props) => {
+  headline,
+  expYears,
+  repeatClient,
+}: Props) => {
   function getMonthAndDat(date: string | number | Date) {
     const dateStr = new Date(date).toDateString();
     if (dateStr) {
@@ -40,16 +45,15 @@ Props) => {
         textStyle={styles.title}
         text={`${user.firstName} ${user.lastName}`}
       />
+      {headline ? (
+        <ShortText
+          text={headline}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+          textStyle={styles.shortText}
+        />
+      ) : null}
       <View style={styles.shortInfo}>
-        <View>
-          <AirbnbRating
-            showRating={false}
-            count={5}
-            defaultRating={rating}
-            size={10}
-            isDisabled
-          />
-        </View>
         <ShortIconTitle
           Icon={MapMarker}
           text={`${distance?.distance.toFixed(2)} ${distance?.unit}`}
@@ -64,13 +68,27 @@ Props) => {
           />
         </View>
       )}
-      {/* {repeatClient && (
+      {repeatClient ? (
         <View style={styles.repeatContainer}>
           <View style={styles.repeat}>
             <ShortText text={repeatClient} />
           </View>
+          {rating ? (
+            <AirbnbRating
+              showRating={false}
+              count={5}
+              defaultRating={rating}
+              size={10}
+              isDisabled
+            />
+          ) : null}
         </View>
-      )} */}
+      ) : expYears ? (
+        <ShortText
+          text={expYears + ' years of experience'}
+          textStyle={styles.shortText}
+        />
+      ) : null}
     </View>
   );
 };
@@ -89,11 +107,11 @@ const styles = StyleSheet.create({
   shortInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 5,
+    paddingTop: 4,
     width: '60%',
   },
   availableTime: {
-    marginVertical: 5,
+    paddingTop: 4,
     maxWidth: '75%',
   },
   rating: {marginRight: 5},
@@ -104,5 +122,10 @@ const styles = StyleSheet.create({
   },
   repeatContainer: {
     flexDirection: 'row',
+    paddingTop: 4,
+  },
+  shortText: {
+    maxWidth: '70%',
+    paddingTop: 4,
   },
 });

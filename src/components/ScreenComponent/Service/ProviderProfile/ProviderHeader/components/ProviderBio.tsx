@@ -20,7 +20,6 @@ interface Props {
 }
 const ProviderBio = ({
   name,
-
   rating,
   distance,
   availablity,

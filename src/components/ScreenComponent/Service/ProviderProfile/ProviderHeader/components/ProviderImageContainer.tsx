@@ -2,16 +2,17 @@
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
-import {DogFeet} from '../../../../../../assets/svgs/SVG_LOGOS';
+import {DogFeet, ProfilePicSvg} from '../../../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../../../constants/Colors';
 import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
+import {ProfileIcon} from '../../../../../../assets/svgs/Setting_SVG';
 interface Props {
   image: string;
   rounded?: Boolean;
 }
 const ProviderImageContainer = ({image, rounded}: Props) => {
   const {colors} = useTheme();
-
+  console.log(image);
   return (
     <View
       style={[
@@ -22,10 +23,15 @@ const ProviderImageContainer = ({image, rounded}: Props) => {
         },
       ]}>
       <Image
-        source={{uri: image}}
+        source={{
+          uri: image
+            ? image
+            : 'https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg',
+        }}
         resizeMode="cover"
         style={[styles.image, {borderRadius: rounded ? 100 : 50}]}
       />
+
       <View style={styles.batchCon}>
         <View style={styles.batchContainer}>
           <DogFeet fill={Colors.background} height={15} width={15} />
