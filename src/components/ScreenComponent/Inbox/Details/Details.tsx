@@ -1,13 +1,15 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {FC} from 'react';
-import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
-import Text_Size from '../../../../../constants/textScaling';
-import HeaderText from '../../../../common/text/HeaderText';
+import React, {FC, useEffect} from 'react';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import Text_Size from '../../../../constants/textScaling';
+import HeaderText from '../../../common/text/HeaderText';
 import Ion from 'react-native-vector-icons/Ionicons';
-import Colors from '../../../../../constants/Colors';
-import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+import Colors from '../../../../constants/Colors';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Pricing from './Pricing';
-import BottomSpacing from '../../../../UI/BottomSpacing';
+import BottomSpacing from '../../../UI/BottomSpacing';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {getProposalPricing} from '../../../../store/slices/Appointment/Details/getProposalPricing';
 
 interface Props {
   setIsPayment?: (value: boolean) => void;
@@ -17,6 +19,11 @@ interface Props {
 
 const Details: FC<Props> = props => {
   const {colors} = useTheme();
+  const dispatch = useAppDispatch();
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  useEffect(() => {
+    dispatch(getProposalPricing(proposedServiceInfo.appointmentOpk));
+  }, []);
   return (
     <View>
       <View style={styles.headerContainer}>

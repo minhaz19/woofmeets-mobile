@@ -4,7 +4,7 @@ import {SafeAreaView, View} from 'react-native';
 import ActivityHeader from '../../../components/ScreenComponent/activity/ActivityHeader';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BottomHalfModal from '../../../components/UI/modal/BottomHalfModal';
-import Details from '../../../components/ScreenComponent/Inbox/Draft/Past/Details';
+import Details from '../../../components/ScreenComponent/Inbox/Details/Details';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';

@@ -18,7 +18,7 @@ import ErrorMessage from '../../../../common/Form/ErrorMessage';
 interface Props {
   handleValues: (values: any) => void;
   loading: boolean;
-  sequence: null | number;
+  sequence: null | number | string;
 }
 
 const AddCardFormBody = ({handleValues, loading, sequence}: Props) => {
@@ -114,7 +114,7 @@ const AddCardFormBody = ({handleValues, loading, sequence}: Props) => {
           title={
             sequence === 1
               ? 'Add Card'
-              : sequence === 2 || sequence === 3
+              : sequence === 2 || sequence === 3 || sequence === 'Appointment'
               ? 'Confirm Payment'
               : 'Add Card'
           }

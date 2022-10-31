@@ -49,7 +49,9 @@ export const useSubRates = (rateFields: any, watch: any) => {
     const modRates = rateFields?.map((item: any) => ({
       ...item,
       percentage: Number(item.percentage),
-      convertedValue: Number(baseRateWatch) * Number(item.percentage),
+      convertedValue: (Number(baseRateWatch) * Number(item.percentage)).toFixed(
+        2,
+      ),
     }));
     setRates(modRates);
   }, [baseRateWatch, rateFields]);
@@ -59,63 +61,47 @@ export const useSubRates = (rateFields: any, watch: any) => {
       serviceTypeId: elm.id,
       percentage: elm.percentage,
     }));
-
+    console.log('base Rate', baseRateWatch);
     const submittedValue = fieldValue?.map((item: any) => item.amount);
-    const calculatedValue = checkCheck?.map(
-      (it: any) => Number(baseRateWatch) * it.percentage,
+    const calculatedValue = checkCheck?.map((it: any) => {
+      return Number(
+        (
+          Number(baseRateWatch) * (it.serviceTypeId === 1 ? 1 : it.percentage)
+        ).toFixed(2),
+      );
+    });
+
+    console.log(
+      'calculatedValue',
+
+      submittedValue,
+      checkCheck,
+      calculatedValue,
     );
-    // const checkFields =
-    //   checkCheck &&
-    //   fieldValue?.map(
-    //     (_: any) =>
-    //       fieldValue?.find((it: any) => it.modRatesId === 1)?.amount *
-    //         checkCheck?.filter(
-    //           (fi: any) =>
-    //             fi.serviceTypeId ===
-    //             fieldValue?.find(
-    //               (it: any) => it.modRatesId === fi.serviceTypeId,
-    //             )?.modRatesId,
-    //         )[0]?.percentage ===
-    //       fieldValue?.filter(
-    //         (el: any) =>
-    //           el.modRatesId ===
-    //           checkCheck?.find((fi: any) => fi.serviceTypeId === el.modRatesId)
-    //             ?.serviceTypeId,
-    //       )[0]?.amount,
-    //   );
-
-    // const validateCheck =
-    //   checkFields &&
-    //   checkFields?.filter((item: boolean) => item === false).length >= 2;
-    // if (validateCheck === true) {
-    //   setChecked(true);
-    //   setUpdateRates(true);
-    // } else if (validateCheck === false) {
-    //   setChecked(false);
-    //   setUpdateRates(false);
-    // }
-
-    const validateCheck = areEqual(submittedValue, calculatedValue);
+    const validateCheck =
+      submittedValue === undefined
+        ? null
+        : areEqual(submittedValue, calculatedValue);
     if (validateCheck === true) {
-      setChecked(true);
+      // setChecked(true);
       setUpdateRates(false);
-    } else if (validateCheck === false) {
-      setChecked(false);
+    } else if (validateCheck === false && validateCheck !== null) {
+      // setChecked(false);
       setUpdateRates(true);
     }
-  }, [baseRateWatch, fieldValue, rateFields]);
+  }, [fieldValue, rateFields]);
 
-  useMemo(() => {
-    if (checked === true) {
-      if (updateRates === false) {
-        setChecked(false);
-      }
-    } else if (checked === false) {
-      if (updateRates === true) {
-        setChecked(true);
-      }
-    }
-  }, [checked, updateRates]);
+  // useMemo(() => {
+  //   if (checked === true) {
+  //     if (updateRates === false) {
+  //       setChecked(false);
+  //     }
+  //   } else if (checked === false) {
+  //     if (updateRates === true) {
+  //       setChecked(true);
+  //     }
+  //   }
+  // }, [checked, updateRates]);
   return {
     baseRateWatch,
     handlePress,

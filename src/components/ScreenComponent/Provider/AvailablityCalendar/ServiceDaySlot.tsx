@@ -6,81 +6,28 @@ interface Props {
   setValue: any;
 }
 const ServiceDaySlot = ({setValue}: Props) => {
-  const {userServices} = useAppSelector(state => state.services);
-  const modDays = userServices?.map((item: any) => ({
-    id: item.serviceTypeId,
-    days:
-      item.AvailableDay.length !== 0
-        ? item.AvailableDay.map((d: any) => [
-            {id: 1, label: 'M', putServiceId: d.id, active: d.mon, key: 'mon'},
-            {id: 2, label: 'T', putServiceId: d.id, active: d.tue, key: 'tue'},
-            {id: 3, label: 'W', putServiceId: d.id, active: d.wed, key: 'wed'},
-            {id: 4, label: 'T', putServiceId: d.id, active: d.thu, key: 'thu'},
-            {id: 5, label: 'F', putServiceId: d.id, active: d.fri, key: 'fri'},
-            {id: 6, label: 'S', putServiceId: d.id, active: d.sat, key: 'sat'},
-            {id: 7, label: 'S', putServiceId: d.id, active: d.sun, key: 'sun'},
-          ])
-        : [
-            [
-              {
-                id: 1,
-                label: 'M',
-                putServiceId: null,
-                active: false,
-                key: 'mon',
-              },
-              {
-                id: 2,
-                label: 'T',
-                putServiceId: null,
-                active: false,
-                key: 'tue',
-              },
-              {
-                id: 3,
-                label: 'W',
-                putServiceId: null,
-                active: false,
-                key: 'wed',
-              },
-              {
-                id: 4,
-                label: 'T',
-                putServiceId: null,
-                active: false,
-                key: 'thu',
-              },
-              {
-                id: 5,
-                label: 'F',
-                putServiceId: null,
-                active: false,
-                key: 'fri',
-              },
-              {
-                id: 6,
-                label: 'S',
-                putServiceId: null,
-                active: false,
-                key: 'sat',
-              },
-              {
-                id: 7,
-                label: 'S',
-                putServiceId: null,
-                active: false,
-                key: 'sun',
-              },
-            ],
-          ],
+  const {serviceDays} = useAppSelector(state => state.serviceDays);
+  // const {userServices} = useAppSelector(state => state.services);
+  console.log('user service', serviceDays);
+  const modDays = serviceDays?.map((item: any) => ({
+    id: item.service.serviceTypeId,
+    days: [
+      {id: 1, label: 'M', putServiceId: item.id, active: item.mon, key: 'mon'},
+      {id: 2, label: 'T', putServiceId: item.id, active: item.tue, key: 'tue'},
+      {id: 3, label: 'W', putServiceId: item.id, active: item.wed, key: 'wed'},
+      {id: 4, label: 'T', putServiceId: item.id, active: item.thu, key: 'thu'},
+      {id: 5, label: 'F', putServiceId: item.id, active: item.fri, key: 'fri'},
+      {id: 6, label: 'S', putServiceId: item.id, active: item.sat, key: 'sat'},
+      {id: 7, label: 'S', putServiceId: item.id, active: item.sun, key: 'sun'},
+    ],
   }));
   return (
     <>
-      {userServices?.map((item: any, index: number) => (
+      {serviceDays?.map((item: any, index: number) => (
         <BoardingDayAV
           key={index}
-          title={item.serviceType.name}
-          serviceTypeId={item.serviceTypeId}
+          title={item.service.serviceType.name}
+          serviceTypeId={item.service.serviceTypeId}
           data={modDays[index]}
           setValue={setValue}
         />
@@ -139,3 +86,56 @@ export default ServiceDaySlot;
 //         </View>
 //       ))}
 //     </View> */}
+//  : [
+//             [
+//               {
+//                 id: 1,
+//                 label: 'M',
+//                 putServiceId: null,
+//                 active: false,
+//                 key: 'mon',
+//               },
+//               {
+//                 id: 2,
+//                 label: 'T',
+//                 putServiceId: null,
+//                 active: false,
+//                 key: 'tue',
+//               },
+//               {
+//                 id: 3,
+//                 label: 'W',
+//                 putServiceId: null,
+//                 active: false,
+//                 key: 'wed',
+//               },
+//               {
+//                 id: 4,
+//                 label: 'T',
+//                 putServiceId: null,
+//                 active: false,
+//                 key: 'thu',
+//               },
+//               {
+//                 id: 5,
+//                 label: 'F',
+//                 putServiceId: null,
+//                 active: false,
+//                 key: 'fri',
+//               },
+//               {
+//                 id: 6,
+//                 label: 'S',
+//                 putServiceId: null,
+//                 active: false,
+//                 key: 'sat',
+//               },
+//               {
+//                 id: 7,
+//                 label: 'S',
+//                 putServiceId: null,
+//                 active: false,
+//                 key: 'sun',
+//               },
+//             ],
+//           ],

@@ -13,7 +13,7 @@ type StackParamList = {
   AddCardForm: {foo: string; onBar: () => void} | undefined;
 };
 interface Props {
-  sequence: null | number;
+  sequence: null | number | string;
 }
 type NavigationProps = StackNavigationProp<StackParamList>;
 const NoCards = ({sequence}: Props) => {

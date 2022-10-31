@@ -157,6 +157,7 @@ const PetCareZipSearch = (props: {
     const lng = details.geometry.location.lng;
     setCareLocation({lat: lat, lng: lng});
     setErrorLocation(null);
+    console.log('dd', lat, lng);
   };
   // submitting the data and get request
   const handleSubmit = () => {

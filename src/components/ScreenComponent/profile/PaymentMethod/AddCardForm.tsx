@@ -12,15 +12,13 @@ import Text_Size from '../../../../constants/textScaling';
 import CardFormHeader from './components/CardFormHeader';
 import {useAddCardForm} from './utils/useAddCardForm';
 import AddCardFormBody from './components/AddCardFormBody';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const AddCardForm = ({navigation, route}: any) => {
   const {colors} = useTheme();
   const {sequence} = route.params;
-  const {handleValues, loading, tokenLoading} = useAddCardForm(
-    navigation,
-    sequence,
-  );
+  const {handleValues, loading, appointmentLoading, tokenLoading} =
+    useAddCardForm(navigation, sequence);
   return (
     <View
       style={[
@@ -29,7 +27,8 @@ const AddCardForm = ({navigation, route}: any) => {
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      <KeyboardAwareScrollView showsVerticalScrollIndicator={false}
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
         extraHeight={100}
         extraScrollHeight={200}
         enableAutomaticScroll={true}
@@ -41,7 +40,7 @@ const AddCardForm = ({navigation, route}: any) => {
           <AppStripe>
             <AddCardFormBody
               handleValues={handleValues}
-              loading={loading || tokenLoading}
+              loading={loading || tokenLoading || appointmentLoading}
               sequence={sequence}
             />
           </AppStripe>

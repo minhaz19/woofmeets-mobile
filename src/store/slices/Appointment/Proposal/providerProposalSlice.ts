@@ -46,11 +46,22 @@ const providerProposalSlice = createSlice({
                   modpayload.appointment.provider.user?.firstName +
                   ' ' +
                   modpayload.appointment.provider.user?.lastName,
+                providerAddress:
+                  modpayload.appointment.provider.user?.basicInfo !== null
+                    ? modpayload.appointment.provider.user?.basicInfo
+                        ?.addressLine1
+                    : '',
+                userAddress:
+                  modpayload.appointment.user?.basicInfo !== null
+                    ? modpayload.appointment.user?.basicInfo?.addressLine1
+                    : '',
+                providerServiceId: modpayload.appointment.providerService.id,
                 userName:
                   modpayload.appointment.user?.firstName +
                   ' ' +
                   modpayload.appointment.user?.lastName,
-                image: modpayload.appointment.provider.user.image,
+                providerImage: modpayload.appointment.provider.user.image,
+                userImage: modpayload.appointment.user.image,
                 serviceTypeId:
                   modpayload.appointment.providerService.serviceTypeId,
                 petsInfo: modpayload.proposal.appointmentPet,
@@ -66,6 +77,7 @@ const providerProposalSlice = createSlice({
                 counter: modpayload.proposal.countered,
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
+                billing: modpayload.appointment.billing,
               }
             : modpayload.appointment.providerService.serviceTypeId === 3 ||
               modpayload.appointment.providerService.serviceTypeId === 5
@@ -82,11 +94,22 @@ const providerProposalSlice = createSlice({
                   modpayload.appointment.provider.user.firstName +
                   ' ' +
                   modpayload.appointment.provider.user.lastName,
+                providerServiceId: modpayload.appointment.providerService.id,
                 userName:
                   modpayload.appointment.user?.firstName +
                   ' ' +
                   modpayload.appointment.user?.lastName,
-                image: modpayload.appointment.provider.user.image,
+                providerImage: modpayload.appointment.provider.user.image,
+                providerAddress:
+                  modpayload.appointment.provider.user?.basicInfo !== null
+                    ? modpayload.appointment.provider.user?.basicInfo
+                        ?.addressLine1
+                    : '',
+                userAddress:
+                  modpayload.appointment.user?.basicInfo !== null
+                    ? modpayload.appointment.user?.basicInfo?.addressLine1
+                    : '',
+                userImage: modpayload.appointment.user.image,
                 appointmentserviceType:
                   modpayload.proposal.appointmentserviceType,
                 isRecurring: modpayload.proposal.isRecurring,
@@ -101,6 +124,7 @@ const providerProposalSlice = createSlice({
                 counter: modpayload.proposal.countered,
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
+                billing: modpayload.appointment.billing,
               }
             : modpayload.appointment.providerService.serviceTypeId === 4
             ? {
@@ -116,11 +140,22 @@ const providerProposalSlice = createSlice({
                   modpayload.appointment.provider.user.firstName +
                   ' ' +
                   modpayload.appointment.provider.user.lastName,
+                providerServiceId: modpayload.appointment.providerService.id,
                 userName:
                   modpayload.appointment.user?.firstName +
                   ' ' +
                   modpayload.appointment.user?.lastName,
-                image: modpayload.appointment.provider.user.image,
+                providerImage: modpayload.appointment.provider.user.image,
+                userImage: modpayload.appointment.user.image,
+                providerAddress:
+                  modpayload.appointment.provider.user?.basicInfo !== null
+                    ? modpayload.appointment.provider.user?.basicInfo
+                        ?.addressLine1
+                    : '',
+                userAddress:
+                  modpayload.appointment.user?.basicInfo !== null
+                    ? modpayload.appointment.user?.basicInfo?.addressLine1
+                    : '',
                 dropOffStartTime: modpayload.proposal.dropOffStartTime,
                 dropOffEndTime: modpayload.proposal.dropOffEndTime,
                 pickUpStartTime: modpayload.proposal.pickUpStartTime,
@@ -136,6 +171,7 @@ const providerProposalSlice = createSlice({
                 counter: modpayload.proposal.countered,
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
+                billing: modpayload.appointment.billing,
               }
             : null;
       })
