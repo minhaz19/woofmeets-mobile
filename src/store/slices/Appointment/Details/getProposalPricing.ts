@@ -3,13 +3,12 @@ import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../../api/client';
 export const getProposalPricing = createAsyncThunk(
-  '/appointment/getAppointmentPrice/',
+  '/appointment/get-price/',
   async (opk: string) => {
     try {
       const response: ApiResponse<any> = await apiClient.get(
-        `/appointment/getAppointmentPrice/${opk}`,
+        `/appointment/get-price/${opk}`,
       );
-      console.log('res pricing', response.data);
       if (!response.ok) {
         if (response.data) {
         } else if (response.problem === 'TIMEOUT_ERROR') {

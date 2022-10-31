@@ -30,7 +30,6 @@ const BoardingDayAV = ({title, data, setValue}: Props) => {
     setDays(newHoliday);
     setValue;
   };
-  console.log('days', data, days);
   return (
     <View style={styles.parent}>
       <View>

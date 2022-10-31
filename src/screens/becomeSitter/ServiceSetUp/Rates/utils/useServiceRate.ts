@@ -35,6 +35,7 @@ export const useServiceRates = (serviceSetup: any) => {
     },
   );
   rateFieldId &&
+    rateFieldId !== undefined &&
     fieldValue &&
     fieldValue?.map(
       (item: {id: number; modRatesId: number}) =>
@@ -67,7 +68,6 @@ export const useServiceRates = (serviceSetup: any) => {
         },
       );
     const result = await request(payload);
-
     if (result.ok) {
       dispatch(setBoardingSelection({pass: 0}));
       dispatch(getRateFieldValue(providerServicesId));

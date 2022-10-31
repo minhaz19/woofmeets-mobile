@@ -115,8 +115,12 @@ const providerProposalSlice = createSlice({
                 isRecurring: modpayload.proposal.isRecurring,
                 length: modpayload.proposal.length,
                 recurringStartDate: modpayload.proposal.recurringStartDate,
-                recurringSelectedDay: modpayload.proposal.recurringSelectedDay,
-                proposalOtherDate: modpayload.proposal.proposalOtherDate,
+                recurringSelectedDay: modpayload.proposal.isRecurring
+                  ? modpayload.proposal.proposalVisits
+                  : [],
+                proposalOtherDate: modpayload.proposal.isRecurring
+                  ? []
+                  : modpayload.proposal.proposalVisits,
                 petsInfo: modpayload.proposal.appointmentPet,
                 firstMessage: modpayload.proposal.firstMessage,
                 isRecivedPhotos: modpayload.proposal.isRecivedPhotos,

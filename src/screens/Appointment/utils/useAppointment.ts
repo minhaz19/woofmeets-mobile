@@ -116,13 +116,14 @@ export const useAppointment = (providerOpk: string) => {
           dropOffEndTime: dropOffEndTime,
           pickUpStartTime: pickUpStartTime,
           pickUpEndTime: pickUpEndTime,
-          proposalStartDate: proposalStartDate,
-          proposalEndDate: proposalEndDate,
+          proposalStartDate: new Date(proposalStartDate).toISOString(),
+          proposalEndDate: new Date(proposalEndDate).toISOString(),
           appointmentserviceType: 'NONE',
           firstMessage: firstMessage,
           isRecivedPhotos: isRecivedPhotos,
           formattedMessage: boardingSittingFT,
         };
+
 
         const response = await request(endpoint, boardSittingPayload);
         response.ok &&
@@ -137,7 +138,7 @@ export const useAppointment = (providerOpk: string) => {
               date: new Date(item.date).toISOString(),
               name: format(new Date(item.date), 'yyyy-MM-dd'),
               startDate: item.startDate !== undefined ? item.startDate : false,
-              visits: item.visitTime.map((time: string, index: number) => ({
+              visits: item.visits.map((time: string, index: number) => ({
                 id: index + 1,
                 time: time,
               })),
@@ -149,7 +150,7 @@ export const useAppointment = (providerOpk: string) => {
               date: item.date,
               name: item.date.substring(0, 3).toLowerCase(),
               startDate: item.startDate !== undefined ? item.startDate : false,
-              visits: item.visitTime.map((time: string, index: number) => ({
+              visits: item.visits.map((time: string, index: number) => ({
                 id: index + 1,
                 time: time,
               })),
@@ -160,31 +161,31 @@ export const useAppointment = (providerOpk: string) => {
             ? isRecurring
               ? `Drop In Visit Proposal:\nRepeat service starting from: ${recurringStartDate}\n${recurringModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} Visits on: ${
+                    `${item.visits.length} Visits on: ${
                       item.date
-                    }at ${item.visitTime.join(', ')}`,
+                    }at ${item.visits.join(', ')}`,
                 )}  `
               : `Drop In Visit Proposal:\n  ${specificModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} Visits on: ${format(
+                    `${item.visits.length} Visits on: ${format(
                       new Date(item.date),
                       'iii, LLL d',
-                    )} at ${item.visitTime.join(', ')}`,
+                    )} at ${item.visits.join(', ')}`,
                 )}  `
             : serviceTypeId === 5
             ? isRecurring
               ? `Dog Walking Proposal:\nRepeat service starting from: ${recurringStartDate}\n${recurringModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} Visits on: ${
+                    `${item.visits.length} Visits on: ${
                       item.date
-                    } at ${item.visitTime.join(', ')}`,
+                    } at ${item.visits.join(', ')}`,
                 )}  `
               : `Dog Walking Proposal:\n${specificModDates.map(
                   (item: any) =>
-                    `${item.visitTime.length} Visits on: ${format(
+                    `${item.visits.length} Visits on: ${format(
                       new Date(item.date),
                       'iii, LLL d',
-                    )} at ${item.visitTime.join(', ')}`,
+                    )} at ${item.visits.join(', ')}`,
                 )}  `
             : null;
         const dropDogPayload = isRecurring
@@ -204,7 +205,7 @@ export const useAppointment = (providerOpk: string) => {
                   : 'NONE',
               recurringStartDate: new Date(recurringStartDate).toISOString(),
 
-              recurringSelectedDay: sortedRecurringDates,
+              proposalVisits: sortedRecurringDates,
               firstMessage: firstMessage,
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
@@ -223,7 +224,7 @@ export const useAppointment = (providerOpk: string) => {
                   : serviceTypeId === 5
                   ? 'WALK'
                   : 'NONE',
-              proposalOtherDate: sortedSpecificModDates,
+              proposalVisits: sortedSpecificModDates,
               firstMessage: firstMessage,
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
@@ -273,9 +274,9 @@ export const useAppointment = (providerOpk: string) => {
               dropOffEndTime: dropOffEndTime,
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
-              proposalOtherDate: multiDate.map((item: string) => ({
-                date: new Date(item).toISOString(),
-              })),
+              proposalOtherDate: multiDate.map((item: string) =>
+                new Date(item).toISOString(),
+              ),
               firstMessage: firstMessage,
               formattedMessage: DoggyDayFT,
               isRecivedPhotos: isRecivedPhotos,

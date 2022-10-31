@@ -83,7 +83,6 @@ const ServiceForm = ({
       });
   }, [name, updateRates, checked, setValue, convertedValue, errors]);
   const [isVisible, setIsVisible] = useState(false);
-  console.log('ccc', convertedValue);
   return (
     <>
       <View>
