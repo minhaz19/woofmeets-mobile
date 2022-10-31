@@ -43,6 +43,7 @@ const PendingStatus = ({statusType}: Props) => {
     onRefresh();
   }, []);
   console.log('inbox check', providerApntStatus, appointmentStatus);
+  console.log('inbox check', providerApntStatus, appointmentStatus);
 
   return (
     <>
@@ -96,17 +97,10 @@ const PendingStatus = ({statusType}: Props) => {
                                 new Date(proposalDate.recurringStartDate),
                                 'iii LLL d',
                               )}`
-                            : `Starting From:  ${
-                                proposalDate?.proposalVisits[0]?.date ===
-                                undefined
-                                  ? ''
-                                  : format(
-                                      new Date(
-                                        proposalDate?.proposalVisits[0]?.date,
-                                      ),
-                                      'iii LLL d',
-                                    )
-                              }`
+                            : `Starting From:  ${format(
+                                new Date(proposalDate?.proposalVisits[0]?.date),
+                                'iii LLL d',
+                              )}`
                           : serviceTypeId === 4
                           ? isRecurring
                             ? `Starting From:  ${format(
@@ -114,7 +108,9 @@ const PendingStatus = ({statusType}: Props) => {
                                 'iii LLL d',
                               )}`
                             : `Starting From:  ${format(
-                                new Date(),
+                                new Date(
+                                  proposalDate?.proposalOtherDate[0]?.date,
+                                ),
                                 'iii LLL d',
                               )}`
                           : ''
@@ -169,18 +165,15 @@ const PendingStatus = ({statusType}: Props) => {
                                 'iii LLL d',
                               )}`
                             : `Starting From:  ${format(
-                                new Date(proposalDate.proposalVisits[0].date),
+                                new Date(
+                                  proposalDate?.proposalOtherDate[0]?.date,
+                                ),
                                 'iii LLL d',
                               )}`
                           : ''
                         : 'No Mesaegs fonnd',
                       boardingTime: item?.providerService?.serviceType?.name,
                       status: item.status,
-                      // description: item?.appointmentProposal[0]?.firstMessage
-                      //   ? item?.appointmentProposal[0]?.firstMessage
-                      //   : 'No Mesaegs fonnd',
-                      // boardingTime: item?.providerService?.serviceType?.name,
-                      // status: item.status,
                     }}
                     buttonStyles={Colors.primary}
                     handlePress={() =>

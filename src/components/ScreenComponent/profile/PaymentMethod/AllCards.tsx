@@ -68,6 +68,7 @@ const AllCards = ({
   const [active, setActive] = useState(true);
   const [cardIndex, setActiveCardIndex] = useState<null | number>(0);
 
+  console.log('sequence', sequence);
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
@@ -79,7 +80,12 @@ const AllCards = ({
           {newCard.map((card: any, index: number) => (
             <View key={index}>
               {card.addCard === true ? (
-                <ListItem key={index} newCard Icon={getIcon(card.brand)} />
+                <ListItem
+                  key={index}
+                  newCard
+                  Icon={getIcon(card.brand)}
+                  sequence={sequence}
+                />
               ) : (
                 <ListItem
                   key={index}
@@ -89,6 +95,7 @@ const AllCards = ({
                     setActiveCardIndex(index);
                     setSelectedCard(card.id);
                   }}
+                  sequence={sequence}
                   defaultCard={card.id === CardId ? true : false}
                   activeCard={index === cardIndex ? true : false}
                   handleUpdate={id => {

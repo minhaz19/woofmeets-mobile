@@ -100,9 +100,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                                 'iii LLL d',
                               )}`
                             : `Starting From:  ${format(
-                                new Date(
-                                  proposalDate.proposalOtherDate[0].date,
-                                ),
+                                new Date(proposalDate.proposalVisits[0].date),
                                 'iii LLL d',
                               )}`
                           : serviceTypeId === 4
@@ -155,9 +153,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                                 'iii LLL d',
                               )}`
                             : `Starting From:  ${format(
-                                new Date(
-                                  proposalDate.proposalOtherDate[0].date,
-                                ),
+                                new Date(proposalDate.proposalVisits[0].date),
                                 'iii LLL d',
                               )}`
                           : serviceTypeId === 4

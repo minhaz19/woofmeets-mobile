@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ReusableCard from '../utils/Common/ReusableCard';
@@ -5,19 +6,37 @@ import {UpcomingSvg} from '../utils/SvgComponent/SvgComponent';
 import MessageNotSend from '../utils/Common/MessageNotSend';
 import Colors from '../../../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
-import BottomSpacingNav from '../../../UI/BottomSpacingNav';
+import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {getInprogressApnt} from '../../../../store/slices/Appointment/Inbox/User/InProgress/getInprogressApnt';
+import {getProviderInprogressApnt} from '../../../../store/slices/Appointment/Inbox/Provider/InProgress/getPInprogressApnt';
+import changeTextLetter from '../../../common/changeTextLetter';
+import format from 'date-fns/format';
+import BottomSpacing from '../../../UI/BottomSpacing';
 interface Props {
   statusType: string;
 }
 const ApprovedStatus = ({statusType}: Props) => {
   let navigation = useNavigation<any>();
+  const dispatch = useAppDispatch();
+  const {userInprogress, loading} = useAppSelector(
+    state => state.userInprogress,
+  );
+  const {providerInprogress} = useAppSelector(
+    state => state.providerInprogress,
+  );
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    statusType === 'USER' && dispatch(getInprogressApnt('PAID'));
+    statusType === 'PROVIDER' && dispatch(getProviderInprogressApnt('PAID'));
+  }, [statusType]);
 
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
+    statusType === 'USER' && dispatch(getInprogressApnt('PAID'));
+    statusType === 'PROVIDER' && dispatch(getProviderInprogressApnt('PAID'));
     setRefreshing(false);
   };
   useEffect(() => {
@@ -26,12 +45,14 @@ const ApprovedStatus = ({statusType}: Props) => {
 
   return (
     <>
+      {loading && <AppActivityIndicator visible={true} />}
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {true && (statusType === 'USER' || statusType === 'PROVIDER') ? (
+        {(userInprogress === null || userInprogress === undefined) &&
+        statusType === 'USER' ? (
           <View style={styles.errorContainer}>
             <MessageNotSend
               svg={<UpcomingSvg width={200} height={200} />}
@@ -43,30 +64,56 @@ const ApprovedStatus = ({statusType}: Props) => {
           </View>
         ) : (
           <View style={styles.container}>
-            {/* <FilterByDateAndActivity
-              handleActivity={() => {}}
-              handleDate={() => {}}
-            /> */}
-            {true ? (
-              []?.map((item: any) => {
+            {userInprogress !== null &&
+            userInprogress !== undefined &&
+            statusType === 'USER' ? (
+              userInprogress?.map((item: any) => {
+                const serviceTypeId = item?.providerService?.serviceTypeId;
+                const proposalDate = item.appointmentProposal[0];
+                const isRecurring = item.appointmentProposal[0]?.isRecurring;
+                console.log(
+                  'proposalVisits[0]',
+                  proposalDate?.proposalVisits[0]?.date,
+                );
                 return (
                   <ReusableCard
                     key={item.opk}
                     item={{
-                      name: `${item.provider.user.firstName} ${item.provider.user.lastName}`,
+                      name: changeTextLetter(
+                        `${item.provider.user.firstName} ${item.provider.user.lastName}`,
+                      ),
                       image: item.provider.user.image,
-                      description: item?.appointmentProposal[0]?.firstMessage
-                        ? item?.appointmentProposal[0]?.firstMessage
+                      description: item?.providerService
+                        ? serviceTypeId === 1 || serviceTypeId === 2
+                          ? `Starting From:  ${format(
+                              new Date(proposalDate.proposalStartDate),
+                              'iii LLL d',
+                            )}`
+                          : serviceTypeId === 3 || serviceTypeId === 5
+                          ? isRecurring
+                            ? `Starting From:  ${format(
+                                new Date(proposalDate.recurringStartDate),
+                                'iii LLL d',
+                              )}`
+                            : `Starting From:  ${format(
+                                new Date(proposalDate?.proposalVisits[0]?.date),
+                                'iii LLL d',
+                              )}`
+                          : serviceTypeId === 4
+                          ? isRecurring
+                            ? `Starting From:  ${format(
+                                new Date(proposalDate.recurringStartDate),
+                                'iii LLL d',
+                              )}`
+                            : `Starting From:  ${format(
+                                new Date(
+                                  proposalDate?.proposalOtherDate[0]?.date,
+                                ),
+                                'iii LLL d',
+                              )}`
+                          : ''
                         : 'No Mesaegs fonnd',
                       boardingTime: item?.providerService?.serviceType?.name,
-                      // boardingTime: item?.appointmentProposal[0]
-                      //   ?.proposalStartDate
-                      //   ? `${item.appointmentProposal[0].proposalStartDate} to ${item.appointmentProposal[0].proposalEndDate} `
-                      //   : '',
-                      // pickUpStartTime: item?.appointmentProposal[0]
-                      //   ?.pickUpStartTime
-                      //   ? item.appointmentProposal[0].pickUpStartTime
-                      //   : '',
                       status: item.status,
                     }}
                     buttonStyles={Colors.primary}
@@ -78,26 +125,52 @@ const ApprovedStatus = ({statusType}: Props) => {
                   />
                 );
               })
-            ) : true && statusType === 'PROVIDER' ? (
-              []?.map((item: any) => {
+            ) : providerInprogress !== null &&
+              providerInprogress !== undefined &&
+              statusType === 'PROVIDER' ? (
+              providerInprogress?.map((item: any) => {
+                const serviceTypeId = item?.providerService?.serviceTypeId;
+                const proposalDate = item.appointmentProposal[0];
+                const isRecurring = item.appointmentProposal[0]?.isRecurring;
                 return (
                   <ReusableCard
                     key={item.opk}
                     item={{
-                      name: `${item.user.firstName} ${item.user.lastName}`,
+                      name: changeTextLetter(
+                        `${item.user.firstName} ${item.user.lastName}`,
+                      ),
                       image: item.user.image,
-                      description: item?.appointmentProposal[0]?.firstMessage
-                        ? item?.appointmentProposal[0]?.firstMessage
+                      description: item?.providerService
+                        ? serviceTypeId === 1 || serviceTypeId === 2
+                          ? `Starting From:  ${format(
+                              new Date(proposalDate.proposalStartDate),
+                              'iii LLL d',
+                            )}`
+                          : serviceTypeId === 3 || serviceTypeId === 5
+                          ? isRecurring
+                            ? `Starting From:  ${format(
+                                new Date(proposalDate.recurringStartDate),
+                                'iii LLL d',
+                              )}`
+                            : `Starting From:  ${format(
+                                new Date(proposalDate.proposalVisits[0].date),
+                                'iii LLL d',
+                              )}`
+                          : serviceTypeId === 4
+                          ? isRecurring
+                            ? `Starting From:  ${format(
+                                new Date(proposalDate.recurringStartDate),
+                                'iii LLL d',
+                              )}`
+                            : `Starting From:  ${format(
+                                new Date(
+                                  proposalDate?.proposalOtherDate[0]?.date,
+                                ),
+                                'iii LLL d',
+                              )}`
+                          : ''
                         : 'No Mesaegs fonnd',
                       boardingTime: item?.providerService?.serviceType?.name,
-                      // boardingTime: item?.appointmentProposal[0]
-                      //   ?.proposalStartDate
-                      //   ? `${item.appointmentProposal[0].proposalStartDate} to ${item.appointmentProposal[0].proposalEndDate} `
-                      //   : '',
-                      // pickUpStartTime: item?.appointmentProposal[0]
-                      //   ?.pickUpStartTime
-                      //   ? item.appointmentProposal[0].pickUpStartTime
-                      //   : '',
                       status: item.status,
                     }}
                     buttonStyles={Colors.primary}
@@ -121,7 +194,8 @@ const ApprovedStatus = ({statusType}: Props) => {
           </View>
         )}
 
-        <BottomSpacingNav />
+        <BottomSpacing />
+        <BottomSpacing />
       </ScrollView>
     </>
   );

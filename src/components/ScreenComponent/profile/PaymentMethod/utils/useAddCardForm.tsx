@@ -91,13 +91,14 @@ export const useAddCardForm = (
             ) {
               try {
                 const clientScreet = appointmentResult.data.data.clientSecret;
-                const r: any = await confirmPayment(clientScreet);
-                r?.error?.code === 'Failed' &&
-                  Alert.alert(r?.error?.localizedMessage);
+                const {paymentIntent, error: dsError}: any =
+                  await confirmPayment(clientScreet);
+                dsError?.code === 'Failed' &&
+                  Alert.alert(dsError?.localizedMessage);
                 setAppointmentLoading(false);
-                r.paymentIntent?.status === 'Succeeded' &&
+                paymentIntent?.status === 'Succeeded' &&
                   navigation.navigate('AppointmentSuccess');
-                console.log('r tyr', r);
+                console.log('r tyr', paymentIntent);
               } catch (er) {
                 setAppointmentLoading(false);
                 console.log('error', er);

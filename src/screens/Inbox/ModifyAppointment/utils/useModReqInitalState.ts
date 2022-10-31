@@ -52,13 +52,13 @@ export const useModReqInitialState = () => {
   const modProposalRecurringDate =
     proposedServiceInfo?.recurringSelectedDay?.map((item: any) => ({
       date: item?.date,
-      visits: item?.visits.map((it: any) => it.time),
+      visits: item?.visits?.map((it: any) => it.time),
       // startDate: item?.startDate ? item.startDate : false,
     }));
   const modProposalScheduleDate = proposedServiceInfo?.proposalOtherDate?.map(
     (item: any) => ({
       date: item?.name,
-      visits: item?.visits.map((it: any) => it.time),
+      visits: item?.visits?.map((it: any) => it.time),
       // startDate: item?.startDate ? item.startDate : false,
     }),
   );
@@ -122,17 +122,17 @@ export const useModReqInitialState = () => {
       proposedServiceInfo?.isRecurring &&
       proposedServiceInfo?.recurringSelectedDay
         ? proposedServiceInfo?.recurringSelectedDay.map((it: any) => ({
-            date: it.date,
-            visits: it.visits.map((vis: any) => vis.time),
+            date: it?.date,
+            visits: it?.visits?.map((vis: any) => vis.time),
           }))
         : [],
     specificModDates:
       !proposedServiceInfo?.isRecurring &&
       proposedServiceInfo?.proposalOtherDate
         ? proposedServiceInfo?.proposalOtherDate.map((it: any) => ({
-            date: it.date,
-            name: it.name,
-            visits: it.visits.map((vis: any) => vis.time),
+            date: it?.date,
+            name: it?.name,
+            visits: it?.visits?.map((vis: any) => vis.time),
           }))
         : [],
     multiDate:

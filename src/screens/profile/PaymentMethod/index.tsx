@@ -33,7 +33,7 @@ const PaymentMethods = ({route, navigation}: Props) => {
   const {loading: Hloading, request: postRequest} = useApi(methods._post);
   const {sequence} = route.params;
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  console.log('payment methods', proposedServiceInfo);
+  console.log('payment methods', proposedServiceInfo.billing);
   const handlePayment = async () => {
     if (sequence === 1) {
       navigation.navigate('BasicPayment', {
@@ -41,59 +41,55 @@ const PaymentMethods = ({route, navigation}: Props) => {
         cardId: selectedCard !== null ? selectedCard : CardId,
       });
     } else if (sequence === 'Appointment') {
-      if (proposedServiceInfo.billing.length === 0) {
-        Alert.alert('No Billing id found');
-      } else {
-        setAppointmentLoading(true);
-        const cardId = selectedCard !== null ? selectedCard : CardId;
-        const result: any = await apiClient.post(
-          `/appointment/${proposedServiceInfo.appointmentOpk}/billing/${proposedServiceInfo.billing[0]?.id}/pay?cardId=${cardId}`,
-          {},
-          {
-            headers: {
-              'Idempontency-Key': uuid,
-            },
+      setAppointmentLoading(true);
+      const cardId = selectedCard !== null ? selectedCard : CardId;
+      const result: any = await apiClient.post(
+        `/appointment/${proposedServiceInfo.appointmentOpk}/billing/${proposedServiceInfo.billing[0]?.id}/pay?cardId=${cardId}`,
+        {},
+        {
+          headers: {
+            'Idempontency-Key': uuid,
           },
-        );
-        console.log('r', result);
+        },
+      );
+      console.log('r', result);
 
-        if (result.ok) {
-          if (
-            result.ok &&
-            result.status === 201 &&
-            result?.data.data.requiresAction === true
-          ) {
-            try {
-              const clientScreet = result.data.data.clientSecret;
-              const r: any = await confirmPayment(clientScreet);
-              r?.error?.code === 'Failed' &&
-                Alert.alert(r?.error?.localizedMessage);
-              console.log('inside', r);
-              setAppointmentLoading(false);
-              r.paymentIntent?.status === 'Succeeded' &&
-                navigation.navigate('AppointmentSuccess');
-            } catch (er: any) {
-              setAppointmentLoading(false);
-              Alert.alert(er.message);
-              console.log('err', er);
-            }
-          } else if (
-            result.ok &&
-            result.status === 201 &&
-            result?.data.data.requiresAction === false
-          ) {
+      if (result.ok) {
+        if (
+          result.ok &&
+          result.status === 201 &&
+          result?.data.data.requiresAction === true
+        ) {
+          try {
+            const clientScreet = result.data.data.clientSecret;
+            const r: any = await confirmPayment(clientScreet);
+            r?.error?.code === 'Failed' &&
+              Alert.alert(r?.error?.localizedMessage);
+            console.log('inside', r);
             setAppointmentLoading(false);
-            navigation.navigate('AppointmentSuccess');
+            r.paymentIntent?.status === 'Succeeded' &&
+              navigation.navigate('AppointmentSuccess');
+          } catch (er: any) {
+            setAppointmentLoading(false);
+            Alert.alert(er.message);
+            console.log('err', er);
           }
-        } else if (!result.ok && result.status === 400) {
+        } else if (
+          result.ok &&
+          result.status === 201 &&
+          result?.data.data.requiresAction === false
+        ) {
           setAppointmentLoading(false);
-          Alert.alert(result?.data?.message);
-        } else if (!result.ok && result.status === 409) {
-          setAppointmentLoading(false);
-          Alert.alert(result?.data?.message);
+          navigation.navigate('AppointmentSuccess');
         }
+      } else if (!result.ok && result.status === 400) {
         setAppointmentLoading(false);
+        Alert.alert(result?.data?.message);
+      } else if (!result.ok && result.status === 409) {
+        setAppointmentLoading(false);
+        Alert.alert(result?.data?.message);
       }
+      setAppointmentLoading(false);
     } else {
       const selectCardId = selectedCard !== null ? selectedCard : CardId;
       const result = await postRequest(
