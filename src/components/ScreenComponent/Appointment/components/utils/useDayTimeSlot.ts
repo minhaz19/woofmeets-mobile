@@ -13,7 +13,7 @@ export const useDayTimeSlot = () => {
     proposalRecurringDate,
   } = useWatch();
   const [newData, setDatas] = useState(modData);
-
+  console.log('first', proposalRecurringDate);
   const getRecurringDays = (rd: any, rsd: any, pod: any) => {
     const output = rd?.filter((obj: any) => {
       return rsd.indexOf(obj.day) !== -1;
@@ -22,19 +22,12 @@ export const useDayTimeSlot = () => {
     const recurring = output?.map((item: any, index: number) => ({
       id: index + 1,
       date: item.day,
-      // startDate:
-      //   pod && pod?.length !== 0
-      //     ? pod?.some(
-      //         (elm: any) => elm.date === item.day && elm?.startDate === true,
-      //       )
-      //     : index === 0
-      //     ? true
-      //     : false,
       initalSlot:
         pod && pod?.length !== 0
-          ? pod?.find((elm: any) => elm.date === item.day)?.visitTime
+          ? pod?.find((elm: any) => elm.date === item.day)?.visits
           : [],
     }));
+    console.log('rrr', output, recurring);
     return recurring;
   };
   useMemo(() => {
@@ -52,7 +45,7 @@ export const useDayTimeSlot = () => {
         initalSlot:
           proposalRecurringDate && proposalScheduleDate?.length !== 0
             ? proposalScheduleDate?.find((elm: any) => elm.date === item)
-                ?.visitTime
+                ?.visits
             : [],
       }));
       setDatas(multi);

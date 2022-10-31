@@ -128,13 +128,10 @@ export const useModifyAppointment = (route: any) => {
               id: i + 1,
               date: new Date(item.date).toISOString(),
               name: format(new Date(item.date), 'yyyy-MM-dd'),
-              visits:
-                item?.visits && item?.visits.length !== 0
-                  ? item.visits
-                  : item.visitTime.map((time: string, index: number) => ({
-                      id: index + 1,
-                      time: time,
-                    })),
+              visits: item.visits.map((time: string, index: number) => ({
+                id: index + 1,
+                time: time,
+              })),
             }))
           : [];
         const sortedRecurringDates = isRecurring
@@ -142,13 +139,10 @@ export const useModifyAppointment = (route: any) => {
               id: i + 1,
               date: item.date,
               name: item.date.substring(0, 3).toLowerCase(),
-              visits:
-                item?.visits && item?.visits.length !== 0
-                  ? item.visits
-                  : item?.visitTime?.map((time: string, index: number) => ({
-                      id: index + 1,
-                      time: time,
-                    })),
+              visits: item?.visits?.map((time: string, index: number) => ({
+                id: index + 1,
+                time: time,
+              })),
             }))
           : [];
         const dropInVisitFT =
@@ -159,11 +153,11 @@ export const useModifyAppointment = (route: any) => {
                     `${
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.length
-                        : item.visitTime.length
+                        : item.visits.length
                     } Visits on: ${item.date} at ${
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.join(', ')
-                        : item.visitTime.join(', ')
+                        : item.visits.join(', ')
                     }\n`,
                 )}  `
               : `Drop In Visit Proposal:\n${specificModDates.map(
@@ -171,14 +165,14 @@ export const useModifyAppointment = (route: any) => {
                     `${
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.length
-                        : item.visitTime.length
+                        : item.visits.length
                     } Visits on: ${format(
                       new Date(item.date),
                       'iii, LLL d',
                     )} at ${
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.join(', ')
-                        : item.visitTime.join(', ')
+                        : item.visits.join(', ')
                     }`,
                 )}  `
             : serviceTypeId === 5
@@ -188,11 +182,11 @@ export const useModifyAppointment = (route: any) => {
                     `${
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.length
-                        : item.visitTime.length
+                        : item.visits.length
                     } Visits on: ${item.date} at ${
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.join(', ')
-                        : item.visitTime.join(', ')
+                        : item.visits.join(', ')
                     }`,
                 )}  `
               : `Dog Walking Proposal:\n${specificModDates.map(
@@ -200,14 +194,14 @@ export const useModifyAppointment = (route: any) => {
                     `${
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.length
-                        : item.visitTime.length
+                        : item.visits.length
                     } Visits on: ${format(
                       new Date(item.date),
                       'iii, LLL d',
                     )} at ${
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.join(', ')
-                        : item.visitTime.join(', ')
+                        : item.visits.join(', ')
                     }`,
                 )}  `
             : null;
@@ -248,6 +242,7 @@ export const useModifyAppointment = (route: any) => {
                   : 'NONE',
               proposalVisits: sortedSpecificModDates,
             };
+        console.log('geo geo', dropDogPayload);
         const result = await request(endpoint, dropDogPayload);
 
         if (result.ok) {

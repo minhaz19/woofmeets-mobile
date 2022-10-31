@@ -11,6 +11,7 @@ export const useTimeMultiSlotPicker = (
   const {visitLength} = useWatch();
 
   const [newData, setDatas] = useState<any>([]);
+  console.log('inside', initalSlot, singleItem);
   useMemo(() => {
     const times: any = []; // time array
     let tt = 0; // start time
@@ -50,7 +51,7 @@ export const useTimeMultiSlotPicker = (
       if (matchIndex === -1) {
         Days.push({
           date: singleItem.date,
-          visitTime: initalSlot,
+          visits: singleItem.initalSlot,
           // startDate: singleItem.startDate,
         });
       }
@@ -61,7 +62,7 @@ export const useTimeMultiSlotPicker = (
       if (matchIndex === -1) {
         Dates.push({
           date: singleItem.date,
-          visitTime: initalSlot,
+          visits: singleItem.initalSlot,
           // startDate: singleItem.startDate,
         });
       }

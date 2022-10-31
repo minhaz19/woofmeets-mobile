@@ -74,47 +74,47 @@ export const useProposalPricing = () => {
             new Date(recurringStartDate),
             "yyyy-MM-dd'T'HH:mm:ss'Z'",
           ),
-          isRecurring: true,
+          isRecurring: proposedServiceInfo.isRecurring,
           proposalVisits: recurringModDates.map((item: any) => ({
-            date: item.date,
+            day: item.date.substring(0, 3).toLowerCase(),
             visits: item.visits,
           })),
           timeZone: 'Asia/Dhaka',
         };
-        console.log('res', payload);
-        // const result = await postRequest(dayCareEndpoint, payload);
-        // console.log('res', payload, result);
-        // setPricingInfo([
-        //   ...result.data.petsRates,
-        //   {
-        //     id: result.data.petsRates.length,
-        //     subTotal: result.data.subTotal,
-        //     name: 'subTotal',
-        //   },
-        // ]);
+        console.log('recurringModDates', recurringModDates, payload);
+        const result = await postRequest(vistWalkEndpoint, payload);
+        console.log('res', payload, result);
+        setPricingInfo([
+          ...result.data.petsRates,
+          {
+            id: result.data.petsRates.length,
+            subTotal: result.data.subTotal,
+            name: 'subTotal',
+          },
+        ]);
       } else {
         const payload = {
           serviceId: proposedServiceInfo.providerServiceId,
           petIds: petsId,
           length: visitLength,
-          isRecurring: false,
+          isRecurring: proposedServiceInfo.isRecurring,
           timeZone: 'Asia/Dhaka',
           proposalVisits: specificModDates.map((item: any) => ({
             date: item.date,
             visits: item.visits,
           })),
         };
-        console.log('res', payload);
-        // const result = await postRequest(dayCareEndpoint, payload);
-        // console.log('res', payload, result);
-        // setPricingInfo([
-        //   ...result.data.petsRates,
-        //   {
-        //     id: result.data.petsRates.length,
-        //     subTotal: result.data.subTotal,
-        //     name: 'subTotal',
-        //   },
-        // ]);
+        console.log('proposedServiceInfo', payload);
+        const result = await postRequest(vistWalkEndpoint, payload);
+        console.log('res', payload, result);
+        setPricingInfo([
+          ...result.data.petsRates,
+          {
+            id: result.data.petsRates.length,
+            subTotal: result.data.subTotal,
+            name: 'subTotal',
+          },
+        ]);
       }
     } else if (proposedServiceInfo.serviceTypeId === 4) {
       if (proposedServiceInfo.isRecurring) {
