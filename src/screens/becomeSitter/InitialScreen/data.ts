@@ -1,15 +1,15 @@
 export const bulletData1 = [
   {
     id: 1,
-    text: 'Set your own schedule and prices',
+    text: 'Create your own schedule and pricing',
   },
   {
     id: 2,
-    text: 'Offer any combination of pet care services',
+    text: 'Select from various services',
   },
   {
     id: 3,
-    text: 'Set size , age , and other pet preferences that work for you',
+    text: 'Maximize how much you can earn',
   },
 ];
 export const bulletData2 = [
@@ -29,18 +29,18 @@ export const bulletData2 = [
 export const bulletData3 = [
   {
     id: 1,
-    text: 'Every Service you offer on Woofmeets is backed by the Woofmeets Guarantee.',
+    text: `You must be at least 18 and own an iPhone or Android phone. As part of our approval process, you'll undergo a DMV check, plus a national and county background check. This will require a Social Security number, in addition to an in-state driver's license that is at least a year old.`,
   },
   {
     id: 2,
-    text: 'Safe , secured and convenient online payments.',
+    text: 'Pricing and scheduling are up to you. You can offer any combination of services for pets. You can offer any combination of services for pets. Decide what size, age, and other pet preferences work best for you. We also provide the WoofMeets Guarantee in support of each service you provide on the site. The benefits of online payments are convenience, security, and convenience.',
   },
-  {
-    id: 3,
-    text: 'A top tier support team available 24/7 .',
-  },
-  {
-    id: 4,
-    text: 'Ongoing pet care education for pet sitters.',
-  },
+  // {
+  //   id: 3,
+  //   text: 'A top tier support team available 24/7 .',
+  // },
+  // {
+  //   id: 4,
+  //   text: 'Ongoing pet care education for pet sitters.',
+  // },
 ];

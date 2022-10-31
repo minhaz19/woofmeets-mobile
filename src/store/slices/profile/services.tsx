@@ -21,7 +21,7 @@ export const getUserServices = createAsyncThunk(
       '/provider-services',
     );
     if (!response.ok) {
-      Alert.alert(response.data.message);
+      // Alert.alert(response.data.message);
       throw new Error(response.data.message);
     }
     if (response.ok) {

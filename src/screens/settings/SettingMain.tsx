@@ -169,7 +169,7 @@ const SettingMain = (props: { navigation: { navigate: (arg0: string) => any; dis
       id: 2,
       title: 'Help',
       icon: HelpIcon,
-      screenName: () => {Linking.openURL('https://stage.woofmeets.com/help-center')},
+      screenName: () => {Linking.openURL('https://woofmeets.com/help-center')},
       rightIcon: true,
       opacity: 1,
     },

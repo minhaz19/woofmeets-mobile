@@ -104,7 +104,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             header: () => (
               <HeaderWithBack
                 navigation={navigation}
-                title="Dog Sitting Jobs"
+                title="Become a Sitter"
               />
             ),
             backgroundColor: Colors.primary,

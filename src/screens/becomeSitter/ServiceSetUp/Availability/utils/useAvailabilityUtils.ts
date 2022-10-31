@@ -31,6 +31,7 @@ export const useAvailabilityUtils = (id: string) => {
       postEndPoint,
       id ? putFormattedData : data,
     );
+    console.log(response);
     if (response?.data?.data) {
       dispatch(setAvailability(response?.data?.data));
       dispatch(setBoardingSelection({pass: 1}));
