@@ -6,11 +6,11 @@ import {useApi} from '../../../../../../../../../utils/helpers/api/useApi';
 import {getDates} from './getDates';
 
 const today = new Date();
-const opk = 'Vi1sNYOD';
 export const useAvailability = (
   selectedService: any,
   navigation: any,
   monthRef: any,
+  providerOpk: any,
 ) => {
   const [availabileDates, setAvailableDates] = useState([]);
   const {loading, request} = useApi(methods._get);
@@ -18,13 +18,13 @@ export const useAvailability = (
   const getAvailablity = async (monthData: any, currentMonth?: string) => {
     const {startDate, endDate} = getDates(monthData, currentMonth);
     const payload = {
-      opk: opk,
+      opk: providerOpk,
       serviceId: selectedService,
       startDate: startDate,
       endDate: endDate,
     };
     const result = await request(
-      `/provider/${opk}/calender/${selectedService}`,
+      `/provider/${providerOpk}/calender/${selectedService}`,
       payload,
     );
     if (result.ok && currentMonth !== 'fullYear') {

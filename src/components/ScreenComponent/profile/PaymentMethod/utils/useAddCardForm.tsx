@@ -62,7 +62,7 @@ export const useAddCardForm = (
         token: token.id,
       };
       const result = await request(endpoint, reqPayload);
-      console.log('res', result);
+      console.log('res', reqPayload, result);
       if (result.ok && sequence !== null && sequence !== undefined) {
         const cardId = result.data.data.id;
         if (sequence === 1) {
@@ -165,10 +165,10 @@ export const useAddCardForm = (
             setAppointmentLoading(false);
             Alert.alert(appointmentResult?.data?.message);
           }
-        } else if (sequence === null) {
-          console.log('in here');
-          navigation.navigate('PaymentMethod', {sequence: null});
         }
+      } else if (sequence === null) {
+        console.log('in here');
+        navigation.navigate('PaymentMethod', {sequence: null});
       }
       dispatch(getCards());
     }

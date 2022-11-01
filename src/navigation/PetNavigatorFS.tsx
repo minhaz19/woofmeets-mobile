@@ -14,9 +14,9 @@ const Stack1 = createStackNavigator();
 const PetNavigatorFC = () => {
   const dispatch = useAppDispatch();
   return (
-      <Stack1.Navigator initialRouteName="AddPetHome">
+      <Stack1.Navigator initialRouteName="AddPetHome1">
         <Stack1.Screen
-          name="AddPetHome"
+          name="AddPetHome1"
           component={AddPetHome}
           options={({navigation, route}) => ({
             title: '',

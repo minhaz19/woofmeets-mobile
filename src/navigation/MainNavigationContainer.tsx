@@ -25,7 +25,6 @@ import ManageBusiness from '../components/ScreenComponent/setting/subProfile/Man
 import SchedulePetSettings from '../components/ScreenComponent/search/SchedulePetSettings';
 import AddPetCheckScreen from '../screens/pet/AddPet/AddPetCheck';
 import AddPetSubmit from '../screens/pet/AddPet/AddPetSubmit';
-import AddPetHome from '../screens/pet/AddPet/AddPetHome';
 import SitterDetails from '../screens/becomeSitter/Details';
 import BasicInfo from '../screens/profile/BasicInfo';
 import ServiceNavigator from './bottoms/ServiceNavigator';
@@ -48,6 +47,7 @@ import Availability from '../screens/becomeSitter/ServiceSetUp/Availability/Avai
 import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy/CancellationPolicy';
 import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
 import CheckoutDetails from '../screens/Inbox/checkout/CheckoutDetails';
+import AddPetHome from '../screens/pet/AddPet/AddPetHome';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {

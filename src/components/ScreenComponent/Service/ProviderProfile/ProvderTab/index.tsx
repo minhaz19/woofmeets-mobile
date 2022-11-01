@@ -21,7 +21,7 @@ const tabs = [
     tab: 'Reviews',
   },
 ];
-const ProviderTab = () => {
+const ProviderTab = (props) => {
   const [active, setActive] = useState(0);
   const {isDarkMode} = useTheme();
   return (
@@ -49,7 +49,7 @@ const ProviderTab = () => {
         ))}
       </View>
       {active === 0 && <Overview />}
-      {active === 1 && <Services />}
+      {active === 1 && <Services providerOpk={props.providerOpk}/>}
       {active === 2 && <Reviews />}
     </View>
   );
