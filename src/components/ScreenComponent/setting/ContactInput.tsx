@@ -1,4 +1,9 @@
-import {ActivityIndicator, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
@@ -22,9 +27,9 @@ import {otpValue} from '../../../utils/config/initalValues/initalValues';
 import {otpValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {phoneNumberReg} from '../../../constants/regex';
 import {useAppSelector, useAppDispatch} from '../../../store/store';
-import { getContactInfo } from '../../../store/slices/profile/contact';
+import {getContactInfo} from '../../../store/slices/profile/contact';
 import MiddleModal from '../../UI/modal/MiddleModal';
-import { QuestionIcon } from '../../../assets/svgs/SVG_LOGOS';
+import {QuestionIcon} from '../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../becomeSitter/ServiceSetup/Common/ServiceReusableModal';
 
 const contactInput = [
@@ -52,7 +57,9 @@ const ContactInput = (props: {handleSubmit: any}) => {
     contact.phoneNumber ? contact.phoneNumber : '+1',
   );
   const [globalError, setGlobalError] = useState('');
-  const [otpVerificationStatus, setOtpVerificationStatus] = useState(contact.phoneNumber ? true : false);
+  const [otpVerificationStatus, setOtpVerificationStatus] = useState(
+    contact.phoneNumber ? true : false,
+  );
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPhoneLoading, setIsPhoneLoading] = useState(false);
   const [phoneNumberError, setPhoneNumberError] = useState<string | null>();
@@ -160,7 +167,9 @@ const ContactInput = (props: {handleSubmit: any}) => {
               <InputText
                 title={'Your Phone Number'}
                 placeholder={'Phone Number'}
-                description={"WoofMeet requires a verified phone number to keep your account safe and for important updates. We'll send a code via text message."}
+                description={
+                  "WoofMeet requires a verified phone number to keep your account safe and for important updates. We'll send a code via text message."
+                }
                 value={textInput}
                 setValue={setTextInput}
                 leftIcon={<USAFlag height={24} width={24} />}
@@ -169,7 +178,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
                   mobilevalidate(number);
                 }}
               />
-              <TitleText text={globalError} textStyle={{color: Colors.alert}}/>
+              <TitleText text={globalError} textStyle={{color: Colors.alert}} />
               {phoneNumberError && (
                 <DescriptionText
                   text={phoneNumberError}
@@ -190,13 +199,14 @@ const ContactInput = (props: {handleSubmit: any}) => {
             </View>
           }
           <View style={{paddingBottom: 10}}>
-            <HeaderText
-              text="Emergency Contact"
-              textStyle={styles.textStyle}
+            <HeaderText text="Emergency Contact" textStyle={styles.textStyle} />
+            <DescriptionText
+              text={
+                'Who can we contact, other than you, in case of an emergency?'
+              }
             />
-            <DescriptionText text={"Who can we contact, other than you, in case of an emergency?"} />
           </View>
-          
+
           {contactInput.map((item, index) => {
             return (
               <View key={index}>
@@ -221,8 +231,8 @@ const ContactInput = (props: {handleSubmit: any}) => {
             title="Save"
             onPress={() => {
               if (otpVerificationStatus) {
-                setGlobalError('')
-                props.handleSubmit()
+                setGlobalError('');
+                props.handleSubmit();
               } else {
                 setGlobalError('Please submit and verify phone number');
               }
@@ -242,7 +252,7 @@ const styles = StyleSheet.create({
     marginTop: '5%',
   },
   container1: {
-   flex: 1,
+    flex: 1,
   },
   inputContainer: {marginHorizontal: 20},
   textInputStyle: {},

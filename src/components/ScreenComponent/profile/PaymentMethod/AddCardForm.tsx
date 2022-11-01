@@ -17,7 +17,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const AddCardForm = ({navigation, route}: any) => {
   const {colors} = useTheme();
   const {sequence} = route.params;
-  const {handleValues, loading, appointmentLoading, tokenLoading} =
+  const {handleValues, idemLoading, loading, appointmentLoading, tokenLoading} =
     useAddCardForm(navigation, sequence);
   return (
     <View
@@ -40,7 +40,9 @@ const AddCardForm = ({navigation, route}: any) => {
           <AppStripe>
             <AddCardFormBody
               handleValues={handleValues}
-              loading={loading || tokenLoading || appointmentLoading}
+              loading={
+                loading || tokenLoading || idemLoading || appointmentLoading
+              }
               sequence={sequence}
             />
           </AppStripe>

@@ -6,7 +6,7 @@ import {useApi} from '../../../../../../../../../utils/helpers/api/useApi';
 import {getDates} from './getDates';
 
 const today = new Date();
-const opk = 'gzwnCRsg';
+const opk = 'Vi1sNYOD';
 export const useAvailability = (
   selectedService: any,
   navigation: any,

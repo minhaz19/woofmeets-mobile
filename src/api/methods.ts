@@ -8,6 +8,13 @@ const _post = (slug: string, payload: any, value?: string, ) => {
     },
   });
 };
+const _idempt_post = (slug: string, payload: any, value?: string, ) => {
+  return client.post(slug, payload, {
+    headers: {
+      'Idempontency-Key': value,
+    },
+  });
+};
 const _update = (slug: string, payload?: any, value?: string) =>
   client.patch(slug, payload, {
     headers: {
@@ -22,4 +29,4 @@ const _put = (slug: string, payload: any, value?: string) =>
   });
 const _delete = (slug: string) => client.delete(slug);
 
-export default {_get, _post, _update, _put, _delete};
+export default {_get, _post, _update, _put, _delete, _idempt_post};

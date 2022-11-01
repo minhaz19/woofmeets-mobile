@@ -1,14 +1,16 @@
 import {useNavigation} from '@react-navigation/native';
 import {ApiResponse} from 'apisauce';
 import {useState} from 'react';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 import methods from '../../../../../../api/methods';
 import {getCurrentplan} from '../../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 import {useAppDispatch, useAppSelector} from '../../../../../../store/store';
 import {useApi} from '../../../../../../utils/helpers/api/useApi';
 
+const uuid = Math.random().toString(36).substring(2, 36);
 const endpoint = '/subscriptions/check-basic-verification-payment';
-const subscriptionEndpoint = '/subscriptions/subscribe/';
+const subscriptionEndpoint =
+  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
 const defaultCardEndpoint = '/stripe-payment-method/default-card-info';
 export const usePackageCard = (props: any) => {
   const navigation = useNavigation<any>();
@@ -20,7 +22,11 @@ export const usePackageCard = (props: any) => {
   const {request: cardRequest} = useApi(methods._get);
   const {sitterData} = useAppSelector(state => state.initial);
   const handleSubmit = async () => {
-    if (sitterData[1].isCompleted && sitterData[2].isCompleted && sitterData[3].isCompleted) {
+    if (
+      sitterData[1].isCompleted &&
+      sitterData[2].isCompleted &&
+      sitterData[3].isCompleted
+    ) {
       if (sequence === 1) {
         setSSLoading(true);
         const result: ApiResponse<any> = await methods._get(endpoint);
@@ -33,12 +39,14 @@ export const usePackageCard = (props: any) => {
             navigation.navigate('PaymentMethod', {
               sequence: sequence,
             });
-  
+
             setSSLoading(false);
           } else if (result.data.data.needPayment === false) {
             const cardId = cardResponse.data.data.id;
             const subscriptionResult = await request(
-              `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+              `${subscriptionEndpoint}priceId=${sequence}&cardId=${cardId}`,
+              {},
+              uuid,
             );
             subscriptionResult.ok &&
               (await dispatch(getCurrentplan()),
