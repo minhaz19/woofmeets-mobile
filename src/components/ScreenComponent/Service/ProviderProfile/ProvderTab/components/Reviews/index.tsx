@@ -16,7 +16,7 @@ const Reviews = () => {
       ) : (
         <HeaderText
           textStyle={{textAlign: 'center', marginVertical: 10}}
-          text={'No Reviews for this sitter'}
+          text={'No Reviews found'}
         />
       )}
     </View>

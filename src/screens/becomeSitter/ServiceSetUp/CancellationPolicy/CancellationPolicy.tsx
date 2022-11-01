@@ -38,7 +38,6 @@ const CancellationPolicy = () => {
   const handlePolicy = async (e: any) => {
     const postPoint = `/cancellation-policy/provider-policy/${e.policyId}`;
     const result = await postRequest(postPoint);
-    console.log(result);
     if (result?.data?.data) {
       dispatch(setBoardingSelection({pass: 2}));
       dispatch(setSitterData({pass: 1}));

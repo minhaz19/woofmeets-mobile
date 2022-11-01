@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Text_Size from '../../constants/textScaling';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
 import TitleText from '../../components/common/text/TitleText';
 import ButtonCom from '../../components/UI/ButtonCom';
 import {btnStyles} from '../../constants/theme/common/buttonStyles';
@@ -21,7 +20,6 @@ import ServiceCard from '../../components/ScreenComponent/search/ServiceCard';
 import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
 import SwitchView from '../../components/common/switch/SwitchView';
 import PetCard from '../../components/ScreenComponent/search/PetCard';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {getAllProviderOneTime} from '../../store/slices/Provider/allProvider/getAllProvider';
@@ -44,6 +42,7 @@ import {
   setFormattedData,
 } from '../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
 import {days} from '../../utils/config/Data/filterProviderDatas';
+import GoogleAutoComplete from '../../components/common/GoogleAutoComplete';
 
 const petData = [
   {
@@ -76,16 +75,14 @@ const PetCareZipSearch = (props: {
   const [selectPetType, setSelectPetType] = useState(petData);
   const [myPet, setMyPet] = useState<any[]>([]);
   const [careLocation, setCareLocation] = useState({
-    lat: 40.702078,
-    lng: -73.822156,
+    lat: null,
+    lng: null,
   });
   const [sequence, setSequence] = useState<number>(0);
   const [serviceData, setServiceData] = useState({
     service: '',
     serviceId: '',
   });
-
-  const {colors, isDarkMode} = useTheme();
   const dispatch = useAppDispatch();
 
   // updating the state
@@ -204,7 +201,7 @@ const PetCareZipSearch = (props: {
       dispatch(getAllProviderOneTime(formattedData));
       dispatch(setLocation({lat: careLocation.lat, lng: careLocation.lng}));
       dispatch(setSelectedHome(''));
-      dispatch(setMultiSliderValue([0, 150]));
+      dispatch(setMultiSliderValue([0, 200]));
       dispatch(setDropIn(null));
       dispatch(setDropOut(null));
       dispatch(setIsYardEnabled(''));
@@ -323,63 +320,9 @@ const PetCareZipSearch = (props: {
               <RenderHeader />
               <View style={styles.zipContainer}>
                 <TitleText text="Near" textStyle={styles.zipText} />
-                <GooglePlacesAutocomplete
-                  placeholder="Type a place"
-                  onPress={onPressAddress}
-                  query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo'}}
-                  fetchDetails={true}
-                  onFail={() => {}}
-                  onNotFound={() => {}}
-                  keyboardShouldPersistTaps={'always'}
-                  keepResultsAfterBlur={true}
-                  enablePoweredByContainer={false}
-                  styles={{
-                    container: {
-                      flex: 0,
-                    },
-                    description: {
-                      color: colors.headerText,
-                      fontSize: Text_Size.Text_8,
-                    },
-                    textInput: {
-                      backgroundColor: isDarkMode
-                        ? Colors.dark.background
-                        : Colors.light.background,
-                      // height: 42,
-                      borderRadius: 5,
-                      paddingVertical: 5,
-                      paddingHorizontal: 10,
-                      fontSize: Text_Size.Text_9,
-                      borderColor: colors.borderColor,
-                      borderWidth: 1,
-                      flex: 1,
-                      color: colors.headerText,
-                    },
-                    predefinedPlacesDescription: {
-                      color: colors.headerText,
-                    },
-                    poweredContainer: {
-                      justifyContent: 'flex-end',
-                      alignItems: 'center',
-                      borderBottomRightRadius: 5,
-                      borderBottomLeftRadius: 5,
-                      borderColor: '#c8c7cc',
-                      borderTopWidth: 0.5,
-
-                      backgroundColor: isDarkMode
-                        ? Colors.dark.background
-                        : Colors.light.background,
-                    },
-                    row: {
-                      backgroundColor: isDarkMode
-                        ? Colors.dark.background
-                        : Colors.light.background,
-                      padding: 13,
-                      // height: 44,
-
-                      flexDirection: 'row',
-                    },
-                  }}
+                <GoogleAutoComplete
+                  onPressAddress={onPressAddress}
+                  placeholder={'Type a place'}
                 />
                 {errorLocation && <ErrorMessage error={errorLocation} />}
                 <View style={styles.footerContainer}>
