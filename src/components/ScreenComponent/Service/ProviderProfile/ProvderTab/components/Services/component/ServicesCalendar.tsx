@@ -19,7 +19,7 @@ interface Props {
   availabilityData: any;
 }
 const today = new Date();
-const ServicesCalendar = ({availabilityData}: Props) => {
+const ServicesCalendar = ({availabilityData, providerOpk}: Props) => {
   const [selectedService, setSelectedService] = useState(
     availabilityData.selectData[0].id,
   );
@@ -28,8 +28,9 @@ const ServicesCalendar = ({availabilityData}: Props) => {
   const {control} = useForm();
   const navigation = useNavigation<NavigationProps>();
   const {loading, availabileDates, getAvailablity, getCurrentMonthDate} =
-    useAvailability(selectedService, navigation, monthRef);
+    useAvailability(selectedService, navigation, monthRef, providerOpk);
   const {_markedStyle} = useMarkedStyles(availabileDates);
+  console.log(_markedStyle, providerOpk);
 
   return (
     <>

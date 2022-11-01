@@ -16,7 +16,7 @@ const ProviderProfile = ({route}: Props) => {
   const _renderFooter = () => (
     <View style={styles.infoContianer}>
       <ProviderHeader />
-      <ProviderTab />
+      <ProviderTab providerOpk={providerOpk}/>
       <ProviderFooter providerOpk={providerOpk} />
     </View>
   );

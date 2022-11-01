@@ -23,7 +23,7 @@ export const useMyPetUtils = (navigation: any, onBoarding = false): Props => {
       data.payload.ok === false || data === undefined
         ? null
         : navigation.navigate('AddPetHome', {
-            opk: opk!,
+            opk: opk,
             onBoarding: onBoarding,
           });
     } else {

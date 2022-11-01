@@ -12,7 +12,7 @@ interface useActiveIndex {
   3: boolean;
   4: boolean;
 }
-const Services = () => {
+const Services = (props) => {
   const {formattedServices, availabilityData, atHome} = useServices();
   const [activeIndex, setActiveIndex] = useState<useActiveIndex | any>({
     0: true,
@@ -21,6 +21,7 @@ const Services = () => {
     3: false,
     4: false,
   });
+  console.log(formattedServices);
   return (
     <View style={styles.container}>
       <View style={styles.petTypeContainer}>
@@ -54,7 +55,7 @@ const Services = () => {
         ))}
       </View>
       <View style={styles.calendar}>
-        <ServicesCalendar availabilityData={availabilityData} />
+        <ServicesCalendar availabilityData={availabilityData} providerOpk={props.providerOpk}/>
       </View>
     </View>
   );
