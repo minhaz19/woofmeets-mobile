@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     paddingTop: 4,
   },
   shortText: {
-    maxWidth: '70%',
+    maxWidth: '65%',
     paddingTop: 4,
   },
 });

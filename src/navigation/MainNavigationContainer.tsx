@@ -252,7 +252,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         /> */}
         <Stack.Screen
           name="AddPetHome"
-          getComponent={AddPetHome}
+          Component={AddPetHome}
           options={({navigation, route}) => ({
             title: '',
             header: () => (

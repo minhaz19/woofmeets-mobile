@@ -4,7 +4,6 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
-import {useAppSelector} from '../../store/store';
 import TitleText from './text/TitleText';
 
 interface Props {
@@ -15,7 +14,6 @@ interface Props {
 
 const GoogleAutoComplete = ({onPressAddress, label, placeholder}: Props) => {
   const {colors, isDarkMode} = useTheme();
-  const {userInfo} = useAppSelector(state => state.userProfile);
   return (
     <View>
       {label && <TitleText textStyle={styles.label} text={label} />}
@@ -23,13 +21,12 @@ const GoogleAutoComplete = ({onPressAddress, label, placeholder}: Props) => {
         // ref={ref => {
         //   ref?.setAddressText('hello world');
         // }}
-        placeholder={
-          userInfo?.basicInfo?.addressLine1
-            ? userInfo?.basicInfo?.addressLine1
-            : placeholder
-        }
+        placeholder={placeholder}
         onPress={onPressAddress}
-        query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo'}}
+        query={{
+          key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo',
+          components: 'country:us',
+        }}
         fetchDetails={true}
         onFail={() => {}}
         onNotFound={() => {}}

@@ -17,8 +17,6 @@ import {
 } from '../../../../utils/config/Data/filterProviderDatas';
 import ButtonCom from '../../../UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import Colors from '../../../../constants/Colors';
 import AppSelectField from '../../../common/Form/AppSelectField';
 import {useForm} from 'react-hook-form';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
@@ -27,13 +25,13 @@ import FilterMyPet from './FilterMyPet';
 import FilterDaySelect from './FilterDaySelect';
 import FilterSchedule from './FilterSchedule';
 import {Calendar, Repeat} from '../../../../assets/svgs/SVG_LOGOS';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
 import {
   setIsYardEnabled,
   setScheduleId,
   setSelectedHome,
 } from '../../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
+import GoogleAutoComplete from '../../../common/GoogleAutoComplete';
 
 const schedule = [
   {
@@ -78,7 +76,6 @@ const FilterProviderBody = ({
   petType,
   scheduleId,
 }: Props) => {
-  const {colors, isDarkMode} = useTheme();
   const dispatch = useAppDispatch();
   const [OpenDropIn, setOpenDropIn] = useState(false);
   const [OpenDropOut, setOpenDropOut] = useState(false);
@@ -119,60 +116,9 @@ const FilterProviderBody = ({
           control={control}
         />
         <TitleText textStyle={styles.label} text={'Location'} />
-        <GooglePlacesAutocomplete
-          placeholder="Type a place"
-          onPress={onPressAddress}
-          query={{key: 'AIzaSyCfhL0D8h89t_m4xilQ-Nb8rlVpzXqAjdo'}}
-          fetchDetails={true}
-          onFail={() => {}}
-          onNotFound={() => {}}
-          keyboardShouldPersistTaps={'always'}
-          keepResultsAfterBlur={true}
-          styles={{
-            container: {
-              flex: 0,
-            },
-            description: {
-              color: colors.headerText,
-              fontSize: Text_Size.Text_11,
-            },
-            textInput: {
-              backgroundColor: isDarkMode
-                ? Colors.dark.background
-                : Colors.light.background,
-              height: 40,
-              // borderRadius: 5,
-              paddingVertical: 5,
-              paddingHorizontal: 10,
-              fontSize: Text_Size.Text_0,
-              borderColor: colors.borderColor,
-              borderWidth: 1,
-              flex: 1,
-              color: colors.headerText,
-            },
-            predefinedPlacesDescription: {
-              color: colors.headerText,
-            },
-            poweredContainer: {
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              borderBottomRightRadius: 5,
-              borderBottomLeftRadius: 5,
-              borderColor: '#c8c7cc',
-              borderTopWidth: 0.5,
-              backgroundColor: isDarkMode
-                ? Colors.dark.background
-                : Colors.light.background,
-            },
-            row: {
-              backgroundColor: isDarkMode
-                ? Colors.dark.background
-                : Colors.light.background,
-              padding: 13,
-              height: 44,
-              flexDirection: 'row',
-            },
-          }}
+        <GoogleAutoComplete
+          onPressAddress={onPressAddress}
+          placeholder={'Type a place'}
         />
         {(isService.serviceId === 3 ||
           isService.serviceId === 4 ||

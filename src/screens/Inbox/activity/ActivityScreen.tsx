@@ -23,8 +23,6 @@ const ActivityScreen = (props: {
   const {loading, proposal} = useAppSelector(state => state.proposal);
   const {loading: petLoading} = useAppSelector(state => state.allPets);
   const {appointmentOpk} = props.route.params;
-  console.log(appointmentOpk);
-
   useEffect(() => {
     dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAllPets());

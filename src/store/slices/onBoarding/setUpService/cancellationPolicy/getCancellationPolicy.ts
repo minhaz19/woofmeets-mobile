@@ -9,7 +9,6 @@ export const getCancellationPolicy = createAsyncThunk(
       const response: ApiResponse<any> = await apiClient.get(
         '/cancellation-policy',
       );
-      console.log('can', response);
       if (!response.ok) {
         throw new Error(response.data?.message);
       }

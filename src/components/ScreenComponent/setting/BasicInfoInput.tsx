@@ -38,6 +38,9 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   const image = userInfo?.image;
   const firstName = userInfo?.firstName;
   const lastName = userInfo?.lastName;
+  const previousLocation = userInfo?.basicInfo?.addressLine1
+    ? userInfo?.basicInfo?.addressLine1
+    : null;
   const {
     control,
     setValue,
@@ -155,7 +158,9 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                     <GoogleAutoComplete
                       onPressAddress={onPressAddress}
                       label={item.title}
-                      placeholder={item.placeholder}
+                      placeholder={
+                        previousLocation ? previousLocation : item.placeholder
+                      }
                     />
                   ) : item.name === 'state' ? (
                     <AppSelectState

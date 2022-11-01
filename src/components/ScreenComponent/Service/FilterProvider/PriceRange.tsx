@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {StyleSheet, View} from 'react-native';
 import React, {memo} from 'react';
 import TitleText from '../../../common/text/TitleText';
@@ -33,7 +32,7 @@ const PriceRange = ({multiSliderValue}: Props) => {
           animateTransitions={true}
           value={[multiSliderValue[0], multiSliderValue[1]]}
           minimumValue={0}
-          maximumValue={150}
+          maximumValue={200}
           trackMarks={[0, 10]}
           step={1}
           thumbTouchSize={{width: 30, height: 30}}
