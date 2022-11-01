@@ -17,6 +17,7 @@ type StackParamList = {
 type NavigationProps = StackNavigationProp<StackParamList>;
 interface Props {
   availabilityData: any;
+  providerOpk: string;
 }
 const today = new Date();
 const ServicesCalendar = ({availabilityData, providerOpk}: Props) => {

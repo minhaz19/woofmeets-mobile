@@ -14,7 +14,7 @@ import BottomSpacing from '../../../UI/BottomSpacing';
 import {format} from 'date-fns';
 import changeTextLetter from '../../../common/changeTextLetter';
 interface Props {
-  statusType: string;
+  statusType: string; 
 }
 const PendingStatus = ({statusType}: Props) => {
   let navigation = useNavigation<any>();
@@ -71,7 +71,7 @@ const PendingStatus = ({statusType}: Props) => {
                 const serviceTypeId = item?.providerService?.serviceTypeId;
                 const proposalDate = item.appointmentProposal[0];
                 const isRecurring = item.appointmentProposal[0]?.isRecurring;
- 
+
                 return (
                   <ReusableCard
                     key={item.opk}
