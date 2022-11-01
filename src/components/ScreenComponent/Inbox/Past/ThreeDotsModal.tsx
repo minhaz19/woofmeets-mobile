@@ -33,13 +33,13 @@ const ThreeDotsModal: FC<Props> = props => {
     },
     {
       id: 3,
-      name: props.isReviewed.length > 0 ? 'Already reviewed' : 'Review',
+      name: props?.isReviewed?.length > 0 ? 'Already reviewed' : 'Review',
       icon: (
         <MaterialIcons name="rate-review" size={24} color={Colors.primary} />
       ),
       screen: () => {
-        props.isReviewed.length === 0 && props.setIsReviewModal(true);
-        props.isReviewed.length === 0 && props.setIsThreeDotsModal(false);
+        props?.isReviewed?.length === 0 && props?.setIsReviewModal(true);
+        props?.isReviewed?.length === 0 && props?.setIsThreeDotsModal(false);
       },
     },
     {
@@ -54,7 +54,7 @@ const ThreeDotsModal: FC<Props> = props => {
   return (
     <>
       <View>
-        {modalData.map(item => {
+        {modalData?.map(item => {
           return (
             <AppTouchableOpacity
               key={item.id}

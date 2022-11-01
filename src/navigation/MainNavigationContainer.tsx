@@ -102,10 +102,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack
-                navigation={navigation}
-                title="Become a Sitter"
-              />
+              <HeaderWithBack navigation={navigation} title="Become a Sitter" />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -252,7 +249,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         /> */}
         <Stack.Screen
           name="AddPetHome"
-          Component={AddPetHome}
+          component={AddPetHome}
           options={({navigation, route}) => ({
             title: '',
             header: () => (
