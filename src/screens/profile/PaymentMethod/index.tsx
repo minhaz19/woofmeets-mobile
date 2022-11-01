@@ -8,8 +8,7 @@ import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import NoCards from '../../../components/ScreenComponent/profile/PaymentMethod/NoCards';
 import {getCurrentplan} from '../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
-import {v4 as uuidv4} from 'uuid';
-import apiClient from '../../../api/client';
+
 import {Alert} from 'react-native';
 import {confirmPayment} from '@stripe/stripe-react-native';
 const endpoint = '/stripe-payment-method/default-card-info';
@@ -22,7 +21,8 @@ interface Props {
   };
 }
 const uuid = Math.random().toString(36).substring(2, 36);
-const subscriptionEndpoint = '/subscriptions/subscribe/';
+const subscriptionEndpoint =
+  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
 const PaymentMethods = ({route, navigation}: Props) => {
   const dispatch = useAppDispatch();
   const {cards, loading} = useAppSelector(state => state.cards);
@@ -30,7 +30,10 @@ const PaymentMethods = ({route, navigation}: Props) => {
   const [CardId, setDefaultCard] = useState(null);
   const [selectedCard, setSelectedCard] = useState<null | number>(null);
   const {request} = useApi(methods._get);
-  const {loading: Hloading, request: postRequest} = useApi(methods._post);
+  // const {loading: Hloading, request: postRequest} = useApi(methods._post);
+  const {loading: idemLoading, request: idemRequest} = useApi(
+    methods._idempt_post,
+  );
   const {sequence} = route.params;
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const handlePayment = async () => {
@@ -42,14 +45,10 @@ const PaymentMethods = ({route, navigation}: Props) => {
     } else if (sequence === 'Appointment') {
       setAppointmentLoading(true);
       const cardId = selectedCard !== null ? selectedCard : CardId;
-      const result: any = await apiClient.post(
+      const result: any = await idemRequest(
         `/appointment/${proposedServiceInfo.appointmentOpk}/billing/${proposedServiceInfo.billing[0]?.id}/pay?cardId=${cardId}`,
         {},
-        {
-          headers: {
-            'Idempontency-Key': uuid,
-          },
-        },
+        uuid,
       );
 
       if (result.ok) {
@@ -83,12 +82,48 @@ const PaymentMethods = ({route, navigation}: Props) => {
       setAppointmentLoading(false);
     } else {
       const selectCardId = selectedCard !== null ? selectedCard : CardId;
-      const result = await postRequest(
-        `${subscriptionEndpoint}?priceId=${sequence}&cardId=${selectCardId}`,
+      const result = await idemRequest(
+        `${subscriptionEndpoint}priceId=${sequence}&cardId=${selectCardId}`,
+        {},
+        uuid,
       );
-      result.ok &&
-        (await dispatch(getCurrentplan()),
-        navigation.navigate('SubscriptionScreen'));
+      console.log('result', result);
+      if (result.ok) {
+        dispatch(getCurrentplan());
+        navigation.navigate('SubscriptionScreen');
+      } else {
+        Alert.alert(result.data.message);
+      }
+      // if (result.ok) {
+      //   if (result.ok && result?.data.data.requiresAction === true) {
+      //     try {
+      //       const clientScreet = result.data.data.clientSecret;
+      //       const {paymentIntent, error: dsError}: any = await confirmPayment(
+      //         clientScreet,
+      //       );
+      //       console.log('m', paymentIntent, dsError);
+      //       if (dsError.code === 'Failed') {
+      //         return Alert.alert(dsError.localizedMessage);
+      //       }
+
+      //       paymentIntent?.status === 'Succeeded' &&
+      //         (dispatch(getCurrentplan()),
+      //         navigation.navigate('SubscriptionScreen'));
+      //     } catch (er: any) {
+      //       Alert.alert(er.message);
+      //     }
+      //   } else if (result.ok && result?.data.data.requiresAction === false) {
+      //     dispatch(getCurrentplan());
+      //     navigation.navigate('SubscriptionScreen');
+      //   }
+      // } else if (!result.ok && result.status === 400) {
+      //   Alert.alert(result.data.message);
+      //   // Alert.alert(
+      //   //   'We are unable to proccess your payment request right now, Please reload the application and try again ',
+      //   // );
+      // } else if (!result.ok && result.status === 409) {
+      //   Alert.alert(result?.data?.message);
+      // }
     }
   };
   const callApi = async () => {
@@ -111,7 +146,7 @@ const PaymentMethods = ({route, navigation}: Props) => {
             CardId={CardId}
             sequence={sequence}
             onPress={handlePayment}
-            loading={Hloading || appointmentLoading}
+            loading={idemLoading || appointmentLoading}
             setSelectedCard={setSelectedCard}
           />
         </>

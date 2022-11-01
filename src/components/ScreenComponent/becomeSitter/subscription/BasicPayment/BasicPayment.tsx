@@ -1,5 +1,5 @@
-import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import {Alert, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
 import AnimatedLottieView from 'lottie-react-native';
 import TitleText from '../../../../common/text/TitleText';
 import DescriptionText from '../../../../common/text/DescriptionText';
@@ -16,8 +16,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
-const endpoint = '/subscriptions/pay-basic-verification-payment';
-const subscriptionEndpoint = '/subscriptions/subscribe';
+import {confirmPayment} from '@stripe/stripe-react-native';
+const endpointBasicPayment =
+  'https://api-stg.woofmeets.com/v2/subscriptions/pay-basic-verification-payment?';
+const subscriptionEndpoint =
+  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
+
+const uuid = Math.random().toString(36).substring(2, 36);
 interface Props {
   route: {
     params: {
@@ -30,21 +35,72 @@ interface Props {
     goBack: () => void;
   };
 }
+
 const BasicPayment = ({route, navigation}: Props) => {
   const {sequence, cardId} = route.params;
-  const {loading, request} = useApi(methods._post);
+  const {loading, request} = useApi(methods._idempt_post);
+  const [idemLoading, setIdemLoading] = useState(false);
   const dispatch = useAppDispatch();
   const handleSubmit = async () => {
-    const result = await request(endpoint + `?cardId=${cardId}`);
+    const result = await request(
+      endpointBasicPayment + `cardId=${cardId}`,
+      {},
+      uuid,
+    );
+    console.log('based pay res', uuid, result);
+
     if (result.ok) {
-      const res = await request(
-        `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+      if (result.ok && result?.data?.data?.requiresAction === true) {
+        try {
+          const clientScreet = result.data.data.clientSecret;
+          const {paymentIntent, error: dsError}: any = await confirmPayment(
+            clientScreet,
+          );
+          console.log('3ds', paymentIntent, dsError);
+          dsError.code === 'Failed' && Alert.alert(dsError.localizedMessage);
+
+          if (paymentIntent?.status === 'Succeeded') {
+            const res = await request(
+              `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+              {},
+              uuid,
+            );
+            setIdemLoading(false);
+            console.log('pay res', res);
+
+            if (res.ok) {
+              dispatch(getCurrentplan());
+              dispatch(getSubscription());
+              navigation.navigate('SubscriptionScreen');
+            }
+          }
+        } catch (er: any) {
+          setIdemLoading(false);
+          Alert.alert(er.message);
+        }
+      } else if (result.ok && result?.data.data.requiresAction === false) {
+        const res = await request(
+          `${subscriptionEndpoint}priceId=${sequence}&cardId=${cardId}`,
+          {},
+          uuid,
+        );
+        setIdemLoading(false);
+        if (res.ok) {
+          dispatch(getCurrentplan());
+          dispatch(getSubscription());
+          navigation.navigate('SubscriptionScreen');
+        }
+      }
+    } else if (!result.ok && result.status === 400) {
+      setIdemLoading(false);
+      Alert.alert(
+        'We are unable to proccess your payment request right now, Please reload the application and try again ',
       );
-      res.ok &&
-        (navigation.navigate('SubscriptionScreen'),
-        dispatch(getCurrentplan()),
-        dispatch(getSubscription()));
+    } else if (!result.ok && result.status === 409) {
+      setIdemLoading(false);
+      Alert.alert(result?.data?.message);
     }
+    // setIdemLoading(false);
   };
   const {colors} = useTheme();
   return (
@@ -81,7 +137,7 @@ const BasicPayment = ({route, navigation}: Props) => {
         containerStyle={btnStyles.containerStyleFullWidth}
         titleStyle={btnStyles.titleStyle}
         onSelect={handleSubmit}
-        loading={loading}
+        loading={loading || idemLoading}
       />
     </View>
   );
