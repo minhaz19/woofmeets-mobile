@@ -34,6 +34,7 @@ export const useAddCardForm = (
   useEffect(() => {
     cd();
   }, []);
+  console.log('sce', sequence);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const handleValues = async (cardData: any) => {
     setTokenLoading(true);
@@ -61,7 +62,8 @@ export const useAddCardForm = (
         token: token.id,
       };
       const result = await request(endpoint, reqPayload);
-      if (result.ok && (sequence !== null || sequence !== undefined)) {
+      console.log('res', reqPayload, result);
+      if (result.ok && sequence !== null && sequence !== undefined) {
         const cardId = result.data.data.id;
         if (sequence === 1) {
           navigation.navigate('BasicPayment', {
@@ -163,9 +165,10 @@ export const useAddCardForm = (
             setAppointmentLoading(false);
             Alert.alert(appointmentResult?.data?.message);
           }
-        } else {
-          navigation.navigate('PaymentMethod', {sequence: null});
         }
+      } else if (sequence === null) {
+        console.log('in here');
+        navigation.navigate('PaymentMethod', {sequence: null});
       }
       dispatch(getCards());
     }

@@ -19,6 +19,7 @@ type NavigationProps = StackNavigationProp<StackParamList>;
 const NoCards = ({sequence}: Props) => {
   const {colors} = useTheme();
   const navigation = useNavigation<NavigationProps>();
+
   return (
     <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <View>
