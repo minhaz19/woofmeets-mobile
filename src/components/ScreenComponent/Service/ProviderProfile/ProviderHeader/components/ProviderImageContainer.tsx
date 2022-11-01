@@ -2,10 +2,9 @@
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
-import {DogFeet, ProfilePicSvg} from '../../../../../../assets/svgs/SVG_LOGOS';
+import {DogFeet} from '../../../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../../../constants/Colors';
 import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
-import {ProfileIcon} from '../../../../../../assets/svgs/Setting_SVG';
 interface Props {
   image: string;
   rounded?: Boolean;

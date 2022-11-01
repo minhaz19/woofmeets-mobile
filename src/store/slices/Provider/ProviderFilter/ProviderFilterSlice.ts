@@ -10,7 +10,7 @@ const initialState: any = {
   },
   selectedPet: [],
   selectedHome: '',
-  multiSliderValue: [0, 150],
+  multiSliderValue: [0, 200],
   dropIn: null,
   dropOut: null,
   isService: {

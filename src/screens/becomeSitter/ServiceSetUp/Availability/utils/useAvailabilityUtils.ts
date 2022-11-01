@@ -26,12 +26,10 @@ export const useAvailabilityUtils = (id: string) => {
       pottyBreak: data.pottyBreak,
       fulltime: data.fulltime,
     };
-
     const response: ApiResponse<any> = await PService(
       postEndPoint,
       id ? putFormattedData : data,
     );
-    console.log(response);
     if (response?.data?.data) {
       dispatch(setAvailability(response?.data?.data));
       dispatch(setBoardingSelection({pass: 1}));

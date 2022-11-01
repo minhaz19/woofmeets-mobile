@@ -11,10 +11,10 @@ const SitterMap = () => {
   return (
     <>
       <TitleText textStyle={styles.titleText} text="Location" />
-      <View style={styles.locationText}>
+      {/* <View style={styles.locationText}>
         <MapMarker />
         <ShortText textStyle={styles.shortText} text="1.5 mile away from you" />
-      </View>
+      </View> */}
       <View style={styles.container}>
         <MapView
           style={styles.map}
@@ -25,9 +25,15 @@ const SitterMap = () => {
             longitudeDelta: 0.0121,
           }}>
           <Marker
-            coordinate={{latitude: 37.78825, longitude: -122.4324}}
-            title={'Meers home'}
-            description={'Meers wife home'}
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+            // title={'Meers home'}
+            // description={'Meers wife home'}
+            image={{
+              uri: 'https://toppng.com/uploads/preview/map-point-google-map-marker-gif-11562858751s4qufnxuml.png',
+            }}
           />
         </MapView>
       </View>

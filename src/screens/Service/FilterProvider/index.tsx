@@ -131,7 +131,7 @@ const FilterProvider = () => {
     dispatch(setLocation({lat: null, lng: null}));
     dispatch(setSelectedPet(pets));
     dispatch(setSelectedHome(''));
-    dispatch(setMultiSliderValue([0, 150]));
+    dispatch(setMultiSliderValue([0, 200]));
     dispatch(setDropIn(null));
     dispatch(setDropOut(null));
     dispatch(setIsService({service: '', serviceId: ''}));
