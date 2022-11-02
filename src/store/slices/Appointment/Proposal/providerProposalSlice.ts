@@ -78,6 +78,9 @@ const providerProposalSlice = createSlice({
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
                 billing: modpayload.appointment.billing,
+                rating: modpayload.rating,
+                review: modpayload.appointment.review,
+                providerTimeZone: modpayload.appointment.providerTimeZone,
               }
             : modpayload.appointment.providerService.serviceTypeId === 3 ||
               modpayload.appointment.providerService.serviceTypeId === 5
@@ -129,6 +132,9 @@ const providerProposalSlice = createSlice({
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
                 billing: modpayload.appointment.billing,
+                providerTimeZone: modpayload.appointment.providerTimeZone,
+                rating: modpayload.rating,
+                review: modpayload.appointment.review,
               }
             : modpayload.appointment.providerService.serviceTypeId === 4
             ? {
@@ -176,6 +182,9 @@ const providerProposalSlice = createSlice({
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
                 billing: modpayload.appointment.billing,
+                rating: modpayload.rating,
+                review: modpayload.appointment.review,
+                providerTimeZone: modpayload.appointment.providerTimeZone,
               }
             : null;
       })

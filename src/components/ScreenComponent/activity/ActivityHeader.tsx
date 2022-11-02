@@ -19,6 +19,7 @@ import {getProviderApnt} from '../../../store/slices/Appointment/Inbox/Provider/
 import changeTextLetter from '../../common/changeTextLetter';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 const acceptEndpoint = '/appointment/accept/proposal/';
+const completeEndpoint = '/appointment/complete/';
 const rejectEndpoint = '/appointment/proposal/reject/';
 const ActivityHeader = (props: {
   setIsDetailsModal: (arg0: boolean) => void;
@@ -42,6 +43,31 @@ const ActivityHeader = (props: {
     }
   };
 
+  const handleComplete = () => {
+    Alert.alert(
+      'Complete Appointment',
+      'Are you sure you want to Complete and close this appointment',
+      [
+        {
+          text: 'No',
+          onPress: () => {},
+        },
+        {
+          text: 'Yes',
+          onPress: async () => {
+            const r = await request(completeEndpoint + props.opk);
+            if (r.ok) {
+              dispatch(getAppointmentStatus('PAID'));
+              dispatch(getProviderApnt('PAID'));
+              navigation.navigate('Inbox');
+            } else if (!r.ok) {
+              Alert.alert(r.data.message);
+            }
+          },
+        },
+      ],
+    );
+  };
   const handleReject = async () => {
     Alert.alert(
       'Cancel Appointment',
@@ -67,6 +93,7 @@ const ActivityHeader = (props: {
       ],
     );
   };
+  console.log('propsed', proposedServiceInfo);
 
   return (
     <View style={[styles.container, {borderColor: colors.borderColor}]}>
@@ -240,7 +267,11 @@ const ActivityHeader = (props: {
                 // style={{width: SCREEN_WIDTH / 5}}
                 onPress={() => navigation.navigate('AppointmentSuccess')}>
                 <TitleText
-                  text="Paid Successfully"
+                  text={`${
+                    proposedServiceInfo?.userId === user?.user?.id
+                      ? 'Paid'
+                      : 'Paid Successfully'
+                  }`}
                   textStyle={{
                     ...styles.textStyle,
                     textAlign: 'center',
@@ -249,6 +280,39 @@ const ActivityHeader = (props: {
                 />
               </TouchableOpacity>
               {/* <View style={styles.divider} /> */}
+              {proposedServiceInfo?.userId === user?.user?.id &&
+                proposedServiceInfo?.status === 'PAID' && (
+                  <>
+                    <View style={styles.divider} />
+                    <TouchableOpacity
+                      // style={{width: SCREEN_WIDTH / 5}}
+                      onPress={handleComplete}>
+                      <TitleText
+                        text="Complete"
+                        textStyle={{
+                          ...styles.textStyle,
+                          textAlign: 'center',
+                          color: Colors.light.background,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </>
+                )}
+            </>
+          ) : proposedServiceInfo?.status === 'COMPLETED' ? (
+            <>
+              <TouchableOpacity
+                // style={{width: SCREEN_WIDTH / 5}}
+                onPress={() => {}}>
+                <TitleText
+                  text={`Completed`}
+                  textStyle={{
+                    ...styles.textStyle,
+                    textAlign: 'center',
+                    color: Colors.light.background,
+                  }}
+                />
+              </TouchableOpacity>
             </>
           ) : null}
           {proposedServiceInfo?.status === 'PROPOSAL' && (

@@ -51,33 +51,28 @@ const BasicPayment = ({route, navigation}: Props) => {
 
     if (result.ok) {
       if (result.ok && result?.data?.data?.requiresAction === true) {
-        try {
-          const clientScreet = result.data.data.clientSecret;
-          const {paymentIntent, error: dsError}: any = await confirmPayment(
-            clientScreet,
+        const clientScreet = result.data.data.clientSecret;
+        const {paymentIntent, error: dsError}: any = await confirmPayment(
+          clientScreet,
+        );
+        console.log('3ds', paymentIntent, dsError);
+
+        if (paymentIntent?.status === 'Succeeded') {
+          const res = await request(
+            `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+            {},
+            uuid,
           );
-          console.log('3ds', paymentIntent, dsError);
-          dsError.code === 'Failed' && Alert.alert(dsError.localizedMessage);
-
-          if (paymentIntent?.status === 'Succeeded') {
-            const res = await request(
-              `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
-              {},
-              uuid,
-            );
-            setIdemLoading(false);
-            console.log('pay res', res);
-
-            if (res.ok) {
-              dispatch(getCurrentplan());
-              dispatch(getSubscription());
-              navigation.navigate('SubscriptionScreen');
-            }
-          }
-        } catch (er: any) {
           setIdemLoading(false);
-          Alert.alert(er.message);
+          console.log('pay res', res);
+
+          if (res.ok) {
+            dispatch(getCurrentplan());
+            dispatch(getSubscription());
+            navigation.navigate('SubscriptionScreen');
+          }
         }
+        dsError !== undefined && Alert.alert(dsError.localizedMessage);
       } else if (result.ok && result?.data.data.requiresAction === false) {
         const res = await request(
           `${subscriptionEndpoint}priceId=${sequence}&cardId=${cardId}`,

@@ -9,11 +9,41 @@ import AppTouchableOpacity from '../../../../components/common/AppClickEvents/Ap
 import {useNavigation} from '@react-navigation/native';
 import MiddleModal from '../../../../components/UI/modal/MiddleModal';
 import Text_Size from '../../../../constants/textScaling';
-
+import {Controller, useForm} from 'react-hook-form';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
+import ButtonCom from '../../../../components/UI/ButtonCom';
+import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
+const endPoint = '/appointment/cancel/';
 const AppointmentSuccess = () => {
   const [isVisible, setIsVisible] = useState(false);
   const {colors, isDarkMode} = useTheme();
   const navigation = useNavigation();
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  const dispatch = useAppDispatch();
+  const {loading, request} = useApi(methods._put);
+  const {control, handleSubmit} = useForm({
+    defaultValues: {
+      cancelText: '',
+    },
+  });
+  const handleCancel = async (text: any) => {
+    const payload = {
+      cancelReason: text,
+    };
+    const result = await request(
+      endPoint + proposedServiceInfo.appointmentOpk,
+      payload,
+    );
+    console.log('res', result);
+    if (result.ok) {
+      dispatch(getProviderApnt(proposedServiceInfo.appointmentOpk));
+      setIsVisible(false);
+      navigation.navigate('Inbox');
+    }
+  };
   return (
     <>
       <ScrollView
@@ -95,27 +125,48 @@ const AppointmentSuccess = () => {
                 text={'Why you want to cancel this subscription?'}
                 textStyle={{fontWeight: 'bold', fontSize: Text_Size.Text_1}}
               />
-              <TextInput
-                // autoCapitalize={}
-                keyboardType={'default'}
-                placeholder={'Provider short description...'}
-                onChangeText={() => {}}
-                value={''}
-                numberOfLines={10}
-                style={{
-                  // alignSelf: 'flex-start',
-                  height: 120,
-                  borderWidth: 1,
-                  borderColor: colors.borderColor,
-                  borderRadius: 4,
-                  color: isDarkMode ? 'white' : 'black',
-                  fontSize: Text_Size.Text_11,
-                  marginTop: 20,
-                  padding: 10,
+              <Controller
+                control={control}
+                name="cancelText"
+                render={({field: {onChange, value}, fieldState: {}}) => {
+                  return (
+                    <TextInput
+                      // autoCapitalize={}
+                      autoCorrect={false}
+                      keyboardType={'default'}
+                      placeholder={'Provider short description...'}
+                      onChangeText={onChange}
+                      value={value}
+                      numberOfLines={10}
+                      multiline
+                      style={{
+                        // alignSelf: 'flex-start',
+                        height: 120,
+                        borderWidth: 1,
+                        borderColor: colors.borderColor,
+                        borderRadius: 4,
+                        color: isDarkMode ? 'white' : 'black',
+                        fontSize: Text_Size.Text_8,
+                        // marginTop: 20,
+                        padding: 10,
+                        paddingVertical: 10,
+
+                        marginVertical: 20,
+                      }}
+                    />
+                  );
                 }}
               />
-              <AppTouchableOpacity
-                onPress={() => {}}
+              <ButtonCom
+                title="Cancel Plan"
+                textAlignment={btnStyles.textAlignment}
+                containerStyle={btnStyles.containerStyleFullWidth}
+                titleStyle={btnStyles.titleStyle}
+                onSelect={handleSubmit(handleCancel)}
+                loading={loading}
+              />
+              {/* <AppTouchableOpacity
+                onPress={handleSubmit(handleCancel)}
                 style={{
                   // width: '100%',
 
@@ -132,7 +183,7 @@ const AppointmentSuccess = () => {
                   }}
                   text={'Submit Cancellation'}
                 />
-              </AppTouchableOpacity>
+              </AppTouchableOpacity> */}
             </View>
           </>
         }

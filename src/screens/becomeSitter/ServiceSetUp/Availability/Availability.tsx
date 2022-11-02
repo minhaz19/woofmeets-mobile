@@ -10,7 +10,6 @@ import {
 } from './utils/AvailabilityInitialValues';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
-import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {getAvailability} from '../../../../store/slices/onBoarding/setUpService/availability/getAvailability';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
@@ -74,7 +73,8 @@ const Availability = () => {
             itemId,
           )}
           validationSchema={availabilityValidation}
-          enableReset>
+          // enableReset
+        >
           <SubAvailability handlePost={handlePost} loading={isLoading} />
         </AppForm>
       </KeyboardAwareScrollView>

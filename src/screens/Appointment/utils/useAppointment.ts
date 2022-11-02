@@ -124,8 +124,8 @@ export const useAppointment = (providerOpk: string) => {
           formattedMessage: boardingSittingFT,
         };
 
-
         const response = await request(endpoint, boardSittingPayload);
+        console.log('boarding res', response);
         response.ok &&
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,

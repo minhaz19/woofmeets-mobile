@@ -7,7 +7,7 @@ export const getCurrentplan = createAsyncThunk(
   async () => {
     try {
       const response: ApiResponse<any> = await apiClient.get(
-        '/subscriptions/my-current-subscription',
+        'https://api-stg.woofmeets.com/v2/subscriptions/my-current-subscription',
       );
       if (!response.ok) {
         if (response.data) {

@@ -8,8 +8,10 @@ import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import TitleText from '../../../../common/text/TitleText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Colors from '../../../../../constants/Colors';
-
-const QuestionModals = () => {
+interface Props {
+  upgradePlan?: boolean;
+}
+const QuestionModals = ({}: Props) => {
   const [faq1, setFaq1] = useState(false);
   const [faq2, setFaq2] = useState(false);
   const [faq3, setFaq3] = useState(false);

@@ -9,7 +9,6 @@ import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import Screen from '../../../components/common/Screen';
 import Welcome from '../../../components/ScreenComponent/becomeSitter/subscription/Welcome/Welcome';
-// import {useAppSelector} from '../../../store/store';
 import Colors from '../../../constants/Colors';
 import QuestionModals from '../../../components/ScreenComponent/becomeSitter/subscription/QuestionModal/QuestionModals';
 interface Props {
@@ -30,7 +29,6 @@ const SubscriptionScreen = ({route}: Props) => {
     ssLoading,
     cardLoading,
   } = useSubscription();
-  console.log('current', currentPlan, formattedPackageRate);
   return (
     <Screen style={{flex: 1}}>
       {(loading || planLoading) && <AppActivityIndicator visible={true} />}
@@ -52,6 +50,7 @@ const SubscriptionScreen = ({route}: Props) => {
                 currentPlan?.subscriptionInfo?.membershipPlanPrice
                   .membershipPlanId
               }
+              currentPlan={currentPlan}
             />
           </>
         ) : (

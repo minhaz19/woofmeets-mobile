@@ -71,7 +71,7 @@ const ApprovedStatus = ({statusType}: Props) => {
                 const serviceTypeId = item?.providerService?.serviceTypeId;
                 const proposalDate = item.appointmentProposal[0];
                 const isRecurring = item.appointmentProposal[0]?.isRecurring;
-           
+
                 return (
                   <ReusableCard
                     key={item.opk}

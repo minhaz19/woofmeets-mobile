@@ -48,6 +48,7 @@ import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/Cancellatio
 import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
 import CheckoutDetails from '../screens/Inbox/checkout/CheckoutDetails';
 import AddPetHome from '../screens/pet/AddPet/AddPetHome';
+import UpgradePlan from '../components/ScreenComponent/becomeSitter/subscription/UpgradePlan/UpgradePlan';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -598,6 +599,13 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="AppointmentSuccess"
           component={AppointmentSuccess}
+          options={() => ({
+            headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name="UpgradePlan"
+          component={UpgradePlan}
           options={() => ({
             headerShown: false,
           })}

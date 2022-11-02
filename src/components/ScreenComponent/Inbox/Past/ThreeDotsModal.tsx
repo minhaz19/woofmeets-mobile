@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import React, {FC} from 'react';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import {SCREEN_HEIGHT} from '../../../../constants/WindowSize';
@@ -11,6 +11,7 @@ import Colors from '../../../../constants/Colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useAppSelector} from '../../../../store/store';
 
 interface Props {
   setIsReviewModal: (value: boolean) => void;
@@ -22,6 +23,7 @@ interface Props {
 const ThreeDotsModal: FC<Props> = props => {
   const {colors} = useTheme();
   const navigation = useNavigation();
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const modalData = [
     {
       id: 2,
@@ -38,8 +40,20 @@ const ThreeDotsModal: FC<Props> = props => {
         <MaterialIcons name="rate-review" size={24} color={Colors.primary} />
       ),
       screen: () => {
-        props?.isReviewed?.length === 0 && props?.setIsReviewModal(true);
-        props?.isReviewed?.length === 0 && props?.setIsThreeDotsModal(false);
+        // props?.setIsReviewModal(true);
+        // props?.setIsThreeDotsModal(false);
+        if (proposedServiceInfo.status !== 'COMPLETED') {
+          Alert.alert(
+            'You can only review once you complete the appointment successfully',
+          );
+        } else {
+          props?.isReviewed?.length === 0 && props?.setIsReviewModal(true);
+          props?.isReviewed?.length === 0 && props?.setIsThreeDotsModal(false);
+          props?.isReviewed?.length > 0 &&
+            Alert.alert(
+              'You have already reviewed this provider and his service',
+            );
+        }
       },
     },
     {

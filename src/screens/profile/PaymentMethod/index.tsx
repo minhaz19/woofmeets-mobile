@@ -22,7 +22,7 @@ interface Props {
 }
 const uuid = Math.random().toString(36).substring(2, 36);
 const subscriptionEndpoint =
-  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
+  'https://api-stg.woofmeets.com/v2/subscriptions/subscribe?';
 const PaymentMethods = ({route, navigation}: Props) => {
   const dispatch = useAppDispatch();
   const {cards, loading} = useAppSelector(state => state.cards);
@@ -30,7 +30,6 @@ const PaymentMethods = ({route, navigation}: Props) => {
   const [CardId, setDefaultCard] = useState(null);
   const [selectedCard, setSelectedCard] = useState<null | number>(null);
   const {request} = useApi(methods._get);
-  // const {loading: Hloading, request: postRequest} = useApi(methods._post);
   const {loading: idemLoading, request: idemRequest} = useApi(
     methods._idempt_post,
   );
@@ -53,19 +52,15 @@ const PaymentMethods = ({route, navigation}: Props) => {
 
       if (result.ok) {
         if (result.ok && result?.data.data.requiresAction === true) {
-          try {
-            const clientScreet = result.data.data.clientSecret;
-            const {paymentIntent, error: dsError}: any = await confirmPayment(
-              clientScreet,
-            );
-            dsError.code === 'Failed' && Alert.alert(dsError.localizedMessage);
-            setAppointmentLoading(false);
-            paymentIntent?.status === 'Succeeded' &&
-              navigation.navigate('AppointmentSuccess');
-          } catch (er: any) {
-            setAppointmentLoading(false);
-            Alert.alert(er.message);
-          }
+          const clientScreet = result.data.data.clientSecret;
+          const {paymentIntent, error: dsError}: any = await confirmPayment(
+            clientScreet,
+          );
+          console.log('payment', paymentIntent, dsError);
+          setAppointmentLoading(false);
+          paymentIntent?.status === 'Succeeded' &&
+            navigation.navigate('AppointmentSuccess');
+          dsError !== undefined && Alert.alert(dsError.localizedMessage);
         } else if (result.ok && result?.data.data.requiresAction === false) {
           setAppointmentLoading(false);
           navigation.navigate('AppointmentSuccess');
@@ -78,6 +73,7 @@ const PaymentMethods = ({route, navigation}: Props) => {
       } else if (!result.ok && result.status === 409) {
         setAppointmentLoading(false);
         Alert.alert(result?.data?.message);
+        console.log('ressssss', result);
       }
       setAppointmentLoading(false);
     } else {
@@ -88,42 +84,33 @@ const PaymentMethods = ({route, navigation}: Props) => {
         uuid,
       );
       console.log('result', result);
-      if (result.ok) {
-        dispatch(getCurrentplan());
-        navigation.navigate('SubscriptionScreen');
-      } else {
-        Alert.alert(result.data.message);
-      }
-      // if (result.ok) {
-      //   if (result.ok && result?.data.data.requiresAction === true) {
-      //     try {
-      //       const clientScreet = result.data.data.clientSecret;
-      //       const {paymentIntent, error: dsError}: any = await confirmPayment(
-      //         clientScreet,
-      //       );
-      //       console.log('m', paymentIntent, dsError);
-      //       if (dsError.code === 'Failed') {
-      //         return Alert.alert(dsError.localizedMessage);
-      //       }
 
-      //       paymentIntent?.status === 'Succeeded' &&
-      //         (dispatch(getCurrentplan()),
-      //         navigation.navigate('SubscriptionScreen'));
-      //     } catch (er: any) {
-      //       Alert.alert(er.message);
-      //     }
-      //   } else if (result.ok && result?.data.data.requiresAction === false) {
-      //     dispatch(getCurrentplan());
-      //     navigation.navigate('SubscriptionScreen');
-      //   }
-      // } else if (!result.ok && result.status === 400) {
-      //   Alert.alert(result.data.message);
-      //   // Alert.alert(
-      //   //   'We are unable to proccess your payment request right now, Please reload the application and try again ',
-      //   // );
-      // } else if (!result.ok && result.status === 409) {
-      //   Alert.alert(result?.data?.message);
-      // }
+      if (result.ok) {
+        if (result.ok && result?.data.data.requiresAction === true) {
+          const clientScreet = result.data.data.clientSecret;
+          const {paymentIntent, error: dsError}: any = await confirmPayment(
+            clientScreet,
+          );
+          console.log('m', paymentIntent, dsError);
+
+          paymentIntent?.status === 'Succeeded' &&
+            (dispatch(getCurrentplan()),
+            navigation.navigate('SubscriptionScreen'));
+          dsError !== undefined && Alert.alert(dsError.localizedMessage);
+          console.log('ds', paymentIntent, dsError);
+        } else if (result.ok && result?.data.data.requiresAction === false) {
+          dispatch(getCurrentplan());
+          navigation.navigate('SubscriptionScreen');
+          console.log('sidle mistake', result);
+        }
+      } else if (!result.ok && result.status === 400) {
+        Alert.alert(result.data.message);
+        // Alert.alert(
+        //   'We are unable to proccess your payment request right now, Please reload the application and try again ',
+        // );
+      } else if (!result.ok && result.status === 409) {
+        Alert.alert(result?.data?.message);
+      }
     }
   };
   const callApi = async () => {

@@ -45,7 +45,7 @@ const Details: FC<Props> = props => {
       <View
         style={[styles.divider, {backgroundColor: colors.descriptionText}]}
       />
-      <Pricing />
+      <Pricing screen={''} />
       <BottomSpacing />
     </View>
   );
