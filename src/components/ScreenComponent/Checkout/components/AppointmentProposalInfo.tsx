@@ -66,9 +66,9 @@ const AppointmentProposalInfo = () => {
               textStyle={{paddingVertical: 2}}
             />
           </>
-        ) : proposedServiceInfo.serviceTypeId === 3 ||
-          proposedServiceInfo.serviceTypeId === 5 ? (
-          proposedServiceInfo.isRecurring ? (
+        ) : proposedServiceInfo?.serviceTypeId === 3 ||
+          proposedServiceInfo?.serviceTypeId === 5 ? (
+          proposedServiceInfo?.isRecurring ? (
             <>
               <TitleText
                 text={'Recurring Service:'}
@@ -116,8 +116,8 @@ const AppointmentProposalInfo = () => {
               />
             </>
           )
-        ) : proposedServiceInfo.serviceTypeId === 4 ? (
-          proposedServiceInfo.isRecurring ? (
+        ) : proposedServiceInfo?.serviceTypeId === 4 ? (
+          proposedServiceInfo?.isRecurring ? (
             <>
               <TitleText
                 text={'Recurring Service:'}

@@ -140,7 +140,7 @@ const ActivityHeader = (props: {
                         )
                       : proposedServiceInfo?.serviceTypeId === 3 ||
                         proposedServiceInfo?.serviceTypeId === 5
-                      ? proposedServiceInfo.isRecurring
+                      ? proposedServiceInfo?.isRecurring
                         ? proposedServiceInfo?.serviceName +
                           ' from:  ' +
                           format(
@@ -291,7 +291,7 @@ const ActivityHeader = (props: {
                     />
                   </TouchableOpacity>
                 )}
-                {!proposedServiceInfo.isRecurring &&
+                {!proposedServiceInfo?.isRecurring &&
                   proposedServiceInfo?.userId === user?.user?.id && (
                     <>
                       <TouchableOpacity
@@ -328,9 +328,9 @@ const ActivityHeader = (props: {
                     </>
                   )}
                 {proposedServiceInfo?.userId === user?.user?.id &&
-                  proposedServiceInfo.isRecurring && (
+                  proposedServiceInfo?.isRecurring && (
                     <>
-                      {proposedServiceInfo.isRecurring && (
+                      {proposedServiceInfo?.isRecurring && (
                         <>
                           <TouchableOpacity
                             // style={{width: '100%'}}
