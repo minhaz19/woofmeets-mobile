@@ -18,9 +18,9 @@ import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import {confirmPayment} from '@stripe/stripe-react-native';
 const endpointBasicPayment =
-  'https://api-stg.woofmeets.com/v2/subscriptions/pay-basic-verification-payment?';
+  'https://woof-api.hirebeet.com/v2/subscriptions/pay-basic-verification-payment?';
 const subscriptionEndpoint =
-  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
+  'https://woof-api.hirebeet.com/v3/subscriptions/subscribe?';
 
 interface Props {
   route: {
