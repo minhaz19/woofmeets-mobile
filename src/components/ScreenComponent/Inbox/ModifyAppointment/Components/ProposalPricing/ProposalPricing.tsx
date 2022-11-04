@@ -11,12 +11,19 @@ import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
 
 const ProposalPricing = () => {
   const {pricingInfo, proposedServiceInfo} = useProposalPricing();
-  const {colors} = useTheme();
+  const {isDarkMode, colors} = useTheme();
   return (
     <View>
       <TitleText text={'Pricing Summary'} textStyle={styles.titleText} />
 
-      <View style={styles.priceContainer}>
+      <View
+        style={[
+          styles.priceContainer,
+          {
+            backgroundColor: isDarkMode ? Colors.dark.lightDark : Colors.iosBG,
+            borderColor: colors.borderColor,
+          },
+        ]}>
         {pricingInfo?.map((item: any) => (
           <>
             {item.name === 'subTotal' ? (

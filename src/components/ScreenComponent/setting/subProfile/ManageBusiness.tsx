@@ -7,7 +7,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../../../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ManageBusiness = () => {
+const ManageBusiness = (props: {
+  navigation: {navigate: (arg0: string, arg1?: any) => any};
+}) => {
   const modifyProfileData = [
     {
       id: 1,
@@ -20,9 +22,23 @@ const ManageBusiness = () => {
           style={styles.iconStyles}
         />
       ),
+      screen: () => props.navigation.navigate('ProviderAvailablity'),
     },
     {
       id: 2,
+      name: 'Subscription',
+      icon: (
+        <FontAwesome
+          name="rocket"
+          size={20}
+          color={Colors.primary}
+          style={styles.iconStyles}
+        />
+      ),
+      screen: () => props.navigation.navigate('SubscriptionScreen'),
+    },
+    {
+      id: 3,
       name: 'Receive payments',
       icon: (
         <FontAwesome
@@ -32,9 +48,10 @@ const ManageBusiness = () => {
           style={styles.iconStyles}
         />
       ),
+      screen: () => props.navigation.navigate('ReceivePayments'),
     },
     {
-      id: 3,
+      id: 4,
       name: 'Add or modify a payment',
       icon: (
         <FontAwesome
@@ -44,9 +61,11 @@ const ManageBusiness = () => {
           style={styles.iconStyles}
         />
       ),
+      screen: () =>
+        props.navigation.navigate('PaymentMethod', {sequence: null}),
     },
     {
-      id: 4,
+      id: 5,
       name: 'Share your profile',
       icon: (
         <FontAwesome
@@ -56,6 +75,7 @@ const ManageBusiness = () => {
           style={styles.iconStyles}
         />
       ),
+      screen: () => {},
     },
   ];
   const {colors} = useTheme();
@@ -68,9 +88,12 @@ const ManageBusiness = () => {
         },
       ]}>
       {modifyProfileData.map(
-        (item: {id: number; icon: JSX.Element; name: string}) => {
+        (item: {id: number; icon: JSX.Element; name: string; screen: any}) => {
           return (
-            <TouchableOpacity style={styles.tabContainer} key={item.id}>
+            <TouchableOpacity
+              style={styles.tabContainer}
+              key={item.id}
+              onPress={item.screen}>
               <View style={styles.flexContainer}>
                 <View style={styles.iconContainer}>{item.icon}</View>
                 <HeaderText text={item.name} textStyle={styles.headerText} />
@@ -115,7 +138,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   iconContainer: {
-    width: 24,
+    width: '10%',
     paddingHorizontal: 5,
   },
   tabContainer: {

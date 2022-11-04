@@ -90,7 +90,6 @@ const PaymentMethods = ({route, navigation}: Props) => {
           const {paymentIntent, error: dsError}: any = await confirmPayment(
             clientScreet,
           );
-          console.log('m', paymentIntent, dsError);
 
           paymentIntent?.status === 'Succeeded' &&
             (dispatch(getCurrentplan()),
