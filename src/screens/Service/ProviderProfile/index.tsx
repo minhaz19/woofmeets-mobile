@@ -1,10 +1,14 @@
 import {FlatList, Platform, StyleSheet, View} from 'react-native';
 import React from 'react';
 import ProviderHeader from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderHeader';
-import ProviderFooter from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderFooter';
+// import ProviderFooter from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderFooter';
 import ProviderTab from '../../../components/ScreenComponent/Service/ProviderProfile/ProvderTab';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import ButtonCom from '../../../components/UI/ButtonCom';
+import {btnStyles} from '../../../constants/theme/common/buttonStyles';
+import {useNavigation} from '@react-navigation/native';
+import {useAppSelector} from '../../../store/store';
 // import ProviderStory from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderStoryStatus/ProviderStory';
 interface Props {
   route: any;
@@ -16,10 +20,22 @@ const ProviderProfile = ({route}: Props) => {
   const _renderFooter = () => (
     <View style={styles.infoContianer}>
       <ProviderHeader />
-      <ProviderTab providerOpk={providerOpk}/>
-      <ProviderFooter providerOpk={providerOpk} />
+      <ProviderTab providerOpk={providerOpk} />
+      {/* <ProviderFooter providerOpk={providerOpk} /> */}
     </View>
   );
+  const navigation = useNavigation<any>();
+  const {isLoggedIn} = useAppSelector(state => state.auth);
+  const handleSubmit = () => {
+    if (isLoggedIn) {
+      navigation.navigate('Appointment', {
+        appointmentType: 'create',
+        providerOpk: providerOpk,
+      });
+    } else {
+      navigation.navigate('SignUp');
+    }
+  };
   return (
     <View
       style={[
@@ -36,6 +52,15 @@ const ProviderProfile = ({route}: Props) => {
         ListHeaderComponent={_renderHeader}
         ListFooterComponent={_renderFooter}
       />
+      <View style={styles.footerContainer}>
+        <ButtonCom
+          title={'Hire This Sitter'}
+          textAlignment={btnStyles.textAlignment}
+          containerStyle={btnStyles.containerStyleFullWidth}
+          titleStyle={btnStyles.titleStyle}
+          onSelect={handleSubmit}
+        />
+      </View>
     </View>
   );
 };
@@ -52,5 +77,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     marginTop: -20,
+  },
+  footerContainer: {
+    marginTop: 20,
+    position: 'absolute',
+    bottom: 30,
+    right: 20,
+    left: 20,
   },
 });

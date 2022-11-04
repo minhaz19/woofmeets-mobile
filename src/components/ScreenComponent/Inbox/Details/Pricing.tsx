@@ -10,198 +10,222 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppSelector} from '../../../../store/store';
 import changeTextLetter from '../../../common/changeTextLetter';
 import ShortText from '../../../common/text/ShortText';
+import DotLoader from '../../../../components/common/Loaders/DotLoader';
+import TitleText from '../../../common/text/TitleText';
 interface Props {
   screen: string;
 }
-const Pricing = ({screen}: Props) => {
+const Pricing = ({}: Props) => {
   const {colors} = useTheme();
   const {user} = useAppSelector(state => state.whoAmI);
-  const {proposalPricing} = useAppSelector(state => state.proposalPricing);
+  const {proposalPricing, loading} = useAppSelector(
+    state => state.proposalPricing,
+  );
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  console.log('proposalPricing', proposalPricing, proposedServiceInfo);
   return (
-    <View>
-      <HeaderText text={'Charges & Services'} textStyle={styles._textHeader} />
-      {proposalPricing?.petsRates?.map((item: any, index: number) => {
-        return (
-          <View key={index} style={[styles.mapContainer]}>
-            <View style={styles.flexContainer}>
-              <HeaderText
-                text={changeTextLetter(item.name)}
-                textStyle={styles.priceTextHeader}
-              />
-              <HeaderText
-                text={`$${item.count * item?.rate.amount}`}
-                textStyle={styles.priceText}
-              />
-            </View>
-
-            <ShortText
-              text={`Applied ${item?.rate.name}`}
-              textStyle={{fontWeight: 'bold'}}
-            />
-
-            <DescriptionText
-              text={`${item.count} ${
-                proposedServiceInfo.serviceTypeId === 1 ||
-                proposedServiceInfo.serviceTypeId === 2
-                  ? ' night'
-                  : proposedServiceInfo.serviceTypeId === 3
-                  ? ' walk'
-                  : proposedServiceInfo.serviceTypeId === 4
-                  ? ' day'
-                  : proposedServiceInfo.serviceTypeId === 5
-                  ? ' visit'
-                  : ''
-              } @ $${item?.rate.amount} /${
-                proposedServiceInfo.serviceTypeId === 1 ||
-                proposedServiceInfo.serviceTypeId === 2
-                  ? ' night'
-                  : proposedServiceInfo.serviceTypeId === 3
-                  ? ' walk'
-                  : proposedServiceInfo.serviceTypeId === 4
-                  ? ' day'
-                  : proposedServiceInfo.serviceTypeId === 5
-                  ? ' visit'
-                  : ''
-              }`}
-              textStyle={{color: colors.descriptionText, lineHeight: 20}}
-            />
-          </View>
-        );
-      })}
-      {proposalPricing?.sixtyMinutesRate?.count && (
-        <View style={[styles.mapContainer]}>
-          <View style={styles.flexContainer}>
-            <HeaderText
-              text={changeTextLetter(
-                proposalPricing?.sixtyMinutesRate?.rate.name,
-              )}
-              textStyle={styles.priceTextHeader}
-            />
-            <HeaderText
-              text={`$${
-                proposalPricing?.sixtyMinutesRate?.count *
-                proposalPricing?.sixtyMinutesRate?.rate.amount
-              }`}
-              textStyle={styles.priceText}
-            />
-          </View>
-
-          <ShortText
-            text={`Applied ${proposalPricing?.sixtyMinutesRate.rate.name}`}
-            textStyle={{fontWeight: 'bold'}}
-          />
-
-          <DescriptionText
-            text={`${proposalPricing?.sixtyMinutesRate.count} visit @ $${proposalPricing?.sixtyMinutesRate.rate.amount} / visit`}
-            textStyle={{color: colors.descriptionText, lineHeight: 20}}
+    <>
+      {loading ? (
+        <View style={{marginVertical: '50%'}}>
+          <TitleText
+            text="Loading..."
+            textStyle={{
+              fontSize: Text_Size.Text_1,
+              fontWeight: 'bold',
+              color: Colors.primary,
+              textAlign: 'center',
+              // marginTop: '50%',
+              // height: '100%',
+            }}
           />
         </View>
-      )}
-      <View
-        style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-      />
-      <View style={styles.totalContainer}>
-        <HeaderText
-          text={'Subtotal: '}
-          textStyle={{
-            color: colors.headerText,
-            fontWeight: 'bold',
-            fontSize: Text_Size.Text_2,
-            marginBottom: 10,
-            marginLeft: 0,
-          }}
-        />
-        {user?.id === proposedServiceInfo?.userId ? (
-          <HeaderText
-            text={`$${proposalPricing?.subTotal}`}
-            textStyle={{
-              fontSize: Text_Size.Text_2,
-            }}
-          />
-        ) : (
-          <HeaderText
-            text={`$${proposalPricing?.providerFee?.providerTotal}`}
-            textStyle={{
-              fontSize: Text_Size.Text_2,
-            }}
-          />
-        )}
-      </View>
-      <View style={[styles.totalContainer]}>
+      ) : (
         <View>
           <HeaderText
-            text={'Platform charge: '}
-            textStyle={{
-              color: colors.headerText,
-              fontWeight: 'bold',
-              fontSize: Text_Size.Text_2,
-              marginLeft: 0,
-            }}
+            text={'Charges & Services'}
+            textStyle={styles._textHeader}
           />
-          {user?.id === proposedServiceInfo?.userId ? (
-            <>
+          {proposalPricing?.petsRates?.map((item: any, index: number) => {
+            return (
+              <View key={index} style={[styles.mapContainer]}>
+                <View style={styles.flexContainer}>
+                  <HeaderText
+                    text={changeTextLetter(item.name)}
+                    textStyle={styles.priceTextHeader}
+                  />
+                  <HeaderText
+                    text={`$${item.count * item?.rate.amount}`}
+                    textStyle={styles.priceText}
+                  />
+                </View>
+
+                <ShortText
+                  text={`Applied ${item?.rate.name}`}
+                  textStyle={{fontWeight: 'bold'}}
+                />
+
+                <DescriptionText
+                  text={`${item.count} ${
+                    proposedServiceInfo.serviceTypeId === 1 ||
+                    proposedServiceInfo.serviceTypeId === 2
+                      ? ' night'
+                      : proposedServiceInfo.serviceTypeId === 3
+                      ? ' visit'
+                      : proposedServiceInfo.serviceTypeId === 4
+                      ? ' day'
+                      : proposedServiceInfo.serviceTypeId === 5
+                      ? ' walk'
+                      : ''
+                  } @ $${item?.rate.amount} /${
+                    proposedServiceInfo.serviceTypeId === 1 ||
+                    proposedServiceInfo.serviceTypeId === 2
+                      ? ' night'
+                      : proposedServiceInfo.serviceTypeId === 3
+                      ? ' visit'
+                      : proposedServiceInfo.serviceTypeId === 4
+                      ? ' day'
+                      : proposedServiceInfo.serviceTypeId === 5
+                      ? ' walk'
+                      : ''
+                  }`}
+                  textStyle={{color: colors.descriptionText, lineHeight: 20}}
+                />
+              </View>
+            );
+          })}
+          {proposalPricing?.sixtyMinutesRate?.count && (
+            <View style={[styles.mapContainer]}>
+              <View style={styles.flexContainer}>
+                <HeaderText
+                  text={changeTextLetter(
+                    proposalPricing?.sixtyMinutesRate?.rate.name,
+                  )}
+                  textStyle={styles.priceTextHeader}
+                />
+                <HeaderText
+                  text={`$${
+                    proposalPricing?.sixtyMinutesRate?.count *
+                    proposalPricing?.sixtyMinutesRate?.rate.amount
+                  }`}
+                  textStyle={styles.priceText}
+                />
+              </View>
+
               <ShortText
-                text={` ( + ) ${proposalPricing?.serviceChargeInParcentage}% of $${proposalPricing?.subTotal}`}
+                text={`Applied ${proposalPricing?.sixtyMinutesRate.rate.name}`}
+                textStyle={{fontWeight: 'bold'}}
               />
-            </>
-          ) : (
-            <ShortText
-              text={` ( - ) ${proposalPricing?.providerFee?.subscriptionFeeInParcentage}% of $${proposalPricing?.providerFee?.providerTotal}`}
-            />
+
+              <DescriptionText
+                text={`${proposalPricing?.sixtyMinutesRate.count} visit @ $${proposalPricing?.sixtyMinutesRate.rate.amount} / visit`}
+                textStyle={{color: colors.descriptionText, lineHeight: 20}}
+              />
+            </View>
           )}
+          <View
+            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+          />
+          <View style={styles.totalContainer}>
+            <HeaderText
+              text={'Subtotal: '}
+              textStyle={{
+                color: colors.headerText,
+                fontWeight: 'bold',
+                fontSize: Text_Size.Text_2,
+                marginBottom: 10,
+                marginLeft: 0,
+              }}
+            />
+            {user?.id === proposedServiceInfo?.userId ? (
+              <HeaderText
+                text={`$${proposalPricing?.subTotal}`}
+                textStyle={{
+                  fontSize: Text_Size.Text_2,
+                }}
+              />
+            ) : (
+              <HeaderText
+                text={`$${proposalPricing?.providerFee?.providerTotal}`}
+                textStyle={{
+                  fontSize: Text_Size.Text_2,
+                }}
+              />
+            )}
+          </View>
+          <View style={[styles.totalContainer]}>
+            <View>
+              <HeaderText
+                text={'Platform charge: '}
+                textStyle={{
+                  color: colors.headerText,
+                  fontWeight: 'bold',
+                  fontSize: Text_Size.Text_2,
+                  marginLeft: 0,
+                }}
+              />
+              {user?.id === proposedServiceInfo?.userId ? (
+                <>
+                  <ShortText
+                    text={` ( + ) ${proposalPricing?.serviceChargeInParcentage}% of $${proposalPricing?.subTotal}`}
+                  />
+                </>
+              ) : (
+                <ShortText
+                  text={` ( - ) ${proposalPricing?.providerFee?.subscriptionFeeInParcentage}% of $${proposalPricing?.providerFee?.providerTotal}`}
+                />
+              )}
+            </View>
+            {user?.id === proposedServiceInfo?.userId ? (
+              <HeaderText
+                text={`$${(
+                  proposalPricing?.total - proposalPricing?.subTotal
+                ).toFixed(2)}`}
+                textStyle={{
+                  fontSize: Text_Size.Text_2,
+                }}
+              />
+            ) : (
+              <HeaderText
+                text={`$${proposalPricing?.providerFee?.subscriptionFee?.toFixed(
+                  2,
+                )}`}
+                textStyle={{
+                  fontSize: Text_Size.Text_2,
+                }}
+              />
+            )}
+          </View>
+          <View
+            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+          />
+          <View style={styles.totalContainer}>
+            <HeaderText
+              text={'Total Amount: '}
+              textStyle={{
+                color: colors.headerText,
+                fontWeight: 'bold',
+                fontSize: Text_Size.Text_2,
+                marginLeft: 0,
+              }}
+            />
+            {user?.id === proposedServiceInfo?.userId ? (
+              <HeaderText
+                text={`$${proposalPricing?.total}`}
+                textStyle={{
+                  fontSize: Text_Size.Text_2,
+                }}
+              />
+            ) : (
+              <HeaderText
+                text={`$${proposalPricing?.providerFee?.providerTotal}`}
+                textStyle={{
+                  fontSize: Text_Size.Text_2,
+                }}
+              />
+            )}
+          </View>
         </View>
-        {user?.id === proposedServiceInfo?.userId ? (
-          <HeaderText
-            text={`$${(
-              proposalPricing?.total - proposalPricing?.subTotal
-            ).toFixed(2)}`}
-            textStyle={{
-              fontSize: Text_Size.Text_2,
-            }}
-          />
-        ) : (
-          <HeaderText
-            text={`$${proposalPricing?.providerFee?.subscriptionFee?.toFixed(
-              2,
-            )}`}
-            textStyle={{
-              fontSize: Text_Size.Text_2,
-            }}
-          />
-        )}
-      </View>
-      <View
-        style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-      />
-      <View style={styles.totalContainer}>
-        <HeaderText
-          text={'Total Amount: '}
-          textStyle={{
-            color: colors.headerText,
-            fontWeight: 'bold',
-            fontSize: Text_Size.Text_2,
-            marginLeft: 0,
-          }}
-        />
-        {user?.id === proposedServiceInfo?.userId ? (
-          <HeaderText
-            text={`$${proposalPricing?.total}`}
-            textStyle={{
-              fontSize: Text_Size.Text_2,
-            }}
-          />
-        ) : (
-          <HeaderText
-            text={`$${proposalPricing?.providerFee?.providerTotal}`}
-            textStyle={{
-              fontSize: Text_Size.Text_2,
-            }}
-          />
-        )}
-      </View>
-    </View>
+      )}
+    </>
   );
 };
 

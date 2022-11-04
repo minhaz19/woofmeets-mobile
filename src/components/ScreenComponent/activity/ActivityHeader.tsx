@@ -38,12 +38,13 @@ const ActivityHeader = (props: {
   const user = useAppSelector(state => state.whoAmI);
   const handleAccept = async () => {
     const result = await request(acceptEndpoint + props.opk);
-
     if (result.ok) {
       dispatch(getProviderProposal(proposedServiceInfo.appointmentOpk));
       dispatch(getAppointmentStatus('PROPOSAL'));
       dispatch(getProviderApnt('PROPOSAL'));
       navigation.navigate('Inbox');
+    } else {
+      Alert.alert(result?.data?.message);
     }
   };
   const handleRegenerate = async () => {
@@ -100,7 +101,6 @@ const ActivityHeader = (props: {
       ],
     );
   };
-  console.log('propsed', proposedServiceInfo);
 
   return (
     <>
@@ -206,19 +206,19 @@ const ActivityHeader = (props: {
                       const r = await request(
                         acceptEndpoint + proposedServiceInfo.appointmentOpk,
                       );
-                      console.log('handle accept', r);
                       if (r.ok) {
-                        // dispatch(
-                        //   getProviderProposal(
-                        //     proposedServiceInfo.appointmentOpk,
-                        //   ),
-                        // );
-                        // dispatch(
-                        //   setBillingId(proposedServiceInfo.billing[0].id),
-                        // );
+                        dispatch(
+                          getProviderProposal(
+                            proposedServiceInfo.appointmentOpk,
+                          ),
+                        );
+                        dispatch(
+                          setBillingId(proposedServiceInfo.billing[0].id),
+                        );
                       }
                     } else {
                       dispatch(setBillingId(proposedServiceInfo.billing[0].id));
+                      navigation.navigate('Checkout');
                     }
                   }}>
                   <TitleText
@@ -272,43 +272,61 @@ const ActivityHeader = (props: {
                     }}
                   />
                 </TouchableOpacity>
-                {/* <View style={styles.divider} /> */}
+                <View style={styles.divider} />
               </>
             ) : proposedServiceInfo?.status === 'PAID' ? (
               <>
-                {!proposedServiceInfo.isRecurring && (
-                  <>
-                    <TouchableOpacity
-                      // style={{width: SCREEN_WIDTH / 5}}
-                      onPress={() => navigation.navigate('AppointmentSuccess')}>
-                      <TitleText
-                        text={`${
-                          proposedServiceInfo?.userId === user?.user?.id
-                            ? 'Paid'
-                            : 'Paid Successfully'
-                        }`}
-                        textStyle={{
-                          ...styles.textStyle,
-                          textAlign: 'center',
-                          color: Colors.light.background,
-                        }}
-                      />
-                    </TouchableOpacity>
-                    <View style={styles.divider} />
-                    <TouchableOpacity
-                      // style={{width: SCREEN_WIDTH / 5}}
-                      onPress={handleComplete}>
-                      <TitleText
-                        text="Complete"
-                        textStyle={{
-                          ...styles.textStyle,
-                          textAlign: 'center',
-                          color: Colors.light.background,
-                        }}
-                      />
-                    </TouchableOpacity>
-                  </>
+                {proposedServiceInfo?.providerId ===
+                  user?.user?.provider?.id && (
+                  <TouchableOpacity
+                    // style={{width: SCREEN_WIDTH / 5}}
+                    onPress={() => navigation.navigate('AppointmentSuccess')}>
+                    <TitleText
+                      text={'Paid Successfully'}
+                      textStyle={{
+                        ...styles.textStyle,
+                        textAlign: 'center',
+                        color: Colors.light.background,
+                      }}
+                    />
+                  </TouchableOpacity>
                 )}
+                {!proposedServiceInfo.isRecurring &&
+                  proposedServiceInfo?.userId === user?.user?.id && (
+                    <>
+                      <TouchableOpacity
+                        // style={{width: SCREEN_WIDTH / 5}}
+                        onPress={() =>
+                          navigation.navigate('AppointmentSuccess')
+                        }>
+                        <TitleText
+                          text={`${
+                            proposedServiceInfo?.userId === user?.user?.id
+                              ? 'Paid'
+                              : 'Paid Successfully'
+                          }`}
+                          textStyle={{
+                            ...styles.textStyle,
+                            textAlign: 'center',
+                            color: Colors.light.background,
+                          }}
+                        />
+                      </TouchableOpacity>
+                      <View style={styles.divider} />
+                      <TouchableOpacity
+                        // style={{width: SCREEN_WIDTH / 5}}
+                        onPress={handleComplete}>
+                        <TitleText
+                          text="Complete"
+                          textStyle={{
+                            ...styles.textStyle,
+                            textAlign: 'center',
+                            color: Colors.light.background,
+                          }}
+                        />
+                      </TouchableOpacity>
+                    </>
+                  )}
                 {proposedServiceInfo?.userId === user?.user?.id &&
                   proposedServiceInfo.isRecurring && (
                     <>
@@ -330,7 +348,7 @@ const ActivityHeader = (props: {
 
                                 textAlign: 'center',
                                 width: '100%',
-                                backgroundColor: 'red',
+                                // backgroundColor: 'red',
                                 color: Colors.light.background,
                               }}
                             />

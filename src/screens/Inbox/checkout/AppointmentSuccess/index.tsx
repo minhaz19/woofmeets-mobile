@@ -37,7 +37,6 @@ const AppointmentSuccess = () => {
       endPoint + proposedServiceInfo.appointmentOpk,
       payload,
     );
-    console.log('res', result);
     if (result.ok) {
       dispatch(getProviderApnt(proposedServiceInfo.appointmentOpk));
       setIsVisible(false);

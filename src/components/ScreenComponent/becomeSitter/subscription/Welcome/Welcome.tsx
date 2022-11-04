@@ -29,7 +29,6 @@ const Welcome = (props: any) => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
-  console.log('welcome', props.currentPlan);
   const handleSubmit = () => {
     Alert.alert(
       'Cancel Subscription',
@@ -48,7 +47,6 @@ const Welcome = (props: any) => {
             const result = await methods._delete(
               endpoint + props.currentPlan.subscriptionInfo.id,
             );
-            console.log('res', result);
             result.ok &&
               (dispatch(getCurrentplan()),
               dispatch(getSubscription()),
@@ -75,7 +73,6 @@ const Welcome = (props: any) => {
       clearTimeout(runTime);
     };
   }, []);
-  console.log('opkkkkk', props);
 
   return (
     <View style={{flex: 1, justifyContent: 'space-between'}}>

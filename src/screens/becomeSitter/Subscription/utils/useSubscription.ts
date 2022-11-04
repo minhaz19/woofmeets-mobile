@@ -14,8 +14,8 @@ const endpoint = '/subscriptions/check-basic-verification-payment';
 const subscriptionEndpoint =
   'https://api-stg.woofmeets.com/v2/subscriptions/subscribe?';
 const defaultCardEndpoint = '/stripe-payment-method/default-card-info';
-const uuid = Math.random().toString(36).substring(2, 36);
 export const useSubscription = () => {
+  const uuid = Math.random().toString(36).substring(2, 36);
   const [sequence, setSequence] = useState<number>(0);
   const [ssLoading, setSSloading] = useState(false);
   const dispatch = useAppDispatch();

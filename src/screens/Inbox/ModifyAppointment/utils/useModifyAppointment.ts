@@ -121,6 +121,8 @@ export const useModifyAppointment = (route: any) => {
           navigation.navigate('ActivityScreen', {
             appointmentOpk: result.data.data.appointment.opk,
           });
+        } else {
+          Alert.alert(result.data.message);
         }
       } else if (serviceTypeId === 3 || serviceTypeId === 5) {
         const sortedSpecificModDates = !isRecurring
@@ -249,6 +251,8 @@ export const useModifyAppointment = (route: any) => {
           navigation.navigate('ActivityScreen', {
             appointmentOpk: result.data.data.appointment.opk,
           });
+        } else {
+          Alert.alert(result.data.message);
         }
       } else if (serviceTypeId === 4) {
         const DoggyDayFT = isRecurring
@@ -302,6 +306,8 @@ export const useModifyAppointment = (route: any) => {
           navigation.navigate('ActivityScreen', {
             appointmentOpk: result.data.data.appointment.opk,
           });
+        } else {
+          Alert.alert(result.data.message);
         }
       }
     }

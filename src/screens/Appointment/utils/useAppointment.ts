@@ -125,12 +125,19 @@ export const useAppointment = (providerOpk: string) => {
         };
 
         const response = await request(endpoint, boardSittingPayload);
-        console.log('boarding res', response);
-        response.ok &&
+        if (response.ok) {
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,
             screen: 'Inbox',
           });
+        } else {
+          Alert.alert(response.data.message);
+        }
+        // response.ok &&
+        //   navigation.navigate('ActivityScreen', {
+        //     appointmentOpk: response.data.data.appointment.opk,
+        //     screen: 'Inbox',
+        //   });
       } else if (serviceTypeId === 3 || serviceTypeId === 5) {
         const sortedSpecificModDates = !isRecurring
           ? specificModDates.map((item: any, i: number) => ({
@@ -230,12 +237,15 @@ export const useAppointment = (providerOpk: string) => {
               formattedMessage: dropInVisitFT,
             };
         const response = await request(endpoint, dropDogPayload);
-        console.log('res', response);
-        response.ok &&
+
+        if (response.ok) {
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,
             screen: 'Inbox',
           });
+        } else {
+          Alert.alert(response.data.message);
+        }
       } else if (serviceTypeId === 4) {
         const DoggyDayFT = isRecurring
           ? `Doggy Day Care Proposal:\nRepeat service starting from: ${recurringStartDate}\nDrop-off: ${dropOffStartTime} - ${dropOffEndTime}\nPick-Up: ${pickUpStartTime} - ${pickUpEndTime}`
@@ -283,11 +293,19 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
             };
         const response = await request(endpoint, doggyPayload);
-        response.ok &&
+        // response.ok &&
+        //   navigation.navigate('ActivityScreen', {
+        //     appointmentOpk: response.data.data.appointment.opk,
+        //     // screen: 'Inbox',
+        //   });
+        if (response.ok) {
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,
-            // screen: 'Inbox',
+            screen: 'Inbox',
           });
+        } else {
+          Alert.alert(response.data.message);
+        }
       }
     }
   };

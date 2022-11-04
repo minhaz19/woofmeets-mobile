@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import TitleText from '../../../../../../../common/text/TitleText';
@@ -31,10 +31,15 @@ const SitterMap = () => {
             }}
             // title={'Meers home'}
             // description={'Meers wife home'}
-            image={{
-              uri: 'https://toppng.com/uploads/preview/map-point-google-map-marker-gif-11562858751s4qufnxuml.png',
-            }}
-          />
+          >
+            <Image
+              source={{
+                uri: 'https://toppng.com/uploads/preview/map-point-google-map-marker-gif-11562858751s4qufnxuml.png',
+              }}
+              style={{width: 46, height: 46}}
+              resizeMode="contain"
+            />
+          </Marker>
         </MapView>
       </View>
     </>

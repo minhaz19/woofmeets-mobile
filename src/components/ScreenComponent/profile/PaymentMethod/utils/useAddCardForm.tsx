@@ -12,11 +12,11 @@ const endpoint = '/stripe-payment-method/add-card';
 const subscriptionEndpoint =
   'https://api-stg.woofmeets.com/v2/subscriptions/subscribe?';
 import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
-const uuid = Math.random().toString(36).substring(2, 36);
 export const useAddCardForm = (
   navigation: any,
   sequence: number | null | string,
 ) => {
+  const uuid = Math.random().toString(36).substring(2, 36);
   const [tokenLoading, setTokenLoading] = useState(false);
   const [appointmentLoading, setAppointmentLoading] = useState(false);
   const {proposedServiceInfo, billingId} = useAppSelector(
@@ -36,7 +36,6 @@ export const useAddCardForm = (
   useEffect(() => {
     cd();
   }, []);
-  console.log('sce', sequence);
   const handleValues = async (cardData: any) => {
     setTokenLoading(true);
     const tokenPayload: any = {
@@ -63,7 +62,6 @@ export const useAddCardForm = (
         token: token.id,
       };
       const result = await request(endpoint, reqPayload);
-      console.log('res', reqPayload, result);
       if (result.ok && sequence !== null && sequence !== undefined) {
         const cardId = result.data.data.id;
         if (sequence === 1) {
@@ -84,7 +82,6 @@ export const useAddCardForm = (
                 const clientScreet = subsRes.data.data.clientSecret;
                 const {paymentIntent, error: dsError}: any =
                   await confirmPayment(clientScreet);
-                console.log('paymentIntent res', paymentIntent, dsError);
 
                 paymentIntent?.status === 'Succeeded' &&
                   (dispatch(getCurrentplan()),
@@ -158,8 +155,6 @@ export const useAddCardForm = (
           }
         }
       } else if (sequence === null) {
-        console.log('in here');
-        navigation.navigate('PaymentMethod', {sequence: null});
       }
       dispatch(getCards());
     }

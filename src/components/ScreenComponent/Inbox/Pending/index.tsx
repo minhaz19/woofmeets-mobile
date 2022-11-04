@@ -42,7 +42,6 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
-  console.log('provier', providerApntStatus);
   return (
     <>
       {loading && <AppActivityIndicator visible={true} />}

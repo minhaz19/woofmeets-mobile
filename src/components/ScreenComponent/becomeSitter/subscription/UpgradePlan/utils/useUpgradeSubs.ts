@@ -12,7 +12,6 @@ export const useUpgradeSubscription = () => {
   const {loading, plans} = useAppSelector(state => state.subscription);
 
   const navigation = useNavigation<any>();
-  console.log('pans');
   const upgradePlans = plans?.filter((item: any) => item.id !== 1);
   const formattedPackageRate = upgradePlans?.map((item: any) => ({
     id: item.id,

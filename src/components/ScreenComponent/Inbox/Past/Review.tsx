@@ -66,7 +66,6 @@ const Review: FC<Props> = props => {
       };
     }
     const result = await request(endPoint, formattedData);
-    console.log('review , ', result);
     if (result.ok) {
       props.setIsReviewModal(false);
       dispatch(getProviderApnt(proposedServiceInfo.appointmentOpk));

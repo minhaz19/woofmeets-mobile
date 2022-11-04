@@ -20,10 +20,10 @@ interface Props {
     };
   };
 }
-const uuid = Math.random().toString(36).substring(2, 36);
 const subscriptionEndpoint =
   'https://api-stg.woofmeets.com/v2/subscriptions/subscribe?';
 const PaymentMethods = ({route, navigation}: Props) => {
+  const uuid = Math.random().toString(36).substring(2, 36);
   const dispatch = useAppDispatch();
   const {cards, loading} = useAppSelector(state => state.cards);
   const [appointmentLoading, setAppointmentLoading] = useState(false);
@@ -51,7 +51,6 @@ const PaymentMethods = ({route, navigation}: Props) => {
         {},
         uuid,
       );
-      console.log('re', result);
 
       if (result.ok) {
         if (result.ok && result?.data.data.requiresAction === true) {
@@ -59,7 +58,6 @@ const PaymentMethods = ({route, navigation}: Props) => {
           const {paymentIntent, error: dsError}: any = await confirmPayment(
             clientScreet,
           );
-          console.log('payment', paymentIntent, dsError);
           setAppointmentLoading(false);
           paymentIntent?.status === 'Succeeded' &&
             navigation.navigate('AppointmentSuccess');
@@ -76,7 +74,6 @@ const PaymentMethods = ({route, navigation}: Props) => {
       } else if (!result.ok && result.status === 409) {
         setAppointmentLoading(false);
         Alert.alert(result?.data?.message);
-        console.log('ressssss', result);
       }
       setAppointmentLoading(false);
     } else {
@@ -86,7 +83,6 @@ const PaymentMethods = ({route, navigation}: Props) => {
         {},
         uuid,
       );
-      console.log('result', result);
 
       if (result.ok) {
         if (result.ok && result?.data.data.requiresAction === true) {
@@ -100,11 +96,9 @@ const PaymentMethods = ({route, navigation}: Props) => {
             (dispatch(getCurrentplan()),
             navigation.navigate('SubscriptionScreen'));
           dsError !== undefined && Alert.alert(dsError.localizedMessage);
-          console.log('ds', paymentIntent, dsError);
         } else if (result.ok && result?.data.data.requiresAction === false) {
           dispatch(getCurrentplan());
           navigation.navigate('SubscriptionScreen');
-          console.log('sidle mistake', result);
         }
       } else if (!result.ok && result.status === 400) {
         Alert.alert(result.data.message);

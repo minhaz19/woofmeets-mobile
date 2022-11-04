@@ -34,7 +34,6 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
     const result = await request(
       regenerateEndpoint + proposedServiceInfo?.appointmentOpk,
     );
-    console.log('result generate', result);
     if (result.ok) {
       dispatch(setBillingId(result.data.data.billing.id));
       dispatch(getProviderProposal(proposedServiceInfo?.appointmentOpk));
@@ -42,7 +41,6 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
       navigation.navigate('Checkout');
     }
   };
-  console.log('proposedServiceInfo', proposedServiceInfo);
   return (
     <View>
       <BottomHalfModal
@@ -171,6 +169,7 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
               </AppTouchableOpacity>
               <AppTouchableOpacity
                 onPress={handleGenerate}
+                disabled={loading}
                 style={{
                   flex: 1,
                   marginleft: 10,
@@ -179,7 +178,7 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
                   borderRadius: 5,
                 }}>
                 <TitleText
-                  text={'Proceed'}
+                  text={loading ? 'loading...' : 'Proceed'}
                   textStyle={{
                     textAlign: 'center',
                     fontWeight: 'bold',
