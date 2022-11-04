@@ -27,7 +27,9 @@ const CheckoutDetails = () => {
     dispatch(getProposalPricing(proposedServiceInfo.appointmentOpk));
   }, []);
   const handlePayment = () => {
-    navigation.navigate('PaymentMethod', {sequence: 'Appointment'});
+    navigation.navigate('PaymentMethod', {
+      sequence: 'Appointment',
+    });
   };
   return (
     <KeyboardAvoidingView

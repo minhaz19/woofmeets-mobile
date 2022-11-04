@@ -15,8 +15,10 @@ interface Props {
 }
 const Pricing = ({screen}: Props) => {
   const {colors} = useTheme();
+  const {user} = useAppSelector(state => state.whoAmI);
   const {proposalPricing} = useAppSelector(state => state.proposalPricing);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  console.log('proposalPricing', proposalPricing, proposedServiceInfo);
   return (
     <View>
       <HeaderText text={'Charges & Services'} textStyle={styles._textHeader} />
@@ -68,68 +70,136 @@ const Pricing = ({screen}: Props) => {
           </View>
         );
       })}
+      {proposalPricing?.sixtyMinutesRate?.count && (
+        <View style={[styles.mapContainer]}>
+          <View style={styles.flexContainer}>
+            <HeaderText
+              text={changeTextLetter(
+                proposalPricing?.sixtyMinutesRate?.rate.name,
+              )}
+              textStyle={styles.priceTextHeader}
+            />
+            <HeaderText
+              text={`$${
+                proposalPricing?.sixtyMinutesRate?.count *
+                proposalPricing?.sixtyMinutesRate?.rate.amount
+              }`}
+              textStyle={styles.priceText}
+            />
+          </View>
+
+          <ShortText
+            text={`Applied ${proposalPricing?.sixtyMinutesRate.rate.name}`}
+            textStyle={{fontWeight: 'bold'}}
+          />
+
+          <DescriptionText
+            text={`${proposalPricing?.sixtyMinutesRate.count} visit @ $${proposalPricing?.sixtyMinutesRate.rate.amount} / visit`}
+            textStyle={{color: colors.descriptionText, lineHeight: 20}}
+          />
+        </View>
+      )}
       <View
         style={[styles.divider, {backgroundColor: colors.descriptionText}]}
       />
       <View style={styles.totalContainer}>
         <HeaderText
-          text={'Calculated Pricing: '}
+          text={'Subtotal: '}
           textStyle={{
-            color: colors.descriptionText,
-            fontWeight: '400',
+            color: colors.headerText,
+            fontWeight: 'bold',
             fontSize: Text_Size.Text_2,
             marginBottom: 10,
             marginLeft: 0,
           }}
         />
-        <HeaderText
-          text={`$${proposalPricing?.subTotal}`}
-          textStyle={{
-            fontSize: Text_Size.Text_2,
-          }}
-        />
+        {user?.id === proposedServiceInfo?.userId ? (
+          <HeaderText
+            text={`$${proposalPricing?.subTotal}`}
+            textStyle={{
+              fontSize: Text_Size.Text_2,
+            }}
+          />
+        ) : (
+          <HeaderText
+            text={`$${proposalPricing?.providerFee?.providerTotal}`}
+            textStyle={{
+              fontSize: Text_Size.Text_2,
+            }}
+          />
+        )}
       </View>
       <View style={[styles.totalContainer]}>
         <View>
           <HeaderText
-            text={'Service fee: '}
+            text={'Platform charge: '}
             textStyle={{
-              color: colors.descriptionText,
-              fontWeight: '400',
+              color: colors.headerText,
+              fontWeight: 'bold',
               fontSize: Text_Size.Text_2,
               marginLeft: 0,
             }}
           />
-          <ShortText text={`10% of $${proposalPricing?.subTotal}`} />
+          {user?.id === proposedServiceInfo?.userId ? (
+            <>
+              <ShortText
+                text={` ( + ) ${proposalPricing?.serviceChargeInParcentage}% of $${proposalPricing?.subTotal}`}
+              />
+            </>
+          ) : (
+            <ShortText
+              text={` ( - ) ${proposalPricing?.providerFee?.subscriptionFeeInParcentage}% of $${proposalPricing?.providerFee?.providerTotal}`}
+            />
+          )}
         </View>
-        <HeaderText
-          text={`$${(
-            proposalPricing?.total - proposalPricing?.subTotal
-          ).toFixed(2)}`}
-          textStyle={{
-            fontSize: Text_Size.Text_2,
-          }}
-        />
+        {user?.id === proposedServiceInfo?.userId ? (
+          <HeaderText
+            text={`$${(
+              proposalPricing?.total - proposalPricing?.subTotal
+            ).toFixed(2)}`}
+            textStyle={{
+              fontSize: Text_Size.Text_2,
+            }}
+          />
+        ) : (
+          <HeaderText
+            text={`$${proposalPricing?.providerFee?.subscriptionFee?.toFixed(
+              2,
+            )}`}
+            textStyle={{
+              fontSize: Text_Size.Text_2,
+            }}
+          />
+        )}
       </View>
       <View
         style={[styles.divider, {backgroundColor: colors.descriptionText}]}
       />
       <View style={styles.totalContainer}>
         <HeaderText
-          text={'Total Pricing: '}
+          text={'Total Amount: '}
           textStyle={{
-            color: colors.descriptionText,
-            fontWeight: '400',
+            color: colors.headerText,
+            fontWeight: 'bold',
             fontSize: Text_Size.Text_2,
             marginLeft: 0,
           }}
         />
-        <HeaderText
-          text={`$${proposalPricing?.total}`}
-          textStyle={{
-            fontSize: Text_Size.Text_2,
-          }}
-        />
+        {user?.id === proposedServiceInfo?.userId ? (
+          <HeaderText
+            text={`$${proposalPricing?.total}`}
+            textStyle={{
+              fontSize: Text_Size.Text_2,
+            }}
+          />
+        ) : (
+          <HeaderText
+            text={`$${proposalPricing?.providerFee?.providerTotal}`}
+            textStyle={{
+              fontSize: Text_Size.Text_2,
+            }}
+          />
+        )}
       </View>
     </View>
   );

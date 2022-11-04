@@ -31,6 +31,7 @@ export const useServiceRates = (serviceSetup: any) => {
         name: item.slug.replace('-', '').replace('-', ''),
         postId: item.rateId,
         rateTypeId: item.id,
+        putId: null,
       };
     },
   );

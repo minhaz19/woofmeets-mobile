@@ -29,12 +29,14 @@ const PaymentMethods = ({route, navigation}: Props) => {
   const [appointmentLoading, setAppointmentLoading] = useState(false);
   const [CardId, setDefaultCard] = useState(null);
   const [selectedCard, setSelectedCard] = useState<null | number>(null);
+  const {proposedServiceInfo, billingId} = useAppSelector(
+    state => state.proposal,
+  );
   const {request} = useApi(methods._get);
   const {loading: idemLoading, request: idemRequest} = useApi(
     methods._idempt_post,
   );
   const {sequence} = route.params;
-  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const handlePayment = async () => {
     if (sequence === 1) {
       navigation.navigate('BasicPayment', {
@@ -45,10 +47,11 @@ const PaymentMethods = ({route, navigation}: Props) => {
       setAppointmentLoading(true);
       const cardId = selectedCard !== null ? selectedCard : CardId;
       const result: any = await idemRequest(
-        `/appointment/${proposedServiceInfo.appointmentOpk}/billing/${proposedServiceInfo.billing[0]?.id}/pay?cardId=${cardId}`,
+        `/appointment/${proposedServiceInfo.appointmentOpk}/billing/${billingId}/pay?cardId=${cardId}`,
         {},
         uuid,
       );
+      console.log('re', result);
 
       if (result.ok) {
         if (result.ok && result?.data.data.requiresAction === true) {

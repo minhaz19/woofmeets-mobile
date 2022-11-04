@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TitleText from '../../common/text/TitleText';
 import Colors from '../../../constants/Colors';
@@ -18,9 +18,12 @@ import {getAppointmentStatus} from '../../../store/slices/Appointment/Inbox/User
 import {getProviderApnt} from '../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import changeTextLetter from '../../common/changeTextLetter';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
+import RecurringModal from './components/RecurringModal';
+import {setBillingId} from '../../../store/slices/Appointment/Proposal/providerProposalSlice';
 const acceptEndpoint = '/appointment/accept/proposal/';
 const completeEndpoint = '/appointment/complete/';
 const rejectEndpoint = '/appointment/proposal/reject/';
+
 const ActivityHeader = (props: {
   setIsDetailsModal: (arg0: boolean) => void;
   setIsThreeDotsModal: (arg0: boolean) => void;
@@ -30,6 +33,7 @@ const ActivityHeader = (props: {
   const {colors} = useTheme();
   const {request} = useApi(methods._put);
   const dispatch = useAppDispatch();
+  const [regenerateModal, setRegenerateModal] = useState(false);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const user = useAppSelector(state => state.whoAmI);
   const handleAccept = async () => {
@@ -41,6 +45,9 @@ const ActivityHeader = (props: {
       dispatch(getProviderApnt('PROPOSAL'));
       navigation.navigate('Inbox');
     }
+  };
+  const handleRegenerate = async () => {
+    setRegenerateModal(true);
   };
 
   const handleComplete = () => {
@@ -96,193 +103,197 @@ const ActivityHeader = (props: {
   console.log('propsed', proposedServiceInfo);
 
   return (
-    <View style={[styles.container, {borderColor: colors.borderColor}]}>
-      <View style={styles.containerInner}>
-        <View style={styles.headerTitleContainer}>
+    <>
+      <View style={[styles.container, {borderColor: colors.borderColor}]}>
+        <View style={styles.containerInner}>
+          <View style={styles.headerTitleContainer}>
+            <TouchableOpacity
+              style={styles.leftContainer}
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <Ionicons
+                name="ios-chevron-back"
+                size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+                style={styles.iconStyle}
+                color={Colors.primary}
+              />
+            </TouchableOpacity>
+            <View style={styles.headerTitleContainer}>
+              <View style={styles.titleMargin}>
+                <HeaderText
+                  text={
+                    proposedServiceInfo?.providerId === user?.user?.provider?.id
+                      ? changeTextLetter(proposedServiceInfo?.userName)
+                      : changeTextLetter(proposedServiceInfo?.providerName)
+                  }
+                />
+                <DescriptionText
+                  text={
+                    proposedServiceInfo?.serviceTypeId === 1 ||
+                    proposedServiceInfo?.serviceTypeId === 2
+                      ? proposedServiceInfo?.serviceName +
+                        ' from:  ' +
+                        format(
+                          new Date(proposedServiceInfo.proposalStartDate),
+                          'iii LLL d',
+                        )
+                      : proposedServiceInfo?.serviceTypeId === 3 ||
+                        proposedServiceInfo?.serviceTypeId === 5
+                      ? proposedServiceInfo.isRecurring
+                        ? proposedServiceInfo?.serviceName +
+                          ' from:  ' +
+                          format(
+                            new Date(proposedServiceInfo.recurringStartDate),
+                            'iii LLL d',
+                          )
+                        : proposedServiceInfo?.serviceName +
+                          ' from:  ' +
+                          format(
+                            new Date(
+                              proposedServiceInfo.proposalOtherDate[0].date,
+                            ),
+                            'iii LLL d',
+                          )
+                      : proposedServiceInfo?.serviceTypeId === 4
+                      ? proposedServiceInfo.isRecurring
+                        ? proposedServiceInfo?.serviceName +
+                          ' from:  ' +
+                          format(
+                            new Date(proposedServiceInfo.recurringStartDate),
+                            'iii LLL d',
+                          )
+                        : proposedServiceInfo?.serviceName +
+                          ' from:  ' +
+                          format(
+                            new Date(
+                              proposedServiceInfo.proposalOtherDate[0].date,
+                            ),
+                            'iii LLL d',
+                          )
+                      : ''
+                  }
+                />
+              </View>
+            </View>
+          </View>
           <TouchableOpacity
             style={styles.leftContainer}
-            onPress={() => {
-              navigation.goBack();
-            }}>
-            <Ionicons
-              name="ios-chevron-back"
+            onPress={() => props.setIsThreeDotsModal(true)}>
+            <Entypo
+              name="dots-three-vertical"
               size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
-              style={styles.iconStyle}
               color={Colors.primary}
             />
           </TouchableOpacity>
-          <View style={styles.headerTitleContainer}>
-            <View style={styles.titleMargin}>
-              <HeaderText
-                text={
-                  proposedServiceInfo?.providerId === user?.user?.provider?.id
-                    ? changeTextLetter(proposedServiceInfo?.userName)
-                    : changeTextLetter(proposedServiceInfo?.providerName)
-                }
-              />
-              <DescriptionText
-                text={
-                  proposedServiceInfo?.serviceTypeId === 1 ||
-                  proposedServiceInfo?.serviceTypeId === 2
-                    ? proposedServiceInfo?.serviceName +
-                      ' from:  ' +
-                      format(
-                        new Date(proposedServiceInfo.proposalStartDate),
-                        'iii LLL d',
-                      )
-                    : proposedServiceInfo?.serviceTypeId === 3 ||
-                      proposedServiceInfo?.serviceTypeId === 5
-                    ? proposedServiceInfo.isRecurring
-                      ? proposedServiceInfo?.serviceName +
-                        ' from:  ' +
-                        format(
-                          new Date(proposedServiceInfo.recurringStartDate),
-                          'iii LLL d',
-                        )
-                      : proposedServiceInfo?.serviceName +
-                        ' from:  ' +
-                        format(
-                          new Date(
-                            proposedServiceInfo.proposalOtherDate[0].date,
-                          ),
-                          'iii LLL d',
-                        )
-                    : proposedServiceInfo?.serviceTypeId === 4
-                    ? proposedServiceInfo.isRecurring
-                      ? proposedServiceInfo?.serviceName +
-                        ' from:  ' +
-                        format(
-                          new Date(proposedServiceInfo.recurringStartDate),
-                          'iii LLL d',
-                        )
-                      : proposedServiceInfo?.serviceName +
-                        ' from:  ' +
-                        format(
-                          new Date(
-                            proposedServiceInfo.proposalOtherDate[0].date,
-                          ),
-                          'iii LLL d',
-                        )
-                    : ''
-                }
-              />
-            </View>
-          </View>
         </View>
-        <TouchableOpacity
-          style={styles.leftContainer}
-          onPress={() => props.setIsThreeDotsModal(true)}>
-          <Entypo
-            name="dots-three-vertical"
-            size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
-            color={Colors.primary}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.innerTwo}>
-        <View style={styles.buttonContainer}>
-          {((proposedServiceInfo?.proposedBy === 'USER' &&
-            proposedServiceInfo?.status === 'ACCEPTED') ||
-            (proposedServiceInfo?.proposedBy === 'PROVIDER' &&
-              (proposedServiceInfo?.status === 'ACCEPTED' ||
-                proposedServiceInfo?.status === 'PROPOSAL'))) &&
-          proposedServiceInfo?.userId === user?.user?.id ? (
-            <>
-              <TouchableOpacity
-                // style={{width: SCREEN_WIDTH / 5}}
-                onPress={async () => {
-                  if (
-                    proposedServiceInfo?.proposedBy === 'PROVIDER' &&
-                    proposedServiceInfo?.status !== 'ACCEPTED'
-                  ) {
-                    const r = await request(
-                      acceptEndpoint + proposedServiceInfo.appointmentOpk,
-                    );
-                    if (r.ok) {
-                      dispatch(
-                        getProviderProposal(proposedServiceInfo.appointmentOpk),
+        <View style={styles.innerTwo}>
+          <View style={styles.buttonContainer}>
+            {((proposedServiceInfo?.proposedBy === 'USER' &&
+              proposedServiceInfo?.status === 'ACCEPTED') ||
+              (proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+                (proposedServiceInfo?.status === 'ACCEPTED' ||
+                  proposedServiceInfo?.status === 'PROPOSAL'))) &&
+            proposedServiceInfo?.userId === user?.user?.id ? (
+              <>
+                <TouchableOpacity
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  onPress={async () => {
+                    if (
+                      proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+                      proposedServiceInfo?.status !== 'ACCEPTED'
+                    ) {
+                      const r = await request(
+                        acceptEndpoint + proposedServiceInfo.appointmentOpk,
                       );
-                      navigation.navigate('Checkout');
+                      console.log('handle accept', r);
+                      if (r.ok) {
+                        // dispatch(
+                        //   getProviderProposal(
+                        //     proposedServiceInfo.appointmentOpk,
+                        //   ),
+                        // );
+                        // dispatch(
+                        //   setBillingId(proposedServiceInfo.billing[0].id),
+                        // );
+                      }
+                    } else {
+                      dispatch(setBillingId(proposedServiceInfo.billing[0].id));
                     }
-                  } else {
-                    navigation.navigate('Checkout');
-                  }
-                }}>
-                <TitleText
-                  text={
-                    proposedServiceInfo?.proposedBy === 'PROVIDER' &&
-                    proposedServiceInfo?.status !== 'ACCEPTED'
-                      ? 'Accept'
-                      : proposedServiceInfo?.status === 'ACCEPTED'
-                      ? 'Pay Now'
-                      : 'Pay'
-                  }
-                  textStyle={{
-                    ...styles.textStyle,
-                    textAlign: 'center',
-                    color: Colors.light.background,
-                  }}
-                />
-              </TouchableOpacity>
-              {(proposedServiceInfo?.status === 'PROPOSAL' ||
-                proposedServiceInfo?.status === 'ACCEPTED') && (
+                  }}>
+                  <TitleText
+                    text={
+                      proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+                      proposedServiceInfo?.status !== 'ACCEPTED'
+                        ? 'Accept'
+                        : proposedServiceInfo?.status === 'ACCEPTED'
+                        ? 'Pay Now'
+                        : 'Pay'
+                    }
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
+                {(proposedServiceInfo?.status === 'PROPOSAL' ||
+                  proposedServiceInfo?.status === 'ACCEPTED') && (
+                  <View style={styles.divider} />
+                )}
+              </>
+            ) : proposedServiceInfo?.proposedBy === 'USER' &&
+              proposedServiceInfo?.status === 'PROPOSAL' &&
+              proposedServiceInfo?.providerId === user?.user?.provider?.id ? (
+              <>
+                <TouchableOpacity onPress={handleAccept}>
+                  <TitleText
+                    text="Accept"
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
                 <View style={styles.divider} />
-              )}
-            </>
-          ) : proposedServiceInfo?.proposedBy === 'USER' &&
-            proposedServiceInfo?.status === 'PROPOSAL' &&
-            proposedServiceInfo?.providerId === user?.user?.provider?.id ? (
-            <>
-              <TouchableOpacity onPress={handleAccept}>
-                <TitleText
-                  text="Accept"
-                  textStyle={{
-                    ...styles.textStyle,
-                    textAlign: 'center',
-                    color: Colors.light.background,
-                  }}
-                />
-              </TouchableOpacity>
-              <View style={styles.divider} />
-            </>
-          ) : proposedServiceInfo?.status === 'ACCEPTED' ? (
-            <>
-              <TouchableOpacity
-                // style={{width: SCREEN_WIDTH / 5}}
-                onPress={() => Alert.alert('Proposal Already Accepted!')}>
-                <TitleText
-                  text="Accepted"
-                  textStyle={{
-                    ...styles.textStyle,
-                    textAlign: 'center',
-                    color: Colors.light.background,
-                  }}
-                />
-              </TouchableOpacity>
-              {/* <View style={styles.divider} /> */}
-            </>
-          ) : proposedServiceInfo?.status === 'PAID' ? (
-            <>
-              <TouchableOpacity
-                // style={{width: SCREEN_WIDTH / 5}}
-                onPress={() => navigation.navigate('AppointmentSuccess')}>
-                <TitleText
-                  text={`${
-                    proposedServiceInfo?.userId === user?.user?.id
-                      ? 'Paid'
-                      : 'Paid Successfully'
-                  }`}
-                  textStyle={{
-                    ...styles.textStyle,
-                    textAlign: 'center',
-                    color: Colors.light.background,
-                  }}
-                />
-              </TouchableOpacity>
-              {/* <View style={styles.divider} /> */}
-              {proposedServiceInfo?.userId === user?.user?.id &&
-                proposedServiceInfo?.status === 'PAID' && (
+              </>
+            ) : proposedServiceInfo?.status === 'ACCEPTED' ? (
+              <>
+                <TouchableOpacity
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  onPress={() => Alert.alert('Proposal Already Accepted!')}>
+                  <TitleText
+                    text="Accepted"
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
+                {/* <View style={styles.divider} /> */}
+              </>
+            ) : proposedServiceInfo?.status === 'PAID' ? (
+              <>
+                {!proposedServiceInfo.isRecurring && (
                   <>
+                    <TouchableOpacity
+                      // style={{width: SCREEN_WIDTH / 5}}
+                      onPress={() => navigation.navigate('AppointmentSuccess')}>
+                      <TitleText
+                        text={`${
+                          proposedServiceInfo?.userId === user?.user?.id
+                            ? 'Paid'
+                            : 'Paid Successfully'
+                        }`}
+                        textStyle={{
+                          ...styles.textStyle,
+                          textAlign: 'center',
+                          color: Colors.light.background,
+                        }}
+                      />
+                    </TouchableOpacity>
                     <View style={styles.divider} />
                     <TouchableOpacity
                       // style={{width: SCREEN_WIDTH / 5}}
@@ -298,14 +309,107 @@ const ActivityHeader = (props: {
                     </TouchableOpacity>
                   </>
                 )}
-            </>
-          ) : proposedServiceInfo?.status === 'COMPLETED' ? (
-            <>
+                {proposedServiceInfo?.userId === user?.user?.id &&
+                  proposedServiceInfo.isRecurring && (
+                    <>
+                      {proposedServiceInfo.isRecurring && (
+                        <>
+                          <TouchableOpacity
+                            // style={{width: '100%'}}
+                            onPress={() =>
+                              navigation.navigate('AppointmentSuccess')
+                            }>
+                            <TitleText
+                              text={`${
+                                proposedServiceInfo?.userId === user?.user?.id
+                                  ? 'Paid'
+                                  : 'Paid Successfully'
+                              }`}
+                              textStyle={{
+                                ...styles.textStyle,
+
+                                textAlign: 'center',
+                                width: '100%',
+                                backgroundColor: 'red',
+                                color: Colors.light.background,
+                              }}
+                            />
+                          </TouchableOpacity>
+                          <View style={styles.divider} />
+                          <TouchableOpacity
+                            // style={{width: SCREEN_WIDTH / 5}}
+                            onPress={handleRegenerate}>
+                            <TitleText
+                              text="Regenerate"
+                              textStyle={{
+                                ...styles.textStyle,
+                                textAlign: 'center',
+                                color: Colors.light.background,
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </>
+                      )}
+                      <View style={styles.divider} />
+                      <TouchableOpacity
+                        // style={{width: SCREEN_WIDTH / 5}}
+                        onPress={handleComplete}>
+                        <TitleText
+                          text="Complete"
+                          textStyle={{
+                            ...styles.textStyle,
+                            textAlign: 'center',
+                            color: Colors.light.background,
+                          }}
+                        />
+                      </TouchableOpacity>
+                    </>
+                  )}
+              </>
+            ) : proposedServiceInfo?.status === 'COMPLETED' ? (
+              <>
+                <TouchableOpacity
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  onPress={() => {}}>
+                  <TitleText
+                    text={'Completed'}
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
+              </>
+            ) : null}
+            {proposedServiceInfo?.status === 'PROPOSAL' && (
+              <>
+                <TouchableOpacity
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  onPress={() =>
+                    navigation.navigate('EditDetails', {
+                      appointmentOpk: props.opk,
+                    })
+                  }>
+                  <TitleText
+                    text="Modify"
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
+                <View style={styles.divider} />
+              </>
+            )}
+            {(proposedServiceInfo?.status === 'PROPOSAL' ||
+              proposedServiceInfo?.status === 'ACCEPTED') && (
               <TouchableOpacity
                 // style={{width: SCREEN_WIDTH / 5}}
-                onPress={() => {}}>
+                onPress={handleReject}>
                 <TitleText
-                  text={`Completed`}
+                  text="Decline"
                   textStyle={{
                     ...styles.textStyle,
                     textAlign: 'center',
@@ -313,55 +417,25 @@ const ActivityHeader = (props: {
                   }}
                 />
               </TouchableOpacity>
-            </>
-          ) : null}
-          {proposedServiceInfo?.status === 'PROPOSAL' && (
-            <>
-              <TouchableOpacity
-                // style={{width: SCREEN_WIDTH / 5}}
-                onPress={() =>
-                  navigation.navigate('EditDetails', {
-                    appointmentOpk: props.opk,
-                  })
-                }>
-                <TitleText
-                  text="Modify"
-                  textStyle={{
-                    ...styles.textStyle,
-                    textAlign: 'center',
-                    color: Colors.light.background,
-                  }}
-                />
-              </TouchableOpacity>
-              <View style={styles.divider} />
-            </>
-          )}
-          {(proposedServiceInfo?.status === 'PROPOSAL' ||
-            proposedServiceInfo?.status === 'ACCEPTED') && (
-            <TouchableOpacity
-              // style={{width: SCREEN_WIDTH / 5}}
-              onPress={handleReject}>
-              <TitleText
-                text="Decline"
-                textStyle={{
-                  ...styles.textStyle,
-                  textAlign: 'center',
-                  color: Colors.light.background,
-                }}
-              />
-            </TouchableOpacity>
-          )}
+            )}
+          </View>
+          <TouchableOpacity
+            onPress={() => props.setIsDetailsModal(true)}
+            style={[
+              styles.detailsButtonStyle,
+              {borderColor: colors.borderColor},
+            ]}>
+            <TitleText text="Details" textStyle={styles.textStyle} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() => props.setIsDetailsModal(true)}
-          style={[
-            styles.detailsButtonStyle,
-            {borderColor: colors.borderColor},
-          ]}>
-          <TitleText text="Details" textStyle={styles.textStyle} />
-        </TouchableOpacity>
       </View>
-    </View>
+      {/* Modals */}
+      <RecurringModal
+        regenerateModal={regenerateModal}
+        setRegenerateModal={setRegenerateModal}
+        proposedServiceInfo={proposedServiceInfo}
+      />
+    </>
   );
 };
 

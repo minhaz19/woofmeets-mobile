@@ -22,8 +22,9 @@ const Details: FC<Props> = props => {
   const dispatch = useAppDispatch();
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   useEffect(() => {
-    dispatch(getProposalPricing(proposedServiceInfo.appointmentOpk));
+    dispatch(getProposalPricing(proposedServiceInfo?.appointmentOpk));
   }, []);
+
   return (
     <View>
       <View style={styles.headerContainer}>

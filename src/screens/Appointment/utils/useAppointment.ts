@@ -230,6 +230,7 @@ export const useAppointment = (providerOpk: string) => {
               formattedMessage: dropInVisitFT,
             };
         const response = await request(endpoint, dropDogPayload);
+        console.log('res', response);
         response.ok &&
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,

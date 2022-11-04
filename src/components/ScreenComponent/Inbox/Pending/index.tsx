@@ -14,7 +14,7 @@ import BottomSpacing from '../../../UI/BottomSpacing';
 import {format} from 'date-fns';
 import changeTextLetter from '../../../common/changeTextLetter';
 interface Props {
-  statusType: string; 
+  statusType: string;
 }
 const PendingStatus = ({statusType}: Props) => {
   let navigation = useNavigation<any>();
@@ -42,7 +42,7 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, []);
-
+  console.log('provier', providerApntStatus);
   return (
     <>
       {loading && <AppActivityIndicator visible={true} />}

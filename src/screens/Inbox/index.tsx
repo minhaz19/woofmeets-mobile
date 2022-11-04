@@ -12,7 +12,6 @@ import ApprovedStatus from '../../components/ScreenComponent/Inbox/Approved';
 import CompletedStatus from '../../components/ScreenComponent/Inbox/Completed';
 import DeclinedStatus from '../../components/ScreenComponent/Inbox/Declined';
 import UserProviderInbox from '../../components/ScreenComponent/Inbox/utils/Common/UserProviderInbox';
-import format from 'date-fns/format';
 
 const data = [
   {
@@ -41,7 +40,6 @@ const Inbox = () => {
   const [showInbox, setShowInbox] = useState(1);
   const [active, setActive] = useState('USER');
   const {colors, isDarkMode} = useTheme();
-  console.log('currne', format(new Date(), "yyyy-MM-dd'T'HH:mm:ss'Z'"));
   return (
     <ScreenRapperGrey rapperStyle={styles.container}>
       <View style={styles.tabContainer}>

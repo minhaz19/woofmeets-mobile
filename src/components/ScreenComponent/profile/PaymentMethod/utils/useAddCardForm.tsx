@@ -19,6 +19,9 @@ export const useAddCardForm = (
 ) => {
   const [tokenLoading, setTokenLoading] = useState(false);
   const [appointmentLoading, setAppointmentLoading] = useState(false);
+  const {proposedServiceInfo, billingId} = useAppSelector(
+    state => state.proposal,
+  );
   const [customerId, setCustomerId] = useState<string | null | undefined>('');
   const {request, loading} = useApi(methods._post);
   const {request: idemRequest, loading: idemLoading} = useApi(
@@ -34,7 +37,6 @@ export const useAddCardForm = (
     cd();
   }, []);
   console.log('sce', sequence);
-  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const handleValues = async (cardData: any) => {
     setTokenLoading(true);
     const tokenPayload: any = {
@@ -111,7 +113,7 @@ export const useAddCardForm = (
           setAppointmentLoading(true);
 
           const appointmentResult: any = await idemRequest(
-            `/appointment/${proposedServiceInfo.appointmentOpk}/billing/${proposedServiceInfo.billing[0]?.id}/pay?cardId=${cardId}`,
+            `/appointment/${proposedServiceInfo.appointmentOpk}/billing/${billingId}/pay?cardId=${cardId}`,
             {},
             uuid,
           );

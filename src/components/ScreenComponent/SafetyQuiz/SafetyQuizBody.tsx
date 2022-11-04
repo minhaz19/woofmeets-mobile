@@ -17,6 +17,7 @@ const SafetyQuizBody = ({handleSubmit, loading}: Props) => {
     getValues,
     formState: {errors},
   } = useFormContext();
+  console.log('safety quiz', errors);
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>

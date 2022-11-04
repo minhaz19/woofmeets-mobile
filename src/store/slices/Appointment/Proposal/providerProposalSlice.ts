@@ -10,12 +10,17 @@ const initialState: any = {
   proposedServiceInfo: null,
   error: null,
   loading: false,
+  billingId: null,
 };
 
 const providerProposalSlice = createSlice({
   name: 'proposal',
   initialState,
-  reducers: {},
+  reducers: {
+    setBillingId: (state, {payload}) => {
+      state.billingId = payload;
+    },
+  },
 
   extraReducers(builder) {
     builder
@@ -81,6 +86,7 @@ const providerProposalSlice = createSlice({
                 rating: modpayload.rating,
                 review: modpayload.appointment.review,
                 providerTimeZone: modpayload.appointment.providerTimeZone,
+                refundDetails: modpayload.proposal.refundDetails,
               }
             : modpayload.appointment.providerService.serviceTypeId === 3 ||
               modpayload.appointment.providerService.serviceTypeId === 5
@@ -135,6 +141,7 @@ const providerProposalSlice = createSlice({
                 providerTimeZone: modpayload.appointment.providerTimeZone,
                 rating: modpayload.rating,
                 review: modpayload.appointment.review,
+                refundDetails: modpayload.proposal.refundDetails,
               }
             : modpayload.appointment.providerService.serviceTypeId === 4
             ? {
@@ -185,6 +192,7 @@ const providerProposalSlice = createSlice({
                 rating: modpayload.rating,
                 review: modpayload.appointment.review,
                 providerTimeZone: modpayload.appointment.providerTimeZone,
+                refundDetails: modpayload.proposal.refundDetails,
               }
             : null;
       })
@@ -194,4 +202,5 @@ const providerProposalSlice = createSlice({
       });
   },
 });
+export const {setBillingId} = providerProposalSlice.actions;
 export default providerProposalSlice.reducer;

@@ -45,6 +45,7 @@ const ActivityScreen = (props: {
   useEffect(() => {
     onRefresh();
   }, []);
+  console.log('review', proposal?.review);
   return (
     <>
       {(loading || petLoading) && <AppActivityIndicator visible={true} />}

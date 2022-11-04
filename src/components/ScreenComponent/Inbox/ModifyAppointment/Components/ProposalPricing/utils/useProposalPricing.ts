@@ -87,6 +87,7 @@ export const useProposalPricing = () => {
             name: 'subTotal',
           },
         ]);
+        console.log(' d payload', payload, result);
       } else {
         const payload = {
           serviceId: proposedServiceInfo.providerServiceId,

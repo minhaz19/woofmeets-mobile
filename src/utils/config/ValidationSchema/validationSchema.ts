@@ -193,9 +193,9 @@ const safetyQuizValidationSchema = Yup.object().shape({
   '2': Yup.string().required('Please choose the corrent answer'),
   '3': Yup.string().required('Please choose the corrent answer'),
   '4': Yup.string().required('Please choose the corrent answer'),
-  '5': Yup.string().required('Please choose the corrent answer'),
-  '6': Yup.string().required('Please choose the corrent answer'),
-  '7': Yup.string().required('Please choose the corrent answer'),
+  // '5': Yup.string().required('Please choose the corrent answer'),
+  // '6': Yup.string().required('Please choose the corrent answer'),
+  // '7': Yup.string().required('Please choose the corrent answer'),
 });
 const backgroundCheckValidationSchema = Yup.object().shape({
   dob: Yup.string(),
