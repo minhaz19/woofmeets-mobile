@@ -2,6 +2,7 @@ import {useAppSelector} from '../../../../store/store';
 
 export const useBasicInitalState = () => {
   const {userInfo} = useAppSelector(state => state.userProfile);
+  console.log(userInfo);
   const basicInitalState = {
     profileImage: userInfo?.image?.url ? userInfo?.image?.url : '',
     addressLine1: userInfo?.basicInfo?.addressLine1
@@ -22,8 +23,8 @@ export const useBasicInitalState = () => {
     dob: userInfo?.basicInfo?.dob
       ? new Date(userInfo?.basicInfo?.dob)?.toDateString()
       : '',
-    latitude: 0,
-    longitude: 0,
+    latitude: userInfo?.basicInfo?.latitude ? userInfo?.basicInfo?.latitude : null,
+    longitude: userInfo?.basicInfo?.longitude ? userInfo?.basicInfo?.longitude : null,
   };
   return basicInitalState;
 };

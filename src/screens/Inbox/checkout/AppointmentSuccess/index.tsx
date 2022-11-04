@@ -48,6 +48,7 @@ const AppointmentSuccess = () => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
+          backgroundColor: colors.backgroundColor,
           paddingHorizontal: 20,
           flex: 1,
           justifyContent: 'center',
@@ -66,7 +67,7 @@ const AppointmentSuccess = () => {
             padding: 10,
             borderWidth: 1,
             borderColor: colors.borderColor,
-            backgroundColor: Colors.iosBG,
+            backgroundColor: isDarkMode ? Colors.dark.lightDark : Colors.iosBG,
             marginBottom: 20,
           }}>
           <TitleText

@@ -1,4 +1,13 @@
-import {View, StyleSheet, ScrollView, useColorScheme, Platform, Linking, Alert} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  useColorScheme,
+  Platform,
+  Linking,
+  Alert,
+  Pressable,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   CallIcon,
@@ -24,16 +33,23 @@ import {logout} from '../../store/slices/auth/userSlice';
 import methods from '../../api/methods';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
-import { CommonActions } from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
+import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
 
-const SettingMain = (props: { navigation: { navigate: (arg0: string) => any; dispatch: (arg0: CommonActions.Action) => void; }; }) => {
+const SettingMain = (props: {
+  navigation: {
+    navigate: (arg0: string) => any;
+    dispatch: (arg0: CommonActions.Action) => void;
+  };
+}) => {
   const dispatch = useAppDispatch();
   const isDarkMode = useColorScheme() === 'dark';
   const {colors} = useTheme();
   const [token, setToken] = useState<any>();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const {user} = useAppSelector((state: any) => state.whoAmI);
   // const userInfo = useAppSelector(state => state.auth.userInfo);
-
+  console.log('=====>', user, isLoggedIn);
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {
@@ -44,6 +60,7 @@ const SettingMain = (props: { navigation: { navigate: (arg0: string) => any; dis
   };
   useEffect(() => {
     getDecodedToken();
+    dispatch(getWhoAmI());
   }, []);
 
   const makeCall = (phone: string | number) => {
@@ -169,7 +186,9 @@ const SettingMain = (props: { navigation: { navigate: (arg0: string) => any; dis
       id: 2,
       title: 'Help',
       icon: HelpIcon,
-      screenName: () => {Linking.openURL('https://woofmeets.com/help-center')},
+      screenName: () => {
+        Linking.openURL('https://woofmeets.com/help-center');
+      },
       rightIcon: true,
       opacity: 1,
     },
@@ -204,10 +223,8 @@ const SettingMain = (props: { navigation: { navigate: (arg0: string) => any; dis
       props.navigation.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [
-            { name: 'AuthNavigator' },
-          ],
-        })
+          routes: [{name: 'AuthNavigator'}],
+        }),
       );
     },
     opacity: 1,
@@ -253,16 +270,37 @@ const SettingMain = (props: { navigation: { navigate: (arg0: string) => any; dis
         style={[styles.rootContainer]}
         showsVerticalScrollIndicator={false}>
         <View>
-          <View style={[styles.boxContainer, backgroundStyle]}>
-            <View style={styles.boxTextContainer}>
+          {isLoggedIn && !user?.timezone ? (
+            <View style={[styles.boxContainer, backgroundStyle]}>
               <ShortText
-                textStyle={{color: Colors.primary}}
-                text={'Get $100 '}
+                text={
+                  'Action Required! Please set your preferred time zone to continue.'
+                }
+                textStyle={{color: Colors.red}}
               />
-              <ShortText text={' when friends join Woofmeets'} />
+              <Pressable
+                onPress={() => {
+                  props.navigation.navigate('AccountSetting');
+                    dispatch(getWhoAmI());
+                }}>
+                <ShortText
+                  text={'Set Time Zone'}
+                  textStyle={{color: Colors.blue}}
+                />
+              </Pressable>
             </View>
-            <ShortText text={'Share Now'} textStyle={{color: Colors.blue}} />
-          </View>
+          ) : (
+            <View style={[styles.boxContainer, backgroundStyle]}>
+              <View style={styles.boxTextContainer}>
+                <ShortText
+                  textStyle={{color: Colors.primary}}
+                  text={'Get $100 '}
+                />
+                <ShortText text={' when friends join Woofmeets'} />
+              </View>
+              <ShortText text={'Share Now'} textStyle={{color: Colors.blue}} />
+            </View>
+          )}
           {!isLoggedIn && (
             <View
               style={{

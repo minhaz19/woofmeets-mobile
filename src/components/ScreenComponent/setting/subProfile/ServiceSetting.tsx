@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  Alert,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
@@ -28,6 +29,7 @@ import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import {useNavigation} from '@react-navigation/native';
 import {getUserServices} from '../../../../store/slices/profile/services';
 import {setCurrentScreen} from '../../../../store/slices/onBoarding/initial';
+import {getWhoAmI} from '../../../../store/slices/common/whoAmI/whoAmIAction';
 
 const ServiceSetting = () => {
   // const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
@@ -36,6 +38,7 @@ const ServiceSetting = () => {
   const {userServices, userServicesLoading} = useAppSelector(
     (state: any) => state.services,
   );
+  const {user} = useAppSelector((state: any) => state?.whoAmI);
   const navigation = useNavigation();
 
   const serviceData = userServices !== null && userServices;
@@ -56,11 +59,13 @@ const ServiceSetting = () => {
   // if (isBoardingSelected) {
   //   return <ServiceSetUp />;
   // }
+  console.log(user);
 
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     dispatch(getUserServices());
+    dispatch(getWhoAmI());
     setRefreshing(false);
   }, [dispatch]);
 
@@ -145,7 +150,13 @@ const ServiceSetting = () => {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => navigation.navigate('ServiceSelection')}
+            onSelect={
+              user.provider?.isApproved
+                ? () => navigation.navigate('ServiceSelection')
+                : Alert.alert(
+                    'You may notice during the onboarding process that you can only select one of the services you decided to offer clients. This is normal. We will run a background check on you once you’ve set up your profile. Assuming we accept you to join the Woofmeets team, you’ll be able to come back to your dashboard and set up the rest of your services.',
+                  )
+            }
           />
         </View>
       </ScrollView>

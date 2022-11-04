@@ -1,6 +1,4 @@
-import {parse} from 'date-fns';
 import * as Yup from 'yup';
-import {  emailReg, phoneNumberReg1 } from '../../../constants/regex';
 
 const basicInfoValidationSchema = Yup.object().shape({
   profileImage: Yup.string(),
@@ -12,9 +10,9 @@ const basicInfoValidationSchema = Yup.object().shape({
   zipCode: Yup.string().required('Zip code is required'),
   countryId: Yup.number(),
   name: Yup.string().required('Name is required'),
-  dob: Yup.date()
-    .typeError('please enter a valid date')
-    .required()
+  dob: Yup.date().typeError('please enter a valid date').required(),
+  latitude: Yup.number().required('Address is required'),
+  longitude: Yup.number().required('Address is required'),
 });
 
 const contactValidationSchema = Yup.object().shape({

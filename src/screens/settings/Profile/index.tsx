@@ -25,6 +25,7 @@ import authStorage from '../../../utils/helpers/auth/storage';
 import TitleText from '../../../components/common/text/TitleText';
 import {getUserOnboardStatus} from '../../../store/slices/connect/stripe';
 import {getSkillsData} from '../../../store/slices/profile/details';
+import { getWhoAmI } from '../../../store/slices/common/whoAmI/whoAmIAction';
 
 const Profile = (props: {
   navigation: {navigate: (arg0: string, arg1?: any) => any};
@@ -93,7 +94,10 @@ const Profile = (props: {
         </View>
         <View style={styles.serviceContainer}>
           <TouchableOpacity
-            onPress={() => props.navigation.navigate('ServiceSetting')}
+            onPress={() => {
+              props.navigation.navigate('ServiceSetting');
+              dispatch(getWhoAmI());
+            }}
             style={styles.flexContainer}>
             <HeaderText
               text={'Service Settings'}
