@@ -11,12 +11,19 @@ import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
 
 const ProposalPricing = () => {
   const {pricingInfo, proposedServiceInfo} = useProposalPricing();
-  const {colors} = useTheme();
+  const {isDarkMode, colors} = useTheme();
   return (
     <View>
       <TitleText text={'Pricing Summary'} textStyle={styles.titleText} />
 
-      <View style={styles.priceContainer}>
+      <View
+        style={[
+          styles.priceContainer,
+          {
+            backgroundColor: isDarkMode ? Colors.dark.lightDark : Colors.iosBG,
+            borderColor: colors.borderColor,
+          },
+        ]}>
         {pricingInfo?.map((item: any) => (
           <>
             {item.name === 'subTotal' ? (
@@ -84,20 +91,6 @@ const ProposalPricing = () => {
                         lineHeight: 20,
                       }}
                     />
-                    {/* <ShortText
-                    text={`$${item?.rate?.amount} X ${item?.count} ${
-                      proposedServiceInfo.serviceTypeId === 1 ||
-                      proposedServiceInfo.serviceTypeId === 2
-                        ? 'per night'
-                        : proposedServiceInfo.serviceTypeId === 3
-                        ? 'per visit'
-                        : proposedServiceInfo.serviceTypeId === 4
-                        ? 'per day'
-                        : proposedServiceInfo.serviceTypeId === 5
-                        ? 'per walk'
-                        : ''
-                    }`}
-                  /> */}
                   </View>
                   <View>
                     <TitleText
@@ -106,37 +99,6 @@ const ProposalPricing = () => {
                     />
                   </View>
                 </View>
-
-                {/* {item?.sixtyMinutesRate?.count && (
-                  <View style={{}}>
-                    <View style={{}}>
-                      <TitleText
-                        text={'helo'}
-                        textStyle={{fontWeight: 'bold'}}
-                      />
-                      <TitleText
-                        text={`$${
-                          item?.sixtyMinutesRate?.count *
-                          item?.sixtyMinutesRate?.rate.amount
-                        }`}
-                        textStyle={{}}
-                      />
-                    </View>
-
-                    <ShortText
-                      text={`Applied ${item?.sixtyMinutesRate.rate.name}`}
-                      textStyle={{fontWeight: 'bold'}}
-                    />
-
-                    <ShortText
-                      text={`${item?.sixtyMinutesRate.count} visit @ $${item?.sixtyMinutesRate.rate.amount} / visit`}
-                      textStyle={{
-                        color: colors.descriptionText,
-                        lineHeight: 20,
-                      }}
-                    />
-                  </View>
-                )} */}
               </>
             )}
           </>

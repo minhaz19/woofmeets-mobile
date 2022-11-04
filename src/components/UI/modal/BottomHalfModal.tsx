@@ -8,7 +8,7 @@ import {useAppDispatch} from '../../../store/store';
 const BottomHalfModal = (props: {
   setIsModalVisible?: (arg0: boolean) => void;
   isModalVisible?: boolean | undefined;
-  height: string;
+  height?: string;
   children:
     | boolean
     | React.ReactChild

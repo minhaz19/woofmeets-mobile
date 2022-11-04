@@ -22,6 +22,7 @@ import HeaderText from '../../../common/text/HeaderText';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import {useNavigation} from '@react-navigation/native';
+import BottomSpacing from '../../../UI/BottomSpacing';
 
 interface Props {
   setIsReviewModal: (value: boolean) => void;
@@ -171,6 +172,7 @@ const Review: FC<Props> = props => {
             }}
             title={'Close'}
           />
+          <BottomSpacing />
         </ScrollView>
       </KeyboardAvoidingView>
     </>

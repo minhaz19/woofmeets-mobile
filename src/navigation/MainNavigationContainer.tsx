@@ -34,7 +34,6 @@ import BasicPayment from '../components/ScreenComponent/becomeSitter/subscriptio
 import Appointment from '../screens/Appointment';
 import SubscriptionScreen from '../screens/becomeSitter/Subscription';
 import ActivityScreen from '../screens/Inbox/activity/ActivityScreen';
-import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
 import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
 import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
 import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
@@ -45,9 +44,10 @@ import SingleServiceLanding from '../components/ScreenComponent/setting/subProfi
 import Rates from '../screens/becomeSitter/ServiceSetUp/Rates';
 import Availability from '../screens/becomeSitter/ServiceSetUp/Availability/Availability';
 import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy/CancellationPolicy';
-import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
-import CheckoutDetails from '../screens/Inbox/checkout/CheckoutDetails';
 import AddPetHome from '../screens/pet/AddPet/AddPetHome';
+import CheckoutDetails from '../screens/Inbox/checkout/CheckoutDetails';
+import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
+import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
 import UpgradePlan from '../components/ScreenComponent/becomeSitter/subscription/UpgradePlan/UpgradePlan';
 const Stack = createStackNavigator();
 
