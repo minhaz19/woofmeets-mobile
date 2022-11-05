@@ -11,8 +11,8 @@ const basicInfoValidationSchema = Yup.object().shape({
   countryId: Yup.number(),
   name: Yup.string().required('Name is required'),
   dob: Yup.date().typeError('please enter a valid date').required(),
-  latitude: Yup.number().required('Address is required'),
-  longitude: Yup.number().required('Address is required'),
+  // latitude: Yup.number().required('Address is required'),
+  // longitude: Yup.number().required('Address is required'),
 });
 
 const contactValidationSchema = Yup.object().shape({

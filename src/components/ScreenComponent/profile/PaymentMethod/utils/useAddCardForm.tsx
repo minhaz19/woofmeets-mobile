@@ -52,6 +52,7 @@ export const useAddCardForm = (
       name: cardData.name,
     };
     const {error, token} = await createToken(tokenPayload);
+    console.log('token', error, token);
     setTokenLoading(false);
     if (error) {
       Alert.alert(`Error code: ${error.code}`, error.message);
@@ -75,22 +76,19 @@ export const useAddCardForm = (
             {},
             uuid,
           );
-
+          console.log('sub res', subsRes);
           if (subsRes.ok) {
             if (subsRes.ok && subsRes?.data.data.requiresAction === true) {
-              try {
-                const clientScreet = subsRes.data.data.clientSecret;
-                const {paymentIntent, error: dsError}: any =
-                  await confirmPayment(clientScreet);
+              const clientScreet = subsRes.data.data.clientSecret;
+              const {paymentIntent, error: dsError}: any = await confirmPayment(
+                clientScreet,
+              );
 
-                paymentIntent?.status === 'Succeeded' &&
-                  (dispatch(getCurrentplan()),
-                  navigation.navigate('SubscriptionScreen'));
-                if (dsError !== undefined && dsError.code === 'Failed') {
-                  return Alert.alert(dsError.localizedMessage);
-                }
-              } catch (er: any) {
-                Alert.alert(er.message);
+              paymentIntent?.status === 'Succeeded' &&
+                (dispatch(getCurrentplan()),
+                navigation.navigate('SubscriptionScreen'));
+              if (dsError !== undefined) {
+                Alert.alert(dsError.localizedMessage);
               }
             } else if (
               subsRes.ok &&

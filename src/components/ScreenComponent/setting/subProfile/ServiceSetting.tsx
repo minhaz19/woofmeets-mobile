@@ -149,9 +149,10 @@ const ServiceSetting = () => {
             onSelect={
               user.provider?.isApproved
                 ? () => navigation.navigate('ServiceSelection')
-                : Alert.alert(
-                    'You may notice during the onboarding process that you can only select one of the services you decided to offer clients. This is normal. We will run a background check on you once you’ve set up your profile. Assuming we accept you to join the Woofmeets team, you’ll be able to come back to your dashboard and set up the rest of your services.',
-                  )
+                : () =>
+                    Alert.alert(
+                      'You may notice during the onboarding process that you can only select one of the services you decided to offer clients. This is normal. We will run a background check on you once you’ve set up your profile. Assuming we accept you to join the Woofmeets team, you’ll be able to come back to your dashboard and set up the rest of your services.',
+                    )
             }
           />
         </View>
