@@ -8,10 +8,10 @@ import HeaderText from '../../../common/text/HeaderText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppSelector} from '../../../../store/store';
-import changeTextLetter from '../../../common/changeTextLetter';
 import ShortText from '../../../common/text/ShortText';
 import DotLoader from '../../../../components/common/Loaders/DotLoader';
 import TitleText from '../../../common/text/TitleText';
+import changeTextLetter from '../../../common/changeTextLetter';
 interface Props {
   screen: string;
 }

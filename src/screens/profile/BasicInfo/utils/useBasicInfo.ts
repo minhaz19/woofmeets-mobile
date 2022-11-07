@@ -26,7 +26,6 @@ export const useBasicInfo = () => {
       longitude: e.lng,
     };
     const result = await request(slug, formatedPayload);
-    console.log('res', formatedPayload, result);
     if (result.ok) {
       Alert.alert('Information Updated!');
       dispatch(getUserProfileInfo());

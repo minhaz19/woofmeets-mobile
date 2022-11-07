@@ -52,7 +52,6 @@ export const useAddCardForm = (
       name: cardData.name,
     };
     const {error, token} = await createToken(tokenPayload);
-    console.log('token', error, token);
     setTokenLoading(false);
     if (error) {
       Alert.alert(`Error code: ${error.code}`, error.message);
@@ -76,7 +75,6 @@ export const useAddCardForm = (
             {},
             uuid,
           );
-          console.log('sub res', subsRes);
           if (subsRes.ok) {
             if (subsRes.ok && subsRes?.data.data.requiresAction === true) {
               const clientScreet = subsRes.data.data.clientSecret;

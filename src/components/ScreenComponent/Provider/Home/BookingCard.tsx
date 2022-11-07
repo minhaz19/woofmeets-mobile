@@ -15,6 +15,8 @@ import {
   import ShortText from '../../../common/text/ShortText';
 import TitleText from '../../../common/text/TitleText';
 import Text_Size from '../../../../constants/textScaling';
+import changeTextLetter from '../../../common/changeTextLetter';
+import { format } from 'date-fns';
   
   interface Props {
     item: {
@@ -33,6 +35,9 @@ import Text_Size from '../../../../constants/textScaling';
   
   const BookingCard: FC<Props> = ({item, buttonStyles, handlePress, onScreen}) => {
     const {isDarkMode, colors} = useTheme();
+    const serviceTypeId = item?.providerService?.serviceTypeId;
+    const proposalDate = item.appointmentProposal[0];
+    const isRecurring = item.appointmentProposal[0]?.isRecurring;
     return (
       <Card
         style={{
@@ -46,15 +51,44 @@ import Text_Size from '../../../../constants/textScaling';
             <View style={styles.topContainer}>
                 <View style={styles.imageContainer}>
                     <Image
-                        source={item?.ownerImage}
-                        style={styles.image}
+                        source={item?.image}
+                        style={{...styles.image, borderColor: colors.borderColor}}
                         resizeMode="contain"
                     />
                 </View>
                 <View>
-                    <HeaderText text={item.serviceName} textStyle={styles.textHeader} />
+                    <HeaderText text={item?.providerService?.serviceType?.name} textStyle={styles.textHeader} />
                     <ShortText
-                        text={item.duration}
+                        text={item?.providerService
+                          ? serviceTypeId === 1 || serviceTypeId === 2
+                            ? `Starting From:  ${format(
+                                new Date(proposalDate.proposalStartDate),
+                                'iii LLL d',
+                              )}`
+                            : serviceTypeId === 3 || serviceTypeId === 5
+                            ? isRecurring
+                              ? `Starting From:  ${format(
+                                  new Date(proposalDate.recurringStartDate),
+                                  'iii LLL d',
+                                )}`
+                              : `Starting From:  ${format(
+                                  new Date(proposalDate?.proposalVisits[0]?.date),
+                                  'iii LLL d',
+                                )}`
+                            : serviceTypeId === 4
+                            ? isRecurring
+                              ? `Starting From:  ${format(
+                                  new Date(proposalDate.recurringStartDate),
+                                  'iii LLL d',
+                                )}`
+                              : `Starting From:  ${format(
+                                  new Date(
+                                    proposalDate?.proposalOtherDate[0]?.date,
+                                  ),
+                                  'iii LLL d',
+                                )}`
+                            : ''
+                          : 'No Mesaegs fonnd'}
                         textStyle={styles.textDescription}
                     />
                 </View>
@@ -62,7 +96,7 @@ import Text_Size from '../../../../constants/textScaling';
             </View>
             <View style={styles.timeContainer}>
               <ShortText
-                text={item.orderStatus}
+                text={item?.status}
                 textStyle={styles.textTimeDescription}
               />
             </View>
@@ -70,13 +104,15 @@ import Text_Size from '../../../../constants/textScaling';
             <View style={[styles.topContainer, {paddingTop: 10}]}>
                 <View style={styles.imageContainer}>
                     <Image
-                        source={item?.ownerImage}
-                        style={styles.image}
+                        source={item?.user?.image}
+                        style={{...styles.image, borderColor: colors.borderColor}}
                         resizeMode="contain"
                     />
                 </View>
                 <View>
-                    <TitleText text={item.ownerName} textStyle={styles.textHeader} />
+                    <TitleText text={changeTextLetter(
+                        `${item?.user?.firstName} ${item?.user?.lastName}`,
+                      )} textStyle={styles.textHeader} />
                     <ShortText
                         text={item.petName}
                         textStyle={styles.textDescription}
@@ -97,6 +133,7 @@ import Text_Size from '../../../../constants/textScaling';
       width: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
       height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
       marginRight: 10,
+      borderWidth: 1,
     },
     itemContainer: {
       padding: '3%',
