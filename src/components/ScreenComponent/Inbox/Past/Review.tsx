@@ -19,7 +19,10 @@ import IOSButton from '../../../UI/IOSButton';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
 import HeaderText from '../../../common/text/HeaderText';
-import {useAppSelector} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
+import {useNavigation} from '@react-navigation/native';
+import BottomSpacing from '../../../UI/BottomSpacing';
 
 interface Props {
   setIsReviewModal: (value: boolean) => void;
@@ -33,9 +36,10 @@ const Review: FC<Props> = props => {
   const [isEnjoyRating, setIsEnjoyRating] = useState(5);
   const [isText, setIsText] = useState('');
   const [enjoyText, setEnjoyText] = useState('');
-
+  const dispatch = useAppDispatch();
   const {user} = useAppSelector((state: any) => state.whoAmI);
-
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  const navigation = useNavigation();
   // handleRatings
   const handleRatings = (value: number) => {
     setIsRatings(value);
@@ -65,6 +69,8 @@ const Review: FC<Props> = props => {
     const result = await request(endPoint, formattedData);
     if (result.ok) {
       props.setIsReviewModal(false);
+      dispatch(getProviderApnt(proposedServiceInfo.appointmentOpk));
+      navigation.navigate('Inbox');
     }
   };
   return (
@@ -166,6 +172,7 @@ const Review: FC<Props> = props => {
             }}
             title={'Close'}
           />
+          <BottomSpacing />
         </ScrollView>
       </KeyboardAvoidingView>
     </>

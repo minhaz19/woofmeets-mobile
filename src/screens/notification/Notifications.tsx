@@ -88,7 +88,6 @@ const Notifications = () => {
           });
         });
     } catch (error) {
-      console.log('myMethod: ', 'Error after getToken: ', error);
     }
   };
 

@@ -21,6 +21,10 @@ const serviceRateFieldSlice = createSlice({
         state.error = null;
       })
       .addCase(getServiceRateFields.fulfilled, (state, {payload}) => {
+        const findIndex = payload.data.findIndex(
+          (item: any) => item.serviceRateType.slug === 'base-rate',
+        );
+        payload.data.splice(0, 0, payload.data.splice(findIndex, 1)[0]);
         state.loading = false;
         state.serviceData = payload.data;
         state.ratesMeta = payload.data.filter(

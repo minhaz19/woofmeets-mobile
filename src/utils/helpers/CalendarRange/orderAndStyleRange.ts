@@ -34,7 +34,8 @@ export const orderAndStyleRange = (range: any, type: string, color: string) => {
         [orderRange[i]]: {
           customStyles: {
             container: {
-              backgroundColor: 'black',
+              backgroundColor: Colors.primary,
+              // backgroundColor: 'black',
               elevation: 2,
               borderRadius: 0,
               borderBottomLeftRadius: i === 0 ? 30 : 0,

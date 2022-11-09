@@ -150,9 +150,11 @@ const styles = StyleSheet.create({
   contentStyle: {
     borderColor: Colors.subText,
     marginBottom: 10,
-    marginRight: 10,
+    backgroundColor: 'red',
+    // marginRight: 10,
     borderRadius: 5,
     padding: 10,
+    paddingVertical: 20,
     minHeight: 100,
     marginTop: 5,
     flexDirection: 'row',

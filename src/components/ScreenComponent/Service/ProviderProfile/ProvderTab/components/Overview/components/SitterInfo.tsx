@@ -44,7 +44,7 @@ const SitterInfo = ({item}: Props) => {
                 fontSize: Text_Size.Text_9,
                 marginTop: 10,
               }}
-              text={'No skills found'}
+              text={'No home information found'}
             />
           </View>
         ) : (

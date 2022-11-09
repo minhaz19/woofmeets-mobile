@@ -80,7 +80,7 @@ const Inbox = () => {
       </View>
       {showInbox === 1 && <PendingStatus statusType={active} />}
       {showInbox === 2 && <ApprovedStatus statusType={active} />}
-      {showInbox === 3 && <CompletedStatus />}
+      {showInbox === 3 && <CompletedStatus statusType={active} />}
       {showInbox === 4 && <DeclinedStatus statusType={active} />}
 
       <BottomSpacing />

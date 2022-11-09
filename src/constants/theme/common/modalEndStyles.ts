@@ -2,7 +2,7 @@ import {Platform, StyleSheet} from 'react-native';
 import Colors from '../../Colors';
 import Text_Size from '../../textScaling';
 import {SCREEN_WIDTH} from '../../WindowSize';
-import { textStyle } from './textStyle';
+import {textStyle} from './textStyle';
 // import {SCREEN_WIDTH} from '../../WindowSize';
 
 export const designs = StyleSheet.create({

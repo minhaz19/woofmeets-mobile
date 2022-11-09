@@ -31,7 +31,6 @@ const ServicesCalendar = ({availabilityData, providerOpk}: Props) => {
   const {loading, availabileDates, getAvailablity, getCurrentMonthDate} =
     useAvailability(selectedService, navigation, monthRef, providerOpk);
   const {_markedStyle} = useMarkedStyles(availabileDates);
-  console.log(_markedStyle, providerOpk);
 
   return (
     <>

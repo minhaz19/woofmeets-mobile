@@ -21,6 +21,7 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import DescriptionText from '../../../common/text/DescriptionText';
 import ButtonCom from '../../../UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
+import BottomSpacing from '../../../UI/BottomSpacing';
 interface Props {
   cards: any;
   CardId: null | number;
@@ -143,6 +144,7 @@ const AllCards = ({
             </>
           )}
         </View>
+        <BottomSpacing />
         <View>
           {sequence !== null && sequence !== undefined && (
             <View style={{marginHorizontal: 20}}>
@@ -175,8 +177,8 @@ const styles = StyleSheet.create({
     paddingLeft: '5%',
   },
   scrollview: {
-    flex: 1,
-    height: '100%',
+    // flex: 1,
+    // height: '100%',
     justifyContent: 'space-between',
   },
   taskContainer: {

@@ -12,10 +12,10 @@ import {useApi} from '../../../../utils/helpers/api/useApi';
 
 const endpoint = '/subscriptions/check-basic-verification-payment';
 const subscriptionEndpoint =
-  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
+  'https://woof-api.hirebeet.com/v2/subscriptions/subscribe?';
 const defaultCardEndpoint = '/stripe-payment-method/default-card-info';
-const uuid = Math.random().toString(36).substring(2, 36);
 export const useSubscription = () => {
+  const uuid = Math.random().toString(36).substring(2, 36);
   const [sequence, setSequence] = useState<number>(0);
   const [ssLoading, setSSloading] = useState(false);
   const dispatch = useAppDispatch();
@@ -32,8 +32,7 @@ export const useSubscription = () => {
     id: item.id,
     sequence: item.id,
     title: item.name[0].toUpperCase() + item.name.slice(1),
-    description:
-      'Unlimited appointments only at 9% service charge for each appointment.',
+    description: item.features[0],
     price: item.MembershipPlanPrices[0].rate,
     annualRate: item.annualRate,
     details: item.features?.map((des: any, i: number) => ({
@@ -46,10 +45,9 @@ export const useSubscription = () => {
   };
   const handleSubmit = async () => {
     if (
-      // sitterData[1].isCompleted &&
-      // sitterData[2].isCompleted &&
-      // sitterData[3].isCompleted
-      true
+      sitterData[1].isCompleted &&
+      sitterData[2].isCompleted &&
+      sitterData[3].isCompleted
     ) {
       if (sequence === 1) {
         setSSloading(true);

@@ -41,12 +41,13 @@ export const useServices = () => {
         (ite: {serviceTypeHasRatesId: number; amount: number}) =>
           ite.serviceTypeHasRatesId === 1,
       )[0];
-
     return {
       id: item.id,
       Icon: getIcon(item.serviceType.slug),
       sittingType: item.serviceType.displayName,
-      price: ccc?.amount ? ccc.amount : 0,
+      price: item?.ServiceHasRates.find(
+        (it: any) => it.serviceTypeRate.serviceRateTypeId === 1,
+      )?.amount,
       perNight: 'Per night',
       location: `in the ${item.serviceType.location}`,
       pricingInfo:

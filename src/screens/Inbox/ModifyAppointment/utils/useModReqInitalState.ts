@@ -136,11 +136,11 @@ export const useModReqInitialState = () => {
         : [],
     multiDate:
       proposedServiceInfo?.serviceTypeId === 4 &&
-      !proposedServiceInfo.isRecurring
+      !proposedServiceInfo?.isRecurring
         ? proposedServiceInfo?.proposalOtherDate?.map((di: {date: string}) =>
             format(new Date(di.date), 'yyyy-MM-dd'),
           )
-        : !proposedServiceInfo.isRecurring
+        : !proposedServiceInfo?.isRecurring
         ? modMultiDates
         : [],
     selectedRange: getDatesInRange(d1, d2),

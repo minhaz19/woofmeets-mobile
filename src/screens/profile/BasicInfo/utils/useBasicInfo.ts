@@ -30,6 +30,8 @@ export const useBasicInfo = () => {
       Alert.alert('Information Updated!');
       dispatch(getUserProfileInfo());
       dispatch(setProfileData({pass: 0}));
+    } else {
+      Alert.alert(result?.data?.message);
     }
   };
 

@@ -18,11 +18,10 @@ import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import {confirmPayment} from '@stripe/stripe-react-native';
 const endpointBasicPayment =
-  'https://api-stg.woofmeets.com/v2/subscriptions/pay-basic-verification-payment?';
+  'https://woof-api.hirebeet.com/v2/subscriptions/pay-basic-verification-payment?';
 const subscriptionEndpoint =
-  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
+  'https://woof-api.hirebeet.com/v3/subscriptions/subscribe?';
 
-const uuid = Math.random().toString(36).substring(2, 36);
 interface Props {
   route: {
     params: {
@@ -37,6 +36,7 @@ interface Props {
 }
 
 const BasicPayment = ({route, navigation}: Props) => {
+  const uuid = Math.random().toString(36).substring(2, 36);
   const {sequence, cardId} = route.params;
   const {loading, request} = useApi(methods._idempt_post);
   const [idemLoading, setIdemLoading] = useState(false);
@@ -47,37 +47,29 @@ const BasicPayment = ({route, navigation}: Props) => {
       {},
       uuid,
     );
-    console.log('based pay res', uuid, result);
 
     if (result.ok) {
       if (result.ok && result?.data?.data?.requiresAction === true) {
-        try {
-          const clientScreet = result.data.data.clientSecret;
-          const {paymentIntent, error: dsError}: any = await confirmPayment(
-            clientScreet,
+        const clientScreet = result.data.data.clientSecret;
+        const {paymentIntent, error: dsError}: any = await confirmPayment(
+          clientScreet,
+        );
+
+        if (paymentIntent?.status === 'Succeeded') {
+          const res = await request(
+            `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
+            {},
+            uuid,
           );
-          console.log('3ds', paymentIntent, dsError);
-          dsError.code === 'Failed' && Alert.alert(dsError.localizedMessage);
-
-          if (paymentIntent?.status === 'Succeeded') {
-            const res = await request(
-              `${subscriptionEndpoint}?priceId=${sequence}&cardId=${cardId}`,
-              {},
-              uuid,
-            );
-            setIdemLoading(false);
-            console.log('pay res', res);
-
-            if (res.ok) {
-              dispatch(getCurrentplan());
-              dispatch(getSubscription());
-              navigation.navigate('SubscriptionScreen');
-            }
-          }
-        } catch (er: any) {
           setIdemLoading(false);
-          Alert.alert(er.message);
+
+          if (res.ok) {
+            dispatch(getCurrentplan());
+            dispatch(getSubscription());
+            navigation.navigate('SubscriptionScreen');
+          }
         }
+        dsError !== undefined && Alert.alert(dsError.localizedMessage);
       } else if (result.ok && result?.data.data.requiresAction === false) {
         const res = await request(
           `${subscriptionEndpoint}priceId=${sequence}&cardId=${cardId}`,

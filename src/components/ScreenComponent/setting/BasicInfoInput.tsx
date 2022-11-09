@@ -69,6 +69,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     setValue('state', state);
     setValue('zipCode', zipCode);
   };
+
   const renderHeader = useCallback(() => {
     return (
       <>

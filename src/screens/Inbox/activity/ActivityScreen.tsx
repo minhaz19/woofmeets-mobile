@@ -20,8 +20,11 @@ const ActivityScreen = (props: {
   route: {params: {appointmentOpk: string}};
 }) => {
   const dispatch = useAppDispatch();
-  const {loading, proposal} = useAppSelector(state => state.proposal);
   const {loading: petLoading} = useAppSelector(state => state.allPets);
+  const {loading, proposal, proposedServiceInfo} = useAppSelector(
+    state => state.proposal,
+  );
+
   const {appointmentOpk} = props.route.params;
   useEffect(() => {
     dispatch(getProviderProposal(appointmentOpk));
@@ -76,7 +79,7 @@ const ActivityScreen = (props: {
                 <ThreeDotsModal
                   setIsThreeDotsModal={setIsThreeDotsModal}
                   setIsReviewModal={setIsReviewModal}
-                  isReviewed={proposal?.review}
+                  isReviewed={proposedServiceInfo?.review}
                   setModalVisible={function (): void {
                     throw new Error('Function not implemented.');
                   }}

@@ -6,12 +6,20 @@ interface Props {
   children: React.ReactNode;
   style?: TextStyle | any;
   onLongPress?: () => void;
+  disabled?: boolean;
 }
-function AppTouchableOpacity({onPress, style, children, onLongPress}: Props) {
+function AppTouchableOpacity({
+  onPress,
+  style,
+  children,
+  onLongPress,
+  disabled = false,
+}: Props) {
   return (
     <Pressable
       onPress={onPress}
       onLongPress={onLongPress}
+      disabled={disabled}
       style={({pressed}) => [style, {opacity: pressed ? 0.5 : 1}]}>
       {children}
     </Pressable>

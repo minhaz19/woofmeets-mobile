@@ -45,9 +45,8 @@ const Welcome = (props: any) => {
           onPress: async () => {
             setLoading(true);
             const result = await methods._delete(
-              endpoint + props.subscriptionId,
+              endpoint + props.currentPlan.subscriptionInfo.id,
             );
-            console.log('res', result);
             result.ok &&
               (dispatch(getCurrentplan()),
               dispatch(getSubscription()),
@@ -59,7 +58,13 @@ const Welcome = (props: any) => {
     );
   };
   const hanldeUpgrade = () => {
-    navigation.navigate('SubscriptionScreen');
+    if (props.subscriptionId === 1) {
+      navigation.navigate('UpgradePlan');
+    } else {
+      Alert.alert(
+        `You are currently using ${props.item.membershipPlan.name} plan in order to upgrade your plan you have to cancel your current plan!`,
+      );
+    }
   };
   useEffect(() => {
     let runTime = setTimeout(() => setShow(false), 3000);
@@ -244,16 +249,16 @@ const Welcome = (props: any) => {
       <View>
         {/* */}
         {opk === 'current_plan' ? (
-          props.subscriptionId === 1 ? (
+          <>
             <ButtonCom
               title="Upgrage Plan"
               textAlignment={btnStyles.textAlignment}
               containerStyle={btnStyles.containerStyleFullWidth}
               titleStyle={btnStyles.titleStyle}
               onSelect={hanldeUpgrade}
-              loading={loading}
+              loading={false}
             />
-          ) : (
+
             <ButtonCom
               title="Cancel Plan"
               textAlignment={btnStyles.textAlignment}
@@ -262,8 +267,18 @@ const Welcome = (props: any) => {
               onSelect={handleSubmit}
               loading={loading}
             />
-          )
+          </>
         ) : (
+          <ButtonCom
+            title="Upgrage Plan"
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={btnStyles.containerStyleFullWidth}
+            titleStyle={btnStyles.titleStyle}
+            onSelect={hanldeUpgrade}
+            loading={loading}
+          />
+        )}
+        {opk !== 'current_plan' && (
           <ButtonCom
             title="Go Home"
             textAlignment={btnStyles.textAlignment}

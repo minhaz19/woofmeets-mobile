@@ -16,6 +16,8 @@ import ProRescheduleNavigator from './providers/bottoms/RescheduleNavigator';
 import ProSettingNavigator from './providers/bottoms/SettingNavigator';
 import BottomTabText from '../components/common/text/BottomTabText';
 import {useTheme} from '../constants/theme/hooks/useTheme';
+import CalendarNavigator from './providers/bottoms/CalendarNavigator';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
 
@@ -106,6 +108,27 @@ function BottomTabNavigator() {
             ),
           }}
         />
+        {/* <Tab.Screen
+          name="CalendarNavigator"
+          component={CalendarNavigator}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({focused}) => (
+              <View style={styles.bottomContainer}>
+                <FontAwesome
+                  name="calendar"
+                  size={20}
+                  color={focused ? Colors.primary : Colors.subText}
+                />
+                <BottomTabText
+                  text="Calendar"
+                  focused={focused}
+                  textStyle={styles.textStyle}
+                />
+              </View>
+            ),
+          }}
+        /> */}
         <Tab.Screen
           name="InboxNavigator"
           component={InboxNavigator}

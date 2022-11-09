@@ -52,6 +52,8 @@ import availableDaySlice from './slices/Provider/Unavailability/availableDaySlic
 import pInprogressApntSlice from './slices/Appointment/Inbox/Provider/InProgress/pInprogressApntSlice';
 import inprogressApntSlice from './slices/Appointment/Inbox/User/InProgress/inprogressApntSlice';
 import proposalPricingSlice from './slices/Appointment/Details/proposalPricingSlice';
+import completedApntSlice from './slices/Appointment/Inbox/User/Completed/completedApntSlice';
+import pCompletedApntSlice from './slices/Appointment/Inbox/Provider/Completed/pCompletedApntSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -97,6 +99,8 @@ const appReducer = combineReducers({
   proposalPricing: proposalPricingSlice,
   providerInprogress: pInprogressApntSlice,
   userInprogress: inprogressApntSlice,
+  userCompleted: completedApntSlice,
+  providerCompleted: pCompletedApntSlice,
 });
 
 const RootReducer = (

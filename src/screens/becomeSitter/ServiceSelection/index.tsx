@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import HeaderText from '../../../components/common/text/HeaderText';

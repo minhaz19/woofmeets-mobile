@@ -1,5 +1,5 @@
-import {View, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import ScreenRapper from '../../../components/common/ScreenRapper';
 import HeaderText from '../../../components/common/text/HeaderText';
@@ -8,6 +8,10 @@ import TitleText from '../../../components/common/text/TitleText';
 import BookingCard from '../../../components/ScreenComponent/Provider/Home/BookingCard';
 import Colors from '../../../constants/Colors';
 import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
+import { getProviderInprogressApnt } from '../../../store/slices/Appointment/Inbox/Provider/InProgress/getPInprogressApnt';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
+import subDays from 'date-fns/subDays';
+import formatDistance from 'date-fns/formatDistance';
 
 const ProviderHome = (props: {
   navigation: {navigate: (arg0: string) => any};
@@ -24,38 +28,68 @@ const ProviderHome = (props: {
       ownerImage: require('../../../assets/image/pet/mypet.png'),
     },
   ];
+
+  const dispatch = useAppDispatch();
+
+  const providerInprogress = useAppSelector(
+    state => state.providerInprogress?.providerInprogress,
+  );
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(getProviderInprogressApnt('PAID'))
+    setRefreshing(false);
+  };
+  useEffect(() => {
+    onRefresh();
+  }, []);
+
   return (
     <ScreenRapperGrey>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        style={styles.container}>
+        style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }>
         <View style={styles.headerContainer}>
           <HeaderText text="Today" textStyle={{paddingBottom: 4}} />
-          <ShortText text="1 Booking" />
+          <ShortText text={`${providerInprogress ? providerInprogress?.length : 0} Booking`} />
         </View>
         <View style={styles.spacing}>
-          <TitleText text={'Thursday, Sep 23'} textStyle={{paddingBottom: 4}} />
+          <TitleText text={new Date().toLocaleDateString()} textStyle={{paddingBottom: 4}} />
         </View>
         <View style={styles.spacing}>
           <ShortText text="+ Booking" textStyle={styles.bookingText} />
         </View>
         <View>
-          {bookingData?.map((item: any, index) => {
+          {providerInprogress?.map((item: any, index) => {
             return (
               <BookingCard
                 key={index}
                 item={item}
                 buttonStyles={Colors.yellow}
                 // onScreen={() => props.navigation.navigate('OngoingActivityScreen')}
-                onScreen={() => {}}
+                onScreen={() => props.navigation.navigate('ActivityScreen', {
+                  appointmentOpk: item.opk,
+                })}
               />
             );
           })}
         </View>
         <View style={styles.spacing}>
           <ShortText
-            text="Last checked today at 5:16 PM"
+            text={`Last checked today at ${formatDistance(
+              subDays(new Date(), 0),
+              new Date(),
+              {addSuffix: true},
+            )}`}
             textStyle={styles.bookingTextDes}
           />
         </View>

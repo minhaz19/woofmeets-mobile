@@ -7,12 +7,12 @@ import {getCurrentplan} from '../../../../../../store/slices/payment/Subscriptio
 import {useAppDispatch, useAppSelector} from '../../../../../../store/store';
 import {useApi} from '../../../../../../utils/helpers/api/useApi';
 
-const uuid = Math.random().toString(36).substring(2, 36);
 const endpoint = '/subscriptions/check-basic-verification-payment';
 const subscriptionEndpoint =
-  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
+  'https://woof-api.hirebeet.com/v2/subscriptions/subscribe?';
 const defaultCardEndpoint = '/stripe-payment-method/default-card-info';
 export const usePackageCard = (props: any) => {
+  const uuid = Math.random().toString(36).substring(2, 36);
   const navigation = useNavigation<any>();
   const [ssLoading, setSSLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);

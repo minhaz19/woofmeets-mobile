@@ -9,6 +9,7 @@ import DescriptionText from '../../../../../../common/text/DescriptionText';
 import Colors from '../../../../../../../constants/Colors';
 import Text_Size from '../../../../../../../constants/textScaling';
 import {useTheme} from '../../../../../../../constants/theme/hooks/useTheme';
+import BottomSpacing from '../../../../../../UI/BottomSpacing';
 
 const Overview = () => {
   const {overview, profileInfo} = useAppSelector(
@@ -80,6 +81,8 @@ const Overview = () => {
           )}
         </View>
       </View>
+      <BottomSpacing />
+      <BottomSpacing />
     </View>
   );
 };

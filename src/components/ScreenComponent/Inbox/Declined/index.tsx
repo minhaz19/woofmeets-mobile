@@ -13,6 +13,8 @@ import BottomHalfModal from '../../../UI/modal/BottomHalfModal';
 import Details from '../Details/Details';
 import {format} from 'date-fns';
 import changeTextLetter from '../../../common/changeTextLetter';
+import {getProviderProposal} from '../../../../store/slices/Appointment/Proposal/getProviderProposal';
+import RefundDetails from '../Details/RefundDetails';
 interface Props {
   statusType: string;
 }
@@ -121,7 +123,10 @@ const DeclinedStatus = ({statusType}: Props) => {
                       status: item.status,
                     }}
                     buttonStyles={Colors.primary}
-                    handlePress={() => setIsVisible(true)}
+                    handlePress={() => {
+                      setIsVisible(true);
+                      dispatch(getProviderProposal(item.opk));
+                    }}
                   />
                 );
               })
@@ -174,7 +179,10 @@ const DeclinedStatus = ({statusType}: Props) => {
                       status: item.status,
                     }}
                     buttonStyles={Colors.primary}
-                    handlePress={() => setIsVisible(true)}
+                    handlePress={() => {
+                      setIsVisible(true);
+                      dispatch(getProviderProposal(item.opk));
+                    }}
                   />
                 );
               })
@@ -196,7 +204,7 @@ const DeclinedStatus = ({statusType}: Props) => {
       <BottomHalfModal
         isModalVisible={isVisible}
         setIsModalVisible={setIsVisible}>
-        <Details setIsDetailsModal={setIsVisible} />
+        <RefundDetails setIsDetailsModal={setIsVisible} />
       </BottomHalfModal>
     </>
   );

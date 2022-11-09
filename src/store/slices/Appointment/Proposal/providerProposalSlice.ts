@@ -10,12 +10,17 @@ const initialState: any = {
   proposedServiceInfo: null,
   error: null,
   loading: false,
+  billingId: null,
 };
 
 const providerProposalSlice = createSlice({
   name: 'proposal',
   initialState,
-  reducers: {},
+  reducers: {
+    setBillingId: (state, {payload}) => {
+      state.billingId = payload;
+    },
+  },
 
   extraReducers(builder) {
     builder
@@ -78,6 +83,10 @@ const providerProposalSlice = createSlice({
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
                 billing: modpayload.appointment.billing,
+                rating: modpayload.rating,
+                review: modpayload.appointment.review,
+                providerTimeZone: modpayload.appointment.providerTimeZone,
+                refundDetails: modpayload.proposal.refundDetails,
               }
             : modpayload.appointment.providerService.serviceTypeId === 3 ||
               modpayload.appointment.providerService.serviceTypeId === 5
@@ -129,6 +138,10 @@ const providerProposalSlice = createSlice({
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
                 billing: modpayload.appointment.billing,
+                providerTimeZone: modpayload.appointment.providerTimeZone,
+                rating: modpayload.rating,
+                review: modpayload.appointment.review,
+                refundDetails: modpayload.proposal.refundDetails,
               }
             : modpayload.appointment.providerService.serviceTypeId === 4
             ? {
@@ -176,6 +189,10 @@ const providerProposalSlice = createSlice({
                 status: modpayload.appointment.status,
                 formattedMessage: modpayload.proposal.meta.formattedMessage,
                 billing: modpayload.appointment.billing,
+                rating: modpayload.rating,
+                review: modpayload.appointment.review,
+                providerTimeZone: modpayload.appointment.providerTimeZone,
+                refundDetails: modpayload.proposal.refundDetails,
               }
             : null;
       })
@@ -185,4 +202,5 @@ const providerProposalSlice = createSlice({
       });
   },
 });
+export const {setBillingId} = providerProposalSlice.actions;
 export default providerProposalSlice.reducer;

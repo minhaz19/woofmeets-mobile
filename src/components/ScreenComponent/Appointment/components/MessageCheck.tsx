@@ -18,7 +18,7 @@ const MessageCheck = ({errors, control, setValue}: Props) => {
         textContentType={'none'}
         name={'firstMessage'}
         label={'Message'}
-        subTitle="Share a little info about your pet and why they would have a great time with fahmida"
+        subTitle="Send a first message to provider"
         multiline
         numberOfLines={10}
         errors={errors}

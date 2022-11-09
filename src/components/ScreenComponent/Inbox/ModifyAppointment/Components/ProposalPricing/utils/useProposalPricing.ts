@@ -82,9 +82,14 @@ export const useProposalPricing = () => {
         setPricingInfo([
           ...result.data.petsRates,
           {
+            ...result?.data?.sixtyMinutesRate,
+            name: result?.data?.sixtyMinutesRate.rate.name,
+          },
+          {
             id: result.data.petsRates.length,
             subTotal: result.data.subTotal,
             name: 'subTotal',
+            sixtyMinutesRate: result?.data?.sixtyMinutesRate,
           },
         ]);
       } else {
