@@ -43,6 +43,8 @@ const HeaderWithBack = (props: {
               style={styles.filterContainer}
               onPress={props.onPress}>
               <props.Icon
+                fill={Colors.primary}
+                width={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
                 height={
                   SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
                 }

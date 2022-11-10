@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
 import Animated, {
   useAnimatedStyle,
@@ -8,7 +9,6 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import Text_Size from '../../../../constants/textScaling';
-import {Setting} from '../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../constants/Colors';
 import ServiceSlotModal from './ServiceSlotModal';
 import ServiceDaySlotModal from './ServiceDaySlotModal';
@@ -23,37 +23,43 @@ import {format} from 'date-fns';
 import {useHandleRange} from '../../../../utils/helpers/CalendarRange/useHandleRange';
 import {getAvailableDays} from '../../../../store/slices/Provider/Unavailability/getAvailableDay';
 import baseUrl from '../../../../utils/helpers/httpRequest';
+import {setOpenSettings} from '../../../../store/slices/misc/openFilter';
 interface Props {
   startingDate: string;
   endingDate: string;
   // resetRange: () => void;
-  setIsDayVisible: (arg: boolean) => void;
-  isDayVisible: boolean;
   foundAvailable: boolean;
   setAvailableDays: (arg: any) => void;
   setModMarkDate: (arg: any) => void;
+  setResetLoading: (arg: any) => void;
+  setResetAvailableService: (arg: any) => void;
   monthRef: any;
+  _markedStyle: any;
+  resetSelection: any;
 }
 const dayAvEndpoint = '/availability/';
-const unavailabilityEndpoint =
-  `${baseUrl}/v2/unavailability`;
+const unavailabilityEndpoint = `${baseUrl}/v2/unavailability`;
 const availablityEndpoint = '/availability/add-dates';
 const EditCart = ({
   startingDate,
   endingDate,
-  setIsDayVisible,
-  isDayVisible,
+
   foundAvailable,
   setAvailableDays,
   setModMarkDate,
   monthRef,
+  setResetAvailableService,
+  setResetLoading,
+  resetSelection,
+  _markedStyle,
 }: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const {colors, isDarkMode} = useTheme();
 
   const {userServices} = useAppSelector(state => state.services);
-  const {availabileDates, getAvailablity} = useProviderAvailability();
-  const {resetSelection, _markedStyle} = useHandleRange('RANGE');
+  const {availabileDates, getAvailablity, loading, availableService} =
+    useProviderAvailability();
+  // const {resetSelection, _markedStyle} = useHandleRange('RANGE');
   const dispatch = useAppDispatch();
   const {request} = useApi(methods._post);
   const {request: putRequest} = useApi(methods._put);
@@ -179,7 +185,7 @@ const EditCart = ({
           ? await putRequest(dayAvEndpoint + item.putServiceId, payload)
           : null;
       if (r !== null && r.ok) {
-        setIsDayVisible(false);
+        dispatch(setOpenSettings(false));
         dispatch(getAvailableDays());
         dispatch;
         if (monthRef && Object.keys(monthRef).length !== 0) {
@@ -203,7 +209,19 @@ const EditCart = ({
   useEffect(() => {
     setModMarkDate(_markedStyle);
     setAvailableDays(availabileDates);
-  }, [_markedStyle, availabileDates, setAvailableDays, setModMarkDate]);
+    setResetLoading(loading);
+    setResetAvailableService(availableService);
+  }, [
+    _markedStyle,
+    availabileDates,
+    availableService,
+    loading,
+    // setAvailableDays,
+    // setModMarkDate,
+    // setResetAvailableService,
+    // setResetLoading,
+  ]);
+  console.log('marked s i', _markedStyle);
   return (
     <Animated.View
       style={[
@@ -279,8 +297,7 @@ const EditCart = ({
         handleAvailable={handleAvailable}
       />
       <ServiceDaySlotModal
-        isVisible={isDayVisible}
-        setIsVisible={setIsDayVisible}
+        handleVisibility={() => dispatch(setOpenSettings(false))}
         onPress={handleDayAvailability}
       />
     </Animated.View>

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, SafeAreaView} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import PackageCard from '../../../components/ScreenComponent/becomeSitter/subscription/packages/PackageCard';
@@ -7,7 +7,7 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 import {useSubscription} from './utils/useSubscription';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import ButtonCom from '../../../components/UI/ButtonCom';
-import Screen from '../../../components/common/Screen';
+// import Screen from '../../../components/common/Screen';
 import Welcome from '../../../components/ScreenComponent/becomeSitter/subscription/Welcome/Welcome';
 import Colors from '../../../constants/Colors';
 import QuestionModals from '../../../components/ScreenComponent/becomeSitter/subscription/QuestionModal/QuestionModals';
@@ -30,17 +30,12 @@ const SubscriptionScreen = ({route}: Props) => {
     cardLoading,
   } = useSubscription();
   return (
-    <Screen style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.backgroundColor}}>
       {(loading || planLoading) && <AppActivityIndicator visible={true} />}
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        style={[
-          styles.container,
-          {
-            backgroundColor: colors.backgroundColor,
-          },
-        ]}>
+        style={[styles.container]}>
         {currentPlan ? (
           <>
             <Welcome
@@ -80,7 +75,7 @@ const SubscriptionScreen = ({route}: Props) => {
           </>
         )}
       </ScrollView>
-    </Screen>
+    </SafeAreaView>
   );
 };
 

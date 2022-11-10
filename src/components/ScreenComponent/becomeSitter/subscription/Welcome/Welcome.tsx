@@ -20,6 +20,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch} from '../../../../../store/store';
 import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 import {getSubscription} from '../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
+import AppButton from '../../../../common/AppButton';
 const endpoint = '/subscriptions/cancel-subscription?subscriptionId=';
 const Welcome = (props: any) => {
   const {colors, isDarkMode} = useTheme();
@@ -30,6 +31,8 @@ const Welcome = (props: any) => {
   const navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
   const handleSubmit = () => {
+    // if (true) {
+    // } else {
     Alert.alert(
       'Cancel Subscription',
       'Are you sure you want to unsubscribe this plan',
@@ -56,13 +59,18 @@ const Welcome = (props: any) => {
         },
       ],
     );
+    // }
   };
   const hanldeUpgrade = () => {
     if (props.subscriptionId === 1) {
       navigation.navigate('UpgradePlan');
     } else {
       Alert.alert(
-        `You are currently using ${props.item.membershipPlan.name} plan in order to upgrade your plan you have to cancel your current plan!`,
+        `You are currently using ${
+          props.item.membershipPlan.name
+        } plan in order to ${
+          props.subscriptionId === 3 ? 'switch' : 'upgrade'
+        } your plan you have to cancel your current plan!`,
       );
     }
   };
@@ -113,7 +121,6 @@ const Welcome = (props: any) => {
         />
       </View>
 
-      {/* asdfasdfasdfasdfasdf*/}
       <View>
         <MiddleModal
           isModalVisible={isModalVisible}
@@ -251,7 +258,9 @@ const Welcome = (props: any) => {
         {opk === 'current_plan' ? (
           <>
             <ButtonCom
-              title="Upgrage Plan"
+              title={
+                props.subscriptionId === 3 ? 'Switch Plan' : 'Upgrade Plan'
+              }
               textAlignment={btnStyles.textAlignment}
               containerStyle={btnStyles.containerStyleFullWidth}
               titleStyle={btnStyles.titleStyle}
@@ -259,18 +268,35 @@ const Welcome = (props: any) => {
               loading={false}
             />
 
-            <ButtonCom
-              title="Cancel Plan"
-              textAlignment={btnStyles.textAlignment}
-              containerStyle={btnStyles.containerStyleFullWidth}
-              titleStyle={btnStyles.titleStyle}
-              onSelect={handleSubmit}
-              loading={loading}
-            />
+            {props.subscriptionId === 1 ? (
+              <ButtonCom
+                title="Go Home"
+                textAlignment={btnStyles.textAlignment}
+                containerStyle={btnStyles.containerStyleFullWidth}
+                titleStyle={btnStyles.titleStyle}
+                onSelect={() => navigation.navigate('BottomTabNavigator')}
+                loading={loading}
+              />
+            ) : (
+              <>
+                <ButtonCom
+                  title="Cancel Plan"
+                  textAlignment={btnStyles.textAlignment}
+                  containerStyle={btnStyles.containerStyleFullWidth}
+                  titleStyle={btnStyles.titleStyle}
+                  onSelect={handleSubmit}
+                  loading={loading}
+                />
+                <AppButton
+                  title="Go Back"
+                  onPress={() => navigation.goBack()}
+                />
+              </>
+            )}
           </>
         ) : (
           <ButtonCom
-            title="Upgrage Plan"
+            title={props.subscriptionId === 3 ? 'Switch Plan' : 'Upgrade Plan'}
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}

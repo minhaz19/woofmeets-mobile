@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import AppFormField from '../../../common/Form/AppFormField';
 import AppCheckboxField from '../../../common/Form/AppCheckboxField';
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
 }
 const MessageCheck = ({errors, control, setValue}: Props) => {
   const [active, setActive] = useState(false);
+  console.log('message check');
   return (
     <>
       <AppFormField
@@ -40,4 +41,4 @@ const MessageCheck = ({errors, control, setValue}: Props) => {
   );
 };
 
-export default MessageCheck;
+export default memo(MessageCheck);

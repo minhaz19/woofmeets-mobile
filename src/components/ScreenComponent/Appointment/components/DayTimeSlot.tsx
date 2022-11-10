@@ -1,13 +1,18 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import TimeMultiSlotPicker from './TimeMultiSlotPicker';
 import DescriptionText from '../../../common/text/DescriptionText';
 import Text_Size from '../../../../constants/textScaling';
 import {useDayTimeSlot} from './utils/useDayTimeSlot';
+interface Props {
+  setValue: any;
+  watch: any;
+}
+const DayTimeSlot = ({setValue, watch}: Props) => {
+  const {newData, isRecurring} = useDayTimeSlot(watch);
+  console.log('Day time slot', newData);
 
-const DayTimeSlot = () => {
-  const {newData, isRecurring} = useDayTimeSlot();
   return (
     <View>
       {newData?.map((item: any, index: number) => (
@@ -24,6 +29,8 @@ const DayTimeSlot = () => {
               singleItem={item}
               isRecurring={isRecurring}
               initalSlot={item?.initalSlot}
+              setValue={setValue}
+              watch={watch}
             />
           </View>
         </View>
@@ -32,7 +39,7 @@ const DayTimeSlot = () => {
   );
 };
 
-export default DayTimeSlot;
+export default memo(DayTimeSlot);
 
 const styles = StyleSheet.create({
   headerText: {

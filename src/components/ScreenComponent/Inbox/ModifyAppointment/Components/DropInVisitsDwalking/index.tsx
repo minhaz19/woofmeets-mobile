@@ -1,7 +1,6 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import BottomSheetCalendar from '../../../../../common/BottomSheetCalendar';
-import {useFormContext} from 'react-hook-form';
 import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
 import {
   Calendar,
@@ -13,15 +12,25 @@ import AppDayPicker from '../../../../../common/AppDayPicker';
 import TitleText from '../../../../../common/text/TitleText';
 import Text_Size from '../../../../../../constants/textScaling';
 import DayTimeSlot from '../../../../Appointment/components/DayTimeSlot';
+import {useWatch} from 'react-hook-form';
 interface Props {
   appointmentType: string;
+  setValue: any;
+  watch: any;
 }
-const DropInVisitWalking = ({appointmentType}: Props) => {
+const DropInVisitWalking = ({appointmentType, watch, setValue}: Props) => {
   const [, setVisitId] = useState(null);
   const [scheduleId, setScheduleId] = useState(null);
   const {colors} = useTheme();
-  const {setValue, watch} = useFormContext();
-  const {isRecurring, visitLength, recurringStartDate} = watch();
+
+  const {isRecurring, visitLength, recurringStartDate} = useWatch();
+  console.log(
+    'recurringStartDate',
+    isRecurring,
+    visitLength,
+    recurringStartDate,
+    typeof recurringStartDate,
+  );
   const data = [
     {
       id: 1,
@@ -57,6 +66,7 @@ const DropInVisitWalking = ({appointmentType}: Props) => {
           <AppHalfTabs
             title="Visit Length"
             data={data}
+            setValue={setValue}
             //@ts-ignore
             setVisitId={setVisitId}
             name="visitLength"
@@ -69,6 +79,7 @@ const DropInVisitWalking = ({appointmentType}: Props) => {
             setScheduleId={setScheduleId}
             name="isRecurring"
             defaultValue={isRecurring ? 1 : 0}
+            setValue={setValue}
           />
         </>
       )}
@@ -84,13 +95,14 @@ const DropInVisitWalking = ({appointmentType}: Props) => {
         setValue={setValue}
         isRecurring={isRecurring}
         initalData={recurringStartDate}
+        watch={watch}
       />
-      <DayTimeSlot />
+      <DayTimeSlot setValue={setValue} watch={watch} />
     </View>
   );
 };
 
-export default DropInVisitWalking;
+export default memo(DropInVisitWalking);
 
 const styles = StyleSheet.create({
   container: {

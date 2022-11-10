@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import {getSubscription} from '../../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
 import {useAppDispatch, useAppSelector} from '../../../../../../store/store';
-('https://woof-api.hirebeet.com/v3/subscriptions/subscribe?');
+('https://api-stg.woofmeets.com/v3/subscriptions/subscribe?');
 export const useUpgradeSubscription = () => {
   const [sequence, setSequence] = useState<number>(0);
   const [ssLoading, setSSloading] = useState(false);

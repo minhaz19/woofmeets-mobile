@@ -3,12 +3,11 @@ import AppDayPicker from '../../../../../common/AppDayPicker';
 import {colors} from '../../../../../../constants/theme/textTheme';
 import {Calendar, Repeat} from '../../../../../../assets/svgs/SVG_LOGOS';
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import {CalendarCSvg, ClockSvg} from '../../../../../../assets/svgs/SVG_LOGOS';
 import TitleText from '../../../../../common/text/TitleText';
 import AppTouchableOpacity from '../../../../../common/AppClickEvents/AppTouchableOpacity';
 import DescriptionText from '../../../../../common/text/DescriptionText';
-import {useFormContext, useWatch} from 'react-hook-form';
 import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../../../constants/Colors';
 import TimeSlotPicker from '../../../../../common/TimeRangePicker';
@@ -18,13 +17,15 @@ import Text_Size from '../../../../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
 interface Props {
   appointmentType: string;
+  setValue: any;
+  watch: any;
 }
-const DoggyDayCare = ({appointmentType}: Props) => {
+const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
   const [setScheduleId] = useState(null);
   const [visible, setVisible] = useState(false);
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
-  const {setValue} = useFormContext();
+  // const {setValue} = useFormContext();
 
   const {isDarkMode} = useTheme();
   const {
@@ -35,7 +36,7 @@ const DoggyDayCare = ({appointmentType}: Props) => {
     pickUpStartTime,
     pickUpEndTime,
     isRecurring,
-  } = useWatch();
+  } = watch();
   const schedule = [
     {
       id: 1,
@@ -50,6 +51,8 @@ const DoggyDayCare = ({appointmentType}: Props) => {
       value: true,
     },
   ];
+
+  console.log('Doggy day care');
   return (
     <View style={styles.container}>
       {appointmentType === 'create' && (
@@ -60,6 +63,7 @@ const DoggyDayCare = ({appointmentType}: Props) => {
           setScheduleId={setScheduleId}
           defaultValue={isRecurring ? 1 : 0}
           name="isRecurring"
+          setValue={setValue}
         />
       )}
       {isRecurring && <AppDayPicker />}
@@ -127,6 +131,7 @@ const DoggyDayCare = ({appointmentType}: Props) => {
               endName={'dropOffEndTime'}
               defaultFrom={dropOffStartTime}
               defaultTo={dropOffEndTime}
+              setValue={setValue}
             />
           </>
           <>
@@ -166,6 +171,7 @@ const DoggyDayCare = ({appointmentType}: Props) => {
               endName={'pickUpEndTime'}
               defaultFrom={pickUpStartTime}
               defaultTo={pickUpEndTime}
+              setValue={setValue}
             />
           </>
         </View>
@@ -193,7 +199,7 @@ const DoggyDayCare = ({appointmentType}: Props) => {
   );
 };
 
-export default DoggyDayCare;
+export default memo(DoggyDayCare);
 
 const styles = StyleSheet.create({
   container: {

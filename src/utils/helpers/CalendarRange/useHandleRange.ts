@@ -24,6 +24,8 @@ export const useHandleRange = (
   const [startingDate, setStartingDate] = useState(proposalStartDate);
   const [endingDate, setEndingDate] = useState(proposalEndDate);
 
+  console.log('calendar usehandleRange');
+
   useEffect(() => {
     if (type === 'MULTI') {
       orderMultiDates = [...rr];
@@ -88,7 +90,6 @@ export const useHandleRange = (
       const {styledMarkedRange, orderRange} = orderAndStyleRange(
         range,
         'RANGE',
-        'black',
       );
       setMarkedStyle(styledMarkedRange);
       // dispatch(storeMarkStyle(styledMarkedRange));

@@ -15,18 +15,30 @@ interface Props {
 const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {serviceTypeId: serviceId} = proposedServiceInfo;
-  const {} = useFormContext();
+  const {watch, setValue} = useFormContext();
   return (
     <ScrollView
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}>
-      {(serviceId === 1 || serviceId === 2) && <BoardingSitting />}
-      {(serviceId === 3 || serviceId === 5) && (
-        <DropInVisitWalking appointmentType={'modify'} />
+      {(serviceId === 1 || serviceId === 2) && (
+        <BoardingSitting setValue={setValue} watch={watch} />
       )}
-      {serviceId === 4 && <DoggyDayCare appointmentType={'modify'} />}
+      {(serviceId === 3 || serviceId === 5) && (
+        <DropInVisitWalking
+          appointmentType={'modify'}
+          setValue={setValue}
+          watch={watch}
+        />
+      )}
+      {serviceId === 4 && (
+        <DoggyDayCare
+          appointmentType={'modify'}
+          setValue={setValue}
+          watch={watch}
+        />
+      )}
 
-      <MyPets appointmentType={''} />
+      <MyPets appointmentType={''} setValue={setValue} watch={watch} />
       <ProposalPricing />
       <SubmitButton
         title="Submit Proposal"

@@ -2,10 +2,6 @@ import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import SubmitButton from '../../common/Form/SubmitButton';
 import ServicePicker from './components/ServicePicker';
-// import DateDropPick from './components/DateDropPick';
-// import DayTimeSlot from './components/DayTimeSlot';
-// import VisitScheduleTab from './components/VisitScheduleTab';
-// import BottomSheetCalendar from '../../common/BottomSheetCalendar';
 import {useFormContext} from 'react-hook-form';
 import BottomSpacing from '../../UI/BottomSpacing';
 import MyPets from './components/MyPets';
@@ -22,10 +18,11 @@ const AppointmentBody = ({handleSubmit, loading, appointmentType}: Props) => {
   const [serviceId, setServiceId] = useState(1);
   const {
     control,
+
+    watch,
     setValue,
     formState: {errors},
   } = useFormContext();
-  // const {isRecurring, recurringStartDate} = watch();
 
   return (
     <View style={styles.container}>
@@ -34,14 +31,30 @@ const AppointmentBody = ({handleSubmit, loading, appointmentType}: Props) => {
         setValue={setValue}
         setServiceId={setServiceId}
       />
-      {(serviceId === 1 || serviceId === 2) && <BoardingSitting />}
-      {(serviceId === 3 || serviceId === 5) && (
-        <DropInVisitWalking appointmentType="create" />
+      {(serviceId === 1 || serviceId === 2) && (
+        <BoardingSitting watch={watch} setValue={setValue} />
       )}
-      {serviceId === 4 && <DoggyDayCare appointmentType="create" />}
+      {(serviceId === 3 || serviceId === 5) && (
+        <DropInVisitWalking
+          appointmentType="create"
+          watch={watch}
+          setValue={setValue}
+        />
+      )}
+      {serviceId === 4 && (
+        <DoggyDayCare
+          appointmentType="create"
+          watch={watch}
+          setValue={setValue}
+        />
+      )}
 
       <View style={styles.zIndex}>
-        <MyPets appointmentType={appointmentType} />
+        <MyPets
+          appointmentType={appointmentType}
+          watch={watch}
+          setValue={setValue}
+        />
         <MessageCheck errors={errors} control={control} setValue={setValue} />
         <SubmitButton
           title="Send Proposal"
