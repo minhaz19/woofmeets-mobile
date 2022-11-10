@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import SubmitButton from '../../common/Form/SubmitButton';
 import ServicePicker from './components/ServicePicker';
 import {useFormContext} from 'react-hook-form';
@@ -15,7 +15,6 @@ interface Props {
   appointmentType: string;
 }
 const AppointmentBody = ({handleSubmit, loading, appointmentType}: Props) => {
-  const [serviceId, setServiceId] = useState(1);
   const {
     control,
 
@@ -23,25 +22,24 @@ const AppointmentBody = ({handleSubmit, loading, appointmentType}: Props) => {
     setValue,
     formState: {errors},
   } = useFormContext();
-
+  const {serviceTypeId} = watch();
   return (
     <View style={styles.container}>
       <ServicePicker
         name="providerServiceId"
         setValue={setValue}
-        setServiceId={setServiceId}
       />
-      {(serviceId === 1 || serviceId === 2) && (
+      {(serviceTypeId === 1 || serviceTypeId === 2) && (
         <BoardingSitting watch={watch} setValue={setValue} />
       )}
-      {(serviceId === 3 || serviceId === 5) && (
+      {(serviceTypeId === 3 || serviceTypeId === 5) && (
         <DropInVisitWalking
           appointmentType="create"
           watch={watch}
           setValue={setValue}
         />
       )}
-      {serviceId === 4 && (
+      {serviceTypeId === 4 && (
         <DoggyDayCare
           appointmentType="create"
           watch={watch}

@@ -24,8 +24,8 @@ const ProposalPricing = () => {
             borderColor: colors.borderColor,
           },
         ]}>
-        {pricingInfo?.map((item: any) => (
-          <>
+        {pricingInfo?.map((item: any, index: number) => (
+          <View key={index}>
             {item.name === 'subTotal' ? (
               <View
                 style={{
@@ -61,7 +61,7 @@ const ProposalPricing = () => {
                       text={changeTextLetter(item?.name)}
                       textStyle={{fontWeight: 'bold'}}
                     />
-                    <ShortText text={`( Applied ${item.rate.name} )`} />
+                    <ShortText text={`( Applied ${item?.rate?.name} )`} />
                     <ShortText
                       text={`${item.count} ${
                         proposedServiceInfo.serviceTypeId === 1 ||
@@ -74,7 +74,7 @@ const ProposalPricing = () => {
                           : proposedServiceInfo.serviceTypeId === 5
                           ? ' walk'
                           : ''
-                      } @ $${item?.rate.amount} /${
+                      } @ $${item?.rate?.amount} /${
                         proposedServiceInfo.serviceTypeId === 1 ||
                         proposedServiceInfo.serviceTypeId === 2
                           ? ' night'
@@ -101,7 +101,7 @@ const ProposalPricing = () => {
                 </View>
               </>
             )}
-          </>
+          </View>
         ))}
       </View>
     </View>

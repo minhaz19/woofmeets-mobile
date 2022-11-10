@@ -95,12 +95,11 @@ const AvailablityCalendar = () => {
     setResetAvailableService(availableService);
     setResetLoading(loading);
   }, [availabileDates, loading, _markedStyle, availableService]);
-  console.log('availableService', _markedStyle);
   return (
     <>
       {resetLoading && <AppActivityIndicator visible={resetLoading} />}
       <View style={styles.container}>
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={styles.scrollView}>
           <View>
             <AvailableService availableService={resetAvailableService} />
           </View>
@@ -176,13 +175,9 @@ const AvailablityCalendar = () => {
           startingDate={startingDate}
           endingDate={endingDate}
           foundAvailable={foundAvailable}
-          setAvailableDays={setAvailableDays}
-          setModMarkDate={setModMarkDate}
-          setResetAvailableService={setResetAvailableService}
-          setResetLoading={setResetLoading}
           monthRef={monthRef}
           resetSelection={resetSelection}
-          _markedStyle={_markedStyle}
+          getAvailablity={getAvailablity}
         />
       </View>
     </>
@@ -229,4 +224,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 30,
   },
+  scrollView: {flex: 1},
 });

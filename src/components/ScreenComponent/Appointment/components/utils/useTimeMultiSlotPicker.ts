@@ -1,18 +1,17 @@
 import {useMemo, useState} from 'react';
 import {useWatch} from 'react-hook-form';
-
+let Dates: any = [];
+let Days: any = [];
 export const useTimeMultiSlotPicker = (
   singleItem: any,
   initalSlot: any,
   isRecurring: boolean,
 ) => {
-  const [Dates, setDates] = useState<any>([]);
-  const [Days, setDays] = useState<any>([]);
-  // let Dates: any = [];
-  // let Days: any = [];
+  // const [Dates, setDates] = useState<any>([]);
+  // const [Days, setDays] = useState<any>([]);
+
   const [newData, setDatas] = useState<any>([]);
   const {visitLength} = useWatch();
-  console.log('visitLength', visitLength);
   useMemo(() => {
     const times: any = []; // time array
     let tt = 0; // start time
@@ -44,7 +43,7 @@ export const useTimeMultiSlotPicker = (
       tt = tt + visitLength;
     }
     setDatas(times);
-  }, [Days, initalSlot, isRecurring, Dates, visitLength]);
+  }, [initalSlot, isRecurring, visitLength]);
 
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
@@ -58,34 +57,20 @@ export const useTimeMultiSlotPicker = (
         (itm: {date: string}) => itm.date === singleItem.date,
       );
       if (matchIndex === -1) {
-        setDays([
-          ...Days,
-          {
-            date: singleItem.date,
-            visits: singleItem.initalSlot,
-          },
-        ]);
-        // Days.push({
-        //   date: singleItem.date,
-        //   visits: singleItem.initalSlot,
-        // });
+        Days.push({
+          date: singleItem.date,
+          visits: singleItem.initalSlot,
+        });
       }
     } else if (!isRecurring) {
       const matchIndex = Dates.findIndex(
         (itm: {date: string}) => itm.date === singleItem.date,
       );
       if (matchIndex === -1) {
-        setDates([
-          ...Dates,
-          {
-            date: singleItem.date,
-            visits: singleItem.initalSlot,
-          },
-        ]);
-        // Dates.push({
-        //   date: singleItem.date,
-        //   visits: singleItem.initalSlot,
-        // });
+        Dates.push({
+          date: singleItem.date,
+          visits: singleItem.initalSlot,
+        });
       }
     }
   }

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {Pressable, StyleSheet, View} from 'react-native';
 import React, {useState, useEffect, memo} from 'react';
 import TitleText from './text/TitleText';
@@ -37,10 +36,8 @@ const AppDayPicker = () => {
         sDays?.findIndex((it: string) => it === item) !== -1 ? true : false,
     }));
     setDatas(modDays);
-  }, []);
-
-  console.log('AppDayPicker');
-
+  }, [sDays]);
+  console.log('s', selectedDays);
   return (
     <View style={styles.container}>
       <TitleText
@@ -63,6 +60,7 @@ const AppDayPicker = () => {
               } else {
                 selectedDays.splice(matchIndex, 1);
               }
+              console.log('selectedDays', selectedDays);
               setValue('selectedDays', selectedDays);
               handleMultipleCheck(item.id);
             }}>

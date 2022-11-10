@@ -24,13 +24,6 @@ const DropInVisitWalking = ({appointmentType, watch, setValue}: Props) => {
   const {colors} = useTheme();
 
   const {isRecurring, visitLength, recurringStartDate} = useWatch();
-  console.log(
-    'recurringStartDate',
-    isRecurring,
-    visitLength,
-    recurringStartDate,
-    typeof recurringStartDate,
-  );
   const data = [
     {
       id: 1,
@@ -83,7 +76,6 @@ const DropInVisitWalking = ({appointmentType, watch, setValue}: Props) => {
           />
         </>
       )}
-      {isRecurring && recurringStartDate !== '' && <AppDayPicker />}
       <View>
         <TitleText
           text={!scheduleId ? 'Select Dates' : 'Select starting date'}
@@ -97,6 +89,7 @@ const DropInVisitWalking = ({appointmentType, watch, setValue}: Props) => {
         initalData={recurringStartDate}
         watch={watch}
       />
+      {isRecurring && recurringStartDate !== '' && <AppDayPicker />}
       <DayTimeSlot setValue={setValue} watch={watch} />
     </View>
   );

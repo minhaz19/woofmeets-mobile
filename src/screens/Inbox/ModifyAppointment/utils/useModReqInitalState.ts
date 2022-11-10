@@ -53,13 +53,11 @@ export const useModReqInitialState = () => {
     proposedServiceInfo?.recurringSelectedDay?.map((item: any) => ({
       date: item?.date,
       visits: item?.visits?.map((it: any) => it.time),
-      // startDate: item?.startDate ? item.startDate : false,
     }));
   const modProposalScheduleDate = proposedServiceInfo?.proposalOtherDate?.map(
     (item: any) => ({
       date: item?.name,
       visits: item?.visits?.map((it: any) => it.time),
-      // startDate: item?.startDate ? item.startDate : false,
     }),
   );
   const DoggySelected = dayss.filter(item =>

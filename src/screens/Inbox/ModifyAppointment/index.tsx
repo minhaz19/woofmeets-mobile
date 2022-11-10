@@ -19,8 +19,7 @@ const ModifyAppointment = ({route}: Props) => {
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
       <AppForm
         initialValues={useModReqInitialState()}
-        validationSchema={appointmentModifyValidationSchema}
-        enableReset>
+        validationSchema={appointmentModifyValidationSchema}>
         <ModifyRequestBody handleSubmit={handleSubmit} loading={loading} />
       </AppForm>
     </SafeAreaView>

@@ -10,8 +10,7 @@ interface Props {
   watch: any;
 }
 const DayTimeSlot = ({setValue, watch}: Props) => {
-  const {newData, isRecurring} = useDayTimeSlot(watch);
-  console.log('Day time slot', newData);
+  const {newData, isRecurring} = useDayTimeSlot();
 
   return (
     <View>

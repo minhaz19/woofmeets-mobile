@@ -7,7 +7,6 @@ import {useAppSelector, useAppDispatch} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 
 export const useModifyAppointment = (route: any) => {
-  const {} = useAppSelector(state => state.proposal);
   const {loading, request} = useApi(methods._put);
   const {appointmentOpk} = route.params;
   const dispatch = useAppDispatch();
@@ -15,7 +14,6 @@ export const useModifyAppointment = (route: any) => {
   const navigation = useNavigation<any>();
   const {user} = useAppSelector(state => state.whoAmI);
   const handleSubmit = async (data: any) => {
-    // const user: any = await storage.getUser();
     const {
       petsId,
       userId,
