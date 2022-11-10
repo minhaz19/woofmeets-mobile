@@ -52,7 +52,6 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
     },
   ];
 
-  console.log('Doggy day care');
   return (
     <View style={styles.container}>
       {appointmentType === 'create' && (

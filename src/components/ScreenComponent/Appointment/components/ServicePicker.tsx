@@ -18,7 +18,6 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 interface Props {
   name: string;
   setValue: (arg: string, arg1: number) => void;
-  setServiceId: (arg: number) => void;
 }
 let modData: any = [];
 const getIcon = (iconId: number) => {
@@ -35,7 +34,7 @@ const getIcon = (iconId: number) => {
       return DogWalkingIcon;
   }
 };
-const ServicePicker = ({name, setValue, setServiceId}: Props) => {
+const ServicePicker = ({name, setValue}: Props) => {
   const [visible, setVisible] = useState(false);
   const {providerServices} = useAppSelector(state => state?.providerServices);
   const [selectedService, setSelectedService] = useState<any>([]);
@@ -53,8 +52,6 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
       setValue(name, modData[0].id));
   }, [name, providerServices, setValue]);
   const {isDarkMode, colors} = useTheme();
-
-  console.log('Service Picker');
 
   return (
     <>
@@ -104,7 +101,7 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
                 setSelectedService(item);
                 setValue(name, item.id);
                 setValue('serviceTypeId', item.serviceTypeId);
-                setServiceId(item.serviceTypeId);
+                // setServiceId(item.serviceTypeId);
                 setVisible(false);
               }}>
               <View>

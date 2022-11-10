@@ -51,6 +51,5 @@ export const useProviderAvailability = () => {
       availableServiceArr && setAvailableService(availableServiceArr);
     }
   };
-  console.log('availableService', availableService);
   return {availabileDates, getAvailablity, availableService, loading};
 };

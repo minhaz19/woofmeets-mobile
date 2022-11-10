@@ -17,13 +17,10 @@ interface Props {
 const BoardingSitting = ({watch, setValue}: Props) => {
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
-  // const {watch} = useWat();
   const {dropOffStartTime, dropOffEndTime, pickUpStartTime, pickUpEndTime} =
     watch();
-  // const {dropOffStartTime, dropOffEndTime, pickUpStartTime, pickUpEndTime} =
-  //   watch();
 
-  console.log('Boarding Setting');
+
 
   const {isDarkMode} = useTheme();
 

@@ -1,10 +1,8 @@
-import format from 'date-fns/format';
-import React, {useEffect, useState} from 'react';
-import {RefreshControl, ScrollView, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 import AppForm from '../../../components/common/Form/AppForm';
 import Screen from '../../../components/common/Screen';
 import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar/AvailablityCalendar';
-import {useProviderAvailability} from '../../../components/ScreenComponent/Provider/AvailablityCalendar/utils/useProviderAvailability';
 import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {getUserServices} from '../../../store/slices/profile/services';

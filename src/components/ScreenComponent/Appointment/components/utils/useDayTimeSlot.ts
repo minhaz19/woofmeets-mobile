@@ -2,10 +2,9 @@ import {useMemo, useState} from 'react';
 import {useWatch} from 'react-hook-form';
 
 let modData: any = [];
-export const useDayTimeSlot = (watch: any) => {
+export const useDayTimeSlot = () => {
   const {
     selectedDays,
-
     isRecurring,
     repeatDate,
     multiDate,
@@ -57,8 +56,6 @@ export const useDayTimeSlot = (watch: any) => {
     multiDate,
     proposalScheduleDate,
   ]);
-
-  console.log('useDaytime slot');
 
   return {isRecurring, newData};
 };

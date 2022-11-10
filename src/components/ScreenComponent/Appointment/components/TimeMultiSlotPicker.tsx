@@ -11,16 +11,14 @@ const TimeMultiSlotPicker = ({
   singleItem,
   initalSlot,
   setValue,
-  watch,
 }: any) => {
   // const {setValue} = useFormContext();
   const {handleMultipleCheck, newData, Dates, Days} = useTimeMultiSlotPicker(
     singleItem,
     initalSlot,
     isRecurring,
-    watch,
   );
-  console.log('new Data', newData);
+  // console.log(singleItem, newData);
   return (
     <View style={styles.container}>
       <TitleText textStyle={{}} text={''} />
@@ -55,9 +53,10 @@ const TimeMultiSlotPicker = ({
                     if (Days[matchDate]?.visits?.length > 9) {
                       Alert.alert('You can only select 10 time slots');
                       return;
+                    } else {
+                      handleMultipleCheck(item.id);
+                      found[0].visits.push(item.slot);
                     }
-                    handleMultipleCheck(item.id);
-                    found[0].visits.push(item.slot);
                   } else {
                     found[0].visits.splice(matchIndex, 1);
                     handleMultipleCheck(item.id);
@@ -76,6 +75,7 @@ const TimeMultiSlotPicker = ({
                     visits: [item.slot],
                   });
                   handleMultipleCheck(item.id);
+                  console.log('is it in core');
                 } else {
                   const found = Dates.filter(
                     (obj: any) => obj.date === singleItem.date,
@@ -83,14 +83,23 @@ const TimeMultiSlotPicker = ({
                   const matchIndex = found[0].visits?.findIndex(
                     (it: {visits: string}) => it === item.slot,
                   );
+
                   if (matchIndex === -1) {
                     if (Dates[matchDate]?.visits?.length > 9) {
                       Alert.alert('You can only select 10 time slots');
                       return;
+                    } else {
+                      found[0].visits.push(item.slot);
+                      handleMultipleCheck(item.id);
+                      console.log(
+                        'matchIndex be here',
+                        item.active,
+                        item.id,
+                        matchIndex,
+                      );
                     }
-                    found[0].visits.push(item.slot);
-                    handleMultipleCheck(item.id);
                   } else {
+                    console.log('should be else');
                     found[0].visits.splice(matchIndex, 1);
                     handleMultipleCheck(item.id);
                   }

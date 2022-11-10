@@ -84,7 +84,7 @@ const planCheckoutInit = {
 };
 const appointmentInit = {
   providerServiceId: null,
-  serviceTypeId: null,
+  serviceTypeId: 1,
   visitLength: 30,
   isRecurring: false,
   dropOffStartTime: '',

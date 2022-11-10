@@ -2,7 +2,6 @@ import Colors from '../../../constants/Colors';
 
 // const orderMultiDates: any = [];
 export const orderAndStyleRange = (range: any, type: string) => {
-  console.log('calendar orderStyleRange');
 
   let orderRange: any = [];
   let styledMarkedRange: any = {};

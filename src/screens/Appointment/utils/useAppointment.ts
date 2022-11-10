@@ -40,7 +40,6 @@ export const useAppointment = (providerOpk: string) => {
       selectedDays,
       multiDate,
     } = data;
-
     if (isRecurring && serviceTypeId === 4 && recurringStartDate === '') {
       Alert.alert('You have to select recurring start date');
     } else if (serviceTypeId === 4 && !isRecurring && multiDate.length === 0) {
@@ -133,11 +132,6 @@ export const useAppointment = (providerOpk: string) => {
         } else {
           Alert.alert(response.data.message);
         }
-        // response.ok &&
-        //   navigation.navigate('ActivityScreen', {
-        //     appointmentOpk: response.data.data.appointment.opk,
-        //     screen: 'Inbox',
-        //   });
       } else if (serviceTypeId === 3 || serviceTypeId === 5) {
         const sortedSpecificModDates = !isRecurring
           ? specificModDates.map((item: any, i: number) => ({
@@ -293,11 +287,7 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
             };
         const response = await request(endpoint, doggyPayload);
-        // response.ok &&
-        //   navigation.navigate('ActivityScreen', {
-        //     appointmentOpk: response.data.data.appointment.opk,
-        //     // screen: 'Inbox',
-        //   });
+
         if (response.ok) {
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,

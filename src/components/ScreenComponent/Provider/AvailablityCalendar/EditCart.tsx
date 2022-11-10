@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Platform, StyleSheet, View} from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -18,9 +17,7 @@ import methods from '../../../../api/methods';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
-import {useProviderAvailability} from './utils/useProviderAvailability';
 import {format} from 'date-fns';
-import {useHandleRange} from '../../../../utils/helpers/CalendarRange/useHandleRange';
 import {getAvailableDays} from '../../../../store/slices/Provider/Unavailability/getAvailableDay';
 import baseUrl from '../../../../utils/helpers/httpRequest';
 import {setOpenSettings} from '../../../../store/slices/misc/openFilter';
@@ -29,13 +26,14 @@ interface Props {
   endingDate: string;
   // resetRange: () => void;
   foundAvailable: boolean;
-  setAvailableDays: (arg: any) => void;
-  setModMarkDate: (arg: any) => void;
-  setResetLoading: (arg: any) => void;
-  setResetAvailableService: (arg: any) => void;
   monthRef: any;
-  _markedStyle: any;
   resetSelection: any;
+  getAvailablity: any;
+  // setAvailableDays: (arg: any) => void;
+  // setModMarkDate: (arg: any) => void;
+  // setResetLoading: (arg: any) => void;
+  // setResetAvailableService: (arg: any) => void;
+  // _markedStyle: any;
 }
 const dayAvEndpoint = '/availability/';
 const unavailabilityEndpoint = `${baseUrl}/v2/unavailability`;
@@ -43,22 +41,22 @@ const availablityEndpoint = '/availability/add-dates';
 const EditCart = ({
   startingDate,
   endingDate,
-
+  getAvailablity,
   foundAvailable,
-  setAvailableDays,
-  setModMarkDate,
   monthRef,
-  setResetAvailableService,
-  setResetLoading,
   resetSelection,
-  _markedStyle,
-}: Props) => {
+}: // setAvailableDays,
+// setModMarkDate,
+// setResetAvailableService,
+// setResetLoading,
+// _markedStyle,
+Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const {colors, isDarkMode} = useTheme();
 
   const {userServices} = useAppSelector(state => state.services);
-  const {availabileDates, getAvailablity, loading, availableService} =
-    useProviderAvailability();
+  // const {availabileDates, getAvailablity, loading, availableService} =
+  //   useProviderAvailability();
   // const {resetSelection, _markedStyle} = useHandleRange('RANGE');
   const dispatch = useAppDispatch();
   const {request} = useApi(methods._post);
@@ -129,6 +127,7 @@ const EditCart = ({
       providerServiceIds: userServices.map((item: {id: number}) => item.id),
     };
     const result = await request(unavailabilityEndpoint, payload);
+    console.log('rrrr', result);
     if (result.ok) {
       const monthData = {
         year: new Date(startingDate).getFullYear(),
@@ -150,6 +149,7 @@ const EditCart = ({
     };
 
     const result = await request(availablityEndpoint, payload);
+    console.log('rrrr', result);
     if (result.ok) {
       const monthData = {
         year: new Date(startingDate).getFullYear(),
@@ -206,22 +206,12 @@ const EditCart = ({
       }
     });
   };
-  useEffect(() => {
-    setModMarkDate(_markedStyle);
-    setAvailableDays(availabileDates);
-    setResetLoading(loading);
-    setResetAvailableService(availableService);
-  }, [
-    _markedStyle,
-    availabileDates,
-    availableService,
-    loading,
-    // setAvailableDays,
-    // setModMarkDate,
-    // setResetAvailableService,
-    // setResetLoading,
-  ]);
-  console.log('marked s i', _markedStyle);
+  // useEffect(() => {
+  //   setModMarkDate(_markedStyle);
+  //   setAvailableDays(availabileDates);
+  //   setResetLoading(loading);
+  //   setResetAvailableService(availableService);
+  // }, [_markedStyle, availabileDates, availableService, loading]);
   return (
     <Animated.View
       style={[

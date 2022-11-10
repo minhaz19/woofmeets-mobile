@@ -45,11 +45,15 @@ const BottomSheetCalendar = ({
         var dayName = dayss[d.getDay()];
         return {date: date.toDateString(), day: dayName};
       });
+      const dayName = new Date(data.dateString).toLocaleString('en-us', {
+        weekday: 'long',
+      });
+      console.log('selectedDays', [dayName]);
       setValue('recurringStartDate', data.dateString);
+      setValue('selectedDays', [dayName]);
       setValue('repeatDate', next6Days);
     }
   };
-  console.log('Bototm sheet calendar', watch());
 
   return (
     <>

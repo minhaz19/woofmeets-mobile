@@ -79,11 +79,12 @@ export const useProposalPricing = () => {
           timeZone: 'Asia/Dhaka',
         };
         const result = await postRequest(vistWalkEndpoint, payload);
+        console.log('re', result);
         setPricingInfo([
           ...result.data.petsRates,
           {
             ...result?.data?.sixtyMinutesRate,
-            name: result?.data?.sixtyMinutesRate.rate.name,
+            name: result?.data?.sixtyMinutesRate?.rate?.name,
           },
           {
             id: result.data.petsRates.length,
