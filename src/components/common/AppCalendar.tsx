@@ -1,5 +1,5 @@
 import {StyleSheet, TextStyle, View} from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import {CalendarList} from 'react-native-calendars';
 import {useHandleRange} from '../../utils/helpers/CalendarRange/useHandleRange';
 import Colors from '../../constants/Colors';
@@ -24,11 +24,13 @@ const AppCalendar = ({
     selectType,
     setValue,
   );
+  console.log('App Calendar');
 
   return (
     <View style={styles.contentContainer}>
       <CalendarList
         current={new Date().toString()}
+        minDate={new Date().toString()}
         pastScrollRange={0}
         futureScrollRange={range}
         onDayPress={data => {
@@ -123,7 +125,7 @@ function renderCustomHeader(date: any) {
   );
 }
 
-export default AppCalendar;
+export default memo(AppCalendar);
 
 const styles = StyleSheet.create({
   contentContainer: {

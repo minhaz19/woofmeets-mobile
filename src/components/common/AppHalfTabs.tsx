@@ -1,10 +1,9 @@
 import {Pressable, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import TitleText from './text/TitleText';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Text_Size from '../../constants/textScaling';
-import {useFormContext} from 'react-hook-form';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 
 interface Props {
@@ -14,6 +13,7 @@ interface Props {
   setScheduleId?: (arg: number | null) => void;
   setVisitId?: (arg: number | null) => void;
   defaultValue: number;
+  setValue: any;
 }
 const AppHalfTabs = ({
   data,
@@ -21,10 +21,12 @@ const AppHalfTabs = ({
   name,
   setScheduleId,
   defaultValue,
+  setValue,
 }: Props) => {
   const [activeIndex, setActiveIndex] = useState(defaultValue);
-  const {setValue} = useFormContext();
+
   const {isDarkMode, colors} = useTheme();
+  console.log('App half tabs');
   return (
     <View style={[styles.container, {}]}>
       <TitleText textStyle={styles.titleText} text={title} />
@@ -59,7 +61,7 @@ const AppHalfTabs = ({
   );
 };
 
-export default AppHalfTabs;
+export default memo(AppHalfTabs);
 
 const styles = StyleSheet.create({
   container: {

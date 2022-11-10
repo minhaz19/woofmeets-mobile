@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -112,11 +113,13 @@ const ContactInput = (props: {handleSubmit: any}) => {
       phoneNumber: textInput,
       otp: code,
     });
-
+    console.log('result', result);
     if (result.ok) {
       setOtpVerificationStatus(true);
       dispatch(getContactInfo());
       setIsModalVisible(!isModalVisible);
+    } else if (!result.ok) {
+      Alert.alert(result.data.message);
     }
   };
 

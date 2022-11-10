@@ -39,7 +39,6 @@ import cardsSlice from './slices/payment/PaymentCards/cardsSlice';
 import currentPlanSlice from './slices/payment/Subscriptions/CurrentSubscription/currentPlanSlice';
 import providerServicesSlice from './slices/Appointment/ProviderServices/providerServicesSlice';
 import addressReducer from './slices/address/address';
-import markedStyle from './slices/misc/markedStyle';
 import ProviderFilterSlice from './slices/Provider/ProviderFilter/ProviderFilterSlice';
 import stripe from './slices/connect/stripe';
 import providerProposalSlice from './slices/Appointment/Proposal/providerProposalSlice';
@@ -87,7 +86,6 @@ const appReducer = combineReducers({
   providerServices: providerServicesSlice,
   address: addressReducer,
   proposal: providerProposalSlice,
-  markedStyle: markedStyle,
   providerFilter: ProviderFilterSlice,
   stripe: stripe,
   appointmentStatus: appointmentStatusSlice,

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {Pressable, StyleSheet, View} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import TitleText from './text/TitleText';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
@@ -39,6 +39,8 @@ const AppDayPicker = () => {
     setDatas(modDays);
   }, []);
 
+  console.log('AppDayPicker');
+
   return (
     <View style={styles.container}>
       <TitleText
@@ -72,7 +74,7 @@ const AppDayPicker = () => {
   );
 };
 
-export default AppDayPicker;
+export default memo(AppDayPicker);
 
 const styles = StyleSheet.create({
   container: {

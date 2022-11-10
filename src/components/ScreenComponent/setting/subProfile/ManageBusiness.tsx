@@ -35,7 +35,8 @@ const ManageBusiness = (props: {
           style={styles.iconStyles}
         />
       ),
-      screen: () => props.navigation.navigate('SubscriptionScreen'),
+      screen: () =>
+        props.navigation.navigate('SubscriptionScreen', {opk: 'current_plan'}),
     },
     {
       id: 3,

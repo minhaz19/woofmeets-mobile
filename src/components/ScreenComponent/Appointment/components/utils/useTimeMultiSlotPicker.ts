@@ -1,22 +1,27 @@
 import {useMemo, useState} from 'react';
 import {useWatch} from 'react-hook-form';
 
-let Dates: any = [];
-let Days: any = [];
 export const useTimeMultiSlotPicker = (
   singleItem: any,
   initalSlot: any,
   isRecurring: boolean,
 ) => {
-  const {visitLength} = useWatch();
-
+  const [Dates, setDates] = useState<any>([]);
+  const [Days, setDays] = useState<any>([]);
+  // let Dates: any = [];
+  // let Days: any = [];
   const [newData, setDatas] = useState<any>([]);
+  const {visitLength} = useWatch();
+  console.log('visitLength', visitLength);
   useMemo(() => {
     const times: any = []; // time array
     let tt = 0; // start time
     const ap = [' AM', ' PM']; // AM-PM
 
+    console.log('inside for time memo', Days);
     for (let i = 0; tt < 24 * 60; i++) {
+      console.log('inside for mulit');
+
       const hh = Math.floor(tt / 60); // getting hours of day in 0-24 format
       const mm = tt % 60; // getting minutes of the hour in 0-55 format
       const individualSlot =
@@ -27,14 +32,19 @@ export const useTimeMultiSlotPicker = (
       times[i] = {
         id: i + 1,
         slot: individualSlot,
-        active: initalSlot
-          ? initalSlot?.some((it: string) => it === individualSlot)
-          : false,
+        active:
+          initalSlot?.length > 0
+            ? initalSlot?.some((it: string) => it === individualSlot)
+            : isRecurring && Days?.length > 0
+            ? Days[0].visits?.some((it: string) => it === individualSlot)
+            : !isRecurring && Dates?.length > 0
+            ? Dates[0].visits?.some((it: string) => it === individualSlot)
+            : false,
       }; // pushing data in array in [00:00 - 12:00 AM/PM format]
       tt = tt + visitLength;
     }
     setDatas(times);
-  }, [initalSlot, visitLength]);
+  }, [Days, initalSlot, isRecurring, Dates, visitLength]);
 
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
@@ -48,22 +58,34 @@ export const useTimeMultiSlotPicker = (
         (itm: {date: string}) => itm.date === singleItem.date,
       );
       if (matchIndex === -1) {
-        Days.push({
-          date: singleItem.date,
-          visits: singleItem.initalSlot,
-          // startDate: singleItem.startDate,
-        });
+        setDays([
+          ...Days,
+          {
+            date: singleItem.date,
+            visits: singleItem.initalSlot,
+          },
+        ]);
+        // Days.push({
+        //   date: singleItem.date,
+        //   visits: singleItem.initalSlot,
+        // });
       }
     } else if (!isRecurring) {
       const matchIndex = Dates.findIndex(
         (itm: {date: string}) => itm.date === singleItem.date,
       );
       if (matchIndex === -1) {
-        Dates.push({
-          date: singleItem.date,
-          visits: singleItem.initalSlot,
-          // startDate: singleItem.startDate,
-        });
+        setDates([
+          ...Dates,
+          {
+            date: singleItem.date,
+            visits: singleItem.initalSlot,
+          },
+        ]);
+        // Dates.push({
+        //   date: singleItem.date,
+        //   visits: singleItem.initalSlot,
+        // });
       }
     }
   }

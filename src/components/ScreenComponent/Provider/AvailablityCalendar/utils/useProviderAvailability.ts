@@ -7,6 +7,7 @@ import {getSelectedDates} from './getSelectDates';
 const endPoint = '/availability/all-service';
 export const useProviderAvailability = () => {
   const [availabileDates, setAvailableDates] = useState([]);
+  const [availableService, setAvailableService] = useState([]);
   const {loading, request} = useApi(methods._get);
 
   const getAvailablity = async (monthData: any, currentMonth: string) => {
@@ -18,6 +19,7 @@ export const useProviderAvailability = () => {
           endDate,
         ).toISOString()}`,
     );
+    console.log('result', result);
     if (result.ok) {
       const allDates = result.data.data?.map((item: any) => [
         ...new Set([...new Set(item.availability.dates)]),
@@ -25,7 +27,30 @@ export const useProviderAvailability = () => {
 
       const uniqueChars: any = [...new Set(allDates.flat(1))];
       uniqueChars && setAvailableDates(uniqueChars);
+
+      const availableServiceArr = uniqueChars.map(
+        (date: string, index: number) => {
+          const modAvailableService: any = [];
+          const services: any = [];
+
+          result.data.data.map((item: any) => {
+            const {dates} = item.availability;
+            let tmp = dates.indexOf(date);
+            if (tmp !== -1) {
+              services.push(item.serviceType.displayName);
+            }
+          });
+          modAvailableService.push({
+            id: index,
+            date: date,
+            services: services,
+          });
+          return modAvailableService[0];
+        },
+      );
+      availableServiceArr && setAvailableService(availableServiceArr);
     }
   };
-  return {availabileDates, getAvailablity, loading};
+  console.log('availableService', availableService);
+  return {availabileDates, getAvailablity, availableService, loading};
 };

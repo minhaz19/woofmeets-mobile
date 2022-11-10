@@ -14,13 +14,12 @@ import {useForm} from 'react-hook-form';
 import {availabilityDayInit} from './utils/availabilityinitState';
 import {useAppSelector} from '../../../../store/store';
 interface Props {
-  isVisible: boolean;
-  setIsVisible: (arg: boolean) => void;
+  handleVisibility: any;
   onPress: (data: any) => void;
 }
-const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
+const ServiceSlotModal = ({handleVisibility, onPress}: Props) => {
   const {serviceDays} = useAppSelector(state => state.serviceDays);
-  // const {userServices} = useAppSelector(state => state.services);
+  const {isSettingVisible} = useAppSelector(state => state.filter);
   const [initalState, setInitalState] = useState({});
   const {colors} = useTheme();
 
@@ -40,11 +39,12 @@ const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
   }, [initalState, reset, serviceDays]);
   return (
     <View>
-      <Modal animated transparent visible={isVisible} animationType="fade">
-        <Pressable
-          style={styles.bgContainer}
-          onPress={() => setIsVisible(!isVisible)}
-        />
+      <Modal
+        animated
+        transparent
+        visible={isSettingVisible}
+        animationType="fade">
+        <Pressable style={styles.bgContainer} onPress={handleVisibility} />
 
         <View
           style={[
@@ -56,7 +56,7 @@ const ServiceSlotModal = ({isVisible, setIsVisible, onPress}: Props) => {
           <View style={styles.btnContainer}>
             <TouchableOpacity
               style={styles.cancelBtn}
-              onPress={() => setIsVisible(false)}>
+              onPress={handleVisibility}>
               <TitleText text="Cancel" textStyle={styles.text} />
             </TouchableOpacity>
             <TouchableOpacity

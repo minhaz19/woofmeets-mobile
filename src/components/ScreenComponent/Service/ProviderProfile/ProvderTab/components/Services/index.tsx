@@ -13,7 +13,7 @@ interface useActiveIndex {
   3: boolean;
   4: boolean;
 }
-const Services = props => {
+const Services = (props: any) => {
   const {formattedServices, availabilityData, atHome} = useServices();
   const [activeIndex, setActiveIndex] = useState<useActiveIndex | any>({
     0: true,

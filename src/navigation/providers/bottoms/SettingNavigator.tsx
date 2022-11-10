@@ -12,10 +12,14 @@ import CreditAndDebitCard from '../../../screens/profile/PaymentMethod';
 import SetNewPassword from '../../../screens/auth/ResetPassword';
 import Profile from '../../../screens/settings/Profile';
 import ProviderAvailablity from '../../../screens/provider/ProviderAvailablity';
+import {Setting} from '../../../assets/svgs/SVG_LOGOS';
+import {useAppDispatch} from '../../../store/store';
+import {setOpenSettings} from '../../../store/slices/misc/openFilter';
 
 const Stack1 = createStackNavigator();
 
 const ProSettingNavigator = () => {
+  const dispatch = useAppDispatch();
   return (
     <Stack1.Navigator initialRouteName="SettingMain">
       <Stack1.Screen
@@ -164,7 +168,9 @@ const ProSettingNavigator = () => {
             <HeaderWithBack
               navigation={navigation}
               title="Provider Availability"
-              notification
+              Icon={Setting}
+              onPress={() => dispatch(setOpenSettings(true))}
+              // notification
             />
           ),
           backgroundColor: Colors.primary,

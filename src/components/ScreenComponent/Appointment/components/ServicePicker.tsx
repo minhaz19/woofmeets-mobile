@@ -1,5 +1,5 @@
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
@@ -53,6 +53,9 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
       setValue(name, modData[0].id));
   }, [name, providerServices, setValue]);
   const {isDarkMode, colors} = useTheme();
+
+  console.log('Service Picker');
+
   return (
     <>
       <TitleText textStyle={styles.header} text={'Provider Services'} />
@@ -119,7 +122,7 @@ const ServicePicker = ({name, setValue, setServiceId}: Props) => {
   );
 };
 
-export default ServicePicker;
+export default memo(ServicePicker);
 
 const styles = StyleSheet.create({
   header: {

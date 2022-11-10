@@ -70,7 +70,6 @@ export const useSubRates = (rateFields: any, watch: any) => {
       );
     });
 
-
     const validateCheck =
       submittedValue === undefined
         ? null

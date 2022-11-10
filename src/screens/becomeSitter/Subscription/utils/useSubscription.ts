@@ -12,7 +12,7 @@ import {useApi} from '../../../../utils/helpers/api/useApi';
 
 const endpoint = '/subscriptions/check-basic-verification-payment';
 const subscriptionEndpoint =
-  'https://woof-api.hirebeet.com/v2/subscriptions/subscribe?';
+  'https://api-stg.woofmeets.com/v2/subscriptions/subscribe?';
 const defaultCardEndpoint = '/stripe-payment-method/default-card-info';
 export const useSubscription = () => {
   const uuid = Math.random().toString(36).substring(2, 36);
@@ -44,6 +44,7 @@ export const useSubscription = () => {
     setSequence(id);
   };
   const handleSubmit = async () => {
+    console.log('sequence', sequence);
     if (
       sitterData[1].isCompleted &&
       sitterData[2].isCompleted &&
@@ -81,10 +82,12 @@ export const useSubscription = () => {
           navigation.navigate('PaymentMethod', {sequence: sequence});
           setSSloading(false);
         }
-      } else {
+      } else if (sequence === 2 || sequence === 3) {
         // @ts-ignore
         navigation.navigate('PaymentMethod', {sequence: sequence});
         setSSloading(false);
+      } else {
+        Alert.alert('Please select a plan ');
       }
     } else {
       Alert.alert('Please complete all the steps first');

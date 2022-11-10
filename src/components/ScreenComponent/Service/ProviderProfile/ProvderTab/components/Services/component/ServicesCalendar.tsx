@@ -32,6 +32,7 @@ const ServicesCalendar = ({availabilityData, providerOpk}: Props) => {
     useAvailability(selectedService, navigation, monthRef, providerOpk);
   const {_markedStyle} = useMarkedStyles(availabileDates);
 
+  console.log('memo');
   return (
     <>
       <View style={styles.selectContainer}>

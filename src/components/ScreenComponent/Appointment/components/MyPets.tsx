@@ -10,14 +10,16 @@ import {Plus} from '../../../../assets/svgs/SVG_LOGOS';
 import DescriptionText from '../../../common/text/DescriptionText';
 import {useAppSelector} from '../../../../store/store';
 import {useNavigation} from '@react-navigation/native';
-import {useFormContext} from 'react-hook-form';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 let petsId: any = [];
 interface Props {
   appointmentType: string;
+  setValue: any;
+  watch: any;
 }
-const MyPets = ({appointmentType}: Props) => {
+const MyPets = ({appointmentType, setValue, watch}: Props) => {
   const {pets: allPets} = useAppSelector(state => state.allPets);
+  // const {setValue, watch} = useFormContext();
   const [newData, setDatas] = useState<any>([]);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
@@ -29,9 +31,9 @@ const MyPets = ({appointmentType}: Props) => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const petsInfo = proposedServiceInfo?.petsInfo;
   const providerId = proposedServiceInfo?.providerId;
-  const {setValue, watch} = useFormContext();
   const {petsId: pp} = watch();
   useEffect(() => {
+    console.log('MyPet effect');
     petsId = [...pp];
     if (
       providerId === user?.user?.provider?.id &&
@@ -66,6 +68,7 @@ const MyPets = ({appointmentType}: Props) => {
   }, [allPets]);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
+  console.log('MyPet');
   return (
     <>
       {appointmentType !== 'create' &&

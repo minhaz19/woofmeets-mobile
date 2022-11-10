@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import AppTouchableOpacity from '../../../../../../common/AppClickEvents/AppTouchableOpacity';
 import TitleText from '../../../../../../common/text/TitleText';
 import DescriptionText from '../../../../../../common/text/DescriptionText';
@@ -8,14 +8,16 @@ import {CalendarCSvg} from '../../../../../../../assets/svgs/SVG_LOGOS';
 import AppCalendar from '../../../../../../common/AppCalendar';
 import {useTheme} from '../../../../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../../../../constants/Colors';
-import {useFormContext} from 'react-hook-form';
 import {SCREEN_WIDTH} from '../../../../../../../constants/WindowSize';
 import Text_Size from '../../../../../../../constants/textScaling';
-
-const BScalendar = ({}) => {
+interface Props {
+  watch: any;
+  setValue: any;
+}
+const BScalendar = ({watch, setValue}: Props) => {
   const [visible, setVisible] = useState(false);
   const {isDarkMode, colors} = useTheme();
-  const {setValue, watch} = useFormContext();
+  // const {setValue, watch} = useFormContext();
   const {proposalStartDate, proposalEndDate} = watch();
   return (
     <View>
@@ -39,49 +41,48 @@ const BScalendar = ({}) => {
           <CalendarCSvg fill="black" width={30} height={30} />
         </View>
       </AppTouchableOpacity>
-      <Modal animated transparent visible={visible} animationType="fade">
-        <Pressable
-          style={styles.bgContainer}
-          onPress={() => setVisible(!visible)}
-        />
-        <View
-          style={[
-            styles.pickerContainer,
-            {
-              backgroundColor: colors.backgroundColor,
-            },
-          ]}>
-          <View style={styles.calHeader}>
-            <TitleText
-              textStyle={{
-                fontWeight: 'bold',
-                fontSize: Text_Size.Text_3,
-                color: colors.headerText,
-              }}
-              text={'Select date'}
-            />
-            <AppTouchableOpacity onPress={() => setVisible(false)}>
+      {visible ? (
+        <Modal animated transparent visible={visible} animationType="fade">
+          <Pressable
+            style={styles.bgContainer}
+            onPress={() => setVisible(!visible)}
+          />
+          <View
+            style={[
+              styles.pickerContainer,
+              {
+                backgroundColor: colors.backgroundColor,
+              },
+            ]}>
+            <View style={styles.calHeader}>
               <TitleText
                 textStyle={{
                   fontWeight: 'bold',
-                  fontSize: Text_Size.Text_2,
+                  fontSize: Text_Size.Text_3,
                   color: colors.headerText,
                 }}
-                text={'Done'}
+                text={'Select date'}
               />
-            </AppTouchableOpacity>
+              <AppTouchableOpacity onPress={() => setVisible(false)}>
+                <TitleText
+                  textStyle={{
+                    fontWeight: 'bold',
+                    fontSize: Text_Size.Text_2,
+                    color: colors.headerText,
+                  }}
+                  text={'Done'}
+                />
+              </AppTouchableOpacity>
+            </View>
+            <AppCalendar selectType={'RANGE'} setValue={setValue} />
           </View>
-          <AppCalendar
-            selectType={'RANGE'}
-            setValue={setValue}
-          />
-        </View>
-      </Modal>
+        </Modal>
+      ) : null}
     </View>
   );
 };
 
-export default BScalendar;
+export default memo(BScalendar);
 
 const styles = StyleSheet.create({
   headerText: {

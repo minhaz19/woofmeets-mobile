@@ -15,29 +15,12 @@ import {providerAvailablityValidationSchema} from '../../../utils/config/Validat
 const ProviderAvailablity = () => {
   const dispatch = useAppDispatch();
   const {isDarkMode} = useTheme();
-  const {getAvailablity} = useProviderAvailability();
-  // const {} =
+
   useEffect(() => {
     dispatch(getUserServices());
     dispatch(getAvailableDays());
   }, []);
-  // const [refreshing, setRefreshing] = useState(false);
 
-  // const onRefresh = () => {
-  //   setRefreshing(true);
-  //   dispatch(getUserServices());
-  //   dispatch(getAvailableDays());
-  //   const monthData = {
-  //     year: new Date().getFullYear(),
-  //     month: new Date().getMonth() + 1,
-  //     dateString: format(new Date(), 'yyyy-MM-dd'),
-  //   };
-  //   getAvailablity(monthData, 'current');
-  //   setRefreshing(false);
-  // };
-  // useEffect(() => {
-  //   onRefresh();
-  // }, []);
   return (
     <Screen
       style={[
@@ -53,13 +36,7 @@ const ProviderAvailablity = () => {
         initialValues={{
           dateRange: '',
         }}>
-        {/* <ScrollView
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }> */}
         <AvailablityCalendar />
-        {/* </ScrollView> */}
       </AppForm>
     </Screen>
   );

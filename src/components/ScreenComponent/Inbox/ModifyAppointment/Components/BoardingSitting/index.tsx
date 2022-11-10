@@ -10,23 +10,27 @@ import ShortText from '../../../../../common/text/ShortText';
 import Text_Size from '../../../../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
 import BScalendar from './components/BScalendar';
-import {useFormContext} from 'react-hook-form';
-
-const BoardingSitting = () => {
+interface Props {
+  watch: any;
+  setValue: any;
+}
+const BoardingSitting = ({watch, setValue}: Props) => {
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
-  const {watch} = useFormContext();
+  // const {watch} = useWat();
   const {dropOffStartTime, dropOffEndTime, pickUpStartTime, pickUpEndTime} =
     watch();
   // const {dropOffStartTime, dropOffEndTime, pickUpStartTime, pickUpEndTime} =
-  //   getValues();
+  //   watch();
+
+  console.log('Boarding Setting');
 
   const {isDarkMode} = useTheme();
 
   return (
     <View style={[styles.container]}>
       <TitleText textStyle={styles.headerText} text={'Schedule'} />
-      <BScalendar />
+      <BScalendar setValue={setValue} watch={watch} />
       <View style={styles.slotContainer}>
         <>
           <AppTouchableOpacity
@@ -61,6 +65,7 @@ const BoardingSitting = () => {
             endName={'dropOffEndTime'}
             defaultFrom={dropOffStartTime}
             defaultTo={dropOffEndTime}
+            setValue={setValue}
           />
         </>
         <>
@@ -96,6 +101,7 @@ const BoardingSitting = () => {
             endName={'pickUpEndTime'}
             defaultFrom={pickUpStartTime}
             defaultTo={pickUpEndTime}
+            setValue={setValue}
           />
         </>
       </View>

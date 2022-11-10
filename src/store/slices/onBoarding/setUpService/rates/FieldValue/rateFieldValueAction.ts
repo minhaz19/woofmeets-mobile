@@ -9,6 +9,7 @@ export const getRateFieldValue = createAsyncThunk(
       const response: ApiResponse<any> = await apiClient.get(
         `/service-rates/${id}`,
       );
+      console.log('field value res', response);
       if (!response.ok) {
         if (response.data) {
         } else if (response.problem === 'TIMEOUT_ERROR') {

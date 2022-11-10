@@ -13,6 +13,8 @@ interface Props {
 }
 const Appointment = ({route}: Props) => {
   const {colors} = useTheme();
+  // const appointmentType = 'create';
+  // const providerOpk = 'vxUC7v6J';
   const {appointmentType, providerOpk} = route?.params;
   const {handleSubmit, loading, btnLoading, refreshing, onRefresh} =
     useAppointment(providerOpk);
@@ -21,21 +23,21 @@ const Appointment = ({route}: Props) => {
       {loading && <AppActivityIndicator visible />}
       <SafeAreaView
         style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
-        <AppForm
-          initialValues={appointmentInit}
-          validationSchema={appointmentValidationSchema}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
+          <AppForm
+            initialValues={appointmentInit}
+            validationSchema={appointmentValidationSchema}>
             <AppointmentBody
               handleSubmit={handleSubmit}
               loading={btnLoading}
               appointmentType={appointmentType}
             />
-          </ScrollView>
-        </AppForm>
+          </AppForm>
+        </ScrollView>
       </SafeAreaView>
     </>
   );

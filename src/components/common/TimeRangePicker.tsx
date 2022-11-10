@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Modal, Platform, Pressable, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import TitleText from './text/TitleText';
 import Text_Size from '../../constants/textScaling';
 import Colors from '../../constants/Colors';
-import {useFormContext} from 'react-hook-form';
+// import {useFormContext} from 'react-hook-form';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 interface Props {
   visible: boolean;
@@ -15,6 +15,7 @@ interface Props {
   endName: string;
   defaultFrom: string;
   defaultTo: string;
+  setValue: any;
 }
 
 var x = 60; //minutes interval
@@ -41,10 +42,11 @@ const TimeSlotPicker = ({
   endName,
   defaultFrom,
   defaultTo,
+  setValue,
 }: Props) => {
   const [fromTime, setFromTime] = useState<string>(defaultFrom);
   const [toTime, setToTime] = useState<string>(defaultTo);
-  const {setValue} = useFormContext();
+
   const {colors, isDarkMode} = useTheme();
   const handleFrom = (itemValue: string) => {
     const findIndex = times.findIndex((item: string) => item === itemValue);
@@ -72,6 +74,7 @@ const TimeSlotPicker = ({
     setToTime(itemValue);
   };
 
+  console.log('Time slot picker');
   return (
     <View>
       <Modal animated transparent visible={visible} animationType="fade">
@@ -122,7 +125,7 @@ const TimeSlotPicker = ({
   );
 };
 
-export default TimeSlotPicker;
+export default memo(TimeSlotPicker);
 
 const styles = StyleSheet.create({
   container: {

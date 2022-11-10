@@ -1,5 +1,5 @@
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import AppTouchableOpacity from './AppClickEvents/AppTouchableOpacity';
 import TitleText from './text/TitleText';
 import DescriptionText from './text/DescriptionText';
@@ -7,7 +7,6 @@ import {CalendarCSvg} from '../../assets/svgs/SVG_LOGOS';
 import AppCalendar from './AppCalendar';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
-import {useFormContext} from 'react-hook-form';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 interface Props {
   title: string;
@@ -15,6 +14,7 @@ interface Props {
   isRecurring?: boolean;
   setValue: (arg1: string, arg3: any) => void;
   initalData: string;
+  watch: any;
 }
 var dayss = [
   'Sunday',
@@ -30,12 +30,12 @@ const BottomSheetCalendar = ({
   isRecurring,
   setValue,
   initalData,
+  watch,
 }: Props) => {
   const [visible, setVisible] = useState(false);
 
-  const {getValues} = useFormContext();
   const {isDarkMode, colors} = useTheme();
-  const {multiDate} = getValues();
+  const {multiDate} = watch();
   const handlePress = (data: any) => {
     if (isRecurring) {
       const next6Days = [...Array(7).keys()].map(index => {
@@ -49,6 +49,8 @@ const BottomSheetCalendar = ({
       setValue('repeatDate', next6Days);
     }
   };
+  console.log('Bototm sheet calendar', watch());
+
   return (
     <>
       <View style={[styles.container]}>
@@ -83,38 +85,40 @@ const BottomSheetCalendar = ({
             </View>
           </AppTouchableOpacity>
         )}
-        <Modal animated transparent visible={visible} animationType="fade">
-          <Pressable
-            style={styles.bgContainer}
-            onPress={() => setVisible(!visible)}
-          />
-
-          <View
-            style={[
-              styles.pickerContainer,
-              {
-                backgroundColor: colors.backgroundColor,
-              },
-            ]}>
-            <View style={styles.calHeader}>
-              <TitleText textStyle={styles.calTitle} text={'Select date'} />
-              <AppTouchableOpacity onPress={() => setVisible(false)}>
-                <TitleText textStyle={styles.done} text={'Done'} />
-              </AppTouchableOpacity>
-            </View>
-            <AppCalendar
-              selectType={isRecurring ? 'SINGLE' : 'MULTI'}
-              handlePress={handlePress}
-              setValue={setValue}
+        {visible ? (
+          <Modal animated transparent visible={visible} animationType="fade">
+            <Pressable
+              style={styles.bgContainer}
+              onPress={() => setVisible(!visible)}
             />
-          </View>
-        </Modal>
+
+            <View
+              style={[
+                styles.pickerContainer,
+                {
+                  backgroundColor: colors.backgroundColor,
+                },
+              ]}>
+              <View style={styles.calHeader}>
+                <TitleText textStyle={styles.calTitle} text={'Select date'} />
+                <AppTouchableOpacity onPress={() => setVisible(false)}>
+                  <TitleText textStyle={styles.done} text={'Done'} />
+                </AppTouchableOpacity>
+              </View>
+              <AppCalendar
+                selectType={isRecurring ? 'SINGLE' : 'MULTI'}
+                handlePress={handlePress}
+                setValue={setValue}
+              />
+            </View>
+          </Modal>
+        ) : null}
       </View>
     </>
   );
 };
 
-export default BottomSheetCalendar;
+export default memo(BottomSheetCalendar);
 
 const styles = StyleSheet.create({
   sectionContainer: {

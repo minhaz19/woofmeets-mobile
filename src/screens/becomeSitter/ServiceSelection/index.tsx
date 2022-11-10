@@ -102,8 +102,8 @@ const ServiceSelection = () => {
         }
       }
       // return response.data;
-    } catch (error: any) {
-      if (error.response && error.response.data.message) {
+    } catch (er: any) {
+      if (er.response && er.response.data.message) {
       }
       setLoading(false);
     }
@@ -132,7 +132,9 @@ const ServiceSelection = () => {
           You can always modify the services you’ve chosen to provide for clients after we’ve accepted you to become a part of the Woofmeets team. If you no longer want to offer particular services, you can do that. If you feel you’re ready to start offering services that you didn’t when you originally signed up, that’s fine too. Remember, you’re potentially setting yourself up to make the most money as a pet care provider if you offer a diverse range of options for your clients.`}
         />
         <HeaderText text="Service Selection" />
-        <TouchableOpacity style={styles.viewQuestionStyle} onPress={() => setModalVisible(true)}>
+        <TouchableOpacity
+          style={styles.viewQuestionStyle}
+          onPress={() => setModalVisible(true)}>
           <MaterialIcons name="error" size={14} color={Colors.primary} />
           <ShortText
             textStyle={{...styles.shortText, color: Colors.primary}}
@@ -197,6 +199,7 @@ const ServiceSelection = () => {
             numColumns={2}
             renderItem={RenderItem}
             keyExtractor={item => item.id}
+            showsVerticalScrollIndicator={false}
             ListFooterComponent={renderFooter}
             ListHeaderComponent={renderHeader}
           />
