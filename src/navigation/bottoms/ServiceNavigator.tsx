@@ -12,6 +12,9 @@ import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 import {useAppDispatch} from '../../store/store';
 import authStorage from '../../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
+import ReportCardInitial from '../../screens/reports/Initial';
+import GenerateReport from '../../screens/reports/Initial/GenerateReport';
+import ReportCard from '../../screens/reports/Initial/ReportCard';
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
@@ -28,6 +31,42 @@ const ServiceNavigator = () => {
   getDecodedToken();
   return (
     <Stack1.Navigator initialRouteName="PetCareZipSearch">
+      {/* will be deleted */}
+      {/* <Stack1.Screen
+        name="ReportCardInitial"
+        component={ReportCardInitial}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack navigation={navigation} title="Reports" />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="GenerateReport"
+        component={GenerateReport}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack navigation={navigation} title="Reports" />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="ReportCard"
+        component={ReportCard}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack navigation={navigation} title="Reports" />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      /> */}
+      {/* will be deleted */}
+
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}

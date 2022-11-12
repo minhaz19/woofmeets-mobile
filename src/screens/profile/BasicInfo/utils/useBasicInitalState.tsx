@@ -20,10 +20,14 @@ export const useBasicInitalState = () => {
         ? `${userInfo.firstName + ' ' + userInfo.lastName}`
         : '',
     dob: userInfo?.basicInfo?.dob
-      ? new Date(userInfo?.basicInfo?.dob)?.toDateString()
+      ? new Date(userInfo?.basicInfo?.dob).toLocaleDateString()
       : '',
-    latitude: userInfo?.basicInfo?.latitude ? userInfo?.basicInfo?.latitude : null,
-    longitude: userInfo?.basicInfo?.longitude ? userInfo?.basicInfo?.longitude : null,
+    latitude: userInfo?.basicInfo?.latitude
+      ? userInfo?.basicInfo?.latitude
+      : null,
+    longitude: userInfo?.basicInfo?.longitude
+      ? userInfo?.basicInfo?.longitude
+      : null,
   };
   return basicInitalState;
 };

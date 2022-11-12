@@ -6,11 +6,12 @@ import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
 interface Props {
   label: string;
-  subTitle: string;
+  subTitle?: string;
   imageUris: [] | string[];
   onRemoveImage: (arg0: string) => void;
   onAddImage: (arg0: string) => void;
   handlePress: (arg: string) => void;
+  marginTop?: boolean;
 }
 
 const PhotoGalleryList = ({
@@ -20,14 +21,16 @@ const PhotoGalleryList = ({
   onRemoveImage,
   onAddImage,
   handlePress,
+  marginTop,
 }: Props) => {
   const scrollRef = useRef<ScrollView | null>(null);
 
   return (
     <View>
       <TitleText textStyle={styles.label} text={label} />
-      <DescriptionText textStyle={styles.subTitle} text={subTitle} />
-
+      {subTitle && (
+        <DescriptionText textStyle={styles.subTitle} text={subTitle} />
+      )}
       <ScrollView
         horizontal
         ref={scrollRef}
@@ -40,10 +43,11 @@ const PhotoGalleryList = ({
                 imageUri={uri}
                 handlePress={() => handlePress(uri)}
                 onChangeImage={() => onRemoveImage(uri)}
+                marginTop={marginTop}
               />
             </View>
           ))}
-          <PhotoGallery onChangeImage={onAddImage} />
+          <PhotoGallery onChangeImage={onAddImage} marginTop={marginTop} />
         </View>
       </ScrollView>
     </View>

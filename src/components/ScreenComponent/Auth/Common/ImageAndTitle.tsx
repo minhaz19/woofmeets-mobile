@@ -15,7 +15,12 @@ interface Props {
 }
 const ImageAndTitle = ({id, title, Icon, subTitle, image, rowImage}: Props) => {
   return (
-    <View key={id} style={{flexDirection: rowImage ? 'row' : 'column', alignItems: 'center'}}>
+    <View
+      key={id}
+      style={{
+        flexDirection: rowImage ? 'row' : 'column',
+        alignItems: 'center',
+      }}>
       <View style={styles.iconContainer}>
         {Icon && (
           <Icon

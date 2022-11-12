@@ -4,7 +4,7 @@ import ShortText from '../../../common/text/ShortText';
 import SwitchView from '../../../common/switch/SwitchView';
 import Text_Size from '../../../../constants/textScaling';
 interface Props {
-  title: string;
+  title?: string;
   isEnabled: boolean;
   onPress?: () => void;
 }

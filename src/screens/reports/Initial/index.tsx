@@ -7,10 +7,6 @@ import InputItem from '../../../components/ScreenComponent/reports/Cards/InputIt
 import StaticMap from '../map/NavigateMap';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import getLiveLocation from '../map/helperFunction/useGetLiveLocation';
-import MiddleModal from '../../../components/UI/modal/MiddleModal';
-import SwitchView from '../../../components/common/switch/SwitchView';
-import HeaderText from '../../../components/common/text/HeaderText';
-import ImageAndTitle from '../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
@@ -22,9 +18,20 @@ import TitleText from '../../../components/common/text/TitleText';
 import BigText from '../../../components/common/text/BigText';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
-import {setIsSelectedPet} from '../../../store/slices/reportCard/reportCardSlice';
+import ReportModal from './ReportModal';
+import {
+  setIsFoodSelected,
+  setIsPeeSelected,
+  setIsPooSelected,
+  setIsWaterSelected,
+  setPhoto,
+} from '../../../store/slices/reportCard/reportCardSlice';
+import PhotoGalleryList from '../../../components/common/ImagePicker/PhotoGalleryList';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 
-const ReportCardInitial = () => {
+const ReportCardInitial = (props: {
+  navigation: {navigate: (arg0: string, arg1?: any) => any};
+}) => {
   const [items] = useState([
     {
       id: 1,
@@ -79,82 +86,195 @@ const ReportCardInitial = () => {
       ),
     },
   ]);
+  const {pets} = useAppSelector((state: any) => state?.allPets);
   const [sequence, setSequence] = useState<number>(0);
-  const currentUserLocation = useAppSelector(
-    state => state.address.currentUserLocation,
-  );
-  useEffect(() => {}, [currentUserLocation]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const {colors} = useTheme();
   const dispatch = useAppDispatch();
-  const {pets, loading: petsLoading} = useAppSelector(
-    (state: any) => state?.allPets,
+  const currentUserLocation = useAppSelector(
+    (state: any) => state.address.currentUserLocation,
   );
-  const {isSelectedPet} = useAppSelector((state: any) => state?.reportCard);
+  useEffect(() => {
+    dispatch(setIsPeeSelected(pets));
+    dispatch(setIsPooSelected(pets));
+    dispatch(setIsFoodSelected(pets));
+    dispatch(setIsWaterSelected(pets));
+  }, [currentUserLocation, dispatch, pets]);
+
+  const {
+    isPeeSelected,
+    isPooSelected,
+    isWaterSelected,
+    isFoodSelected,
+    photo,
+  } = useAppSelector((state: any) => state?.reportCard);
+
+  //modal visible
   const onPressService = (data: any) => {
     setSequence(data?.id);
     setIsModalVisible(true);
   };
   getLiveLocation();
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isSendEmailInNewMessage, setIsSendEmailInNewMessage] = useState(true);
+
+  //handle Switch
+  const handleSwitch = (id: number) => {
+    if (sequence === 1) {
+      const myNewPet = isPeeSelected?.map((item: any) => {
+        if (item.id === id) {
+          return {...item, selected: !item.selected};
+        } else {
+          return item;
+        }
+      });
+      dispatch(setIsPeeSelected(myNewPet));
+    } else if (sequence === 2) {
+      const myNewPet = isPooSelected?.map((item: any) => {
+        if (item.id === id) {
+          return {...item, selected: !item.selected};
+        } else {
+          return item;
+        }
+      });
+      dispatch(setIsPooSelected(myNewPet));
+    } else if (sequence === 3) {
+      const myNewPet = isFoodSelected?.map((item: any) => {
+        if (item.id === id) {
+          return {...item, selected: !item.selected};
+        } else {
+          return item;
+        }
+      });
+      dispatch(setIsFoodSelected(myNewPet));
+    } else {
+      const myNewPet = isWaterSelected?.map((item: any) => {
+        if (item.id === id) {
+          return {...item, selected: !item.selected};
+        } else {
+          return item;
+        }
+      });
+      dispatch(setIsWaterSelected(myNewPet));
+    }
+  };
+
+  // handle pet Report
+  const handlePress = () => {
+    if (sequence === 1) {
+      const myNewPet = isPeeSelected?.map((item: any) => {
+        if (item.selected) {
+          return {...item, pee: item.pee ? item.pee + 1 : 1, selected: false};
+        } else {
+          return item;
+        }
+      });
+      dispatch(setIsPeeSelected(myNewPet));
+    } else if (sequence === 2) {
+      const myNewPet = isPooSelected?.map((item: any) => {
+        if (item.selected) {
+          return {...item, poo: item.poo ? item.poo + 1 : 1, selected: false};
+        } else {
+          return item;
+        }
+      });
+      dispatch(setIsPooSelected(myNewPet));
+    } else if (sequence === 3) {
+      const myNewPet = isFoodSelected?.map((item: any) => {
+        if (item.selected) {
+          return {...item, food: item.food ? item.food + 1 : 1, selected: false};
+        } else {
+          return item;
+        }
+      });
+      dispatch(setIsFoodSelected(myNewPet));
+    } else {
+      const myNewPet = isWaterSelected?.map((item: any) => {
+        if (item.selected) {
+          // setIsWater(isWater + 1);
+          return {...item, water: item.water ? item.water + 1 : 1, selected: false};
+        } else {
+          return item;
+        }
+      });
+      dispatch(setIsWaterSelected(myNewPet));
+    }
+  };
+
+  //Remove photo
+  // const {request: deleteRequest, loading: deleteLoading} = useApi(
+  //   methods._delete,
+  // );
+  const handleRemove = async (uri: string) => {
+    // const removeEndPoint = `/gallery/photo/delete/${uri}`;
+    // const result = await deleteRequest(removeEndPoint);
+    dispatch(setPhoto(photo?.filter((image: any) => image !== uri)));
+  };
+
+  //Upload photo
+  // const {request: uploadRequest, loading: uploadLoading} = useApi(
+  //   methods._post,
+  // );
+  const handleAdd = async (_e: any) => {
+    // const uploadEndPoint = '/gallery/photo/upload';
+    // const result = await uploadRequest(uploadEndPoint, _e);
+    // try {
+    //   let imageData = {
+    //     name: result.data.data?.imageSrc?.url,
+    //     key: result.data.data?.id,
+    //     caption: result.data.data?.caption,
+    //   };
+    //   setPhoto([...photo, imageData]);
+    // } catch (err) {}
+    dispatch(setPhoto([...photo, _e]));
+  };
   return (
     <ScreenRapperGrey rapperStyle={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <MiddleModal
-          isModalVisible={isModalVisible}
-          setIsModalVisible={setIsModalVisible}
-          onBlur={undefined}
-          isButton
-          notOutsidePress
-          height={'40%'}>
-          <View style={{flex: 1, width: '100%'}}>
-            <HeaderText
-              text={sequence !== 0 && items[sequence - 1].title}
-              textStyle={{textAlign: 'center', width: '100%', paddingTop: 20}}
-            />
-            <ScrollView showsHorizontalScrollIndicator={false}>
-              {pets?.map(
-                (item: {
-                  id: number;
-                  name: string;
-                  profile_image: {url: any};
-                }) => {
-                  return (
-                    <View
-                      key={item?.id}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        paddingVertical: 10,
-                        width: '100%',
-                        paddingHorizontal: '5%',
-                      }}>
-                      <View style={{paddingRight: 10}}>
-                        <ImageAndTitle
-                          title={item.name}
-                          rowImage
-                          image={
-                            item.profile_image
-                              ? item.profile_image.url
-                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-                          }
-                        />
-                      </View>
-                      <SwitchView
-                        isActive={isSelectedPet === item.id ? true : false}
-                        activeText=""
-                        inActiveText=""
-                        onSelect={() => {
-                          dispatch(setIsSelectedPet(item?.id));
-                        }}
-                      />
-                    </View>
-                  );
-                },
-              )}
-            </ScrollView>
-          </View>
-        </MiddleModal>
+        {sequence === 1 ? (
+          <ReportModal
+            isModalVisible={isModalVisible}
+            setIsModalVisible={setIsModalVisible}
+            sequence={sequence}
+            isSelectedPet={isPeeSelected}
+            onPress={handleSwitch}
+            handlePress={handlePress}
+            items={items}
+            pets={pets}
+          />
+        ) : sequence === 2 ? (
+          <ReportModal
+            isModalVisible={isModalVisible}
+            setIsModalVisible={setIsModalVisible}
+            sequence={sequence}
+            isSelectedPet={isPooSelected}
+            onPress={handleSwitch}
+            handlePress={handlePress}
+            items={items}
+            pets={pets}
+          />
+        ) : sequence === 3 ? (
+          <ReportModal
+            isModalVisible={isModalVisible}
+            setIsModalVisible={setIsModalVisible}
+            sequence={sequence}
+            isSelectedPet={isFoodSelected}
+            onPress={handleSwitch}
+            handlePress={handlePress}
+            items={items}
+            pets={pets}
+          />
+        ) : (
+          <ReportModal
+            isModalVisible={isModalVisible}
+            setIsModalVisible={setIsModalVisible}
+            sequence={sequence}
+            isSelectedPet={isWaterSelected}
+            onPress={handleSwitch}
+            handlePress={handlePress}
+            items={items}
+            pets={pets}
+          />
+        )}
         <View style={styles.tabContainer}>
           {items.map(item => (
             <InputItem
@@ -169,19 +289,12 @@ const ReportCardInitial = () => {
         <View style={{height: 200}}>
           <StaticMap />
         </View>
-        <View style={{paddingHorizontal: 15, paddingTop: 15}}>
-          <HeaderText text="Your Pets" textStyle={{paddingBottom: 10}} />
-          {pets?.map(
-            (item: {id: number; name: string; profile_image: {url: any}}) => (
-              <ImageAndTitle
-                key={item.id}
-                id={item.id}
-                title={item.name}
-                rowImage
-                image={item.profile_image.url}
-              />
-            ),
-          )}
+        <View
+          style={{
+            paddingHorizontal: 15,
+            paddingTop: 15,
+            backgroundColor: colors.backgroundColor,
+          }}>
           <View
             style={{
               paddingTop: 10,
@@ -216,7 +329,35 @@ const ReportCardInitial = () => {
             </View>
           </View>
         </View>
-
+        <View
+          style={{
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            marginVertical: 10,
+          }}>
+          <PhotoGalleryList
+            label={'Photos'}
+            imageUris={photo}
+            onRemoveImage={handleRemove}
+            onAddImage={handleAdd}
+            handlePress={() => {}}
+            marginTop={false}
+          />
+        </View>
+        {
+          <View style={styles.buttonContainer}>
+            <ButtonCom
+              title={'Generate Report'}
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={{
+                ...btnStyles.containerStyleFullWidth,
+                borderRadius: 8,
+              }}
+              titleStyle={btnStyles.titleStyle}
+              onSelect={() => props.navigation.navigate('GenerateReport')}
+            />
+          </View>
+        }
         <BottomSpacing />
       </ScrollView>
     </ScreenRapperGrey>
@@ -250,5 +391,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: Text_Size.Text_8,
   },
+  buttonContainer: {paddingHorizontal: 15, paddingTop: 15},
 });
 export default ReportCardInitial;

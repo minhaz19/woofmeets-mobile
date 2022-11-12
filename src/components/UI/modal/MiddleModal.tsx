@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   TouchableWithoutFeedback,
@@ -26,6 +27,7 @@ const MiddleModal = (props: {
   isButton?: boolean;
   notOutsidePress?: boolean;
   height?: string;
+  handlePress: () => void;
 }) => {
   const {colors} = useTheme();
   return (
@@ -54,14 +56,20 @@ const MiddleModal = (props: {
                 <View style={{flexDirection: 'row', width: '100%'}}>
                   <IOSButton
                     containerStyle={styles.containerStyle}
-                    onSelect={() => props.setIsModalVisible(false)}
+                    onSelect={() => {
+                      props.setIsModalVisible(false);
+                      props.handlePress && props.handlePress();
+                    }}
                     textAlignment={styles.textAlignment}
                     titleStyle={styles.textStyle}
                     title={'Cancel'}
                   />
                   <IOSButton
                     containerStyle={styles.containerStyle}
-                    onSelect={() => props.setIsModalVisible(false)}
+                    onSelect={() => {
+                      props.setIsModalVisible(false);
+                      props.handlePress && props.handlePress();
+                    }}
                     textAlignment={styles.textAlignment}
                     titleStyle={styles.textStyle}
                     title={'Okay'}

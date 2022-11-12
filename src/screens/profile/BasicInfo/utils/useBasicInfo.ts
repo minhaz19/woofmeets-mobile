@@ -13,7 +13,7 @@ export const useBasicInfo = () => {
   );
   const dispatch = useAppDispatch();
   const handleSubmit = async (e: any) => {
-    const formatedPayload = {
+    const formattedPayload = {
       addressLine1: e.addressLine1,
       // addressLine2: e.addressLine2,
       // street: e.street,
@@ -25,7 +25,7 @@ export const useBasicInfo = () => {
       latitude: e.lat,
       longitude: e.lng,
     };
-    const result = await request(slug, formatedPayload);
+    const result = await request(slug, formattedPayload);
     if (result.ok) {
       Alert.alert('Information Updated!');
       dispatch(getUserProfileInfo());
