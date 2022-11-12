@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Alert,
@@ -20,8 +21,14 @@ interface Props {
   imageUri?: string;
   onChangeImage: any;
   handlePress?: () => void;
+  marginTop?: boolean;
 }
-const PhotoGallery = ({imageUri, handlePress, onChangeImage}: Props) => {
+const PhotoGallery = ({
+  imageUri,
+  handlePress,
+  onChangeImage,
+  marginTop = true,
+}: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [petImage, setPetImage] = useState();
@@ -52,7 +59,12 @@ const PhotoGallery = ({imageUri, handlePress, onChangeImage}: Props) => {
     <>
       <TouchableOpacity onPress={handlePress} style={styles.galleryContainer}>
         {imageUri ? (
-          <View style={{...styles.imageCon, borderColor: Colors.primary}}>
+          <View
+            style={{
+              ...styles.imageCon,
+              marginTop: marginTop ? 20 : 0,
+              borderColor: Colors.primary,
+            }}>
             <Image source={{uri: imageUri}} style={styles.image} />
             <TouchableOpacity
               style={[
@@ -70,7 +82,7 @@ const PhotoGallery = ({imageUri, handlePress, onChangeImage}: Props) => {
         ) : (
           <>
             <TouchableOpacity
-              style={styles.imageContainer}
+              style={[styles.imageContainer, {marginTop: marginTop ? 20 : 0}]}
               onPress={() => setIsModalVisible(!isModalVisible)}>
               <HeaderText textStyle={styles.innerText} text="Add Photo" />
             </TouchableOpacity>
@@ -99,7 +111,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 120,
     height: 120,
-    marginTop: 20,
+    // marginTop: 20,
     borderRadius: 10,
     overflow: 'hidden',
     borderWidth: 1,
@@ -112,7 +124,7 @@ const styles = StyleSheet.create({
     height: 120,
     borderWidth: 1,
     borderStyle: 'dashed',
-    marginTop: 20,
+    // marginTop: 20,
     borderRadius: 10,
     borderColor: 'gray',
   },
