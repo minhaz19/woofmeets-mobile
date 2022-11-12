@@ -8,10 +8,12 @@ import ProfileInfo from '../../profile/BasicInfo/ProfileInfo';
 import {useAppSelector} from '../../../../store/store';
 import {format} from 'date-fns';
 import Colors from '../../../../constants/Colors';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 
 const AppointmentProposalInfo = () => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {user} = useAppSelector(state => state.whoAmI);
+  const {isDarkMode} = useTheme();
   return (
     <View>
       <BigText text="Review and Payment" />
@@ -31,7 +33,7 @@ const AppointmentProposalInfo = () => {
           borderColor: Colors.border,
           padding: 10,
           borderRadius: 5,
-          backgroundColor: Colors.iosBG,
+          backgroundColor: isDarkMode ? Colors.dark.lightDark : Colors.iosBG,
           marginVertical: 20,
         }}>
         {proposedServiceInfo.serviceTypeId === 1 ||

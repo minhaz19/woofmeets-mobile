@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {memo} from 'react';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import MyPets from '../../Appointment/components/MyPets';
@@ -17,9 +17,7 @@ const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
   const {serviceTypeId: serviceId} = proposedServiceInfo;
   const {watch, setValue} = useFormContext();
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}>
+    <View style={styles.container}>
       {(serviceId === 1 || serviceId === 2) && (
         <BoardingSitting setValue={setValue} watch={watch} />
       )}
@@ -45,7 +43,7 @@ const ModifyRequestBody = ({handleSubmit, loading}: Props) => {
         onPress={handleSubmit}
         loading={loading}
       />
-    </ScrollView>
+    </View>
   );
 };
 

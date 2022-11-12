@@ -26,7 +26,6 @@ const AppHalfTabs = ({
   const [activeIndex, setActiveIndex] = useState(defaultValue);
 
   const {isDarkMode, colors} = useTheme();
-  console.log('App half tabs');
   return (
     <View style={[styles.container, {}]}>
       <TitleText textStyle={styles.titleText} text={title} />

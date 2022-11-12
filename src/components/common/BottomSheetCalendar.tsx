@@ -48,7 +48,6 @@ const BottomSheetCalendar = ({
       const dayName = new Date(data.dateString).toLocaleString('en-us', {
         weekday: 'long',
       });
-      console.log('selectedDays', [dayName]);
       setValue('recurringStartDate', data.dateString);
       setValue('selectedDays', [dayName]);
       setValue('repeatDate', next6Days);

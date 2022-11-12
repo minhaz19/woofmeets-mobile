@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Alert, FlatList, Pressable, StyleSheet, View} from 'react-native';
-import React, {memo} from 'react';
+import React from 'react';
 import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
 import {useTimeMultiSlotPicker} from './utils/useTimeMultiSlotPicker';
@@ -9,16 +9,14 @@ import {useTimeMultiSlotPicker} from './utils/useTimeMultiSlotPicker';
 const TimeMultiSlotPicker = ({
   isRecurring,
   singleItem,
-  initalSlot,
+  visits,
   setValue,
 }: any) => {
-  // const {setValue} = useFormContext();
   const {handleMultipleCheck, newData, Dates, Days} = useTimeMultiSlotPicker(
     singleItem,
-    initalSlot,
+    visits,
     isRecurring,
   );
-  // console.log(singleItem, newData);
   return (
     <View style={styles.container}>
       <TitleText textStyle={{}} text={''} />
@@ -27,109 +25,102 @@ const TimeMultiSlotPicker = ({
         horizontal
         keyExtractor={(item, index) => (item.slot + index).toString()}
         showsHorizontalScrollIndicator={false}
-        renderItem={({item}) => (
-          <Pressable
-            onPress={() => {
-              if (isRecurring) {
-                const matchDate = Days.findIndex(
-                  (dd: {date: string}) => dd.date === singleItem.date,
-                );
-
-                if (matchDate === -1) {
-                  Days.push({
-                    date: singleItem.date,
-                    visits: [item.slot],
-                  });
-                  handleMultipleCheck(item.id);
-                } else {
-                  const found = Days.filter(
-                    (obj: any) => obj.date === singleItem.date,
+        renderItem={({item}) => {
+          return (
+            <Pressable
+              onPress={() => {
+                if (isRecurring) {
+                  const matchDate = Days.findIndex(
+                    (dd: {date: string}) => dd.date === singleItem.date,
                   );
 
-                  const matchIndex = found[0].visits?.findIndex(
-                    (it: {visits: string}) => it === item.slot,
+                  if (matchDate === -1) {
+                    Days.push({
+                      date: singleItem.date,
+                      visits: [item.slot],
+                    });
+                    handleMultipleCheck(item.id);
+                  } else {
+                    const found = Days.filter(
+                      (obj: any) => obj.date === singleItem.date,
+                    );
+
+                    const matchIndex = found[0].visits?.findIndex(
+                      (it: {visits: string}) => it === item.slot,
+                    );
+                    if (matchIndex === -1) {
+                      if (Days[matchDate]?.visits?.length > 9) {
+                        Alert.alert('You can only select 10 time slots');
+                        return;
+                      } else {
+                        handleMultipleCheck(item.id);
+                        found[0].visits.push(item.slot);
+                      }
+                    } else {
+                      found[0].visits.splice(matchIndex, 1);
+                      handleMultipleCheck(item.id);
+                    }
+                  }
+                  setValue('recurringModDates', Days);
+                } else if (!isRecurring) {
+                  const matchDate = Dates?.findIndex(
+                    (it: {date: string}) => it.date === singleItem.date,
                   );
-                  if (matchIndex === -1) {
-                    if (Days[matchDate]?.visits?.length > 9) {
-                      Alert.alert('You can only select 10 time slots');
-                      return;
+                  if (matchDate === -1) {
+                    Dates.push({
+                      date: singleItem.date,
+                      visits: [item.slot],
+                    });
+                    handleMultipleCheck(item.id);
+                  } else {
+                    const found = Dates[matchDate];
+                    // const found = Dates.filter(
+                    //   (obj: any) => obj.date === singleItem.date,
+                    // );
+                    const matchIndex = found.visits.findIndex(
+                      (it: {visits: string}) => it === item.slot,
+                    );
+
+                    if (matchIndex === -1) {
+                      if (Dates[matchDate].visits?.length > 9) {
+                        Alert.alert('You can only select 10 time slots');
+                        return;
+                      } else {
+                        found.visits.push(item.slot);
+                        handleMultipleCheck(item.id);
+                      }
                     } else {
                       handleMultipleCheck(item.id);
-                      found[0].visits.push(item.slot);
+                      found.visits.splice(matchIndex, 1);
                     }
-                  } else {
-                    found[0].visits.splice(matchIndex, 1);
-                    handleMultipleCheck(item.id);
                   }
+                  setValue('specificModDates', Dates);
                 }
-                setValue('recurringModDates', Days);
-              } else if (!isRecurring) {
-                console.log('Date', Dates);
-                const matchDate = Dates?.findIndex(
-                  (it: {date: string}) => it.date === singleItem.date,
-                );
-
-                if (matchDate === -1) {
-                  Dates.push({
-                    date: singleItem.date,
-                    visits: [item.slot],
-                  });
-                  handleMultipleCheck(item.id);
-                  console.log('is it in core');
-                } else {
-                  const found = Dates.filter(
-                    (obj: any) => obj.date === singleItem.date,
-                  );
-                  const matchIndex = found[0].visits?.findIndex(
-                    (it: {visits: string}) => it === item.slot,
-                  );
-
-                  if (matchIndex === -1) {
-                    if (Dates[matchDate]?.visits?.length > 9) {
-                      Alert.alert('You can only select 10 time slots');
-                      return;
-                    } else {
-                      found[0].visits.push(item.slot);
-                      handleMultipleCheck(item.id);
-                      console.log(
-                        'matchIndex be here',
-                        item.active,
-                        item.id,
-                        matchIndex,
-                      );
-                    }
-                  } else {
-                    console.log('should be else');
-                    found[0].visits.splice(matchIndex, 1);
-                    handleMultipleCheck(item.id);
-                  }
-                }
-                setValue('specificModDates', Dates);
-              }
-            }}
-            style={[
-              styles.slots,
-              {
-                backgroundColor: item.active
-                  ? Colors.primary
-                  : Colors.background,
-              },
-            ]}>
-            <TitleText
-              text={item.slot}
-              textStyle={{
-                color: item.active ? Colors.background : Colors.text,
-                fontWeight: 'bold',
               }}
-            />
-          </Pressable>
-        )}
+              style={[
+                styles.slots,
+                {
+                  backgroundColor: item.active
+                    ? Colors.primary
+                    : Colors.background,
+                },
+              ]}>
+              <TitleText
+                text={item.slot}
+                textStyle={{
+                  color: item.active ? Colors.background : Colors.text,
+                  fontWeight: 'bold',
+                }}
+              />
+            </Pressable>
+          );
+        }}
       />
     </View>
   );
 };
 
-export default memo(TimeMultiSlotPicker);
+export default TimeMultiSlotPicker;
 
 const styles = StyleSheet.create({
   container: {

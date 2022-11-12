@@ -74,7 +74,6 @@ const TimeSlotPicker = ({
     setToTime(itemValue);
   };
 
-  console.log('Time slot picker');
   return (
     <View>
       <Modal animated transparent visible={visible} animationType="fade">

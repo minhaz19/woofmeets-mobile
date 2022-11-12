@@ -114,7 +114,6 @@ export const useAddCardForm = (
           if (appointmentResult.ok) {
             if (
               appointmentResult.ok &&
-              appointmentResult.status === 201 &&
               appointmentResult?.data.data.requiresAction === true
             ) {
               const clientScreet = appointmentResult.data.data.clientSecret;
@@ -127,7 +126,6 @@ export const useAddCardForm = (
               dsError !== undefined && Alert.alert(dsError?.localizedMessage);
             } else if (
               appointmentResult.ok &&
-              appointmentResult.status === 201 &&
               appointmentResult?.data.data.requiresAction === false
             ) {
               setAppointmentLoading(false);

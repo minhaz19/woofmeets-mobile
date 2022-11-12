@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import {Alert} from 'react-native';
 import methods from '../../../../api/methods';
 import {setProfileData} from '../../../../store/slices/onBoarding/initial';
@@ -8,6 +9,7 @@ const slug = '/user-profile/basic-info';
 
 export const useBasicInfo = () => {
   const {userInfo} = useAppSelector(state => state.userProfile);
+  const navigation = useNavigation();
   const {request, loading} = useApi(
     userInfo?.basicInfo === null ? methods._post : methods._update,
   );
@@ -27,7 +29,8 @@ export const useBasicInfo = () => {
     };
     const result = await request(slug, formattedPayload);
     if (result.ok) {
-      Alert.alert('Information Updated!');
+      // Alert.alert('Information Updated!');
+      navigation.goBack();
       dispatch(getUserProfileInfo());
       dispatch(setProfileData({pass: 0}));
     } else {

@@ -8,7 +8,6 @@ interface Props {
 }
 const MessageCheck = ({errors, control, setValue}: Props) => {
   const [active, setActive] = useState(false);
-  console.log('message check');
   return (
     <>
       <AppFormField

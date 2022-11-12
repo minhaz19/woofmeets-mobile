@@ -4,7 +4,7 @@ import TitleText from './text/TitleText';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Text_Size from '../../constants/textScaling';
-import {useFormContext} from 'react-hook-form';
+// import {useFormContext} from 'react-hook-form';
 
 const day = [
   'Monday',
@@ -16,7 +16,11 @@ const day = [
   'Sunday',
 ];
 let selectedDays: string[] = [];
-const AppDayPicker = () => {
+interface Props {
+  watch: any;
+  setValue: any;
+}
+const AppDayPicker = ({watch, setValue}: Props) => {
   const [newData, setDatas] = useState<any>([]);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
@@ -24,8 +28,12 @@ const AppDayPicker = () => {
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-  const {setValue, watch} = useFormContext();
-  const {selectedDays: sDays} = watch();
+  // const {setValue, watch} = useFormContext();
+  const {
+    selectedDays: sDays,
+
+    recurringModDates,
+  } = watch();
   useEffect(() => {
     selectedDays = [...sDays];
     const modDays = day.map((item, index) => ({
@@ -37,7 +45,6 @@ const AppDayPicker = () => {
     }));
     setDatas(modDays);
   }, [sDays]);
-  console.log('s', selectedDays);
   return (
     <View style={styles.container}>
       <TitleText
@@ -55,12 +62,14 @@ const AppDayPicker = () => {
             onPress={() => {
               const matchIndex = selectedDays.indexOf(item.value);
               if (matchIndex === -1) {
-                // petIds.push(...petIds, item.id);
                 selectedDays.push(item.value);
               } else {
                 selectedDays.splice(matchIndex, 1);
+                const updatedRMD = recurringModDates.filter(
+                  (it: any) => it.date !== item.value,
+                );
+                setValue('recurringModDates', updatedRMD);
               }
-              console.log('selectedDays', selectedDays);
               setValue('selectedDays', selectedDays);
               handleMultipleCheck(item.id);
             }}>

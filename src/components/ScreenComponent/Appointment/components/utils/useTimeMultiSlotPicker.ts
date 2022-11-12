@@ -1,26 +1,19 @@
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useWatch} from 'react-hook-form';
 let Dates: any = [];
 let Days: any = [];
 export const useTimeMultiSlotPicker = (
   singleItem: any,
-  initalSlot: any,
+  visits: any,
   isRecurring: boolean,
 ) => {
-  // const [Dates, setDates] = useState<any>([]);
-  // const [Days, setDays] = useState<any>([]);
-
   const [newData, setDatas] = useState<any>([]);
   const {visitLength} = useWatch();
   useMemo(() => {
     const times: any = []; // time array
     let tt = 0; // start time
     const ap = [' AM', ' PM']; // AM-PM
-
-    console.log('inside for time memo', Days);
     for (let i = 0; tt < 24 * 60; i++) {
-      console.log('inside for mulit');
-
       const hh = Math.floor(tt / 60); // getting hours of day in 0-24 format
       const mm = tt % 60; // getting minutes of the hour in 0-55 format
       const individualSlot =
@@ -32,47 +25,52 @@ export const useTimeMultiSlotPicker = (
         id: i + 1,
         slot: individualSlot,
         active:
-          initalSlot?.length > 0
-            ? initalSlot?.some((it: string) => it === individualSlot)
-            : isRecurring && Days?.length > 0
-            ? Days[0].visits?.some((it: string) => it === individualSlot)
-            : !isRecurring && Dates?.length > 0
-            ? Dates[0].visits?.some((it: string) => it === individualSlot)
-            : false,
+          visits?.length > 0
+            ? visits?.some((it: string) => it === individualSlot)
+            : // : isRecurring && Days?.length > 0
+              // ? Days[0].visits?.some((it: string) => it === individualSlot)
+              // : !isRecurring && Dates?.length > 0
+              // ? Dates[0].visits?.some((it: string) => it === individualSlot)
+              false,
       }; // pushing data in array in [00:00 - 12:00 AM/PM format]
       tt = tt + visitLength;
     }
     setDatas(times);
-  }, [initalSlot, isRecurring, visitLength]);
+  }, [visitLength, visits]);
 
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);
+
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-  if (initalSlot?.length > 0) {
+
+  useMemo(() => {
     if (isRecurring) {
       const matchIndex = Days.findIndex(
         (itm: {date: string}) => itm.date === singleItem.date,
       );
       if (matchIndex === -1) {
-        Days.push({
-          date: singleItem.date,
-          visits: singleItem.initalSlot,
-        });
+        Days.push(singleItem);
+      } else {
+        var newDays = [];
+        newDays.push(singleItem);
+        Days = newDays;
       }
-    } else if (!isRecurring) {
+    } else {
       const matchIndex = Dates.findIndex(
         (itm: {date: string}) => itm.date === singleItem.date,
       );
       if (matchIndex === -1) {
-        Dates.push({
-          date: singleItem.date,
-          visits: singleItem.initalSlot,
-        });
+        Dates.push(singleItem);
+      } else {
+        var newDates = [];
+        newDates.push(singleItem);
+        Dates = newDates;
       }
     }
-  }
+  }, [isRecurring, singleItem]);
+
   return {handleMultipleCheck, newData, Dates, Days};
 };

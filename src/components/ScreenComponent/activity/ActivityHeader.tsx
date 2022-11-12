@@ -110,7 +110,7 @@ const ActivityHeader = (props: {
             <TouchableOpacity
               style={styles.leftContainer}
               onPress={() => {
-                navigation.goBack();
+                navigation.navigate('Inbox');
               }}>
               <Ionicons
                 name="ios-chevron-back"
@@ -207,7 +207,7 @@ const ActivityHeader = (props: {
                         acceptEndpoint + proposedServiceInfo.appointmentOpk,
                       );
                       if (r.ok) {
-                        dispatch(
+                        await dispatch(
                           getProviderProposal(
                             proposedServiceInfo.appointmentOpk,
                           ),
@@ -215,6 +215,7 @@ const ActivityHeader = (props: {
                         dispatch(
                           setBillingId(proposedServiceInfo.billing[0].id),
                         );
+                        navigation.navigate('Checkout');
                       }
                     } else {
                       dispatch(setBillingId(proposedServiceInfo.billing[0].id));

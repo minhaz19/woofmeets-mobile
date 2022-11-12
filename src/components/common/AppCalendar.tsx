@@ -24,7 +24,6 @@ const AppCalendar = ({
     selectType,
     setValue,
   );
-  console.log('App Calendar');
 
   return (
     <View style={styles.contentContainer}>

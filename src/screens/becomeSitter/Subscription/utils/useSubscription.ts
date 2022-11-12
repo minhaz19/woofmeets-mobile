@@ -44,7 +44,6 @@ export const useSubscription = () => {
     setSequence(id);
   };
   const handleSubmit = async () => {
-    console.log('sequence', sequence);
     if (
       sitterData[1].isCompleted &&
       sitterData[2].isCompleted &&

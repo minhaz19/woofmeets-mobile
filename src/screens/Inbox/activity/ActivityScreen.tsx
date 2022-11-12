@@ -37,14 +37,14 @@ const ActivityScreen = (props: {
   const [isThreeDotsModal, setIsThreeDotsModal] = useState(false);
   const [isReviewModal, setIsReviewModal] = useState(false);
 
-  const onRefresh = () => {
-    dispatch(getProviderProposal(appointmentOpk));
-    dispatch(getAllPets());
-    dispatch(getWhoAmI());
-  };
-  useEffect(() => {
-    onRefresh();
-  }, []);
+  // const onRefresh = () => {
+  //   dispatch(getProviderProposal(appointmentOpk));
+  //   dispatch(getAllPets());
+  //   dispatch(getWhoAmI());
+  // };
+  // useEffect(() => {
+  //   onRefresh();
+  // }, []);
   return (
     <>
       {(loading || petLoading) && <AppActivityIndicator visible={true} />}

@@ -8,10 +8,11 @@ export const useDayTimeSlot = () => {
     isRecurring,
     repeatDate,
     multiDate,
-    proposalScheduleDate,
-    proposalRecurringDate,
+    recurringModDates,
+    specificModDates,
   } = useWatch();
-  console.log('');
+
+
   const [newData, setDatas] = useState(modData);
   const getRecurringDays = (rd: any, rsd: any, pod: any) => {
     const output = rd?.filter((obj: any) => {
@@ -21,29 +22,30 @@ export const useDayTimeSlot = () => {
     const recurring = output?.map((item: any, index: number) => ({
       id: index + 1,
       date: item.day,
-      initalSlot:
-        pod && pod?.length !== 0
+      visits:
+        pod && pod?.find((elm: any) => elm.date === item.day)?.visits
           ? pod?.find((elm: any) => elm.date === item.day)?.visits
           : [],
     }));
     return recurring;
   };
+
   useMemo(() => {
     if (isRecurring) {
       const recurring = getRecurringDays(
         repeatDate,
         selectedDays,
-        proposalRecurringDate,
+        recurringModDates,
       );
       setDatas(recurring);
     } else if (!isRecurring) {
-      const multi = multiDate?.map((item: any, index: number) => ({
-        id: index + 1,
+      const multi = multiDate?.map((item: any) => ({
+        // id: index + 1,
         date: item,
-        initalSlot:
-          proposalRecurringDate && proposalScheduleDate?.length !== 0
-            ? proposalScheduleDate?.find((elm: any) => elm.date === item)
-                ?.visits
+        visits:
+          specificModDates &&
+          specificModDates?.find((elm: any) => elm.date === item)?.visits
+            ? specificModDates?.find((elm: any) => elm.date === item)?.visits
             : [],
       }));
       setDatas(multi);
@@ -52,9 +54,9 @@ export const useDayTimeSlot = () => {
     isRecurring,
     repeatDate,
     selectedDays,
-    proposalRecurringDate,
+    recurringModDates,
+    specificModDates,
     multiDate,
-    proposalScheduleDate,
   ]);
 
   return {isRecurring, newData};

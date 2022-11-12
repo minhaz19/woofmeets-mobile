@@ -49,6 +49,7 @@ import CheckoutDetails from '../screens/Inbox/checkout/CheckoutDetails';
 import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
 import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
 import UpgradePlan from '../components/ScreenComponent/becomeSitter/subscription/UpgradePlan/UpgradePlan';
+import SubscriptionList from '../screens/profile/SubscriptionList';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -74,7 +75,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           component={GuestBottomTabNavigator}
           options={{headerShown: false}}
         />
-
         <Stack.Screen
           name="Notifications"
           component={Notifications}
@@ -551,7 +551,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
-
         <Stack.Screen
           name="ProviderProfile"
           component={ProviderProfile}
@@ -580,7 +579,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         /> */}
-
         <Stack.Screen
           name="ProviderCalendar"
           component={ProviderCalendar}
@@ -608,6 +606,21 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           component={UpgradePlan}
           options={() => ({
             headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name="SubscriptionList"
+          component={SubscriptionList}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Subscription List"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
           })}
         />
       </Stack.Navigator>

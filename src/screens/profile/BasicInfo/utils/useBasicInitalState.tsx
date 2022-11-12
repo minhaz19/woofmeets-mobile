@@ -1,3 +1,4 @@
+import {format} from 'date-fns';
 import {useAppSelector} from '../../../../store/store';
 
 export const useBasicInitalState = () => {
@@ -20,7 +21,7 @@ export const useBasicInitalState = () => {
         ? `${userInfo.firstName + ' ' + userInfo.lastName}`
         : '',
     dob: userInfo?.basicInfo?.dob
-      ? new Date(userInfo?.basicInfo?.dob).toLocaleDateString()
+      ? format(new Date(userInfo?.basicInfo?.dob), 'MM/dd/yyyy')
       : '',
     latitude: userInfo?.basicInfo?.latitude
       ? userInfo?.basicInfo?.latitude

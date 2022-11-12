@@ -51,6 +51,12 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
       value: true,
     },
   ];
+  const handleDay = (data: any) => {
+    const dayName = new Date(data.dateString).toLocaleString('en-us', {
+      weekday: 'long',
+    });
+    setValue('selectedDays', [dayName]);
+  };
 
   return (
     <View style={styles.container}>
@@ -65,7 +71,8 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
           setValue={setValue}
         />
       )}
-      {isRecurring && <AppDayPicker />}
+
+      {/* {isRecurring && <AppDayPicker watch={watch} setValue={setValue} />} */}
       <View style={[styles.sContainer]}>
         <TitleText textStyle={styles.headerText} text={'Schedule'} />
 
@@ -91,6 +98,9 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
             <CalendarCSvg fill="black" width={30} height={30} />
           </View>
         </AppTouchableOpacity>
+        {isRecurring  && (
+          <AppDayPicker watch={watch} setValue={setValue} />
+        )}
 
         <View style={styles.slotContainer}>
           <>
@@ -190,6 +200,7 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
             <AppCalendar
               selectType={isRecurring ? 'SINGLE' : 'MULTI'}
               setValue={setValue}
+              handlePress={handleDay}
             />
           </View>
         </Modal>
@@ -233,6 +244,7 @@ const styles = StyleSheet.create({
   slotContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 10,
   },
   slot: {
     width: (SCREEN_WIDTH - 50) / 2,

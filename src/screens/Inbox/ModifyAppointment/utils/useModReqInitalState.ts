@@ -127,8 +127,8 @@ export const useModReqInitialState = () => {
       !proposedServiceInfo?.isRecurring &&
       proposedServiceInfo?.proposalOtherDate
         ? proposedServiceInfo?.proposalOtherDate.map((it: any) => ({
-            date: it?.date,
-            name: it?.name,
+            date: format(new Date(it?.date), 'yyyy-MM-dd'),
+            // name: it?.name,
             visits: it?.visits?.map((vis: any) => vis.time),
           }))
         : [],
