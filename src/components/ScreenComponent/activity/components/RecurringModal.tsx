@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import BottomHalfModal from '../../../UI/modal/BottomHalfModal';
 import TitleText from '../../../common/text/TitleText';
@@ -22,9 +22,9 @@ interface Props {
 }
 const regenerateEndpoint = '/appointment/recurring-billing/';
 const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
-  const {colors} = useTheme();
+  const {colors, isDarkMode} = useTheme();
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {request, loading} = useApi(methods._put);
   const handleCancel = () => {
@@ -46,7 +46,12 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
       <BottomHalfModal
         isModalVisible={regenerateModal}
         setIsModalVisible={setRegenerateModal}
-        height={'60%'}
+        height={
+          proposedServiceInfo?.serviceTypeId === 5 ||
+          proposedServiceInfo?.serviceTypeId === 3
+            ? '60%'
+            : '45%'
+        }
         children={
           <View>
             <TitleText
@@ -89,21 +94,26 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
                   text={`${proposedServiceInfo?.billing?.[0]?.totalDayCount} Visits per week`}
                 />
               </View>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <TitleText
-                  textStyle={{
-                    fontSize: Text_Size.Text_1,
-                    marginVertical: 5,
-                    textAlign: 'left',
-                  }}
-                  text={'Visit Length :'}
-                />
-                <TitleText
-                  textStyle={{fontSize: Text_Size.Text_1, marginVertical: 5}}
-                  text={`${proposedServiceInfo?.length} min each`}
-                />
-              </View>
+              {proposedServiceInfo?.length && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <TitleText
+                    textStyle={{
+                      fontSize: Text_Size.Text_1,
+                      marginVertical: 5,
+                      textAlign: 'left',
+                    }}
+                    text={'Visit Length :'}
+                  />
+                  <TitleText
+                    textStyle={{fontSize: Text_Size.Text_1, marginVertical: 5}}
+                    text={`${proposedServiceInfo?.length} min each`}
+                  />
+                </View>
+              )}
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <TitleText
@@ -129,17 +139,49 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
                   borderWidth: 1,
                   borderRadius: 4,
                   borderColor: colors.borderColor,
-                  backgroundColor: colors.borderColor,
-                  marginTop: 4,
+                  backgroundColor: isDarkMode
+                    ? Colors.dark.lightDark
+                    : colors.borderColor,
+                  // backgroundColor: colors.borderColor,
+                  marginTop: 8,
                 }}>
-                <TitleText
-                  textStyle={{
-                    fontSize: Text_Size.Text_1,
-                    marginVertical: 5,
-                    textAlign: 'justify',
-                  }}
-                  text={proposedServiceInfo?.formattedMessage}
-                />
+                {proposedServiceInfo?.serviceTypeId === 3 ||
+                proposedServiceInfo?.serviceTypeId === 5 ? (
+                  <TitleText
+                    textStyle={{
+                      fontSize: Text_Size.Text_1,
+                      marginVertical: 5,
+                      textAlign: 'justify',
+                    }}
+                    text={`Drop In Visit Proposal:\nRepeat service starting from: ${format(
+                      new Date(proposedServiceInfo?.recurringStartDate),
+                      'iii LLL d',
+                    )}\n${proposedServiceInfo?.recurringSelectedDay.map(
+                      (item: any) =>
+                        `${item.visits.length} Visits on: ${
+                          item.date
+                        } at ${item.visits
+                          .map((ti: any) => ti.time)
+                          .join(', ')}`,
+                    )}  `}
+                  />
+                ) : proposedServiceInfo?.serviceTypeId === 4 ? (
+                  <TitleText
+                    textStyle={{
+                      fontSize: Text_Size.Text_1,
+                      marginVertical: 5,
+                      textAlign: 'justify',
+                    }}
+                    text={`Doggy Day Care Proposal:\nRepeat service starting from:  ${format(
+                      new Date(proposedServiceInfo?.recurringStartDate),
+                      'iii LLL d',
+                    )}\nDrop-off: ${proposedServiceInfo?.dropOffStartTime} - ${
+                      proposedServiceInfo?.dropOffEndTime
+                    }\nPick-Up: ${proposedServiceInfo?.pickUpStartTime} - ${
+                      proposedServiceInfo?.pickUpEndTime
+                    }`}
+                  />
+                ) : null}
               </View>
             </View>
 
@@ -195,5 +237,3 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
 };
 
 export default RecurringModal;
-
-const styles = StyleSheet.create({});

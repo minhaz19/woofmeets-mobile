@@ -14,13 +14,15 @@ import ShortText from '../../../components/common/text/ShortText';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import io from 'socket.io-client';
-import { msgUrl } from '../../../utils/helpers/httpRequest';
+import {msgUrl} from '../../../utils/helpers/httpRequest';
 import SendMessage from './SendMessage';
 import {apiMsg} from '../../../api/client';
 import {formatDistance, subDays} from 'date-fns';
 import storage from '../../../utils/helpers/auth/storage';
 import {useAppDispatch} from '../../../store/store';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
+import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
+import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 
 const Messages = (props: {roomId: any; opk: any}) => {
   const {colors} = useTheme();
@@ -51,6 +53,8 @@ const Messages = (props: {roomId: any; opk: any}) => {
     setRefreshing(true);
     getPreviousMessages();
     dispatch(getProviderProposal(props.opk));
+    dispatch(getAllPets());
+    dispatch(getWhoAmI());
     setRefreshing(false);
   };
   useEffect(() => {
@@ -118,10 +122,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
           scrollViewRef.current.scrollToEnd({animated: true})
         }
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         {isLoadingMsg ? (
           <View

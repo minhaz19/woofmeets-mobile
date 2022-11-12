@@ -8,7 +8,6 @@ export const getAvailability = createAsyncThunk(
       const response: ApiResponse<any> = await apiClient.get(
         `/availability/service/${id}`,
       );
-      // console.log('res av', response);
       if (!response.ok) {
         throw new Error(response.data?.message);
       }

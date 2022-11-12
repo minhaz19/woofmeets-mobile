@@ -49,7 +49,14 @@ export const useProposalPricing = () => {
         },
         timeZone: 'Asia/Dhaka',
       };
-      const result = await postRequest(boardingHouseEndpoint, payload);
+      const callApi = (milliseconds: number) => {
+        return new Promise(resolve =>
+          setTimeout(() => {
+            return resolve(postRequest(boardingHouseEndpoint, payload));
+          }, milliseconds),
+        );
+      };
+      const result: any = await callApi(750);
       setPricingInfo([
         ...result.data.petsRates,
         {
@@ -58,6 +65,15 @@ export const useProposalPricing = () => {
           name: 'subTotal',
         },
       ]);
+      // const result = await postRequest(boardingHouseEndpoint, payload);
+      // setPricingInfo([
+      //   ...result.data.petsRates,
+      //   {
+      //     id: result.data.petsRates.length,
+      //     subTotal: result.data.subTotal,
+      //     name: 'subTotal',
+      //   },
+      // ]);
     } else if (
       proposedServiceInfo.serviceTypeId === 3 ||
       proposedServiceInfo.serviceTypeId === 5
@@ -79,13 +95,14 @@ export const useProposalPricing = () => {
           timeZone: 'Asia/Dhaka',
         };
         const result = await postRequest(vistWalkEndpoint, payload);
-        console.log('re', result);
         setPricingInfo([
           ...result.data.petsRates,
-          {
-            ...result?.data?.sixtyMinutesRate,
-            name: result?.data?.sixtyMinutesRate?.rate?.name,
-          },
+          result?.data?.sixtyMinutesRate
+            ? {
+                ...result?.data?.sixtyMinutesRate,
+                name: result?.data?.sixtyMinutesRate?.rate?.name,
+              }
+            : null,
           {
             id: result.data.petsRates.length,
             subTotal: result.data.subTotal,
@@ -105,7 +122,14 @@ export const useProposalPricing = () => {
             visits: item.visits,
           })),
         };
-        const result = await postRequest(vistWalkEndpoint, payload);
+        const callApi = (milliseconds: number) => {
+          return new Promise(resolve =>
+            setTimeout(() => {
+              return resolve(postRequest(vistWalkEndpoint, payload));
+            }, milliseconds),
+          );
+        };
+        const result: any = await callApi(750);
         setPricingInfo([
           ...result.data.petsRates,
           {
@@ -114,6 +138,15 @@ export const useProposalPricing = () => {
             name: 'subTotal',
           },
         ]);
+        // const result = await postRequest(vistWalkEndpoint, payload);
+        // setPricingInfo([
+        //   ...result.data.petsRates,
+        //   {
+        //     id: result.data.petsRates.length,
+        //     subTotal: result.data.subTotal,
+        //     name: 'subTotal',
+        //   },
+        // ]);
       }
     } else if (proposedServiceInfo.serviceTypeId === 4) {
       if (proposedServiceInfo.isRecurring) {
@@ -159,7 +192,14 @@ export const useProposalPricing = () => {
             pickUpEndTime: pickUpEndTime,
           },
         };
-        const result = await postRequest(dayCareEndpoint, payload);
+        const callApi = (milliseconds: number) => {
+          return new Promise(resolve =>
+            setTimeout(() => {
+              return resolve(postRequest(dayCareEndpoint, payload));
+            }, milliseconds),
+          );
+        };
+        const result: any = await callApi(750);
         setPricingInfo([
           ...result.data.petsRates,
           {
@@ -168,6 +208,15 @@ export const useProposalPricing = () => {
             name: 'subTotal',
           },
         ]);
+        // const result = await postRequest(dayCareEndpoint, payload);
+        // setPricingInfo([
+        //   ...result.data.petsRates,
+        //   {
+        //     id: result.data.petsRates.length,
+        //     subTotal: result.data.subTotal,
+        //     name: 'subTotal',
+        //   },
+        // ]);
       }
     }
   }, [

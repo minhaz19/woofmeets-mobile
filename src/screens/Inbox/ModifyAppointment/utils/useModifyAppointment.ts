@@ -1,12 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useNavigation} from '@react-navigation/native';
 import format from 'date-fns/format';
+import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
+import {io} from 'socket.io-client';
 import methods from '../../../../api/methods';
 import {getProviderProposal} from '../../../../store/slices/Appointment/Proposal/getProviderProposal';
+import {getProviderServices} from '../../../../store/slices/Appointment/ProviderServices/getProviderServices';
+import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
 import {useAppSelector, useAppDispatch} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
+import {msgUrl} from '../../../../utils/helpers/httpRequest';
 
 export const useModifyAppointment = (route: any) => {
+  const [socket, setSocket] = useState<any>(null);
   const {loading, request} = useApi(methods._put);
   const {appointmentOpk} = route.params;
   const dispatch = useAppDispatch();
@@ -115,6 +122,13 @@ export const useModifyAppointment = (route: any) => {
         };
         const result = await request(endpoint, boardSittingPayload);
         if (result.ok) {
+          const payloadData: any = {
+            sender: user?.id,
+            group: result.data.data.appointment.messageGroupId,
+            content: boardingSittingFT,
+            createdAt: new Date(),
+          };
+          socket.emit('send-message', payloadData);
           dispatch(getProviderProposal(result.data.data.appointment.opk));
           navigation.navigate('ActivityScreen', {
             appointmentOpk: result.data.data.appointment.opk,
@@ -245,6 +259,13 @@ export const useModifyAppointment = (route: any) => {
         const result = await request(endpoint, dropDogPayload);
 
         if (result.ok) {
+          const payloadData: any = {
+            sender: user?.id,
+            group: result.data.data.appointment.messageGroupId,
+            content: dropInVisitFT,
+            createdAt: new Date(),
+          };
+          socket.emit('send-message', payloadData);
           dispatch(getProviderProposal(result.data.data.appointment.opk));
           navigation.navigate('ActivityScreen', {
             appointmentOpk: result.data.data.appointment.opk,
@@ -300,6 +321,13 @@ export const useModifyAppointment = (route: any) => {
         const result = await request(endpoint, doggyPayload);
 
         if (result.ok) {
+          const payloadData: any = {
+            sender: user?.id,
+            group: result.data.data.appointment.messageGroupId,
+            content: DoggyDayFT,
+            createdAt: new Date(),
+          };
+          socket.emit('send-message', payloadData);
           dispatch(getProviderProposal(result.data.data.appointment.opk));
           navigation.navigate('ActivityScreen', {
             appointmentOpk: result.data.data.appointment.opk,
@@ -310,6 +338,22 @@ export const useModifyAppointment = (route: any) => {
       }
     }
   };
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await dispatch(getProviderServices(appointmentOpk));
+    await dispatch(getAllPets());
+    setRefreshing(false);
+  };
+  useEffect(() => {
+    if (socket === null) {
+      let tempSocket = io(`${msgUrl}`);
+      setSocket(tempSocket);
+    }
+  }, [socket]);
 
-  return {handleSubmit, loading};
+  useEffect(() => {
+    onRefresh();
+  }, []);
+  return {handleSubmit, loading, refreshing, onRefresh};
 };

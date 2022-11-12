@@ -101,6 +101,7 @@ Props) => {
           ]}
           onPress={() =>
             navigation.navigate('AddCardForm', {
+              // sequence: null,
               sequence: sequence !== null ? sequence : null,
             })
           }>
@@ -118,7 +119,7 @@ Props) => {
             onPress={onPress}
             onLongPress={() => {
               Alert.alert(
-                'Update Card',
+                'Default Card',
                 'Do you want to use this card as a default card',
                 [
                   {

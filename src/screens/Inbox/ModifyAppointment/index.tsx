@@ -1,4 +1,9 @@
-import {StyleSheet, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  RefreshControl,
+} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import AppForm from '../../../components/common/Form/AppForm';
@@ -13,15 +18,22 @@ interface Props {
 
 const ModifyAppointment = ({route}: Props) => {
   const {colors} = useTheme();
-  const {loading, handleSubmit} = useModifyAppointment(route);
+  const {loading, handleSubmit, refreshing, onRefresh} =
+    useModifyAppointment(route);
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
-      <AppForm
-        initialValues={useModReqInitialState()}
-        validationSchema={appointmentModifyValidationSchema}>
-        <ModifyRequestBody handleSubmit={handleSubmit} loading={loading} />
-      </AppForm>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        <AppForm
+          initialValues={useModReqInitialState()}
+          validationSchema={appointmentModifyValidationSchema}>
+          <ModifyRequestBody handleSubmit={handleSubmit} loading={loading} />
+        </AppForm>
+      </ScrollView>
     </SafeAreaView>
   );
 };

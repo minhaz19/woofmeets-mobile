@@ -8,7 +8,6 @@ import {
   Payment2Icon,
   PaymentIcon,
   PetsIcon,
-  Profile2Icon,
   ProfileIcon,
 } from '../../assets/svgs/Setting_SVG';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
@@ -75,6 +74,14 @@ const MyAccount = (props: {
     },
     {
       id: 6,
+      title: 'Subscription List',
+      icon: CardsIcon,
+      screenName: () => props.navigation.navigate('SubscriptionList'),
+      details: 'Your Subscription Plan List',
+      opacity: 1,
+    },
+    {
+      id: 7,
       title: 'Your Pets',
       icon: PetsIcon,
       screenName: () => props.navigation.navigate('PetScreens'),
@@ -102,7 +109,9 @@ const MyAccount = (props: {
     <ScreenRapperGrey>
       {loading && <AppActivityIndicator visible={true} />}
 
-      <ScrollView style={styles.rootContainer} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.rootContainer}
+        showsVerticalScrollIndicator={false}>
         <SafeAreaView>
           <View style={styles.profileContainer}>
             <ProfileInfo />

@@ -4,7 +4,6 @@ import Colors from '../../../../../../../../../constants/Colors';
 export const useMarkedStyles = (availabileDates: any) => {
   const [_markedStyle, setMarkedStyle] = useState({});
   useMemo(() => {
-    console.log('memo');
     let styledMarkedRange: any = {};
     const styledRange = availabileDates?.map((_: string, i: number) => ({
       [availabileDates[i]]: {

@@ -164,7 +164,7 @@ export const useAppointment = (providerOpk: string) => {
                   (item: any) =>
                     `${item.visits.length} Visits on: ${
                       item.date
-                    }at ${item.visits.join(', ')}`,
+                    } at ${item.visits.join(', ')}`,
                 )}  `
               : `Drop In Visit Proposal:\n  ${specificModDates.map(
                   (item: any) =>
@@ -299,15 +299,15 @@ export const useAppointment = (providerOpk: string) => {
       }
     }
   };
-  useEffect(() => {
-    providerServices === null && dispatch(getProviderServices(providerOpk));
-    dispatch(getAllPets());
-  }, []);
+  // useEffect(() => {
+  //   providerServices === null && dispatch(getProviderServices(providerOpk));
+  //   dispatch(getAllPets());
+  // }, []);
   const [refreshing, setRefreshing] = useState(false);
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    dispatch(getProviderServices(providerOpk));
-    dispatch(getAllPets());
+    await dispatch(getProviderServices(providerOpk));
+    await dispatch(getAllPets());
     setRefreshing(false);
   };
   useEffect(() => {

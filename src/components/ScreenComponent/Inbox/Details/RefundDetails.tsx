@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC, useEffect} from 'react';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
@@ -6,7 +7,6 @@ import HeaderText from '../../../common/text/HeaderText';
 import Ion from 'react-native-vector-icons/Ionicons';
 import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import Pricing from './Pricing';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getProposalPricing} from '../../../../store/slices/Appointment/Details/getProposalPricing';

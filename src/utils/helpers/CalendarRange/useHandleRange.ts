@@ -14,6 +14,7 @@ export const useHandleRange = (
     proposalStartDate,
     proposalEndDate,
     recurringStartDate,
+    specificModDates,
     multiDate: rr,
   } = useWatch();
   const [step, setSteps] = useState(1);
@@ -23,8 +24,6 @@ export const useHandleRange = (
   const [singleSelect, setSingleSelect] = useState<string>(recurringStartDate);
   const [startingDate, setStartingDate] = useState(proposalStartDate);
   const [endingDate, setEndingDate] = useState(proposalEndDate);
-
-  console.log('calendar usehandleRange');
 
   useEffect(() => {
     if (type === 'MULTI') {
@@ -43,6 +42,10 @@ export const useHandleRange = (
         orderMultiDates.push(date.dateString);
       } else {
         orderMultiDates.splice(matchIndex, 1);
+        const updatedRMD = specificModDates?.filter(
+          (it: any) => it.date !== new Date(date.dateString).toISOString(),
+        );
+        setValue && setValue('specificModDates', updatedRMD);
       }
       const {styledMarkedRange} = orderAndStyleRange(orderMultiDates, 'MULTI');
 

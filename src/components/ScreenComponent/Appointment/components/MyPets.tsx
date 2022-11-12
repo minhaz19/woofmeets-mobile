@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
 import React, {memo, useEffect, useState} from 'react';
@@ -33,7 +34,6 @@ const MyPets = ({appointmentType, setValue, watch}: Props) => {
   const providerId = proposedServiceInfo?.providerId;
   const {petsId: pp} = watch();
   useEffect(() => {
-    console.log('MyPet effect');
     petsId = [...pp];
     if (
       providerId === user?.user?.provider?.id &&
@@ -68,7 +68,6 @@ const MyPets = ({appointmentType, setValue, watch}: Props) => {
   }, [allPets]);
   const navigation = useNavigation<any>();
   const {isDarkMode, colors} = useTheme();
-  console.log('MyPet');
   return (
     <>
       {appointmentType !== 'create' &&

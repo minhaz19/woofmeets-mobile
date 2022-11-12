@@ -127,7 +127,6 @@ Props) => {
       providerServiceIds: userServices.map((item: {id: number}) => item.id),
     };
     const result = await request(unavailabilityEndpoint, payload);
-    console.log('rrrr', result);
     if (result.ok) {
       const monthData = {
         year: new Date(startingDate).getFullYear(),
@@ -149,7 +148,6 @@ Props) => {
     };
 
     const result = await request(availablityEndpoint, payload);
-    console.log('rrrr', result);
     if (result.ok) {
       const monthData = {
         year: new Date(startingDate).getFullYear(),

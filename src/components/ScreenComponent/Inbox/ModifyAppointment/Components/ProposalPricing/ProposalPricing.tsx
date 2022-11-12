@@ -24,85 +24,88 @@ const ProposalPricing = () => {
             borderColor: colors.borderColor,
           },
         ]}>
-        {pricingInfo?.map((item: any, index: number) => (
-          <View key={index}>
-            {item.name === 'subTotal' ? (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginBottom: 10,
-                  borderTopWidth: 2,
-                  borderTopColor: Colors.border,
-                  paddingTop: 10,
-                }}>
-                <View>
-                  <TitleText
-                    text={'New Subtotal'}
-                    textStyle={{fontWeight: 'bold'}}
-                  />
-                </View>
-                <View>
-                  <TitleText textStyle={{}} text={`$${item.subTotal}`} />
-                </View>
+        {pricingInfo?.map(
+          (item: any, index: number) =>
+            item !== null && (
+              <View key={index}>
+                {item.name === 'subTotal' ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: 10,
+                      borderTopWidth: 2,
+                      borderTopColor: Colors.border,
+                      paddingTop: 10,
+                    }}>
+                    <View>
+                      <TitleText
+                        text={'New Subtotal'}
+                        textStyle={{fontWeight: 'bold'}}
+                      />
+                    </View>
+                    <View>
+                      <TitleText textStyle={{}} text={`$${item.subTotal}`} />
+                    </View>
+                  </View>
+                ) : (
+                  <>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: 10,
+                      }}>
+                      <View>
+                        <TitleText
+                          text={changeTextLetter(item?.name)!}
+                          textStyle={{fontWeight: 'bold'}}
+                        />
+                        <ShortText text={`( Applied ${item?.rate?.name} )`} />
+                        <ShortText
+                          text={`${item.count} ${
+                            proposedServiceInfo.serviceTypeId === 1 ||
+                            proposedServiceInfo.serviceTypeId === 2
+                              ? ' night'
+                              : proposedServiceInfo.serviceTypeId === 3
+                              ? ' visit'
+                              : proposedServiceInfo.serviceTypeId === 4
+                              ? ' day'
+                              : proposedServiceInfo.serviceTypeId === 5
+                              ? ' walk'
+                              : ''
+                          } @ $${item?.rate?.amount} /${
+                            proposedServiceInfo.serviceTypeId === 1 ||
+                            proposedServiceInfo.serviceTypeId === 2
+                              ? ' night'
+                              : proposedServiceInfo.serviceTypeId === 3
+                              ? ' visit'
+                              : proposedServiceInfo.serviceTypeId === 4
+                              ? ' day'
+                              : proposedServiceInfo.serviceTypeId === 5
+                              ? ' walk'
+                              : ''
+                          }`}
+                          textStyle={{
+                            color: colors.descriptionText,
+                            lineHeight: 20,
+                          }}
+                        />
+                      </View>
+                      <View>
+                        <TitleText
+                          textStyle={{}}
+                          text={`$${item?.rate?.amount * item?.count}`}
+                        />
+                      </View>
+                    </View>
+                  </>
+                )}
               </View>
-            ) : (
-              <>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: 10,
-                  }}>
-                  <View>
-                    <TitleText
-                      text={changeTextLetter(item?.name)}
-                      textStyle={{fontWeight: 'bold'}}
-                    />
-                    <ShortText text={`( Applied ${item?.rate?.name} )`} />
-                    <ShortText
-                      text={`${item.count} ${
-                        proposedServiceInfo.serviceTypeId === 1 ||
-                        proposedServiceInfo.serviceTypeId === 2
-                          ? ' night'
-                          : proposedServiceInfo.serviceTypeId === 3
-                          ? ' visit'
-                          : proposedServiceInfo.serviceTypeId === 4
-                          ? ' day'
-                          : proposedServiceInfo.serviceTypeId === 5
-                          ? ' walk'
-                          : ''
-                      } @ $${item?.rate?.amount} /${
-                        proposedServiceInfo.serviceTypeId === 1 ||
-                        proposedServiceInfo.serviceTypeId === 2
-                          ? ' night'
-                          : proposedServiceInfo.serviceTypeId === 3
-                          ? ' visit'
-                          : proposedServiceInfo.serviceTypeId === 4
-                          ? ' day'
-                          : proposedServiceInfo.serviceTypeId === 5
-                          ? ' walk'
-                          : ''
-                      }`}
-                      textStyle={{
-                        color: colors.descriptionText,
-                        lineHeight: 20,
-                      }}
-                    />
-                  </View>
-                  <View>
-                    <TitleText
-                      textStyle={{}}
-                      text={`$${item?.rate?.amount * item?.count}`}
-                    />
-                  </View>
-                </View>
-              </>
-            )}
-          </View>
-        ))}
+            ),
+        )}
       </View>
     </View>
   );

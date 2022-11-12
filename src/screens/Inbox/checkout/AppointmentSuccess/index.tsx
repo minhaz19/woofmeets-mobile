@@ -20,7 +20,7 @@ const endPoint = '/appointment/cancel/';
 const AppointmentSuccess = () => {
   const [isVisible, setIsVisible] = useState(false);
   const {colors, isDarkMode} = useTheme();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const dispatch = useAppDispatch();
   const {loading, request} = useApi(methods._put);

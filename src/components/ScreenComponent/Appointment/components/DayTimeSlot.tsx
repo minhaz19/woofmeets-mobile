@@ -9,9 +9,8 @@ interface Props {
   setValue: any;
   watch: any;
 }
-const DayTimeSlot = ({setValue, watch}: Props) => {
+const DayTimeSlot = ({setValue}: Props) => {
   const {newData, isRecurring} = useDayTimeSlot();
-
   return (
     <View>
       {newData?.map((item: any, index: number) => (
@@ -27,9 +26,8 @@ const DayTimeSlot = ({setValue, watch}: Props) => {
             <TimeMultiSlotPicker
               singleItem={item}
               isRecurring={isRecurring}
-              initalSlot={item?.initalSlot}
+              visits={item?.visits}
               setValue={setValue}
-              watch={watch}
             />
           </View>
         </View>
