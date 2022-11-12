@@ -454,48 +454,6 @@ export const PetsIcon = (props: SvgProps) => (
   </Svg>
 );
 
-export const USAFlag = (props: SvgProps) => (
-  <Svg
-    xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-    width={1235}
-    height={650}
-    viewBox="0 0 7410 3900"
-    {...props}
-  >
-    <Path fill="#b22234" d="M0 0h7410v3900H0z" />
-    <Path
-      d="M0 450h7410m0 600H0m0 600h7410m0 600H0m0 600h7410m0 600H0"
-      stroke="#fff"
-      strokeWidth={300}
-    />
-    <Path fill="#3c3b6e" d="M0 0h2964v2100H0z" />
-    <G fill="#fff">
-      <G id="d">
-        <G id="c">
-          <G id="e">
-            <G id="b">
-              <Path
-                id="a"
-                d="m247 90 70.534 217.082-184.66-134.164h228.253L176.466 307.082z"
-              />
-              <Use xlinkHref="#a" y={420} />
-              <Use xlinkHref="#a" y={840} />
-              <Use xlinkHref="#a" y={1260} />
-            </G>
-            <Use xlinkHref="#a" y={1680} />
-          </G>
-          <Use xlinkHref="#b" x={247} y={210} />
-        </G>
-        <Use xlinkHref="#c" x={494} />
-      </G>
-      <Use xlinkHref="#d" x={988} />
-      <Use xlinkHref="#c" x={1976} />
-      <Use xlinkHref="#e" x={2470} />
-    </G>
-  </Svg>
-);
-
 export const ChangePasswordIcon = (props: SvgProps) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"

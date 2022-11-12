@@ -12,7 +12,6 @@ import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../../common/text/HeaderText';
 import {useFormContext} from 'react-hook-form';
 import InputText from '../../common/input/InputText';
-import {USAFlag} from '../../../assets/svgs/Setting_SVG';
 import IOSButton from '../../UI/IOSButton';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import Colors from '../../../constants/Colors';
@@ -32,6 +31,8 @@ import {getContactInfo} from '../../../store/slices/profile/contact';
 import MiddleModal from '../../UI/modal/MiddleModal';
 import {QuestionIcon} from '../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../becomeSitter/ServiceSetup/Common/ServiceReusableModal';
+import { CountryPicker } from 'react-native-country-codes-picker';
+import BigText from '../../common/text/BigText';
 
 const contactInput = [
   {
@@ -55,7 +56,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
   const contact = useAppSelector(state => state.contact);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [textInput, setTextInput] = useState(
-    contact.phoneNumber ? contact.phoneNumber : '+1',
+    contact.phoneNumber ? contact.phoneNumber : '',
   );
   const [globalError, setGlobalError] = useState('');
   const [otpVerificationStatus, setOtpVerificationStatus] = useState(
@@ -65,6 +66,8 @@ const ContactInput = (props: {handleSubmit: any}) => {
   const [isPhoneLoading, setIsPhoneLoading] = useState(false);
   const [phoneNumberError, setPhoneNumberError] = useState<string | null>();
   const {request, loading} = useApi(methods._post);
+  const [show, setShow] = useState(false);
+  const [countryCode, setCountryCode] = useState('+1');
 
   const mobilevalidate = (text: any) => {
     const reg = phoneNumberReg;
@@ -87,7 +90,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
         const response: ApiResponse<any> = await apiClient.post(
           '/user-profile/generate-phone-otp',
           {
-            phoneNumber: textInput,
+            phoneNumber: `${countryCode}${textInput}`,
           },
         );
         if (!response.ok) {
@@ -110,7 +113,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
   const route = '/user-profile/add-contact-number';
   const sendOtp = async ({code}: any) => {
     const result = await request(route, {
-      phoneNumber: textInput,
+      phoneNumber: `${countryCode}${textInput}`,
       otp: code,
     });
     if (result.ok) {
@@ -174,12 +177,26 @@ const ContactInput = (props: {handleSubmit: any}) => {
                 }
                 value={textInput}
                 setValue={setTextInput}
-                leftIcon={<USAFlag height={24} width={24} />}
+                leftIcon={<TouchableOpacity
+                  onPress={() => setShow(true)}
+                  style={{
+                  }}
+                >
+                  <BigText text={countryCode} />
+                </TouchableOpacity>}
                 keyboardType="numeric"
                 onChangeText={number => {
                   mobilevalidate(number);
                 }}
               />
+              <CountryPicker
+                  show={show}
+                  // when picker button press you will get the country object with dial code
+                  pickerButtonOnPress={(item) => {
+                    setCountryCode(item.dial_code);
+                    setShow(false);
+                  }}
+                />
               <TitleText text={globalError} textStyle={{color: Colors.alert}} />
               {phoneNumberError && (
                 <DescriptionText

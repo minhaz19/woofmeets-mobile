@@ -8546,6 +8546,11 @@ react-native-codegen@^0.0.17:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-country-codes-picker@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-country-codes-picker/-/react-native-country-codes-picker-2.2.0.tgz#8f37085ea15a344feb233c10e4e628ed6cdcbb8e"
+  integrity sha512-LhEXtqsGmiqi9fUtR/oo1F7TjzcH9l/jZMMbzV3Z7bcWsILipxWolXNGzLzUe2Yk06qo0lpGGoFSbIHaHQ09eA==
+
 react-native-draggable-grid@^2.1.6:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/react-native-draggable-grid/-/react-native-draggable-grid-2.1.6.tgz#87a6c40797b15e874dbd305c3bca6d08bb2b1f5d"
