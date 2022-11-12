@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     borderTopWidth: 1,
+    paddingBottom: Platform.OS === 'android' ? 20 : 5,
   },
   cameraIconContainer: {
     paddingHorizontal: 15,

@@ -40,6 +40,7 @@
     "react-hook-form": "^7.34.0",
     "react-native": "0.68.2",
     "react-native-calendars": "1.1284.0",
+    "react-native-country-codes-picker": "^2.2.0",
     "react-native-draggable-grid": "^2.1.6",
     "react-native-element-dropdown": "^2.2.0",
     "react-native-fbsdk-next": "^10.1.0",
