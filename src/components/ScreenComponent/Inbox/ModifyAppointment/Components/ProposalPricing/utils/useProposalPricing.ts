@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import format from 'date-fns/format';
+
 import {useMemo, useState} from 'react';
 import {useWatch} from 'react-hook-form';
+import {Alert} from 'react-native';
 import methods from '../../../../../../../api/methods';
 import {useAppSelector} from '../../../../../../../store/store';
 import {useApi} from '../../../../../../../utils/helpers/api/useApi';
+import {convertDateAndTime} from '../../../../../../common/convertTimeZone';
 
 const boardingHouseEndpoint =
   '/appointment/boarding-housesitting/get-modified-price';
@@ -29,6 +31,7 @@ export const useProposalPricing = () => {
     recurringStartDate,
     recurringModDates,
     specificModDates,
+    providerTimeZone,
   } = useWatch();
 
   useMemo(async () => {
@@ -39,15 +42,21 @@ export const useProposalPricing = () => {
       const payload = {
         serviceId: proposedServiceInfo.providerServiceId,
         petIds: petsId,
-        proposalStartDate: new Date(proposalStartDate).toISOString(),
-        proposalEndDate: new Date(proposalEndDate).toISOString(),
+        proposalStartDate: convertDateAndTime(
+          new Date(proposalStartDate),
+          providerTimeZone,
+        ),
+        proposalEndDate: convertDateAndTime(
+          new Date(proposalEndDate),
+          providerTimeZone,
+        ),
         timing: {
           dropOffStartTime: dropOffStartTime,
           dropOffEndTime: dropOffEndTime,
           pickUpStartTime: pickUpStartTime,
           pickUpEndTime: pickUpEndTime,
         },
-        timeZone: 'Asia/Dhaka',
+        timeZone: providerTimeZone,
       };
       const callApi = (milliseconds: number) => {
         return new Promise(resolve =>
@@ -65,15 +74,6 @@ export const useProposalPricing = () => {
           name: 'subTotal',
         },
       ]);
-      // const result = await postRequest(boardingHouseEndpoint, payload);
-      // setPricingInfo([
-      //   ...result.data.petsRates,
-      //   {
-      //     id: result.data.petsRates.length,
-      //     subTotal: result.data.subTotal,
-      //     name: 'subTotal',
-      //   },
-      // ]);
     } else if (
       proposedServiceInfo.serviceTypeId === 3 ||
       proposedServiceInfo.serviceTypeId === 5
@@ -83,42 +83,47 @@ export const useProposalPricing = () => {
           serviceId: proposedServiceInfo.providerServiceId,
           petIds: petsId,
           length: visitLength,
-          recurringStartDate: format(
+          recurringStartDate: convertDateAndTime(
             new Date(recurringStartDate),
-            "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            providerTimeZone,
           ),
           isRecurring: proposedServiceInfo.isRecurring,
           proposalVisits: recurringModDates.map((item: any) => ({
             day: item.date.substring(0, 3).toLowerCase(),
             visits: item.visits,
           })),
-          timeZone: 'Asia/Dhaka',
+          timeZone: providerTimeZone,
         };
+
         const result = await postRequest(vistWalkEndpoint, payload);
-        setPricingInfo([
-          ...result.data.petsRates,
-          result?.data?.sixtyMinutesRate
-            ? {
-                ...result?.data?.sixtyMinutesRate,
-                name: result?.data?.sixtyMinutesRate?.rate?.name,
-              }
-            : null,
-          {
-            id: result.data.petsRates.length,
-            subTotal: result.data.subTotal,
-            name: 'subTotal',
-            sixtyMinutesRate: result?.data?.sixtyMinutesRate,
-          },
-        ]);
+        if (result.ok) {
+          setPricingInfo([
+            ...result.data.petsRates,
+            result?.data?.sixtyMinutesRate
+              ? {
+                  ...result?.data?.sixtyMinutesRate,
+                  name: result?.data?.sixtyMinutesRate?.rate?.name,
+                }
+              : null,
+            {
+              id: result.data.petsRates.length,
+              subTotal: result.data.subTotal,
+              name: 'subTotal',
+              sixtyMinutesRate: result?.data?.sixtyMinutesRate,
+            },
+          ]);
+        } else {
+          Alert.alert(result.data.message);
+        }
       } else {
         const payload = {
           serviceId: proposedServiceInfo.providerServiceId,
           petIds: petsId,
           length: visitLength,
           isRecurring: proposedServiceInfo.isRecurring,
-          timeZone: 'Asia/Dhaka',
+          timeZone: providerTimeZone,
           proposalVisits: specificModDates.map((item: any) => ({
-            date: item.date,
+            date: convertDateAndTime(new Date(item.date), providerTimeZone),
             visits: item.visits,
           })),
         };
@@ -138,29 +143,20 @@ export const useProposalPricing = () => {
             name: 'subTotal',
           },
         ]);
-        // const result = await postRequest(vistWalkEndpoint, payload);
-        // setPricingInfo([
-        //   ...result.data.petsRates,
-        //   {
-        //     id: result.data.petsRates.length,
-        //     subTotal: result.data.subTotal,
-        //     name: 'subTotal',
-        //   },
-        // ]);
       }
     } else if (proposedServiceInfo.serviceTypeId === 4) {
       if (proposedServiceInfo.isRecurring) {
         const payload = {
           serviceId: proposedServiceInfo.providerServiceId,
           petIds: petsId,
-          recurringStartDate: format(
+          recurringStartDate: convertDateAndTime(
             new Date(proposedServiceInfo.recurringStartDate),
-            "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            providerTimeZone,
           ),
           recurringSelectedDays: selectedDays.map((item: string) =>
             item.substring(0, 3).toLowerCase(),
           ),
-          timeZone: 'Asia/Dhaka',
+          timeZone: providerTimeZone,
           isRecurring: true,
           timing: {
             dropOffStartTime: dropOffStartTime,
@@ -182,8 +178,10 @@ export const useProposalPricing = () => {
         const payload = {
           serviceId: proposedServiceInfo.providerServiceId,
           petIds: petsId,
-          dates: multiDate,
-          timeZone: 'Asia/Dhaka',
+          dates: multiDate.map((item: string) =>
+            convertDateAndTime(new Date(item), providerTimeZone),
+          ),
+          timeZone: providerTimeZone,
           isRecurring: false,
           timing: {
             dropOffStartTime: dropOffStartTime,
@@ -208,15 +206,6 @@ export const useProposalPricing = () => {
             name: 'subTotal',
           },
         ]);
-        // const result = await postRequest(dayCareEndpoint, payload);
-        // setPricingInfo([
-        //   ...result.data.petsRates,
-        //   {
-        //     id: result.data.petsRates.length,
-        //     subTotal: result.data.subTotal,
-        //     name: 'subTotal',
-        //   },
-        // ]);
       }
     }
   }, [

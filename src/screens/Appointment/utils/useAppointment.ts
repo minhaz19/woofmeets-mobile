@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useNavigation} from '@react-navigation/native';
-import format from 'date-fns/format';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../api/methods';
+import {convertDateAndTime} from '../../../components/common/convertTimeZone';
+import {formatDate} from '../../../components/common/formatDate';
 import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -14,6 +15,8 @@ const endpoint = 'appointment/create/proposal';
 export const useAppointment = (providerOpk: string) => {
   const {loading: btnLoading, request} = useApi(methods._post);
   const dispatch = useAppDispatch();
+  const {profileInfo} = useAppSelector(state => state.providerProfile);
+  const timeZone = profileInfo?.timezone;
   const {providerServices, loading} = useAppSelector(
     state => state.providerServices,
   );
@@ -40,6 +43,7 @@ export const useAppointment = (providerOpk: string) => {
       selectedDays,
       multiDate,
     } = data;
+    console.log('data');
     if (isRecurring && serviceTypeId === 4 && recurringStartDate === '') {
       Alert.alert('You have to select recurring start date');
     } else if (serviceTypeId === 4 && !isRecurring && multiDate.length === 0) {
@@ -98,11 +102,11 @@ export const useAppointment = (providerOpk: string) => {
           serviceTypeId === 1
             ? 'Boarding Proposal:\n'
             : 'House Sitting Proposal:\n'
-        }Starting from:\n${format(
-          new Date(proposalStartDate),
+        }Starting from:\n${formatDate(
+          proposalStartDate,
           'iii LLL d',
-        )} ${pickUpStartTime} - ${pickUpEndTime} \nEnding at:\n${format(
-          new Date(proposalEndDate),
+        )} ${pickUpStartTime} - ${pickUpEndTime} \nEnding at:\n${formatDate(
+          proposalEndDate,
           'iii LLL d',
         )} at ${dropOffStartTime} - ${dropOffEndTime} `;
 
@@ -115,8 +119,14 @@ export const useAppointment = (providerOpk: string) => {
           dropOffEndTime: dropOffEndTime,
           pickUpStartTime: pickUpStartTime,
           pickUpEndTime: pickUpEndTime,
-          proposalStartDate: new Date(proposalStartDate).toISOString(),
-          proposalEndDate: new Date(proposalEndDate).toISOString(),
+          proposalStartDate: convertDateAndTime(
+            new Date(proposalStartDate),
+            timeZone,
+          ),
+          proposalEndDate: convertDateAndTime(
+            new Date(proposalEndDate),
+            timeZone,
+          ),
           appointmentserviceType: 'NONE',
           firstMessage: firstMessage,
           isRecivedPhotos: isRecivedPhotos,
@@ -136,21 +146,20 @@ export const useAppointment = (providerOpk: string) => {
         const sortedSpecificModDates = !isRecurring
           ? specificModDates.map((item: any, i: number) => ({
               id: i + 1,
-              date: new Date(item.date).toISOString(),
-              name: format(new Date(item.date), 'yyyy-MM-dd'),
-              startDate: item.startDate !== undefined ? item.startDate : false,
+              date: convertDateAndTime(new Date(item.date), timeZone),
+              name: formatDate(item.date, 'yyyy-MM-dd'),
               visits: item.visits.map((time: string, index: number) => ({
                 id: index + 1,
                 time: time,
               })),
             }))
           : [];
+        console.log('sp', specificModDates, timeZone);
         const sortedRecurringDates = isRecurring
           ? recurringModDates.map((item: any, i: number) => ({
               id: i + 1,
               date: item.date,
               name: item.date.substring(0, 3).toLowerCase(),
-              startDate: item.startDate !== undefined ? item.startDate : false,
               visits: item.visits.map((time: string, index: number) => ({
                 id: index + 1,
                 time: time,
@@ -168,8 +177,8 @@ export const useAppointment = (providerOpk: string) => {
                 )}  `
               : `Drop In Visit Proposal:\n  ${specificModDates.map(
                   (item: any) =>
-                    `${item.visits.length} Visits on: ${format(
-                      new Date(item.date),
+                    `${item.visits.length} Visits on: ${formatDate(
+                      item.date,
                       'iii, LLL d',
                     )} at ${item.visits.join(', ')}`,
                 )}  `
@@ -183,8 +192,8 @@ export const useAppointment = (providerOpk: string) => {
                 )}  `
               : `Dog Walking Proposal:\n${specificModDates.map(
                   (item: any) =>
-                    `${item.visits.length} Visits on: ${format(
-                      new Date(item.date),
+                    `${item.visits.length} Visits on: ${formatDate(
+                      item.date,
                       'iii, LLL d',
                     )} at ${item.visits.join(', ')}`,
                 )}  `
@@ -197,14 +206,15 @@ export const useAppointment = (providerOpk: string) => {
               petsId: petsId,
               length: visitLength,
               isRecurring: isRecurring,
-
               appointmentserviceType:
                 serviceTypeId === 3
                   ? 'VISIT'
                   : serviceTypeId === 5
                   ? 'WALK'
                   : 'NONE',
-              recurringStartDate: new Date(recurringStartDate).toISOString(),
+              recurringStartDate: isRecurring
+                ? convertDateAndTime(new Date(recurringStartDate), timeZone)
+                : null,
 
               proposalVisits: sortedRecurringDates,
               firstMessage: firstMessage,
@@ -230,8 +240,9 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
             };
+        console.log('res', dropDogPayload.proposalVisits);
         const response = await request(endpoint, dropDogPayload);
-
+        console.log('response', response);
         if (response.ok) {
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,
@@ -260,7 +271,9 @@ export const useAppointment = (providerOpk: string) => {
               dropOffEndTime: dropOffEndTime,
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
-              recurringStartDate: new Date(recurringStartDate).toISOString(),
+              recurringStartDate: isRecurring
+                ? convertDateAndTime(new Date(recurringStartDate), timeZone)
+                : null,
               recurringSelectedDay: selectedDays.map((item: string) =>
                 item.substring(0, 3).toLowerCase(),
               ),
@@ -280,7 +293,7 @@ export const useAppointment = (providerOpk: string) => {
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
               proposalOtherDate: multiDate.map((item: string) =>
-                new Date(item).toISOString(),
+                convertDateAndTime(new Date(item), timeZone),
               ),
               firstMessage: firstMessage,
               formattedMessage: DoggyDayFT,

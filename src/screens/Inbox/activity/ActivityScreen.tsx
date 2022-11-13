@@ -14,7 +14,6 @@ import Review from '../../../components/ScreenComponent/Inbox/Past/Review';
 import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 import styles from './styles';
 import Messages from '../message/Messages';
-
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
   route: {params: {appointmentOpk: string}};
@@ -45,6 +44,7 @@ const ActivityScreen = (props: {
   // useEffect(() => {
   //   onRefresh();
   // }, []);
+
   return (
     <>
       {(loading || petLoading) && <AppActivityIndicator visible={true} />}

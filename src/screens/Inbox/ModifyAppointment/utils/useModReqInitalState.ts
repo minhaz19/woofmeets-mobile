@@ -1,4 +1,3 @@
-import {format} from 'date-fns';
 import {useAppSelector} from '../../../../store/store';
 
 function getDatesInRange(startDate: Date, endDate: Date) {
@@ -43,23 +42,12 @@ export const useModReqInitialState = () => {
       return {date: date?.toDateString(), day: dayName};
     });
 
-  const modMultiDates = proposedServiceInfo?.proposalOtherDate?.map(
-    (item: {name: string}) => item.name,
-  );
+
   const modRecurringSelectedDay =
     proposedServiceInfo?.recurringSelectedDay?.map((item: any) => item.date);
 
-  const modProposalRecurringDate =
-    proposedServiceInfo?.recurringSelectedDay?.map((item: any) => ({
-      date: item?.date,
-      visits: item?.visits?.map((it: any) => it.time),
-    }));
-  const modProposalScheduleDate = proposedServiceInfo?.proposalOtherDate?.map(
-    (item: any) => ({
-      date: item?.name,
-      visits: item?.visits?.map((it: any) => it.time),
-    }),
-  );
+
+
   const DoggySelected = dayss.filter(item =>
     proposedServiceInfo?.recurringSelectedDay?.includes(
       item.substring(0, 3).toLowerCase(),
@@ -72,7 +60,7 @@ export const useModReqInitialState = () => {
     serviceTypeId: proposedServiceInfo?.serviceTypeId,
     visitLength: proposedServiceInfo?.length,
     isRecurring: proposedServiceInfo?.isRecurring,
-
+    providerTimeZone: proposedServiceInfo.providerTimeZone,
     dropOffStartTime: proposedServiceInfo?.dropOffStartTime
       ? proposedServiceInfo.dropOffStartTime
       : '',
@@ -88,10 +76,7 @@ export const useModReqInitialState = () => {
     recurringStartDate:
       proposedServiceInfo?.isRecurring &&
       proposedServiceInfo?.recurringStartDate !== ''
-        ? format(
-            new Date(proposedServiceInfo?.recurringStartDate),
-            'yyyy-MM-dd',
-          )
+        ? proposedServiceInfo?.recurringStartDate
         : '',
     selectedDays:
       proposedServiceInfo?.serviceTypeId === 4
@@ -101,13 +86,13 @@ export const useModReqInitialState = () => {
         : [],
     repeatDate: next6Days ? next6Days : [],
     proposalStartDate: proposedServiceInfo?.proposalStartDate
-      ? format(new Date(proposedServiceInfo?.proposalStartDate), 'yyyy-MM-dd')
+      ? proposedServiceInfo?.proposalStartDate
       : '',
     proposalEndDate: proposedServiceInfo?.proposalEndDate
-      ? format(new Date(proposedServiceInfo?.proposalEndDate), 'yyyy-MM-dd')
+      ? proposedServiceInfo?.proposalEndDate
       : '',
-    proposalScheduleDate: modProposalScheduleDate,
-    proposalRecurringDate: modProposalRecurringDate,
+    // proposalScheduleDate: modProposalScheduleDate,
+    // proposalRecurringDate: modProposalRecurringDate,
     petsId:
       proposedServiceInfo?.appointmentPet &&
       proposedServiceInfo?.appointmentPet.length > 0
@@ -126,21 +111,22 @@ export const useModReqInitialState = () => {
     specificModDates:
       !proposedServiceInfo?.isRecurring &&
       proposedServiceInfo?.proposalOtherDate
-        ? proposedServiceInfo?.proposalOtherDate.map((it: any) => ({
-            date: format(new Date(it?.date), 'yyyy-MM-dd'),
-            // name: it?.name,
-            visits: it?.visits?.map((vis: any) => vis.time),
-          }))
+        ? proposedServiceInfo?.proposalOtherDate
         : [],
-    multiDate:
-      proposedServiceInfo?.serviceTypeId === 4 &&
-      !proposedServiceInfo?.isRecurring
-        ? proposedServiceInfo?.proposalOtherDate?.map((di: {date: string}) =>
-            format(new Date(di.date), 'yyyy-MM-dd'),
-          )
-        : !proposedServiceInfo?.isRecurring
-        ? modMultiDates
-        : [],
+    multiDate: !proposedServiceInfo?.isRecurring
+      ? proposedServiceInfo?.proposalOtherDate?.map(
+          (di: {date: string}) => di.date,
+        )
+      : [],
+    // multiDate:
+    //   proposedServiceInfo?.serviceTypeId === 4 &&
+    //   !proposedServiceInfo?.isRecurring
+    //     ? proposedServiceInfo?.proposalOtherDate?.map(
+    //         (di: {date: string}) => di.date,
+    //       )
+    //     : !proposedServiceInfo?.isRecurring
+    //     ? modMultiDates
+    //     : [],
     selectedRange: getDatesInRange(d1, d2),
     selectDate: [],
   };

@@ -4,7 +4,6 @@ import React from 'react';
 import BottomHalfModal from '../../../UI/modal/BottomHalfModal';
 import TitleText from '../../../common/text/TitleText';
 import Text_Size from '../../../../constants/textScaling';
-import format from 'date-fns/format';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import Colors from '../../../../constants/Colors';
 import methods from '../../../../api/methods';
@@ -15,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import changeTextLetter from '../../../common/changeTextLetter';
 import {setBillingId} from '../../../../store/slices/Appointment/Proposal/providerProposalSlice';
+import {formatDate} from '../../../common/formatDate';
 interface Props {
   regenerateModal: any;
   setRegenerateModal: any;
@@ -72,8 +72,8 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
                 {proposedServiceInfo?.recurringStartDate && (
                   <TitleText
                     textStyle={{fontSize: Text_Size.Text_1, marginVertical: 5}}
-                    text={`${format(
-                      new Date(proposedServiceInfo?.recurringStartDate),
+                    text={`${formatDate(
+                      proposedServiceInfo?.recurringStartDate,
                       'iii LLL d',
                     )}`}
                   />
@@ -153,8 +153,8 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
                       marginVertical: 5,
                       textAlign: 'justify',
                     }}
-                    text={`Drop In Visit Proposal:\nRepeat service starting from: ${format(
-                      new Date(proposedServiceInfo?.recurringStartDate),
+                    text={`Drop In Visit Proposal:\nRepeat service starting from: ${formatDate(
+                      proposedServiceInfo?.recurringStartDate,
                       'iii LLL d',
                     )}\n${proposedServiceInfo?.recurringSelectedDay.map(
                       (item: any) =>
@@ -172,8 +172,8 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
                       marginVertical: 5,
                       textAlign: 'justify',
                     }}
-                    text={`Doggy Day Care Proposal:\nRepeat service starting from:  ${format(
-                      new Date(proposedServiceInfo?.recurringStartDate),
+                    text={`Doggy Day Care Proposal:\nRepeat service starting from:  ${formatDate(
+                      proposedServiceInfo?.recurringStartDate,
                       'iii LLL d',
                     )}\nDrop-off: ${proposedServiceInfo?.dropOffStartTime} - ${
                       proposedServiceInfo?.dropOffEndTime

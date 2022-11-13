@@ -1,5 +1,5 @@
-import {RefreshControl,  StyleSheet} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {RefreshControl, StyleSheet} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import AppForm from '../../../../components/common/Form/AppForm';
 import SubRates from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubRates';
@@ -12,8 +12,11 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {getServiceRateFields} from '../../../../store/slices/onBoarding/setUpService/rates/Field/serviceRateFieldAction';
 import {getRateFieldValue} from '../../../../store/slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueAction';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-
-const Rates = () => {
+interface Props {
+  navigation: any;
+  route: any;
+}
+const Rates = ({navigation, route}: Props) => {
   const {serviceSetup} = useAppSelector(
     (state: {serviceSetup: any}) => state?.serviceSetup,
   );
@@ -22,15 +25,22 @@ const Rates = () => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = useState(false);
-  const {handleRates, loading, btnLoading, fLoading, serviceRateFields} =
-    useServiceRates(serviceSetup);
+  const {
+    handleRates,
+    loading,
+    btnLoading,
+    fLoading,
+    serviceRateFields,
+    fieldValue,
+    ratesMeta,
+  } = useServiceRates(serviceSetup, navigation, route);
 
-  const onRefresh = async () => {
+  const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    dispatch(getServiceRateFields(serviceId));
-    dispatch(getRateFieldValue(providerServicesId));
+    await dispatch(getServiceRateFields(serviceId));
+    await dispatch(getRateFieldValue(providerServicesId));
     setRefreshing(false);
-  };
+  }, []);
 
   useEffect(() => {
     onRefresh();
@@ -62,12 +72,13 @@ const Rates = () => {
           description={description}
         />
         <AppForm
-          initialValues={useServiceRateInit()}
+          initialValues={useServiceRateInit(fieldValue, ratesMeta)}
           validationSchema={BoardingSettingsSchema}
           enableReset>
           <SubRates
             handleRates={handleRates}
             rateFields={serviceRateFields}
+            fieldValue={fieldValue}
             loading={btnLoading}
           />
         </AppForm>

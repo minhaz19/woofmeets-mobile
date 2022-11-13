@@ -13,13 +13,13 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
-import {format} from 'date-fns';
 import {getAppointmentStatus} from '../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 import {getProviderApnt} from '../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 import RecurringModal from './components/RecurringModal';
 import {setBillingId} from '../../../store/slices/Appointment/Proposal/providerProposalSlice';
 import changeTextLetter from '../../common/changeTextLetter';
+import {formatDate} from '../../common/formatDate';
 const acceptEndpoint = '/appointment/accept/proposal/';
 const completeEndpoint = '/appointment/complete/';
 const rejectEndpoint = '/appointment/proposal/reject/';
@@ -134,8 +134,8 @@ const ActivityHeader = (props: {
                     proposedServiceInfo?.serviceTypeId === 2
                       ? proposedServiceInfo?.serviceName +
                         ' from:  ' +
-                        format(
-                          new Date(proposedServiceInfo.proposalStartDate),
+                        formatDate(
+                          proposedServiceInfo.proposalStartDate,
                           'iii LLL d',
                         )
                       : proposedServiceInfo?.serviceTypeId === 3 ||
@@ -143,32 +143,28 @@ const ActivityHeader = (props: {
                       ? proposedServiceInfo?.isRecurring
                         ? proposedServiceInfo?.serviceName +
                           ' from:  ' +
-                          format(
-                            new Date(proposedServiceInfo.recurringStartDate),
+                          formatDate(
+                            proposedServiceInfo.recurringStartDate,
                             'iii LLL d',
                           )
                         : proposedServiceInfo?.serviceName +
                           ' from:  ' +
-                          format(
-                            new Date(
-                              proposedServiceInfo.proposalOtherDate[0].date,
-                            ),
+                          formatDate(
+                            proposedServiceInfo.proposalOtherDate[0].date,
                             'iii LLL d',
                           )
                       : proposedServiceInfo?.serviceTypeId === 4
                       ? proposedServiceInfo.isRecurring
                         ? proposedServiceInfo?.serviceName +
                           ' from:  ' +
-                          format(
-                            new Date(proposedServiceInfo.recurringStartDate),
+                          formatDate(
+                            proposedServiceInfo.recurringStartDate,
                             'iii LLL d',
                           )
                         : proposedServiceInfo?.serviceName +
                           ' from:  ' +
-                          format(
-                            new Date(
-                              proposedServiceInfo.proposalOtherDate[0].date,
-                            ),
+                          formatDate(
+                            proposedServiceInfo.proposalOtherDate[0].date,
                             'iii LLL d',
                           )
                       : ''
@@ -212,10 +208,11 @@ const ActivityHeader = (props: {
                             proposedServiceInfo.appointmentOpk,
                           ),
                         );
-                        dispatch(
-                          setBillingId(proposedServiceInfo.billing[0].id),
-                        );
-                        navigation.navigate('Checkout');
+                        proposedServiceInfo?.billing[0]?.id &&
+                          (dispatch(
+                            setBillingId(proposedServiceInfo.billing[0].id),
+                          ),
+                          navigation.navigate('Checkout'));
                       }
                     } else {
                       dispatch(setBillingId(proposedServiceInfo.billing[0].id));
@@ -449,11 +446,13 @@ const ActivityHeader = (props: {
         </View>
       </View>
       {/* Modals */}
-      <RecurringModal
-        regenerateModal={regenerateModal}
-        setRegenerateModal={setRegenerateModal}
-        proposedServiceInfo={proposedServiceInfo}
-      />
+      {proposedServiceInfo?.isRecurring && (
+        <RecurringModal
+          regenerateModal={regenerateModal}
+          setRegenerateModal={setRegenerateModal}
+          proposedServiceInfo={proposedServiceInfo}
+        />
+      )}
     </>
   );
 };

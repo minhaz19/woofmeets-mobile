@@ -43,7 +43,7 @@ export const useHandleRange = (
       } else {
         orderMultiDates.splice(matchIndex, 1);
         const updatedRMD = specificModDates?.filter(
-          (it: any) => it.date !== new Date(date.dateString).toISOString(),
+          (it: any) => it.date !== date.dateString,
         );
         setValue && setValue('specificModDates', updatedRMD);
       }

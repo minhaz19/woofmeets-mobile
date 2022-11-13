@@ -6,10 +6,14 @@ import {useApi} from '../../../../../utils/helpers/api/useApi';
 
 const ratePostEndpoint = '/service-rates/multiple/create';
 const ratePutEndpoint = '/service-rates/multiple/update';
-export const useServiceRates = (serviceSetup: any) => {
+export const useServiceRates = (
+  serviceSetup: any,
+  navigation: any,
+  route: any,
+) => {
   const {providerServicesId} = serviceSetup?.routeData;
   const dispatch = useAppDispatch();
-  const {loading, serviceRateFields} = useAppSelector(
+  const {loading, serviceRateFields, ratesMeta} = useAppSelector(
     state => state.serviceRates,
   );
   const {loading: fLoading, fieldValue} = useAppSelector(
@@ -37,14 +41,14 @@ export const useServiceRates = (serviceSetup: any) => {
   rateFieldId &&
     rateFieldId !== undefined &&
     fieldValue &&
-    fieldValue?.map(
-      (item: {id: number; modRatesId: number}) =>
-        (rateFieldId[
-          rateFieldId.findIndex(
-            (elm: any) => elm.rateTypeId === item.modRatesId,
-          )
-        ].putId = item.id),
-    );
+    fieldValue?.map((item: {id: number; modRatesId: number}) => {
+      const fIndex = rateFieldId.findIndex(
+        (elm: any) => elm.rateTypeId === item.modRatesId,
+      );
+      if (fIndex !== -1) {
+        return (rateFieldId[fIndex].putId = item.id);
+      }
+    });
   const handleRates = async (e: any) => {
     let payload: any = {
       serviceRate: [],
@@ -71,6 +75,9 @@ export const useServiceRates = (serviceSetup: any) => {
     if (result.ok) {
       dispatch(setBoardingSelection({pass: 0}));
       dispatch(getRateFieldValue(providerServicesId));
+      if (route.name === 'RatesScreen') {
+        navigation.goBack();
+      }
     }
   };
   return {
@@ -79,5 +86,7 @@ export const useServiceRates = (serviceSetup: any) => {
     fLoading,
     btnLoading,
     serviceRateFields,
+    fieldValue,
+    ratesMeta,
   };
 };

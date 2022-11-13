@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useNavigation} from '@react-navigation/native';
-import format from 'date-fns/format';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import {io} from 'socket.io-client';
 import methods from '../../../../api/methods';
+import {convertDateAndTime} from '../../../../components/common/convertTimeZone';
+import {formatDate} from '../../../../components/common/formatDate';
 import {getProviderProposal} from '../../../../store/slices/Appointment/Proposal/getProviderProposal';
 import {getProviderServices} from '../../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
@@ -39,6 +40,7 @@ export const useModifyAppointment = (route: any) => {
       isRecurring,
       visitLength,
       multiDate,
+      providerTimeZone,
     } = data;
 
     if (isRecurring && serviceTypeId === 4 && recurringStartDate === '') {
@@ -97,11 +99,11 @@ export const useModifyAppointment = (route: any) => {
           serviceTypeId === 1
             ? 'Boarding Proposal: \n'
             : 'House Sitting Proposal:\n'
-        }Starting from:\n ${format(
-          new Date(proposalStartDate),
+        }Starting from:\n ${formatDate(
+          proposalStartDate,
           'iii LLL d',
-        )} ${pickUpStartTime} - ${pickUpEndTime} \n ending at:\n ${format(
-          new Date(proposalEndDate),
+        )} ${pickUpStartTime} - ${pickUpEndTime} \n ending at:\n ${formatDate(
+          proposalEndDate,
           'iii LLL d',
         )} at ${dropOffStartTime} - ${dropOffEndTime}`;
 
@@ -115,8 +117,14 @@ export const useModifyAppointment = (route: any) => {
           dropOffEndTime: dropOffEndTime,
           pickUpStartTime: pickUpStartTime,
           pickUpEndTime: pickUpEndTime,
-          proposalStartDate: proposalStartDate,
-          proposalEndDate: proposalEndDate,
+          proposalStartDate: convertDateAndTime(
+            new Date(proposalStartDate),
+            providerTimeZone,
+          ),
+          proposalEndDate: convertDateAndTime(
+            new Date(proposalEndDate),
+            providerTimeZone,
+          ),
           formattedMessage: boardingSittingFT,
           appointmentserviceType: 'NONE',
         };
@@ -140,8 +148,8 @@ export const useModifyAppointment = (route: any) => {
         const sortedSpecificModDates = !isRecurring
           ? specificModDates.map((item: any, i: number) => ({
               id: i + 1,
-              date: new Date(item.date).toISOString(),
-              name: format(new Date(item.date), 'yyyy-MM-dd'),
+              date: convertDateAndTime(new Date(item.date), providerTimeZone),
+              name: formatDate(item.date, 'yyyy-MM-dd'),
               visits: item.visits.map((time: string, index: number) => ({
                 id: index + 1,
                 time: time,
@@ -180,10 +188,7 @@ export const useModifyAppointment = (route: any) => {
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.length
                         : item.visits.length
-                    } Visits on: ${format(
-                      new Date(item.date),
-                      'iii, LLL d',
-                    )} at ${
+                    } Visits on: ${formatDate(item.date, 'iii, LLL d')} at ${
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.join(', ')
                         : item.visits.join(', ')
@@ -209,10 +214,7 @@ export const useModifyAppointment = (route: any) => {
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.length
                         : item.visits.length
-                    } Visits on: ${format(
-                      new Date(item.date),
-                      'iii, LLL d',
-                    )} at ${
+                    } Visits on: ${formatDate(item.date, 'iii, LLL d')} at ${
                       item?.visits && item?.visits.length !== 0
                         ? item?.visits.join(', ')
                         : item.visits.join(', ')
@@ -236,7 +238,10 @@ export const useModifyAppointment = (route: any) => {
                   : serviceTypeId === 5
                   ? 'WALK'
                   : 'NONE',
-              recurringStartDate: new Date(recurringStartDate).toISOString(),
+              recurringStartDate: convertDateAndTime(
+                new Date(recurringStartDate),
+                providerTimeZone,
+              ),
               proposalVisits: sortedRecurringDates,
             }
           : {
@@ -256,6 +261,7 @@ export const useModifyAppointment = (route: any) => {
                   : 'NONE',
               proposalVisits: sortedSpecificModDates,
             };
+
         const result = await request(endpoint, dropDogPayload);
 
         if (result.ok) {
@@ -294,7 +300,10 @@ export const useModifyAppointment = (route: any) => {
               dropOffEndTime: dropOffEndTime,
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
-              recurringStartDate: new Date(recurringStartDate).toISOString(),
+              recurringStartDate: convertDateAndTime(
+                new Date(recurringStartDate),
+                providerTimeZone,
+              ),
               recurringSelectedDay: selectedDays.map((item: string) =>
                 item.substring(0, 3).toLowerCase(),
               ),
@@ -315,7 +324,7 @@ export const useModifyAppointment = (route: any) => {
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
               proposalOtherDate: multiDate.map((item: string) =>
-                new Date(item).toISOString(),
+                convertDateAndTime(new Date(item), providerTimeZone),
               ),
             };
         const result = await request(endpoint, doggyPayload);

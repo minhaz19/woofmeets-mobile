@@ -6,9 +6,9 @@ import TitleText from '../../../common/text/TitleText';
 import ProviderProfileInfo from './ApntProviderProfileInfo';
 import ProfileInfo from '../../profile/BasicInfo/ProfileInfo';
 import {useAppSelector} from '../../../../store/store';
-import {format} from 'date-fns';
 import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import {formatDate} from '../../../common/formatDate';
 
 const AppointmentProposalInfo = () => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
@@ -77,16 +77,17 @@ const AppointmentProposalInfo = () => {
                 textStyle={{fontWeight: 'bold', paddingVertical: 5}}
               />
               <TitleText
-                text={`Starting from : ${format(
-                  new Date(proposedServiceInfo.recurringStartDate),
+                text={`Starting from : ${formatDate(
+                  proposedServiceInfo.recurringStartDate,
                   'iii LLL d',
                 )}`}
                 textStyle={styles.textPadding}
               />
               <TitleText
                 text={proposedServiceInfo?.recurringSelectedDay?.map(
-                  (item: {date: string; visits: any}) => (
+                  (item: {date: string; visits: any}, index: number) => (
                     <TitleText
+                      key={index}
                       text={`Date: ${item.date} : Visit: ${item?.visits
                         .map((it: any) => it.time)
                         .join(', ')}`}
@@ -105,9 +106,10 @@ const AppointmentProposalInfo = () => {
               />
               <TitleText
                 text={proposedServiceInfo?.proposalOtherDate?.map(
-                  (item: {name: string; visits: any}) => (
+                  (item: {date: string; visits: any}, index: number) => (
                     <TitleText
-                      text={`Date: ${item.name} : Visit: ${item?.visits
+                      key={index}
+                      text={`Date: ${item.date} : Visit: ${item?.visits
                         .map((it: any) => it.time)
                         .join(', ')}`}
                       textStyle={{textAlign: 'justify'}}
@@ -126,8 +128,8 @@ const AppointmentProposalInfo = () => {
                 textStyle={{fontWeight: 'bold', paddingVertical: 5}}
               />
               <TitleText
-                text={`Starting from : ${format(
-                  new Date(proposedServiceInfo.recurringStartDate),
+                text={`Starting from : ${formatDate(
+                  proposedServiceInfo.recurringStartDate,
                   'iii LLL d',
                 )}`}
                 textStyle={styles.textPadding}
@@ -157,8 +159,8 @@ const AppointmentProposalInfo = () => {
               />
               <TitleText
                 text={proposedServiceInfo.proposalOtherDate
-                  .map((item: {date: string}) =>
-                    format(new Date(item.date), 'yyyy-MM-dd'),
+                  .map((item: {date: Date}) =>
+                    formatDate(item.date, 'yyyy-MM-dd'),
                   )
                   .join(', ')}
                 textStyle={styles.textPadding}

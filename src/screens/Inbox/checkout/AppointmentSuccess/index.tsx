@@ -16,6 +16,7 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import ButtonCom from '../../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
+import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 const endPoint = '/appointment/cancel/';
 const AppointmentSuccess = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -96,7 +97,11 @@ const AppointmentSuccess = () => {
           />
         </AppTouchableOpacity>
         <AppTouchableOpacity
-          onPress={() => navigation.navigate('Inbox')}
+          onPress={() => {
+            navigation.navigate('Inbox');
+            dispatch(getAppointmentStatus('PROPOSAL'));
+            dispatch(getProviderApnt('PROPOSAL'));
+          }}
           style={{
             width: '80%',
             backgroundColor: Colors.primary,
@@ -165,25 +170,6 @@ const AppointmentSuccess = () => {
                 onSelect={handleSubmit(handleCancel)}
                 loading={loading}
               />
-              {/* <AppTouchableOpacity
-                onPress={handleSubmit(handleCancel)}
-                style={{
-                  // width: '100%',
-
-                  backgroundColor: Colors.primary,
-                  paddingVertical: 10,
-                  borderRadius: 100,
-                  marginVertical: 20,
-                }}>
-                <TitleText
-                  textStyle={{
-                    textAlign: 'center',
-                    color: Colors.background,
-                    fontWeight: 'bold',
-                  }}
-                  text={'Submit Cancellation'}
-                />
-              </AppTouchableOpacity> */}
             </View>
           </>
         }

@@ -1,5 +1,5 @@
 import {useMemo, useState} from 'react';
-import {useAppSelector} from '../../../../../../store/store';
+// import {useAppSelector} from '../../../../../../store/store';
 function areEqual(arr1: any, arr2: any) {
   let N = arr1?.length;
   let M = arr2?.length;
@@ -34,12 +34,12 @@ function areEqual(arr1: any, arr2: any) {
 
   return true;
 }
-export const useSubRates = (rateFields: any, watch: any) => {
+export const useSubRates = (rateFields: any, fieldValue: any, watch: any) => {
   const [showAdditionalRates, setShowAdditionalRates] = useState(true);
   const [updateRates, setUpdateRates] = useState(false);
   const [rates, setRates] = useState([]);
   const [checked, setChecked] = useState(false);
-  const {fieldValue} = useAppSelector(state => state.fieldValue);
+  // const {fieldValue} = useAppSelector(state => state.fieldValue);
 
   const baseRateWatch = watch('baserate');
   const handlePress = () => {
