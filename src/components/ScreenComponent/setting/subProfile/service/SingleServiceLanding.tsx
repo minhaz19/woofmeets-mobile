@@ -5,15 +5,15 @@ import {
   GestureResponderEvent,
 } from 'react-native';
 import React, {useEffect} from 'react';
-import {
-  CallSvg,
-  FileTextSvg,
-  ImageStackSvg,
-  PetSvg,
-} from '../../../../../screens/settings/Profile/utils/ProfileSvg';
+// import {
+//   CallSvg,
+//   FileTextSvg,
+//   ImageStackSvg,
+//   PetSvg,
+// } from '../../../../../screens/settings/Profile/utils/ProfileSvg';
 import HeaderText from '../../../../common/text/HeaderText';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
-import {ProfileIcon} from '../../../../../assets/svgs/Setting_SVG';
+// import {ProfileIcon} from '../../../../../assets/svgs/Setting_SVG';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../../../../constants/Colors';

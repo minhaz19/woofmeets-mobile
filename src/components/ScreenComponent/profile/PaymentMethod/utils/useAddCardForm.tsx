@@ -10,7 +10,7 @@ import {useApi} from '../../../../../utils/helpers/api/useApi';
 const customerEndPoint = '/stripe-payment-method/customers';
 const endpoint = '/stripe-payment-method/add-card';
 const subscriptionEndpoint =
-  'https://api-stg.woofmeets.com/v2/subscriptions/subscribe?';
+  'https://woof-api.hirebeet.com/v2/subscriptions/subscribe?';
 import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 export const useAddCardForm = (
   navigation: any,

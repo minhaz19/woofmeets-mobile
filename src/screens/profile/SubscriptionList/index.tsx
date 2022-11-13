@@ -9,7 +9,7 @@ import methods from '../../../api/methods';
 import {format} from 'date-fns';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 const listEndpoint =
-  'https://api-stg.woofmeets.com/v1/subscriptions/all-subscriptions?page=1&limit=20&sortBy=createdAt&sortOrder=desc';
+  'https://woof-api.hirebeet.com/v1/subscriptions/all-subscriptions?page=1&limit=20&sortBy=createdAt&sortOrder=desc';
 const SubscriptionList = () => {
   const {colors} = useTheme();
   const [listData, setListData] = useState([]);

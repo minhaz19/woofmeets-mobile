@@ -115,10 +115,7 @@ const ServiceForm = ({
                     ? value?.toString()
                     : updateRates === false && baseRateWatch !== undefined
                     ? convertedValue.toString()
-                    : // ? (Number(baseRateWatch!) * Number(percentage))
-                      //     .toFixed(2)
-                      //     .toString()
-                      value !== null && value?.toString()
+                    : value !== null && value?.toString()
                 }
                 error={error?.message}
                 textInputStyle={textInputStyle}

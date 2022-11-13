@@ -18,9 +18,9 @@ import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import {confirmPayment} from '@stripe/stripe-react-native';
 const endpointBasicPayment =
-  'https://api-stg.woofmeets.com/v2/subscriptions/pay-basic-verification-payment?';
+  'https://woof-api.hirebeet.com/v2/subscriptions/pay-basic-verification-payment?';
 const subscriptionEndpoint =
-  'https://api-stg.woofmeets.com/v3/subscriptions/subscribe?';
+  'https://woof-api.hirebeet.com/v3/subscriptions/subscribe?';
 
 interface Props {
   route: {
@@ -121,7 +121,7 @@ const BasicPayment = ({route, navigation}: Props) => {
       />
       <DescriptionText
         textStyle={styles.des}
-        text="As you choosed basic subscription as your plan we have to verify your identity manually. You have to provide $35 dollar to pass basic background check"
+        text="We must manually verify your identification because you selected the basic subscription as your plan. To pass a background check, you must give $35."
       />
       <ButtonCom
         title="Pay $35"

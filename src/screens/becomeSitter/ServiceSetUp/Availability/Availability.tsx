@@ -13,8 +13,11 @@ import AppActivityIndicator from '../../../../components/common/Loaders/AppActiv
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {getAvailability} from '../../../../store/slices/onBoarding/setUpService/availability/getAvailability';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-
-const Availability = () => {
+interface Props {
+  navigation: any;
+  route: any;
+}
+const Availability = ({navigation, route}: Props) => {
   const {colors} = useTheme();
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {itemId, name, image, description, service} = serviceSetup.routeData;
@@ -27,7 +30,11 @@ const Availability = () => {
     (state: any) => state?.availability,
   );
   // hook for post/put
-  const {handlePost, isLoading} = useAvailabilityUtils(serviceId[0]);
+  const {handlePost, isLoading} = useAvailabilityUtils(
+    serviceId[0],
+    navigation,
+    route,
+  );
   const [refreshing, setRefreshing] = useState(false);
   const dispatch = useAppDispatch();
 

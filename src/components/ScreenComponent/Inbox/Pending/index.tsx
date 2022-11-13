@@ -10,9 +10,9 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import BottomSpacing from '../../../UI/BottomSpacing';
-import {format} from 'date-fns';
 import changeTextLetter from '../../../common/changeTextLetter';
 import InboxLoader from '../../../../screens/Inbox/Loader/InboxLoader';
+import {formatDate} from '../../../common/formatDate';
 interface Props {
   statusType: string;
 }
@@ -37,6 +37,7 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, [statusType]);
+
   return (
     <>
       {loading ? (
@@ -67,7 +68,12 @@ const PendingStatus = ({statusType}: Props) => {
                   const serviceTypeId = item?.providerService?.serviceTypeId;
                   const proposalDate = item.appointmentProposal[0];
                   const isRecurring = item.appointmentProposal[0]?.isRecurring;
-
+                  // if (serviceTypeId === 3) {
+                  //   console.log(
+                  //     'proposalDate?.proposalVisits',
+                  //     proposalDate?.proposalVisits[0]?.date instanceof Date,
+                  //   );
+                  // }
                   return (
                     <ReusableCard
                       key={item.opk}
@@ -78,32 +84,28 @@ const PendingStatus = ({statusType}: Props) => {
                         image: item.provider.user.image,
                         description: item?.providerService
                           ? serviceTypeId === 1 || serviceTypeId === 2
-                            ? `Starting From:  ${format(
-                                new Date(proposalDate.proposalStartDate),
+                            ? `Starting From:  ${formatDate(
+                                proposalDate.proposalStartDate,
                                 'iii LLL d',
                               )}`
                             : serviceTypeId === 3 || serviceTypeId === 5
                             ? isRecurring
-                              ? `Starting From:  ${format(
-                                  new Date(proposalDate.recurringStartDate),
+                              ? `Starting From:  ${formatDate(
+                                  proposalDate.recurringStartDate,
                                   'iii LLL d',
                                 )}`
-                              : `Starting From:  ${format(
-                                  new Date(
-                                    proposalDate?.proposalVisits[0]?.date,
-                                  ),
+                              : `Starting From:  ${formatDate(
+                                  new Date(),
                                   'iii LLL d',
                                 )}`
                             : serviceTypeId === 4
                             ? isRecurring
-                              ? `Starting From:  ${format(
-                                  new Date(proposalDate.recurringStartDate),
+                              ? `Starting From:  ${formatDate(
+                                  proposalDate.recurringStartDate,
                                   'iii LLL d',
                                 )}`
-                              : `Starting From:  ${format(
-                                  new Date(
-                                    proposalDate?.proposalOtherDate[0]?.date,
-                                  ),
+                              : `Starting From:  ${formatDate(
+                                  proposalDate?.proposalOtherDate[0]?.date,
                                   'iii LLL d',
                                 )}`
                             : ''
@@ -137,30 +139,32 @@ const PendingStatus = ({statusType}: Props) => {
                         image: item.user.image,
                         description: item?.providerService
                           ? serviceTypeId === 1 || serviceTypeId === 2
-                            ? `Starting From:  ${format(
-                                new Date(proposalDate.proposalStartDate),
+                            ? `Starting From:  ${formatDate(
+                                proposalDate.proposalStartDate,
                                 'iii LLL d',
                               )}`
                             : serviceTypeId === 3 || serviceTypeId === 5
                             ? isRecurring
-                              ? `Starting From:  ${format(
-                                  new Date(proposalDate.recurringStartDate),
+                              ? `Starting From:  ${formatDate(
+                                  proposalDate.recurringStartDate,
                                   'iii LLL d',
                                 )}`
-                              : `Starting From:  ${format(
-                                  new Date(proposalDate.proposalVisits[0].date),
+                              : `Starting From:  ${formatDate(
+                                  new Date(),
                                   'iii LLL d',
                                 )}`
-                            : serviceTypeId === 4
+                            : // : `Starting From:  ${formatDate(
+                            //     proposalDate.proposalVisits[0].date,
+                            //     'iii LLL d',
+                            //   )}`
+                            serviceTypeId === 4
                             ? isRecurring
-                              ? `Starting From:  ${format(
-                                  new Date(proposalDate.recurringStartDate),
+                              ? `Starting From:  ${formatDate(
+                                  proposalDate.recurringStartDate,
                                   'iii LLL d',
                                 )}`
-                              : `Starting From:  ${format(
-                                  new Date(
-                                    proposalDate?.proposalOtherDate[0]?.date,
-                                  ),
+                              : `Starting From:  ${formatDate(
+                                  proposalDate?.proposalOtherDate[0]?.date,
                                   'iii LLL d',
                                 )}`
                             : ''

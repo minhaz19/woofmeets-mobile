@@ -14,11 +14,14 @@ import {
   getCancellationPolicy,
   getSingleCancellationPolicy,
 } from '../../../../store/slices/onBoarding/setUpService/cancellationPolicy/getCancellationPolicy';
-import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useTheme } from '../../../../constants/theme/hooks/useTheme';
-
-const CancellationPolicy = () => {
+// import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+interface Props {
+  navigation: any;
+  route: any;
+}
+const CancellationPolicy = ({navigation, route}: Props) => {
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {policy, singleProviderPolicy, loading} = useAppSelector(
     (state: any) => state?.cancellationPolicy,
@@ -41,6 +44,9 @@ const CancellationPolicy = () => {
     if (result?.data?.data) {
       dispatch(setBoardingSelection({pass: 2}));
       dispatch(setSitterData({pass: 1}));
+      if (route.name === 'CancellationPolicyScreen') {
+        navigation.goBack();
+      }
     }
   };
 

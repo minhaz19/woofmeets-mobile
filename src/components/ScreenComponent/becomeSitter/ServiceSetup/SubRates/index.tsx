@@ -18,9 +18,10 @@ interface Props {
   handleRates: (arg: any) => void;
   rateFields: any;
   loading: boolean;
+  fieldValue: any;
 }
 
-const SubRates = ({handleRates, rateFields, loading}: Props) => {
+const SubRates = ({handleRates, rateFields, fieldValue, loading}: Props) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {
     formState: {errors},
@@ -36,7 +37,7 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
     updateRates,
     setUpdateRates,
     checked,
-  } = useSubRates(rateFields, watch);
+  } = useSubRates(rateFields, fieldValue, watch);
   return (
     <View>
       <ServiceReusableModal

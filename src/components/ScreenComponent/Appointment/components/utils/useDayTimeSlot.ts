@@ -12,7 +12,6 @@ export const useDayTimeSlot = () => {
     specificModDates,
   } = useWatch();
 
-
   const [newData, setDatas] = useState(modData);
   const getRecurringDays = (rd: any, rsd: any, pod: any) => {
     const output = rd?.filter((obj: any) => {

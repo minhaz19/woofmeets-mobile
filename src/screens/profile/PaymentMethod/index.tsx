@@ -21,7 +21,7 @@ interface Props {
   };
 }
 const subscriptionEndpoint =
-  'https://api-stg.woofmeets.com/v2/subscriptions/subscribe?';
+  'https://woof-api.hirebeet.com/v2/subscriptions/subscribe?';
 const PaymentMethods = ({route, navigation}: Props) => {
   const uuid = Math.random().toString(36).substring(2, 36);
   const dispatch = useAppDispatch();

@@ -1,8 +1,8 @@
-import {useAppSelector} from '../../../../../store/store';
+// import {useAppSelector} from '../../../../../store/store';
 
-export const useServiceRateInit = () => {
-  const {fieldValue} = useAppSelector(state => state.fieldValue);
-  const {ratesMeta} = useAppSelector(state => state.serviceRates);
+export const useServiceRateInit = (fieldValue: any, ratesMeta: any) => {
+  // const {fieldValue} = useAppSelector(state => state.fieldValue);
+  // const {ratesMeta} = useAppSelector(state => state.serviceRates);
   const baseRate =
     ratesMeta !== null && ratesMeta !== undefined && ratesMeta['base-rate'];
   return {

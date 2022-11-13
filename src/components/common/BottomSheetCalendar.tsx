@@ -33,7 +33,7 @@ const BottomSheetCalendar = ({
   watch,
 }: Props) => {
   const [visible, setVisible] = useState(false);
-
+  // const {profileInfo} = useAppSelector(state => state.providerProfile);
   const {isDarkMode, colors} = useTheme();
   const {multiDate} = watch();
   const handlePress = (data: any) => {
@@ -45,11 +45,20 @@ const BottomSheetCalendar = ({
         var dayName = dayss[d.getDay()];
         return {date: date.toDateString(), day: dayName};
       });
-      const dayName = new Date(data.dateString).toLocaleString('en-us', {
-        weekday: 'long',
-      });
+      // const dayName = Intl.DateTimeFormat('en-US', {
+      //   timeZone: providerTimeZone,
+      //   weekday: 'long',
+      // }).format(data.dateString);
+      // const dayName = new Date(data.dateString).toLocaleString('en-us', {
+      //   weekday: 'long',
+      //   // timeZone: profileInfo.timezone,
+      // });
+      // const dayName = format(new Date(data.dateString), 'eeee', {
+      //   timeZone: profileInfo.timezone,
+      // });
+
       setValue('recurringStartDate', data.dateString);
-      setValue('selectedDays', [dayName]);
+      // setValue('selectedDays', [dayName]);
       setValue('repeatDate', next6Days);
     }
   };
