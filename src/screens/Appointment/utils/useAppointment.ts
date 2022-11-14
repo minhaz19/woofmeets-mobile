@@ -43,7 +43,6 @@ export const useAppointment = (providerOpk: string) => {
       selectedDays,
       multiDate,
     } = data;
-    console.log('data');
     if (isRecurring && serviceTypeId === 4 && recurringStartDate === '') {
       Alert.alert('You have to select recurring start date');
     } else if (serviceTypeId === 4 && !isRecurring && multiDate.length === 0) {
@@ -154,7 +153,6 @@ export const useAppointment = (providerOpk: string) => {
               })),
             }))
           : [];
-        console.log('sp', specificModDates, timeZone);
         const sortedRecurringDates = isRecurring
           ? recurringModDates.map((item: any, i: number) => ({
               id: i + 1,
@@ -240,9 +238,7 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
             };
-        console.log('res', dropDogPayload.proposalVisits);
         const response = await request(endpoint, dropDogPayload);
-        console.log('response', response);
         if (response.ok) {
           navigation.navigate('ActivityScreen', {
             appointmentOpk: response.data.data.appointment.opk,

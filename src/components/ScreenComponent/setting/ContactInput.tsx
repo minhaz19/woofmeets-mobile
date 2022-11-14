@@ -96,7 +96,6 @@ const ContactInput = (props: {handleSubmit: any}) => {
             phoneNumber: `${countryCode}${textInput}`,
           },
         );
-        console.log('otp res', response);
         if (!response.ok) {
           setPhoneNumberError(response.data.message);
           throw new Error(response.data.message);
@@ -209,7 +208,6 @@ const ContactInput = (props: {handleSubmit: any}) => {
                   show={show}
                   // when picker button press you will get the country object with dial code
                   pickerButtonOnPress={(item) => {
-                    console.log(item);
                     setCountryCode(item.dial_code);
                     setFlag(item.flag);
                     setShow(false);

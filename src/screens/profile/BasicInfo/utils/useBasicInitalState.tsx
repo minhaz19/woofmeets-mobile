@@ -15,7 +15,10 @@ export const useBasicInitalState = () => {
     state: userInfo?.basicInfo?.state ? userInfo?.basicInfo?.state : '',
     street: userInfo?.basicInfo?.street ? userInfo?.basicInfo?.street : '',
     zipCode: userInfo?.basicInfo?.zipCode ? userInfo?.basicInfo?.zipCode : '',
-    countryId: 1,
+    countryId: userInfo?.basicInfo?.countryId
+      ? String(userInfo.basicInfo.countryId)
+      : '',
+    // countryId: userInfo?.countryId ? userInfo.countryId : '',
     name:
       userInfo?.firstName || userInfo?.lastName
         ? `${userInfo.firstName + ' ' + userInfo.lastName}`

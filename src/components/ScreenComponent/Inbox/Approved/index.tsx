@@ -91,7 +91,7 @@ const ApprovedStatus = ({statusType}: Props) => {
                                   'iii LLL d',
                                 )}`
                               : `Starting From:  ${formatDate(
-                                  new Date(),
+                                  proposalDate?.proposalVisits[0]?.date,
                                   'iii LLL d',
                                 )}`
                             : // : `Starting From:  ${formatDate(
@@ -151,7 +151,7 @@ const ApprovedStatus = ({statusType}: Props) => {
                                   'iii LLL d',
                                 )}`
                               : `Starting From:  ${formatDate(
-                                  new Date(),
+                                  proposalDate.proposalVisits[0].date,
                                   'iii LLL d',
                                 )}`
                             : // : `Starting From:  ${formatDate(

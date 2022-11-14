@@ -9,10 +9,10 @@ import {getCurrentplan} from '../../../../store/slices/payment/Subscriptions/Cur
 import {getSubscription} from '../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
+import {baseUrlV} from '../../../../utils/helpers/httpRequest';
 
 const endpoint = '/subscriptions/check-basic-verification-payment';
-const subscriptionEndpoint =
-  'https://woof-api.hirebeet.com/v2/subscriptions/subscribe?';
+const subscriptionEndpoint = `${baseUrlV}/v2/subscriptions/subscribe?`;
 const defaultCardEndpoint = '/stripe-payment-method/default-card-info';
 export const useSubscription = () => {
   const uuid = Math.random().toString(36).substring(2, 36);

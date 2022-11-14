@@ -25,7 +25,7 @@ const GoogleAutoComplete = ({onPressAddress, label, placeholder}: Props) => {
         onPress={onPressAddress}
         query={{
           key: 'AIzaSyBfNC-SGgbvOOFj9FqoA6HQhrCh_hq5Zo0',
-          components: 'country:us',
+          // components: ':us',
         }}
         fetchDetails={true}
         onFail={() => {}}

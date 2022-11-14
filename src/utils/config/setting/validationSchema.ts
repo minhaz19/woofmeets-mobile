@@ -8,7 +8,7 @@ const basicInfoValidationSchema = Yup.object().shape({
   state: Yup.string().required('State is required'),
   street: Yup.string(),
   zipCode: Yup.string().required('Zip code is required'),
-  countryId: Yup.number(),
+  countryId: Yup.string().required('Country name is required'),
   name: Yup.string().required('Name is required'),
   dob: Yup.date().typeError('please enter a valid date').required(),
   // latitude: Yup.number().required('Address is required'),

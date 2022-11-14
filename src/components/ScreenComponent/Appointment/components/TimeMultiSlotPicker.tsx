@@ -12,16 +12,16 @@ const TimeMultiSlotPicker = ({
   visits,
   setValue,
 }: any) => {
-  const {handleMultipleCheck, newData, Dates, Days} = useTimeMultiSlotPicker(
+  const {handleMultipleCheck, times, Dates, Days} = useTimeMultiSlotPicker(
     singleItem,
     visits,
-    isRecurring,
+    // isRecurring,
   );
   return (
     <View style={styles.container}>
       <TitleText textStyle={{}} text={''} />
       <FlatList
-        data={newData}
+        data={times}
         horizontal
         keyExtractor={(item, index) => (item.slot + index).toString()}
         showsHorizontalScrollIndicator={false}
@@ -61,6 +61,7 @@ const TimeMultiSlotPicker = ({
                       handleMultipleCheck(item.id);
                     }
                   }
+
                   setValue('recurringModDates', Days);
                 } else if (!isRecurring) {
                   const matchDate = Dates?.findIndex(
@@ -94,6 +95,7 @@ const TimeMultiSlotPicker = ({
                       found.visits.splice(matchIndex, 1);
                     }
                   }
+
                   setValue('specificModDates', Dates);
                 }
               }}

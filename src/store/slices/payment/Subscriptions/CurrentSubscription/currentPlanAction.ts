@@ -2,12 +2,13 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../../../api/client';
+import {baseUrlV} from '../../../../../utils/helpers/httpRequest';
 export const getCurrentplan = createAsyncThunk(
   '/subscriptions/my-current-subscription',
   async () => {
     try {
       const response: ApiResponse<any> = await apiClient.get(
-        'https://woof-api.hirebeet.com/v2/subscriptions/my-current-subscription',
+        `${baseUrlV}/v2/subscriptions/my-current-subscription`,
       );
       if (!response.ok) {
         if (response.data) {

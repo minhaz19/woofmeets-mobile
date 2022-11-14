@@ -11,6 +11,7 @@ import {getCurrentplan} from '../../../store/slices/payment/Subscriptions/Curren
 
 import {Alert} from 'react-native';
 import {confirmPayment} from '@stripe/stripe-react-native';
+import {baseUrlV} from '../../../utils/helpers/httpRequest';
 const endpoint = '/stripe-payment-method/default-card-info';
 interface Props {
   navigation: any;
@@ -20,8 +21,7 @@ interface Props {
     };
   };
 }
-const subscriptionEndpoint =
-  'https://woof-api.hirebeet.com/v2/subscriptions/subscribe?';
+const subscriptionEndpoint = `${baseUrlV}/v2/subscriptions/subscribe?`;
 const PaymentMethods = ({route, navigation}: Props) => {
   const uuid = Math.random().toString(36).substring(2, 36);
   const dispatch = useAppDispatch();
