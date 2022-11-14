@@ -8,7 +8,8 @@ import {useFormContext} from 'react-hook-form';
 import {timeZones} from './utils/timeZones';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import AppDropDownSelect from '../../../common/AppDropDownSelect';
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import TimezoneDropDown from './TimezoneDropDown';
 interface Props {
   handleSubmit: (value: any) => void;
   loading: boolean;
@@ -25,7 +26,7 @@ const General = ({handleSubmit, loading}: Props) => {
     <ScrollView
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}>
-      <AppDropDownSelect
+      <TimezoneDropDown
         title={'Time Zone'}
         setValue={setValue}
         name={'timezone'}
