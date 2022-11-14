@@ -87,7 +87,7 @@ function BottomTabNavigator() {
             ),
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="ProRescheduleNavigator"
           component={ProRescheduleNavigator}
           options={{
@@ -107,8 +107,8 @@ function BottomTabNavigator() {
               </View>
             ),
           }}
-        />
-        {/* <Tab.Screen
+        /> */}
+        <Tab.Screen
           name="CalendarNavigator"
           component={CalendarNavigator}
           options={{
@@ -128,7 +128,7 @@ function BottomTabNavigator() {
               </View>
             ),
           }}
-        /> */}
+        />
         <Tab.Screen
           name="InboxNavigator"
           component={InboxNavigator}
