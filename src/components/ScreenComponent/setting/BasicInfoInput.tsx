@@ -20,9 +20,8 @@ import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 import DescriptionText from '../../common/text/DescriptionText';
 import GoogleAutoComplete from '../../common/GoogleAutoComplete';
-import AppSelectState from '../../common/Form/AppSelectState';
-import CustomStateChange from './CustomStateChange';
 import {states} from '../../../screens/profile/BasicInfo/utils/basicInfoState';
+import AppDropDownSelect from '../../common/AppDropDownSelect';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -30,8 +29,6 @@ interface Props {
 }
 
 const BasicInfoInput = ({handleSubmit, loading}: Props) => {
-  const [dropVisible, setDropVisible] = useState(false);
-  const [isState, setIsState] = useState(null);
   const {loading: gLoading, userInfo} = useAppSelector(
     state => state?.userProfile,
   );
@@ -49,6 +46,8 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   } = useFormContext();
   const dispatch = useAppDispatch();
   const basicData = getValues();
+  console.log(basicData.state);
+
   // add google address
   const onPressAddress = (data: any, details: any) => {
     const lat = details.geometry.location.lat;
@@ -62,6 +61,10 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     const state = details?.address_components.find((addressComponent: any) =>
       addressComponent.types.includes('administrative_area_level_1'),
     )?.long_name;
+    const country = details?.address_components.find((addressComponent: any) =>
+      addressComponent.types.includes('country'),
+    )?.long_name;
+    console.log('country', country);
     setValue('addressLine1', details?.formatted_address);
     setValue('lat', lat);
     setValue('lng', lng);
@@ -164,14 +167,13 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                       }
                     />
                   ) : item.name === 'state' ? (
-                    <AppSelectState
-                      placeholder={item.placeholder}
-                      setOpenDropDown={() => setDropVisible(!dropVisible)}
-                      label={item.title}
-                      isState={isState}
-                      dropVisible={dropVisible}
-                      control={control}
+                    <AppDropDownSelect
+                      title={item.title}
+                      setValue={setValue}
                       name={item.name}
+                      data={states}
+                      valueData={basicData.state}
+                      placeholder={item.placeholder}
                       errors={errors}
                     />
                   ) : (
@@ -202,20 +204,10 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                   />
                 </View>
               )}
-              <CustomStateChange
-                visible={dropVisible}
-                setVisible={setDropVisible}
-                title={'Select State'}
-                setValue={setValue}
-                setIsState={setIsState}
-                name={'state'}
-                data={states}
-                value={basicData.state}
-              />
             </>
           );
         },
-        [control, dropVisible, errors, getValues, setValue],
+        [control, errors, getValues, setValue],
       )}
       keyExtractor={(item, index) => item.name + index.toString()}
       ListHeaderComponent={renderHeader}
