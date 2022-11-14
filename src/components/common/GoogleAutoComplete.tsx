@@ -10,17 +10,24 @@ interface Props {
   onPressAddress: (data: any, details: any) => void;
   label?: string;
   placeholder: string;
+  value?: any;
 }
 
-const GoogleAutoComplete = ({onPressAddress, label, placeholder}: Props) => {
+const GoogleAutoComplete = ({
+  onPressAddress,
+  label,
+  placeholder,
+  // value,
+}: Props) => {
   const {colors, isDarkMode} = useTheme();
   return (
     <View>
       {label && <TitleText textStyle={styles.label} text={label} />}
       <GooglePlacesAutocomplete
         // ref={ref => {
-        //   ref?.setAddressText('hello world');
+        //   ref?.setAddressText(value);
         // }}
+        // listViewDisplayed={false}
         placeholder={placeholder}
         onPress={onPressAddress}
         query={{

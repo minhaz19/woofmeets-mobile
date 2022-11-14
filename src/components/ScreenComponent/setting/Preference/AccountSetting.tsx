@@ -14,6 +14,7 @@ import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
 import {useAppSelector} from '../../../../store/store';
 import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
+import {useNavigation} from '@react-navigation/native';
 
 const data = [
   {
@@ -29,17 +30,21 @@ const data = [
 ];
 
 const AccountSetting = () => {
+  const navigation = useNavigation();
   const [showSetting, setShowSetting] = useState(1);
   const {colors} = useTheme();
   const {user, loading} = useAppSelector(state => state.whoAmI);
+
   // Submit data
   const endPoint = '/user-profile/add-timezone';
   const {request, loading: Ploading} = useApi(methods._put);
   const handleSubmit = async (e: any) => {
+    console.log('eeeee', e);
     const result = await request(endPoint, e);
     Alert.alert('', result?.data?.data?.message, [
       {text: 'OK', onPress: () => {}},
     ]);
+    navigation.goBack();
   };
   return (
     <>

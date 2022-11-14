@@ -42,7 +42,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     control,
     setValue,
     getValues,
-    watch,
+
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
