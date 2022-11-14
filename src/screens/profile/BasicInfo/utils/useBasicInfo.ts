@@ -7,7 +7,7 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 const slug = '/user-profile/basic-info';
 
-export const useBasicInfo = () => {
+export const useBasicInfo = (route: any) => {
   const {userInfo} = useAppSelector(state => state.userProfile);
   const navigation = useNavigation();
   const {request, loading} = useApi(
@@ -30,7 +30,10 @@ export const useBasicInfo = () => {
     const result = await request(slug, formattedPayload);
     if (result.ok) {
       // Alert.alert('Information Updated!');
-      navigation.goBack();
+      // navigation.goBack();
+      if (route?.name) {
+        navigation.goBack();
+      }
       dispatch(getUserProfileInfo());
       dispatch(setProfileData({pass: 0}));
     } else {
@@ -38,5 +41,5 @@ export const useBasicInfo = () => {
     }
   };
 
-  return {loading, handleSubmit};
+  return {loading, handleSubmit}; 
 };

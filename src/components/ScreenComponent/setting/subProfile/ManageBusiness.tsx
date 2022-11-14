@@ -1,15 +1,29 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import HeaderText from '../../../common/text/HeaderText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../../../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import jwtDecode from 'jwt-decode';
+import storage from '../../../../utils/helpers/auth/storage';
 
 const ManageBusiness = (props: {
   navigation: {navigate: (arg0: string, arg1?: any) => any};
 }) => {
+  const [token, setToken] = useState<any>();
+  const getDecodedToken = async () => {
+    const tok: any = await storage.getToken();
+    if (tok) {
+      const decode: any = await jwtDecode(tok);
+      setToken(decode);
+      return decode;
+    }
+  };
+  useEffect(() => {
+    getDecodedToken();
+  }, []);
   const modifyProfileData = [
     {
       id: 1,
@@ -76,7 +90,9 @@ const ManageBusiness = (props: {
           style={styles.iconStyles}
         />
       ),
-      screen: () => {},
+      screen: () => {
+        Linking.openURL(`https://woofmeets.com/profile/view/${token?.opk}`)
+      },
     },
   ];
   const {colors} = useTheme();

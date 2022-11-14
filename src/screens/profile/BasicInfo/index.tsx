@@ -8,10 +8,9 @@ import {useBasicInfo} from './utils/useBasicInfo';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
 
-const BasicInfo = () => {
+const BasicInfo = ({route}) => {
   const {colors} = useTheme();
-  const {loading, handleSubmit} = useBasicInfo();
-
+  const {loading, handleSubmit} = useBasicInfo(route);
   return (
     <>
       <View

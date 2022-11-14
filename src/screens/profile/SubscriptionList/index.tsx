@@ -8,8 +8,9 @@ import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import {format} from 'date-fns';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import baseUrl from '../../../utils/helpers/httpRequest';
 const listEndpoint =
-  'https://woof-api.hirebeet.com/v1/subscriptions/all-subscriptions?page=1&limit=20&sortBy=createdAt&sortOrder=desc';
+  `${baseUrl}/subscriptions/all-subscriptions?page=1&limit=20&sortBy=createdAt&sortOrder=desc`;
 const SubscriptionList = () => {
   const {colors} = useTheme();
   const [listData, setListData] = useState([]);

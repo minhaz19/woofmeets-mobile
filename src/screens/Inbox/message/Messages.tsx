@@ -39,12 +39,15 @@ const Messages = (props: {roomId: any; opk: any}) => {
     getTokenDecoded();
   }, []);
   const getPreviousMessages = async () => {
-    const slug = `/v1/messages/group/${props.roomId}`;
-    setIsLoadingMsg(true);
-    const result = await apiMsg.get(slug);
-    if (result.ok) {
-      setMessages(result.data?.data?.reverse());
-      setIsLoadingMsg(false);
+    if (props.roomId) {
+      const slug = `/v1/messages/group/${props.roomId}`;
+      setIsLoadingMsg(true);
+      const result = await apiMsg.get(slug);
+      console.log(result);
+      if (result.ok) {
+        setMessages(result.data?.data?.reverse());
+        setIsLoadingMsg(false);
+      }
     }
   };
 

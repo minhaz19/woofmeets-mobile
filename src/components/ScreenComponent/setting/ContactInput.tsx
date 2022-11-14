@@ -2,6 +2,7 @@ import {
   ActivityIndicator,
   Alert,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -33,6 +34,7 @@ import {QuestionIcon} from '../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../becomeSitter/ServiceSetup/Common/ServiceReusableModal';
 import { CountryPicker } from 'react-native-country-codes-picker';
 import BigText from '../../common/text/BigText';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const contactInput = [
   {
@@ -68,6 +70,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
   const {request, loading} = useApi(methods._post);
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+1');
+  const [flag, setFlag] = useState();
 
   const mobilevalidate = (text: any) => {
     const reg = phoneNumberReg;
@@ -93,6 +96,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
             phoneNumber: `${countryCode}${textInput}`,
           },
         );
+        console.log('otp res', response);
         if (!response.ok) {
           setPhoneNumberError(response.data.message);
           throw new Error(response.data.message);
@@ -145,6 +149,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
             btn2Title="Resend Code"
             forgotPasswordOpt
             loading={loading}
+            onPress={handleSubmit}
           />
         </AppForm>
       </MiddleModal>
@@ -180,9 +185,19 @@ const ContactInput = (props: {handleSubmit: any}) => {
                 leftIcon={<TouchableOpacity
                   onPress={() => setShow(true)}
                   style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
-                  <BigText text={countryCode} />
+                  {/* <Text style={{width: 30, color: 'transparent', backgroundColor: 'green'}}>{flag}</Text> */}
+                  <BigText text={countryCode} textStyle={{color: Colors.blue}}/>
+                  <AntDesign
+                    name="caretdown"
+                    size={12}
+                    color={Colors.blue}
+                    style={{paddingLeft: 5}}
+                  />
                 </TouchableOpacity>}
                 keyboardType="numeric"
                 onChangeText={number => {
@@ -190,10 +205,13 @@ const ContactInput = (props: {handleSubmit: any}) => {
                 }}
               />
               <CountryPicker
+                  withFlag
                   show={show}
                   // when picker button press you will get the country object with dial code
                   pickerButtonOnPress={(item) => {
+                    console.log(item);
                     setCountryCode(item.dial_code);
+                    setFlag(item.flag);
                     setShow(false);
                   }}
                 />

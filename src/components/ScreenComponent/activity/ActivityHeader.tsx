@@ -42,7 +42,7 @@ const ActivityHeader = (props: {
       dispatch(getProviderProposal(proposedServiceInfo.appointmentOpk));
       dispatch(getAppointmentStatus('PROPOSAL'));
       dispatch(getProviderApnt('PROPOSAL'));
-      navigation.navigate('Inbox');
+      navigation.navigate('InboxNavigator');
     } else {
       Alert.alert(result?.data?.message);
     }
@@ -67,7 +67,7 @@ const ActivityHeader = (props: {
             if (r.ok) {
               dispatch(getAppointmentStatus('PAID'));
               dispatch(getProviderApnt('PAID'));
-              navigation.navigate('Inbox');
+              navigation.navigate('InboxNavigator');
             } else if (!r.ok) {
               Alert.alert(r.data.message);
             }
@@ -92,7 +92,7 @@ const ActivityHeader = (props: {
             if (r.ok) {
               dispatch(getAppointmentStatus('PROPOSAL'));
               dispatch(getProviderApnt('PROPOSAL'));
-              navigation.navigate('Inbox');
+              navigation.navigate('InboxNavigator');
             } else if (!r.ok) {
               Alert.alert(r.data.message);
             }
@@ -110,7 +110,7 @@ const ActivityHeader = (props: {
             <TouchableOpacity
               style={styles.leftContainer}
               onPress={() => {
-                navigation.navigate('Inbox');
+                navigation.navigate('InboxNavigator');
               }}>
               <Ionicons
                 name="ios-chevron-back"

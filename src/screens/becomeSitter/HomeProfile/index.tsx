@@ -205,7 +205,7 @@ const HomeProfile = () => {
                 </View>
               ),
             )}
-          <View style={styles.footerContainer}>
+          {/* <View style={styles.footerContainer}>
             <ButtonCom
               title="Save and Continue"
               textAlignment={btnStyles.textAlignment}
@@ -214,7 +214,7 @@ const HomeProfile = () => {
               onSelect={onServicePostHandle}
               // loading={isloading}
             />
-          </View>
+          </View> */}
         </ScrollView>
       )}
     </>

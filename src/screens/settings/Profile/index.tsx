@@ -84,8 +84,9 @@ const Profile = (props: {
               ]}
               onPress={async () => {
                 await dispatch(getProviderProfile(token?.opk));
-                navigation.navigate('ProviderNavigator', {
+                navigation.navigate('ProviderProfile', {
                   providerOpk: token?.opk,
+                  isSelfProfile: true,
                 });
               }}>
               <ShortText text="View Profile" textStyle={styles.text} />

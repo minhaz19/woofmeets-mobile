@@ -10,16 +10,12 @@ export const genders = [
 ];
 export const contries = [
   {
-    label: 'Bangladesh',
-    value: 'Bangladesh',
-  },
-  {
     label: 'USA',
-    value: 'USA',
+    value: '1',
   },
   {
-    label: 'India',
-    value: 'India',
+    label: 'Canada',
+    value: '2',
   },
 ];
 

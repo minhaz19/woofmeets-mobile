@@ -15,6 +15,7 @@ interface Props {
 }
 const ProviderProfile = ({route}: Props) => {
   const providerOpk = route?.params?.providerOpk;
+  const isSelfProfile = route?.params?.isSelfProfile;
   const {colors} = useTheme();
   const _renderHeader = () => null;
   const _renderFooter = () => (
@@ -52,15 +53,17 @@ const ProviderProfile = ({route}: Props) => {
         ListHeaderComponent={_renderHeader}
         ListFooterComponent={_renderFooter}
       />
-      <View style={styles.footerContainer}>
-        <ButtonCom
-          title={'Hire This Sitter'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={handleSubmit}
-        />
-      </View>
+      {isSelfProfile ? null : (
+        <View style={styles.footerContainer}>
+          <ButtonCom
+            title={'Hire This Sitter'}
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={btnStyles.containerStyleFullWidth}
+            titleStyle={btnStyles.titleStyle}
+            onSelect={handleSubmit}
+          />
+        </View>
+      )}
     </View>
   );
 };
