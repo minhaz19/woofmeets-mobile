@@ -1,8 +1,10 @@
 import {useMemo, useState} from 'react';
 import {useWatch} from 'react-hook-form';
+// import {useAppSelector} from '../../../../../store/store';
 
-let modData: any = [];
+// let modData: any = [];
 export const useDayTimeSlot = () => {
+  // const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {
     selectedDays,
     isRecurring,
@@ -12,7 +14,7 @@ export const useDayTimeSlot = () => {
     specificModDates,
   } = useWatch();
 
-  const [newData, setDatas] = useState(modData);
+  const [newData, setDatas] = useState([]);
   const getRecurringDays = (rd: any, rsd: any, pod: any) => {
     const output = rd?.filter((obj: any) => {
       return rsd.indexOf(obj.day) !== -1;

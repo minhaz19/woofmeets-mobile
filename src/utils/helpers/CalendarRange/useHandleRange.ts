@@ -8,6 +8,7 @@ let orderMultiDates: any = [];
 export const useHandleRange = (
   type: string,
   setValue?: (arg: string, arg2: any) => void,
+  selectColor?: string,
 ) => {
   const [_markedStyle, setMarkedStyle] = useState({});
   const {
@@ -93,6 +94,7 @@ export const useHandleRange = (
       const {styledMarkedRange, orderRange} = orderAndStyleRange(
         range,
         'RANGE',
+        selectColor,
       );
       setMarkedStyle(styledMarkedRange);
       // dispatch(storeMarkStyle(styledMarkedRange));

@@ -19,7 +19,7 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import {format} from 'date-fns';
 import {getAvailableDays} from '../../../../store/slices/Provider/Unavailability/getAvailableDay';
-import baseUrl from '../../../../utils/helpers/httpRequest';
+import {baseUrlV} from '../../../../utils/helpers/httpRequest';
 import {setOpenSettings} from '../../../../store/slices/misc/openFilter';
 interface Props {
   startingDate: string;
@@ -29,14 +29,9 @@ interface Props {
   monthRef: any;
   resetSelection: any;
   getAvailablity: any;
-  // setAvailableDays: (arg: any) => void;
-  // setModMarkDate: (arg: any) => void;
-  // setResetLoading: (arg: any) => void;
-  // setResetAvailableService: (arg: any) => void;
-  // _markedStyle: any;
 }
 const dayAvEndpoint = '/availability/';
-const unavailabilityEndpoint = `${baseUrl}/v2/unavailability`;
+const unavailabilityEndpoint = `${baseUrlV}/v2/unavailability`;
 const availablityEndpoint = '/availability/add-dates';
 const EditCart = ({
   startingDate,
@@ -45,12 +40,7 @@ const EditCart = ({
   foundAvailable,
   monthRef,
   resetSelection,
-}: // setAvailableDays,
-// setModMarkDate,
-// setResetAvailableService,
-// setResetLoading,
-// _markedStyle,
-Props) => {
+}: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const {colors, isDarkMode} = useTheme();
 
@@ -148,6 +138,7 @@ Props) => {
     };
 
     const result = await request(availablityEndpoint, payload);
+
     if (result.ok) {
       const monthData = {
         year: new Date(startingDate).getFullYear(),

@@ -14,7 +14,8 @@ export const useBasicInfo = (route: any) => {
     userInfo?.basicInfo === null ? methods._post : methods._update,
   );
   const dispatch = useAppDispatch();
-  const handleSubmit = async (e: any) => {
+
+  const handleSubmit = async (e: any, ) => {
     const formattedPayload = {
       addressLine1: e.addressLine1,
       // addressLine2: e.addressLine2,
@@ -22,7 +23,7 @@ export const useBasicInfo = (route: any) => {
       city: e.city,
       state: e.state,
       zipCode: e.zipCode,
-      countryId: e.countryId,
+      countryId: Number(e.countryId),
       dob: e.dob,
       latitude: e.lat,
       longitude: e.lng,
@@ -41,5 +42,5 @@ export const useBasicInfo = (route: any) => {
     }
   };
 
-  return {loading, handleSubmit}; 
+  return {loading, handleSubmit};
 };

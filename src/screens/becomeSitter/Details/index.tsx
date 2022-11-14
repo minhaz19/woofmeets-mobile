@@ -30,7 +30,6 @@ const SitterDetails = ({route, navigation}) => {
   const sitterInfo = useAppSelector(
     state => state.details.sitterInfo?.providerDetails,
   );
-  console.log(route);
   const sitterDetailsSubmit = async (sitterData: any) => {
     setIsLoading(true);
     const mtd = sitterInfo ? 'patch' : 'post';

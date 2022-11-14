@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Colors from '../../../constants/Colors';
 import {Dropdown} from 'react-native-element-dropdown';
 import Text_Size from '../../../constants/textScaling';
@@ -34,12 +34,18 @@ const AppSelect = ({
     (item: any) => {
       return (
         <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
-          <TitleText textStyle={{...styles.selectedTextStyle, color: colors.headerText}} text={item.label} />
+          <TitleText
+            textStyle={{...styles.selectedTextStyle, color: colors.headerText}}
+            text={item.label}
+          />
         </View>
       );
     },
     [colors.backgroundColor],
   );
+  useEffect(() => {
+    setValuee(defaultText);
+  }, [defaultText]);
   return (
     <View>
       <Dropdown
@@ -50,9 +56,18 @@ const AppSelect = ({
             borderColor: isDarkMode ? Colors.gray : Colors.border,
           },
         ]}
-        placeholderStyle={{...styles.placeholderStyle, color: colors.descriptionText}}
-        selectedTextStyle={{...styles.selectedTextStyle, color: colors.headerText}}
-        inputSearchStyle={{...styles.inputSearchStyle, color: colors.headerText}}
+        placeholderStyle={{
+          ...styles.placeholderStyle,
+          color: colors.descriptionText,
+        }}
+        selectedTextStyle={{
+          ...styles.selectedTextStyle,
+          color: colors.headerText,
+        }}
+        inputSearchStyle={{
+          ...styles.inputSearchStyle,
+          color: colors.headerText,
+        }}
         iconStyle={styles.iconStyle}
         containerStyle={{
           backgroundColor: colors.backgroundColor,
@@ -63,7 +78,7 @@ const AppSelect = ({
         labelField="label"
         valueField="value"
         placeholder={!isFocus ? placeholder : '...'}
-        value={isService ? isService?.service : value}
+        value={isService.service !== '' ? isService?.service : value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         disable={disable}

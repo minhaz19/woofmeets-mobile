@@ -25,7 +25,7 @@ function isBeforeToday(date: Date) {
   return date < today;
 }
 const AvailablityCalendar = () => {
-  const {colors} = useTheme();
+  const {isDarkMode, colors} = useTheme();
   const [preMarked, setPremarked] = useState({});
   const [availabledays, setAvailableDays] = useState([]);
   const [resetAvailableService, setResetAvailableService] = useState([]);
@@ -34,6 +34,7 @@ const AvailablityCalendar = () => {
   const [monthRef, setMonthRef] = useState({});
   const {loading, availabileDates, getAvailablity, availableService} =
     useProviderAvailability();
+  const selectColor = isDarkMode ? Colors.background : Colors.black;
 
   const [foundAvailable, setFoundAvailable] = useState(false);
   const {
@@ -43,7 +44,7 @@ const AvailablityCalendar = () => {
     endingDate,
     handleDayPress,
     resetSelection,
-  } = useHandleRange(selectType);
+  } = useHandleRange(selectType, undefined, selectColor);
   const dispatch = useAppDispatch();
   useMemo(() => {
     const preStyled = availabledays.map((_: string, i: number) => ({
@@ -119,7 +120,9 @@ const AvailablityCalendar = () => {
               [singleSelect]: {
                 customStyles: {
                   container: {
-                    backgroundColor: Colors.primary,
+                    backgroundColor: isDarkMode
+                      ? Colors.background
+                      : Colors.black,
                     elevation: 2,
                     borderRadius: 10,
 

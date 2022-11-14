@@ -147,7 +147,7 @@ const ServiceSetting = () => {
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
             onSelect={
-              user.provider?.isApproved
+              user?.provider?.isApproved
                 ? () => navigation.navigate('ServiceSelection')
                 : () =>
                     Alert.alert(

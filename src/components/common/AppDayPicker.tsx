@@ -4,7 +4,7 @@ import TitleText from './text/TitleText';
 import Colors from '../../constants/Colors';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Text_Size from '../../constants/textScaling';
-// import {useFormContext} from 'react-hook-form';
+import {useFormContext} from 'react-hook-form';
 
 const day = [
   'Monday',
@@ -20,7 +20,7 @@ interface Props {
   watch: any;
   setValue: any;
 }
-const AppDayPicker = ({watch, setValue}: Props) => {
+const AppDayPicker = ({}: Props) => {
   const [newData, setDatas] = useState<any>([]);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];
@@ -28,7 +28,7 @@ const AppDayPicker = ({watch, setValue}: Props) => {
     newArray[index].active = !newArray[index].active;
     setDatas(newArray);
   };
-  // const {setValue, watch} = useFormContext();
+  const {setValue, watch} = useFormContext();
   const {
     selectedDays: sDays,
 
@@ -64,11 +64,11 @@ const AppDayPicker = ({watch, setValue}: Props) => {
               if (matchIndex === -1) {
                 selectedDays.push(item.value);
               } else {
-                selectedDays.splice(matchIndex, 1);
                 const updatedRMD = recurringModDates.filter(
                   (it: any) => it.date !== item.value,
                 );
                 setValue('recurringModDates', updatedRMD);
+                selectedDays.splice(matchIndex, 1);
               }
               setValue('selectedDays', selectedDays);
               handleMultipleCheck(item.id);

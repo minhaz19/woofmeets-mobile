@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import PackageCard from '../packages/PackageCard';
 import {useUpgradeSubscription} from './utils/useUpgradeSubs';
@@ -14,7 +14,11 @@ const UpgradePlan = () => {
   const {formattedPackageRate, handleSubmit, onPressEvent, sequence} =
     useUpgradeSubscription();
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={[
+        styles.container,
+        {backgroundColor: isDarkMode ? colors.backgroundColor : Colors.iosBG},
+      ]}>
       {/* <QuestionModals upgradePlan={true} /> */}
       <View
         style={{
@@ -54,7 +58,7 @@ const UpgradePlan = () => {
           loading={false}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

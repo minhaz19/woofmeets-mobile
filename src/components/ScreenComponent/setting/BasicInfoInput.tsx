@@ -42,11 +42,11 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     control,
     setValue,
     getValues,
+    watch,
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
   const basicData = getValues();
-  console.log(basicData.state);
 
   // add google address
   const onPressAddress = (data: any, details: any) => {
@@ -63,14 +63,20 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     )?.long_name;
     const country = details?.address_components.find((addressComponent: any) =>
       addressComponent.types.includes('country'),
-    )?.long_name;
-    console.log('country', country);
+    )?.short_name;
     setValue('addressLine1', details?.formatted_address);
     setValue('lat', lat);
     setValue('lng', lng);
-    setValue('city', city);
-    setValue('state', state);
-    setValue('zipCode', zipCode);
+    setValue('city', city ? city : '');
+    setValue('state', state ? state : '');
+    setValue('zipCode', zipCode ? zipCode : '');
+    setValue(
+      'countryId',
+      country === 'US' ? '1' : country === 'CA' ? '2' : null,
+      {
+        shouldValidate: true,
+      },
+    );
   };
 
   const renderHeader = useCallback(() => {
@@ -197,9 +203,10 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                 <View style={styles.selectContainer}>
                   <AppSelectField
                     label={item.title}
-                    name={item.name}
+                    name={'countryId'}
                     data={contries}
                     control={control}
+                    defaultText={basicData.countryId}
                     placeholder={'Please select a country'}
                   />
                 </View>

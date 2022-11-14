@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import methods from '../../../../../api/methods';
 import {useApi} from '../../../../../utils/helpers/api/useApi';
-// import {getDates} from '../../../Service/ProviderProfile/ProvderTab/components/Services/component/utils/getDates';
 import {getSelectedDates} from './getSelectDates';
 
 const endPoint = '/availability/all-service';
