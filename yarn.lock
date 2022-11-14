@@ -8561,6 +8561,11 @@ react-native-draggable-grid@^2.1.6:
   resolved "https://registry.yarnpkg.com/react-native-draggable-grid/-/react-native-draggable-grid-2.1.6.tgz#87a6c40797b15e874dbd305c3bca6d08bb2b1f5d"
   integrity sha512-yIuOwQziFBvBbn+6Q62SFo2dOdJtFv6uvAIx7eMarfz3i4yp6ZtvNsIxlZlPCP7hdpNAeyX/9da+2kb7gIlcyA==
 
+react-native-dropdown-select-list@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-dropdown-select-list/-/react-native-dropdown-select-list-2.0.2.tgz#12fc6810de3ea05f065ecf418ec2638d64a04ef4"
+  integrity sha512-dxbhsO6DHxN5Ex5koVIAWO5E9R6ENNzbVjSoBVi8dcQkd1ubD31eCmdJXd4+VzEpXZ2em61kzILqyksRkLtS5w==
+
 react-native-element-dropdown@^2.2.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/react-native-element-dropdown/-/react-native-element-dropdown-2.3.1.tgz#f17b0723b13628a1ec01c6cdb652429823d20476"

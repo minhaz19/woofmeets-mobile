@@ -31,8 +31,7 @@ const data = [
 const AccountSetting = () => {
   const [showSetting, setShowSetting] = useState(1);
   const {colors} = useTheme();
-  const {user, loading} = useAppSelector(state => state.whoAmI); 
-
+  const {user, loading} = useAppSelector(state => state.whoAmI);
   // Submit data
   const endPoint = '/user-profile/add-timezone';
   const {request, loading: Ploading} = useApi(methods._put);
@@ -72,7 +71,8 @@ const AccountSetting = () => {
             initialValues={{timezone: user?.timezone ? user?.timezone : ''}}
             validationSchema={Yup.object().shape({
               timezone: Yup.string().required('time zone is required'),
-            })}>
+            })}
+            enableReset>
             <General handleSubmit={handleSubmit} loading={Ploading} />
           </AppForm>
         )}
