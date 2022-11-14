@@ -23,13 +23,14 @@ import AppForm from '../../../components/common/Form/AppForm';
 import ScrollViewRapperRefresh from '../../../components/common/ScrollViewRapperRefresh';
 import BulletPoints from '../../../components/UI/Points/BulletPoints';
 
-const SitterDetails = () => {
+const SitterDetails = ({route, navigation}) => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const sitterInfo = useAppSelector(
     state => state.details.sitterInfo?.providerDetails,
   );
+  console.log(route);
   const sitterDetailsSubmit = async (sitterData: any) => {
     setIsLoading(true);
     const mtd = sitterInfo ? 'patch' : 'post';
@@ -43,6 +44,9 @@ const SitterDetails = () => {
     await dispatch(postSitterDetails(data));
     await dispatch(getSitterDetails());
     setIsLoading(false);
+    if (route?.name) {
+      return navigation.goBack();
+    }
     dispatch(setProfileData({pass: 2}));
     // new update onboarding
     dispatch(setSitterData({pass: 2}));

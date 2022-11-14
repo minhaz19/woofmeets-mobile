@@ -2,10 +2,10 @@ import {View, StyleSheet} from 'react-native';
 import React from 'react';
 import ContactScreen from '../../profile/ContactScreen/ContactScreen';
 
-const PhoneNumberSitter = () => {
+const PhoneNumberSitter = ({route}) => {
   return (
     <View style={styles.container}>
-      <ContactScreen />
+      <ContactScreen route={route} />
     </View>
   );
 };

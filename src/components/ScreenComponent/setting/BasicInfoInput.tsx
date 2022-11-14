@@ -197,10 +197,8 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                     label={item.title}
                     name={item.name}
                     data={contries}
-                    disable={true}
                     control={control}
-                    placeholder={'USA'}
-                    defaultText="USA"
+                    placeholder={'Please select a country'}
                   />
                 </View>
               )}

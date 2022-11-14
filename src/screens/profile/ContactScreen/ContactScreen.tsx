@@ -16,11 +16,16 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {setProfileData} from '../../../store/slices/onBoarding/initial';
 import AppForm from '../../../components/common/Form/AppForm';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
 
-const ContactScreen = () => {
+const ContactScreen = ({route}) => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
   const emergencyContactSubmit = (contactData: any) => {
+    if (route?.name) {
+      navigation.goBack();
+    }
     dispatch(postContactInfo(contactData));
     dispatch(setProfileData({pass: 1}));
   };
