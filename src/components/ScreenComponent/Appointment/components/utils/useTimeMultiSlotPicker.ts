@@ -80,6 +80,5 @@ export const useTimeMultiSlotPicker = (
   //     }
   //   }
   // }, [isRecurring, singleItem]);
-  console.log('days mod', Days);
   return {handleMultipleCheck, times, Dates, Days};
 };
