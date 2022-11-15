@@ -354,15 +354,16 @@ export const useModifyAppointment = (route: any) => {
     await dispatch(getAllPets());
     setRefreshing(false);
   };
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
+
   useEffect(() => {
     if (socket === null) {
       let tempSocket = io(`${msgUrl}`);
       setSocket(tempSocket);
     }
   }, [socket]);
-
-  useEffect(() => {
-    onRefresh();
-  }, []);
   return {handleSubmit, loading, refreshing, onRefresh};
 };

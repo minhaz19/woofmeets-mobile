@@ -27,16 +27,16 @@ const DeclinedStatus = ({statusType}: Props) => {
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
     setRefreshing(true);
-    statusType === 'USER' && (await dispatch(getUserCanceled('CANCELLED')));
+    statusType === 'USER' && (await dispatch(getUserCanceled('REJECTED')));
     statusType === 'PROVIDER' &&
-      (await dispatch(getProviderCancelled('CANCELLED')));
+      (await dispatch(getProviderCancelled('REJECTED')));
 
     setRefreshing(false);
   };
   useEffect(() => {
     onRefresh();
   }, [statusType]);
-
+  console.log('delcined ', userCancelled, providerCancelled);
   return (
     <>
       {loading ? (

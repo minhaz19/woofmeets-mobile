@@ -39,7 +39,6 @@ const AccountSetting = () => {
   const endPoint = '/user-profile/add-timezone';
   const {request, loading: Ploading} = useApi(methods._put);
   const handleSubmit = async (e: any) => {
-    console.log('eeeee', e);
     const result = await request(endPoint, e);
     Alert.alert('', result?.data?.data?.message, [
       {text: 'OK', onPress: () => {}},
