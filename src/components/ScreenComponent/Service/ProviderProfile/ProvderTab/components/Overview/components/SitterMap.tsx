@@ -15,33 +15,40 @@ const SitterMap = () => {
         <MapMarker />
         <ShortText textStyle={styles.shortText} text="1.5 mile away from you" />
       </View> */}
-      <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          region={{
-            latitude: location?.latitude ? location?.latitude : 18.476223,
-            longitude: location?.longitude ? location?.longitude : -77.89389,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}>
-          <Marker
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
-            // title={'Meers home'}
-            // description={'Meers wife home'}
-          >
-            <Image
-              source={{
-                uri: 'https://toppng.com/uploads/preview/map-point-google-map-marker-gif-11562858751s4qufnxuml.png',
-              }}
-              style={{width: 46, height: 46}}
-              resizeMode="contain"
-            />
-          </Marker>
-        </MapView>
-      </View>
+      {location?.latitude !== undefined ||
+        (location.longitude !== undefined && (
+          <View style={styles.container}>
+            <MapView
+              style={styles.map}
+              region={{
+                latitude: location?.latitude ? location?.latitude : 18.476223,
+                longitude: location?.longitude
+                  ? location?.longitude
+                  : -77.89389,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+              }}>
+              <Marker
+                coordinate={{
+                  latitude: location?.latitude ? location?.latitude : 18.476223,
+                  longitude: location?.longitude
+                    ? location?.longitude
+                    : -77.89389,
+                }}
+                // title={'Meers home'}
+                // description={'Meers wife home'}
+              >
+                <Image
+                  source={{
+                    uri: 'https://toppng.com/uploads/preview/map-point-google-map-marker-gif-11562858751s4qufnxuml.png',
+                  }}
+                  style={{width: 46, height: 46}}
+                  resizeMode="contain"
+                />
+              </Marker>
+            </MapView>
+          </View>
+        ))}
     </>
   );
 };
