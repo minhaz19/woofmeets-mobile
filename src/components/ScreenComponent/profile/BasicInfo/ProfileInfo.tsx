@@ -1,16 +1,21 @@
 import {View, Image, StyleSheet} from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import HeaderText from '../../../common/text/HeaderText';
 import ShortText from '../../../common/text/ShortText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import {useAppSelector} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import changeTextLetter from '../../../common/changeTextLetter';
+import { getUserProfileInfo } from '../../../../store/slices/userProfile/userProfileAction';
 const img =
   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 const ProfileInfo = () => {
   const {colors} = useTheme();
   const {userInfo} = useAppSelector(state => state.userProfile);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getUserProfileInfo())
+  }, [])
   return (
     <View style={styles.topContainer}>
       <View
@@ -34,7 +39,7 @@ const ProfileInfo = () => {
             }`}
           />
           <View>
-            <ShortText text="Hey there! I am ………" />
+            <ShortText text={userInfo?.provider?.providerDetails?.about} />
           </View>
         </View>
       </View>
