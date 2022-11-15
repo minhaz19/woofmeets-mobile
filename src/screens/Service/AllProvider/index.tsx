@@ -24,6 +24,7 @@ import {SCREEN_HEIGHT} from '../../../constants/WindowSize';
 import IOSButton from '../../../components/UI/IOSButton';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import BigText from '../../../components/common/text/BigText';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 
 interface Props {
   navigation: {
@@ -36,6 +37,9 @@ const AllProvider = ({navigation}: Props) => {
   const [limit] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
   const filter = useAppSelector((state: any) => state.filter.isOpen);
+  const {loading: loadingProivder} = useAppSelector(
+    state => state.providerProfile,
+  );
   const {formattedData} = useAppSelector((state: any) => state.providerFilter);
   const {
     allProvider,
@@ -96,59 +100,62 @@ const AllProvider = ({navigation}: Props) => {
   };
 
   return (
-    <ScreenRapperGrey>
-      {loadingOneTime && <AllProviderLoader />}
-      <Screen style={styles.container}>
-        {allProvider ? (
-          <>
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={allProvider}
-              keyExtractor={(_, i) => i.toString()}
-              renderItem={({item}) => {
-                return (
-                  <ProviderList
-                    item={item}
-                    onPress={async () => {
-                      await dispatch(
-                        getProviderProfile(item.provider?.user?.opk),
-                      );
-                      navigation.navigate('ProviderProfile', {
-                        providerOpk: item.provider?.user?.opk,
-                      });
-                    }}
-                  />
-                );
-              }}
-              ListFooterComponent={renderLoader}
-              ListHeaderComponent={renderHeader}
-              onEndReached={loadMoreItem}
-              onEndReachedThreshold={0.2}
-              // refreshControl={
-              //   <RefreshControl
-              //     refreshing={isRefreshing}
-              //     onRefresh={handleRefresh}
-              // />
-              // }
-            />
-          </>
-        ) : (
-          <View style={{justifyContent: 'center', height: SCREEN_HEIGHT}}>
-            <BigText text={message} textStyle={{textAlign: 'center'}} />
-            <IOSButton
-              title={'Search Again'}
-              textAlignment={btnStyles.textAlignment}
-              containerStyle={btnStyles.containerStyleFullWidth}
-              titleStyle={{color: Colors.blue}}
-              onSelect={() => navigation.goBack()}
-            />
-          </View>
-        )}
-        <BottomHalfModal isModalVisible={filter}>
-          <FilterProvider />
-        </BottomHalfModal>
-      </Screen>
-    </ScreenRapperGrey>
+    <>
+      {loadingProivder && <AppActivityIndicator visible={true} />}
+      <ScreenRapperGrey>
+        {loadingOneTime && <AllProviderLoader />}
+        <Screen style={styles.container}>
+          {allProvider ? (
+            <>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={allProvider}
+                keyExtractor={(_, i) => i.toString()}
+                renderItem={({item}) => {
+                  return (
+                    <ProviderList
+                      item={item}
+                      onPress={async () => {
+                        await dispatch(
+                          getProviderProfile(item.provider?.user?.opk),
+                        );
+                        navigation.navigate('ProviderProfile', {
+                          providerOpk: item.provider?.user?.opk,
+                        });
+                      }}
+                    />
+                  );
+                }}
+                ListFooterComponent={renderLoader}
+                ListHeaderComponent={renderHeader}
+                onEndReached={loadMoreItem}
+                onEndReachedThreshold={0.2}
+                // refreshControl={
+                //   <RefreshControl
+                //     refreshing={isRefreshing}
+                //     onRefresh={handleRefresh}
+                // />
+                // }
+              />
+            </>
+          ) : (
+            <View style={{justifyContent: 'center', height: SCREEN_HEIGHT}}>
+              <BigText text={message} textStyle={{textAlign: 'center'}} />
+              <IOSButton
+                title={'Search Again'}
+                textAlignment={btnStyles.textAlignment}
+                containerStyle={btnStyles.containerStyleFullWidth}
+                titleStyle={{color: Colors.blue}}
+                onSelect={() => navigation.goBack()}
+              />
+            </View>
+          )}
+          <BottomHalfModal isModalVisible={filter}>
+            <FilterProvider />
+          </BottomHalfModal>
+        </Screen>
+      </ScreenRapperGrey>
+    </>
   );
 };
 

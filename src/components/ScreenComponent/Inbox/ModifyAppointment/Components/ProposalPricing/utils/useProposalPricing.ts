@@ -66,14 +66,18 @@ export const useProposalPricing = () => {
         );
       };
       const result: any = await callApi(750);
-      setPricingInfo([
-        ...result.data.petsRates,
-        {
-          id: result.data.petsRates.length,
-          subTotal: result.data.subTotal,
-          name: 'subTotal',
-        },
-      ]);
+      if (result.ok) {
+        setPricingInfo([
+          ...result.data.petsRates,
+          {
+            id: result.data.petsRates.length,
+            subTotal: result.data.subTotal,
+            name: 'subTotal',
+          },
+        ]);
+      } else {
+        Alert.alert(result.data.message);
+      }
     } else if (
       proposedServiceInfo.serviceTypeId === 3 ||
       proposedServiceInfo.serviceTypeId === 5
@@ -135,14 +139,18 @@ export const useProposalPricing = () => {
           );
         };
         const result: any = await callApi(750);
-        setPricingInfo([
-          ...result.data.petsRates,
-          {
-            id: result.data.petsRates.length,
-            subTotal: result.data.subTotal,
-            name: 'subTotal',
-          },
-        ]);
+        if (result.ok) {
+          setPricingInfo([
+            ...result.data.petsRates,
+            {
+              id: result.data.petsRates.length,
+              subTotal: result.data.subTotal,
+              name: 'subTotal',
+            },
+          ]);
+        } else {
+          Alert.alert(result.data.message);
+        }
       }
     } else if (proposedServiceInfo.serviceTypeId === 4) {
       if (proposedServiceInfo.isRecurring) {
@@ -166,14 +174,18 @@ export const useProposalPricing = () => {
           },
         };
         const result = await postRequest(dayCareEndpoint, payload);
-        setPricingInfo([
-          ...result.data.petsRates,
-          {
-            id: result.data.petsRates.length,
-            subTotal: result.data.subTotal,
-            name: 'subTotal',
-          },
-        ]);
+        if (result.ok) {
+          setPricingInfo([
+            ...result.data.petsRates,
+            {
+              id: result.data.petsRates.length,
+              subTotal: result.data.subTotal,
+              name: 'subTotal',
+            },
+          ]);
+        } else {
+          Alert.alert(result.data.message);
+        }
       } else {
         const payload = {
           serviceId: proposedServiceInfo.providerServiceId,
@@ -198,14 +210,18 @@ export const useProposalPricing = () => {
           );
         };
         const result: any = await callApi(750);
-        setPricingInfo([
-          ...result.data.petsRates,
-          {
-            id: result.data.petsRates.length,
-            subTotal: result.data.subTotal,
-            name: 'subTotal',
-          },
-        ]);
+        if (result.ok) {
+          setPricingInfo([
+            ...result.data.petsRates,
+            {
+              id: result.data.petsRates.length,
+              subTotal: result.data.subTotal,
+              name: 'subTotal',
+            },
+          ]);
+        } else {
+          Alert.alert(result.data.message);
+        }
       }
     }
   }, [

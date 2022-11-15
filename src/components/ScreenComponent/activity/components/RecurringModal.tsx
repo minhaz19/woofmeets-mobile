@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import React from 'react';
 import BottomHalfModal from '../../../UI/modal/BottomHalfModal';
 import TitleText from '../../../common/text/TitleText';
@@ -33,12 +33,15 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
   const handleGenerate = async () => {
     const result = await request(
       regenerateEndpoint + proposedServiceInfo?.appointmentOpk,
+      {},
     );
     if (result.ok) {
       dispatch(setBillingId(result.data.data.billing.id));
       dispatch(getProviderProposal(proposedServiceInfo?.appointmentOpk));
       setRegenerateModal(false);
       navigation.navigate('Checkout');
+    } else {
+      Alert.alert(result.data.message);
     }
   };
   return (

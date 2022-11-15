@@ -30,8 +30,6 @@ export const useBasicInfo = (route: any) => {
     };
     const result = await request(slug, formattedPayload);
     if (result.ok) {
-      // Alert.alert('Information Updated!');
-      // navigation.goBack();
       if (route?.name) {
         navigation.goBack();
       }
