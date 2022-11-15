@@ -3,7 +3,6 @@ import React from 'react';
 import Text_Size from '../../../../constants/textScaling';
 import TitleText from '../../../common/text/TitleText';
 import DescriptionText from '../../../common/text/DescriptionText';
-
 interface Props {
   title: string;
   subTitle: string;
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
   },
-  image: {width: 100, height: 100, marginTop: '0%', borderRadius: 50,},
+  image: {width: 100, height: 100, marginTop: '0%', borderRadius: 50},
   title: {
     fontSize: Text_Size.Text_2,
     fontWeight: '600',

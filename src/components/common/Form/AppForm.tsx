@@ -15,6 +15,23 @@ const AppForm = ({
   enableReset,
   validationSchema,
 }: Props) => {
+  // const [initValue, setInitValue] = useState(initialValues);
+  // const methods = useForm<FormData>({
+  //   resolver: yupResolver(validationSchema),
+  //   mode: 'onChange',
+  //   defaultValues: initValue,
+  // });
+  // const {reset} = methods;
+
+  // useEffect(() => {
+  //   console.log('inital state', initialValues);
+  //   setInitValue(initialValues);
+  // }, [initialValues]);
+  // useEffect(() => {
+  //   if (initValue) {
+  //     reset(initialValues);
+  //   }
+  // }, [initValue, reset, initialValues]);
   const methods = useForm<FormData>({
     resolver: yupResolver(validationSchema),
     mode: 'onChange',

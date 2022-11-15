@@ -21,6 +21,9 @@ import AppForm from '../../../components/common/Form/AppForm';
 // import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {useLogin} from './utils/useLogin';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import TitleText from '../../../components/common/text/TitleText';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
@@ -44,6 +47,19 @@ const Login = ({navigation}: Props) => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
           enabled={Platform.OS === 'ios' ? true : false}>
+          <AppTouchableOpacity
+            style={styles.leftContainer}
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <Ionicons
+              name="ios-chevron-back"
+              size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+              style={styles.iconStyle}
+              color={Colors.primary}
+            />
+            <TitleText text={'Back'} textStyle={styles.backText} />
+          </AppTouchableOpacity>
           <View
             style={[
               styles.infoContainer,
@@ -86,6 +102,16 @@ const Login = ({navigation}: Props) => {
 export default Login;
 
 const styles = StyleSheet.create({
+  iconStyle: {paddingRight: 5},
+  leftContainer: {
+    // position: 'absolute',
+    // top: 10,
+    left: '2%',
+    paddingTop: 4,
+    paddingBottom: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -106,4 +132,5 @@ const styles = StyleSheet.create({
   view: {
     height: 40,
   },
+  backText: {color: Colors.primary, fontWeight: 'bold'},
 });

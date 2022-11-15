@@ -13,6 +13,9 @@ import {useSignUp} from './utils/useSignUp';
 import {othersAuthIcons} from '../../../utils/config/Data/loginDatas';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import ScrollViewRapper from '../../../components/common/ScrollViewRapper';
+import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import TitleText from '../../../components/common/text/TitleText';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
@@ -33,6 +36,19 @@ const SignUp = ({navigation}: Props) => {
                 : Colors.background,
             },
           ]}>
+          <AppTouchableOpacity
+            style={styles.leftContainer}
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <Ionicons
+              name="ios-chevron-back"
+              size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+              style={styles.iconStyle}
+              color={Colors.primary}
+            />
+            <TitleText text={'Back'} textStyle={styles.backText} />
+          </AppTouchableOpacity>
           <AuthHeader
             title={signUpInitalState.title}
             subTitle={signUpInitalState.subTitle}
@@ -83,4 +99,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  iconStyle: {paddingRight: 5},
+  leftContainer: {
+    // position: 'absolute',
+    // top: 10,
+    left: '0%',
+    paddingTop: 4,
+    paddingBottom: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backText: {color: Colors.primary, fontWeight: 'bold'},
 });
