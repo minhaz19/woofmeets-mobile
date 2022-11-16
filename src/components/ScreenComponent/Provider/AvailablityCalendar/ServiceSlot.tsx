@@ -12,7 +12,7 @@ interface Props {
 }
 let modSelectedService: any = [];
 const ServiceSlot = ({setSelectedService}: Props) => {
-  const {userServices} = useAppSelector(state => state.services);
+  const {userActiveServices} = useAppSelector(state => state.services);
   const [servcies, setServices] = useState<any>([]);
   const handleOnChange = (id: number) => {
     const newHoliday = [...servcies];
@@ -28,36 +28,35 @@ const ServiceSlot = ({setSelectedService}: Props) => {
     setSelectedService([...modSelectedService]);
   };
   useEffect(() => {
-    const modService = userServices?.map((item: any) => ({
+    const modService = userActiveServices?.map((item: any) => ({
       service: item.serviceType.name,
       id: item.id,
-      active: false,
+      active:
+        modSelectedService.findIndex((it: any) => it === item.id) !== -1
+          ? true
+          : false,
     }));
 
     setServices(modService);
-  }, [userServices]);
+  }, [userActiveServices]);
   return (
     <View style={styles.parent}>
       {servcies?.map((item: any, index: number) => (
-        <>
-          <View key={index} style={styles.container}>
-            <View style={styles.serviceContainer}>
-              <AppCheckbox
-                active={item.active}
-                radio
-                onPress={() => handleOnChange(item.id)}
-                Comp={() => (
-                  <View style={styles.serviceContainer}>
-                    <View>
-                      <View style={styles.textContainer}>
-                        <TitleText
-                          textStyle={styles.title}
-                          text={item.service}
-                        />
-                        <ShortText text={'Tab to mark unavailable'} />
-                      </View>
+        <View key={index} style={styles.container}>
+          <View style={styles.serviceContainer}>
+            <AppCheckbox
+              active={item.active}
+              radio
+              onPress={() => handleOnChange(item.id)}
+              Comp={() => (
+                <View style={styles.serviceContainer}>
+                  <View>
+                    <View style={styles.textContainer}>
+                      <TitleText textStyle={styles.title} text={item.service} />
+                      <ShortText text={'Tab to mark unavailable'} />
                     </View>
-                    {/* <View style={styles.btnCont}>
+                  </View>
+                  {/* <View style={styles.btnCont}>
                       {item.active ? (
                         <View style={styles.unMarkBtn}>
                           <TitleText
@@ -71,12 +70,11 @@ const ServiceSlot = ({setSelectedService}: Props) => {
                         </View>
                       )}
                     </View> */}
-                  </View>
-                )}
-              />
-            </View>
+                </View>
+              )}
+            />
           </View>
-        </>
+        </View>
       ))}
     </View>
   );

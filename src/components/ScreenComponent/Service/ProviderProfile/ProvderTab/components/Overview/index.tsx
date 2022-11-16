@@ -64,7 +64,7 @@ const Overview = () => {
         ))}
         <SitterMap />
         <View>
-          <TitleText textStyle={styles.petTitle} text="Pets" />
+          <TitleText textStyle={styles.petTitle} text="Past Clients" />
 
           {overview?.pastCLients?.length === 0 ? (
             <DescriptionText

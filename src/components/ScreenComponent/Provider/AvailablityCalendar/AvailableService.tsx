@@ -67,6 +67,18 @@ const AvailableService = ({availableService}: Props) => {
             ))}
           </View>
         )}
+        ListEmptyComponent={
+          <View>
+            <TitleText
+              textStyle={{
+                fontWeight: '500',
+                marginTop: 15,
+                marginBottom: 10,
+              }}
+              text={'No Availability found for this particular day'}
+            />
+          </View>
+        }
       />
     </View>
   );

@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {Platform, StyleSheet, View} from 'react-native';
+import {Alert, Platform, StyleSheet, View} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import Animated, {
   useAnimatedStyle,
@@ -17,10 +16,10 @@ import methods from '../../../../api/methods';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
-import {format} from 'date-fns';
 import {getAvailableDays} from '../../../../store/slices/Provider/Unavailability/getAvailableDay';
 import {baseUrlV} from '../../../../utils/helpers/httpRequest';
 import {setOpenSettings} from '../../../../store/slices/misc/openFilter';
+import {formatDate} from '../../../common/formatDate';
 interface Props {
   startingDate: string;
   endingDate: string;
@@ -42,12 +41,10 @@ const EditCart = ({
   resetSelection,
 }: Props) => {
   const [isVisible, setIsVisible] = useState(false);
-  const {colors, isDarkMode} = useTheme();
+  const {isDarkMode} = useTheme();
 
-  const {userServices} = useAppSelector(state => state.services);
-  // const {availabileDates, getAvailablity, loading, availableService} =
-  //   useProviderAvailability();
-  // const {resetSelection, _markedStyle} = useHandleRange('RANGE');
+  const {userActiveServices} = useAppSelector(state => state.services);
+
   const dispatch = useAppDispatch();
   const {request} = useApi(methods._post);
   const {request: putRequest} = useApi(methods._put);
@@ -57,17 +54,23 @@ const EditCart = ({
       transform: [{translateY: offset.value}],
     };
   });
+  const selectDate = new Date(startingDate).getMonth() + 1;
+  const currentDate = new Date().getMonth() + 1;
 
   useMemo(() => {
     offset.value = withSpring(startingDate ? 10 / 100 : 300);
   }, [startingDate, offset]);
 
   const handleUnavailable = async (selectedService: any) => {
+    if (selectedService.length === 0) {
+      Alert.alert('Please select at lease one service');
+      return;
+    }
     const payload = {
-      from: format(new Date(startingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
+      from: formatDate(new Date(startingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
       to:
         endingDate !== undefined && endingDate !== ''
-          ? format(new Date(endingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'")
+          ? formatDate(new Date(endingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'")
           : null,
       providerServiceIds: selectedService,
     };
@@ -78,74 +81,94 @@ const EditCart = ({
       const monthData = {
         year: new Date(startingDate).getFullYear(),
         month: new Date(startingDate).getMonth() + 1,
-        dateString: format(new Date(startingDate), 'yyyy-MM-dd'),
+        dateString: formatDate(new Date(startingDate), 'yyyy-MM-dd'),
       };
-      getAvailablity(monthData, 'next');
+      getAvailablity(
+        monthData,
+        selectDate === currentDate ? 'current' : 'next',
+      );
       resetSelection();
     }
   };
 
   const handleAvailable = async (selectedService: any) => {
+    if (selectedService.length === 0) {
+      Alert.alert('Please select at lease one service');
+      return;
+    }
     const payload = {
-      from: format(new Date(startingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
+      from: formatDate(new Date(startingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
       to:
         endingDate !== undefined && endingDate !== ''
-          ? format(new Date(endingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'")
+          ? formatDate(new Date(endingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'")
           : null,
       providerServiceIds: selectedService,
     };
+
     const result = await request(availablityEndpoint, payload);
     if (result.ok) {
       setIsVisible(false);
       const monthData = {
         year: new Date(startingDate).getFullYear(),
         month: new Date(startingDate).getMonth() + 1,
-        dateString: format(new Date(startingDate), 'yyyy-MM-dd'),
+        dateString: formatDate(new Date(startingDate), 'yyyy-MM-dd'),
       };
-      getAvailablity(monthData, 'next');
+      getAvailablity(
+        monthData,
+        selectDate === currentDate ? 'current' : 'next',
+      );
       resetSelection();
     }
   };
 
   const handleMAUnavailable = async () => {
     const payload = {
-      from: format(new Date(startingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
+      from: formatDate(new Date(startingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
       to:
         endingDate !== undefined && endingDate !== ''
-          ? format(new Date(endingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'")
+          ? formatDate(new Date(endingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'")
           : null,
-      providerServiceIds: userServices.map((item: {id: number}) => item.id),
+      providerServiceIds: userActiveServices.map(
+        (item: {id: number}) => item.id,
+      ),
     };
     const result = await request(unavailabilityEndpoint, payload);
     if (result.ok) {
       const monthData = {
         year: new Date(startingDate).getFullYear(),
         month: new Date(startingDate).getMonth() + 1,
-        dateString: format(new Date(startingDate), 'yyyy-MM-dd'),
+        dateString: formatDate(new Date(startingDate), 'yyyy-MM-dd'),
       };
-      getAvailablity(monthData, 'next');
+      getAvailablity(
+        monthData,
+        selectDate === currentDate ? 'current' : 'next',
+      );
       resetSelection();
     }
   };
   const handleMAAvailable = async () => {
     const payload = {
-      providerServiceIds: userServices.map((item: {id: number}) => item.id),
-      from: format(new Date(startingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
+      providerServiceIds: userActiveServices.map(
+        (item: {id: number}) => item.id,
+      ),
+      from: formatDate(new Date(startingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
       to:
         endingDate !== undefined && endingDate !== ''
-          ? format(new Date(endingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'")
+          ? formatDate(new Date(endingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'")
           : null,
     };
 
     const result = await request(availablityEndpoint, payload);
-
     if (result.ok) {
       const monthData = {
         year: new Date(startingDate).getFullYear(),
         month: new Date(startingDate).getMonth() + 1,
-        dateString: format(new Date(startingDate), 'yyyy-MM-dd'),
+        dateString: formatDate(new Date(startingDate), 'yyyy-MM-dd'),
       };
-      getAvailablity(monthData, 'next');
+      getAvailablity(
+        monthData,
+        selectDate === currentDate ? 'current' : 'next',
+      );
       resetSelection();
     }
   };
@@ -188,19 +211,13 @@ const EditCart = ({
           const monthData = {
             year: new Date().getFullYear(),
             month: new Date().getMonth() + 1,
-            dateString: format(new Date(), 'yyyy-MM-dd'),
+            dateString: formatDate(new Date(), 'yyyy-MM-dd'),
           };
           getAvailablity(monthData, 'current');
         }
       }
     });
   };
-  // useEffect(() => {
-  //   setModMarkDate(_markedStyle);
-  //   setAvailableDays(availabileDates);
-  //   setResetLoading(loading);
-  //   setResetAvailableService(availableService);
-  // }, [_markedStyle, availabileDates, availableService, loading]);
   return (
     <Animated.View
       style={[

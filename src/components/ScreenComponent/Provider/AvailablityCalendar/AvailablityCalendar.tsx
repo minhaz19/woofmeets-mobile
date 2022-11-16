@@ -14,8 +14,8 @@ import format from 'date-fns/format';
 import {useAppDispatch} from '../../../../store/store';
 import AvailableService from './AvailableService';
 import TitleText from '../../../common/text/TitleText';
-import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 import BottomSpacing from '../../../UI/BottomSpacing';
+import CalendarSK from '../../../common/Skeleton/CalendarSK';
 
 const RANGE = 12;
 const today = new Date();
@@ -98,7 +98,12 @@ const AvailablityCalendar = () => {
   }, [availabileDates, loading, _markedStyle, availableService]);
   return (
     <>
-      {resetLoading && <AppActivityIndicator visible={resetLoading} />}
+      {resetLoading && (
+        <View style={styles.loader}>
+          <CalendarSK />
+        </View>
+      )}
+
       <View style={styles.container}>
         <ScrollView style={styles.scrollView}>
           <View>
@@ -189,6 +194,16 @@ export default AvailablityCalendar;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
+  loader: {
+    backgroundColor: Colors.background,
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    zIndex: 999,
+  },
   calenderStyles: {
     marginHorizontal: 10,
     borderRadius: 5,

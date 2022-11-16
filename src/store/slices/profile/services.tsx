@@ -37,6 +37,7 @@ const initialState: any = {
   loading: false,
   success: false,
   userServices: null,
+  userActiveServices: null,
   userServicesLoading: false,
   userServicesError: null,
 };
@@ -68,6 +69,9 @@ const services = createSlice({
       .addCase(getUserServices.fulfilled, (state, {payload}) => {
         state.userServicesLoading = false;
         state.userServices = payload.data;
+        state.userActiveServices = payload.data?.filter(
+          (ser: any) => ser.isActive === true && ser.AvailableDay?.length !== 0,
+        );
         state.userServicesError = payload.message;
       })
       .addCase(getUserServices.rejected, (state, {payload}) => {
