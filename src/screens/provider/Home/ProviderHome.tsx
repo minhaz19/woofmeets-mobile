@@ -1,34 +1,21 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
-import React, { useEffect, useState } from 'react';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import ScreenRapper from '../../../components/common/ScreenRapper';
+import React, {useEffect, useState} from 'react';
 import HeaderText from '../../../components/common/text/HeaderText';
 import ShortText from '../../../components/common/text/ShortText';
 import TitleText from '../../../components/common/text/TitleText';
 import BookingCard from '../../../components/ScreenComponent/Provider/Home/BookingCard';
 import Colors from '../../../constants/Colors';
 import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
-import { getProviderInprogressApnt } from '../../../store/slices/Appointment/Inbox/Provider/InProgress/getPInprogressApnt';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import {getProviderInprogressApnt} from '../../../store/slices/Appointment/Inbox/Provider/InProgress/getPInprogressApnt';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import subDays from 'date-fns/subDays';
 import formatDistance from 'date-fns/formatDistance';
+import BottomSpacing from '../../../components/UI/BottomSpacing';
 
 const ProviderHome = (props: {
   navigation: {navigate: (arg0: string) => any};
 }) => {
-  const {colors} = useTheme();
-  const bookingData = [
-    {
-      id: 1,
-      serviceName: 'Drop-in visit',
-      duration: '30 mins',
-      orderStatus: 'Completed',
-      ownerName: 'Mashfiqs Home',
-      petName: 'Bunty',
-      ownerImage: require('../../../assets/image/pet/mypet.png'),
-    },
-  ];
-
   const dispatch = useAppDispatch();
 
   const providerInprogress = useAppSelector(
@@ -39,7 +26,7 @@ const ProviderHome = (props: {
 
   const onRefresh = () => {
     setRefreshing(true);
-    dispatch(getProviderInprogressApnt('PAID'))
+    dispatch(getProviderInprogressApnt('PAID'));
     setRefreshing(false);
   };
   useEffect(() => {
@@ -53,17 +40,21 @@ const ProviderHome = (props: {
         showsVerticalScrollIndicator={false}
         style={styles.container}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         <View style={styles.headerContainer}>
           <HeaderText text="Today" textStyle={{paddingBottom: 4}} />
-          <ShortText text={`${providerInprogress ? providerInprogress?.length : 0} Booking`} />
+          <ShortText
+            text={`${
+              providerInprogress ? providerInprogress?.length : 0
+            } Booking`}
+          />
         </View>
         <View style={styles.spacing}>
-          <TitleText text={new Date().toLocaleDateString()} textStyle={{paddingBottom: 4}} />
+          <TitleText
+            text={new Date().toLocaleDateString()}
+            textStyle={{paddingBottom: 4}}
+          />
         </View>
         <View style={styles.spacing}>
           <ShortText text="+ Booking" textStyle={styles.bookingText} />
@@ -76,9 +67,11 @@ const ProviderHome = (props: {
                 item={item}
                 buttonStyles={Colors.yellow}
                 // onScreen={() => props.navigation.navigate('OngoingActivityScreen')}
-                onScreen={() => props.navigation.navigate('ActivityScreen', {
-                  appointmentOpk: item.opk,
-                })}
+                onScreen={() =>
+                  props.navigation.navigate('ActivityScreen', {
+                    appointmentOpk: item.opk,
+                  })
+                }
               />
             );
           })}
@@ -93,6 +86,7 @@ const ProviderHome = (props: {
             textStyle={styles.bookingTextDes}
           />
         </View>
+        <BottomSpacing />
       </ScrollView>
     </ScreenRapperGrey>
   );
