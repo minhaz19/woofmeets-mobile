@@ -19,7 +19,19 @@ const Overview = () => {
   const changeText = (name: string) => {
     return name[0].toUpperCase() + name?.slice(1);
   };
+  const aboutOver = overview?.about?.slice(0, 25) +
+    overview?.about?.length > 25 ? '...' : '' ;
   const providerDatas = [
+    {
+      title: 'About',
+      viewAll: 'View All',
+      subInfo: [
+        {
+          description: overview?.about ? `${overview?.about?.slice(0, 300)}${overview?.about?.length > 300 ? '...' : ''}` : 'No about details found...',
+          longDescription: overview?.about,
+        },
+      ],
+    },
     {
       title: `🏡  ${
         changeText(profileInfo?.firstName) +
@@ -44,16 +56,6 @@ const Overview = () => {
           : overview.skills.map((item: any) => ({
               info: item.skillType?.title,
             })),
-    },
-    {
-      title: 'About',
-      subInfo: [
-        {
-          description: overview?.about
-            ? overview.about
-            : 'No about details found...',
-        },
-      ],
     },
   ];
   return (

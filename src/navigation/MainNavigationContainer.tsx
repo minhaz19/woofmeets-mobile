@@ -50,6 +50,7 @@ import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
 import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
 import UpgradePlan from '../components/ScreenComponent/becomeSitter/subscription/UpgradePlan/UpgradePlan';
 import SubscriptionList from '../screens/profile/SubscriptionList';
+import AboutProvider from '../screens/Service/ProviderProfile/AboutProvider';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -565,20 +566,20 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
-        {/* <Stack.Screen
-          name="Appointment"
-          component={Appointment}
+        <Stack.Screen
+          name="AboutProvider"
+          component={AboutProvider}
           options={({navigation}) => ({
             title: '',
             header: () => (
               <HeaderWithBack
                 navigation={navigation}
-                title="Create Appointment"
+                title="About Provider"
               />
             ),
             backgroundColor: Colors.primary,
           })}
-        /> */}
+        />
         <Stack.Screen
           name="ProviderCalendar"
           component={ProviderCalendar}
