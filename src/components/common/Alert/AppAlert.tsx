@@ -1,15 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Button,
-  Modal,
-  Image,
-  TouchableOpacity,
-  Animated,
-} from 'react-native';
+import {View, StyleSheet, Modal, Animated} from 'react-native';
 import Text_Size from '../../../constants/textScaling';
+import AppTouchableOpacity from '../AppClickEvents/AppTouchableOpacity';
 import BigText from '../text/BigText';
 interface Props {
   visible: boolean;
@@ -40,40 +33,31 @@ const ModalPoup = ({visible, children}: Props) => {
   };
   return (
     <Modal transparent visible={showModal}>
-      <View style={styles.modalBackGround}>
+      <AppTouchableOpacity
+        style={styles.modalBackGround}
+        onPress={() => setShowModal(false)}>
         <Animated.View
           style={[styles.modalContainer, {transform: [{scale: scaleValue}]}]}>
           {children}
         </Animated.View>
-      </View>
+      </AppTouchableOpacity>
     </Modal>
   );
 };
 
-const AppAlert = () => {
-  const [visible, setVisible] = React.useState(false);
+const AppAlert = ({visible}: any) => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <ModalPoup visible={visible}>
-        <View style={{alignItems: 'center'}}>
-          <View style={styles.header}>
-            <TouchableOpacity onPress={() => setVisible(false)}>
-              <Image
-                source={require('./assets/x.png')}
-                style={{height: 30, width: 30}}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={{alignItems: 'center'}}>
-          <Image
-            source={require('./assets/success.png')}
-            style={{height: 150, width: 150, marginVertical: 10}}
-          />
-        </View>
-        <BigText text="Congratulations registration was successful" textStyle={{marginVertical: 30, fontSize: Text_Size.Text_5, textAlign: 'center'}} />
+        <BigText
+          text="Congratulations registration was successful"
+          textStyle={{
+            marginVertical: 30,
+            fontSize: Text_Size.Text_5,
+            textAlign: 'center',
+          }}
+        />
       </ModalPoup>
-      <Button title="Open Modal" onPress={() => setVisible(true)} />
     </View>
   );
 };

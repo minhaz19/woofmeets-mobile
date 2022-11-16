@@ -18,6 +18,7 @@ export const useProviderAvailability = () => {
           endDate,
         ).toISOString()}`,
     );
+   
     if (result.ok) {
       const allDates = result.data.data?.map((item: any) => [
         ...new Set([...new Set(item.availability.dates)]),

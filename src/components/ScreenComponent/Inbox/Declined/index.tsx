@@ -36,7 +36,6 @@ const DeclinedStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, [statusType]);
-  console.log('delcined ', userCancelled, providerCancelled);
   return (
     <>
       {loading ? (

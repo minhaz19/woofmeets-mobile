@@ -1,5 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import HeaderText from '../../../components/common/text/HeaderText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -87,9 +93,9 @@ const ServiceSelection = () => {
       const response: ApiResponse<any> = await apiClient.post(
         `/provider-services/${sequence}`,
       );
-      setError(response.data.message);
       if (!response.ok) {
         setLoading(false);
+        Alert.alert(response.data.message);
         throw new Error(response.data.message);
       }
       if (response.ok) {
@@ -101,7 +107,6 @@ const ServiceSelection = () => {
           dispatch(setSitterData({pass: 0}));
         }
       }
-      // return response.data;
     } catch (er: any) {
       if (er.response && er.response.data.message) {
       }

@@ -1,6 +1,6 @@
 import {
   StyleSheet,
-  TouchableOpacity,
+  
   View,
   Image,
   useColorScheme,
@@ -17,6 +17,7 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {setSelectService} from '../../../../store/slices/Provider/reschedule/rescheduleSlice';
 import TitleText from '../../../common/text/TitleText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 
 interface Props {
   setModalVisible: (arg1: boolean) => void;
@@ -35,14 +36,14 @@ const ServiceSelection = ({setModalVisible, setViewDetails}: Props) => {
   return (
     <View>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => setModalVisible(false)}>
+        <AppTouchableOpacity onPress={() => setModalVisible(false)}>
           <Ion
             name="ios-chevron-back"
             size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
             style={styles.iconStyle}
             color={Colors.primary}
           />
-        </TouchableOpacity>
+        </AppTouchableOpacity>
         <HeaderText text={selectedItem} textStyle={styles.textHeader} />
       </View>
       <View
@@ -52,7 +53,7 @@ const ServiceSelection = ({setModalVisible, setViewDetails}: Props) => {
         {selectionData.map(item => {
           return (
             <View key={item.id}>
-              <TouchableOpacity
+              <AppTouchableOpacity
                 style={[
                   styles.selectionContainer,
                   {
@@ -94,7 +95,7 @@ const ServiceSelection = ({setModalVisible, setViewDetails}: Props) => {
                     color={Colors.subText}
                   />
                 </View>
-              </TouchableOpacity>
+              </AppTouchableOpacity>
               <View
                 style={[
                   styles.divider,

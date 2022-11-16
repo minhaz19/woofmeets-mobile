@@ -26,7 +26,9 @@ const ServiceSlotModal = ({
       <MiddleModal
         isModalVisible={isVisible}
         setIsModalVisible={setIsVisible}
-        onBlur={() => null}>
+        onBlur={() => null}
+        // children={undefined}
+        handlePress={() => {}}>
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={styles.cancelBtn}
