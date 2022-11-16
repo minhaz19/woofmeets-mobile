@@ -15,8 +15,7 @@ const SitterMap = () => {
         <MapMarker />
         <ShortText textStyle={styles.shortText} text="1.5 mile away from you" />
       </View> */}
-      {location?.latitude !== undefined ||
-        (location.longitude !== undefined && (
+      {location?.latitude !== undefined && location.longitude !== undefined && 
           <View style={styles.container}>
             <MapView
               style={styles.map}
@@ -48,7 +47,7 @@ const SitterMap = () => {
               </Marker>
             </MapView>
           </View>
-        ))}
+        }
     </>
   );
 };

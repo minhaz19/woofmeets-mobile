@@ -12,6 +12,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import subDays from 'date-fns/subDays';
 import formatDistance from 'date-fns/formatDistance';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
+import DescriptionText from '../../../components/common/text/DescriptionText';
 
 const ProviderHome = (props: {
   navigation: {navigate: (arg0: string) => any};
@@ -56,11 +57,11 @@ const ProviderHome = (props: {
             textStyle={{paddingBottom: 4}}
           />
         </View>
-        <View style={styles.spacing}>
-          <ShortText text="+ Booking" textStyle={styles.bookingText} />
-        </View>
+        {/* <View style={styles.spacing}>
+          <ShortText text="Booking" textStyle={styles.bookingText} />
+        </View> */}
         <View>
-          {providerInprogress?.map((item: any, index) => {
+          {providerInprogress ? providerInprogress?.map((item: any, index) => {
             return (
               <BookingCard
                 key={index}
@@ -74,7 +75,7 @@ const ProviderHome = (props: {
                 }
               />
             );
-          })}
+          }) : <DescriptionText text={'No upcoming schedules found!'} textStyle={{paddingVertical: '10%'}}/>}
         </View>
         <View style={styles.spacing}>
           <ShortText

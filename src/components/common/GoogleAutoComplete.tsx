@@ -29,6 +29,10 @@ const GoogleAutoComplete = ({
         // }}
         // listViewDisplayed={false}
         placeholder={placeholder}
+        textInputProps={{
+          placeholderTextColor: Colors.light.subText,
+          returnKeyType: "search"
+        }}
         onPress={onPressAddress}
         query={{
           key: 'AIzaSyBfNC-SGgbvOOFj9FqoA6HQhrCh_hq5Zo0',

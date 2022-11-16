@@ -39,7 +39,10 @@ const ProfileInfo = () => {
             }`}
           />
           <View>
-            <ShortText text={userInfo?.provider?.providerDetails?.about} />
+            <ShortText 
+              text={userInfo?.provider?.providerDetails?.about.slice(0, 25) +
+                (userInfo?.provider?.providerDetails?.about.length > 25 ? '...' : '')}
+            />
           </View>
         </View>
       </View>

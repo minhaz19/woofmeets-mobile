@@ -177,7 +177,7 @@ const SettingMain = (props: {
       title: 'Emergency hotline',
       icon: CallIcon,
       screenName: () => {
-        makeCall(999);
+        makeCall(911);
       },
       opacity: 1,
     },
