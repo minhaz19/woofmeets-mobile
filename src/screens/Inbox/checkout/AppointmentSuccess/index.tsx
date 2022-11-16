@@ -68,7 +68,7 @@ const AppointmentSuccess = () => {
             padding: 10,
             borderWidth: 1,
             borderColor: colors.borderColor,
-            backgroundColor: isDarkMode ? Colors.dark.lightDark : Colors.iosBG,
+            backgroundColor: Colors.iosBG,
             marginBottom: 20,
           }}>
           <TitleText
@@ -150,7 +150,7 @@ const AppointmentSuccess = () => {
                         borderWidth: 1,
                         borderColor: colors.borderColor,
                         borderRadius: 4,
-                        color: isDarkMode ? 'white' : 'black',
+                        color: 'black',
                         fontSize: Text_Size.Text_8,
                         // marginTop: 20,
                         padding: 10,

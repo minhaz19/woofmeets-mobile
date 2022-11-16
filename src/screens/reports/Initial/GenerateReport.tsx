@@ -54,7 +54,7 @@ const GenerateReport = (props: {
       showsVerticalScrollIndicator={false}
       style={[
         styles.container,
-        {backgroundColor: isDarkMode ? Colors.lightDark : Colors.iosBG},
+        {backgroundColor: Colors.iosBG},
       ]}>
       <View
         style={{

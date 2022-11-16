@@ -100,7 +100,7 @@ const SitterDetailsInput = (props: {handleSubmit: any; isLoading: boolean}) => {
                   inputBoxContainerStyle={{
                     borderRadius: 2,
                     paddingHorizontal: 0,
-                    borderWidth: isDarkMode ? 2 : 0,
+                    borderWidth: 0,
                   }}
                 />
               </View>

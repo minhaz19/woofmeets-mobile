@@ -49,9 +49,7 @@ const GoogleAutoComplete = ({
             fontSize: Text_Size.Text_8,
           },
           textInput: {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.light.background,
+            backgroundColor: Colors.light.background,
             // height: 42,
             borderRadius: 1,
             paddingVertical: 5,
@@ -73,14 +71,10 @@ const GoogleAutoComplete = ({
             borderColor: '#c8c7cc',
             borderTopWidth: 0.5,
 
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.light.background,
+            backgroundColor: Colors.light.background,
           },
           row: {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.light.background,
+            backgroundColor: Colors.light.background,
             padding: 13,
             // height: 44,
 

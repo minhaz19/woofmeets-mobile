@@ -258,9 +258,7 @@ const SettingMain = (props: {
   ];
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode
-      ? colors.lightBackgroundColor
-      : colors.backgroundColor,
+    backgroundColor: colors.backgroundColor,
   };
 
   return (
@@ -303,9 +301,7 @@ const SettingMain = (props: {
           {!isLoggedIn && (
             <View
               style={{
-                backgroundColor: isDarkMode
-                  ? Colors.dark.background
-                  : Colors.light.inputBackground,
+                backgroundColor: Colors.light.inputBackground,
               }}>
               {loginData?.map(item => (
                 <SettingItem data={item} key={item.id} />
@@ -325,9 +321,7 @@ const SettingMain = (props: {
               </View>
               <View
                 style={{
-                  backgroundColor: isDarkMode
-                    ? Colors.dark.background
-                    : Colors.light.inputBackground,
+                  backgroundColor: Colors.light.inputBackground,
                 }}>
                 {token && token.provider ? (
                   <SettingItem data={sitterProfile} key={sitterProfile.id} />

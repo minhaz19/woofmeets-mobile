@@ -53,8 +53,6 @@ const Inbox = () => {
                   backgroundColor:
                     showInbox === item.id
                       ? Colors.primary
-                      : isDarkMode
-                      ? Colors.dark.lightDark
                       : Colors.background,
                   borderRightWidth: 1,
                   borderRightColor: Colors.primary,

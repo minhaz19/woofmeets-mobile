@@ -99,7 +99,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -232,6 +232,9 @@ android {
     signingConfigs {
         release {
             storeFile file('woofmeets_key.keystore')
+            storePassword '4112961'
+            keyAlias 'woofmeets_key_alias'
+            keyPassword '4112961'
         }
         debug {
             storeFile file('debug.keystore')

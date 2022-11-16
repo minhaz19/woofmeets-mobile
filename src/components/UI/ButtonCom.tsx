@@ -47,8 +47,6 @@ const ButtonCom = ({
         ...styles.cardlist,
         backgroundColor: color
           ? color
-          : isDarkMode
-          ? Colors.button.grey
           : Colors.primary,
         ...containerStyle,
       }}>

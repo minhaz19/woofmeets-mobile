@@ -32,9 +32,7 @@ const AddPetHome = ({route, navigation}: Props) => {
         style={[
           styles.container,
           {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.background,
+            backgroundColor: Colors.background,
           },
         ]}>
         <AppForm

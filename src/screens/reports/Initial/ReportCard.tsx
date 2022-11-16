@@ -22,7 +22,7 @@ const ReportCard = () => {
       showsVerticalScrollIndicator={false}
       style={[
         styles.container,
-        {backgroundColor: isDarkMode ? Colors.lightDark : Colors.iosBG},
+        {backgroundColor: Colors.iosBG},
       ]}>
       <View style={{height: 200}}>
         <StaticMap />

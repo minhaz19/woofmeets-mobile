@@ -22,9 +22,7 @@ import { useTheme } from '../../constants/theme/hooks/useTheme';
   }) => {
     const isDarkMode = useColorScheme() === 'dark';
     const {colors} = useTheme();
-    const backgroundStyle = {backgroundColor: isDarkMode
-      ? Colors.dark.background
-      : Colors.light.inputBackground}
+    const backgroundStyle = {backgroundColor: Colors.light.inputBackground}
     return (
       <KeyboardAwareScrollView
         style={[

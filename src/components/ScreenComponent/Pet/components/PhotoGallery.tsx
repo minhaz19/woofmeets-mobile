@@ -70,9 +70,7 @@ const PhotoGallery = ({
               style={[
                 styles.delete,
                 {
-                  backgroundColor: isDarkMode
-                    ? Colors.dark.lightDark
-                    : Colors.primaryLight,
+                  backgroundColor: Colors.primaryLight,
                 },
               ]}
               onPress={handleDelete}>

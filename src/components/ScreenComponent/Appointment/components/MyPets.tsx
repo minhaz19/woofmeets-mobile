@@ -98,8 +98,6 @@ const MyPets = ({appointmentType, setValue, watch}: Props) => {
                       : colors.borderColor,
                     backgroundColor: item.active
                       ? Colors.primary
-                      : isDarkMode
-                      ? Colors.lightDark
                       : Colors.background,
                   },
                 ]}>
@@ -151,9 +149,7 @@ const MyPets = ({appointmentType, setValue, watch}: Props) => {
                   style={[
                     styles.icon,
                     {
-                      backgroundColor: isDarkMode
-                        ? Colors.lightDark
-                        : colors.borderColor,
+                      backgroundColor: colors.borderColor,
                       borderColor: colors.borderColor,
                       padding: 6,
                     },
@@ -185,8 +181,6 @@ const MyPets = ({appointmentType, setValue, watch}: Props) => {
                         : colors.borderColor,
                       backgroundColor: item.active
                         ? Colors.primary
-                        : isDarkMode
-                        ? Colors.lightDark
                         : Colors.background,
                     },
                   ]}>

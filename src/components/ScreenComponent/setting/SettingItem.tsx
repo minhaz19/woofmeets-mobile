@@ -34,9 +34,7 @@ const SettingItem = (props: {
   const {colors} = useTheme();
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
-    backgroundColor: isDarkMode
-      ? colors.lightBackgroundColor
-      : colors.backgroundColor
+    backgroundColor: colors.backgroundColor
   }
   return (
     <TouchableOpacity onPress={props.data.screenName} style={{

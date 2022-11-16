@@ -113,9 +113,7 @@ const PackageCard = (props: {
                 style={[
                   styles.detailsContainer,
                   {
-                    backgroundColor: isDarkMode
-                      ? colors.lightBackgroundColor
-                      : colors.primaryLight,
+                    backgroundColor: colors.primaryLight,
                   },
                 ]}>
                 <DescriptionText

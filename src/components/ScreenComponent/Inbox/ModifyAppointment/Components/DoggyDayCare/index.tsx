@@ -79,7 +79,7 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
         <AppTouchableOpacity
           style={[
             styles.sectionContainer,
-            {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
+            {backgroundColor: Colors.border},
           ]}
           onPress={() => setVisible(!visible)}>
           <View style={styles.textWidth}>
@@ -108,9 +108,7 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
               style={[
                 styles.slot,
                 {
-                  backgroundColor: isDarkMode
-                    ? Colors.lightDark
-                    : Colors.border,
+                  backgroundColor: Colors.border,
                 },
               ]}
               onPress={() => setDropVisible(!dropVisible)}>
@@ -148,9 +146,7 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
               style={[
                 styles.slot,
                 {
-                  backgroundColor: isDarkMode
-                    ? Colors.lightDark
-                    : Colors.border,
+                  backgroundColor: Colors.border,
                 },
               ]}
               onPress={() => setPickVisible(!pickVisible)}>

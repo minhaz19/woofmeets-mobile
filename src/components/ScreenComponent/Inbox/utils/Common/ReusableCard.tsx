@@ -33,9 +33,7 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
     <Card
       style={{
         ...styles.itemContainer,
-        backgroundColor: isDarkMode
-          ? colors.lightBackgroundColor
-          : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
       }}>
       <TouchableOpacity onPress={handlePress}>
         <View style={styles.flexContainer}>

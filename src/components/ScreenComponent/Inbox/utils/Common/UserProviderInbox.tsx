@@ -27,9 +27,7 @@ const UserProviderInbox = ({active, setActive}: Props) => {
       style={[
         styles.container,
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.lightDark
-            : Colors.primaryLight,
+          backgroundColor: Colors.primaryLight,
         },
       ]}>
       {data.map((item, index) => (
@@ -43,8 +41,6 @@ const UserProviderInbox = ({active, setActive}: Props) => {
             backgroundColor:
               active === item.id
                 ? Colors.primary
-                : isDarkMode
-                ? Colors.dark.lightDark
                 : Colors.primaryLight,
             width: '46%',
             margin: '2%',

@@ -38,9 +38,7 @@ const ForgotPassword = ({navigation}: Props) => {
           style={[
             styles.infoContainer,
             {
-              backgroundColor: isDarkMode
-                ? Colors.dark.lightDark
-                : Colors.background,
+              backgroundColor: Colors.background,
             },
           ]}>
           <ImageAndTitle Icon={AuthPassword} title={forgotPassData.title} id={0} />

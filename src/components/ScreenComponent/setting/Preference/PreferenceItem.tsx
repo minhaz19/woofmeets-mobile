@@ -27,9 +27,7 @@ const PreferenceItem: FC<PreferenceItemProps> = ({data}) => {
   const {colors} = useTheme();
   const isDarkMode = useColorScheme();
   const backgroundStyle = {
-    backgroundColor: isDarkMode
-      ? colors.lightBackgroundColor
-      : colors.backgroundColor,
+    backgroundColor: colors.backgroundColor,
   };
   return (
     <View

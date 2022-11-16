@@ -69,7 +69,7 @@ const Overview = () => {
           {overview?.pastCLients?.length === 0 ? (
             <DescriptionText
               textStyle={{
-                color: isDarkMode ? Colors.background : Colors.text,
+                color: Colors.text,
                 fontSize: Text_Size.Text_9,
               }}
               text={'No past client found'}

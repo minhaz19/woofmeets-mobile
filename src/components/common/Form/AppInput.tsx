@@ -14,7 +14,7 @@ const AppInput = ({...otherProps}) => {
       style={[
         styles.container,
         {
-          borderColor: isDarkMode ? Colors.gray : Colors.border,
+          borderColor: Colors.border,
         },
         inputBoxContainerStyle,
       ]}>
@@ -27,7 +27,7 @@ const AppInput = ({...otherProps}) => {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
             height: numberOfLines >= 10 ? 120 : 45,
             width: otherProps.secureTextEntry ? '90%' : '100%',
-            color: isDarkMode ? 'white' : 'black',
+            color: 'black',
             fontSize: Text_Size.Text_11,
           },
           textInputBoxStyle,

@@ -33,7 +33,7 @@ const BoardingSitting = ({watch, setValue}: Props) => {
           <AppTouchableOpacity
             style={[
               styles.slot,
-              {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
+              {backgroundColor: Colors.border},
             ]}
             onPress={() => setDropVisible(!dropVisible)}>
             <View>
@@ -69,7 +69,7 @@ const BoardingSitting = ({watch, setValue}: Props) => {
           <AppTouchableOpacity
             style={[
               styles.slot,
-              {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
+              {backgroundColor: Colors.border},
             ]}
             onPress={() => setPickVisible(!pickVisible)}>
             <View>

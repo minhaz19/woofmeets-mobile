@@ -42,9 +42,7 @@ const ScreenSlider = () => {
         style={[
           styles.slide,
           {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.background,
+            backgroundColor: Colors.background,
           },
         ]}>
         {item.screen}
@@ -72,7 +70,7 @@ const ScreenSlider = () => {
       <View
         style={[
           styles.buttonContainer,
-          {backgroundColor: isDarkMode ? Colors.subText : Colors.primary},
+          {backgroundColor: Colors.primary},
         ]}>
         <AppTouchableOpacity onPress={() => navigation.goBack()}>
           <DescriptionText text={'Book Now'} textStyle={styles.description} />

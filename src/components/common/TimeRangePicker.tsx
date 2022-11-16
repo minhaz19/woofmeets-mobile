@@ -87,9 +87,7 @@ const TimeSlotPicker = ({
             fontWeight: 'bold',
             fontSize: Text_Size.Text_1,
             padding: 20,
-            backgroundColor: isDarkMode
-              ? Colors.lightDark
-              : colors.backgroundColor,
+            backgroundColor: colors.backgroundColor,
           }}
         />
 
@@ -97,9 +95,7 @@ const TimeSlotPicker = ({
           style={[
             styles.pickerContainer,
             {
-              backgroundColor: isDarkMode
-                ? Colors.lightDark
-                : colors.backgroundColor,
+              backgroundColor: colors.backgroundColor,
             },
           ]}>
           <View style={styles.halfCont}>

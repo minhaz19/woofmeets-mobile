@@ -25,7 +25,7 @@ const AuthOTP = ({name, auth}: Props) => {
         placeholder={'-'}
         style={[
           styles.inputContainer,
-          {backgroundColor: isDarkMode ? Colors.dark.lightDark : 'white'},
+          {backgroundColor: 'white'},
         ]}
         inputStyles={[styles.input]}
       />

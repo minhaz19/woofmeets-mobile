@@ -20,9 +20,7 @@ const ReviewItem = ({item}: Props) => {
         styles.container,
         styles.shadow,
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.lightDark
-            : Colors.background,
+          backgroundColor: Colors.background,
         },
       ]}>
       <Image

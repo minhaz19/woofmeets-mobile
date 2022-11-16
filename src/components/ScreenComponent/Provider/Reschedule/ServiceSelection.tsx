@@ -27,9 +27,7 @@ const ServiceSelection = ({setModalVisible, setViewDetails}: Props) => {
   const {colors} = useTheme();
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
-    backgroundColor: isDarkMode
-      ? colors.lightBackgroundColor
-      : colors.backgroundColor,
+    backgroundColor: colors.backgroundColor,
   };
   const dispatch = useAppDispatch();
   const {selectedItem} = useAppSelector((state: any) => state.reschedule);

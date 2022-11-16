@@ -47,7 +47,7 @@ const AppMultiSelect = ({
           styles.dropdown,
           {
             backgroundColor: colors.backgroundColor,
-            borderColor: isDarkMode ? Colors.gray : Colors.border,
+            borderColor: Colors.border,
           },
         ]}
         placeholderStyle={{...styles.placeholderStyle, color: colors.descriptionText}}

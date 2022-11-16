@@ -17,7 +17,7 @@ const UpgradePlan = () => {
     <ScrollView
       contentContainerStyle={[
         styles.container,
-        {backgroundColor: isDarkMode ? colors.backgroundColor : Colors.iosBG},
+        {backgroundColor: Colors.iosBG},
       ]}>
       {/* <QuestionModals upgradePlan={true} /> */}
       <View

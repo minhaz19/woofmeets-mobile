@@ -19,9 +19,7 @@ const AfterIntroScreen = (props: {
       style={[
         styles.container,
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.lightDark
-            : colors.backgroundColor,
+          backgroundColor: colors.backgroundColor,
         },
       ]}>
       <ScrollView

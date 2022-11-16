@@ -74,9 +74,7 @@ const Profile = (props: {
               style={[
                 styles.button,
                 {
-                  backgroundColor: isDarkMode
-                    ? Colors.button.grey
-                    : Colors.primary,
+                  backgroundColor: Colors.primary,
                 },
                 {
                   borderColor: colors.borderColor,

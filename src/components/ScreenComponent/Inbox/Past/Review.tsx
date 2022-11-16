@@ -102,13 +102,13 @@ const Review: FC<Props> = props => {
             style={[
               styles.container,
               {
-                borderColor: isDarkMode ? Colors.gray : Colors.border,
+                borderColor: Colors.border,
               },
             ]}>
             <TextInput
               placeholderTextColor={'gray'}
               allowFontScaling={false}
-              style={[styles.text, {color: isDarkMode ? 'white' : 'black'}]}
+              style={[styles.text, {color: 'black'}]}
               placeholder="Write your Comments"
               multiline={true}
               onChangeText={value => setIsText(value)}
@@ -133,13 +133,13 @@ const Review: FC<Props> = props => {
                 style={[
                   styles.container,
                   {
-                    borderColor: isDarkMode ? Colors.gray : Colors.border,
+                    borderColor: Colors.border,
                   },
                 ]}>
                 <TextInput
                   placeholderTextColor={'gray'}
                   allowFontScaling={false}
-                  style={[styles.text, {color: isDarkMode ? 'white' : 'black'}]}
+                  style={[styles.text, {color: 'black'}]}
                   placeholder="Write your Comments"
                   multiline={true}
                   onChangeText={value => setEnjoyText(value)}

@@ -30,7 +30,7 @@ const ServiceInput = ({...otherProps}) => {
               styles.text,
               {
                 flex: 1,
-                color: isDarkMode ? 'white' : 'black',
+                color: 'black',
               },
             ]}
             {...otherProps}

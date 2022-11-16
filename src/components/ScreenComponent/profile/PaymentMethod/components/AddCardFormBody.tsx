@@ -65,7 +65,7 @@ const AddCardFormBody = ({handleValues, loading, sequence}: Props) => {
                       borderWidth: 1,
                       backgroundColor: colors.backgroundColor,
                       borderRadius: 3,
-                      borderColor: isDarkMode ? Colors.gray : Colors.border,
+                      borderColor: Colors.border,
                       fontSize: Text_Size.Text_0,
                     }}
                   />
@@ -95,9 +95,7 @@ const AddCardFormBody = ({handleValues, loading, sequence}: Props) => {
         style={[
           styles.noteContainer,
           {
-            backgroundColor: isDarkMode
-              ? Colors.light.tabIconDefault
-              : Colors.secondary,
+            backgroundColor: Colors.secondary,
           },
         ]}>
         <DescriptionText

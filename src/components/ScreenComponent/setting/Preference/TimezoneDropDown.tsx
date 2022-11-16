@@ -41,10 +41,8 @@ const TimezoneDropDown = ({
         data={data}
         boxStyles={{
           borderRadius: 0,
-          backgroundColor: isDarkMode
-            ? colors.lightBackgroundColor
-            : colors.backgroundColor,
-          borderColor: isDarkMode ? Colors.gray : Colors.border,
+          backgroundColor: colors.backgroundColor,
+          borderColor: Colors.border,
         }}
         placeholder={placeholder}
         arrowicon={

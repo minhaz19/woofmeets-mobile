@@ -47,18 +47,14 @@ const CustomStateChange = ({
             fontWeight: 'bold',
             fontSize: Text_Size.Text_1,
             padding: 20,
-            backgroundColor: isDarkMode
-              ? Colors.lightDark
-              : colors.backgroundColor,
+            backgroundColor: colors.backgroundColor,
           }}
         />
         <View
           style={[
             styles.pickerContainer,
             {
-              backgroundColor: isDarkMode
-                ? Colors.lightDark
-                : colors.backgroundColor,
+              backgroundColor: colors.backgroundColor,
             },
           ]}>
           <View style={styles.halfCont}>

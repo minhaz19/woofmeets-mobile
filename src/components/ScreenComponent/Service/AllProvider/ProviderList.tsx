@@ -16,9 +16,7 @@ const ProviderList = ({item, onPress}: Props) => {
     <Card
       style={{
         ...styles.container,
-        backgroundColor: isDarkMode
-          ? colors.lightBackgroundColor
-          : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
       }}>
       <TouchableOpacity onPress={onPress} style={styles.providerContainer}>
         <ImageContainer provider={item?.provider} />
