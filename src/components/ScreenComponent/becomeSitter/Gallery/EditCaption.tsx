@@ -65,7 +65,7 @@ const EditCaption = ({captionImage, setIsModalVisible}: Props) => {
         <TouchableOpacity
           style={[
             styles.cancelBtn,
-            {backgroundColor: isDarkMode ? Colors.button.grey : Colors.primary},
+            {backgroundColor: Colors.primary},
           ]}
           onPress={() => setIsModalVisible(false)}>
           <TitleText text="Cancel" textStyle={styles.text} />
@@ -73,7 +73,7 @@ const EditCaption = ({captionImage, setIsModalVisible}: Props) => {
         <TouchableOpacity
           style={[
             styles.saveBtn,
-            {backgroundColor: isDarkMode ? Colors.button.grey : Colors.primary},
+            {backgroundColor: Colors.primary},
           ]}
           onPress={handleSubmit(handleEdit)}>
           <TitleText

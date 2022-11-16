@@ -71,7 +71,7 @@ const BottomSheetCalendar = ({
             style={[
               styles.sectionContainer,
               {
-                backgroundColor: isDarkMode ? Colors.lightDark : Colors.border,
+                backgroundColor: Colors.border,
                 borderColor: colors.borderColor,
               },
             ]}

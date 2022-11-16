@@ -24,7 +24,7 @@ const BScalendar = ({watch, setValue}: Props) => {
       <AppTouchableOpacity
         style={[
           styles.sectionContainer,
-          {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
+          {backgroundColor: Colors.border},
         ]}
         onPress={() => setVisible(!visible)}>
         <View style={styles.textWidth}>

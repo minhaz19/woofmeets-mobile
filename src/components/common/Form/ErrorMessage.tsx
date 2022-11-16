@@ -20,7 +20,7 @@ const ErrorMessage = ({error, auth}: Props) => {
         styles.container,
         {
           backgroundColor:
-            auth && isDarkMode ? Colors.dark.lightDark : colors.backgroundColor,
+            colors.backgroundColor,
         },
       ]}>
       <Text

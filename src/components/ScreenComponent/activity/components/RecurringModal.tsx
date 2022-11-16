@@ -142,9 +142,7 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
                   borderWidth: 1,
                   borderRadius: 4,
                   borderColor: colors.borderColor,
-                  backgroundColor: isDarkMode
-                    ? Colors.dark.lightDark
-                    : colors.borderColor,
+                  backgroundColor: colors.borderColor,
                   // backgroundColor: colors.borderColor,
                   marginTop: 8,
                 }}>

@@ -14,9 +14,7 @@ const ScreenRapperGrey = (props: {
 }) => {
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
-    backgroundColor: isDarkMode
-      ? Colors.dark.background
-      : Colors.light.inputBackground,
+    backgroundColor: Colors.light.inputBackground,
   };
   return (
     <View style={[styles.container, backgroundStyle, props?.rapperStyle]}>

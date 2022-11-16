@@ -43,8 +43,6 @@ const AppHalfTabs = ({
                 backgroundColor:
                   activeIndex === index
                     ? Colors.primary
-                    : isDarkMode
-                    ? Colors.lightDark
                     : Colors.border,
                 borderColor:
                   activeIndex === index ? Colors.primary : colors.borderColor,

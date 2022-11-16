@@ -45,10 +45,8 @@ const MyPetList = ({
           {
             backgroundColor: !dataList
               ? Colors.none
-              : isDarkMode
-              ? colors.lightBackgroundColor
               : colors.backgroundColor,
-            borderColor: isDarkMode ? Colors.shadow : Colors.border,
+            borderColor: Colors.border,
           },
         ]}>
         {dataList ? (
@@ -62,9 +60,7 @@ const MyPetList = ({
               style={[
                 styles.textContainer,
                 {
-                  backgroundColor: isDarkMode
-                    ? colors.lightBackgroundColor
-                    : colors.backgroundColor,
+                  backgroundColor: colors.backgroundColor,
                 },
               ]}>
               <HeaderText
@@ -89,7 +85,7 @@ const MyPetList = ({
           </View>
         ) : (
           <View style={styles.addPet}>
-            <PlusRounded fill={isDarkMode ? 'white' : Colors.light.lightText} />
+            <PlusRounded fill={Colors.light.lightText} />
           </View>
         )}
       </View>

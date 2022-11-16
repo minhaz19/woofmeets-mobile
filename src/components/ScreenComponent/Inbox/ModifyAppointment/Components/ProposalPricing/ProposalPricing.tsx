@@ -20,7 +20,7 @@ const ProposalPricing = () => {
         style={[
           styles.priceContainer,
           {
-            backgroundColor: isDarkMode ? Colors.dark.lightDark : Colors.iosBG,
+            backgroundColor: Colors.iosBG,
             borderColor: colors.borderColor,
           },
         ]}>

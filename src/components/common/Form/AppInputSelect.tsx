@@ -13,10 +13,8 @@ const AppInputSelect = ({...otherProps}) => {
       style={[
         styles.container,
         {
-          backgroundColor: isDarkMode
-            ? colors.lightBackgroundColor
-            : colors.backgroundColor,
-          borderColor: isDarkMode ? Colors.gray : Colors.border,
+          backgroundColor: colors.backgroundColor,
+          borderColor: Colors.border,
         },
       ]}>
       <TextInput
@@ -29,7 +27,7 @@ const AppInputSelect = ({...otherProps}) => {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
             height: numberOfLines >= 10 ? 120 : 40,
             flex: 1,
-            color: isDarkMode ? Colors.gray : Colors.black,
+            color: Colors.black,
           },
         ]}
         {...otherProps}

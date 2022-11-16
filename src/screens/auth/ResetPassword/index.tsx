@@ -43,9 +43,7 @@ const SetNewPassword = ({navigation}: Props) => {
       style={[
         styles.container,
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.background,
+          backgroundColor: Colors.background,
         },
       ]}
       extraHeight={100}
@@ -56,9 +54,7 @@ const SetNewPassword = ({navigation}: Props) => {
           style={[
             styles.infoContainer,
             {
-              backgroundColor: isDarkMode
-                ? Colors.dark.lightDark
-                : Colors.background,
+              backgroundColor: Colors.background,
             },
           ]}>
           <AuthHeader

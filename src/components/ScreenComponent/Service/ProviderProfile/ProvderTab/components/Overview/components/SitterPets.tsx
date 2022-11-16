@@ -15,9 +15,7 @@ const SitterPets = () => {
         styles.card,
         styles.shadowProp,
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.lightDark
-            : Colors.background,
+          backgroundColor: Colors.background,
         },
       ]}>
       <View style={styles.contentWrapper}>

@@ -23,6 +23,7 @@ const RefundPricing = ({}: Props) => {
   const {proposedServiceInfo, loading: sLoader} = useAppSelector(
     state => state.proposal,
   );
+  console.log('proposedServiceInfo', proposedServiceInfo);
   return loading || sLoader ? (
     <View style={{marginVertical: '50%'}}>
       <TitleText
@@ -245,71 +246,73 @@ const RefundPricing = ({}: Props) => {
       <View
         style={[styles.divider, {backgroundColor: colors.descriptionText}]}
       />
-      <View
-        style={{
-          padding: 10,
-          backgroundColor: Colors.primary,
-          borderWidth: 1,
-          borderColor: Colors.border,
-          borderRadius: 5,
-        }}>
-        <View style={styles.totalContainer}>
-          <HeaderText
-            text={'Refunded type: '}
-            textStyle={{
-              color: Colors.background,
-              fontWeight: 'bold',
-              fontSize: Text_Size.Text_2,
-              marginLeft: 0,
-            }}
-          />
-          {user?.id === proposedServiceInfo?.userId ? (
+      {proposedServiceInfo?.refundDetails && (
+        <View
+          style={{
+            padding: 10,
+            backgroundColor: Colors.primary,
+            borderWidth: 1,
+            borderColor: Colors.border,
+            borderRadius: 5,
+          }}>
+          <View style={styles.totalContainer}>
             <HeaderText
-              text={`${proposedServiceInfo?.refundDetails?.refundType}`}
+              text={'Refunded type: '}
               textStyle={{
-                fontSize: Text_Size.Text_2,
                 color: Colors.background,
+                fontWeight: 'bold',
+                fontSize: Text_Size.Text_2,
+                marginLeft: 0,
               }}
             />
-          ) : (
+            {user?.id === proposedServiceInfo?.userId ? (
+              <HeaderText
+                text={`${proposedServiceInfo?.refundDetails?.refundType}`}
+                textStyle={{
+                  fontSize: Text_Size.Text_2,
+                  color: Colors.background,
+                }}
+              />
+            ) : (
+              <HeaderText
+                text={`${proposedServiceInfo?.refundDetails?.refundType}`}
+                textStyle={{
+                  fontSize: Text_Size.Text_2,
+                  color: Colors.background,
+                }}
+              />
+            )}
+          </View>
+          <View style={styles.totalContainer}>
             <HeaderText
-              text={`${proposedServiceInfo?.refundDetails?.refundType}`}
+              text={'Refund Amount: '}
               textStyle={{
-                fontSize: Text_Size.Text_2,
                 color: Colors.background,
+                fontWeight: 'bold',
+                fontSize: Text_Size.Text_2,
+                marginLeft: 0,
               }}
             />
-          )}
+            {user?.id === proposedServiceInfo?.userId ? (
+              <HeaderText
+                text={`$${proposedServiceInfo?.refundDetails?.userAmount}`}
+                textStyle={{
+                  fontSize: Text_Size.Text_2,
+                  color: Colors.background,
+                }}
+              />
+            ) : (
+              <HeaderText
+                text={`$${proposedServiceInfo?.refundDetails?.providerAmount}`}
+                textStyle={{
+                  fontSize: Text_Size.Text_2,
+                  color: Colors.background,
+                }}
+              />
+            )}
+          </View>
         </View>
-        <View style={styles.totalContainer}>
-          <HeaderText
-            text={'Refund Amount: '}
-            textStyle={{
-              color: Colors.background,
-              fontWeight: 'bold',
-              fontSize: Text_Size.Text_2,
-              marginLeft: 0,
-            }}
-          />
-          {user?.id === proposedServiceInfo?.userId ? (
-            <HeaderText
-              text={`$${proposedServiceInfo?.refundDetails?.userAmount}`}
-              textStyle={{
-                fontSize: Text_Size.Text_2,
-                color: Colors.background,
-              }}
-            />
-          ) : (
-            <HeaderText
-              text={`$${proposedServiceInfo?.refundDetails?.providerAmount}`}
-              textStyle={{
-                fontSize: Text_Size.Text_2,
-                color: Colors.background,
-              }}
-            />
-          )}
-        </View>
-      </View>
+      )}
     </View>
   );
 };

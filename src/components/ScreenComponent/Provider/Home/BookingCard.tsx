@@ -46,9 +46,7 @@ const BookingCard: FC<Props> = ({
     <Card
       style={{
         ...styles.itemContainer,
-        backgroundColor: isDarkMode
-          ? colors.lightBackgroundColor
-          : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
       }}>
       <TouchableOpacity onPress={onScreen}>
         <View style={styles.flexContainer}>

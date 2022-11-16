@@ -28,10 +28,8 @@ const FilterByDateAndActivity: FC<Props> = ({handleActivity, handleDate}) => {
             containerStyle={styles.containerStyleSmall}
             onSelect={handleActivity}
             textAlignment={{
-              backgroundColor: isDarkMode
-                ? Colors.light.lightText
-                : Colors.primary,
-              borderColor: isDarkMode ? Colors.light.lightText : Colors.primary,
+              backgroundColor: Colors.primary,
+              borderColor: Colors.primary,
               borderWidth: 1,
               borderRadius: 100,
             }}
@@ -50,8 +48,8 @@ const FilterByDateAndActivity: FC<Props> = ({handleActivity, handleDate}) => {
             containerStyle={styles.containerStyleSmall}
             onSelect={handleDate}
             textAlignment={{
-              backgroundColor: isDarkMode ? 'black' : 'white',
-              borderColor: isDarkMode ? 'white' : 'black',
+              backgroundColor: 'white',
+              borderColor: 'black',
               borderWidth: 1,
               borderRadius: 100,
             }}

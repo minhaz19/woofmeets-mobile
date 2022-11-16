@@ -206,7 +206,7 @@ const EditCart = ({
       style={[
         styles.editContainer,
         {
-          backgroundColor: isDarkMode ? Colors.background : Colors.black,
+          backgroundColor: Colors.black,
         },
         animatedStyles,
       ]}>
@@ -217,13 +217,13 @@ const EditCart = ({
               styles.markContainer,
               {
                 borderRightWidth: 1,
-                borderRightColor: isDarkMode ? Colors.text : Colors.background,
+                borderRightColor: Colors.background,
               },
             ]}
             onPress={handleMAUnavailable}>
             <TitleText
               textStyle={{
-                color: isDarkMode ? Colors.text : Colors.background,
+                color: Colors.background,
                 fontSize: Text_Size.Text_0,
                 fontWeight: 'bold',
                 textAlign: 'center',
@@ -237,13 +237,13 @@ const EditCart = ({
               styles.markContainer,
               {
                 borderRightWidth: 1,
-                borderRightColor: isDarkMode ? Colors.text : Colors.background,
+                borderRightColor: Colors.background,
               },
             ]}
             onPress={handleMAAvailable}>
             <TitleText
               textStyle={{
-                color: isDarkMode ? Colors.text : Colors.background,
+                color: Colors.background,
                 fontSize: Text_Size.Text_0,
                 fontWeight: 'bold',
                 textAlign: 'center',
@@ -257,7 +257,7 @@ const EditCart = ({
           onPress={() => setIsVisible(true)}>
           <TitleText
             textStyle={{
-              color: isDarkMode ? Colors.text : Colors.background,
+              color: Colors.background,
               fontSize: Text_Size.Text_0,
               fontWeight: 'bold',
               alignItems: 'center',

@@ -40,9 +40,7 @@ const ForgotPasswordReset = ({route, navigation}: Props) => {
           style={[
             styles.infoContainer,
             {
-              backgroundColor: isDarkMode
-                ? Colors.dark.lightDark
-                : Colors.background,
+              backgroundColor: Colors.background,
             },
           ]}>
           <AuthHeader

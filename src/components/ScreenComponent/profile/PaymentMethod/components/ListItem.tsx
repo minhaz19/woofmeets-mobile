@@ -94,9 +94,7 @@ Props) => {
             styles.taskContainer,
             {
               paddingVertical: 20,
-              backgroundColor: isDarkMode
-                ? colors.lightBackgroundColor
-                : colors.backgroundColor,
+              backgroundColor: colors.backgroundColor,
             },
           ]}
           onPress={() =>

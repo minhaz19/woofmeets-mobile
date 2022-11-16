@@ -41,7 +41,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
         <AppTouchableOpacity
           style={[
             styles.sectionContainer,
-            {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
+            {backgroundColor: Colors.border},
           ]}
           onPress={() => setVisible(!visible)}>
           <View style={styles.textWidth}>
@@ -69,7 +69,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
           <AppTouchableOpacity
             style={[
               styles.slot,
-              {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
+              {backgroundColor: Colors.border},
             ]}
             onPress={() => setDropVisible(!dropVisible)}>
             <View>
@@ -102,7 +102,7 @@ const DateDropPick = ({serviceId, setValue}: Props) => {
           <AppTouchableOpacity
             style={[
               styles.slot,
-              {backgroundColor: isDarkMode ? Colors.lightDark : Colors.border},
+              {backgroundColor: Colors.border},
             ]}
             onPress={() => setPickVisible(!pickVisible)}>
             <View>

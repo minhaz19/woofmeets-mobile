@@ -35,9 +35,7 @@ const VerifyAccount = ({navigation}: Props) => {
       showsVerticalScrollIndicator={false}
       style={[
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
+          backgroundColor: Colors.secondary,
         },
       ]}>
       <KeyboardAvoidingView
@@ -48,9 +46,7 @@ const VerifyAccount = ({navigation}: Props) => {
           style={[
             styles.infoContainer,
             {
-              backgroundColor: isDarkMode
-                ? Colors.dark.lightDark
-                : Colors.background,
+              backgroundColor: Colors.background,
             },
           ]}>
           <ImageAndTitle

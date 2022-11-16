@@ -38,9 +38,7 @@ const Splash = ({}) => {
         style={[
           styles.slide,
           {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.background,
+            backgroundColor: Colors.background,
           },
         ]}>
         <Image source={item.image} style={styles.image} />

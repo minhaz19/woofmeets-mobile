@@ -24,9 +24,7 @@ const ProviderAvailablity = () => {
       style={[
         styles.container,
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.background,
+          backgroundColor: Colors.background,
         },
       ]}>
       <AppForm

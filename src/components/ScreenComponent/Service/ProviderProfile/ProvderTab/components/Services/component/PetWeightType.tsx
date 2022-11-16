@@ -23,7 +23,7 @@ const PetWeightType = ({item}: Props) => {
         textStyle={{
           fontSize: Text_Size.Text_0,
           fontWeight: '600',
-          color: isDarkMode ? Colors.background : Colors.black,
+          color: Colors.black,
         }}
         text={item.weight}
       />

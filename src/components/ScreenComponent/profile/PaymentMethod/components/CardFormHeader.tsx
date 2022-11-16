@@ -18,7 +18,7 @@ const CardFormHeader = () => {
       style={[
         styles.container,
         {
-          backgroundColor: isDarkMode ? Colors.gray : colors.backgroundColor,
+          backgroundColor: colors.backgroundColor,
         },
       ]}>
       <AnimatedLottieView

@@ -29,16 +29,14 @@ function GuestBottomTabNavigator() {
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.background,
+          backgroundColor: Colors.background,
           height: height,
           position: 'absolute',
           bottom: 0,
           elevation: 9,
           shadowOpacity: 0.9,
           shadowOffset: {width: 2, height: 8},
-          shadowColor: isDarkMode ? Colors.dark.background : Colors.background,
+          shadowColor: Colors.background,
           borderTopWidth: 2,
           borderColor: colors.borderColor,
         },

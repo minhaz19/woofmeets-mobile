@@ -180,9 +180,7 @@ const Gallery = () => {
               style={[
                 styles.uploadContainer,
                 {
-                  backgroundColor: isDarkMode
-                    ? Colors.dark.lightDark
-                    : Colors.primaryLight,
+                  backgroundColor: Colors.primaryLight,
                 },
               ]}>
               <View style={styles.uploadInfo}>

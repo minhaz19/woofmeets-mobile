@@ -38,9 +38,7 @@ const ProviderTab = (props) => {
                   SCREEN_WIDTH > 800 ? Text_Size.Text_1 : Text_Size.Text_0,
                 color:
                   active === index
-                    ? isDarkMode
-                      ? Colors.background
-                      : Colors.black
+                    ? Colors.black
                     : Colors.gray,
               }}
             />

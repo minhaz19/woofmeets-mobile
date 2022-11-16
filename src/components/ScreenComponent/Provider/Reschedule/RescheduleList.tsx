@@ -32,9 +32,7 @@ const RescheduleList = ({
       <Card
         style={{
           ...styles.container,
-          backgroundColor: isDarkMode
-            ? colors.lightBackgroundColor
-            : colors.backgroundColor,
+          backgroundColor: colors.backgroundColor,
         }}>
         <TouchableOpacity
           onPress={() => {

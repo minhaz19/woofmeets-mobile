@@ -50,18 +50,14 @@ function BottomTabNavigator() {
           tabBarShowLabel: false,
           tabBarHideOnKeyboard: true,
           tabBarStyle: {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.background,
+            backgroundColor: Colors.background,
             height: height,
             position: 'absolute',
             bottom: 0,
             elevation: 9,
             shadowOpacity: 0.9,
             shadowOffset: {width: 2, height: 8},
-            shadowColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.background,
+            shadowColor: Colors.background,
             borderTopWidth: 2,
             borderColor: colors.borderColor,
           },
@@ -140,8 +136,6 @@ function BottomTabNavigator() {
                   fill={
                     focused
                       ? Colors.primary
-                      : isDarkMode
-                      ? Colors.light.placeholderTextColor
                       : Colors.subText
                   }
                   height={SCREEN_WIDTH <= 380 ? 18 : 20}
@@ -188,18 +182,14 @@ function BottomTabNavigator() {
           tabBarShowLabel: false,
           tabBarHideOnKeyboard: true,
           tabBarStyle: {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.background,
+            backgroundColor: Colors.background,
             height: height,
             position: 'absolute',
             bottom: 0,
             elevation: 9,
             shadowOpacity: 0.9,
             shadowOffset: {width: 2, height: 8},
-            shadowColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.background,
+            shadowColor: Colors.background,
             borderTopWidth: 2,
             borderColor: colors.borderColor,
           },
@@ -259,8 +249,6 @@ function BottomTabNavigator() {
                   fill={
                     focused
                       ? Colors.primary
-                      : isDarkMode
-                      ? Colors.light.placeholderTextColor
                       : Colors.subText
                   }
                   height={SCREEN_WIDTH <= 380 ? 20 : 22}

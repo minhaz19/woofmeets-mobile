@@ -26,7 +26,7 @@ const HomeType = ({Icon, text, onPress, selected, slug}: Props) => {
         <Icon
           height={30}
           width={30}
-          fill={isDarkMode ? colors.backgroundColor : colors.headerText}
+          fill={colors.headerText}
         />
       </View>
       <ShortText
@@ -37,8 +37,6 @@ const HomeType = ({Icon, text, onPress, selected, slug}: Props) => {
           color:
           slug === selected
               ? Colors.primary
-              : isDarkMode
-              ? Colors.background
               : Colors.headerText,
         }}
         text={text}

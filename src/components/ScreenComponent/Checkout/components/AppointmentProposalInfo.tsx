@@ -33,7 +33,7 @@ const AppointmentProposalInfo = () => {
           borderColor: Colors.border,
           padding: 10,
           borderRadius: 5,
-          backgroundColor: isDarkMode ? Colors.dark.lightDark : Colors.iosBG,
+          backgroundColor: Colors.iosBG,
           marginVertical: 20,
         }}>
         {proposedServiceInfo.serviceTypeId === 1 ||

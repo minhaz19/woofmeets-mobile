@@ -52,9 +52,7 @@ const BoardingDayAV = ({title, data, setValue}: Props) => {
                 padding: 10,
                 borderRadius: 6,
                 backgroundColor: it.active
-                  ? isDarkMode
-                    ? Colors.primary
-                    : 'black'
+                  ? 'black'
                   : Colors.background,
               }}>
               <TitleText

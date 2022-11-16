@@ -90,9 +90,7 @@ const ServicePicker = ({name, setValue}: Props) => {
               style={[
                 styles.sectionContainer,
                 {
-                  backgroundColor: isDarkMode
-                    ? Colors.lightDark
-                    : Colors.background,
+                  backgroundColor: Colors.background,
 
                   borderColor: colors.borderColor,
                 },

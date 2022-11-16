@@ -25,7 +25,7 @@ const SubscriptionListBody = ({data}: Props) => {
           padding: 10,
           borderColor: colors.borderColor,
           borderWidth: 1,
-          backgroundColor: isDarkMode ? Colors.dark.lightDark : Colors.iosBG,
+          backgroundColor: Colors.iosBG,
           marginVertical: 10,
         }}>
         <TitleText

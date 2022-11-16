@@ -34,7 +34,7 @@ const AvailablityCalendar = () => {
   const [monthRef, setMonthRef] = useState({});
   const {loading, availabileDates, getAvailablity, availableService} =
     useProviderAvailability();
-  const selectColor = isDarkMode ? Colors.background : Colors.black;
+  const selectColor = Colors.black;
 
   const [foundAvailable, setFoundAvailable] = useState(false);
   const {
@@ -120,9 +120,7 @@ const AvailablityCalendar = () => {
               [singleSelect]: {
                 customStyles: {
                   container: {
-                    backgroundColor: isDarkMode
-                      ? Colors.background
-                      : Colors.black,
+                    backgroundColor: Colors.black,
                     elevation: 2,
                     borderRadius: 10,
 

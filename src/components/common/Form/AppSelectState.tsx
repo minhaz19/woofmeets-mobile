@@ -44,10 +44,8 @@ const AppSelectState = ({
                 style={[
                   styles.container,
                   {
-                    backgroundColor: isDarkMode
-                      ? colors.lightBackgroundColor
-                      : colors.backgroundColor,
-                    borderColor: isDarkMode ? Colors.gray : Colors.border,
+                    backgroundColor: colors.backgroundColor,
+                    borderColor: Colors.border,
                   },
                 ]}>
                 <View pointerEvents="none">
@@ -60,7 +58,7 @@ const AppSelectState = ({
                         alignSelf: 'flex-start',
                         height: 40,
                         flex: 1,
-                        color: isDarkMode ? Colors.gray : Colors.black,
+                        color: Colors.black,
                       },
                     ]}
                     value={value}

@@ -44,9 +44,7 @@ const AddPetImage = ({name}: Props) => {
             style={[
               styles.container,
               {
-                backgroundColor: isDarkMode
-                  ? Colors.dark.lightDark
-                  : Colors.primaryLight,
+                backgroundColor: Colors.primaryLight,
               },
             ]}>
             <View style={styles.uploadInfo}>
@@ -63,9 +61,7 @@ const AddPetImage = ({name}: Props) => {
             style={[
               styles.editCon,
               {
-                backgroundColor: isDarkMode
-                  ? colors.lightBackgroundColor
-                  : colors.backgroundColor,
+                backgroundColor: colors.backgroundColor,
               },
             ]}
             onPress={() => {

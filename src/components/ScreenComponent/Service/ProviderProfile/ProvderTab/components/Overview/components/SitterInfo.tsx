@@ -40,7 +40,7 @@ const SitterInfo = ({item}: Props) => {
             />
             <DescriptionText
               textStyle={{
-                color: isDarkMode ? Colors.background : Colors.text,
+                color: Colors.text,
                 fontSize: Text_Size.Text_9,
                 marginTop: 10,
               }}
@@ -60,7 +60,7 @@ const SitterInfo = ({item}: Props) => {
                   />
                   <DescriptionText
                     textStyle={{
-                      color: isDarkMode ? Colors.background : Colors.text,
+                      color: Colors.text,
                       fontSize: Text_Size.Text_9,
                     }}
                     text={inf.info}
@@ -71,7 +71,7 @@ const SitterInfo = ({item}: Props) => {
                 <>
                   <DescriptionText
                     textStyle={{
-                      color: isDarkMode ? Colors.background : Colors.text,
+                      color: Colors.text,
                       fontSize: Text_Size.Text_9,
                     }}
                     text={inf.description}
