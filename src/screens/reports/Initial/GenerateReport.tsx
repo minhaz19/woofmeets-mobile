@@ -20,7 +20,8 @@ const GenerateReport = (props: {
   const {isPeeSelected, isPooSelected, isWaterSelected, isFoodSelected, photo} =
     useAppSelector((state: any) => state?.reportCard);
   const {pets} = useAppSelector((state: any) => state?.allPets);
-
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+ 
   //Remove photo
   // const {request: deleteRequest, loading: deleteLoading} = useApi(
   //   methods._delete,
@@ -76,14 +77,14 @@ const GenerateReport = (props: {
           text="Activities"
           textStyle={{paddingVertical: 10, marginHorizontal: 15}}
         />
-        {pets?.map(
-          (item: {id: number; name: string; profile_image: {url: any}}) => (
+        {proposedServiceInfo?.petsInfo?.map(
+          (item: {id: number; pet: any; profile_image: {url: any}}) => (
             <ReportPet
               key={item?.id}
               id={item?.id}
-              title={item?.name}
+              title={item?.pet?.name}
               rowImage
-              image={item?.profile_image?.url}
+              image={item?.pet?.profile_image.url}
               isPeeSelected={isPeeSelected}
               isPooSelected={isPooSelected}
               isFoodSelected={isFoodSelected}

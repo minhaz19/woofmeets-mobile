@@ -17,6 +17,7 @@ const ReportCard = () => {
   const {isPeeSelected, isPooSelected, isWaterSelected, isFoodSelected, photo} =
     useAppSelector((state: any) => state?.reportCard);
   const {pets} = useAppSelector((state: any) => state?.allPets);
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -72,7 +73,7 @@ const ReportCard = () => {
       />
       {
         <View>
-          {pets?.map(
+          {proposedServiceInfo?.petsInfo?.map(
             (item: {id: number; name: string; profile_image: {url: any}}) => (
               <ReportSingleCard
                 key={item?.id}

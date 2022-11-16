@@ -29,6 +29,7 @@ const Availability = ({navigation, route}: Props) => {
   const {availability, loading} = useAppSelector(
     (state: any) => state?.availability,
   );
+
   // hook for post/put
   const {handlePost, isLoading} = useAvailabilityUtils(
     serviceId[0],
@@ -80,8 +81,7 @@ const Availability = ({navigation, route}: Props) => {
             itemId,
           )}
           validationSchema={availabilityValidation}
-          // enableReset
-        >
+          enableReset>
           <SubAvailability handlePost={handlePost} loading={isLoading} />
         </AppForm>
       </KeyboardAwareScrollView>

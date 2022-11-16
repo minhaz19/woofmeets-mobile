@@ -87,6 +87,8 @@ const ReportCardInitial = (props: {
     },
   ]);
   const {pets} = useAppSelector((state: any) => state?.allPets);
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+
   const [sequence, setSequence] = useState<number>(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -96,19 +98,14 @@ const ReportCardInitial = (props: {
     (state: any) => state.address.currentUserLocation,
   );
   useEffect(() => {
-    dispatch(setIsPeeSelected(pets));
-    dispatch(setIsPooSelected(pets));
-    dispatch(setIsFoodSelected(pets));
-    dispatch(setIsWaterSelected(pets));
-  }, [currentUserLocation, dispatch, pets]);
+    dispatch(setIsPeeSelected(proposedServiceInfo?.petsInfo));
+    dispatch(setIsPooSelected(proposedServiceInfo?.petsInfo));
+    dispatch(setIsFoodSelected(proposedServiceInfo?.petsInfo));
+    dispatch(setIsWaterSelected(proposedServiceInfo?.petsInfo));
+  }, [currentUserLocation, dispatch, proposedServiceInfo?.petsInfo]);
 
-  const {
-    isPeeSelected,
-    isPooSelected,
-    isWaterSelected,
-    isFoodSelected,
-    photo,
-  } = useAppSelector((state: any) => state?.reportCard);
+  const {isPeeSelected, isPooSelected, isWaterSelected, isFoodSelected, photo} =
+    useAppSelector((state: any) => state?.reportCard);
 
   //modal visible
   const onPressService = (data: any) => {
@@ -181,7 +178,11 @@ const ReportCardInitial = (props: {
     } else if (sequence === 3) {
       const myNewPet = isFoodSelected?.map((item: any) => {
         if (item.selected) {
-          return {...item, food: item.food ? item.food + 1 : 1, selected: false};
+          return {
+            ...item,
+            food: item.food ? item.food + 1 : 1,
+            selected: false,
+          };
         } else {
           return item;
         }
@@ -191,7 +192,11 @@ const ReportCardInitial = (props: {
       const myNewPet = isWaterSelected?.map((item: any) => {
         if (item.selected) {
           // setIsWater(isWater + 1);
-          return {...item, water: item.water ? item.water + 1 : 1, selected: false};
+          return {
+            ...item,
+            water: item.water ? item.water + 1 : 1,
+            selected: false,
+          };
         } else {
           return item;
         }
@@ -239,7 +244,7 @@ const ReportCardInitial = (props: {
             onPress={handleSwitch}
             handlePress={handlePress}
             items={items}
-            pets={pets}
+            pets={proposedServiceInfo?.petsInfo}
           />
         ) : sequence === 2 ? (
           <ReportModal
@@ -250,7 +255,7 @@ const ReportCardInitial = (props: {
             onPress={handleSwitch}
             handlePress={handlePress}
             items={items}
-            pets={pets}
+            pets={proposedServiceInfo?.petsInfo}
           />
         ) : sequence === 3 ? (
           <ReportModal
@@ -261,7 +266,7 @@ const ReportCardInitial = (props: {
             onPress={handleSwitch}
             handlePress={handlePress}
             items={items}
-            pets={pets}
+            pets={proposedServiceInfo?.petsInfo}
           />
         ) : (
           <ReportModal
@@ -272,7 +277,7 @@ const ReportCardInitial = (props: {
             onPress={handleSwitch}
             handlePress={handlePress}
             items={items}
-            pets={pets}
+            pets={proposedServiceInfo?.petsInfo}
           />
         )}
         <View style={styles.tabContainer}>

@@ -40,9 +40,7 @@ const ThreeDotsModal: FC<Props> = props => {
         <MaterialIcons name="rate-review" size={24} color={Colors.primary} />
       ),
       screen: () => {
-        // props?.setIsReviewModal(true);
-        // props?.setIsThreeDotsModal(false);
-        if (proposedServiceInfo.status !== 'COMPLETED') {
+        if (proposedServiceInfo?.status !== 'COMPLETED') {
           Alert.alert(
             'You can only review once you complete the appointment successfully',
           );
@@ -51,7 +49,7 @@ const ThreeDotsModal: FC<Props> = props => {
           props?.isReviewed?.length === 0 && props?.setIsThreeDotsModal(false);
           props?.isReviewed?.length > 0 &&
             Alert.alert(
-              'You have already reviewed this provider and his service',
+              'You have already reviewed',
             );
         }
       },

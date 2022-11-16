@@ -47,18 +47,18 @@ const ReportModal = ({
               (item: {
                 selected: any;
                 id: number;
-                name: string;
+                pet: any;
                 profile_image: {url: any};
               }) => {
                 return (
                   <View key={item?.id} style={styles.innerContainer}>
                     <View style={{paddingRight: 10}}>
                       <ImageAndTitle
-                        title={item.name}
+                        title={item?.pet?.name}
                         rowImage
                         image={
-                          item.profile_image
-                            ? item.profile_image.url
+                          item?.pet?.profile_image
+                            ? item?.pet?.profile_image.url
                             : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
                         }
                       />

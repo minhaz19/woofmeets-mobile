@@ -20,8 +20,9 @@ import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 import DescriptionText from '../../common/text/DescriptionText';
 import GoogleAutoComplete from '../../common/GoogleAutoComplete';
-import {states} from '../../../screens/profile/BasicInfo/utils/basicInfoState';
 import AppDropDownSelect from '../../common/AppDropDownSelect';
+import { states } from '../../../screens/profile/BasicInfo/utils/basicInfoState';
+
 
 interface Props {
   handleSubmit: (value: any) => void;

@@ -171,7 +171,7 @@ const FilterProviderBody = ({
         <View>
           <PriceRange multiSliderValue={multiSliderValue} />
         </View>
-        <TitleText textStyle={styles.title} text="Home Type" />
+        {/* <TitleText textStyle={styles.title} text="Home Type" />
         <FlatList
           data={homeType}
           showsHorizontalScrollIndicator={false}
@@ -203,7 +203,7 @@ const FilterProviderBody = ({
               ))}
             </View>
           ))}
-        </View>
+        </View> */}
         <View style={styles.btnContainer}>
           <ButtonCom
             title="Search"
