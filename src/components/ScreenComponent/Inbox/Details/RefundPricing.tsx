@@ -23,7 +23,6 @@ const RefundPricing = ({}: Props) => {
   const {proposedServiceInfo, loading: sLoader} = useAppSelector(
     state => state.proposal,
   );
-  console.log('proposedServiceInfo', proposedServiceInfo);
   return loading || sLoader ? (
     <View style={{marginVertical: '50%'}}>
       <TitleText

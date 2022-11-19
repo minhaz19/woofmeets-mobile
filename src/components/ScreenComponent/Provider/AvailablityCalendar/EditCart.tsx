@@ -14,7 +14,6 @@ import TitleText from '../../../common/text/TitleText';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 import {getAvailableDays} from '../../../../store/slices/Provider/Unavailability/getAvailableDay';
 import {baseUrlV} from '../../../../utils/helpers/httpRequest';
@@ -41,10 +40,8 @@ const EditCart = ({
   resetSelection,
 }: Props) => {
   const [isVisible, setIsVisible] = useState(false);
-  const {isDarkMode} = useTheme();
 
   const {userActiveServices} = useAppSelector(state => state.services);
-
   const dispatch = useAppDispatch();
   const {request} = useApi(methods._post);
   const {request: putRequest} = useApi(methods._put);
@@ -54,7 +51,7 @@ const EditCart = ({
       transform: [{translateY: offset.value}],
     };
   });
-  const selectDate = new Date(startingDate).getMonth() + 1;
+  const selectDate = new Date(startingDate?.replace(/-/g, '/')).getMonth() + 1;
   const currentDate = new Date().getMonth() + 1;
 
   useMemo(() => {
@@ -79,9 +76,12 @@ const EditCart = ({
     if (result.ok) {
       setIsVisible(false);
       const monthData = {
-        year: new Date(startingDate).getFullYear(),
-        month: new Date(startingDate).getMonth() + 1,
-        dateString: formatDate(new Date(startingDate), 'yyyy-MM-dd'),
+        year: new Date(startingDate?.replace(/-/g, '/')).getFullYear(),
+        month: new Date(startingDate?.replace(/-/g, '/')).getMonth() + 1,
+        dateString: formatDate(
+          new Date(startingDate?.replace(/-/g, '/')),
+          'yyyy-MM-dd',
+        ),
       };
       getAvailablity(
         monthData,
@@ -109,9 +109,12 @@ const EditCart = ({
     if (result.ok) {
       setIsVisible(false);
       const monthData = {
-        year: new Date(startingDate).getFullYear(),
-        month: new Date(startingDate).getMonth() + 1,
-        dateString: formatDate(new Date(startingDate), 'yyyy-MM-dd'),
+        year: new Date(startingDate?.replace(/-/g, '/')).getFullYear(),
+        month: new Date(startingDate?.replace(/-/g, '/')).getMonth() + 1,
+        dateString: formatDate(
+          new Date(startingDate?.replace(/-/g, '/')),
+          'yyyy-MM-dd',
+        ),
       };
       getAvailablity(
         monthData,
@@ -127,7 +130,7 @@ const EditCart = ({
       to:
         endingDate !== undefined && endingDate !== ''
           ? formatDate(new Date(endingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'")
-          : null,
+          : formatDate(new Date(startingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
       providerServiceIds: userActiveServices.map(
         (item: {id: number}) => item.id,
       ),
@@ -135,9 +138,12 @@ const EditCart = ({
     const result = await request(unavailabilityEndpoint, payload);
     if (result.ok) {
       const monthData = {
-        year: new Date(startingDate).getFullYear(),
-        month: new Date(startingDate).getMonth() + 1,
-        dateString: formatDate(new Date(startingDate), 'yyyy-MM-dd'),
+        year: new Date(startingDate?.replace(/-/g, '/')).getFullYear(),
+        month: new Date(startingDate?.replace(/-/g, '/')).getMonth() + 1,
+        dateString: formatDate(
+          new Date(startingDate?.replace(/-/g, '/')),
+          'yyyy-MM-dd',
+        ),
       };
       getAvailablity(
         monthData,
@@ -155,15 +161,18 @@ const EditCart = ({
       to:
         endingDate !== undefined && endingDate !== ''
           ? formatDate(new Date(endingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'")
-          : null,
+          : formatDate(new Date(startingDate), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
     };
 
     const result = await request(availablityEndpoint, payload);
     if (result.ok) {
       const monthData = {
-        year: new Date(startingDate).getFullYear(),
-        month: new Date(startingDate).getMonth() + 1,
-        dateString: formatDate(new Date(startingDate), 'yyyy-MM-dd'),
+        year: new Date(startingDate?.replace(/-/g, '/')).getFullYear(),
+        month: new Date(startingDate?.replace(/-/g, '/')).getMonth() + 1,
+        dateString: formatDate(
+          new Date(startingDate?.replace(/-/g, '/')),
+          'yyyy-MM-dd',
+        ),
       };
       getAvailablity(
         monthData,
@@ -208,11 +217,24 @@ const EditCart = ({
           }
           resetSelection();
         } else {
-          const monthData = {
-            year: new Date().getFullYear(),
-            month: new Date().getMonth() + 1,
-            dateString: formatDate(new Date(), 'yyyy-MM-dd'),
-          };
+          const monthData =
+            startingDate !== undefined && startingDate !== ''
+              ? {
+                  year: new Date(
+                    startingDate?.replace(/-/g, '/'),
+                  ).getFullYear(),
+                  month:
+                    new Date(startingDate?.replace(/-/g, '/')).getMonth() + 1,
+                  dateString: formatDate(
+                    new Date(startingDate?.replace(/-/g, '/')),
+                    'yyyy-MM-dd',
+                  ),
+                }
+              : {
+                  year: new Date().getFullYear(),
+                  month: new Date().getMonth() + 1,
+                  dateString: formatDate(new Date(), 'yyyy-MM-dd'),
+                };
           getAvailablity(monthData, 'current');
         }
       }

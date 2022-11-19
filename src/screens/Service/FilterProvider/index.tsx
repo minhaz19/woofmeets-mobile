@@ -12,6 +12,7 @@ import {setOpenFilter} from '../../../store/slices/misc/openFilter';
 import {
   setDropIn,
   setDropOut,
+  setFormattedAddress,
   setFormattedData,
   setIsService,
   setIsYardEnabled,
@@ -42,10 +43,11 @@ const FilterProvider = () => {
     scheduleId,
   } = useAppSelector((state: any) => state.providerFilter);
 
-  const onPressAddress = (data: any, details: any) => {
-    const lat = details.geometry.location.lat;
-    const lng = details.geometry.location.lng;
+  const onPressAddress = (details: any) => {
+    const lat = details?.geometry?.location.lat;
+    const lng = details?.geometry?.location.lng;
     dispatch(setLocation({lat: lat, lng: lng}));
+    dispatch(setFormattedAddress(details?.formatted_address));
   };
   useEffect(() => {
     if (pets) {

@@ -51,7 +51,7 @@ const Availability = ({navigation, route}: Props) => {
 
   return (
     <>
-      {loading && <AppActivityIndicator visible={true} />}
+      {(loading || refreshing) && <AppActivityIndicator visible={true} />}
       <KeyboardAwareScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}

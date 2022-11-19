@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {ScrollView, TextInput, View} from 'react-native';
+import {Alert, ScrollView, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import AnimatedLottieView from 'lottie-react-native';
 import TitleText from '../../../../components/common/text/TitleText';
@@ -20,7 +20,7 @@ import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/U
 const endPoint = '/appointment/cancel/';
 const AppointmentSuccess = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const navigation = useNavigation<any>();
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const dispatch = useAppDispatch();
@@ -42,6 +42,9 @@ const AppointmentSuccess = () => {
       dispatch(getProviderApnt(proposedServiceInfo.appointmentOpk));
       setIsVisible(false);
       navigation.navigate('Inbox');
+    } else {
+      Alert.alert(result.data.message);
+      setIsVisible(false);
     }
   };
   return (

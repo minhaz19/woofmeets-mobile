@@ -13,15 +13,20 @@ import {useFormContext} from 'react-hook-form';
 import {useSubRates} from './ulils/useSubRates';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
-
 interface Props {
   handleRates: (arg: any) => void;
   rateFields: any;
   loading: boolean;
   fieldValue: any;
+  ratesMeta: any;
 }
 
-const SubRates = ({handleRates, rateFields, fieldValue, loading}: Props) => {
+const SubRates = ({
+  handleRates,
+  rateFields,
+
+  loading,
+}: Props) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {
     formState: {errors},
@@ -36,8 +41,7 @@ const SubRates = ({handleRates, rateFields, fieldValue, loading}: Props) => {
     showAdditionalRates,
     updateRates,
     setUpdateRates,
-    checked,
-  } = useSubRates(rateFields, fieldValue, watch);
+  } = useSubRates(rateFields, watch);
   return (
     <View>
       <ServiceReusableModal
@@ -132,7 +136,7 @@ const SubRates = ({handleRates, rateFields, fieldValue, loading}: Props) => {
                     convertedValue={item.convertedValue}
                     setValue={setValue}
                     updateRates={updateRates}
-                    checked={checked}
+                    // checked={checked}
                     unit={item.rateUnitLabel}
                     icon={true}
                     helpText={item.helpText}

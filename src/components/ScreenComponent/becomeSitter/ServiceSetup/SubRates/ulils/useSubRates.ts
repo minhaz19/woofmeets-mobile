@@ -1,5 +1,6 @@
 import {useMemo, useState} from 'react';
-// import {useAppSelector} from '../../../../../../store/store';
+import {useWatch} from 'react-hook-form';
+import {useAppSelector} from '../../../../../../store/store';
 function areEqual(arr1: any, arr2: any) {
   let N = arr1?.length;
   let M = arr2?.length;
@@ -34,14 +35,15 @@ function areEqual(arr1: any, arr2: any) {
 
   return true;
 }
-export const useSubRates = (rateFields: any, fieldValue: any, watch: any) => {
+export const useSubRates = (rateFields: any, watch: any) => {
   const [showAdditionalRates, setShowAdditionalRates] = useState(true);
   const [updateRates, setUpdateRates] = useState(false);
   const [rates, setRates] = useState([]);
-  const [checked, setChecked] = useState(false);
-  // const {fieldValue} = useAppSelector(state => state.fieldValue);
+  const {fieldValue} = useAppSelector(state => state.fieldValue);
 
-  const baseRateWatch = watch('baserate');
+  const b = useWatch();
+  const baseRateWatch = b.baserate;
+
   const handlePress = () => {
     setShowAdditionalRates(!showAdditionalRates);
   };
@@ -55,7 +57,6 @@ export const useSubRates = (rateFields: any, fieldValue: any, watch: any) => {
     }));
     setRates(modRates);
   }, [baseRateWatch, rateFields]);
-
   useMemo(() => {
     const checkCheck = rateFields?.map((elm: any) => ({
       serviceTypeId: elm.id,
@@ -83,17 +84,6 @@ export const useSubRates = (rateFields: any, fieldValue: any, watch: any) => {
     }
   }, [fieldValue, rateFields]);
 
-  // useMemo(() => {
-  //   if (checked === true) {
-  //     if (updateRates === false) {
-  //       setChecked(false);
-  //     }
-  //   } else if (checked === false) {
-  //     if (updateRates === true) {
-  //       setChecked(true);
-  //     }
-  //   }
-  // }, [checked, updateRates]);
   return {
     baseRateWatch,
     handlePress,
@@ -101,6 +91,5 @@ export const useSubRates = (rateFields: any, fieldValue: any, watch: any) => {
     showAdditionalRates,
     updateRates,
     setUpdateRates,
-    checked,
   };
 };

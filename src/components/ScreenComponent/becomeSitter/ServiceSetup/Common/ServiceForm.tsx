@@ -69,7 +69,7 @@ const ServiceForm = ({
   convertedValue,
   setValue,
   updateRates,
-  checked,
+
   unit,
   helpText,
 }: Props) => {
@@ -81,7 +81,7 @@ const ServiceForm = ({
       setValue(name, convertedValue, {
         shouldValidate: errors[name] ? true : false,
       });
-  }, [name, updateRates, checked, setValue, convertedValue, errors]);
+  }, [name, updateRates, setValue, convertedValue, errors]);
   const [isVisible, setIsVisible] = useState(false);
   return (
     <>
@@ -114,7 +114,7 @@ const ServiceForm = ({
                   name === 'baserate' && value !== null
                     ? value?.toString()
                     : updateRates === false && baseRateWatch !== undefined
-                    ? convertedValue.toString()
+                    ? convertedValue!.toString()
                     : value !== null && value?.toString()
                 }
                 error={error?.message}

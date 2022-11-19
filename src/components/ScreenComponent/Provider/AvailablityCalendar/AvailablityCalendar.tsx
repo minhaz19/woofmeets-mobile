@@ -98,7 +98,7 @@ const AvailablityCalendar = () => {
   }, [availabileDates, loading, _markedStyle, availableService]);
   return (
     <>
-      {resetLoading && (
+      {(resetLoading || loading) && (
         <View style={styles.loader}>
           <CalendarSK />
         </View>

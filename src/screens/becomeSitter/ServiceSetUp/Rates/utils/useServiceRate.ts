@@ -22,11 +22,9 @@ export const useServiceRates = (
   const addRateApi = (data: any) => {
     return fieldValue === null || fieldValue === undefined
       ? methods._post(ratePostEndpoint, data)
-      : methods._put(ratePutEndpoint, {
-          ratesToUpdate: data.serviceRate,
-          ratesToAdd: [],
-        });
+      : methods._put(ratePutEndpoint, data);
   };
+
   const {loading: btnLoading, request} = useApi(addRateApi);
   const rateFieldId = serviceRateFields?.map(
     (item: {slug: string; rateId: number; id: number}) => {
@@ -53,20 +51,41 @@ export const useServiceRates = (
     let payload: any = {
       serviceRate: [],
     };
+    let putPayload: any = {
+      ratesToUpdate: [],
+      ratesToAdd: [],
+    };
     rateFieldId &&
       rateFieldId.length !== 0 &&
       rateFieldId?.forEach(
         (element: {postId: number; name: string; putId: number}) => {
           Object.keys(e).map(item => {
             if (item === element.name) {
-              payload.serviceRate.push({
-                serviceId: providerServicesId,
-                rateId:
-                  fieldValue === null || fieldValue === undefined
-                    ? element.postId
-                    : element.putId,
-                amount: Number(e[element.name]),
-              });
+              if (fieldValue === null || fieldValue === undefined) {
+                payload.serviceRate.push({
+                  serviceId: providerServicesId,
+                  rateId:
+                    fieldValue === null || fieldValue === undefined
+                      ? element.postId
+                      : element.putId,
+                  amount: Number(e[element.name]),
+                });
+              } else {
+                if (element.putId === null) {
+                  putPayload.ratesToAdd.push({
+                    serviceId: providerServicesId,
+                    rateId: element.postId,
+                    amount: Number(e[element.name]),
+                  });
+                } else {
+                  putPayload.ratesToUpdate.push({
+                    serviceId: providerServicesId,
+                    rateId: element.putId,
+                    amount: Number(e[element.name]),
+                  });
+                }
+                payload = putPayload;
+              }
             }
           });
         },
@@ -90,3 +109,11 @@ export const useServiceRates = (
     ratesMeta,
   };
 };
+// payload.serviceRate.push({
+//   serviceId: providerServicesId,
+//   rateId:
+//     fieldValue === null || fieldValue === undefined
+//       ? element.postId
+//       : element.putId,
+//   amount: Number(e[element.name]),
+// });

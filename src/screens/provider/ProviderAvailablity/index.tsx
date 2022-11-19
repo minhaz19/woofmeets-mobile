@@ -4,7 +4,6 @@ import AppForm from '../../../components/common/Form/AppForm';
 import Screen from '../../../components/common/Screen';
 import AvailablityCalendar from '../../../components/ScreenComponent/Provider/AvailablityCalendar/AvailablityCalendar';
 import Colors from '../../../constants/Colors';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {getUserServices} from '../../../store/slices/profile/services';
 import {getAvailableDays} from '../../../store/slices/Provider/Unavailability/getAvailableDay';
 import {useAppDispatch} from '../../../store/store';
@@ -12,7 +11,6 @@ import {providerAvailablityValidationSchema} from '../../../utils/config/Validat
 
 const ProviderAvailablity = () => {
   const dispatch = useAppDispatch();
-  const {isDarkMode} = useTheme();
 
   useEffect(() => {
     dispatch(getUserServices());

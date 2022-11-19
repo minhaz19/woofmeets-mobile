@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable dot-notation */
 import {
   StyleSheet,
   View,
@@ -28,9 +30,15 @@ import ButtonCom from '../../../UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import {useNavigation} from '@react-navigation/native';
 import {getUserServices} from '../../../../store/slices/profile/services';
-import {setCurrentScreen} from '../../../../store/slices/onBoarding/initial';
+import {
+  getOnboardingProgress,
+  setCurrentScreen,
+} from '../../../../store/slices/onBoarding/initial';
 import {getWhoAmI} from '../../../../store/slices/common/whoAmI/whoAmIAction';
-
+import SwitchView from '../../../common/switch/SwitchView';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
+const activeEndpoint = '/provider-services/change-status/';
 const ServiceSetting = () => {
   // const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
   const {colors} = useTheme();
@@ -38,10 +46,13 @@ const ServiceSetting = () => {
   const {userServices, userServicesLoading} = useAppSelector(
     (state: any) => state.services,
   );
+  const {progressData, loading} = useAppSelector(state => state.initial);
   const {user} = useAppSelector((state: any) => state?.whoAmI);
   const navigation = useNavigation();
 
   const serviceData = userServices !== null && userServices;
+  const {loading: activeLoading, request} = useApi(methods._update);
+  const [selectedService, setSelectedService] = useState(null);
   const getIcon = (icon: string) => {
     switch (icon) {
       case 'sitter-home':
@@ -62,15 +73,19 @@ const ServiceSetting = () => {
     setRefreshing(true);
     dispatch(getUserServices());
     dispatch(getWhoAmI());
+    dispatch(getOnboardingProgress());
     setRefreshing(false);
   }, [dispatch]);
 
   useEffect(() => {
     onRefresh();
   }, []);
+  const servicesProgress = progressData?.individualServiceSetupSublist;
   return (
     <>
-      {userServicesLoading && <AppActivityIndicator visible={true} />}
+      {(userServicesLoading || loading) && (
+        <AppActivityIndicator visible={true} />
+      )}
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -119,7 +134,40 @@ const ServiceSetting = () => {
                       />
                     </View>
                   </View>
-                  <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                    }}>
+                    <SwitchView
+                      isActive={
+                        item.id === selectedService && activeLoading
+                          ? !item.isActive
+                          : item.isActive
+                      }
+                      onSelect={async () => {
+                        setSelectedService(item.id);
+                        const serviceProgress =
+                          servicesProgress[item.serviceType.slug];
+
+                        if (
+                          serviceProgress['AVAILABILITY']['complete'] &&
+                          serviceProgress['SERVICE_RATES']['complete']
+                        ) {
+                          const result = await request(
+                            activeEndpoint + item.id,
+                          );
+                          result.ok &&
+                            (dispatch(getUserServices()),
+                            dispatch(getWhoAmI()));
+                          return;
+                        } else {
+                          Alert.alert('Please complete the service first!');
+                        }
+                      }}
+                      activeText={''}
+                      inActiveText={''}
+                    />
                     <MaterialCommunityIcons
                       name={'chevron-right'}
                       size={
@@ -192,7 +240,9 @@ const styles = StyleSheet.create({
     marginVertical:
       SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '2%',
   },
-  iconStyle: {},
+  iconStyle: {
+    marginLeft: 10,
+  },
   submitContainer: {
     paddingHorizontal: '20%',
     paddingTop: 20,

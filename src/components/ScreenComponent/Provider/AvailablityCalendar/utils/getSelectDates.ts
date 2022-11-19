@@ -13,11 +13,7 @@ export const getSelectedDates = (payload: any, currentMonth: string) => {
     new Date(payload.year, payload.month, 0),
     'yyyy-MM-dd',
   );
-  //   const endDate = format(new Date(end), 'yyyy-MM-dd');
-  // const endDate = format(
-  //   new Date(payload.year, payload.month, 0),
-  //   'yyyy-MM-dd',
-  // );
+
   return {
     startDate,
     endDate,

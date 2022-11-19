@@ -11,7 +11,7 @@ import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
 
 const ProposalPricing = () => {
   const {pricingInfo, proposedServiceInfo} = useProposalPricing();
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   return (
     <View>
       <TitleText text={'Pricing Summary'} textStyle={styles.titleText} />
@@ -76,7 +76,7 @@ const ProposalPricing = () => {
                               : proposedServiceInfo.serviceTypeId === 5
                               ? ' walk'
                               : ''
-                          } @ $${item?.rate?.amount} /${
+                          } @ $${Number(item?.rate?.amount)?.toFixed(2)} /${
                             proposedServiceInfo.serviceTypeId === 1 ||
                             proposedServiceInfo.serviceTypeId === 2
                               ? ' night'
@@ -97,7 +97,9 @@ const ProposalPricing = () => {
                       <View>
                         <TitleText
                           textStyle={{}}
-                          text={`$${item?.rate?.amount * item?.count}`}
+                          text={`$${Number(
+                            item?.rate?.amount * item?.count,
+                          )?.toFixed(2)}`}
                         />
                       </View>
                     </View>

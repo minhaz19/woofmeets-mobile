@@ -7,7 +7,7 @@ import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const {numberOfLines, textInputBoxStyle, inputBoxContainerStyle} = otherProps;
   return (
     <View
@@ -54,6 +54,7 @@ const AppInput = ({...otherProps}) => {
             fill={colors.descriptionText}
           />
         ))}
+      {otherProps.Icon ? otherProps?.Icon : null}
     </View>
   );
 };

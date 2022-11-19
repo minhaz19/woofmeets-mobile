@@ -22,7 +22,7 @@ interface Props {
 const today = new Date();
 const ServicesCalendar = ({availabilityData, providerOpk}: Props) => {
   const [selectedService, setSelectedService] = useState(
-    availabilityData.selectData[0].id,
+    availabilityData.selectData[0]?.id,
   );
   const [monthRef, setMonthRef] = useState<any>(null);
   const {colors} = useTheme();
@@ -39,7 +39,7 @@ const ServicesCalendar = ({availabilityData, providerOpk}: Props) => {
           placeholder="Select Service"
           label={'Select a service'}
           name={'something'}
-          defaultText={availabilityData.selectData[0].value}
+          defaultText={availabilityData?.selectData[0]?.value}
           data={availabilityData.selectData}
           control={control}
           setSelectedService={setSelectedService}

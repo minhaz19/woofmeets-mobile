@@ -12,6 +12,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import subDays from 'date-fns/subDays';
 import formatDistance from 'date-fns/formatDistance';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
+import InboxLoader from '../../Inbox/Loader/InboxLoader';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 
 const ProviderHome = (props: {
@@ -19,8 +20,8 @@ const ProviderHome = (props: {
 }) => {
   const dispatch = useAppDispatch();
 
-  const providerInprogress = useAppSelector(
-    state => state.providerInprogress?.providerInprogress,
+  const {providerInprogress, loading} = useAppSelector(
+    state => state.providerInprogress,
   );
 
   const [refreshing, setRefreshing] = useState(false);
@@ -35,61 +36,71 @@ const ProviderHome = (props: {
   }, []);
 
   return (
-    <ScreenRapperGrey>
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        style={styles.container}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        <View style={styles.headerContainer}>
-          <HeaderText text="Today" textStyle={{paddingBottom: 4}} />
-          <ShortText
-            text={`${
-              providerInprogress ? providerInprogress?.length : 0
-            } Booking`}
-          />
-        </View>
-        <View style={styles.spacing}>
-          <TitleText
-            text={new Date().toLocaleDateString()}
-            textStyle={{paddingBottom: 4}}
-          />
-        </View>
-        {/* <View style={styles.spacing}>
+    <>
+      {loading && <InboxLoader />}
+      <ScreenRapperGrey>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          style={styles.container}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
+          <View style={styles.headerContainer}>
+            <HeaderText text="Today" textStyle={{paddingBottom: 4}} />
+            <ShortText
+              text={`${
+                providerInprogress ? providerInprogress?.length : 0
+              } Booking`}
+            />
+          </View>
+          <View style={styles.spacing}>
+            <TitleText
+              text={new Date().toLocaleDateString()}
+              textStyle={{paddingBottom: 4}}
+            />
+          </View>
+          {/* <View style={styles.spacing}>
           <ShortText text="Booking" textStyle={styles.bookingText} />
         </View> */}
-        <View>
-          {providerInprogress ? providerInprogress?.map((item: any, index) => {
-            return (
-              <BookingCard
-                key={index}
-                item={item}
-                buttonStyles={Colors.yellow}
-                // onScreen={() => props.navigation.navigate('OngoingActivityScreen')}
-                onScreen={() =>
-                  props.navigation.navigate('ActivityScreen', {
-                    appointmentOpk: item.opk,
-                  })
-                }
+          <View>
+            {providerInprogress ? (
+              providerInprogress?.map((item: any, index: number) => {
+                return (
+                  <BookingCard
+                    key={index}
+                    item={item}
+                    buttonStyles={Colors.yellow}
+                    // onScreen={() => props.navigation.navigate('OngoingActivityScreen')}
+                    onScreen={() =>
+                      props.navigation.navigate('ActivityScreen', {
+                        appointmentOpk: item.opk,
+                      })
+                    }
+                  />
+                );
+              })
+            ) : (
+              <DescriptionText
+                text={'No upcoming schedules found!'}
+                textStyle={{paddingVertical: '10%'}}
               />
-            );
-          }) : <DescriptionText text={'No upcoming schedules found!'} textStyle={{paddingVertical: '10%'}}/>}
-        </View>
-        <View style={styles.spacing}>
-          <ShortText
-            text={`Last checked today at ${formatDistance(
-              subDays(new Date(), 0),
-              new Date(),
-              {addSuffix: true},
-            )}`}
-            textStyle={styles.bookingTextDes}
-          />
-        </View>
-        <BottomSpacing />
-      </ScrollView>
-    </ScreenRapperGrey>
+            )}
+          </View>
+          <View style={styles.spacing}>
+            <ShortText
+              text={`Last checked today at ${formatDistance(
+                subDays(new Date(), 0),
+                new Date(),
+                {addSuffix: true},
+              )}`}
+              textStyle={styles.bookingTextDes}
+            />
+          </View>
+          <BottomSpacing />
+        </ScrollView>
+      </ScreenRapperGrey>
+    </>
   );
 };
 

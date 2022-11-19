@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import methods from '../../../../../api/methods';
 import {useApi} from '../../../../../utils/helpers/api/useApi';
+import {formatDate} from '../../../../common/formatDate';
 import {getSelectedDates} from './getSelectDates';
 
 const endPoint = '/availability/all-service';
@@ -18,11 +19,21 @@ export const useProviderAvailability = () => {
           endDate,
         ).toISOString()}`,
     );
-   
+
     if (result.ok) {
-      const allDates = result.data.data?.map((item: any) => [
-        ...new Set([...new Set(item.availability.dates)]),
-      ]);
+      const allDates = result.data.data
+        ?.filter((fi: any) => fi.isActive)
+        ?.map((item: any) => {
+          return [
+            ...new Set([
+              ...new Set(
+                item.availability.dates.map((d: string) =>
+                  formatDate(new Date(d.replace(/-/g, '/')), 'yyyy-MM-dd'),
+                ),
+              ),
+            ]),
+          ];
+        });
 
       const uniqueChars: any = [...new Set(allDates.flat(1))];
       uniqueChars && setAvailableDates(uniqueChars);
@@ -32,13 +43,15 @@ export const useProviderAvailability = () => {
           const modAvailableService: any = [];
           const services: any = [];
 
-          result.data.data.map((item: any) => {
-            const {dates} = item.availability;
-            let tmp = dates.indexOf(date);
-            if (tmp !== -1) {
-              services.push(item.serviceType.displayName);
-            }
-          });
+          result.data.data
+            .filter((fi: any) => fi.isActive)
+            ?.map((item: any) => {
+              const {dates} = item.availability;
+              let tmp = dates.indexOf(date);
+              if (tmp !== -1) {
+                services.push(item.serviceType.displayName);
+              }
+            });
           modAvailableService.push({
             id: index,
             date: date,

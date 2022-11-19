@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {yupResolver} from '@hookform/resolvers/yup';
 import React, {useEffect} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
@@ -15,33 +16,25 @@ const AppForm = ({
   enableReset,
   validationSchema,
 }: Props) => {
-  // const [initValue, setInitValue] = useState(initialValues);
-  // const methods = useForm<FormData>({
-  //   resolver: yupResolver(validationSchema),
-  //   mode: 'onChange',
-  //   defaultValues: initValue,
-  // });
-  // const {reset} = methods;
-
-  // useEffect(() => {
-  //   console.log('inital state', initialValues);
-  //   setInitValue(initialValues);
-  // }, [initialValues]);
-  // useEffect(() => {
-  //   if (initValue) {
-  //     reset(initialValues);
-  //   }
-  // }, [initValue, reset, initialValues]);
   const methods = useForm<FormData>({
     resolver: yupResolver(validationSchema),
     mode: 'onChange',
     defaultValues: initialValues,
   });
-  const {reset} = methods;
+  const {
+    reset,
+    formState: {isDirty},
+  } = methods;
 
   useEffect(() => {
-    enableReset && reset(initialValues);
-  }, [initialValues, enableReset, reset]);
+    // enableReset &&
+
+    enableReset &&
+      isDirty === false &&
+      reset(initialValues, {
+        keepIsSubmitted: true,
+      });
+  }, [enableReset, initialValues, isDirty]);
   return (
     <FormProvider {...methods}>
       <>{children}</>

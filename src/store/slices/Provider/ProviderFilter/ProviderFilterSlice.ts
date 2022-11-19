@@ -8,6 +8,7 @@ const initialState: any = {
     lat: null,
     lng: null,
   },
+  formattedAddress: '',
   selectedPet: [],
   selectedHome: '',
   multiSliderValue: [0, 200],
@@ -32,6 +33,9 @@ const providerFilterSlice = createSlice({
   reducers: {
     setLocation: (state, action) => {
       state.location = action.payload;
+    },
+    setFormattedAddress: (state, action) => {
+      state.formattedAddress = action.payload;
     },
     setSelectedPet: (state, action) => {
       state.selectedPet = action.payload;
@@ -97,6 +101,7 @@ export const {
   setPetType,
   setScheduleId,
   setFormattedData,
+  setFormattedAddress,
 } = providerFilterSlice.actions;
 
 export default providerFilterSlice.reducer;

@@ -56,20 +56,6 @@ const ServiceSlot = ({setSelectedService}: Props) => {
                       <ShortText text={'Tab to mark unavailable'} />
                     </View>
                   </View>
-                  {/* <View style={styles.btnCont}>
-                      {item.active ? (
-                        <View style={styles.unMarkBtn}>
-                          <TitleText
-                            textStyle={styles.btnText}
-                            text="Deselect"
-                          />
-                        </View>
-                      ) : (
-                        <View style={styles.markBtn}>
-                          <TitleText textStyle={styles.btnText} text="Select" />
-                        </View>
-                      )}
-                    </View> */}
                 </View>
               )}
             />

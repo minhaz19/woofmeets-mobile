@@ -1,12 +1,12 @@
 import {View, Image, StyleSheet} from 'react-native';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import HeaderText from '../../../common/text/HeaderText';
 import ShortText from '../../../common/text/ShortText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import changeTextLetter from '../../../common/changeTextLetter';
-import { getUserProfileInfo } from '../../../../store/slices/userProfile/userProfileAction';
+import {getUserProfileInfo} from '../../../../store/slices/userProfile/userProfileAction';
 const img =
   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 const ProfileInfo = () => {
@@ -14,8 +14,8 @@ const ProfileInfo = () => {
   const {userInfo} = useAppSelector(state => state.userProfile);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getUserProfileInfo())
-  }, [])
+    dispatch(getUserProfileInfo());
+  }, []);
   return (
     <View style={styles.topContainer}>
       <View
@@ -38,12 +38,18 @@ const ProfileInfo = () => {
                 : 'loading...'
             }`}
           />
-          <View>
-            <ShortText 
-              text={userInfo?.provider?.providerDetails?.about.slice(0, 25) +
-                (userInfo?.provider?.providerDetails?.about.length > 25 ? '...' : '')}
-            />
-          </View>
+          {userInfo?.provider?.providerDetails?.about && (
+            <View>
+              <ShortText
+                text={
+                  userInfo?.provider?.providerDetails?.about.slice(0, 25) +
+                  (userInfo?.provider?.providerDetails?.about.length > 25
+                    ? '...'
+                    : '')
+                }
+              />
+            </View>
+          )}
         </View>
       </View>
     </View>

@@ -40,9 +40,11 @@ import {
   setServiceFrequency,
   setScheduleId,
   setFormattedData,
+  setFormattedAddress,
 } from '../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
 import {days} from '../../utils/config/Data/filterProviderDatas';
-import GoogleAutoComplete from '../../components/common/GoogleAutoComplete';
+// import GoogleAutoComplete from '../../components/common/GoogleAutoComplete';
+import GooglePredictLocation from '../../components/common/GooglePredictLocations';
 
 const petData = [
   {
@@ -78,6 +80,7 @@ const PetCareZipSearch = (props: {
     lat: null,
     lng: null,
   });
+  const [addressLine, setAddressLine] = useState('');
   const [sequence, setSequence] = useState<number>(0);
   const [serviceData, setServiceData] = useState({
     service: '',
@@ -149,10 +152,11 @@ const PetCareZipSearch = (props: {
   // };
 
   // lat lng
-  const onPressAddress = (data: any, details: any) => {
-    const lat = details.geometry.location.lat;
-    const lng = details.geometry.location.lng;
+  const onPressAddress = (details: any) => {
+    const lat = details?.geometry?.location.lat;
+    const lng = details?.geometry?.location.lng;
     setCareLocation({lat: lat, lng: lng});
+    setAddressLine(details?.formatted_address);
     setErrorLocation(null);
   };
   // submitting the data and get request
@@ -200,6 +204,7 @@ const PetCareZipSearch = (props: {
       dispatch(setFormattedData(formattedData));
       dispatch(getAllProviderOneTime(formattedData));
       dispatch(setLocation({lat: careLocation.lat, lng: careLocation.lng}));
+      dispatch(setFormattedAddress(addressLine));
       dispatch(setSelectedHome(''));
       dispatch(setMultiSliderValue([0, 200]));
       dispatch(setDropIn(null));
@@ -320,9 +325,13 @@ const PetCareZipSearch = (props: {
               <RenderHeader />
               <View style={styles.zipContainer}>
                 <TitleText text="Near" textStyle={styles.zipText} />
-                <GoogleAutoComplete
+                {/* <GoogleAutoComplete
                   onPressAddress={onPressAddress}
                   placeholder={'Type a place'}
+                /> */}
+                <GooglePredictLocation
+                  placeholder={'Type a place'}
+                  onPlaceSelected={onPressAddress}
                 />
                 {errorLocation && <ErrorMessage error={errorLocation} />}
                 <View style={styles.footerContainer}>
