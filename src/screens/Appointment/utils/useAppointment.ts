@@ -210,8 +210,17 @@ export const useAppointment = (providerOpk: string) => {
                   : serviceTypeId === 5
                   ? 'WALK'
                   : 'NONE',
+              // recurringStartDate: isRecurring
+              //   ? convertDateAndTime(new Date(recurringStartDate), timeZone)
+              //   : null,
               recurringStartDate: isRecurring
-                ? convertDateAndTime(new Date(recurringStartDate), timeZone)
+                ? new Date(
+                    new Date(
+                      recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
+                    ).toLocaleString('en-US', {
+                      timeZone,
+                    }),
+                  )
                 : null,
 
               proposalVisits: sortedRecurringDates,
@@ -238,6 +247,7 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
             };
+
         const response = await request(endpoint, dropDogPayload);
         if (response.ok) {
           navigation.navigate('ActivityScreen', {
@@ -268,8 +278,17 @@ export const useAppointment = (providerOpk: string) => {
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
               recurringStartDate: isRecurring
-                ? convertDateAndTime(new Date(recurringStartDate), timeZone)
+                ? new Date(
+                    new Date(
+                      recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
+                    ).toLocaleString('en-US', {
+                      timeZone,
+                    }),
+                  )
                 : null,
+              // recurringStartDate: isRecurring
+              //   ? convertDateAndTime(new Date(recurringStartDate), timeZone)
+              //   : null,
               recurringSelectedDay: selectedDays.map((item: string) =>
                 item.substring(0, 3).toLowerCase(),
               ),

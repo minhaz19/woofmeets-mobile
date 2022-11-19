@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {RefreshControl, StyleSheet} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
@@ -34,7 +35,10 @@ const Rates = ({navigation, route}: Props) => {
     fieldValue,
     ratesMeta,
   } = useServiceRates(serviceSetup, navigation, route);
-
+  useEffect(() => {
+    dispatch(getServiceRateFields(serviceId));
+    dispatch(getRateFieldValue(providerServicesId));
+  }, [providerServicesId, serviceId]);
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await dispatch(getServiceRateFields(serviceId));
@@ -46,9 +50,13 @@ const Rates = ({navigation, route}: Props) => {
     onRefresh();
   }, []);
 
+  const data = useServiceRateInit(fieldValue, ratesMeta);
+
   return (
     <>
-      {(loading || fLoading) && <AppActivityIndicator visible={true} />}
+      {(loading || fLoading || refreshing) && (
+        <AppActivityIndicator visible={true} />
+      )}
       <KeyboardAwareScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -72,7 +80,7 @@ const Rates = ({navigation, route}: Props) => {
           description={description}
         />
         <AppForm
-          initialValues={useServiceRateInit(fieldValue, ratesMeta)}
+          initialValues={data}
           validationSchema={BoardingSettingsSchema}
           enableReset>
           <SubRates
@@ -80,6 +88,7 @@ const Rates = ({navigation, route}: Props) => {
             rateFields={serviceRateFields}
             fieldValue={fieldValue}
             loading={btnLoading}
+            ratesMeta={ratesMeta}
           />
         </AppForm>
       </KeyboardAwareScrollView>

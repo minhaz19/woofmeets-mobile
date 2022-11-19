@@ -9,7 +9,6 @@ import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
 import {Controller} from 'react-hook-form';
 import Colors from '../../../constants/Colors';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
 interface Props {
   name: string;
   label: string;
@@ -65,7 +64,6 @@ const AppFormField = ({
   editable = true,
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
-  const {isDarkMode} = useTheme();
   return (
     <>
       <View>

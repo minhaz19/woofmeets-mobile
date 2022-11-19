@@ -20,7 +20,10 @@ const providerServicesSlice = createSlice({
       })
       .addCase(getProviderServices.fulfilled, (state, {payload}) => {
         state.loading = false;
-        state.providerServices = payload.data;
+        state.providerServices = payload.data.filter(
+          (item: any) =>
+            item.isActive === true && item.AvailableDay.length !== 0,
+        );
       })
       .addCase(getProviderServices.rejected, (state, {payload}) => {
         state.loading = false;

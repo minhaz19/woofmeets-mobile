@@ -19,10 +19,9 @@ import {
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 import DescriptionText from '../../common/text/DescriptionText';
-import GoogleAutoComplete from '../../common/GoogleAutoComplete';
 import AppDropDownSelect from '../../common/AppDropDownSelect';
-import { states } from '../../../screens/profile/BasicInfo/utils/basicInfoState';
-
+import {states} from '../../../screens/profile/BasicInfo/utils/basicInfoState';
+import GooglePredictLocation from '../../common/GooglePredictLocations';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -36,21 +35,18 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   const image = userInfo?.image;
   const firstName = userInfo?.firstName;
   const lastName = userInfo?.lastName;
-  const previousLocation = userInfo?.basicInfo?.addressLine1
-    ? userInfo?.basicInfo?.addressLine1
-    : null;
+
   const {
     control,
     setValue,
     getValues,
-
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
   const basicData = getValues();
 
   // add google address
-  const onPressAddress = (data: any, details: any) => {
+  const onPressAddress = (details: any) => {
     const lat = details.geometry.location.lat;
     const lng = details.geometry.location.lng;
     const zipCode = details?.address_components.find((addressComponent: any) =>
@@ -65,7 +61,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     const country = details?.address_components.find((addressComponent: any) =>
       addressComponent.types.includes('country'),
     )?.short_name;
-    setValue('addressLine1', details?.formatted_address);
+    // setValue('addressLine1', details?.formatted_address);
     setValue('lat', lat);
     setValue('lng', lng);
     setValue('city', city ? city : '');
@@ -166,12 +162,23 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
               {!item.select && (
                 <View style={styles.inputContainer}>
                   {item.name === 'addressLine1' ? (
-                    <GoogleAutoComplete
-                      onPressAddress={onPressAddress}
+                    // <GoogleAutoComplete
+                    //   onPressAddress={onPressAddress}
+                    //   label={item.title}
+                    //   placeholder={
+                    //     previousLocation ? previousLocation : item.placeholder
+                    //   }
+                    // />
+                    <GooglePredictLocation
                       label={item.title}
-                      placeholder={
-                        previousLocation ? previousLocation : item.placeholder
-                      }
+                      placeholder={item.placeholder}
+                      name={'addressLine1'}
+                      defaultValue={getValues('addressLine1')}
+                      onChange={value => {
+                        setValue('addressLine1', value);
+                      }}
+                      onPlaceSelected={onPressAddress}
+                      errors={errors}
                     />
                   ) : item.name === 'state' ? (
                     <AppDropDownSelect
@@ -230,6 +237,7 @@ export default BasicInfoInput;
 const styles = StyleSheet.create({
   container: {
     marginTop: '1%',
+    position: 'relative',
   },
   headerContainer: {
     marginHorizontal: '5%',

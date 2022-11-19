@@ -32,6 +32,7 @@ import {
   setSelectedHome,
 } from '../../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
 import GoogleAutoComplete from '../../../common/GoogleAutoComplete';
+import GooglePredictLocation from '../../../common/GooglePredictLocations';
 
 const schedule = [
   {
@@ -81,6 +82,9 @@ const FilterProviderBody = ({
   const [OpenDropOut, setOpenDropOut] = useState(false);
   const {control} = useForm();
   const {serviceTypes} = useAppSelector((state: any) => state?.services);
+  const {formattedAddress} = useAppSelector(
+    (state: any) => state?.providerFilter,
+  );
   const servicesData = serviceTypes.map((item: any) => {
     return {label: item.name, value: item.slug, id: item.id};
   });
@@ -116,9 +120,14 @@ const FilterProviderBody = ({
           control={control}
         />
         <TitleText textStyle={styles.label} text={'Location'} />
-        <GoogleAutoComplete
+        {/* <GoogleAutoComplete
           onPressAddress={onPressAddress}
           placeholder={'Type a place'}
+        /> */}
+        <GooglePredictLocation
+          defaultValue={formattedAddress}
+          placeholder={'Type a place'}
+          onPlaceSelected={onPressAddress}
         />
         {(isService.serviceId === 3 ||
           isService.serviceId === 4 ||

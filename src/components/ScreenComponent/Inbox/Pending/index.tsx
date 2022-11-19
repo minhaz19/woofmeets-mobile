@@ -68,12 +68,7 @@ const PendingStatus = ({statusType}: Props) => {
                   const serviceTypeId = item?.providerService?.serviceTypeId;
                   const proposalDate = item.appointmentProposal[0];
                   const isRecurring = item.appointmentProposal[0]?.isRecurring;
-                  // if (serviceTypeId === 3) {
-                  //   console.log(
-                  //     'proposalDate?.proposalVisits',
-                  //     proposalDate?.proposalVisits[0]?.date instanceof Date,
-                  //   );
-                  // }
+                
                   return (
                     <ReusableCard
                       key={item.opk}

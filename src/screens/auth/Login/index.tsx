@@ -28,8 +28,8 @@ interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
 const Login = ({navigation}: Props) => {
-  const {isDarkMode, colors} = useTheme();
-  const {handleSubmit, providerLoading, loading} = useLogin(navigation);
+  const { colors} = useTheme();
+  const {handleSubmit,  loading} = useLogin(navigation);
   return (
     <>
       {/* {providerLoading && <AppActivityIndicator visible={true} />} */}

@@ -37,6 +37,12 @@ const Pricing = ({}: Props) => {
             }}
           />
         </View>
+      ) : typeof proposalPricing === 'string' &&
+        proposalPricing?.includes('Invalid Request!') ? (
+        <TitleText
+          text={`${proposalPricing}. Please modify appointment request`}
+          textStyle={styles._textHeader}
+        />
       ) : (
         <View>
           <HeaderText
@@ -52,7 +58,9 @@ const Pricing = ({}: Props) => {
                     textStyle={styles.priceTextHeader}
                   />
                   <HeaderText
-                    text={`$${item.count * item?.rate.amount}`}
+                    text={`$${Number(item?.count * item?.rate?.amount)?.toFixed(
+                      2,
+                    )}`}
                     textStyle={styles.priceText}
                   />
                 </View>
@@ -74,7 +82,7 @@ const Pricing = ({}: Props) => {
                       : proposedServiceInfo.serviceTypeId === 5
                       ? ' walk'
                       : ''
-                  } @ $${item?.rate.amount} /${
+                  } @ $${Number(item?.rate?.amount)?.toFixed(2)} /${
                     proposedServiceInfo.serviceTypeId === 1 ||
                     proposedServiceInfo.serviceTypeId === 2
                       ? ' night'
@@ -101,10 +109,10 @@ const Pricing = ({}: Props) => {
                   textStyle={styles.priceTextHeader}
                 />
                 <HeaderText
-                  text={`$${
+                  text={`$${Number(
                     proposalPricing?.sixtyMinutesRate?.count *
-                    proposalPricing?.sixtyMinutesRate?.rate.amount
-                  }`}
+                      proposalPricing?.sixtyMinutesRate?.rate?.amount,
+                  )?.toFixed(2)}`}
                   textStyle={styles.priceText}
                 />
               </View>
@@ -115,7 +123,11 @@ const Pricing = ({}: Props) => {
               />
 
               <DescriptionText
-                text={`${proposalPricing?.sixtyMinutesRate.count} visit @ $${proposalPricing?.sixtyMinutesRate.rate.amount} / visit`}
+                text={`${
+                  proposalPricing?.sixtyMinutesRate.count
+                } visit @ $${Number(
+                  proposalPricing?.sixtyMinutesRate?.rate?.amount,
+                )?.toFixed(2)} / visit`}
                 textStyle={{color: colors.descriptionText, lineHeight: 20}}
               />
             </View>
@@ -177,7 +189,7 @@ const Pricing = ({}: Props) => {
               <HeaderText
                 text={`$${(
                   proposalPricing?.total - proposalPricing?.subTotal
-                ).toFixed(2)}`}
+                )?.toFixed(2)}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
                 }}

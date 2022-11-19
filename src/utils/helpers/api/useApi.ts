@@ -1,9 +1,9 @@
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 import {useState} from 'react';
 import {Alert} from 'react-native';
 
 export const useApi = (apiFunc: any) => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
@@ -19,21 +19,22 @@ export const useApi = (apiFunc: any) => {
       } else if (response.status === 500) {
         Alert.alert('Something went wrong! please try again later');
       } else if (response.problem === 'TIMEOUT_ERROR') {
-        Alert.alert(
-          'Response Timeout',
-          'would you like to retry?',
-          [
-            {
-              text: 'No',
-              onPress: () => navigation.goBack(),
-            },
-            {
-              text: 'Yes',
-              onPress: async () => await request(...args),
-            },
-          ],
-          {cancelable: false},
-        );
+        Alert.alert('Response Timeout! Go back and try again');
+        // Alert.alert(
+        //   'Response Timeout',
+        //   'would you like to retry?',
+        //   [
+        //     {
+        //       text: 'No',
+        //       onPress: () => navigation.goBack(),
+        //     },
+        //     {
+        //       text: 'Yes',
+        //       onPress: async () => await request(...args),
+        //     },
+        //   ],
+        //   {cancelable: false},
+        // );
       } else if (response.status === 402) {
         Alert.alert(response.data.message);
       } else {

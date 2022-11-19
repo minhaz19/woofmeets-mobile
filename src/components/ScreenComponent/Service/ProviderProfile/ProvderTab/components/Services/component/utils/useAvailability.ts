@@ -16,31 +16,33 @@ export const useAvailability = (
   const {loading, request} = useApi(methods._get);
 
   const getAvailablity = async (monthData: any, currentMonth?: string) => {
-    const {startDate, endDate} = getDates(monthData, currentMonth);
-    const payload = {
-      opk: providerOpk,
-      serviceId: selectedService,
-      startDate: startDate,
-      endDate: endDate,
-    };
-    const result = await request(
-      `/provider/${providerOpk}/calender/${selectedService}`,
-      payload,
-    );
-    if (result.ok && currentMonth !== 'fullYear') {
-      setAvailableDates(result?.data.data.dates);
-    } else if (result.ok && currentMonth === 'fullYear') {
-      navigation.navigate('ProviderCalendar', {
-        // @ts-ignore
-        availability: result?.data.data.dates,
-      });
-    } else if (!result.ok && currentMonth === 'fullYear') {
-      navigation.navigate('ProviderCalendar', {
-        // @ts-ignore
-        availability: [],
-      });
-    } else if (!result.ok) {
-      setAvailableDates([]);
+    if (providerOpk !== undefined && selectedService !== undefined) {
+      const {startDate, endDate} = getDates(monthData, currentMonth);
+      const payload = {
+        opk: providerOpk,
+        serviceId: selectedService,
+        startDate: startDate,
+        endDate: endDate,
+      };
+      const result = await request(
+        `/provider/${providerOpk}/calender/${selectedService}`,
+        payload,
+      );
+      if (result.ok && currentMonth !== 'fullYear') {
+        setAvailableDates(result?.data.data.dates);
+      } else if (result.ok && currentMonth === 'fullYear') {
+        navigation.navigate('ProviderCalendar', {
+          // @ts-ignore
+          availability: result?.data.data.dates,
+        });
+      } else if (!result.ok && currentMonth === 'fullYear') {
+        navigation.navigate('ProviderCalendar', {
+          // @ts-ignore
+          availability: [],
+        });
+      } else if (!result.ok) {
+        setAvailableDates([]);
+      }
     }
   };
   const getCurrentMonthDate = (fullYear?: boolean) => {

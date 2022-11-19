@@ -4,7 +4,7 @@ export const useServiceRateInit = (fieldValue: any, ratesMeta: any) => {
   // const {fieldValue} = useAppSelector(state => state.fieldValue);
   // const {ratesMeta} = useAppSelector(state => state.serviceRates);
   const baseRate =
-    ratesMeta !== null && ratesMeta !== undefined && ratesMeta['base-rate'];
+    ratesMeta !== null && ratesMeta !== undefined ? ratesMeta['base-rate'] : 0;
   return {
     baserate:
       fieldValue && fieldValue.length > 0

@@ -21,7 +21,7 @@ const AppActivityIndicator = ({visible = false}) => {
           <Lottie
             autoPlay
             loop
-            source={require('../../../assets/petLoader.json')}
+            source={require('../../../assets/NewPetLoader.json')}
             style={styles.loaderStyle}
           />
         </View>

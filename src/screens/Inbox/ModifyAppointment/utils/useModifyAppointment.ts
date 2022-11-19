@@ -238,10 +238,19 @@ export const useModifyAppointment = (route: any) => {
                   : serviceTypeId === 5
                   ? 'WALK'
                   : 'NONE',
-              recurringStartDate: convertDateAndTime(
-                new Date(recurringStartDate),
-                providerTimeZone,
-              ),
+              recurringStartDate: isRecurring
+                ? new Date(
+                    new Date(
+                      recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
+                    ).toLocaleString('en-US', {
+                      providerTimeZone,
+                    }),
+                  )
+                : null,
+              // recurringStartDate: convertDateAndTime(
+              //   new Date(recurringStartDate),
+              //   providerTimeZone,
+              // ),
               proposalVisits: sortedRecurringDates,
             }
           : {
@@ -300,10 +309,19 @@ export const useModifyAppointment = (route: any) => {
               dropOffEndTime: dropOffEndTime,
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
-              recurringStartDate: convertDateAndTime(
-                new Date(recurringStartDate),
-                providerTimeZone,
-              ),
+              recurringStartDate: isRecurring
+                ? new Date(
+                    new Date(
+                      recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
+                    ).toLocaleString('en-US', {
+                      providerTimeZone,
+                    }),
+                  )
+                : null,
+              // recurringStartDate: convertDateAndTime(
+              //   new Date(recurringStartDate),
+              //   providerTimeZone,
+              // ),
               recurringSelectedDay: selectedDays.map((item: string) =>
                 item.substring(0, 3).toLowerCase(),
               ),

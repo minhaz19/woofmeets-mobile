@@ -14,6 +14,7 @@ interface Props {
 const Appointment = ({route}: Props) => {
   const {colors} = useTheme();
   // const appointmentType = 'create';
+  // const providerOpk = 'k6MuzmQ1';
   // const providerOpk = 'vxUC7v6J';
   const {appointmentType, providerOpk} = route?.params;
   const {handleSubmit, loading, btnLoading, refreshing, onRefresh} =

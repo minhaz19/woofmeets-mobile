@@ -19,7 +19,9 @@ const availabilityDaysSlice = createSlice({
         state.error = null;
       })
       .addCase(getAvailableDays.fulfilled, (state, {payload}) => {
-        state.serviceDays = payload.data;
+        state.serviceDays = payload?.data?.filter(
+          (item: any) => item.service.isActive,
+        );
         state.loading = false;
         state.error = false;
       })
