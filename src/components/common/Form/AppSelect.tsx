@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import Colors from '../../../constants/Colors';
 import {Dropdown} from 'react-native-element-dropdown';

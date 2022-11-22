@@ -7,8 +7,6 @@ import Colors from '../../../../constants/Colors';
 import {useFormContext} from 'react-hook-form';
 import {timeZones} from './utils/timeZones';
 import SubmitButton from '../../../common/Form/SubmitButton';
-import AppDropDownSelect from '../../../common/AppDropDownSelect';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import TimezoneDropDown from './TimezoneDropDown';
 interface Props {
   handleSubmit: (value: any) => void;

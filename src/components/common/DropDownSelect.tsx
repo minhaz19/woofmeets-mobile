@@ -32,6 +32,8 @@ const DropDownSelect = ({value, data, placeholder}: Props) => {
           backgroundColor: colors.backgroundColor,
           borderColor: Colors.border,
         }}
+        inputStyles={{color: Colors.black}}
+        dropdownTextStyles={{color: Colors.black}}
         placeholder={placeholder}
         arrowicon={
           <FontAwesome

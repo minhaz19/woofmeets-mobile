@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import AppInput from '../Form/AppInput';
@@ -16,13 +17,13 @@ const usePlaceAutoComplete = () => {
   const [placeInputValue, setPlaceInputValue] = useState('');
   const [showPredictionDropDown, setShowPredictionDropDown] = useState(false);
   const [predictPlaces, setPredictPlaces] = useState([]);
-  const [coordinate, setCoordinate] = useState(null);
+  // const [coordinate, setCoordinate] = useState(null);
   const [addressDetails, setAddressDetails] = useState(null);
 
   const onSelectPlaceId = (place: any) => {
     // handleLatLng(place);
     handleAddress(place?.description);
-    setPlaceInputValue(place.description);
+    setPlaceInputValue(place?.description);
     setShowPredictionDropDown(false);
   };
 
@@ -64,9 +65,10 @@ const usePlaceAutoComplete = () => {
     isLoading: isLoading,
     showPredictionDropDown,
     onSelectPlaceId,
-    coords: coordinate,
+    // coords: coordinate,
     setShowPredictionDropDown,
     addressDetails,
+    handleAddress,
   };
 };
 
@@ -112,8 +114,10 @@ const GooglePredictLocation = ({
   useEffect(() => {
     if (defaultValue) {
       setPlaceInputValue(defaultValue);
+    } else {
+      setPlaceInputValue(null);
     }
-  }, []);
+  }, [defaultValue]);
   return (
     <View>
       {label && <TitleText textStyle={styles.label} text={label} />}

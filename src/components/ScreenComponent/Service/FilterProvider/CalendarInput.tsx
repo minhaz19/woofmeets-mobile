@@ -13,7 +13,7 @@ interface Props {
 }
 
 const CalendarInput = ({placeholder, value, setOpenCal}: Props) => {
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const isoDate = new Date(value).toISOString();
   const usaFormateData = format(new Date(isoDate), 'MM-dd-yyyy');
   return (

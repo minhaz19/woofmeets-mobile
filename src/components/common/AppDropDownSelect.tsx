@@ -18,6 +18,7 @@ interface Props {
   valueData?: any;
   placeholder: string;
   errors: any;
+  onChange?: () => void;
 }
 
 const AppDropDownSelect = ({
@@ -28,6 +29,7 @@ const AppDropDownSelect = ({
   valueData,
   placeholder,
   errors,
+  onChange,
 }: Props) => {
   const {state} = useWatch();
 
@@ -43,12 +45,8 @@ const AppDropDownSelect = ({
         setSelected={setSelectedItem}
         onSelect={handleState}
         data={data}
-        inputStyles={{
-          color: 'black'
-        }}
-        dropdownTextStyles={{
-          color: 'black'
-        }}
+        inputStyles={{color: Colors.black}}
+        dropdownTextStyles={{color: Colors.black}}
         boxStyles={{
           borderRadius: 0,
           backgroundColor: colors.backgroundColor,

@@ -20,6 +20,7 @@ const IOSButton = (props: {
   titleStyle: TextStyle | undefined;
   title: string;
   icon?: any;
+  disabled?: boolean;
 }) => {
   return (
     <View
@@ -29,7 +30,7 @@ const IOSButton = (props: {
       }}>
       <View style={{...styles.progressContainer, ...props.progressStyle}} />
       <View style={{...styles.touchable}}>
-        <TouchableOpacity onPress={props.onSelect}>
+        <TouchableOpacity onPress={props.onSelect} disabled={props?.disabled}>
           <View style={{...styles.card, ...props.textAlignment}}>
             <TitleText
               textStyle={{

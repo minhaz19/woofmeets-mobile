@@ -107,10 +107,13 @@ const ActivityHeader = (props: {
   };
 
   const handleProfile = async () => {
-    await dispatch(getProviderProfile(proposedServiceInfo?.providerOpk));
-    navigation.navigate('ProviderProfile', {
-      providerOpk: proposedServiceInfo?.providerOpk,
-    });
+    console.log('mainka', user, user?.userId, proposedServiceInfo.providerOpk);
+    if (user?.userId === proposedServiceInfo.userId) {
+      await dispatch(getProviderProfile(proposedServiceInfo?.providerOpk));
+      navigation.navigate('ProviderProfile', {
+        providerOpk: proposedServiceInfo?.providerOpk,
+      });
+    }
   };
   return (
     <>

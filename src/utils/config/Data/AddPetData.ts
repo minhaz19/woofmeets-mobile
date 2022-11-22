@@ -8,7 +8,7 @@ export const genders = [
     value: 'FEMALE',
   },
 ];
-export const contries = [
+export const countries = [
   {
     label: 'USA',
     value: '1',

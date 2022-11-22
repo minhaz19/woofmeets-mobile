@@ -9,7 +9,7 @@ import ProfileHeader from '../profile/BasicInfo/ProfileHeader';
 import BottomSpacing from '../../UI/BottomSpacing';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useFormContext, useWatch} from 'react-hook-form';
-import {contries} from '../../../utils/config/Data/AddPetData';
+import {countries} from '../../../utils/config/Data/AddPetData';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AppSelectField from '../../common/Form/AppSelectField';
 import {
@@ -32,6 +32,7 @@ interface Props {
 }
 
 const BasicInfoInput = ({handleSubmit, loading}: Props) => {
+  // const [countryId, setCountryId] = useState('1');
   const {loading: gLoading, userInfo} = useAppSelector(
     state => state?.userProfile,
   );
@@ -50,8 +51,8 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
 
   // add google address
   const onPressAddress = (details: any) => {
-    const lat = details.geometry.location.lat;
-    const lng = details.geometry.location.lng;
+    const lat = details?.geometry.location.lat;
+    const lng = details?.geometry.location.lng;
     const zipCode = details?.address_components.find((addressComponent: any) =>
       addressComponent.types.includes('postal_code'),
     )?.short_name;
@@ -65,8 +66,8 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
       addressComponent.types.includes('country'),
     )?.short_name;
     // setValue('addressLine1', details?.formatted_address);
-    setValue('lat', lat);
-    setValue('lng', lng);
+    setValue('latitude', lat);
+    setValue('longitude', lng);
     setValue('city', city ? city : '');
     setValue('state', state ? state : '');
     setValue('zipCode', zipCode ? zipCode : '');
@@ -212,7 +213,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                 <AppSelectField
                   label={item.title}
                   name={'countryId'}
-                  data={contries}
+                  data={countries}
                   control={control}
                   defaultText={basicData.countryId}
                   placeholder={'Please select a country'}

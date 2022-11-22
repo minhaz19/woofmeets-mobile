@@ -8,7 +8,7 @@ import {CalendarCSvg, ClockSvg} from '../../../../../../assets/svgs/SVG_LOGOS';
 import TitleText from '../../../../../common/text/TitleText';
 import AppTouchableOpacity from '../../../../../common/AppClickEvents/AppTouchableOpacity';
 import DescriptionText from '../../../../../common/text/DescriptionText';
-import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
+
 import Colors from '../../../../../../constants/Colors';
 import TimeSlotPicker from '../../../../../common/TimeRangePicker';
 import ShortText from '../../../../../common/text/ShortText';
@@ -27,7 +27,6 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
   const [pickVisible, setPickVisible] = useState(false);
   // const {setValue} = useFormContext();
 
-  const {isDarkMode} = useTheme();
   const {
     multiDate,
     recurringStartDate,
@@ -51,11 +50,11 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
       value: true,
     },
   ];
-  const handleDay = (data: any) => {
-    const dayName = new Date(data.dateString).toLocaleString('en-us', {
-      weekday: 'long',
-    });
-    setValue('selectedDays', [dayName]);
+  const handleDay = () => {
+    // const dayName = new Date(data.dateString).toLocaleString('en-us', {
+    //   weekday: 'long',
+    // });
+    // setValue('selectedDays', [dayName]);
   };
 
   return (
@@ -77,10 +76,7 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
         <TitleText textStyle={styles.headerText} text={'Schedule'} />
 
         <AppTouchableOpacity
-          style={[
-            styles.sectionContainer,
-            {backgroundColor: Colors.border},
-          ]}
+          style={[styles.sectionContainer, {backgroundColor: Colors.border}]}
           onPress={() => setVisible(!visible)}>
           <View style={styles.textWidth}>
             <TitleText textStyle={styles.titleText} text={'Dates'} />
@@ -98,9 +94,7 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
             <CalendarCSvg fill="black" width={30} height={30} />
           </View>
         </AppTouchableOpacity>
-        {isRecurring  && (
-          <AppDayPicker watch={watch} setValue={setValue} />
-        )}
+        {isRecurring && <AppDayPicker watch={watch} setValue={setValue} />}
 
         <View style={styles.slotContainer}>
           <>

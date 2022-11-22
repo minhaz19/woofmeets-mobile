@@ -41,7 +41,7 @@ const Availability = ({navigation, route}: Props) => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await dispatch(getAvailability(providerServiceId[0]));
+    await dispatch(getAvailability(itemId));
     setRefreshing(false);
   };
 

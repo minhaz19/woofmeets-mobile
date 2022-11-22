@@ -21,16 +21,6 @@ const ServiceCard: FC<Props> = props => {
   const {colors} = useTheme();
   const getIcon = (iconId: number, selected: boolean) => {
     switch (iconId) {
-      // case 1:
-      //   return <BoardingIcon width={34} height={36} />;
-      // case 2:
-      //   return <HouseSittingIcon width={34} height={36} />;
-      // case 3:
-      //   return <DropInVisitIcon width={34} height={36} />;
-      // case 4:
-      //   return <DoggyDayCareIcon width={34} height={36} />;
-      // case 5:
-      //   return <DogWalkingIcon width={34} height={36} />;
       case 1:
         return <FontAwesome5Icon
         name="briefcase"

@@ -45,6 +45,8 @@ import {
 import {days} from '../../utils/config/Data/filterProviderDatas';
 // import GoogleAutoComplete from '../../components/common/GoogleAutoComplete';
 import GooglePredictLocation from '../../components/common/GooglePredictLocations';
+import methods from '../../api/methods';
+import {useApi} from '../../utils/helpers/api/useApi';
 
 const petData = [
   {
@@ -72,7 +74,6 @@ const PetCareZipSearch = (props: {
   );
   const {pets} = useAppSelector((state: any) => state?.allPets);
   const [errorMessage, setErrorMessage] = useState<any>();
-  const [errorLocation, setErrorLocation] = useState<any>();
   const [isMyPetEnabled, setIsMyPetEnabled] = useState(false);
   const [selectPetType, setSelectPetType] = useState(petData);
   const [myPet, setMyPet] = useState<any[]>([]);
@@ -81,10 +82,10 @@ const PetCareZipSearch = (props: {
     lng: null,
   });
   const [addressLine, setAddressLine] = useState('');
-  const [sequence, setSequence] = useState<number>(0);
+  const [sequence, setSequence] = useState<number>(1);
   const [serviceData, setServiceData] = useState({
-    service: '',
-    serviceId: '',
+    service: 'boarding',
+    serviceId: 1,
   });
   const dispatch = useAppDispatch();
 
@@ -94,7 +95,6 @@ const PetCareZipSearch = (props: {
       setMyPet(pets);
     }
   }, [pets]);
-
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
@@ -142,55 +142,46 @@ const PetCareZipSearch = (props: {
     }
   };
 
-  // const handleZipCode = (code: number) => {
-  //   let reg = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-  //   setPostCode(code);
-  //   if (reg.test(code) === false) {
-  //     setErrorMessage('Zip code is not valid');
-  //   } else {
-  //     setErrorMessage(null);
-  //   }
-  // };
-
   // lat lng
   const onPressAddress = (details: any) => {
     const lat = details?.geometry?.location.lat;
     const lng = details?.geometry?.location.lng;
     setCareLocation({lat: lat, lng: lng});
     setAddressLine(details?.formatted_address);
-    setErrorLocation(null);
   };
   // submitting the data and get request
-  const handleSubmit = () => {
+  const {request, loading} = useApi(methods._get);
+  const handleSubmit = async () => {
     const selectedPetType = selectPetType
       ?.filter((item: any) => item.selected)
       .map((item: any) => item.slug);
     const selectedMyPet = myPet
       ?.filter((item: any) => item.selected)
       .map((item: any) => item.id);
-    let formattedData;
-    if (isMyPetEnabled) {
-      formattedData = {
-        service: serviceData.service,
-        serviceId: serviceData.serviceId,
-        petsId: selectedMyPet.toString(),
-        lat: careLocation.lat,
-        lng: careLocation.lng,
-        page: 1,
-        limit: 10,
-      };
-    } else {
-      formattedData = {
-        service: serviceData.service,
-        serviceId: serviceData.serviceId,
-        pet_type: selectedPetType.toString(),
-        lat: careLocation.lat,
-        lng: careLocation.lng,
-        page: 1,
-        limit: 10,
-      };
-    }
-    if (formattedData.service && formattedData.lat && formattedData.lng) {
+
+    if (careLocation?.lat && careLocation?.lng) {
+      let formattedData;
+      if (isMyPetEnabled) {
+        formattedData = {
+          service: serviceData.service,
+          serviceId: serviceData.serviceId,
+          petsId: selectedMyPet.toString(),
+          lat: careLocation.lat,
+          lng: careLocation.lng,
+          page: 1,
+          limit: 10,
+        };
+      } else {
+        formattedData = {
+          service: serviceData.service,
+          serviceId: serviceData.serviceId,
+          pet_type: selectedPetType.toString(),
+          lat: careLocation.lat,
+          lng: careLocation.lng,
+          page: 1,
+          limit: 10,
+        };
+      }
       dispatch(
         setIsService({
           service: serviceData.service,
@@ -215,10 +206,59 @@ const PetCareZipSearch = (props: {
       dispatch(setScheduleId(null));
       props.navigation.navigate('AllProvider');
     } else {
-      if (formattedData.service) {
-        setErrorLocation('Location must be selected');
-      } else {
-        setErrorMessage('Service must be selected');
+      const locationAddressEndPoint = `https://woof-api.hirebeet.com/v2/location?address=${addressLine}`;
+      const result = await request(locationAddressEndPoint);
+      if (result.ok) {
+        let formattedData;
+        if (isMyPetEnabled) {
+          formattedData = {
+            service: serviceData.service,
+            serviceId: serviceData.serviceId,
+            petsId: selectedMyPet.toString(),
+            lat: result?.data?.results[0]?.geometry?.location.lat,
+            lng: result?.data?.results[0]?.geometry?.location.lng,
+            page: 1,
+            limit: 10,
+          };
+        } else {
+          formattedData = {
+            service: serviceData.service,
+            serviceId: serviceData.serviceId,
+            pet_type: selectedPetType.toString(),
+            lat: result?.data?.results[0]?.geometry?.location.lat,
+            lng: result?.data?.results[0]?.geometry?.location.lng,
+            page: 1,
+            limit: 10,
+          };
+        }
+        dispatch(
+          setIsService({
+            service: serviceData.service,
+            serviceId: serviceData.serviceId,
+          }),
+        );
+        if (isMyPetEnabled) {
+          dispatch(setSelectedPet(myPet));
+        } else {
+          dispatch(setPetType(selectPetType));
+        }
+        dispatch(setFormattedData(formattedData));
+        dispatch(getAllProviderOneTime(formattedData));
+        dispatch(
+          setLocation({
+            lat: result?.data?.results[0]?.geometry?.location.lat,
+            lng: result?.data?.results[0]?.geometry?.location.lng,
+          }),
+        );
+        dispatch(setFormattedAddress(addressLine));
+        dispatch(setSelectedHome(''));
+        dispatch(setMultiSliderValue([0, 200]));
+        dispatch(setDropIn(null));
+        dispatch(setDropOut(null));
+        dispatch(setIsYardEnabled(''));
+        dispatch(setServiceFrequency(days));
+        dispatch(setScheduleId(null));
+        props.navigation.navigate('AllProvider');
       }
     }
   };
@@ -333,12 +373,14 @@ const PetCareZipSearch = (props: {
                 <GooglePredictLocation
                   placeholder={'Type a place'}
                   onPlaceSelected={onPressAddress}
+                  onChange={value => {
+                    setAddressLine(value);
+                  }}
                 />
-                {errorLocation && <ErrorMessage error={errorLocation} />}
                 <View style={styles.footerContainer}>
                   <ButtonCom
                     title="Search"
-                    // loading={getLoading}
+                    loading={loading}
                     textAlignment={btnStyles.textAlignment}
                     containerStyle={btnStyles.containerStyleFullWidth}
                     titleStyle={btnStyles.titleStyle}

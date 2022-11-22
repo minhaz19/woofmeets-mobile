@@ -1,5 +1,5 @@
 import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import HeaderText from '../../../common/text/HeaderText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
@@ -50,7 +50,10 @@ const ManageBusiness = (props: {
         />
       ),
       screen: () =>
-        props.navigation.navigate('SubscriptionScreen', {opk: 'current_plan'}),
+        props.navigation.navigate('SubscriptionScreen', {
+          opk: 'current_plan',
+          headerBack: true,
+        }),
     },
     {
       id: 3,
@@ -91,7 +94,7 @@ const ManageBusiness = (props: {
         />
       ),
       screen: () => {
-        Linking.openURL(`https://woofmeets.com/profile/view/${token?.opk}`)
+        Linking.openURL(`https://woofmeets.com/profile/view/${token?.opk}`);
       },
     },
   ];

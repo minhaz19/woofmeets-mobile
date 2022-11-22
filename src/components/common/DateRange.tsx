@@ -12,8 +12,9 @@ interface Props {
   selectType?: string;
   value?: any;
   dropOut?: boolean;
+  setOpenCal: () => void;
 }
-const DateRange = ({value, dropOut}: Props) => {
+const DateRange = ({value, dropOut, setOpenCal}: Props) => {
   const [singleSelect, setSingleSelect] = useState<string>('');
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
@@ -31,6 +32,7 @@ const DateRange = ({value, dropOut}: Props) => {
         onDayPress={data => {
           setSingleSelect(data.dateString);
           handleSelectDate(data.dateString);
+          setOpenCal();
         }}
         markingType={'custom'}
         markedDates={{

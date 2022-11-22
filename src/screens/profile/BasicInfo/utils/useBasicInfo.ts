@@ -15,7 +15,7 @@ export const useBasicInfo = (route: any) => {
   );
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (e: any, ) => {
+  const handleSubmit = async (e: any) => {
     const formattedPayload = {
       addressLine1: e.addressLine1,
       // addressLine2: e.addressLine2,
@@ -25,8 +25,8 @@ export const useBasicInfo = (route: any) => {
       zipCode: e.zipCode,
       countryId: Number(e.countryId),
       dob: e.dob,
-      latitude: e.lat,
-      longitude: e.lng,
+      latitude: e.latitude,
+      longitude: e.longitude,
     };
     const result = await request(slug, formattedPayload);
     if (result.ok) {
