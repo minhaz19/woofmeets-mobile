@@ -17,7 +17,6 @@ interface Props {
 const SubscriptionScreen = ({route}: Props) => {
   const opk = route?.params?.opk;
   const headerBack = route?.params?.headerBack;
-  console.log(' iconStyle: {paddingRight: 10},', route, headerBack);
   const {colors} = useTheme();
   const {
     onPressEvent,

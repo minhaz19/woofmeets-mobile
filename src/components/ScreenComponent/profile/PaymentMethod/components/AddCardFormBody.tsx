@@ -22,7 +22,7 @@ interface Props {
 }
 
 const AddCardFormBody = ({handleValues, loading, sequence}: Props) => {
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   const [cardStatus, setCardStatus] = useState<string | null>(null);
   const {
     setValue,
@@ -67,6 +67,8 @@ const AddCardFormBody = ({handleValues, loading, sequence}: Props) => {
                       borderRadius: 3,
                       borderColor: Colors.border,
                       fontSize: Text_Size.Text_0,
+                      textColor: Colors.black,
+                      placeholderColor: Colors.border,
                     }}
                   />
                   <ErrorMessage
@@ -177,6 +179,7 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: Text_Size.Text_10,
     marginBottom: 10,
+    color: 'black',
   },
   noteContainer: {
     padding: 10,

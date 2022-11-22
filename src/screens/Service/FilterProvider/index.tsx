@@ -27,6 +27,7 @@ import {
 import {petData} from './utils/petData';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
+import {baseUrlV} from '../../../utils/helpers/httpRequest';
 
 const FilterProvider = () => {
   const dispatch = useAppDispatch();
@@ -213,7 +214,7 @@ const FilterProvider = () => {
       dispatch(getAllProviderOneTime(formattedData));
       dispatch(setOpenFilter(false));
     } else {
-      const locationAddressEndPoint = `https://woof-api.hirebeet.com/v2/location?address=${selectLatLng?.address}`;
+      const locationAddressEndPoint = `${baseUrlV}/v2/location?address=${selectLatLng?.address}`;
       const result = await request(locationAddressEndPoint);
       if (result.ok) {
         if (pets) {
