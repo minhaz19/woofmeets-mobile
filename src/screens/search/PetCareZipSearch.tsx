@@ -99,6 +99,7 @@ const PetCareZipSearch = (props: {
 
   const onRefresh = () => {
     setRefreshing(true);
+
     dispatch(getServiceTypes());
     dispatch(getAllPets());
     setRefreshing(false);
@@ -256,7 +257,7 @@ const PetCareZipSearch = (props: {
             text="Looking service for my"
             textStyle={styles.petTitleText}
           />
-          {myPet && myPet.length > 0 && (
+          {pets && pets.length > 0 && (
             <View style={styles.switchContainer}>
               <TitleText
                 textStyle={{...styles.petTitleText, paddingRight: 6}}
@@ -280,8 +281,8 @@ const PetCareZipSearch = (props: {
             justifyContent: 'center',
             flexWrap: 'wrap',
           }}>
-          {isMyPetEnabled
-            ? myPet.map((item: any) => (
+          {isMyPetEnabled && pets.length > 0
+            ? pets?.map((item: any) => (
                 <PetCard
                   key={item.id}
                   data={item}

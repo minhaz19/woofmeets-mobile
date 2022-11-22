@@ -21,8 +21,8 @@ import {formatDistance, subDays} from 'date-fns';
 import storage from '../../../utils/helpers/auth/storage';
 import {useAppDispatch} from '../../../store/store';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
-import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
-import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
+// import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
+// import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 import Colors from '../../../constants/Colors';
 
 const Messages = (props: {roomId: any; opk: any}) => {
@@ -39,16 +39,12 @@ const Messages = (props: {roomId: any; opk: any}) => {
   useEffect(() => {
     getTokenDecoded();
   }, []);
-  console.log(messages)
   const getPreviousMessages = async () => {
-    console.log('outside')
     if (socket === null) {
-      console.log('in1');
       let tempSocket = io(`${msgUrl}`);
       tempSocket.emit('user', user?.id);
       setSocket(tempSocket);
       if (props.roomId) {
-        console.log('in2');
         const slug = `/v1/messages/group/${props.roomId}`;
         setIsLoadingMsg(true);
         const result = await apiMsg.get(slug);
@@ -61,9 +57,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
         }
       }
     } else {
-      console.log('in3', props.roomId, user?.id);
       if (props.roomId) {
-        console.log('in4');
         socket.emit('user', user?.id);
         const slug = `/v1/messages/group/${props.roomId}`;
         setIsLoadingMsg(true);
@@ -80,13 +74,12 @@ const Messages = (props: {roomId: any; opk: any}) => {
   };
 
   const [refreshing, setRefreshing] = useState(false);
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    console.log('pressing1');
     getPreviousMessages();
     dispatch(getProviderProposal(props.opk));
-    dispatch(getAllPets());
-    dispatch(getWhoAmI());
+    // dispatch(getAllPets());
+    // dispatch(getWhoAmI());
     setRefreshing(false);
   };
   useEffect(() => {
@@ -159,13 +152,21 @@ const Messages = (props: {roomId: any; opk: any}) => {
             <ActivityIndicator />
           </View>
         ) : messages.length === 0 ? (
-          <View style={{justifyContent: 'center', alignItems: 'center', paddingTop: 20,}}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: 20,
+            }}>
             {/* <TitleText
               textStyle={styles.emptyContainer}
               text={`The Conversation just got created, No texts yet...`}
             /> */}
             <TouchableOpacity onPress={() => onRefresh()}>
-              <TitleText text={'Refresh Again'} textStyle={{paddingTop: 10, color: Colors.blue}} />
+              <TitleText
+                text={'Refresh Again'}
+                textStyle={{paddingTop: 10, color: Colors.blue}}
+              />
             </TouchableOpacity>
           </View>
         ) : (
@@ -198,8 +199,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
                     style={[
                       styles.imageStyle,
                       {borderColor: colors.borderColor},
-                    ]}
-                  >
+                    ]}>
                     <TitleText text={'S'} />
                   </View>
                 </View>
@@ -212,8 +212,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
                     style={[
                       styles.imageStyle,
                       {borderColor: colors.borderColor},
-                    ]}
-                  >
+                    ]}>
                     <TitleText text={'R'} />
                   </View>
                 </View>

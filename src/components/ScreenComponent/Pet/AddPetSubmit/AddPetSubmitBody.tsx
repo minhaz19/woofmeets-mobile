@@ -40,17 +40,19 @@ const AddPetSubmitBody = ({handleSubmit, loading, opk}: Props) => {
             subTitle="Show off your pet through image gallery"
             name="gallery"
           />
-          <SubmitButton
-            title={
-              opk === null || opk === 'Appointment' ? 'Add Pet' : 'Update Pet'
-            }
-            onPress={handleSubmit}
-            loading={loading}
-          />
         </View>
 
         <BottomSpacing />
       </ScrollViewRapper>
+      <View style={styles.btnAb}>
+        <SubmitButton
+          title={
+            opk === null || opk === 'Appointment' ? 'Add Pet' : 'Update Pet'
+          }
+          onPress={handleSubmit}
+          loading={loading}
+        />
+      </View>
     </View>
   );
 };
@@ -64,4 +66,5 @@ const styles = StyleSheet.create({
   spaceHeader: {
     paddingVertical: 10,
   },
+  btnAb: {position: 'absolute', bottom: '0%', width: '100%'},
 });

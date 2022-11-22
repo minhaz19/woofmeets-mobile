@@ -60,6 +60,9 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        screenOptions={{
+          gestureEnabled: false,
+        }}
         initialRouteName={
           props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
         }>
@@ -449,6 +452,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           component={ActivityScreen}
           options={() => ({
             headerShown: false,
+            gestureEnabled: false,
           })}
         />
         <Stack.Screen
@@ -537,10 +541,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack
-                navigation={navigation}
-                title="About Provider"
-              />
+              <HeaderWithBack navigation={navigation} title="About Provider" />
             ),
             backgroundColor: Colors.primary,
           })}

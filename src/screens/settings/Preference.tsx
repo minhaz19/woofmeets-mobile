@@ -14,6 +14,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     {
       id: 1,
       title: 'Account Setting',
+      details: 'Find the account infos here',
       screenName: () => {
         props.navigation.navigate('AccountSetting');
         dispatch(getWhoAmI());
@@ -31,8 +32,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
     {
       id: 4,
       title: 'Privacy Policy',
-      screenName: () =>
-        Linking.openURL('https://woofmeets.com/privacy-policy'),
+      screenName: () => Linking.openURL('https://woofmeets.com/privacy-policy'),
       details: 'https://woofmeets.com/terms-and-conditions',
       opacity: 1,
     },

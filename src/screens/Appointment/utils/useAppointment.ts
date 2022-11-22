@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../api/methods';
 import {convertDateAndTime} from '../../../components/common/convertTimeZone';
-import {formatDate} from '../../../components/common/formatDate';
+import {convertDateTZ, formatDate} from '../../../components/common/formatDate';
 import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -145,7 +145,7 @@ export const useAppointment = (providerOpk: string) => {
         const sortedSpecificModDates = !isRecurring
           ? specificModDates.map((item: any, i: number) => ({
               id: i + 1,
-              date: convertDateAndTime(new Date(item.date), timeZone),
+              date: convertDateTZ(item.date, timeZone),
               name: formatDate(item.date, 'yyyy-MM-dd'),
               visits: item.visits.map((time: string, index: number) => ({
                 id: index + 1,
@@ -214,14 +214,17 @@ export const useAppointment = (providerOpk: string) => {
               //   ? convertDateAndTime(new Date(recurringStartDate), timeZone)
               //   : null,
               recurringStartDate: isRecurring
-                ? new Date(
-                    new Date(
-                      recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
-                    ).toLocaleString('en-US', {
-                      timeZone,
-                    }),
-                  )
+                ? convertDateTZ(recurringStartDate, timeZone)
                 : null,
+              // recurringStartDate: isRecurring
+              //   ? new Date(
+              //       new Date(
+              //         recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
+              //       ).toLocaleString('en-US', {
+              //         timeZone,
+              //       }),
+              //     )
+              //   : null,
 
               proposalVisits: sortedRecurringDates,
               firstMessage: firstMessage,
@@ -247,7 +250,7 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
             };
-
+        console.log('dpr', dropDogPayload);
         const response = await request(endpoint, dropDogPayload);
         if (response.ok) {
           navigation.navigate('ActivityScreen', {
@@ -277,14 +280,17 @@ export const useAppointment = (providerOpk: string) => {
               dropOffEndTime: dropOffEndTime,
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
+              // recurringStartDate: isRecurring
+              //   ? new Date(
+              //       new Date(
+              //         recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
+              //       ).toLocaleString('en-US', {
+              //         timeZone,
+              //       }),
+              //     )
+              //   : null,
               recurringStartDate: isRecurring
-                ? new Date(
-                    new Date(
-                      recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
-                    ).toLocaleString('en-US', {
-                      timeZone,
-                    }),
-                  )
+                ? convertDateTZ(recurringStartDate, timeZone)
                 : null,
               // recurringStartDate: isRecurring
               //   ? convertDateAndTime(new Date(recurringStartDate), timeZone)
@@ -308,7 +314,7 @@ export const useAppointment = (providerOpk: string) => {
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
               proposalOtherDate: multiDate.map((item: string) =>
-                convertDateAndTime(new Date(item), timeZone),
+                convertDateTZ(item, timeZone),
               ),
               firstMessage: firstMessage,
               formattedMessage: DoggyDayFT,

@@ -12,9 +12,9 @@ import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 import {useAppDispatch} from '../../store/store';
 import authStorage from '../../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
-import ReportCardInitial from '../../screens/reports/Initial';
-import GenerateReport from '../../screens/reports/Initial/GenerateReport';
-import ReportCard from '../../screens/reports/Initial/ReportCard';
+// import ReportCardInitial from '../../screens/reports/Initial';
+// import GenerateReport from '../../screens/reports/Initial/GenerateReport';
+// import ReportCard from '../../screens/reports/Initial/ReportCard';
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
@@ -88,6 +88,7 @@ const ServiceNavigator = () => {
               />,
             // ),
           backgroundColor: Colors.primary,
+          gestureEnabled: false,
         })}
       />
 

@@ -53,19 +53,18 @@ const AddPetCheckBody = ({handleSubmit, opk}: Props) => {
             control={control}
             getValues={getValues}
           />
-
-          <SubmitButton
-            title={
-              opk === null || opk === 'Appointment'
-                ? 'Next'
-                : 'Update & Go next'
-            }
-            onPress={handleSubmit}
-          />
         </View>
 
         <BottomSpacing />
       </ScrollViewRapper>
+      <View style={styles.btnAb}>
+        <SubmitButton
+          title={
+            opk === null || opk === 'Appointment' ? 'Next' : 'Update & Go next'
+          }
+          onPress={handleSubmit}
+        />
+      </View>
     </View>
   );
 };
@@ -79,4 +78,5 @@ const styles = StyleSheet.create({
   spaceHeader: {
     paddingVertical: 10,
   },
+  btnAb: {position: 'absolute', bottom: '0%', width: '100%'},
 });

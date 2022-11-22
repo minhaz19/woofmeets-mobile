@@ -8,7 +8,7 @@ import HeaderText from '../../common/text/HeaderText';
 import ProfileHeader from '../profile/BasicInfo/ProfileHeader';
 import BottomSpacing from '../../UI/BottomSpacing';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
-import {useFormContext} from 'react-hook-form';
+import {useFormContext, useWatch} from 'react-hook-form';
 import {contries} from '../../../utils/config/Data/AddPetData';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AppSelectField from '../../common/Form/AppSelectField';
@@ -20,8 +20,11 @@ import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 import DescriptionText from '../../common/text/DescriptionText';
 import AppDropDownSelect from '../../common/AppDropDownSelect';
-import {states} from '../../../screens/profile/BasicInfo/utils/basicInfoState';
 import GooglePredictLocation from '../../common/GooglePredictLocations';
+import {
+  americanStates,
+  canadaStates,
+} from '../../../screens/profile/BasicInfo/utils/basicInfoState';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -43,7 +46,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
-  const basicData = getValues();
+  const basicData = useWatch();
 
   // add google address
   const onPressAddress = (details: any) => {
@@ -89,6 +92,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
           <View style={styles.nameContainer}>
             <HeaderText text="Basic Information" textStyle={styles.textStyle} />
           </View>
+
           <View>
             <FlatList
               data={basicInfoInput}
@@ -155,75 +159,70 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
       extraHeight={60}
       extraScrollHeight={120}
       showsVerticalScrollIndicator={false}
-      renderItem={useCallback(
-        ({item}) => {
-          return (
-            <>
-              {!item.select && (
-                <View style={styles.inputContainer}>
-                  {item.name === 'addressLine1' ? (
-                    // <GoogleAutoComplete
-                    //   onPressAddress={onPressAddress}
-                    //   label={item.title}
-                    //   placeholder={
-                    //     previousLocation ? previousLocation : item.placeholder
-                    //   }
-                    // />
-                    <GooglePredictLocation
-                      label={item.title}
-                      placeholder={item.placeholder}
-                      name={'addressLine1'}
-                      defaultValue={getValues('addressLine1')}
-                      onChange={value => {
-                        setValue('addressLine1', value);
-                      }}
-                      onPlaceSelected={onPressAddress}
-                      errors={errors}
-                    />
-                  ) : item.name === 'state' ? (
-                    <AppDropDownSelect
-                      title={item.title}
-                      setValue={setValue}
-                      name={item.name}
-                      data={states}
-                      valueData={basicData.state}
-                      placeholder={item.placeholder}
-                      errors={errors}
-                    />
-                  ) : (
-                    <AppFormField
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      keyboardType={'default'}
-                      placeholder={item.placeholder}
-                      textContentType={'none'}
-                      name={item.name}
-                      label={item.title}
-                      textInputStyle={styles.textInputStyle}
-                      control={control}
-                      errors={errors}
-                      // defaultValue={basicInfo?.[item.name]}
-                    />
-                  )}
-                </View>
-              )}
-              {item.select && (
-                <View style={styles.selectContainer}>
-                  <AppSelectField
+      renderItem={({item}) => {
+        return (
+          <>
+            {!item.select && (
+              <View style={styles.inputContainer}>
+                {item.name === 'addressLine1' ? (
+                  <GooglePredictLocation
                     label={item.title}
-                    name={'countryId'}
-                    data={contries}
-                    control={control}
-                    defaultText={basicData.countryId}
-                    placeholder={'Please select a country'}
+                    placeholder={item.placeholder}
+                    name={'addressLine1'}
+                    defaultValue={getValues('addressLine1')}
+                    onChange={value => {
+                      setValue('addressLine1', value);
+                    }}
+                    onPlaceSelected={onPressAddress}
+                    errors={errors}
                   />
-                </View>
-              )}
-            </>
-          );
-        },
-        [control, errors, getValues, setValue],
-      )}
+                ) : item.name === 'state' ? (
+                  <AppDropDownSelect
+                    title={item.title}
+                    setValue={setValue}
+                    name={item.name}
+                    data={
+                      basicData.countryId === '1'
+                        ? americanStates
+                        : canadaStates
+                    }
+                    valueData={basicData.state}
+                    placeholder={item.placeholder}
+                    errors={errors}
+                  />
+                ) : (
+                  <AppFormField
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType={'default'}
+                    placeholder={item.placeholder}
+                    textContentType={'none'}
+                    name={item.name}
+                    label={item.title}
+                    textInputStyle={styles.textInputStyle}
+                    control={control}
+                    errors={errors}
+                    // defaultValue={basicInfo?.[item.name]}
+                  />
+                )}
+              </View>
+            )}
+            {item.select && (
+              <View style={styles.selectContainer}>
+                <AppSelectField
+                  label={item.title}
+                  name={'countryId'}
+                  data={contries}
+                  control={control}
+                  defaultText={basicData.countryId}
+                  placeholder={'Please select a country'}
+                  country
+                />
+              </View>
+            )}
+          </>
+        );
+      }}
       keyExtractor={(item, index) => item.name + index.toString()}
       ListHeaderComponent={renderHeader}
       ListFooterComponent={renderFooter}>

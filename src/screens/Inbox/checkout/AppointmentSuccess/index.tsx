@@ -17,6 +17,8 @@ import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provid
 import ButtonCom from '../../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
+import {getProviderInprogressApnt} from '../../../../store/slices/Appointment/Inbox/Provider/InProgress/getPInprogressApnt';
+import {getInprogressApnt} from '../../../../store/slices/Appointment/Inbox/User/InProgress/getInprogressApnt';
 const endPoint = '/appointment/cancel/';
 const AppointmentSuccess = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,7 +41,9 @@ const AppointmentSuccess = () => {
       payload,
     );
     if (result.ok) {
-      dispatch(getProviderApnt(proposedServiceInfo.appointmentOpk));
+      dispatch(getInprogressApnt('PAID'));
+      dispatch(getProviderInprogressApnt('PAID'));
+      // dispatch(getProviderApnt(proposedServiceInfo.appointmentOpk));
       setIsVisible(false);
       navigation.navigate('Inbox');
     } else {
@@ -77,7 +81,7 @@ const AppointmentSuccess = () => {
           <TitleText
             textStyle={{textAlign: 'justify'}}
             text={
-              'You have successfully booked this appointment. If you want to cancel this appointment your have to provide a valid reason for cancelling appointment. After review your cancellation we will refund your 50% payment'
+              'You have successfully booked this appointment. If you want to cancel this appointment your have to provide a valid reason for cancelling appointment.'
             }
           />
         </View>
@@ -130,7 +134,7 @@ const AppointmentSuccess = () => {
           <>
             <View style={{width: '100%', padding: 20}}>
               <TitleText
-                text={'Why you want to cancel this subscription?'}
+                text={'Why you want to cancel this Appointment?'}
                 textStyle={{fontWeight: 'bold', fontSize: Text_Size.Text_1}}
               />
               <Controller
@@ -166,7 +170,7 @@ const AppointmentSuccess = () => {
                 }}
               />
               <ButtonCom
-                title="Cancel Plan"
+                title="Cancel Appointment"
                 textAlignment={btnStyles.textAlignment}
                 containerStyle={btnStyles.containerStyleFullWidth}
                 titleStyle={btnStyles.titleStyle}

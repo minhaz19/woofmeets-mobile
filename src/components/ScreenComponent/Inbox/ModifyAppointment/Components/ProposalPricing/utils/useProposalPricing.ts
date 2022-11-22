@@ -2,11 +2,12 @@
 
 import {useMemo, useState} from 'react';
 import {useWatch} from 'react-hook-form';
-import {Alert} from 'react-native';
+// import {Alert} from 'react-native';
 import methods from '../../../../../../../api/methods';
 import {useAppSelector} from '../../../../../../../store/store';
 import {useApi} from '../../../../../../../utils/helpers/api/useApi';
-import {convertDateAndTime} from '../../../../../../common/convertTimeZone';
+// import {convertDateAndTime} from '../../../../../../common/convertTimeZone';
+import {convertDateTZ} from '../../../../../../common/formatDate';
 
 const boardingHouseEndpoint =
   '/appointment/boarding-housesitting/get-modified-price';
@@ -42,14 +43,8 @@ export const useProposalPricing = () => {
       const payload = {
         serviceId: proposedServiceInfo.providerServiceId,
         petIds: petsId,
-        proposalStartDate: convertDateAndTime(
-          new Date(proposalStartDate),
-          providerTimeZone,
-        ),
-        proposalEndDate: convertDateAndTime(
-          new Date(proposalEndDate),
-          providerTimeZone,
-        ),
+        proposalStartDate: convertDateTZ(proposalStartDate, providerTimeZone),
+        proposalEndDate: convertDateTZ(proposalEndDate, providerTimeZone),
         timing: {
           dropOffStartTime: dropOffStartTime,
           dropOffEndTime: dropOffEndTime,
@@ -76,7 +71,7 @@ export const useProposalPricing = () => {
           },
         ]);
       } else {
-        Alert.alert(result.data.message);
+        // Alert.alert(result.data.message);
       }
     } else if (
       proposedServiceInfo.serviceTypeId === 3 ||
@@ -87,10 +82,18 @@ export const useProposalPricing = () => {
           serviceId: proposedServiceInfo.providerServiceId,
           petIds: petsId,
           length: visitLength,
-          recurringStartDate: convertDateAndTime(
-            new Date(recurringStartDate),
+          recurringStartDate: convertDateTZ(
+            recurringStartDate,
             providerTimeZone,
           ),
+          // recurringStartDate: new Date(
+          //   new Date(
+          //     recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
+          //   ).toLocaleString('en-US', {
+          //     // @ts-ignore
+          //     providerTimeZone,
+          //   }),
+          // ),
           isRecurring: proposedServiceInfo.isRecurring,
           proposalVisits: recurringModDates.map((item: any) => ({
             day: item.date.substring(0, 3).toLowerCase(),
@@ -117,7 +120,7 @@ export const useProposalPricing = () => {
             },
           ]);
         } else {
-          Alert.alert(result.data.message);
+          // Alert.alert(result.data.message);
         }
       } else {
         const payload = {
@@ -127,7 +130,7 @@ export const useProposalPricing = () => {
           isRecurring: proposedServiceInfo.isRecurring,
           timeZone: providerTimeZone,
           proposalVisits: specificModDates.map((item: any) => ({
-            date: convertDateAndTime(new Date(item.date), providerTimeZone),
+            date: convertDateTZ(item.date, providerTimeZone),
             visits: item.visits,
           })),
         };
@@ -149,7 +152,7 @@ export const useProposalPricing = () => {
             },
           ]);
         } else {
-          Alert.alert(result.data.message);
+          // Alert.alert(result.data.message);
         }
       }
     } else if (proposedServiceInfo.serviceTypeId === 4) {
@@ -157,10 +160,18 @@ export const useProposalPricing = () => {
         const payload = {
           serviceId: proposedServiceInfo.providerServiceId,
           petIds: petsId,
-          recurringStartDate: convertDateAndTime(
-            new Date(proposedServiceInfo.recurringStartDate),
+          recurringStartDate: convertDateTZ(
+            proposedServiceInfo.recurringStartDate,
             providerTimeZone,
           ),
+          // recurringStartDate: new Date(
+          //   new Date(
+          //     recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
+          //   ).toLocaleString('en-US', {
+          //     // @ts-ignore
+          //     providerTimeZone,
+          //   }),
+          // ),
           recurringSelectedDays: selectedDays.map((item: string) =>
             item.substring(0, 3).toLowerCase(),
           ),
@@ -184,14 +195,14 @@ export const useProposalPricing = () => {
             },
           ]);
         } else {
-          Alert.alert(result.data.message);
+          // Alert.alert(result.data.message);
         }
       } else {
         const payload = {
           serviceId: proposedServiceInfo.providerServiceId,
           petIds: petsId,
           dates: multiDate.map((item: string) =>
-            convertDateAndTime(new Date(item), providerTimeZone),
+            convertDateTZ(item, providerTimeZone),
           ),
           timeZone: providerTimeZone,
           isRecurring: false,
@@ -220,7 +231,7 @@ export const useProposalPricing = () => {
             },
           ]);
         } else {
-          Alert.alert(result.data.message);
+          // Alert.alert(result.data.message);
         }
       }
     }

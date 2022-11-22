@@ -4,8 +4,10 @@ import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import {io} from 'socket.io-client';
 import methods from '../../../../api/methods';
-import {convertDateAndTime} from '../../../../components/common/convertTimeZone';
-import {formatDate} from '../../../../components/common/formatDate';
+import {
+  convertDateTZ,
+  formatDate,
+} from '../../../../components/common/formatDate';
 import {getProviderProposal} from '../../../../store/slices/Appointment/Proposal/getProviderProposal';
 import {getProviderServices} from '../../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
@@ -117,14 +119,8 @@ export const useModifyAppointment = (route: any) => {
           dropOffEndTime: dropOffEndTime,
           pickUpStartTime: pickUpStartTime,
           pickUpEndTime: pickUpEndTime,
-          proposalStartDate: convertDateAndTime(
-            new Date(proposalStartDate),
-            providerTimeZone,
-          ),
-          proposalEndDate: convertDateAndTime(
-            new Date(proposalEndDate),
-            providerTimeZone,
-          ),
+          proposalStartDate: convertDateTZ(proposalStartDate, providerTimeZone),
+          proposalEndDate: convertDateTZ(proposalEndDate, providerTimeZone),
           formattedMessage: boardingSittingFT,
           appointmentserviceType: 'NONE',
         };
@@ -148,7 +144,7 @@ export const useModifyAppointment = (route: any) => {
         const sortedSpecificModDates = !isRecurring
           ? specificModDates.map((item: any, i: number) => ({
               id: i + 1,
-              date: convertDateAndTime(new Date(item.date), providerTimeZone),
+              date: convertDateTZ(item.date, providerTimeZone),
               name: formatDate(item.date, 'yyyy-MM-dd'),
               visits: item.visits.map((time: string, index: number) => ({
                 id: index + 1,
@@ -238,19 +234,19 @@ export const useModifyAppointment = (route: any) => {
                   : serviceTypeId === 5
                   ? 'WALK'
                   : 'NONE',
-              recurringStartDate: isRecurring
-                ? new Date(
-                    new Date(
-                      recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
-                    ).toLocaleString('en-US', {
-                      providerTimeZone,
-                    }),
-                  )
-                : null,
-              // recurringStartDate: convertDateAndTime(
-              //   new Date(recurringStartDate),
-              //   providerTimeZone,
-              // ),
+              // recurringStartDate: isRecurring
+              //   ? new Date(
+              //       new Date(
+              //         recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
+              //       ).toLocaleString('en-US', {
+              //         providerTimeZone,
+              //       }),
+              //     )
+              //   : null,
+              recurringStartDate: convertDateTZ(
+                recurringStartDate,
+                providerTimeZone,
+              ),
               proposalVisits: sortedRecurringDates,
             }
           : {
@@ -309,19 +305,19 @@ export const useModifyAppointment = (route: any) => {
               dropOffEndTime: dropOffEndTime,
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
-              recurringStartDate: isRecurring
-                ? new Date(
-                    new Date(
-                      recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
-                    ).toLocaleString('en-US', {
-                      providerTimeZone,
-                    }),
-                  )
-                : null,
-              // recurringStartDate: convertDateAndTime(
-              //   new Date(recurringStartDate),
-              //   providerTimeZone,
-              // ),
+              // recurringStartDate: isRecurring
+              //   ? new Date(
+              //       new Date(
+              //         recurringStartDate.replace(/-/g, '/').replace(/T.+/, ''),
+              //       ).toLocaleString('en-US', {
+              //         providerTimeZone,
+              //       }),
+              //     )
+              //   : null,
+              recurringStartDate: convertDateTZ(
+                recurringStartDate,
+                providerTimeZone,
+              ),
               recurringSelectedDay: selectedDays.map((item: string) =>
                 item.substring(0, 3).toLowerCase(),
               ),
@@ -342,7 +338,7 @@ export const useModifyAppointment = (route: any) => {
               pickUpStartTime: pickUpStartTime,
               pickUpEndTime: pickUpEndTime,
               proposalOtherDate: multiDate.map((item: string) =>
-                convertDateAndTime(new Date(item), providerTimeZone),
+                convertDateTZ(item, providerTimeZone),
               ),
             };
         const result = await request(endpoint, doggyPayload);
@@ -368,8 +364,8 @@ export const useModifyAppointment = (route: any) => {
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
     setRefreshing(true);
-    await dispatch(getProviderServices(appointmentOpk));
-    await dispatch(getAllPets());
+    dispatch(getProviderServices(appointmentOpk));
+    dispatch(getAllPets());
     setRefreshing(false);
   };
 

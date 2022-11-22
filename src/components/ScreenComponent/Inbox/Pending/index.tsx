@@ -12,7 +12,7 @@ import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provid
 import BottomSpacing from '../../../UI/BottomSpacing';
 import changeTextLetter from '../../../common/changeTextLetter';
 import InboxLoader from '../../../../screens/Inbox/Loader/InboxLoader';
-import {formatDate} from '../../../common/formatDate';
+import {convertToLocalTZ} from '../../../common/formatDate';
 interface Props {
   statusType: string;
 }
@@ -66,9 +66,9 @@ const PendingStatus = ({statusType}: Props) => {
               statusType === 'USER' ? (
                 appointmentStatus?.map((item: any) => {
                   const serviceTypeId = item?.providerService?.serviceTypeId;
-                  const proposalDate = item.appointmentProposal[0];
-                  const isRecurring = item.appointmentProposal[0]?.isRecurring;
-                
+                  const proposalDate = item?.appointmentProposal[0];
+                  const isRecurring = item?.appointmentProposal[0]?.isRecurring;
+                  const timezone = item?.providerTimeZone;
                   return (
                     <ReusableCard
                       key={item.opk}
@@ -79,29 +79,34 @@ const PendingStatus = ({statusType}: Props) => {
                         image: item.provider.user.image,
                         description: item?.providerService
                           ? serviceTypeId === 1 || serviceTypeId === 2
-                            ? `Starting From:  ${formatDate(
+                            ? `Starting From:  ${convertToLocalTZ(
                                 proposalDate.proposalStartDate,
-                                'iii LLL d',
+                                timezone,
+                                'MMM ddd D',
                               )}`
                             : serviceTypeId === 3 || serviceTypeId === 5
                             ? isRecurring
-                              ? `Starting From:  ${formatDate(
+                              ? `Starting From:  ${convertToLocalTZ(
                                   proposalDate.recurringStartDate,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
-                              : `Starting From:  ${formatDate(
+                              : `Starting From:  ${convertToLocalTZ(
                                   proposalDate.proposalVisits[0].date,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
                             : serviceTypeId === 4
                             ? isRecurring
-                              ? `Starting From:  ${formatDate(
+                              ? `Starting From:  ${convertToLocalTZ(
                                   proposalDate.recurringStartDate,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
-                              : `Starting From:  ${formatDate(
+                              : `Starting From:  ${convertToLocalTZ(
                                   proposalDate?.proposalOtherDate[0]?.date,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
                             : ''
                           : 'No Mesaegs fonnd',
@@ -124,6 +129,7 @@ const PendingStatus = ({statusType}: Props) => {
                   const serviceTypeId = item?.providerService?.serviceTypeId;
                   const proposalDate = item.appointmentProposal[0];
                   const isRecurring = item.appointmentProposal[0]?.isRecurring;
+                  const timezone = item?.providerTimeZone;
                   return (
                     <ReusableCard
                       key={item.opk}
@@ -134,19 +140,22 @@ const PendingStatus = ({statusType}: Props) => {
                         image: item.user.image,
                         description: item?.providerService
                           ? serviceTypeId === 1 || serviceTypeId === 2
-                            ? `Starting From:  ${formatDate(
+                            ? `Starting From:  ${convertToLocalTZ(
                                 proposalDate.proposalStartDate,
-                                'iii LLL d',
+                                timezone,
+                                'MMM ddd D',
                               )}`
                             : serviceTypeId === 3 || serviceTypeId === 5
                             ? isRecurring
-                              ? `Starting From:  ${formatDate(
+                              ? `Starting From:  ${convertToLocalTZ(
                                   proposalDate.recurringStartDate,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
-                              : `Starting From:  ${formatDate(
+                              : `Starting From:  ${convertToLocalTZ(
                                   proposalDate.proposalVisits[0].date,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
                             : // : `Starting From:  ${formatDate(
                             //     proposalDate.proposalVisits[0].date,
@@ -154,13 +163,15 @@ const PendingStatus = ({statusType}: Props) => {
                             //   )}`
                             serviceTypeId === 4
                             ? isRecurring
-                              ? `Starting From:  ${formatDate(
+                              ? `Starting From:  ${convertToLocalTZ(
                                   proposalDate.recurringStartDate,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
-                              : `Starting From:  ${formatDate(
+                              : `Starting From:  ${convertToLocalTZ(
                                   proposalDate?.proposalOtherDate[0]?.date,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
                             : ''
                           : 'No Mesaegs fonnd',

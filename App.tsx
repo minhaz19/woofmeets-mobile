@@ -13,7 +13,9 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Splash from './src/screens/splash';
 import store from './src/store/store';
-
+// import 'intl';
+// import 'intl/locale-data/jsonp/en-US';
+// import 'date-time-format-timezone';
 Icon.loadFont();
 Fst.loadFont();
 Mci.loadFont();

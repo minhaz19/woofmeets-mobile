@@ -12,7 +12,7 @@ import {getProviderInprogressApnt} from '../../../../store/slices/Appointment/In
 import changeTextLetter from '../../../common/changeTextLetter';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import InboxLoader from '../../../../screens/Inbox/Loader/InboxLoader';
-import {formatDate} from '../../../common/formatDate';
+import {convertToLocalTZ} from '../../../common/formatDate';
 interface Props {
   statusType: string;
 }
@@ -27,7 +27,14 @@ const ApprovedStatus = ({statusType}: Props) => {
   );
 
   const [refreshing, setRefreshing] = useState(false);
-
+  // useEffect(() => {
+  //   showInbox === 2 &&
+  //     statusType === 'USER' &&
+  //     dispatch(getInprogressApnt('PAID'));
+  //   showInbox === 2 &&
+  //     statusType === 'PROVIDER' &&
+  //     dispatch(getProviderInprogressApnt('PAID'));
+  // }, [showInbox]);
   const onRefresh = async () => {
     setRefreshing(true);
     statusType === 'USER' && (await dispatch(getInprogressApnt('PAID')));
@@ -38,7 +45,6 @@ const ApprovedStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, [statusType]);
-
   return (
     <>
       {loading ? (
@@ -69,7 +75,7 @@ const ApprovedStatus = ({statusType}: Props) => {
                   const serviceTypeId = item?.providerService?.serviceTypeId;
                   const proposalDate = item.appointmentProposal[0];
                   const isRecurring = item.appointmentProposal[0]?.isRecurring;
-
+                  const timezone = item?.providerTimeZone;
                   return (
                     <ReusableCard
                       key={item.opk}
@@ -80,34 +86,35 @@ const ApprovedStatus = ({statusType}: Props) => {
                         image: item.provider.user.image,
                         description: item?.providerService
                           ? serviceTypeId === 1 || serviceTypeId === 2
-                            ? `Starting From:  ${formatDate(
+                            ? `Starting From:  ${convertToLocalTZ(
                                 proposalDate.proposalStartDate,
-                                'iii LLL d',
+                                timezone,
+                                'MMM ddd D',
                               )}`
                             : serviceTypeId === 3 || serviceTypeId === 5
                             ? isRecurring
-                              ? `Starting From:  ${formatDate(
+                              ? `Starting From:  ${convertToLocalTZ(
                                   proposalDate.recurringStartDate,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
-                              : `Starting From:  ${formatDate(
+                              : `Starting From:  ${convertToLocalTZ(
                                   proposalDate?.proposalVisits[0]?.date,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
-                            : // : `Starting From:  ${formatDate(
-                            //     proposalDate?.proposalVisits[0]?.date,
-                            //     'iii LLL d',
-                            //   )}`
-                            serviceTypeId === 4
+                            : serviceTypeId === 4
                             ? isRecurring
-                              ? `Starting From:  ${formatDate(
+                              ? `Starting From:  ${convertToLocalTZ(
                                   proposalDate.recurringStartDate,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
-                              : `Starting From:  ${formatDate(
+                              : `Starting From:  ${convertToLocalTZ(
                                   proposalDate?.proposalOtherDate[0]?.date,
 
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
                             : ''
                           : 'No Mesaegs fonnd',
@@ -130,6 +137,7 @@ const ApprovedStatus = ({statusType}: Props) => {
                   const serviceTypeId = item?.providerService?.serviceTypeId;
                   const proposalDate = item.appointmentProposal[0];
                   const isRecurring = item.appointmentProposal[0]?.isRecurring;
+                  const timezone = item?.providerTimeZone;
                   return (
                     <ReusableCard
                       key={item.opk}
@@ -140,19 +148,22 @@ const ApprovedStatus = ({statusType}: Props) => {
                         image: item.user.image,
                         description: item?.providerService
                           ? serviceTypeId === 1 || serviceTypeId === 2
-                            ? `Starting From:  ${formatDate(
+                            ? `Starting From:  ${convertToLocalTZ(
                                 proposalDate.proposalStartDate,
-                                'iii LLL d',
+                                timezone,
+                                'MMM ddd D',
                               )}`
                             : serviceTypeId === 3 || serviceTypeId === 5
                             ? isRecurring
-                              ? `Starting From:  ${formatDate(
+                              ? `Starting From:  ${convertToLocalTZ(
                                   proposalDate.recurringStartDate,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
-                              : `Starting From:  ${formatDate(
+                              : `Starting From:  ${convertToLocalTZ(
                                   proposalDate.proposalVisits[0].date,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
                             : // : `Starting From:  ${formatDate(
                             //     proposalDate.proposalVisits[0].date,
@@ -160,14 +171,16 @@ const ApprovedStatus = ({statusType}: Props) => {
                             //   )}`
                             serviceTypeId === 4
                             ? isRecurring
-                              ? `Starting From:  ${formatDate(
+                              ? `Starting From:  ${convertToLocalTZ(
                                   proposalDate.recurringStartDate,
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
-                              : `Starting From:  ${formatDate(
+                              : `Starting From:  ${convertToLocalTZ(
                                   proposalDate?.proposalOtherDate[0]?.date,
 
-                                  'iii LLL d',
+                                  timezone,
+                                  'MMM ddd D',
                                 )}`
                             : ''
                           : 'No Mesaegs fonnd',

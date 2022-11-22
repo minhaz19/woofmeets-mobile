@@ -19,6 +19,7 @@ const AddCardForm = ({navigation, route}: any) => {
   const {sequence} = route.params;
   const {handleValues, idemLoading, loading, appointmentLoading, tokenLoading} =
     useAddCardForm(navigation, sequence);
+
   return (
     <View
       style={[

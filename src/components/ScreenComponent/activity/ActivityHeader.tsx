@@ -20,6 +20,9 @@ import RecurringModal from './components/RecurringModal';
 import {setBillingId} from '../../../store/slices/Appointment/Proposal/providerProposalSlice';
 import changeTextLetter from '../../common/changeTextLetter';
 import {formatDate} from '../../common/formatDate';
+import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
+import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
+// import AppActivityIndicator from '../../common/Loaders/AppActivityIndicator';
 const acceptEndpoint = '/appointment/accept/proposal/';
 const completeEndpoint = '/appointment/complete/';
 const rejectEndpoint = '/appointment/proposal/reject/';
@@ -35,6 +38,7 @@ const ActivityHeader = (props: {
   const dispatch = useAppDispatch();
   const [regenerateModal, setRegenerateModal] = useState(false);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  // const {loading} = useAppSelector(state => state.providerProfile);
   const user = useAppSelector(state => state.whoAmI);
   const handleAccept = async () => {
     const result = await request(acceptEndpoint + props.opk);
@@ -102,8 +106,15 @@ const ActivityHeader = (props: {
     );
   };
 
+  const handleProfile = async () => {
+    await dispatch(getProviderProfile(proposedServiceInfo?.providerOpk));
+    navigation.navigate('ProviderProfile', {
+      providerOpk: proposedServiceInfo?.providerOpk,
+    });
+  };
   return (
     <>
+      {/* {loading && <AppActivityIndicator visible={true} />} */}
       <View style={[styles.container, {borderColor: colors.borderColor}]}>
         <View style={styles.containerInner}>
           <View style={styles.headerTitleContainer}>
@@ -119,7 +130,9 @@ const ActivityHeader = (props: {
                 color={Colors.primary}
               />
             </TouchableOpacity>
-            <View style={styles.headerTitleContainer}>
+            <AppTouchableOpacity
+              onPress={handleProfile}
+              style={styles.headerTitleContainer}>
               <View style={styles.titleMargin}>
                 <HeaderText
                   text={
@@ -171,7 +184,7 @@ const ActivityHeader = (props: {
                   }
                 />
               </View>
-            </View>
+            </AppTouchableOpacity>
           </View>
           <TouchableOpacity
             style={styles.leftContainer}

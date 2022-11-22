@@ -47,7 +47,7 @@ const TimeSlotPicker = ({
   const [fromTime, setFromTime] = useState<string>(defaultFrom);
   const [toTime, setToTime] = useState<string>(defaultTo);
 
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const handleFrom = (itemValue: string) => {
     const findIndex = times.findIndex((item: string) => item === itemValue);
     if (findIndex !== -1 && findIndex !== times.length - 1) {
@@ -100,7 +100,13 @@ const TimeSlotPicker = ({
           ]}>
           <View style={styles.halfCont}>
             <TitleText text={'From'} textStyle={styles.title} />
-            <Picker selectedValue={fromTime} onValueChange={handleFrom}>
+            <Picker
+              selectedValue={fromTime}
+              onValueChange={handleFrom}
+              dropdownIconColor={Colors.black}
+              style={{
+                color: Colors.black,
+              }}>
               {times.map((item: string, index: number) => (
                 <Picker.Item value={item} label={item.toString()} key={index} />
               ))}
@@ -108,7 +114,13 @@ const TimeSlotPicker = ({
           </View>
           <View style={styles.halfCont}>
             <TitleText text={'To'} textStyle={styles.title} />
-            <Picker selectedValue={toTime} onValueChange={handleTo}>
+            <Picker
+              selectedValue={toTime}
+              onValueChange={handleTo}
+              dropdownIconColor={Colors.black}
+              style={{
+                color: Colors.black,
+              }}>
               {times.map((item: string, index: number) => (
                 <Picker.Item value={item} label={item.toString()} key={index} />
               ))}

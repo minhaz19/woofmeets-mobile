@@ -25,7 +25,7 @@ function isBeforeToday(date: Date) {
   return date < today;
 }
 const AvailablityCalendar = () => {
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   const [preMarked, setPremarked] = useState({});
   const [availabledays, setAvailableDays] = useState([]);
   const [resetAvailableService, setResetAvailableService] = useState([]);
@@ -134,6 +134,7 @@ const AvailablityCalendar = () => {
                   },
                   text: {
                     color: 'white',
+                    fontWeight: 'bold',
                   },
                 },
               },

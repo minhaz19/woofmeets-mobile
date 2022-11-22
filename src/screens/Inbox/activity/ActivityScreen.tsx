@@ -23,12 +23,11 @@ const ActivityScreen = (props: {
   const {loading, proposal, proposedServiceInfo} = useAppSelector(
     state => state.proposal,
   );
+  const {loading: providerLoading} = useAppSelector(
+    state => state.providerProfile,
+  );
   const {appointmentOpk} = props.route.params;
-  useEffect(() => {
-    dispatch(getProviderProposal(appointmentOpk));
-    dispatch(getAllPets());
-    dispatch(getWhoAmI());
-  }, []);
+
   const {user} = useAppSelector(state => state.whoAmI);
   const reviewGiven = proposedServiceInfo?.review?.filter(
     (item: any) => item?.reviewedById === user?.id,
@@ -37,10 +36,16 @@ const ActivityScreen = (props: {
   const [isDetailsModal, setIsDetailsModal] = useState(false);
   const [isThreeDotsModal, setIsThreeDotsModal] = useState(false);
   const [isReviewModal, setIsReviewModal] = useState(false);
-
+  useEffect(() => {
+    dispatch(getProviderProposal(appointmentOpk));
+    dispatch(getAllPets());
+    dispatch(getWhoAmI());
+  }, []);
   return (
     <>
-      {(loading || petLoading) && <AppActivityIndicator visible={true} />}
+      {(loading || petLoading || providerLoading) && (
+        <AppActivityIndicator visible={true} />
+      )}
       <View
         style={{
           ...styles.rootContainer,

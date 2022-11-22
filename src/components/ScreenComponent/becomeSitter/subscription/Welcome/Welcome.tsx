@@ -23,7 +23,7 @@ import {getSubscription} from '../../../../../store/slices/payment/Subscriptions
 import AppButton from '../../../../common/AppButton';
 const endpoint = '/subscriptions/cancel-subscription?subscriptionId=';
 const Welcome = (props: any) => {
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const opk = props?.opk;
   const [show, setShow] = useState(true);
@@ -117,7 +117,7 @@ const Welcome = (props: any) => {
         />
         <DescriptionText
           textStyle={{textAlign: 'center', marginVertical: 20}}
-          text="You have currenly activated the gold plan for next one month. Now you can access all the feature that includes on gold plan. Check out the features down below."
+          text={`You have currenly activated the ${props.item?.membershipPlan?.displayName} plan for next one month. Now you can access all the feature that includes on ${props.item?.membershipPlan?.displayName} plan. Check out the features down below.`}
         />
       </View>
 

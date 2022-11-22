@@ -4,19 +4,22 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Finder, Setting, Pets, InboxIcon} from '../assets/svgs/SVG_LOGOS';
 import Colors from '../constants/Colors';
 import {SCREEN_WIDTH} from '../constants/WindowSize';
-import InboxNavigator from './bottoms/InboxNavigator';
+// import InboxNavigator from './bottoms/InboxNavigator';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
 import PetNavigator from './bottoms/PetNavigator';
 import authStorage from '../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
 import ProHomeNavigator from './providers/bottoms/HomeNavigator';
+// import {ProHomeIcon} from '../assets/svgs/Provider_Logos';
+// import ProRescheduleNavigator from './providers/bottoms/RescheduleNavigator';
 import {ProRescheduleIcon} from '../assets/svgs/Provider_Logos';
 import ProSettingNavigator from './providers/bottoms/SettingNavigator';
 import BottomTabText from '../components/common/text/BottomTabText';
 import {useTheme} from '../constants/theme/hooks/useTheme';
-import { useAppDispatch, useAppSelector } from '../store/store';
-import { getWhoAmI } from '../store/slices/common/whoAmI/whoAmIAction';
+import {useAppDispatch, useAppSelector} from '../store/store';
+import {getWhoAmI} from '../store/slices/common/whoAmI/whoAmIAction';
+import InboxNavigator from './bottoms/InboxNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +31,7 @@ function BottomTabNavigator() {
 
   useEffect(() => {
     dispatch(getWhoAmI());
-  }, [])
+  }, []);
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {
@@ -118,11 +121,7 @@ function BottomTabNavigator() {
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <Pets
-                  fill={
-                    focused
-                      ? Colors.primary
-                      : Colors.subText
-                  }
+                  fill={focused ? Colors.primary : Colors.subText}
                   height={SCREEN_WIDTH <= 380 ? 18 : 20}
                   width={SCREEN_WIDTH <= 380 ? 18 : 20}
                 />
@@ -231,11 +230,7 @@ function BottomTabNavigator() {
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <Pets
-                  fill={
-                    focused
-                      ? Colors.primary
-                      : Colors.subText
-                  }
+                  fill={focused ? Colors.primary : Colors.subText}
                   height={SCREEN_WIDTH <= 380 ? 20 : 22}
                   width={SCREEN_WIDTH <= 380 ? 20 : 24}
                 />

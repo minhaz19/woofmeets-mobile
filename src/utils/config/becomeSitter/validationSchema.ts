@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 const sitterDetailsValidationSchema = Yup.object().shape({
   headline: Yup.string().required('This field is required'),
-  yearsOfExperience: Yup.number().required('Please input a number'),
+  yearsOfExperience: Yup.number().min(0).required('Please input a number'),
   // dogsExperience: Yup.string(),
   // walkingExperience: Yup.string(),
   // requestedDogInfo: Yup.string(),
@@ -10,7 +10,7 @@ const sitterDetailsValidationSchema = Yup.object().shape({
   environmentDescription: Yup.string().required('This field is required'),
   scheduleDescription: Yup.string().required('This field is required'),
   about: Yup.string().required('This field is required'),
-  // skills: 
+  // skills:
   oral_medication: Yup.boolean(),
   daily_exercise: Yup.boolean(),
   first_aid_cpr: Yup.boolean(),

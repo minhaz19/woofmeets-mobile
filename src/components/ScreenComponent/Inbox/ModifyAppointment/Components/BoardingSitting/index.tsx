@@ -3,7 +3,6 @@ import React, {memo, useState} from 'react';
 import {ClockSvg} from '../../../../../../assets/svgs/SVG_LOGOS';
 import TitleText from '../../../../../common/text/TitleText';
 import AppTouchableOpacity from '../../../../../common/AppClickEvents/AppTouchableOpacity';
-import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../../../constants/Colors';
 import TimeSlotPicker from '../../../../../common/TimeRangePicker';
 import ShortText from '../../../../../common/text/ShortText';
@@ -21,8 +20,6 @@ const BoardingSitting = ({watch, setValue}: Props) => {
     watch();
 
 
-
-  const {isDarkMode} = useTheme();
 
   return (
     <View style={[styles.container]}>

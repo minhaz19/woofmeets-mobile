@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Colors from '../../constants/Colors';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
@@ -13,6 +13,10 @@ import CompletedStatus from '../../components/ScreenComponent/Inbox/Completed';
 import DeclinedStatus from '../../components/ScreenComponent/Inbox/Declined';
 import UserProviderInbox from '../../components/ScreenComponent/Inbox/utils/Common/UserProviderInbox';
 
+// export const convertDateAndTime = (date, timeZone) => {
+
+//   return new Date(convertDate);
+// };
 const data = [
   {
     id: 1,
@@ -39,7 +43,10 @@ const data = [
 const Inbox = () => {
   const [showInbox, setShowInbox] = useState(1);
   const [active, setActive] = useState('USER');
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
+  useEffect(() => {
+    setShowInbox(1);
+  }, []);
   return (
     <ScreenRapperGrey rapperStyle={styles.container}>
       <View style={styles.tabContainer}>
@@ -51,9 +58,7 @@ const Inbox = () => {
                 styles.itemContainer,
                 {
                   backgroundColor:
-                    showInbox === item.id
-                      ? Colors.primary
-                      : Colors.background,
+                    showInbox === item.id ? Colors.primary : Colors.background,
                   borderRightWidth: 1,
                   borderRightColor: Colors.primary,
                 },

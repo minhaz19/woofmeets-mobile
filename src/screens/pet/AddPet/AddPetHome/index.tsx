@@ -2,7 +2,6 @@ import {Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import Screen from '../../../../components/common/Screen';
 import {addPetHomeValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../constants/Colors';
 import AppForm from '../../../../components/common/Form/AppForm';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
@@ -21,7 +20,6 @@ interface Props {
   >;
 }
 const AddPetHome = ({route, navigation}: Props) => {
-  const {isDarkMode} = useTheme();
   const {opk, onBoarding} = route.params;
   const {loading, handleSubmit} = useAddPetUtils(navigation, opk, onBoarding);
 

@@ -79,11 +79,13 @@ const addPetHomeValidationSchema = Yup.object().shape({
     .nullable(true)
     .positive()
     .integer()
+    .min(0)
     .required('Year Required')
     .typeError('A Number is Required'),
   ageMonth: Yup.number()
     .nullable(true)
     .positive()
+    .min(0)
     .integer()
     .required('Month Required')
     .typeError('A Number is Required'),
@@ -145,26 +147,38 @@ const providerAvailablityValidationSchema = Yup.object().shape({
 const BoardingSettingsSchema = Yup.object().shape({
   baserate: Yup.number()
     .nullable(true)
+    .positive()
+    .min(0)
     .required('Pet per service is required')
     .typeError('A Number is Required'),
   holidayrate: Yup.number()
     .nullable(true)
+    .positive()
+    .min(0)
     .required('holiday rate is required')
     .typeError('A Number is Required'),
   additionaldog: Yup.number()
     .nullable(true)
+    .positive()
+    .min(0)
     .required('Additional dog rate is required')
     .typeError('A Number is Required'),
   catcare: Yup.number()
     .nullable(true)
+    .positive()
+    .min(0)
     .required('Cate rate is required')
     .typeError('A Number is Required'),
   puppyrate: Yup.number()
     .nullable(true)
+    .positive()
+    .min(0)
     .required('Puppy rate rate is required')
     .typeError('A Number is Required'),
   additionalcat: Yup.number()
     .nullable(true)
+    .positive()
+    .min(0)
     .required('Additional cat rate is required')
     .typeError('A Number is Required'),
   // bathgroomingrate: Yup.number()

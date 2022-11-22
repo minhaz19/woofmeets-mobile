@@ -9,7 +9,7 @@ import ForgotPasswordOtp from '../screens/auth/ForgotPassword/ForgotPasswordOtp'
 import GuestBottomTabNavigator from './GuestBottomTabNavigator';
 import ForgotPasswordReset from '../screens/auth/ForgotPassword/ForgotPasswordReset';
 
-const Stack = createStackNavigator();
+const Stack: any = createStackNavigator();
 
 function AuthNavigator() {
   return (

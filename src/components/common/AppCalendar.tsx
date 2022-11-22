@@ -56,6 +56,7 @@ const AppCalendar = ({
           },
         }}
         renderHeader={renderCustomHeader}
+     
         theme={{
           stylesheet: {
             calendar: {
