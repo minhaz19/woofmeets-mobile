@@ -123,7 +123,7 @@ const Notifications = () => {
   }
 
   const onPress = () => {
-    setIsModalVisible(true);
+    // setIsModalVisible(true);
   };
 
   return (

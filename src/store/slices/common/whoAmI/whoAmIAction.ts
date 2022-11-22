@@ -7,11 +7,11 @@ export const getWhoAmI = createAsyncThunk('/auth/whoami', async () => {
     const response: ApiResponse<any> = await apiClient.get('/auth/whoami');
     if (!response.ok) {
       if (response.data) {
-        Alert.alert(response.data?.message);
+        // Alert.alert(response.data?.message);
       } else if (response.problem === 'TIMEOUT_ERROR') {
         return response;
       } else {
-        Alert.alert('An unexpected error happened');
+        // Alert.alert('An unexpected error happened');
       }
       throw new Error(response.data?.message);
     }

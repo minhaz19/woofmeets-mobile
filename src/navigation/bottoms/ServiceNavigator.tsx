@@ -72,21 +72,21 @@ const ServiceNavigator = () => {
         component={PetCareZipSearch}
         options={({navigation}) => ({
           header: () =>
-            token?.provider ? (
-              <HeaderWithBack
-                navigation={navigation}
-                title="Services"
-                notification
-                onPress={() => dispatch(setOpenFilter(true))}
-              />
-            ) : (
+            // token?.provider ? (
+            //   <HeaderWithBack
+            //     navigation={navigation}
+            //     title="Services"
+            //     notification
+            //     onPress={() => dispatch(setOpenFilter(true))}
+            //   />
+            // ) : (
               <Header
                 navigation={navigation}
                 title="Services"
                 notification
                 onPress={() => dispatch(setOpenFilter(true))}
-              />
-            ),
+              />,
+            // ),
           backgroundColor: Colors.primary,
         })}
       />

@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import React from 'react';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
@@ -33,7 +33,9 @@ const InviteFriends = () => {
         />
         <IOSButton
             containerStyle={styles.containerStyleSmall}
-            onSelect={() => {}}
+            onSelect={() => {
+              Alert.alert('Development is in progress');
+            }}
             textAlignment={{
               backgroundColor: colors.backgroundColor,
               borderColor: colors.borderColor,

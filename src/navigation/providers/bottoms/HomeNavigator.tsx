@@ -17,7 +17,7 @@ const ProHomeNavigator = () => {
           header: () => (
             <Header
               navigation={navigation}
-              title="Home"
+              title="Appointments"
             />
           ),
           backgroundColor: Colors.primary,

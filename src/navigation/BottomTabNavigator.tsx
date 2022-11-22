@@ -45,7 +45,7 @@ function BottomTabNavigator() {
   if (token && token.provider) {
     return (
       <Tab.Navigator
-        initialRouteName="ProHomeNavigator"
+        initialRouteName="ServiceNavigator"
         screenOptions={{
           tabBarShowLabel: false,
           tabBarHideOnKeyboard: true,
@@ -63,19 +63,42 @@ function BottomTabNavigator() {
           },
         }}>
         <Tab.Screen
+          name="ServiceNavigator"
+          component={ServiceNavigator}
+          options={{
+            tabBarLabel: 'Services',
+            tabBarShowLabel: false,
+            headerShown: false,
+            tabBarIcon: ({focused}) => (
+              <View style={styles.bottomContainer}>
+                <Finder
+                  fill={focused ? Colors.primary : Colors.light.lightText}
+                  height={SCREEN_WIDTH <= 380 ? 20 : 24}
+                  width={SCREEN_WIDTH <= 380 ? 20 : 26}
+                />
+                <BottomTabText
+                  text="Services"
+                  focused={focused}
+                  textStyle={styles.textStyle}
+                />
+              </View>
+            ),
+          }}
+        />
+        <Tab.Screen
           name="ProHomeNavigator"
           component={ProHomeNavigator}
           options={{
             headerShown: false,
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
-                <ProHomeIcon
+                <ProRescheduleIcon
                   stroke={focused ? Colors.primary : Colors.subText}
                   height={SCREEN_WIDTH <= 380 ? 18 : 20}
                   width={SCREEN_WIDTH <= 380 ? 18 : 20}
                 />
                 <BottomTabText
-                  text="Home"
+                  text="Appointments"
                   focused={focused}
                   textStyle={styles.textStyle}
                 />
@@ -104,7 +127,7 @@ function BottomTabNavigator() {
             ),
           }}
         /> */}
-        <Tab.Screen
+        {/* <Tab.Screen
           name="CalendarNavigator"
           component={CalendarNavigator}
           options={{
@@ -124,7 +147,7 @@ function BottomTabNavigator() {
               </View>
             ),
           }}
-        />
+        /> */}
         <Tab.Screen
           name="InboxNavigator"
           component={InboxNavigator}

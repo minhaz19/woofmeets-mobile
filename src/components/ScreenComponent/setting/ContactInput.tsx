@@ -212,6 +212,26 @@ const ContactInput = (props: {handleSubmit: any}) => {
                     setFlag(item.flag);
                     setShow(false);
                   }}
+                  style={{
+                    modal: {
+                      height: '50%',
+                    },
+                    backdrop: {
+                      
+                    },
+                    countryName: {
+                      color: 'black',
+                    },
+                    searchMessageText: {
+                      color: 'black',
+                    },
+                    textInput: {
+                      color: 'black',
+                    },
+                    dialCode: {
+                      color: 'black',
+                    },
+                  }}
                 />
               <TitleText text={globalError} textStyle={{color: Colors.alert}} />
               {phoneNumberError && (

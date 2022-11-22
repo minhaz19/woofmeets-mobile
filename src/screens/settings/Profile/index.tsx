@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView, RefreshControl} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ProfileInfo from '../../../components/ScreenComponent/profile/BasicInfo/ProfileInfo';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -40,17 +40,32 @@ const Profile = (props: {
       return decode;
     }
   };
-  useEffect(() => {
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    dispatch(getWhoAmI());
     getDecodedToken();
     dispatch(getUserOnboardStatus());
     dispatch(getSkillsData());
+    setRefreshing(false);
+  };
+  useEffect(() => {
+    onRefresh();
   }, []);
   return (
     <>
       {pLoading && <AppActivityIndicator visible={true} />}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{flex: 1, backgroundColor: colors.backgroundColor}}>
+        style={{flex: 1, backgroundColor: colors.backgroundColor}}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }>
         {loading && <AppActivityIndicator visible={true} />}
         <View style={styles.rootContainer}>
           {!token?.provider && (

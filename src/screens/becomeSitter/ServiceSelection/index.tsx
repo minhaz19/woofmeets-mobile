@@ -29,6 +29,7 @@ import jwtDecode from 'jwt-decode';
 import authStorage from '../../../utils/helpers/auth/storage';
 import {useNavigation} from '@react-navigation/native';
 import ServiceReusableModal from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/Common/ServiceReusableModal';
+import { getWhoAmI } from '../../../store/slices/common/whoAmI/whoAmIAction';
 interface Props {
   item: any;
 }
@@ -41,6 +42,7 @@ const ServiceSelection = () => {
     state => state.services,
   );
   const oldUser = useAppSelector(state => state.initial.oldUser);
+  const {user} = useAppSelector((state: any) => state.whoAmI);
 
   const dispatch = useAppDispatch();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -81,6 +83,7 @@ const ServiceSelection = () => {
 
   useEffect(() => {
     getDecodedToken();
+    dispatch(getWhoAmI());
   }, []);
 
   const onPressEvent = (id: number) => {
@@ -100,7 +103,7 @@ const ServiceSelection = () => {
       }
       if (response.ok) {
         setLoading(false);
-        if (token && token.provider) {
+        if (user && user.provider?.isApproved) {
           dispatch(getUserServices());
           navigation.goBack();
         } else {
