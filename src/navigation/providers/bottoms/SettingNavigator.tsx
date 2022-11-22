@@ -4,22 +4,15 @@ import Colors from '../../../constants/Colors';
 import SettingMain from '../../../screens/settings/SettingMain';
 import HeaderWithBack from '../../../components/common/header/HeaderWithBack';
 import MyAccount from '../../../screens/settings/MyAccount';
-import BasicInfo from '../../../screens/profile/BasicInfo';
-import ContactScreen from '../../../screens/profile/ContactScreen/ContactScreen';
 import Preference from '../../../screens/settings/Preference';
 import AccountSetting from '../../../components/ScreenComponent/setting/Preference/AccountSetting';
 import CreditAndDebitCard from '../../../screens/profile/PaymentMethod';
 import SetNewPassword from '../../../screens/auth/ResetPassword';
 import Profile from '../../../screens/settings/Profile';
-import ProviderAvailablity from '../../../screens/provider/ProviderAvailablity';
-import {Setting} from '../../../assets/svgs/SVG_LOGOS';
-import {useAppDispatch} from '../../../store/store';
-import {setOpenSettings} from '../../../store/slices/misc/openFilter';
 
 const Stack1 = createStackNavigator();
 
 const ProSettingNavigator = () => {
-  const dispatch = useAppDispatch();
   return (
     <Stack1.Navigator initialRouteName="SettingMain">
       <Stack1.Screen
@@ -54,21 +47,6 @@ const ProSettingNavigator = () => {
         })}
       />
       <Stack1.Screen
-        name="BasicInfo"
-        component={BasicInfo}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Basic Info"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
         name="ResetPassword"
         component={SetNewPassword}
         options={({navigation}) => ({
@@ -77,22 +55,6 @@ const ProSettingNavigator = () => {
             <HeaderWithBack
               navigation={navigation}
               title="Basic Info"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-
-      <Stack1.Screen
-        name="ContactScreen"
-        component={ContactScreen}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Contact"
               notification
             />
           ),
@@ -154,23 +116,6 @@ const ProSettingNavigator = () => {
               navigation={navigation}
               title="Profile"
               notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
-        name="ProviderAvailablity"
-        component={ProviderAvailablity}
-        options={({navigation}) => ({
-          title: 'Provider Availability',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Provider Availability"
-              Icon={Setting}
-              onPress={() => dispatch(setOpenSettings(true))}
-              // notification
             />
           ),
           backgroundColor: Colors.primary,

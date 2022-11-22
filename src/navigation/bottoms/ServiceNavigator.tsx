@@ -92,12 +92,6 @@ const ServiceNavigator = () => {
       />
 
       <Stack1.Screen
-        name="ProviderAvailablity"
-        component={ProviderAvailablity}
-        options={{headerShown: false}}
-      />
-
-      <Stack1.Screen
         name="RealtimeLocation"
         component={RealtimeLocation}
         options={{headerShown: false}}
