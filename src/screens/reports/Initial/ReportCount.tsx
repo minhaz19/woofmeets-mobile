@@ -1,5 +1,5 @@
 import {StyleSheet, View, Pressable} from 'react-native';
-import React  from 'react';
+import React from 'react';
 import HeaderText from '../../../components/common/text/HeaderText';
 import Colors from '../../../constants/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';

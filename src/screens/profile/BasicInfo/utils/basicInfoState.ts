@@ -70,12 +70,12 @@ export const americanStates = [
 
 export const canadaStates = [
   {
-    key: 'British Columbia',
-    value: 'British Columbia',
-  },
-  {
     key: 'Alberta',
     value: 'Alberta',
+  },
+  {
+    key: 'British Columbia',
+    value: 'British Columbia',
   },
   {
     key: 'Manitoba',

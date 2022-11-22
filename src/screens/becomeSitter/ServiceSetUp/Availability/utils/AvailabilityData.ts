@@ -44,17 +44,17 @@ export const availabilityHomeFullTimeInDay = {
   options: [
     {
       id: 1,
-      type: '0-2 hours',
+      type: '0 - 2 hours',
       checked: false,
     },
     {
       id: 2,
-      type: '2-4 hours',
+      type: '2 - 4 hours',
       checked: false,
     },
     {
       id: 3,
-      type: '4-8 hours',
+      type: '4 - 8 hours',
       checked: false,
     },
     {

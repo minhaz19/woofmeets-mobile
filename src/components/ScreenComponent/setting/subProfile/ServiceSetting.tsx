@@ -38,6 +38,9 @@ import {getWhoAmI} from '../../../../store/slices/common/whoAmI/whoAmIAction';
 import SwitchView from '../../../common/switch/SwitchView';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
+import MiddleModal from '../../../UI/modal/MiddleModal';
+import TitleText from '../../../common/text/TitleText';
+import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 const activeEndpoint = '/provider-services/change-status/';
 const ServiceSetting = () => {
   // const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
@@ -69,6 +72,7 @@ const ServiceSetting = () => {
   };
 
   const [refreshing, setRefreshing] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     dispatch(getUserServices());
@@ -197,14 +201,49 @@ const ServiceSetting = () => {
             onSelect={
               user?.provider?.isApproved
                 ? () => navigation.navigate('ServiceSelection')
-                : () =>
-                    Alert.alert(
-                      'You may notice during the onboarding process that you can only select one of the services you decided to offer clients. This is normal. We will run a background check on you once you’ve set up your profile. Assuming we accept you to join the Woofmeets team, you’ll be able to come back to your dashboard and set up the rest of your services.',
-                    )
+                : () => setIsModalVisible(true)
             }
           />
         </View>
       </ScrollView>
+      {isModalVisible && (
+        <MiddleModal
+          onBlur={undefined}
+          setIsModalVisible={setIsModalVisible}
+          isModalVisible={isModalVisible}
+          // children={}
+          handlePress={function (): void {
+            throw new Error('Function not implemented.');
+          }}>
+          <View
+            style={{
+              paddingHorizontal: 20,
+              paddingVertical: 20,
+              flex: 0,
+              width: '100%',
+            }}>
+            <TitleText
+              textStyle={{fontWeight: 'bold'}}
+              text={`You may notice during the onboarding process that you can only select one of the services you decided to offer clients. This is normal. We will run a background check on you once you’ve set up your profile. Assuming we accept you to join the Woofmeets team, you’ll be able to come back to your dashboard and set up the rest of your services.`}
+            />
+            <AppTouchableOpacity
+              onPress={() => setIsModalVisible(false)}
+              style={{
+                marginTop: 10,
+              }}>
+              <TitleText
+                text={'Close'}
+                textStyle={{
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+
+                  color: Colors.blue,
+                }}
+              />
+            </AppTouchableOpacity>
+          </View>
+        </MiddleModal>
+      )}
     </>
   );
 };

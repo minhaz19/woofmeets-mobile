@@ -1,20 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import {FlatList, StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import PriceRange from './PriceRange';
-import HomeType from './HomeType';
 import Text_Size from '../../../../constants/textScaling';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import DateRange from '../../../common/DateRange';
-import FilterSwitch from './FilterSwitch';
-import HeaderText from '../../../common/text/HeaderText';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import AppButton from '../../../common/AppButton';
-import {
-  filterPetSwitch,
-  homeType,
-} from '../../../../utils/config/Data/filterProviderDatas';
 import ButtonCom from '../../../UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import AppSelectField from '../../../common/Form/AppSelectField';
@@ -26,12 +19,7 @@ import FilterDaySelect from './FilterDaySelect';
 import FilterSchedule from './FilterSchedule';
 import {Calendar, Repeat} from '../../../../assets/svgs/SVG_LOGOS';
 import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
-import {
-  setIsYardEnabled,
-  setScheduleId,
-  setSelectedHome,
-} from '../../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
-import GoogleAutoComplete from '../../../common/GoogleAutoComplete';
+import {setScheduleId} from '../../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
 import GooglePredictLocation from '../../../common/GooglePredictLocations';
 
 const schedule = [
@@ -61,6 +49,9 @@ interface Props {
   serviceFrequency: any;
   petType: any;
   scheduleId: any;
+  loading: boolean;
+  setAddressLine: (arg: any) => void;
+  formattedAddress: any;
 }
 
 const FilterProviderBody = ({
@@ -68,23 +59,24 @@ const FilterProviderBody = ({
   onPressAddress,
   selectedPet,
   multiSliderValue,
-  selectedHome,
   dropIn,
   dropOut,
   isService,
-  isYardEnabled,
   serviceFrequency,
   petType,
   scheduleId,
+  loading,
+  setAddressLine,
+  formattedAddress,
 }: Props) => {
   const dispatch = useAppDispatch();
   const [OpenDropIn, setOpenDropIn] = useState(false);
   const [OpenDropOut, setOpenDropOut] = useState(false);
   const {control} = useForm();
   const {serviceTypes} = useAppSelector((state: any) => state?.services);
-  const {formattedAddress} = useAppSelector(
-    (state: any) => state?.providerFilter,
-  );
+  // const {formattedAddress} = useAppSelector(
+  //   (state: any) => state?.providerFilter,
+  // );
   const servicesData = serviceTypes.map((item: any) => {
     return {label: item.name, value: item.slug, id: item.id};
   });
@@ -108,7 +100,6 @@ const FilterProviderBody = ({
   const handleCancel = () => {
     dispatch(setOpenFilter(false));
   };
-
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -128,6 +119,10 @@ const FilterProviderBody = ({
           defaultValue={formattedAddress}
           placeholder={'Type a place'}
           onPlaceSelected={onPressAddress}
+          onChange={value => {
+            setAddressLine({address: value});
+          }}
+          // onReset={}
         />
         {(isService.serviceId === 3 ||
           isService.serviceId === 4 ||
@@ -164,8 +159,10 @@ const FilterProviderBody = ({
             </View>
           )}
         </View>
-        {OpenDropIn && <DateRange value={null} />}
-        {OpenDropOut && <DateRange value={dropIn} dropOut={true} />}
+        {OpenDropIn && <DateRange value={null} setOpenCal={handleDropIn} />}
+        {OpenDropOut && (
+          <DateRange value={dropIn} dropOut={true} setOpenCal={handleDropOut} />
+        )}
         {selectedPet && selectedPet?.length > 0 ? (
           <View>
             <TitleText textStyle={{...styles.label}} text="My Pet" />
@@ -216,7 +213,7 @@ const FilterProviderBody = ({
         <View style={styles.btnContainer}>
           <ButtonCom
             title="Search"
-            // loading={getLoading}
+            loading={loading}
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
@@ -224,6 +221,7 @@ const FilterProviderBody = ({
           />
           <AppButton title="cancel" onPress={handleCancel} />
         </View>
+        <BottomSpacing />
         <BottomSpacing />
       </ScrollView>
     </View>

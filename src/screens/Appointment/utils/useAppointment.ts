@@ -3,7 +3,6 @@ import {useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../api/methods';
-import {convertDateAndTime} from '../../../components/common/convertTimeZone';
 import {convertDateTZ, formatDate} from '../../../components/common/formatDate';
 import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
@@ -118,14 +117,8 @@ export const useAppointment = (providerOpk: string) => {
           dropOffEndTime: dropOffEndTime,
           pickUpStartTime: pickUpStartTime,
           pickUpEndTime: pickUpEndTime,
-          proposalStartDate: convertDateAndTime(
-            new Date(proposalStartDate),
-            timeZone,
-          ),
-          proposalEndDate: convertDateAndTime(
-            new Date(proposalEndDate),
-            timeZone,
-          ),
+          proposalStartDate: convertDateTZ(proposalStartDate, timeZone),
+          proposalEndDate: convertDateTZ(proposalEndDate, timeZone),
           appointmentserviceType: 'NONE',
           firstMessage: firstMessage,
           isRecivedPhotos: isRecivedPhotos,

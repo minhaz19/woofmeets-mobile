@@ -360,25 +360,24 @@ const SettingMain = (props: {
               </View>
               <View
                 style={[
-                  styles.divider,
+                  user && user.provider?.isApproved ? null : styles.divider,
                   {backgroundColor: colors.descriptionText},
                 ]}
               />
             </View>
           )}
-          {user && user.provider?.isApproved ? (
+          {user && user.provider?.isApproved ? null : (
+            // <View>
+            //   <View style={styles.titleContainer}>
+            //     <TitleText text="Services" />
+            //   </View>
+            //   {servicesData?.map(item => (
+            //     <SettingItem data={item} key={item.id} />
+            //   ))}
+            // </View>
             <View>
               <View style={styles.titleContainer}>
-                <TitleText text="Services" />
-              </View>
-              {servicesData?.map(item => (
-                <SettingItem data={item} key={item.id} />
-              ))}
-            </View>
-          ) : (
-            <View>
-              <View style={styles.titleContainer}>
-                <TitleText text="Sitting" />
+                <TitleText text="On Boarding" />
               </View>
               {sittingData?.map(item => (
                 <SettingItem data={item} key={item.id} />
@@ -395,7 +394,7 @@ const SettingMain = (props: {
                 ]}
               />
               <View style={styles.titleContainer}>
-                <TitleText text="Sitting" />
+                <TitleText text="Sitter Availability" />
               </View>
               {providerData?.map(item => (
                 <SettingItem data={item} key={item.id} />
@@ -458,6 +457,15 @@ const styles = StyleSheet.create({
     //   SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '8%' : '10%',
     marginVertical:
       SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '2%',
+  },
+  halfDivider: {
+    // height: 1,
+    opacity: 0.3,
+    // marginLeft: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
+    // marginRight:
+    //   SCREEN_WIDTH <= 380 ? '7%' : SCREEN_WIDTH <= 600 ? '8%' : '10%',
+    marginVertical:
+      SCREEN_WIDTH <= 380 ? '1%' : SCREEN_WIDTH <= 600 ? '2%' : '1%',
   },
   titleContainer: {
     marginHorizontal:

@@ -77,7 +77,7 @@ const BasicInfoSelect = ({
         disable={disable}
         renderItem={renderItem}
         onChange={item => {
-          setValuee(item.value);
+         
           setIsFocus(false);
           onChange(item.value);
         }}

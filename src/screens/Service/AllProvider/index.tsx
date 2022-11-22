@@ -34,7 +34,7 @@ interface Props {
 
 const AllProvider = ({navigation}: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit] = useState(2);
+  const [limit] = useState(20);
   const [isLoading, setIsLoading] = useState(false);
   const filter = useAppSelector((state: any) => state.filter.isOpen);
   const {loading: loadingProivder} = useAppSelector(

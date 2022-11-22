@@ -27,7 +27,7 @@ const TimezoneDropDown = ({
   placeholder,
   errors,
 }: Props) => {
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const [selectedItem, setSelectedItem] = useState(valueData);
   const handleState = () => {
     setValue(name, selectedItem);
@@ -39,6 +39,8 @@ const TimezoneDropDown = ({
         setSelected={setSelectedItem}
         onSelect={handleState}
         data={data}
+        inputStyles={{color: Colors.black}}
+        dropdownTextStyles={{color: Colors.black}}
         boxStyles={{
           borderRadius: 0,
           backgroundColor: colors.backgroundColor,

@@ -40,7 +40,7 @@ const ActivityScreen = (props: {
     dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAllPets());
     dispatch(getWhoAmI());
-  }, []);
+  }, [dispatch, appointmentOpk]);
   return (
     <>
       {(loading || petLoading || providerLoading) && (

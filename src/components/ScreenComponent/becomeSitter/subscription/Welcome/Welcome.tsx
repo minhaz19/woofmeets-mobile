@@ -20,7 +20,9 @@ import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch} from '../../../../../store/store';
 import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 import {getSubscription} from '../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
+import Ion from 'react-native-vector-icons/Ionicons';
 import AppButton from '../../../../common/AppButton';
+import AppTouchableOpacity from '../../../../common/AppClickEvents/AppTouchableOpacity';
 const endpoint = '/subscriptions/cancel-subscription?subscriptionId=';
 const Welcome = (props: any) => {
   const {colors} = useTheme();
@@ -84,6 +86,16 @@ const Welcome = (props: any) => {
 
   return (
     <View style={{flex: 1, justifyContent: 'space-between'}}>
+      {props.headerBack && (
+        <AppTouchableOpacity onPress={() => navigation.goBack()}>
+          <Ion
+            name="ios-chevron-back"
+            size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+            style={styles.iconStyle}
+            color={Colors.primary}
+          />
+        </AppTouchableOpacity>
+      )}
       <AnimatedLottieView
         autoPlay
         loop={false}
@@ -117,7 +129,7 @@ const Welcome = (props: any) => {
         />
         <DescriptionText
           textStyle={{textAlign: 'center', marginVertical: 20}}
-          text={`You have currenly activated the ${props.item?.membershipPlan?.displayName} plan for next one month. Now you can access all the feature that includes on ${props.item?.membershipPlan?.displayName} plan. Check out the features down below.`}
+          text={`You have currenly activated the ${props.item?.membershipPlan?.displayName} plan for next one month. Now you can access all the feature that includes on ${props.item?.membershipPlan?.displayName} Plan. Check out the features down below.`}
         />
       </View>
 
@@ -330,6 +342,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  iconStyle: {paddingRight: 10},
   rightSelection: {
     height: 12,
     width: 12,
