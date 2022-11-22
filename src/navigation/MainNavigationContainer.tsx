@@ -16,7 +16,7 @@ import GuestBottomTabNavigator from './GuestBottomTabNavigator';
 import HomeProfile from '../screens/becomeSitter/HomeProfile';
 import PetNavigator from './bottoms/PetNavigator';
 import {_deleteSinglePet} from '../utils/helpers/HeaderWithBack/_deleteSinglePet';
-import {Delete} from '../assets/svgs/SVG_LOGOS';
+import {Delete, Setting} from '../assets/svgs/SVG_LOGOS';
 import {useAppDispatch} from '../store/store';
 import SitterLandingPage from '../screens/becomeSitter/LandingPage';
 import ServiceSetting from '../components/ScreenComponent/setting/subProfile/ServiceSetting';
@@ -51,6 +51,8 @@ import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
 import UpgradePlan from '../components/ScreenComponent/becomeSitter/subscription/UpgradePlan/UpgradePlan';
 import SubscriptionList from '../screens/profile/SubscriptionList';
 import AboutProvider from '../screens/Service/ProviderProfile/AboutProvider';
+import ProviderAvailablity from '../screens/provider/ProviderAvailablity';
+import { setOpenSettings } from '../store/slices/misc/openFilter';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -231,24 +233,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
-        {/* <Stack.Screen
-          name="PetNavigatorFC"
-          component={PetNavigatorFC}
-          options={({navigation, route}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack
-                navigation={navigation}
-                title="Add pet"
-                Icon={route.params!.opk && Delete}
-                onPress={() => {
-                  _deleteSinglePet(dispatch, navigation, route);
-                }}
-              />
-            ),
-            backgroundColor: Colors.primary,
-          })}
-        /> */}
         <Stack.Screen
           name="AddPetHome"
           component={AddPetHome}
@@ -460,25 +444,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             backgroundColor: Colors.primary,
           })}
         />
-        {/* <Stack.Screen
-          name="ActivityScreen"
-          component={ActivityScreen}
-        <Stack.Screen
-          name="ServiceSelection"
-          component={ServiceSelection}
-          options={({navigation}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack
-                navigation={navigation}
-                title="Activity Screen"
-                title="Service Selection"
-                notification
-              />
-            ),
-            backgroundColor: Colors.primary,
-          })} */}
-        {/* /> */}
         <Stack.Screen
           name="ActivityScreen"
           component={ActivityScreen}
@@ -619,6 +584,23 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 navigation={navigation}
                 title="Subscription List"
                 notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ProviderAvailablity"
+          component={ProviderAvailablity}
+          options={({navigation}) => ({
+            title: 'Provider Availability',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Provider Availability"
+                Icon={Setting}
+                onPress={() => dispatch(setOpenSettings(true))}
+                // notification
               />
             ),
             backgroundColor: Colors.primary,

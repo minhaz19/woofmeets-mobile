@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput } from 'react-native';
+import { View, StyleSheet, TextInput, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
@@ -19,14 +19,16 @@ const PromoGiftCodes = () => {
       <View style={styles.textContainer}>
         <HeaderText text="Add promo or gift code" textStyle={styles.headerText} />
         <TextInput
-                placeholder="Enter Promo code"
-                value={giftCode}
-                onChangeText={pCode => setGiftCode(pCode)}
-                style={[styles._input, {color: colors.headerText}]}
-              />
+          placeholder="Enter Promo code"
+          value={giftCode}
+          onChangeText={pCode => setGiftCode(pCode)}
+          style={[styles._input, {color: colors.headerText}]}
+        />
         <IOSButton
             containerStyle={styles.containerStyleSmall}
-            onSelect={() => {}}
+            onSelect={() => {
+              Alert.alert('Development is in progress');
+            }}
             textAlignment={{
               backgroundColor: colors.backgroundColor,
               borderColor: Colors.blue,

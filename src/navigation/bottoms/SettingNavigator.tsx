@@ -4,13 +4,10 @@ import Colors from '../../constants/Colors';
 import SettingMain from '../../screens/settings/SettingMain';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import MyAccount from '../../screens/settings/MyAccount';
-import BasicInfo from '../../screens/profile/BasicInfo';
-import ContactScreen from '../../screens/profile/ContactScreen/ContactScreen';
 import Preference from '../../screens/settings/Preference';
 import AccountSetting from '../../components/ScreenComponent/setting/Preference/AccountSetting';
 import SetNewPassword from '../../screens/auth/ResetPassword';
 import Profile from '../../screens/settings/Profile';
-import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 
 const Stack1 = createStackNavigator();
 
@@ -26,22 +23,6 @@ const SettingNavigator = () => {
             <HeaderWithBack
               navigation={navigation}
               title="Settings"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-
-      <Stack1.Screen
-        name="ProviderAvailablity"
-        component={ProviderAvailablity}
-        options={({navigation}) => ({
-          title: 'Provider Availability',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Provider Availability"
               notification
             />
           ),
@@ -64,21 +45,6 @@ const SettingNavigator = () => {
         })}
       />
       <Stack1.Screen
-        name="BasicInfo"
-        component={BasicInfo}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Basic Info"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
         name="ResetPassword"
         component={SetNewPassword}
         options={({navigation}) => ({
@@ -87,22 +53,6 @@ const SettingNavigator = () => {
             <HeaderWithBack
               navigation={navigation}
               title="Reset Password"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-
-      <Stack1.Screen
-        name="ContactScreen"
-        component={ContactScreen}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Contact"
               notification
             />
           ),

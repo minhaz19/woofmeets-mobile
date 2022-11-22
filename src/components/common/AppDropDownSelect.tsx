@@ -52,6 +52,12 @@ const AppDropDownSelect = ({
         setSelected={setSelectedItem}
         onSelect={handleState}
         data={data}
+        inputStyles={{
+          color: 'black'
+        }}
+        dropdownTextStyles={{
+          color: 'black'
+        }}
         boxStyles={{
           borderRadius: 0,
           backgroundColor: colors.backgroundColor,

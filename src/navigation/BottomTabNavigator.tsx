@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, useColorScheme, Platform} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Finder, Setting, Pets, InboxIcon} from '../assets/svgs/SVG_LOGOS';
 import Colors from '../constants/Colors';
@@ -11,20 +11,24 @@ import PetNavigator from './bottoms/PetNavigator';
 import authStorage from '../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
 import ProHomeNavigator from './providers/bottoms/HomeNavigator';
-import {ProHomeIcon, ProRescheduleIcon} from '../assets/svgs/Provider_Logos';
-import ProRescheduleNavigator from './providers/bottoms/RescheduleNavigator';
+import {ProRescheduleIcon} from '../assets/svgs/Provider_Logos';
 import ProSettingNavigator from './providers/bottoms/SettingNavigator';
 import BottomTabText from '../components/common/text/BottomTabText';
 import {useTheme} from '../constants/theme/hooks/useTheme';
-import CalendarNavigator from './providers/bottoms/CalendarNavigator';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { getWhoAmI } from '../store/slices/common/whoAmI/whoAmIAction';
 
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
-  const isDarkMode = useColorScheme() === 'dark';
   const {colors} = useTheme();
+  const dispatch = useAppDispatch();
   const [token, setToken] = useState<any>();
+  const {user} = useAppSelector((state: any) => state.whoAmI);
+
+  useEffect(() => {
+    dispatch(getWhoAmI());
+  }, [])
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {
@@ -42,10 +46,10 @@ function BottomTabNavigator() {
       ? 90
       : 80;
   getDecodedToken();
-  if (token && token.provider) {
+  if (user?.provider?.isApproved || token?.provider) {
     return (
       <Tab.Navigator
-        initialRouteName="ProHomeNavigator"
+        initialRouteName="ServiceNavigator"
         screenOptions={{
           tabBarShowLabel: false,
           tabBarHideOnKeyboard: true,
@@ -63,19 +67,21 @@ function BottomTabNavigator() {
           },
         }}>
         <Tab.Screen
-          name="ProHomeNavigator"
-          component={ProHomeNavigator}
+          name="ServiceNavigator"
+          component={ServiceNavigator}
           options={{
+            tabBarLabel: 'Services',
+            tabBarShowLabel: false,
             headerShown: false,
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
-                <ProHomeIcon
-                  stroke={focused ? Colors.primary : Colors.subText}
-                  height={SCREEN_WIDTH <= 380 ? 18 : 20}
-                  width={SCREEN_WIDTH <= 380 ? 18 : 20}
+                <Finder
+                  fill={focused ? Colors.primary : Colors.light.lightText}
+                  height={SCREEN_WIDTH <= 380 ? 20 : 24}
+                  width={SCREEN_WIDTH <= 380 ? 20 : 26}
                 />
                 <BottomTabText
-                  text="Home"
+                  text="Services"
                   focused={focused}
                   textStyle={styles.textStyle}
                 />
@@ -83,9 +89,9 @@ function BottomTabNavigator() {
             ),
           }}
         />
-        {/* <Tab.Screen
-          name="ProRescheduleNavigator"
-          component={ProRescheduleNavigator}
+        <Tab.Screen
+          name="ProHomeNavigator"
+          component={ProHomeNavigator}
           options={{
             headerShown: false,
             tabBarIcon: ({focused}) => (
@@ -96,28 +102,7 @@ function BottomTabNavigator() {
                   width={SCREEN_WIDTH <= 380 ? 18 : 20}
                 />
                 <BottomTabText
-                  text="Reschedule"
-                  focused={focused}
-                  textStyle={styles.textStyle}
-                />
-              </View>
-            ),
-          }}
-        /> */}
-        <Tab.Screen
-          name="CalendarNavigator"
-          component={CalendarNavigator}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({focused}) => (
-              <View style={styles.bottomContainer}>
-                <FontAwesome
-                  name="calendar"
-                  size={20}
-                  color={focused ? Colors.primary : Colors.subText}
-                />
-                <BottomTabText
-                  text="Calendar"
+                  text="Appointments"
                   focused={focused}
                   textStyle={styles.textStyle}
                 />

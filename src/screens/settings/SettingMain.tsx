@@ -7,6 +7,7 @@ import {
   Linking,
   Alert,
   Pressable,
+  RefreshControl,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
@@ -35,6 +36,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 import {CommonActions} from '@react-navigation/native';
 import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
+import { getCurrentplan } from '../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 
 const SettingMain = (props: {
   navigation: {
@@ -43,7 +45,11 @@ const SettingMain = (props: {
   };
 }) => {
   const dispatch = useAppDispatch();
-  const isDarkMode = useColorScheme() === 'dark';
+  useEffect(() => {
+    // dispatch(getOnboardingProgress());
+    dispatch(getCurrentplan());
+  }, []);
+  const currentPlan = useAppSelector(state => state.currentPlan);
   const {colors} = useTheme();
   const [token, setToken] = useState<any>();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -57,10 +63,6 @@ const SettingMain = (props: {
       return decode;
     }
   };
-  useEffect(() => {
-    getDecodedToken();
-    dispatch(getWhoAmI());
-  }, []);
 
   const makeCall = (phone: string | number) => {
     let phoneNumber = '';
@@ -132,9 +134,12 @@ const SettingMain = (props: {
   const sittingData = [
     {
       id: 1,
-      title: 'Become a sitter',
+      title: currentPlan?.currentPlan?.subscriptionInfo?.status ? 'Update Profile' : 'Become a sitter',
       icon: SitterIcon,
-      screenName: () => props.navigation.navigate('SitterInitialScreen'),
+      screenName: () => {
+        currentPlan?.currentPlan?.subscriptionInfo?.status ? 
+          props.navigation.navigate('Profile') : 
+            props.navigation.navigate('SitterInitialScreen')},
       rightIcon: true,
       opacity: 1,
     },
@@ -261,11 +266,29 @@ const SettingMain = (props: {
     backgroundColor: colors.backgroundColor,
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    getDecodedToken();
+    dispatch(getWhoAmI());
+    setRefreshing(false);
+  };
+  useEffect(() => {
+    onRefresh();
+  }, []);
+
   return (
     <ScreenRapperGrey>
       <ScrollView
         style={[styles.rootContainer]}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }>
         <View>
           {isLoggedIn && !user?.timezone ? (
             <View style={[styles.boxContainer, backgroundStyle]}>
@@ -323,7 +346,7 @@ const SettingMain = (props: {
                 style={{
                   backgroundColor: Colors.light.inputBackground,
                 }}>
-                {token && token.provider ? (
+                {user && user.provider?.isApproved ? (
                   <SettingItem data={sitterProfile} key={sitterProfile.id} />
                 ) : (
                   <SettingItem
@@ -343,7 +366,7 @@ const SettingMain = (props: {
               />
             </View>
           )}
-          {token && token.provider ? (
+          {user && user.provider?.isApproved ? (
             <View>
               <View style={styles.titleContainer}>
                 <TitleText text="Services" />
@@ -363,7 +386,7 @@ const SettingMain = (props: {
             </View>
           )}
 
-          {token && token.provider && (
+          {user && user.provider?.isApproved && (
             <View>
               <View
                 style={[

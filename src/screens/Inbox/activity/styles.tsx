@@ -76,10 +76,12 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   imageStyle: {
-    height: SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32,
-    width: SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32,
+    height: SCREEN_WIDTH <= 380 ? 18 : SCREEN_WIDTH <= 600 ? 20 : 22,
+    width: SCREEN_WIDTH <= 380 ? 18 : SCREEN_WIDTH <= 600 ? 20 : 22,
     borderRadius: 20,
     borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   userIconViewReceiver: {
     alignSelf: 'flex-end',

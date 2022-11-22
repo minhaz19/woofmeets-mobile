@@ -23,6 +23,7 @@ import {useAppDispatch} from '../../../store/store';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
 import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
+import Colors from '../../../constants/Colors';
 
 const Messages = (props: {roomId: any; opk: any}) => {
   const {colors} = useTheme();
@@ -38,14 +39,42 @@ const Messages = (props: {roomId: any; opk: any}) => {
   useEffect(() => {
     getTokenDecoded();
   }, []);
+  console.log(messages)
   const getPreviousMessages = async () => {
-    if (props.roomId) {
-      const slug = `/v1/messages/group/${props.roomId}`;
-      setIsLoadingMsg(true);
-      const result = await apiMsg.get(slug);
-      if (result.ok) {
-        setMessages(result.data?.data?.reverse());
-        setIsLoadingMsg(false);
+    console.log('outside')
+    if (socket === null) {
+      console.log('in1');
+      let tempSocket = io(`${msgUrl}`);
+      tempSocket.emit('user', user?.id);
+      setSocket(tempSocket);
+      if (props.roomId) {
+        console.log('in2');
+        const slug = `/v1/messages/group/${props.roomId}`;
+        setIsLoadingMsg(true);
+        const result = await apiMsg.get(slug);
+        if (result.ok) {
+          setMessages(result.data?.data?.reverse());
+          setIsLoadingMsg(false);
+        }
+        if (!result.ok) {
+          setIsLoadingMsg(false);
+        }
+      }
+    } else {
+      console.log('in3', props.roomId, user?.id);
+      if (props.roomId) {
+        console.log('in4');
+        socket.emit('user', user?.id);
+        const slug = `/v1/messages/group/${props.roomId}`;
+        setIsLoadingMsg(true);
+        const result = await apiMsg.get(slug);
+        if (result.ok) {
+          setMessages(result.data?.data?.reverse());
+          setIsLoadingMsg(false);
+        }
+        if (!result.ok) {
+          setIsLoadingMsg(false);
+        }
       }
     }
   };
@@ -53,6 +82,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
     setRefreshing(true);
+    console.log('pressing1');
     getPreviousMessages();
     dispatch(getProviderProposal(props.opk));
     dispatch(getAllPets());
@@ -66,6 +96,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
   useEffect(() => {
     if (socket === null) {
       let tempSocket = io(`${msgUrl}`);
+      tempSocket.emit('user', user?.id);
       setSocket(tempSocket);
     } else {
       getPreviousMessages();
@@ -83,15 +114,6 @@ const Messages = (props: {roomId: any; opk: any}) => {
       socket.emit('user', user?.id);
     }
   }, [user, socket]);
-
-  const {image} = {
-    image: 'https://via.placeholder.com/40x40.png?',
-  };
-  const currentUser = {
-    id: 1,
-    name: 'Tanvir',
-    image: 'https://via.placeholder.com/40x40.png?',
-  };
   const [paddingHeight, setPaddingHeight] = useState(0);
   const scrollViewRef = useRef<any>();
   const navigation = useNavigation();
@@ -137,10 +159,15 @@ const Messages = (props: {roomId: any; opk: any}) => {
             <ActivityIndicator />
           </View>
         ) : messages.length === 0 ? (
-          <TitleText
-            textStyle={styles.emptyContainer}
-            text={`The Conversation just got created, No texts yet...`}
-          />
+          <View style={{justifyContent: 'center', alignItems: 'center', paddingTop: 20,}}>
+            {/* <TitleText
+              textStyle={styles.emptyContainer}
+              text={`The Conversation just got created, No texts yet...`}
+            /> */}
+            <TouchableOpacity onPress={() => onRefresh()}>
+              <TitleText text={'Refresh Again'} textStyle={{paddingTop: 10, color: Colors.blue}} />
+            </TouchableOpacity>
+          </View>
         ) : (
           messages?.map((item: any, i) =>
             item.sender === user?.id ? (
@@ -167,26 +194,28 @@ const Messages = (props: {roomId: any; opk: any}) => {
                   />
                 </View>
                 <View style={styles.userIconView}>
-                  <Image
-                    source={{uri: currentUser.image}}
+                  <View
                     style={[
                       styles.imageStyle,
                       {borderColor: colors.borderColor},
                     ]}
-                  />
+                  >
+                    <TitleText text={'S'} />
+                  </View>
                 </View>
               </View>
             ) : (
               // Receiver
               <View key={i} style={styles.receiverContainer}>
                 <View style={styles.userIconViewReceiver}>
-                  <Image
-                    source={{uri: image}}
+                  <View
                     style={[
                       styles.imageStyle,
                       {borderColor: colors.borderColor},
                     ]}
-                  />
+                  >
+                    <TitleText text={'R'} />
+                  </View>
                 </View>
                 <View
                   style={[
@@ -205,7 +234,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
                     <View>
                       <View style={styles.detailsImage}>
                         <Image
-                          source={{uri: image}}
+                          source={{uri: item.attachment}}
                           style={[
                             styles.imageStyle,
                             {borderColor: colors.borderColor},
