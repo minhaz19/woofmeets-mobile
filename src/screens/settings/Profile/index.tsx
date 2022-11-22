@@ -27,6 +27,7 @@ const Profile = (props: {
   const {colors} = useTheme();
   const {loading} = useAppSelector(state => state.userProfile);
   const {loading: pLoading} = useAppSelector(state => state.providerProfile);
+  const {user} = useAppSelector((state: any) => state.whoAmI);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   // useProfileData();
@@ -68,7 +69,7 @@ const Profile = (props: {
         }>
         {loading && <AppActivityIndicator visible={true} />}
         <View style={styles.rootContainer}>
-          {!token?.provider && (
+          {!user?.provider?.isApproved && (
             <View style={{paddingVertical: 20}}>
               <TitleText
                 textStyle={{color: Colors.blue, textAlign: 'center'}}
