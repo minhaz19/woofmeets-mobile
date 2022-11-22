@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
 import Text_Size from '../../../constants/textScaling';
@@ -60,6 +60,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
   const [textInput, setTextInput] = useState(
     contact.phoneNumber ? contact.phoneNumber : '',
   );
+  console.log(contact.phoneNumber?.slice(4))
   const [globalError, setGlobalError] = useState('');
   const [otpVerificationStatus, setOtpVerificationStatus] = useState(
     contact.phoneNumber ? true : false,
@@ -127,6 +128,16 @@ const ContactInput = (props: {handleSubmit: any}) => {
       Alert.alert(result.data.message);
     }
   };
+
+  useEffect(() => {
+    if (contact.phoneNumber?.slice(0, 2) == '+1') {
+      setTextInput(contact.phoneNumber?.slice(2))
+      setCountryCode(contact.phoneNumber?.slice(0, 2))
+    } else {
+      setTextInput(contact.phoneNumber?.slice(4))
+      setCountryCode(contact.phoneNumber?.slice(0, 4))
+    }
+  }, [contact.phoneNumber])
 
   return (
     <View style={styles.container}>
