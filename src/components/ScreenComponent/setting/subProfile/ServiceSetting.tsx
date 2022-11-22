@@ -166,7 +166,9 @@ const ServiceSetting = () => {
                             dispatch(getWhoAmI()));
                           return;
                         } else {
-                          Alert.alert('Please complete the service first!');
+                          Alert.alert(
+                            'Please complete the service first and pull to refresh!',
+                          );
                         }
                       }}
                       activeText={''}

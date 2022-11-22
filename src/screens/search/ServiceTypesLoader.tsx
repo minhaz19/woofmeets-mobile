@@ -8,13 +8,17 @@ import {SCREEN_WIDTH} from '../../constants/WindowSize';
 const ServiceTypesLoader = () => {
   const {colors} = useTheme();
   return (
-    <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}>
       <View style={{flex: 1}}>
         <ContentLoader
           speed={1}
           width={SCREEN_WIDTH}
           height={200}
-          viewBox={`${Platform.OS === 'android' ? 40 : 30} -20 300 200`}
+          viewBox={`${
+            Platform.OS === 'android' ? -25 : -25
+          } -20 ${SCREEN_WIDTH} 200`}
           backgroundColor={colors.loaderBackground}
           foregroundColor={colors.loaderBackground}>
           <Rect x="0" y="0" rx="4" ry="4" width="100" height="20" />

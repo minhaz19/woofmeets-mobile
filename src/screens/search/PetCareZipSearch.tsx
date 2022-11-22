@@ -47,6 +47,7 @@ import {days} from '../../utils/config/Data/filterProviderDatas';
 import GooglePredictLocation from '../../components/common/GooglePredictLocations';
 import methods from '../../api/methods';
 import {useApi} from '../../utils/helpers/api/useApi';
+import {baseUrlV} from '../../utils/helpers/httpRequest';
 
 const petData = [
   {
@@ -206,7 +207,7 @@ const PetCareZipSearch = (props: {
       dispatch(setScheduleId(null));
       props.navigation.navigate('AllProvider');
     } else {
-      const locationAddressEndPoint = `https://woof-api.hirebeet.com/v2/location?address=${addressLine}`;
+      const locationAddressEndPoint = `${baseUrlV}/v2/location?address=${addressLine}`;
       const result = await request(locationAddressEndPoint);
       if (result.ok) {
         let formattedData;
