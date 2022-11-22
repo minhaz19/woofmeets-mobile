@@ -85,7 +85,7 @@ Props) => {
   const swipeFromRightOpen = () => {
     // Alert.alert('Swipe from right');
   };
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   return (
     <View style={{}}>
       {newCard ? (

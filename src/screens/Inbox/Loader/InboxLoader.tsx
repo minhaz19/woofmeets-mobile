@@ -23,7 +23,9 @@ const InboxLoader = () => {
           speed={1}
           width={SCREEN_WIDTH}
           height={1280}
-          viewBox={`${Platform.OS === 'android' ? 40 : 30} -20 300 1280`}
+          viewBox={`${
+            Platform.OS === 'android' ? -20 : -20
+          } -20 ${SCREEN_WIDTH} 1280`}
           backgroundColor={colors.loaderBackground}
           foregroundColor={colors.loaderForeground}>
           <Rect x="0" y="0" rx="4" ry="4" width="100" height="20" />
@@ -34,7 +36,7 @@ const InboxLoader = () => {
               y={item.y}
               rx="10"
               ry="10"
-              width="90%"
+              width={SCREEN_WIDTH - 40}
               height="140"
             />
           ))}

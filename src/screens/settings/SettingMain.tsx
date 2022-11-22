@@ -2,7 +2,6 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  useColorScheme,
   Platform,
   Linking,
   Alert,
@@ -36,7 +35,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 import {CommonActions} from '@react-navigation/native';
 import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
-import { getCurrentplan } from '../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
+import {getCurrentplan} from '../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 
 const SettingMain = (props: {
   navigation: {
@@ -134,12 +133,15 @@ const SettingMain = (props: {
   const sittingData = [
     {
       id: 1,
-      title: currentPlan?.currentPlan?.subscriptionInfo?.status ? 'Update Profile' : 'Become a sitter',
+      title: currentPlan?.currentPlan?.subscriptionInfo?.status
+        ? 'Update Profile'
+        : 'Become a sitter',
       icon: SitterIcon,
       screenName: () => {
-        currentPlan?.currentPlan?.subscriptionInfo?.status ? 
-          props.navigation.navigate('Profile') : 
-            props.navigation.navigate('SitterInitialScreen')},
+        currentPlan?.currentPlan?.subscriptionInfo?.status
+          ? props.navigation.navigate('Profile')
+          : props.navigation.navigate('SitterInitialScreen');
+      },
       rightIcon: true,
       opacity: 1,
     },
@@ -284,43 +286,41 @@ const SettingMain = (props: {
         style={[styles.rootContainer]}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         <View>
-          {isLoggedIn && !user?.timezone ? (
-            <View style={[styles.boxContainer, backgroundStyle]}>
-              <ShortText
-                text={
-                  'Action Required! Please set your preferred time zone to continue.'
-                }
-                textStyle={{color: Colors.red}}
-              />
-              <Pressable
-                onPress={() => {
-                  props.navigation.navigate('AccountSetting');
+          {
+            isLoggedIn && !user?.timezone ? (
+              <View style={[styles.boxContainer, backgroundStyle]}>
+                <ShortText
+                  text={
+                    'Action Required! Please set your preferred time zone to continue.'
+                  }
+                  textStyle={{color: Colors.red}}
+                />
+                <Pressable
+                  onPress={() => {
+                    props.navigation.navigate('AccountSetting');
                     dispatch(getWhoAmI());
-                }}>
-                <ShortText
-                  text={'Set Time Zone'}
-                  textStyle={{color: Colors.blue}}
-                />
-              </Pressable>
-            </View>
-          ) : (
-            <View style={[styles.boxContainer, backgroundStyle]}>
-              <View style={styles.boxTextContainer}>
-                <ShortText
-                  textStyle={{color: Colors.primary}}
-                  text={'Get $100 '}
-                />
-                <ShortText text={' when friends join Woofmeets'} />
+                  }}>
+                  <ShortText
+                    text={'Set Time Zone'}
+                    textStyle={{color: Colors.blue}}
+                  />
+                </Pressable>
               </View>
-              <ShortText text={'Share Now'} textStyle={{color: Colors.blue}} />
-            </View>
-          )}
+            ) : null
+            // <View style={[styles.boxContainer, backgroundStyle]}>
+            //   <View style={styles.boxTextContainer}>
+            //     <ShortText
+            //       textStyle={{color: Colors.primary}}
+            //       text={'Get $100 '}
+            //     />
+            //     <ShortText text={' when friends join Woofmeets'} />
+            //   </View>
+            //   <ShortText text={'Share Now'} textStyle={{color: Colors.blue}} />
+            // </View>
+          }
           {!isLoggedIn && (
             <View
               style={{
@@ -406,7 +406,7 @@ const SettingMain = (props: {
           <View
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
           />
-          {isLoggedIn && (
+          {/* {isLoggedIn && (
             <View>
               <View style={styles.titleContainer}>
                 <TitleText text="Refferals and Promos" />
@@ -421,7 +421,7 @@ const SettingMain = (props: {
                 ]}
               />
             </View>
-          )}
+          )} */}
           <View style={styles.titleContainer}>
             <TitleText text="Support" />
           </View>
@@ -463,6 +463,7 @@ const styles = StyleSheet.create({
     marginHorizontal:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
     marginBottom: '2%',
+    marginTop: '3%',
   },
   boxContainer: {
     marginHorizontal:

@@ -25,11 +25,11 @@ import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTo
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TitleText from '../../../components/common/text/TitleText';
 interface Props {
-  navigation: {navigate: (arg0: string) => void};
+  navigation: {navigate: (arg0: string) => void} | any;
 }
 const Login = ({navigation}: Props) => {
-  const { colors} = useTheme();
-  const {handleSubmit,  loading} = useLogin(navigation);
+  const {colors} = useTheme();
+  const {handleSubmit, loading} = useLogin(navigation);
   return (
     <>
       {/* {providerLoading && <AppActivityIndicator visible={true} />} */}

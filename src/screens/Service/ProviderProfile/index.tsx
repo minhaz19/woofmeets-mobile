@@ -34,7 +34,7 @@ const ProviderProfile = ({route}: Props) => {
         providerOpk: providerOpk,
       });
     } else {
-      navigation.navigate('SignUp');
+      navigation.navigate('AuthNavigator');
     }
   };
   return (

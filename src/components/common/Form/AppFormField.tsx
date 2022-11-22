@@ -81,24 +81,30 @@ const AppFormField = ({
                   autoCapitalize={autoCapitalize}
                   autoCorrect={autoCorrect}
                   icon={icon}
-                  keyboardType={keyboardType}
+                  keyboardType={name === 'dob' ? 'number-pad' : keyboardType}
                   defaultValue={defaultValue}
                   placeholder={placeholder}
                   name={name}
                   textContentType={textContentType}
-                  onChangeText={onChange}
+                  onChangeText={(text: string) => {
+                    if (name === 'dob' && text.length > 10) {
+                      return;
+                    }
+                    name === 'dob'
+                      ? onChange(
+                          text.length === 3 && !text.includes('/')
+                            ? `${text.substring(0, 2)}/${text.substring(2)}`
+                            : text.length === 6 && !/\/.*\//.test(text)
+                            ? `${text.substring(0, 5)}/${text.substring(5)}`
+                            : text,
+                        )
+                      : onChange(text);
+                  }}
                   onPressIn={onPressIn}
                   onPressOut={onPressOut}
                   editable={editable}
                   onBlur={onBlur}
-                  value={
-                    name === 'dob'
-                      ? value.replace(
-                          /^([\d]{2})([\d]{2})([\d]{4})$/,
-                          '$1/$2/$3',
-                        )
-                      : value?.toString()
-                  }
+                  value={value?.toString()}
                   secureTextEntry={secureTextEntry}
                   error={errors[name]}
                   numberOfLines={numberOfLines && numberOfLines}

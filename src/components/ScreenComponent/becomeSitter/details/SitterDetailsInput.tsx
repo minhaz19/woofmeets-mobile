@@ -66,7 +66,7 @@ const SitterDetailsInput = (props: {handleSubmit: any; isLoading: boolean}) => {
     formState: {errors},
   } = useFormContext();
   const data = getValues();
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const skillsDetailsData = useAppSelector(state => state.details.skillsData);
   const {newData, handleMultipleCheck} =
     useHandleMultipleActiveCheck(skillsDetailsData);
@@ -81,7 +81,9 @@ const SitterDetailsInput = (props: {handleSubmit: any; isLoading: boolean}) => {
                 <AppFormField
                   autoCapitalize="none"
                   autoCorrect={false}
-                  keyboardType={'default'}
+                  keyboardType={
+                    item.name === 'yearsOfExperience' ? 'number-pad' : 'default'
+                  }
                   textContentType={'none'}
                   name={item.name}
                   subTitle={item.description}
@@ -89,19 +91,19 @@ const SitterDetailsInput = (props: {handleSubmit: any; isLoading: boolean}) => {
                   textInputStyle={styles.textInputStyle}
                   control={control}
                   errors={errors}
-                  multiline={true}
                   numberOfLines={item.numberOfLines}
-                  textInputBoxStyle={{
-                    backgroundColor: colors.inputBackground,
-                    width: '100%',
-                    borderRadius: 2,
-                    paddingHorizontal: 8,
-                  }}
-                  inputBoxContainerStyle={{
-                    borderRadius: 2,
-                    paddingHorizontal: 0,
-                    borderWidth: 0,
-                  }}
+                  // multiline={true}
+                  // textInputBoxStyle={{
+                  //   backgroundColor: colors.inputBackground,
+                  //   width: '100%',
+                  //   borderRadius: 2,
+                  //   paddingHorizontal: 8,
+                  // }}
+                  // inputBoxContainerStyle={{
+                  //   borderRadius: 2,
+                  //   paddingHorizontal: 0,
+                  //   borderWidth: 0,
+                  // }}
                 />
               </View>
             );

@@ -4,6 +4,12 @@ export const locationInput = [
     placeholder: 'Enter Address Line 1',
     name: 'addressLine1',
   },
+  {
+    title: 'Country',
+    placeholder: 'Enter Country',
+    select: true,
+    name: 'countryId',
+  },
   // {
   //   title: 'Address Line 2',
   //   placeholder: 'Enter Address Line 2',
@@ -28,12 +34,6 @@ export const locationInput = [
     title: 'Zip/ Postal/ Postcode',
     placeholder: 'Enter Zip/ Postal/ Postcode',
     name: 'zipCode',
-  },
-  {
-    title: 'Country',
-    placeholder: 'Enter Country',
-    select: true,
-    name: 'countryId',
   },
 ];
 export const basicInfoInput = [

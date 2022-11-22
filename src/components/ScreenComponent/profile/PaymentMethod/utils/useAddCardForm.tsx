@@ -148,7 +148,8 @@ export const useAddCardForm = (
             Alert.alert(appointmentResult?.data?.message);
           }
         }
-      } else if (sequence === null) {
+      } else if (result.ok && sequence === null) {
+        navigation.navigate('PaymentMethod', {sequence: null});
       }
       dispatch(getCards());
     }

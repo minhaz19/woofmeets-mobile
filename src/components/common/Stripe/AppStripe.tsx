@@ -6,7 +6,7 @@ interface Props {
 }
 const AppStripe = ({children}: Props) => {
   return (
-    <StripeProvider publishableKey="pk_test_51LuUiGCbzlJgV59MLQDvLPoQfCi1Yml8IXBftc32xcwf6TKDzwcVMcGTmS0CudaErVG1gKVCFI4lQ8ZA7wLrKPCT003isLHUPS">
+    <StripeProvider publishableKey="pk_test_51LTB7cKt0zm1z41kPTt1L4KXeMUPfd4qyWjQdYQR69ejOa2wdd2kpoO2ucIgYG8WJWZTohiDbdmtzG0m04nF0ff900964FN1Vr">
       {children}
     </StripeProvider>
   );

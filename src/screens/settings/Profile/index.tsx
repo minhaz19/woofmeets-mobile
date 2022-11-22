@@ -27,9 +27,9 @@ const Profile = (props: {
   const {colors} = useTheme();
   const {loading} = useAppSelector(state => state.userProfile);
   const {loading: pLoading} = useAppSelector(state => state.providerProfile);
-  const {user} = useAppSelector((state: any) => state.whoAmI);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
+  const {user} = useAppSelector(state => state.whoAmI);
   // useProfileData();
 
   const [token, setToken] = useState<any>();
@@ -46,12 +46,18 @@ const Profile = (props: {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    dispatch(getWhoAmI());
-    getDecodedToken();
-    dispatch(getUserOnboardStatus());
-    dispatch(getSkillsData());
+    await dispatch(getWhoAmI());
+    await getDecodedToken();
+    await dispatch(getUserOnboardStatus());
+    await dispatch(getSkillsData());
     setRefreshing(false);
   };
+  // useEffect(() => {
+  //   getDecodedToken();
+  //   dispatch(getUserOnboardStatus());
+  //   dispatch(getSkillsData());
+  // }, []);
+
   useEffect(() => {
     onRefresh();
   }, []);
@@ -62,10 +68,7 @@ const Profile = (props: {
         showsVerticalScrollIndicator={false}
         style={{flex: 1, backgroundColor: colors.backgroundColor}}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         {loading && <AppActivityIndicator visible={true} />}
         <View style={styles.rootContainer}>

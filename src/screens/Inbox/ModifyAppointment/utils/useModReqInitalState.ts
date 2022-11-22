@@ -42,13 +42,16 @@ export const useModReqInitialState = () => {
       return {date: date?.toDateString(), day: dayName};
     });
 
-
   const modRecurringSelectedDay =
-    proposedServiceInfo?.recurringSelectedDay?.map((item: any) => item.date);
+    proposedServiceInfo?.recurringSelectedDay?.map((item: any) =>
+      dayss
+        .filter(it => it.substring(0, 3).toLowerCase() === item.name)
+        .join(', '),
+    );
+  // const modRecurringSelectedDay =
+  //   proposedServiceInfo?.recurringSelectedDay?.map((item: any) => item.date);
 
-
-
-  const DoggySelected = dayss.filter(item =>
+  const DoggySelected = dayss?.filter(item =>
     proposedServiceInfo?.recurringSelectedDay?.includes(
       item.substring(0, 3).toLowerCase(),
     ),
@@ -104,7 +107,9 @@ export const useModReqInitialState = () => {
       proposedServiceInfo?.isRecurring &&
       proposedServiceInfo?.recurringSelectedDay
         ? proposedServiceInfo?.recurringSelectedDay.map((it: any) => ({
-            date: it?.date,
+            date: dayss?.filter(
+              d => d.substring(0, 3).toLowerCase() === it.name,
+            )[0],
             visits: it?.visits?.map((vis: any) => vis.time),
           }))
         : [],

@@ -12,7 +12,12 @@ const Stack1 = createStackNavigator();
 
 const InboxNavigator = () => {
   return (
-    <Stack1.Navigator initialRouteName="Appointment">
+    <Stack1.Navigator
+      initialRouteName="Inbox"
+      // screenOptions={{
+      //   gestureEnabled: false,
+      // }}
+    >
       <Stack1.Screen
         name="Inbox"
         component={Inbox}

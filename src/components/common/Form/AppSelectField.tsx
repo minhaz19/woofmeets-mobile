@@ -5,6 +5,7 @@ import {Controller} from 'react-hook-form';
 import AppSelect from './AppSelect';
 import TitleText from '../text/TitleText';
 import ErrorMessage from './ErrorMessage';
+import BasicInfoSelect from '../../ScreenComponent/setting/Components/basicInfoSelect';
 
 interface Props {
   name: string;
@@ -15,6 +16,7 @@ interface Props {
   disable?: boolean;
   defaultText?: string;
   setSelectedService?: (arg: any) => void;
+  country?: boolean;
 }
 const AppSelectField = ({
   name,
@@ -25,6 +27,7 @@ const AppSelectField = ({
   disable,
   defaultText,
   setSelectedService,
+  country = false,
 }: Props) => {
   return (
     <View>
@@ -34,17 +37,32 @@ const AppSelectField = ({
         render={({field: {onChange, value}, fieldState: {error}}) => {
           return (
             <>
-              <AppSelect
-                placeholder={placeholder}
-                name={name}
-                data={data}
-                defaultText={
-                  value !== '' && value !== undefined ? value : defaultText
-                }
-                disable={disable}
-                onChange={onChange}
-                setSelectedService={setSelectedService}
-              />
+              {country ? (
+                <BasicInfoSelect
+                  placeholder={placeholder}
+                  name={name}
+                  data={data}
+                  defaultText={
+                    value !== '' && value !== undefined ? value : defaultText
+                  }
+                  disable={disable}
+                  onChange={onChange}
+                  setSelectedService={setSelectedService}
+                />
+              ) : (
+                <AppSelect
+                  placeholder={placeholder}
+                  name={name}
+                  data={data}
+                  defaultText={
+                    value !== '' && value !== undefined ? value : defaultText
+                  }
+                  disable={disable}
+                  onChange={onChange}
+                  setSelectedService={setSelectedService}
+                />
+              )}
+
               <ErrorMessage error={error?.message} />
             </>
           );

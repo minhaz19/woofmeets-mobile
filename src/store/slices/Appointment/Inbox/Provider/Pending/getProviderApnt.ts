@@ -3,7 +3,7 @@ import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../../../../api/client';
 export const getProviderApnt = createAsyncThunk(
-  '/appointment/provider/inbox/pending',
+  '/appointment/provider/inbox/pending/provider',
   async (statusId: string) => {
     try {
       const response: ApiResponse<any> = await apiClient.get(

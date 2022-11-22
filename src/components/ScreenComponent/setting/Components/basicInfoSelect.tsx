@@ -1,13 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Platform, StyleSheet, Text, View} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
-import Colors from '../../../constants/Colors';
+import {Platform, StyleSheet, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+
+import TitleText from '../../../common/text/TitleText';
 import {Dropdown} from 'react-native-element-dropdown';
-import Text_Size from '../../../constants/textScaling';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {setIsService} from '../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import TitleText from '../text/TitleText';
+import Colors from '../../../../constants/Colors';
+import Text_Size from '../../../../constants/textScaling';
+import {useWatch} from 'react-hook-form';
+
 interface Props {
   name: string;
   data: any[];
@@ -17,35 +18,27 @@ interface Props {
   onChange: (arg: any) => void;
   setSelectedService?: (arg: any) => void;
 }
-const AppSelect = ({
+const BasicInfoSelect = ({
   data,
-  defaultText,
+
   placeholder,
   disable = false,
   onChange,
-  setSelectedService,
 }: Props) => {
+  const {countryId} = useWatch();
   const {colors} = useTheme();
-  const dispatch = useAppDispatch();
-  const [value, setValuee] = useState(defaultText);
-  const {isService} = useAppSelector((state: any) => state.providerFilter);
   const [isFocus, setIsFocus] = useState(false);
-  const renderItem = useCallback(
-    (item: any) => {
-      return (
-        <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
-          <TitleText
-            textStyle={{...styles.selectedTextStyle, color: colors.headerText}}
-            text={item.label}
-          />
-        </View>
-      );
-    },
-    [colors.backgroundColor],
-  );
-  useEffect(() => {
-    setValuee(defaultText);
-  }, [defaultText]);
+  const renderItem = useCallback((item: any) => {
+    return (
+      <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
+        <TitleText
+          textStyle={{...styles.selectedTextStyle, color: colors.headerText}}
+          text={item.label}
+        />
+      </View>
+    );
+  }, []);
+
   return (
     <View>
       <Dropdown
@@ -78,7 +71,7 @@ const AppSelect = ({
         labelField="label"
         valueField="value"
         placeholder={!isFocus ? placeholder : '...'}
-        value={isService.service !== '' ? isService?.service : value}
+        value={countryId}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         disable={disable}
@@ -87,16 +80,13 @@ const AppSelect = ({
           setValuee(item.value);
           setIsFocus(false);
           onChange(item.value);
-          setSelectedService && setSelectedService(item.id);
-          setIsService &&
-            dispatch(setIsService({service: item.value, serviceId: item.id}));
         }}
       />
     </View>
   );
 };
 
-export default AppSelect;
+export default BasicInfoSelect;
 
 const styles = StyleSheet.create({
   container: {paddingVertical: 16},
