@@ -16,6 +16,12 @@ export const locationInput = [
     name: 'countryId',
   },
   {
+    title: 'Country',
+    placeholder: 'Enter Country',
+    select: true,
+    name: 'countryId',
+  },
+  {
     title: 'State or Province',
     placeholder: 'Enter State or Province ',
     name: 'state',

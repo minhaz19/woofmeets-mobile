@@ -20,11 +20,11 @@ import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 import DescriptionText from '../../common/text/DescriptionText';
 import AppDropDownSelect from '../../common/AppDropDownSelect';
-import GooglePredictLocation from '../../common/GooglePredictLocations';
 import {
   americanStates,
   canadaStates,
 } from '../../../screens/profile/BasicInfo/utils/basicInfoState';
+import GooglePredictLocation from '../../common/GooglePredictLocations';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -47,6 +47,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
+  // const {countryId} = useWatch();
   const basicData = useWatch();
 
   // add google address

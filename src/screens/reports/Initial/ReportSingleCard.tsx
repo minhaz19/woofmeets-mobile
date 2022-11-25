@@ -12,26 +12,15 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 interface Props {
   id: number;
-  Icon?: any;
-  title: string;
-  subTitle?: string;
+  pee: number;
+  poo: number;
+  water: number;
+  food: number;
+  title?: string;
   image?: any;
-  rowImage?: boolean;
-  isPeeSelected: any;
-  isPooSelected: any;
-  isFoodSelected: any;
-  isWaterSelected: any;
 }
 
-const ReportSingleCard = ({
-  id,
-  title,
-  image,
-  isPeeSelected,
-  isPooSelected,
-  isFoodSelected,
-  isWaterSelected,
-}: Props) => {
+const ReportSingleCard = ({pee, poo, water, food, title, image, id}: Props) => {
   const {colors} = useTheme();
   return (
     <View
@@ -41,80 +30,53 @@ const ReportSingleCard = ({
         marginBottom: 15,
       }}>
       <View style={styles.imageAndTitle}>
-        <ImageAndTitle id={id} title={title} rowImage image={image} />
+        <ImageAndTitle
+          id={id}
+          title={title ? title : 'title'}
+          rowImage
+          image={image}
+        />
       </View>
-      {isPeeSelected &&
-        isPeeSelected?.map((item: any) => {
-          return (
-            item?.id === id && item?.pee && (
-              <View key={item?.id} style={styles.innerContainer}>
-                <MaterialIcons
-                  name="waterfall-chart"
-                  size={
-                    SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32
-                  }
-                  color={Colors.primary}
-                  style={styles.iconStyle}
-                />
-                <HeaderText text={item?.pee + ' pee breaks'} />
-              </View>
-            )
-          );
-        })}
-      {isPooSelected &&
-        isPooSelected?.map((item: any) => {
-          return (
-            item?.id === id && item?.poo && (
-              <View key={item?.id} style={styles.innerContainer}>
-                <MaterialCommunityIcons
-                  name="emoticon-poop"
-                  size={
-                    SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32
-                  }
-                  color={Colors.primary}
-                  style={styles.iconStyle}
-                />
-                <HeaderText text={item?.poo + ' poo breaks'} />
-              </View>
-            )
-          );
-        })}
-      {isFoodSelected &&
-        isFoodSelected?.map((item: any) => {
-          return (
-            item?.id === id && item?.food &&  (
-              <View key={item?.id} style={styles.innerContainer}>
-                <MaterialCommunityIcons
-                  name="pot-mix-outline"
-                  size={
-                    SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32
-                  }
-                  color={Colors.primary}
-                  style={styles.iconStyle}
-                />
-                <HeaderText text={item?.food + ' food breaks'} />
-              </View>
-            )
-          );
-        })}
-      {isWaterSelected &&
-        isWaterSelected?.map((item: any) => {
-          return (
-            item?.id === id && item?.water && (
-              <View key={item?.id} style={styles.innerContainer}>
-                <Entypo
-                  name="water"
-                  size={
-                    SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32
-                  }
-                  color={Colors.primary}
-                  style={styles.iconStyle}
-                />
-                <HeaderText text={item?.water + ' water breaks'} />
-              </View>
-            )
-          );
-        })}
+
+      <View style={styles.innerContainer}>
+        <MaterialIcons
+          name="waterfall-chart"
+          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
+          color={Colors.primary}
+          style={styles.iconStyle}
+        />
+        <HeaderText text={pee + ' pee breaks'} />
+      </View>
+
+      <View style={styles.innerContainer}>
+        <MaterialCommunityIcons
+          name="emoticon-poop"
+          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
+          color={Colors.primary}
+          style={styles.iconStyle}
+        />
+        <HeaderText text={poo + ' poo breaks'} />
+      </View>
+
+      <View style={styles.innerContainer}>
+        <MaterialCommunityIcons
+          name="pot-mix-outline"
+          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
+          color={Colors.primary}
+          style={styles.iconStyle}
+        />
+        <HeaderText text={food + ' food breaks'} />
+      </View>
+
+      <View style={styles.innerContainer}>
+        <Entypo
+          name="water"
+          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
+          color={Colors.primary}
+          style={styles.iconStyle}
+        />
+        <HeaderText text={water + ' water breaks'} />
+      </View>
     </View>
   );
 };

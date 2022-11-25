@@ -30,7 +30,7 @@ const ThreeDotsModal: FC<Props> = props => {
       name: 'Report',
       icon: <Entypo name="documents" size={24} color={Colors.primary} />,
       screen: () => {
-        navigation.navigate('ReportCardInitial');
+        navigation.navigate('ShowAllReport');
       },
     },
     {

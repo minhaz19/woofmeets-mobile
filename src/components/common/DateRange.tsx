@@ -13,8 +13,9 @@ interface Props {
   value?: any;
   dropOut?: boolean;
   setOpenCal: () => void;
+  setTime?: (arg: any) => void;
 }
-const DateRange = ({value, dropOut, setOpenCal}: Props) => {
+const DateRange = ({value, dropOut, setOpenCal, setTime}: Props) => {
   const [singleSelect, setSingleSelect] = useState<string>('');
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
@@ -30,6 +31,7 @@ const DateRange = ({value, dropOut, setOpenCal}: Props) => {
       <Calendar
         style={styles.calenderStyles}
         onDayPress={data => {
+          setTime && setTime(data.dateString);
           setSingleSelect(data.dateString);
           handleSelectDate(data.dateString);
           setOpenCal();
