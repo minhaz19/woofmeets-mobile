@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     borderTopWidth: 1,
-    paddingBottom: Platform.OS === 'android' ? 20 : 5,
+    paddingBottom: Platform.OS === 'android' ? 35 : 5,
   },
   cameraIconContainer: {
     paddingHorizontal: 15,

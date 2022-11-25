@@ -31,13 +31,15 @@ const GoogleAutoComplete = ({
         placeholder={placeholder}
         textInputProps={{
           placeholderTextColor: Colors.light.subText,
-          returnKeyType: "search"
+          returnKeyType: "default"
         }}
         onPress={onPressAddress}
         query={{
           key: 'AIzaSyBfNC-SGgbvOOFj9FqoA6HQhrCh_hq5Zo0',
           // components: ':us',
         }}
+        autoFocus={false}
+        returnKeyType={'default'}
         fetchDetails={true}
         onFail={() => {}}
         onNotFound={() => {}}

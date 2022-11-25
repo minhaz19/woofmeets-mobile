@@ -14,6 +14,8 @@ import formatDistance from 'date-fns/formatDistance';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import InboxLoader from '../../Inbox/Loader/InboxLoader';
 import DescriptionText from '../../../components/common/text/DescriptionText';
+import ScreenRapper from '../../../components/common/ScreenRapper';
+import Text_Size from '../../../constants/textScaling';
 
 const ProviderHome = (props: {
   navigation: {navigate: (arg0: string) => any};
@@ -38,7 +40,7 @@ const ProviderHome = (props: {
   return (
     <>
       {loading && <InboxLoader />}
-      <ScreenRapperGrey>
+      <ScreenRapper>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -52,6 +54,7 @@ const ProviderHome = (props: {
               text={`${
                 providerInprogress ? providerInprogress?.length : 0
               } Booking`}
+              textStyle={{fontSize: Text_Size.Text_1}}
             />
           </View>
           <View style={styles.spacing}>
@@ -83,7 +86,7 @@ const ProviderHome = (props: {
             ) : (
               <DescriptionText
                 text={'No upcoming schedules found!'}
-                textStyle={{paddingVertical: '10%'}}
+                textStyle={{paddingVertical: '10%', fontSize: Text_Size.Text_1}}
               />
             )}
           </View>
@@ -99,7 +102,7 @@ const ProviderHome = (props: {
           </View>
           <BottomSpacing />
         </ScrollView>
-      </ScreenRapperGrey>
+      </ScreenRapper>
     </>
   );
 };

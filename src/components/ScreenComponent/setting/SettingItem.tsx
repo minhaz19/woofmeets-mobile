@@ -27,6 +27,7 @@ const SettingItem = (props: {
     vectorIcon?: any;
     id: any;
     color?: string;
+    iconSetIcon?: any;
   };
   descriptionStyle?: TextStyle;
   key?: number;
@@ -45,6 +46,7 @@ const SettingItem = (props: {
     }}>
       <View style={styles.rootContainer}>
         <View style={styles.titleContainer}>
+          {props.data.iconSetIcon && props.data.iconSetIcon}
           {props.data.icon && <props.data.icon
             height={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 24 : 28}
             opacity={props.data.opacity}

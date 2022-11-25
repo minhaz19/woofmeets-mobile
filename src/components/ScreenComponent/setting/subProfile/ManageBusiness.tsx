@@ -1,4 +1,4 @@
-import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Alert, Linking, Share, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderText from '../../../common/text/HeaderText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
@@ -24,6 +24,25 @@ const ManageBusiness = (props: {
   useEffect(() => {
     getDecodedToken();
   }, []);
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          `https://woofmeets.com/profile/view/${token?.opk}`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
   const modifyProfileData = [
     {
       id: 1,
@@ -93,9 +112,7 @@ const ManageBusiness = (props: {
           style={styles.iconStyles}
         />
       ),
-      screen: () => {
-        Linking.openURL(`https://woofmeets.com/profile/view/${token?.opk}`);
-      },
+      screen: onShare,
     },
   ];
   const {colors} = useTheme();

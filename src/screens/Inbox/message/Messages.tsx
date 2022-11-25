@@ -19,11 +19,12 @@ import SendMessage from './SendMessage';
 import {apiMsg} from '../../../api/client';
 import {formatDistance, subDays} from 'date-fns';
 import storage from '../../../utils/helpers/auth/storage';
-import {useAppDispatch} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 // import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
 // import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 import Colors from '../../../constants/Colors';
+import changeTextLetter from '../../../components/common/changeTextLetter';
 
 const Messages = (props: {roomId: any; opk: any}) => {
   const {colors} = useTheme();
@@ -31,6 +32,8 @@ const Messages = (props: {roomId: any; opk: any}) => {
   const dispatch = useAppDispatch();
   const [messages, setMessages] = useState([]);
   const [isLoadingMsg, setIsLoadingMsg] = useState<boolean>(false);
+  const userInfo = useAppSelector((state: any) => state.whoAmI.user);
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const [user, setUser] = useState();
   const getTokenDecoded = async () => {
     const decoded: any = await storage.getUser();
@@ -82,9 +85,9 @@ const Messages = (props: {roomId: any; opk: any}) => {
     // dispatch(getWhoAmI());
     setRefreshing(false);
   };
-  useEffect(() => {
-    onRefresh();
-  }, []);
+  // useEffect(() => {
+  //   onRefresh();
+  // }, []);
 
   useEffect(() => {
     if (socket === null) {
@@ -115,13 +118,13 @@ const Messages = (props: {roomId: any; opk: any}) => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        setPaddingHeight(5);
+        setPaddingHeight(25);
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        setPaddingHeight(0);
+        setPaddingHeight(10);
       },
     );
     return () => {
@@ -149,7 +152,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
               flex: 1,
               paddingTop: 100,
             }}>
-            <ActivityIndicator />
+            <ActivityIndicator size="large" />
           </View>
         ) : messages.length === 0 ? (
           <View
@@ -200,7 +203,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
                       styles.imageStyle,
                       {borderColor: colors.borderColor},
                     ]}>
-                    <TitleText text={'S'} />
+                    <TitleText text={userInfo.firstName?.slice(0,1)} />
                   </View>
                 </View>
               </View>
@@ -213,7 +216,9 @@ const Messages = (props: {roomId: any; opk: any}) => {
                       styles.imageStyle,
                       {borderColor: colors.borderColor},
                     ]}>
-                    <TitleText text={'R'} />
+                    <TitleText text={proposedServiceInfo?.providerId === userInfo?.provider?.id
+                      ? changeTextLetter(proposedServiceInfo?.userName)?.slice(0,1)
+                      : changeTextLetter(proposedServiceInfo?.providerName)?.slice(0,1)} />
                   </View>
                 </View>
                 <View

@@ -133,7 +133,9 @@ const ServiceSetting = () => {
                         textStyle={styles.titleStyle}
                       />
                       <DescriptionText
-                        text={'active'}
+                        text={item.isActive
+                          ? 'Active'
+                          : 'Inactive'}
                         textStyle={styles.shortText}
                       />
                     </View>
