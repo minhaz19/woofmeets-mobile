@@ -29,6 +29,7 @@ interface Props {
 
 const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
   const {isDarkMode, colors} = useTheme();
+  const img = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
   return (
     <Card
       style={{
@@ -40,7 +41,7 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
           <View
             style={{...styles.imageContainer, borderColor: colors.borderColor}}>
             <Image
-              source={{uri: item?.image?.url}}
+              source={{uri: item?.image?.url ? item?.image?.url : img}}
               style={styles.image}
               resizeMode="cover"
             />

@@ -1662,6 +1662,13 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
+"@react-native-community/datetimepicker@^6.7.0":
+  version "6.7.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.7.0.tgz#c03bef0b07a6734bb8e603b78407e8281a4bfc8a"
+  integrity sha512-R8WA1nv6j2Q54+QFNkhzUzkOcN5lrtOCPyker272e8PopduAiirDMgu9hxNnfxd6NuB4n0VbRbRc7yl0O1V72Q==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/eslint-config@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-config/-/eslint-config-2.0.0.tgz#35dcc529a274803fc4e0a6b3d6c274551fb91774"
@@ -8553,10 +8560,22 @@ react-native-codegen@^0.0.17:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-confirmation-code-field@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-confirmation-code-field/-/react-native-confirmation-code-field-7.3.1.tgz#e705ee5b73d7749cac29da287379fa8690904fe6"
+  integrity sha512-5vI6BclB31e4vTYg0HmV/Vy9zI5MQZfHr1EN3kYzvaZq4GMIsyr6lrSmnQW1TtWR7Z8oURrhCpwo+JsWXxCoug==
+
 react-native-country-codes-picker@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-country-codes-picker/-/react-native-country-codes-picker-2.2.0.tgz#8f37085ea15a344feb233c10e4e628ed6cdcbb8e"
   integrity sha512-LhEXtqsGmiqi9fUtR/oo1F7TjzcH9l/jZMMbzV3Z7bcWsILipxWolXNGzLzUe2Yk06qo0lpGGoFSbIHaHQ09eA==
+
+react-native-date-picker@^4.2.6:
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.2.6.tgz#3fb118c141401dcdebb3472ee1c69a0c1c8ff612"
+  integrity sha512-qnSLefvCInFp1etQ27AsDzpCJgvi0Q0eIYRtIzjBp5WC5hzINIY7WWeQESAA/QUPbwFJU7Vk06ouQc51dC1Qaw==
+  dependencies:
+    prop-types "^15.8.1"
 
 react-native-draggable-grid@^2.1.6:
   version "2.1.6"

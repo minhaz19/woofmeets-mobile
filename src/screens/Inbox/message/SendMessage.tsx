@@ -69,6 +69,7 @@ const SendMessage = ({roomId, setMessages, socket, user, opk}) => {
       <TextInput
         placeholder="Type Message..."
         style={styles.textInput}
+        placeholderTextColor={Colors.placeholder}
         numberOfLines={10}
         onChangeText={text => setContent({...content, text: text})}
         value={content.text}

@@ -35,6 +35,7 @@ import ServiceReusableModal from '../becomeSitter/ServiceSetup/Common/ServiceReu
 import { CountryPicker } from 'react-native-country-codes-picker';
 import BigText from '../../common/text/BigText';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { VerifyCode } from '../Auth/Common/OtpField';
 
 const contactInput = [
   {
@@ -60,7 +61,6 @@ const ContactInput = (props: {handleSubmit: any}) => {
   const [textInput, setTextInput] = useState(
     contact.phoneNumber ? contact.phoneNumber : '',
   );
-  console.log(contact.phoneNumber?.slice(4))
   const [globalError, setGlobalError] = useState('');
   const [otpVerificationStatus, setOtpVerificationStatus] = useState(
     contact.phoneNumber ? true : false,
@@ -99,6 +99,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
         );
         if (!response.ok) {
           setPhoneNumberError(response.data.message);
+          Alert.alert(response.data.message)
           throw new Error(response.data.message);
         }
         if (response.ok) {
@@ -150,18 +151,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
           text="OTP has sent successfully, Please verify the OTP"
           textStyle={styles.textStyle1}
         />
-        <AppForm
-          initialValues={otpValue}
-          validationSchema={otpValidationSchema}>
-          <AuthForm
-            handleSubmit={sendOtp}
-            btnTitle="Continue"
-            btn2Title="Resend Code"
-            forgotPasswordOpt
-            loading={loading}
-            onPress={handleSubmit}
-          />
-        </AppForm>
+        <VerifyCode resendCode={handleSubmit} onPress={sendOtp} />
       </MiddleModal>
       <View style={styles.inputContainer}>
         <ServiceReusableModal

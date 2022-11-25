@@ -20,6 +20,7 @@ const SitterMap = () => {
           <MapView
             // provider={PROVIDER_GOOGLE}
             style={styles.map}
+            zoomEnabled={false}
             region={{
               latitude: location?.latitude ? location?.latitude : 18.476223,
               longitude: location?.longitude ? location?.longitude : -77.89389,

@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   RefreshControl,
+  Pressable,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Text_Size from '../../constants/textScaling';
@@ -48,6 +49,9 @@ import GooglePredictLocation from '../../components/common/GooglePredictLocation
 import methods from '../../api/methods';
 import {useApi} from '../../utils/helpers/api/useApi';
 import {baseUrlV} from '../../utils/helpers/httpRequest';
+import ShortText from '../../components/common/text/ShortText';
+import { getWhoAmI } from '../../store/slices/common/whoAmI/whoAmIAction';
+import { useTheme } from '../../constants/theme/hooks/useTheme';
 
 const petData = [
   {
@@ -89,6 +93,9 @@ const PetCareZipSearch = (props: {
     serviceId: 1,
   });
   const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const {user} = useAppSelector((state: any) => state.whoAmI);
+  const {userOnboardStatus} = useAppSelector(state => state.stripe);
 
   // updating the state
   useEffect(() => {
@@ -263,9 +270,58 @@ const PetCareZipSearch = (props: {
       }
     }
   };
+  const {colors} = useTheme();
+  const backgroundStyle = {
+    backgroundColor: colors.backgroundColor,
+  };
   const RenderHeader = () => {
     return (
       <View>
+        <View style={{paddingHorizontal:20, paddingBottom:20}}>
+          {
+            isLoggedIn && !user?.timezone ? (
+              <View style={[styles.boxContainerIn, backgroundStyle]}>
+                <ShortText
+                  text={
+                    'Action Required! Please set your preferred time zone to continue.'
+                  }
+                  textStyle={{color: Colors.red}}
+                />
+                <Pressable
+                  onPress={() => {
+                    props.navigation.navigate('AccountSetting');
+                    dispatch(getWhoAmI());
+                  }}>
+                  <ShortText
+                    text={'Set Time Zone'}
+                    textStyle={{color: Colors.blue}}
+                  />
+                </Pressable>
+              </View>
+            ) : null
+          }
+          {user?.provider?.isApproved && userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
+          ?.length === 0 ? null : (
+            <View style={[styles.boxContainerIn, backgroundStyle]}>
+                <ShortText
+                  text={
+                    'Action Required! Please set your payments and payout'
+                  }
+                  textStyle={{color: Colors.red}}
+                />
+                <Pressable
+                  onPress={() => {
+                    props.navigation.navigate('ReceivePayments');
+                    dispatch(getWhoAmI());
+                  }}>
+                  <ShortText
+                    text={'Set Payments and Payout'}
+                    textStyle={{color: Colors.blue}}
+                  />
+                </Pressable>
+              </View>
+          )}
+        </View>
         {serviceTypesLoading || !serviceTypes ? (
           <ServiceTypesLoader />
         ) : (
@@ -361,7 +417,6 @@ const PetCareZipSearch = (props: {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.boxContainer}>
               <SearchSlider navigation={props.navigation} />
               <RenderHeader />
@@ -390,7 +445,6 @@ const PetCareZipSearch = (props: {
                 </View>
               </View>
             </View>
-          </TouchableWithoutFeedback>
           <BottomSpacing />
         </KeyboardAwareScrollView>
       </ScreenRapper>
@@ -411,6 +465,10 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     // paddingHorizontal: '10%'
+  },
+  boxContainerIn: {
+    padding: 10,
+    borderWidth:1,
   },
   textHeader: {
     fontSize: Text_Size.Text_1,
