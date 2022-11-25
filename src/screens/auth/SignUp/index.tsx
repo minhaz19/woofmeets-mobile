@@ -11,17 +11,16 @@ import AppForm from '../../../components/common/Form/AppForm';
 import SignUpAuthForm from '../../../components/ScreenComponent/Auth/SignUp/SignUpAuthForm';
 import {useSignUp} from './utils/useSignUp';
 import {othersAuthIcons} from '../../../utils/config/Data/loginDatas';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import ScrollViewRapper from '../../../components/common/ScrollViewRapper';
 import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TitleText from '../../../components/common/text/TitleText';
+import BottomSpacing from '../../../components/UI/BottomSpacing';
 interface Props {
   navigation: {navigate: (arg0: string) => void};
 }
 
 const SignUp = ({navigation}: Props) => {
-  const {isDarkMode} = useTheme();
   const {handleSubmit, loading} = useSignUp(navigation);
 
   return (
@@ -70,6 +69,7 @@ const SignUp = ({navigation}: Props) => {
             navigateScreen="LogIn"
           />
         </View>
+        <BottomSpacing />
       </ScrollViewRapper>
     </>
   );

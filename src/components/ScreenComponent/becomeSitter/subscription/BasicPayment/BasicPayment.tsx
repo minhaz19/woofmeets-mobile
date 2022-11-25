@@ -19,7 +19,7 @@ import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import {confirmPayment} from '@stripe/stripe-react-native';
 import {baseUrlV} from '../../../../../utils/helpers/httpRequest';
 const endpointBasicPayment = `${baseUrlV}/v2/subscriptions/pay-basic-verification-payment?`;
-const subscriptionEndpoint = `${baseUrlV}/v3/subscriptions/subscribe?`;
+const subscriptionEndpoint = `${baseUrlV}/v2/subscriptions/subscribe?`;
 
 interface Props {
   route: {

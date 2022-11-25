@@ -25,6 +25,7 @@ import IOSButton from '../../../components/UI/IOSButton';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import BigText from '../../../components/common/text/BigText';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
 
 interface Props {
   navigation: {
@@ -39,6 +40,9 @@ const AllProvider = ({navigation}: Props) => {
   const filter = useAppSelector((state: any) => state.filter.isOpen);
   const {loading: loadingProivder} = useAppSelector(
     state => state.providerProfile,
+  );
+  const {loading: loadingService} = useAppSelector(
+    state => state.providerServices,
   );
   const {formattedData} = useAppSelector((state: any) => state.providerFilter);
   const {
@@ -101,7 +105,9 @@ const AllProvider = ({navigation}: Props) => {
 
   return (
     <>
-      {loadingProivder && <AppActivityIndicator visible={true} />}
+      {(loadingProivder || loadingService) && (
+        <AppActivityIndicator visible={loadingProivder || loadingService} />
+      )}
       <ScreenRapperGrey>
         {loadingOneTime && <AllProviderLoader />}
         <Screen style={styles.container}>
@@ -118,6 +124,9 @@ const AllProvider = ({navigation}: Props) => {
                       onPress={async () => {
                         await dispatch(
                           getProviderProfile(item.provider?.user?.opk),
+                        );
+                        await dispatch(
+                          getProviderServices(item.provider?.user?.opk),
                         );
                         navigation.navigate('ProviderProfile', {
                           providerOpk: item.provider?.user?.opk,

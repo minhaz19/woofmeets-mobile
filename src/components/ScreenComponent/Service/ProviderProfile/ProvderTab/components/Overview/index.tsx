@@ -8,47 +8,46 @@ import {useAppSelector} from '../../../../../../../store/store';
 import DescriptionText from '../../../../../../common/text/DescriptionText';
 import Colors from '../../../../../../../constants/Colors';
 import Text_Size from '../../../../../../../constants/textScaling';
-import {useTheme} from '../../../../../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../../../../UI/BottomSpacing';
+import changeTextLetter from '../../../../../../common/changeTextLetter';
 
 const Overview = () => {
   const {overview, profileInfo} = useAppSelector(
     state => state.providerProfile,
   );
-  const {isDarkMode} = useTheme();
-  const changeText = (name: string) => {
-    return name[0].toUpperCase() + name?.slice(1);
-  };
-  const aboutOver = overview?.about?.slice(0, 25) +
-    overview?.about?.length > 25 ? '...' : '' ;
+
+  // const aboutOver =
+  //   overview?.about?.slice(0, 25) + overview?.about?.length > 25 ? '...' : '';
   const providerDatas = [
     {
       title: 'About',
       viewAll: 'View All',
       subInfo: [
         {
-          description: overview?.about ? `${overview?.about?.slice(0, 300)}${overview?.about?.length > 300 ? '...' : ''}` : 'No about details found...',
+          description: overview?.about
+            ? `${overview?.about?.slice(0, 300)}${
+                overview?.about?.length > 300 ? '...' : ''
+              }`
+            : 'No about details found...',
           longDescription: overview?.about,
         },
       ],
     },
+    // {
+    //   title: `🏡  ${
+    //     changeText(profileInfo?.firstName) +
+    //     ' ' +
+    //     changeText(profileInfo?.lastName)
+    //   } home`,
+    //   viewAll: 'View All',
+    //   subInfo: overview?.sittersHome?.homeAttributes.map((item: any) => ({
+    //     info: item.homeAttributeType?.displayName,
+    //   })),
+    // },
     {
-      title: `🏡  ${
-        changeText(profileInfo?.firstName) +
-        ' ' +
-        changeText(profileInfo?.lastName)
-      } home`,
-      viewAll: 'View All',
-      subInfo: overview?.sittersHome?.homeAttributes.map((item: any) => ({
-        info: item.homeAttributeType?.displayName,
-      })),
-    },
-    {
-      title: `🤹‍♀️  ${
-        changeText(profileInfo?.firstName) +
-        ' ' +
-        changeText(profileInfo?.lastName)
-      }  skills `,
+      title: `🤹‍♀️ ${changeTextLetter(
+        profileInfo?.firstName + ' ' + profileInfo?.lastName + ' skills',
+      )}`,
       viewAll: 'View All',
       subInfo:
         overview?.skills.lenght === 0

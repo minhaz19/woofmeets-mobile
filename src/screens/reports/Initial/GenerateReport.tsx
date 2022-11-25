@@ -28,11 +28,20 @@ import methods from '../../../api/methods';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import CalendarInput from '../../../components/ScreenComponent/Service/FilterProvider/CalendarInput';
 import DateRange from '../../../components/common/DateRange';
-
-const GenerateReport = () => {
+import {StackActions} from '@react-navigation/native';
+interface Props {
+  route: any;
+  navigation: any;
+}
+const GenerateReport = ({navigation, route}: Props) => {
   const [reportStartTime, setReportStartTime] = useState<any>(null);
   // const [reportEndTime, setReportEndTime] = useState<string>('');
   // const [startDateVisible, setStartDateVisible] = useState(false);
+  const walkTime = route?.params?.walkTime;
+  const distance = route?.params?.distance;
+  const appointmentDateId = route?.params?.appointmentDateId;
+  const reportInfo = route?.params?.reportInfo;
+
   const [isMedication, setIsMedication] = useState('');
   const [isAdditionalNotes, setIsAdditionalNotes] = useState('');
   const [OpenDropIn, setOpenDropIn] = useState(false);
@@ -78,7 +87,11 @@ const GenerateReport = () => {
     });
     const uploadEndPoint = `/appointment/card/upload-file/${
       proposedServiceInfo?.appointmentOpk
-    }/${276}`;
+    }/${
+      proposedServiceInfo?.serviceTypeId === 5
+        ? appointmentDateId
+        : reportInfo.id
+    }`;
     const result = await uploadRequest(uploadEndPoint, formData);
     try {
       dispatch(setPhoto([...photo, result?.data[0]?.url]));
@@ -125,22 +138,39 @@ const GenerateReport = () => {
     });
 
     const endPoint = '/appointment/card/create';
-    const formattedData = {
-      appointmentId: proposedServiceInfo?.billing[0]?.appointmentId,
-      appointmentDateId: 276,
-      images: photo,
-      petsData: petsArray,
-      medication: isMedication,
-      additionalNotes: isAdditionalNotes,
-      // totalWalkTime: 'string',
-      // distance: 0,
-      // distanceUnit: 'string',
-      generateTime: new Date(reportStartTime).toISOString(),
-      submitTime: new Date().toISOString(),
-    };
+    const formattedData =
+      proposedServiceInfo.serviceTypeId === 5
+        ? {
+            appointmentId: proposedServiceInfo?.billing[0]?.appointmentId,
+            appointmentDateId: appointmentDateId,
+            images: photo,
+            petsData: petsArray,
+            medication: isMedication,
+            additionalNotes: isAdditionalNotes,
+            totalWalkTime: walkTime,
+            distance: distance,
+            distanceUnit: 'Miles',
+            generateTime: new Date(reportStartTime).toISOString(),
+            submitTime: new Date().toISOString(),
+          }
+        : {
+            appointmentId: reportInfo?.appointmentId,
+            appointmentDateId: reportInfo?.id,
+            images: photo,
+            petsData: petsArray,
+            medication: isMedication,
+            generateTime: reportInfo?.startTime,
+            submitTime: reportInfo?.stopTime,
+          };
     const result = await reportRequest(endPoint, formattedData);
+    console.log(result, formattedData);
     if (result?.ok) {
-      Alert.alert();
+      navigation.dispatch(
+        StackActions.replace('ActivityScreen', {
+          appointmentOpk: proposedServiceInfo?.appointmentOpk,
+          screen: 'Inbox',
+        }),
+      );
     }
   };
   return (

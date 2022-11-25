@@ -10,7 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../../../constants/Colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+// import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useAppSelector} from '../../../../store/store';
 
 interface Props {
@@ -18,6 +18,7 @@ interface Props {
   setIsThreeDotsModal: (value: boolean) => void;
   setModalVisible: (arg1: boolean) => void;
   isReviewed: any;
+  appointmentId: any;
 }
 
 const ThreeDotsModal: FC<Props> = props => {
@@ -26,13 +27,31 @@ const ThreeDotsModal: FC<Props> = props => {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const modalData = [
     {
-      id: 2,
-      name: 'Report',
+      id: 1,
+      name: 'Report Summary',
       icon: <Entypo name="documents" size={24} color={Colors.primary} />,
       screen: () => {
-        navigation.navigate('ShowAllReport');
+        props.setIsThreeDotsModal(false);
+        navigation.navigate('ShowAllReport', {
+          screen: 'InboxNavigator',
+          appointmentOpk: proposedServiceInfo?.appointmentOpk,
+        });
       },
     },
+    // {
+    //   id: 2,
+    //   name: 'Generate Report',
+    //   icon: (
+    //     <FontAwesome name="video-camera" size={24} color={Colors.primary} />
+    //   ),
+    //   screen: () => {
+    //     props.setIsThreeDotsModal(false);
+    //     navigation.navigate('GenerateReport', {
+    //       screen: 'InboxNavigator',
+    //       appointmentId: props.appointmentId,
+    //     });
+    //   },
+    // },
     {
       id: 3,
       name: props?.isReviewed?.length > 0 ? 'Already reviewed' : 'Review',
@@ -48,19 +67,9 @@ const ThreeDotsModal: FC<Props> = props => {
           props?.isReviewed?.length === 0 && props?.setIsReviewModal(true);
           props?.isReviewed?.length === 0 && props?.setIsThreeDotsModal(false);
           props?.isReviewed?.length > 0 &&
-            Alert.alert(
-              'You have already reviewed',
-            );
+            Alert.alert('You have already reviewed');
         }
       },
-    },
-    {
-      id: 4,
-      name: 'Zoom',
-      icon: (
-        <FontAwesome name="video-camera" size={24} color={Colors.primary} />
-      ),
-      screen: () => {},
     },
   ];
   return (

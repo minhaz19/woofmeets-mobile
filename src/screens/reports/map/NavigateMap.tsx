@@ -1,185 +1,84 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {View, StyleSheet, Dimensions, Platform, PermissionsAndroid} from 'react-native';
-import MapView, {AnimatedRegion, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
-import Geolocation from '@react-native-community/geolocation';
-import { saveCurrentUserLocation } from '../../../store/slices/address/address';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Platform,
+  PermissionsAndroid,
+} from 'react-native';
+import MapView, {Polyline} from 'react-native-maps';
 
+import Colors from '../../../constants/Colors';
 const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.04;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-const NavigateMap = () => {
-  const dispatch = useAppDispatch();
-  const add = {latitude: 23.7639, longitude: 89.6467}
-  const currentUserLocation = useAppSelector(state => state.address.currentUserLocation);
-  const mapRef = useRef<MapView>();
-  const markerRef = useRef<MapView>();
-  const [state, setState] = useState({
-    curLoc: {
-      latitude: currentUserLocation?.latitude ? currentUserLocation?.latitude : 55.5033,
-      longitude: currentUserLocation?.longitude ? currentUserLocation?.longitude : 0.1196,
-    },
-    otherParty: {
-      latitude: currentUserLocation?.latitude ? currentUserLocation?.latitude : 51.5033,
-      longitude: currentUserLocation?.longitude ? currentUserLocation?.longitude : 0.1196,
-    },
-    isLoading: false,
-    coordinate: new AnimatedRegion({
-      latitude: currentUserLocation?.latitude ? currentUserLocation?.latitude : 23.7639,
-      longitude: currentUserLocation?.longitude ? currentUserLocation?.longitude : 89.6467,
-      latitudeDelta: LATITUDE_DELTA,
-      longitudeDelta: LONGITUDE_DELTA,
-    }),
-    time: 0,
-    distance: 0,
-  });
-  const [locationStatus, setLocationStatus] = useState('');
-
-  const {curLoc, otherParty, isLoading, coordinate} = state;
+const NavigateMap = ({mapData}: any) => {
+  const [mapPoints, setMapPoints] = useState<any>([]);
 
   useEffect(() => {
-    getLiveLocation();
-  }, []);
+    const da = mapData?.map((item: any) => item.points);
+    console.log('dat');
+    const result = da?.reduce((r: any, e: any) => (r.push(...e), r), []);
+    const formatted = result?.map((it: any) => ({
+      latitude: it.lat !== null || it.lat !== 0 ? it.lat : result[3]?.lat,
+      longitude: it.long !== null || it.long !== 0 ? it.long : result[3]?.long,
+    }));
+    setMapPoints(formatted);
+  }, [mapData]);
 
-  const getLiveLocation = async () => {
-    const requestLocationPermission = async () => {
-      if (Platform.OS === 'ios') {
-        getOneTimeLocation();
-      } else if (Platform.OS === 'android') {
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-              title: 'Location Access Required',
-              message: 'This App needs to Access your location',
-              buttonPositive: '',
-            },
-          );
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            //To Check, If Permission is granted
-            getOneTimeLocation();
-          } else {
-            setLocationStatus('Permission Denied');
-          }
-        } catch (err) {
-          console.warn(err);
-        }
-      }
-    };
-    requestLocationPermission();
-    return () => {
-      // Geolocation.clearWatch(watchID);
-    };
-  };
-
-  const animateToRegion = (currentLatitude?: any, currentLongitude?: any) => {
-    mapRef.current?.animateToRegion({
-      latitude: currentLatitude,
-      longitude: currentLongitude,
-      latitudeDelta: LATITUDE_DELTA,
-      longitudeDelta: LONGITUDE_DELTA,
-    });
-  }
-
-  // useEffect(() => {
-  //   animateToRegion()
-  // }, [curLoc]);
-
-
-  const getOneTimeLocation = async () => {
-    setLocationStatus('Getting Location ...');
-    Geolocation.getCurrentPosition(
-      async position => {
-        setLocationStatus('You are Here');
-        const currentLongitude = JSON.stringify(position.coords.longitude);
-        const currentLatitude = JSON.stringify(position.coords.latitude);
-        animateToRegion(currentLatitude, currentLongitude)
-        animate(currentLatitude, currentLongitude);
-        setState({
-          ...state,
-          curLoc: {latitude: currentLatitude, longitude: currentLongitude},
-          // destinationCords: {latitude: currentLatitude, longitude: currentLongitude},
-          coordinate: new AnimatedRegion({
-            latitude: currentLatitude,
-            longitude: currentLongitude,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          }),
-        });
-        dispatch(
-          saveCurrentUserLocation({
-            currentUserLocation: position.coords,
-          }),
-        );
-      },
-      error => {
-        setLocationStatus(error.message);
-      },
-      {
-        enableHighAccuracy: false,
-        timeout: 30000,
-        maximumAge: 1000,
-      },
-    );
-  };
-
-  const animate = (latitude: any, longitude: any) => {
-    const newCoordinate = {latitude, longitude};
-    if (Platform.OS === 'android') {
-      if (markerRef.current) {
-        markerRef.current.animateMarkerToCoordinate(newCoordinate, 7000);
-      }
-    } else {
-      coordinate.timing(newCoordinate).start();
-    }
-    setState({
-      ...state,
-      curLoc: {latitude, longitude},
-      coordinate: new AnimatedRegion({
-        latitude: latitude,
-        longitude: longitude,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
-      }),
-    });
-  };
-
-  const onChangeValue = (initialRegion: {latitude: any; longitude: any}) => {
-    setState({
-      ...state,
-      destinationCords: {
-        latitude: initialRegion.latitude,
-        longitude: initialRegion.longitude,
-      },
-    });
-  };
-
+  const mapRef = useRef<MapView>();
+  const markerRef = useRef<MapView>();
+  console.log('mapPoints', mapPoints, mapData, {
+    latitude: mapPoints?.[0]?.latitude,
+    longitude: mapPoints?.[0]?.longitude,
+  });
   return (
     <View style={styles.container}>
       <View style={styles.mapcontainer}>
         <MapView
-          // provider={PROVIDER_GOOGLE}
-          ref={mapRef}
           style={styles.mapStyle}
-          initialRegion={{
-            ...curLoc,
+          region={{
+            latitude: mapPoints?.[0]?.latitude,
+            longitude: mapPoints?.[0]?.longitude,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           }}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
-          followsUserLocation={true}
-          showsPointsOfInterest={true}
-          showsCompass={true}
-          // onRegionChangeComplete={onChangeValue}
-          >
-          <Marker.Animated
-            ref={markerRef}
-            coordinate={curLoc}
+          // initialRegion={mapPoints && mapPoints?.[0] ? mapPoints[0] : {}}
+          loadingEnabled={mapPoints?.lat === undefined ? true : false}
+          zoomEnabled={false}>
+          <Polyline
+            coordinates={mapPoints}
+            strokeColor={Colors.blue} // fallback for when `strokeColors` is not supported by the map-provider
+            strokeWidth={6}
           />
         </MapView>
+        {/* <MapView
+          style={styles.mapStyle}
+          region={{latitude: 37.8025259, longitude: -122.4351431}}>
+          <Polyline
+            coordinates={[
+              {latitude: 37.8025259, longitude: -122.4351431},
+              {latitude: 37.7896386, longitude: -122.421646},
+              {latitude: 37.7665248, longitude: -122.4161628},
+              {latitude: 37.7734153, longitude: -122.4577787},
+              {latitude: 37.7948605, longitude: -122.4596065},
+              {latitude: 37.8025259, longitude: -122.4351431},
+            ]}
+            strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+            strokeColors={[
+              '#7F0000',
+              '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
+              '#B24112',
+              '#E5845C',
+              '#238C23',
+              '#7F0000',
+            ]}
+            strokeWidth={6}
+          />
+        </MapView> */}
       </View>
     </View>
   );

@@ -20,7 +20,9 @@ const CompletedStatus = ({statusType}: Props) => {
   let navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
   const {userCompleted, loading} = useAppSelector(state => state.userCompleted);
-  const {providerCompleted} = useAppSelector(state => state.providerCompleted);
+  const {providerCompleted, loading: providerLoading} = useAppSelector(
+    state => state.providerCompleted,
+  );
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -37,7 +39,7 @@ const CompletedStatus = ({statusType}: Props) => {
 
   return (
     <>
-      {loading ? (
+      {loading || providerLoading ? (
         <InboxLoader />
       ) : (
         <ScrollView

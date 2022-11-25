@@ -22,7 +22,9 @@ const DeclinedStatus = ({statusType}: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const dispatch = useAppDispatch();
   const {userCancelled, loading} = useAppSelector(state => state.userCancelled);
-  const {providerCancelled} = useAppSelector(state => state.providerCancelled);
+  const {providerCancelled, loading: providerLoading} = useAppSelector(
+    state => state.providerCancelled,
+  );
 
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
@@ -38,7 +40,7 @@ const DeclinedStatus = ({statusType}: Props) => {
   }, [statusType]);
   return (
     <>
-      {loading ? (
+      {loading || providerLoading ? (
         <InboxLoader />
       ) : (
         <ScrollView

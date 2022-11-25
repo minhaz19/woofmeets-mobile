@@ -29,11 +29,11 @@ const sitterDetailsInputValue = [
     numberOfLines: 1,
   },
   {
-    title: 'Write something about your self',
+    title: 'Write something about yours self',
     description:
       'What’s something special or unique about yourself that will impress pet owners? Here’s your opportunity to describe why animals mean so much to you.',
     name: 'about',
-    numberOfLines: 1,
+    numberOfLines: 12,
   },
   {
     title: 'Pet care experience',

@@ -51,7 +51,7 @@ const ServicePicker = ({name, setValue}: Props) => {
       (setValue('serviceTypeId', modData[0].serviceTypeId),
       setValue(name, modData[0].id));
   }, [name, providerServices, setValue]);
-  const {isDarkMode, colors} = useTheme();
+  const { colors} = useTheme();
 
   return (
     <>

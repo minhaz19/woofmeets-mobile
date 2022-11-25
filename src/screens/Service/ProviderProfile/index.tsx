@@ -1,4 +1,4 @@
-import {FlatList, Platform, StyleSheet, View} from 'react-native';
+import {Alert, FlatList, Platform, StyleSheet, View} from 'react-native';
 import React from 'react';
 import ProviderHeader from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderHeader';
 // import ProviderFooter from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderFooter';
@@ -16,6 +16,7 @@ interface Props {
 const ProviderProfile = ({route}: Props) => {
   const providerOpk = route?.params?.providerOpk;
   const isSelfProfile = route?.params?.isSelfProfile;
+  const {providerServices} = useAppSelector(state => state.providerServices);
   const {colors} = useTheme();
   const _renderHeader = () => null;
   const _renderFooter = () => (
@@ -29,10 +30,14 @@ const ProviderProfile = ({route}: Props) => {
   const {isLoggedIn} = useAppSelector(state => state.auth);
   const handleSubmit = () => {
     if (isLoggedIn) {
-      navigation.navigate('Appointment', {
-        appointmentType: 'create',
-        providerOpk: providerOpk,
-      });
+      if (providerServices === undefined) {
+        Alert.alert('Provider has no active service');
+      } else {
+        navigation.navigate('Appointment', {
+          appointmentType: 'create',
+          providerOpk: providerOpk,
+        });
+      }
     } else {
       navigation.navigate('SignUp');
     }

@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TitleText from '../../common/text/TitleText';
 import Colors from '../../../constants/Colors';
@@ -22,23 +23,32 @@ import changeTextLetter from '../../common/changeTextLetter';
 import {formatDate} from '../../common/formatDate';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
+// import {format} from 'date-fns';
 // import AppActivityIndicator from '../../common/Loaders/AppActivityIndicator';
 const acceptEndpoint = '/appointment/accept/proposal/';
 const completeEndpoint = '/appointment/complete/';
 const rejectEndpoint = '/appointment/proposal/reject/';
-
+const cardEndpoint = '/appointment/card/all-dates/';
+const startEndpoint = '/appointment/card/start-appointment/';
+const stopEndpoint = '/appointment/card/stop-appointment/';
 const ActivityHeader = (props: {
   setIsDetailsModal: (arg0: boolean) => void;
   setIsThreeDotsModal: (arg0: boolean) => void;
+  setVisitId: any;
   opk?: any;
+  proposedServiceInfo?: any;
 }) => {
   let navigation = useNavigation<any>();
   const {colors} = useTheme();
+  const {request: getRequest} = useApi(methods._get);
   const {request} = useApi(methods._put);
+  const {request: ssReqest, loading} = useApi(methods._put);
   const dispatch = useAppDispatch();
   const [regenerateModal, setRegenerateModal] = useState(false);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  // const {loading} = useAppSelector(state => state.providerProfile);
+  const [currentDate, setCurrentDate] = useState<any>({});
+  const [appointmentStart, setAppointmentStart] = useState('START');
+  const [allDates, setAllDates] = useState<any>([]);
   const user = useAppSelector(state => state.whoAmI);
   const handleAccept = async () => {
     const result = await request(acceptEndpoint + props.opk);
@@ -112,6 +122,178 @@ const ActivityHeader = (props: {
       navigation.navigate('ProviderProfile', {
         providerOpk: proposedServiceInfo?.providerOpk,
       });
+    }
+  };
+  // const callApi = async () => {
+  //   return await getRequest(cardEndpoint + props.opk);
+  // };
+  const today = new Date();
+  const isSameDate = (date: string) => {
+    const splitDate = date?.split('T')?.[0];
+    const formattedToday = formatDate(today, 'yyyy-MM-dd');
+
+    if (formattedToday === splitDate) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  useEffect(() => {
+    const callApi = async () => {
+      const data = await getRequest(cardEndpoint + props.opk);
+      const arr = data?.data?.data?.sort(function (x: any, y: any) {
+        return new Date(x.date).getTime() - new Date(y.date).getTime();
+      });
+
+      if (arr?.length > 0) {
+        setAllDates(arr);
+        const findData = arr?.find(
+          (d: any) =>
+            (isSameDate(d?.date) === true &&
+              (d?.startTime === null || d?.stopTime === null)) ||
+            (!isSameDate(d?.date) && d?.startTime === null),
+        );
+        // ,
+        if (findData && findData !== undefined) {
+          setCurrentDate(findData);
+          props.setVisitId(findData.id);
+        } else {
+        }
+      }
+    };
+    callApi();
+  }, [appointmentStart, props.opk]);
+
+  const datePassed = (date: any) => {
+    return new Date(date) < today;
+  };
+  const isComming = (date: any) => {
+    return new Date(date) > today;
+  };
+  const isDateFound = () => {
+    return allDates?.findIndex((f: any) => new Date(f.date) === today) !== -1;
+  };
+
+  useEffect(() => {
+    if (
+      proposedServiceInfo?.serviceTypeId === 1 ||
+      proposedServiceInfo?.serviceTypeId === 2
+    ) {
+      if (
+        allDates?.[0]?.startTime === null &&
+        isSameDate(allDates?.[0]?.date)
+      ) {
+        setAppointmentStart('START');
+      } else if (
+        allDates?.[0]?.startTime !== null &&
+        isSameDate(allDates[allDates?.length - 1]?.date)
+      ) {
+        setAppointmentStart('STOP');
+      } else if (
+        allDates?.[0]?.startTime !== null &&
+        datePassed(allDates[allDates?.length - 1]?.date)
+      ) {
+        setAppointmentStart('ENDED');
+      } else if (isDateFound()) {
+        setAppointmentStart('NOAPPOINTMENT');
+      } else if (
+        allDates?.[0]?.startTime === null &&
+        allDates?.[0]?.stopTime === null &&
+        isComming(allDates?.[0]?.date)
+      ) {
+        setAppointmentStart('UPCOMING');
+      } else if (allDates?.[0]?.startTime !== null) {
+        setAppointmentStart('INPROGRESS');
+      } else {
+        setAppointmentStart('PAST');
+      }
+    } else {
+      if (currentDate.startTime === null && isSameDate(currentDate?.date)) {
+        setAppointmentStart('START');
+      } else if (
+        currentDate.startTime !== null &&
+        currentDate.stopTime === null &&
+        isSameDate(currentDate?.date)
+      ) {
+        setAppointmentStart('STOP');
+      } else if (
+        currentDate.startTime === null &&
+        isComming(currentDate?.date)
+      ) {
+        setAppointmentStart('UPCOMING');
+      } else if (
+        (currentDate?.startTime !== null && datePassed(currentDate?.date)) ||
+        (currentDate?.startTime === null && datePassed(currentDate?.date))
+      ) {
+        setAppointmentStart('PAST');
+      } else {
+        setAppointmentStart('');
+      }
+    }
+  }, [
+    allDates,
+    appointmentStart,
+    today,
+    currentDate,
+    proposedServiceInfo?.serviceTypeId,
+  ]);
+
+  const handleStart = async () => {
+    if (!isSameDate(currentDate.date)) {
+      // currentDate?.date &&
+      Alert.alert(
+        `You can not start appointment before or after ${formatDate(
+          new Date(currentDate?.date),
+          'iii LLL d yyyy',
+        )}`,
+      );
+    } else {
+      const startRes = await ssReqest(startEndpoint + currentDate?.id, {
+        startTime: new Date().toISOString(),
+      });
+      console.log('res', startRes);
+      if (startRes.ok) {
+        if (proposedServiceInfo.serviceTypeId === 5) {
+          navigation.navigate('ReportCardInitial', {
+            screen: 'InboxNavigator',
+            appointmentId: currentDate?.id,
+          });
+        }
+        setCurrentDate(startRes?.data?.data);
+        setAppointmentStart('STOP');
+      }
+    }
+  };
+  console.log('red', currentDate, appointmentStart);
+  const handleStop = async () => {
+    if (false) {
+    } else {
+      const stopRes = await ssReqest(stopEndpoint + currentDate?.id, {
+        stopTime: new Date().toISOString(),
+      });
+      if (stopRes) {
+        setAppointmentStart('START');
+        navigation.navigate('GenerateReport', {
+          screen: 'InboxNavigator',
+          reportInfo: stopRes.data.data,
+        });
+        setCurrentDate(stopRes?.data?.data);
+      }
+    }
+  };
+  const handleStatus = () => {
+    if (appointmentStart === 'UPCOMING') {
+      Alert.alert('You appointment is comming soon');
+    } else if (appointmentStart === 'NOAPPOINTMENT') {
+      Alert.alert('You have no appointment on this particular day');
+    } else if (appointmentStart === 'INPROGRESS') {
+      Alert.alert('Your appointment is in progress');
+    } else if (appointmentStart === 'ENDED') {
+      Alert.alert('Your appointment date has already been passed.');
+    } else if (appointmentStart === 'PAST') {
+      Alert.alert('Your appointment has been passed.');
+    } else {
+      Alert.alert('No sure about the status');
     }
   };
   return (
@@ -291,18 +473,47 @@ const ActivityHeader = (props: {
               <>
                 {proposedServiceInfo?.providerId ===
                   user?.user?.provider?.id && (
-                  <TouchableOpacity
-                    // style={{width: SCREEN_WIDTH / 5}}
-                    onPress={() => navigation.navigate('AppointmentSuccess')}>
-                    <TitleText
-                      text={'Paid Successfully'}
-                      textStyle={{
-                        ...styles.textStyle,
-                        textAlign: 'center',
-                        color: Colors.light.background,
-                      }}
-                    />
-                  </TouchableOpacity>
+                  <>
+                    <TouchableOpacity
+                      disabled={false}
+                      // style={{width: SCREEN_WIDTH / 5}}
+                      onPress={
+                        // handleStart
+                        appointmentStart === 'STOP'
+                          ? handleStop
+                          : appointmentStart === 'START'
+                          ? handleStart
+                          : handleStatus
+                      }>
+                      <TitleText
+                        text={
+                          loading
+                            ? 'loading...'
+                            : appointmentStart === 'START'
+                            ? 'Start Appointment'
+                            : appointmentStart === 'STOP'
+                            ? 'Complete Appointment'
+                            : appointmentStart === 'ENDED'
+                            ? 'Appointment Ended'
+                            : appointmentStart === 'UPCOMING'
+                            ? 'Comming Soon'
+                            : appointmentStart === 'NOAPPOINTMENT'
+                            ? 'No Appointment'
+                            : appointmentStart === 'INPROGRESS'
+                            ? 'In Progress'
+                            : appointmentStart === 'PAST'
+                            ? 'Past Appointment'
+                            : 'In Progress'
+                        }
+                        textStyle={{
+                          ...styles.textStyle,
+                          textAlign: 'center',
+                          color: Colors.light.background,
+                          fontWeight: 'bold',
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </>
                 )}
                 {!proposedServiceInfo?.isRecurring &&
                   proposedServiceInfo?.userId === user?.user?.id && (
@@ -440,7 +651,11 @@ const ActivityHeader = (props: {
                 // style={{width: SCREEN_WIDTH / 5}}
                 onPress={handleReject}>
                 <TitleText
-                  text="Decline"
+                  text={
+                    user?.id === proposedServiceInfo?.userId
+                      ? 'Cancel'
+                      : 'Decline'
+                  }
                   textStyle={{
                     ...styles.textStyle,
                     textAlign: 'center',
@@ -450,14 +665,50 @@ const ActivityHeader = (props: {
               </TouchableOpacity>
             )}
           </View>
-          <TouchableOpacity
-            onPress={() => props.setIsDetailsModal(true)}
-            style={[
-              styles.detailsButtonStyle,
-              {borderColor: colors.borderColor},
-            ]}>
-            <TitleText text="Details" textStyle={styles.textStyle} />
-          </TouchableOpacity>
+          {proposedServiceInfo?.serviceTypeId === 5 &&
+          proposedServiceInfo?.providerId === user?.user?.provider?.id &&
+          proposedServiceInfo?.status === 'PAID' &&
+          appointmentStart === 'STOP' ? (
+            <TouchableOpacity
+              onPress={() => {
+                // if (appointmentStart === 'START') {
+                //   ('You have to start the appointment to generate report');
+                // } else if (appointmentStart === 'STOP') {
+                //   navigation.navigate('ReportCardInitial', {
+                //     screen: 'InboxNavigator',
+                //     appointmentId: currentDate?.id,
+                //   });
+                // }
+                navigation.navigate('ReportCardInitial', {
+                  screen: 'InboxNavigator',
+                  appointmentId: currentDate?.id,
+                });
+              }}
+              style={[
+                styles.detailsButtonStyle,
+                {
+                  borderColor: colors.borderColor,
+                  backgroundColor: Colors.primaryDif,
+                },
+              ]}>
+              <TitleText
+                text="Report"
+                textStyle={{
+                  color: Colors.background,
+                  fontWeight: 'bold',
+                }}
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => props.setIsDetailsModal(true)}
+              style={[
+                styles.detailsButtonStyle,
+                {borderColor: colors.borderColor},
+              ]}>
+              <TitleText text="Details" textStyle={styles.textStyle} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
       {/* Modals */}

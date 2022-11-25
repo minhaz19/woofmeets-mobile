@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {useNavigation} from '@react-navigation/native';
+import {StackActions, useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../api/methods';
@@ -52,8 +52,7 @@ export const useAppointment = (providerOpk: string) => {
     ) {
       Alert.alert('You must select schedule dates');
     } else if (
-      (serviceTypeId === 1 ||
-        (serviceTypeId === 2 && serviceTypeId === 4 && isRecurring)) &&
+      (serviceTypeId === 1 || serviceTypeId === 2 || serviceTypeId === 4) &&
       (dropOffStartTime === '' ||
         dropOffEndTime === '' ||
         pickUpStartTime === '' ||
@@ -127,10 +126,16 @@ export const useAppointment = (providerOpk: string) => {
 
         const response = await request(endpoint, boardSittingPayload);
         if (response.ok) {
-          navigation.navigate('ActivityScreen', {
-            appointmentOpk: response.data.data.appointment.opk,
-            screen: 'Inbox',
-          });
+          navigation.dispatch(
+            StackActions.replace('ActivityScreen', {
+              appointmentOpk: response.data.data.appointment.opk,
+              screen: 'Inbox',
+            }),
+          );
+          // navigation.navigate('ActivityScreen', {
+          //   appointmentOpk: response.data.data.appointment.opk,
+          //   screen: 'Inbox',
+          // });
         } else {
           Alert.alert(response.data.message);
         }
@@ -245,10 +250,12 @@ export const useAppointment = (providerOpk: string) => {
             };
         const response = await request(endpoint, dropDogPayload);
         if (response.ok) {
-          navigation.navigate('ActivityScreen', {
-            appointmentOpk: response.data.data.appointment.opk,
-            screen: 'Inbox',
-          });
+          navigation.dispatch(
+            StackActions.replace('ActivityScreen', {
+              appointmentOpk: response.data.data.appointment.opk,
+              screen: 'Inbox',
+            }),
+          );
         } else {
           Alert.alert(response.data.message);
         }
@@ -315,10 +322,16 @@ export const useAppointment = (providerOpk: string) => {
         const response = await request(endpoint, doggyPayload);
 
         if (response.ok) {
-          navigation.navigate('ActivityScreen', {
-            appointmentOpk: response.data.data.appointment.opk,
-            screen: 'Inbox',
-          });
+          navigation.dispatch(
+            StackActions.replace('ActivityScreen', {
+              appointmentOpk: response.data.data.appointment.opk,
+              screen: 'Inbox',
+            }),
+          );
+          // navigation.navigate('ActivityScreen', {
+          //   appointmentOpk: response.data.data.appointment.opk,
+          //   screen: 'Inbox',
+          // });
         } else {
           Alert.alert(response.data.message);
         }

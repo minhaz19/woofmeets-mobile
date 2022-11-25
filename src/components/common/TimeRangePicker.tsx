@@ -79,18 +79,36 @@ const TimeSlotPicker = ({
       <Modal animated transparent visible={visible} animationType="fade">
         <Pressable style={styles.container} onPress={() => setVisbile(false)} />
 
-        <TitleText
-          text={title}
-          textStyle={{
-            borderTopColor: Colors.primary,
-            borderTopWidth: 2,
-            fontWeight: 'bold',
-            fontSize: Text_Size.Text_1,
-            padding: 20,
-            backgroundColor: colors.backgroundColor,
-          }}
-        />
-
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            backgroundColor: Colors.background,
+          }}>
+          <TitleText
+            text={title}
+            textStyle={{
+              borderTopColor: Colors.primary,
+              borderTopWidth: 2,
+              fontWeight: 'bold',
+              fontSize: Text_Size.Text_1,
+              padding: 20,
+              backgroundColor: colors.backgroundColor,
+            }}
+          />
+          <Pressable onPress={() => setVisbile(false)}>
+            <TitleText
+              text={'Close'}
+              textStyle={{
+                color: Colors.blue,
+                fontWeight: 'bold',
+                fontSize: Text_Size.Text_1,
+                paddingVertical: 20,
+                paddingHorizontal: 30,
+              }}
+            />
+          </Pressable>
+        </View>
         <View
           style={[
             styles.pickerContainer,

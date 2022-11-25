@@ -63,6 +63,7 @@ export const useImagePicker = (name: string) => {
 
   // submit image caption
   const handleSubmit = async (data: any) => {
+    console.log('data', data);
     const result = await methods._put(
       `${captionEndpoint + opk + '/' + selectedImgInfo?.id}`,
       data,

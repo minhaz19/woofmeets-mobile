@@ -7,7 +7,6 @@ import Overview from './components/Overview';
 import Services from './components/Services';
 import Reviews from './components/Reviews';
 import Colors from '../../../../../constants/Colors';
-import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 
 const tabs = [
@@ -21,9 +20,8 @@ const tabs = [
     tab: 'Reviews',
   },
 ];
-const ProviderTab = (props) => {
+const ProviderTab = (props: {providerOpk: string}) => {
   const [active, setActive] = useState(0);
-  const {isDarkMode} = useTheme();
   return (
     <View style={styles.container}>
       <View style={styles.tabContainer}>
@@ -36,10 +34,7 @@ const ProviderTab = (props) => {
                 fontWeight: 'bold',
                 fontSize:
                   SCREEN_WIDTH > 800 ? Text_Size.Text_1 : Text_Size.Text_0,
-                color:
-                  active === index
-                    ? Colors.black
-                    : Colors.gray,
+                color: active === index ? Colors.black : Colors.gray,
               }}
             />
             {active === index && <View style={styles.activeLabel} />}
@@ -47,7 +42,7 @@ const ProviderTab = (props) => {
         ))}
       </View>
       {active === 0 && <Overview />}
-      {active === 1 && <Services providerOpk={props.providerOpk}/>}
+      {active === 1 && <Services providerOpk={props.providerOpk} />}
       {active === 2 && <Reviews />}
     </View>
   );

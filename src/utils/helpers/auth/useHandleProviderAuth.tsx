@@ -37,7 +37,7 @@ export const useHandleProviderAuth = () => {
         dispatch(authProviderLoading(true));
       }
     } catch (error: any) {
-      Alert.alert('Login failed');
+      // Alert.alert('Login failed');
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -46,6 +46,7 @@ export const useHandleProviderAuth = () => {
         // play services not available or outdated
       } else {
         // some other error happened
+        Alert.alert('Login failed');
       }
     }
   };
@@ -58,7 +59,7 @@ export const useHandleProviderAuth = () => {
       ]);
       if (result) {
         if (result.isCancelled) {
-          Alert.alert('Login Cancelled ' + JSON.stringify(result));
+          // Alert.alert('Login Cancelled ' + JSON.stringify(result));
         } else {
           try {
             const currentProfile = await Profile.getCurrentProfile();

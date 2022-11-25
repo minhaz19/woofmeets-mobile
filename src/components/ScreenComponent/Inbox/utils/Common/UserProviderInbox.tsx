@@ -9,11 +9,11 @@ import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 const data = [
   {
     id: 'USER',
-    title: 'Pet Owner',
+    title: 'Customer',
   },
   {
     id: 'PROVIDER',
-    title: 'Pet Sitter',
+    title: 'Provider',
   },
 ];
 interface Props {
@@ -21,7 +21,7 @@ interface Props {
   setActive: (arg: string) => void;
 }
 const UserProviderInbox = ({active, setActive}: Props) => {
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   return (
     <View
       style={[
@@ -39,9 +39,7 @@ const UserProviderInbox = ({active, setActive}: Props) => {
           style={{
             paddingVertical: 10,
             backgroundColor:
-              active === item.id
-                ? Colors.primary
-                : Colors.primaryLight,
+              active === item.id ? Colors.primary : Colors.primaryLight,
             width: '46%',
             margin: '2%',
             borderRadius: 6,

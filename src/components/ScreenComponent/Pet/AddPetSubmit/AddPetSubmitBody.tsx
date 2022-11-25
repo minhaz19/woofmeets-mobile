@@ -8,6 +8,8 @@ import {useFormContext} from 'react-hook-form';
 import AdditionalMedicationCheck from '../components/AdditionalMedicationCheck';
 import AdditionalButtonInputs from '../components/AdditionalButtonInputs';
 import ScrollViewRapper from '../../../common/ScrollViewRapper';
+import TitleText from '../../../common/text/TitleText';
+import Colors from '../../../../constants/Colors';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -27,6 +29,14 @@ const AddPetSubmitBody = ({handleSubmit, loading, opk}: Props) => {
       <ScrollViewRapper>
         {/* <AddPetHeader /> */}
         <View>
+          <View style={styles.optionalText}>
+            <TitleText
+              textStyle={styles.text}
+              text={
+                'Below informations are optional your can share your pets information if you want to otherwise you can skip this section by hitting Next'
+              }
+            />
+          </View>
           <AdditionalMedicationCheck
             errors={errors}
             setValue={setValue}
@@ -65,6 +75,17 @@ const styles = StyleSheet.create({
   },
   spaceHeader: {
     paddingVertical: 10,
+  },
+  optionalText: {
+    padding: 10,
+    backgroundColor: Colors.iosBG,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    marginVertical: 20,
+  },
+  text: {
+    fontWeight: '600',
+    textAlign: 'justify',
   },
   btnAb: {position: 'absolute', bottom: '0%', width: '100%'},
 });

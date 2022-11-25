@@ -3,6 +3,7 @@ import {getProviderProfile} from './providerProfileAction';
 
 const initialState: any = {
   profileInfo: null,
+  providerProfile: null,
   featured: null,
   gallery: null,
   reviews: null,
@@ -29,6 +30,7 @@ const providerProfileSlice = createSlice({
       })
       .addCase(getProviderProfile.fulfilled, (state, {payload}) => {
         state.loading = false;
+        state.providerProfile = payload.data;
         state.profileInfo = payload.data.provider;
         state.gallery = payload.data.galleryPhotos;
         state.featured = payload.data.overview.featured;

@@ -36,11 +36,13 @@ const ActivityScreen = (props: {
   const [isDetailsModal, setIsDetailsModal] = useState(false);
   const [isThreeDotsModal, setIsThreeDotsModal] = useState(false);
   const [isReviewModal, setIsReviewModal] = useState(false);
+  const [visitId, setVisitId] = useState(null);
   useEffect(() => {
     dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAllPets());
     dispatch(getWhoAmI());
   }, [dispatch, appointmentOpk]);
+  console.log('vistit', visitId);
   return (
     <>
       {(loading || petLoading || providerLoading) && (
@@ -60,6 +62,8 @@ const ActivityScreen = (props: {
                 setIsDetailsModal={setIsDetailsModal}
                 setIsThreeDotsModal={setIsThreeDotsModal}
                 opk={appointmentOpk}
+                setVisitId={setVisitId}
+                proposedServiceInfo={proposedServiceInfo}
               />
               <BottomHalfModal
                 isModalVisible={isDetailsModal}
@@ -78,6 +82,7 @@ const ActivityScreen = (props: {
                   setIsThreeDotsModal={setIsThreeDotsModal}
                   setIsReviewModal={setIsReviewModal}
                   isReviewed={reviewGiven}
+                  appointmentId={visitId}
                   setModalVisible={function (): void {
                     throw new Error('Function not implemented.');
                   }}

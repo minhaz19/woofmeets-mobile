@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   iconStyle: {paddingRight: 5},
   leftContainer: {
     // position: 'absolute',
-    // top: 10,
+    top: -20,
     left: '2%',
     paddingTop: 4,
     paddingBottom: 4,

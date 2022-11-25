@@ -16,22 +16,21 @@ interface Props {
 }
 const BScalendar = ({watch, setValue}: Props) => {
   const [visible, setVisible] = useState(false);
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   // const {setValue, watch} = useFormContext();
   const {proposalStartDate, proposalEndDate} = watch();
   return (
     <View>
       <AppTouchableOpacity
-        style={[
-          styles.sectionContainer,
-          {backgroundColor: Colors.border},
-        ]}
+        style={[styles.sectionContainer, {backgroundColor: Colors.border}]}
         onPress={() => setVisible(!visible)}>
         <View style={styles.textWidth}>
           <TitleText textStyle={styles.titleText} text={'Dates'} />
           <DescriptionText
             text={
-              proposalStartDate !== ''
+              proposalEndDate === ''
+                ? `Boarding Date: ${proposalStartDate}`
+                : proposalStartDate !== ''
                 ? `( From: ${proposalStartDate} To: ${proposalEndDate})`
                 : 'Tap to add dates'
             }

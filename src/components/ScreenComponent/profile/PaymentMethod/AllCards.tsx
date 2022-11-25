@@ -145,21 +145,27 @@ const AllCards = ({
           )}
         </View>
         <BottomSpacing />
-        <View>
-          {sequence !== null && sequence !== undefined && (
-            <View style={{marginHorizontal: 20}}>
-              <ButtonCom
-                title={sequence === 1 ? 'Continue' : 'Confirm Payment'}
-                textAlignment={btnStyles.textAlignment}
-                containerStyle={btnStyles.containerStyleFullWidth}
-                titleStyle={btnStyles.titleStyle}
-                onSelect={onPress}
-                loading={loading}
-              />
-            </View>
-          )}
-        </View>
       </ScrollView>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          right: 10,
+          left: 10,
+        }}>
+        {sequence !== null && sequence !== undefined && (
+          <View style={{marginHorizontal: 20}}>
+            <ButtonCom
+              title={sequence === 1 ? 'Continue' : 'Confirm Payment'}
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={btnStyles.containerStyleFullWidth}
+              titleStyle={btnStyles.titleStyle}
+              onSelect={onPress}
+              loading={loading}
+            />
+          </View>
+        )}
+      </View>
     </SafeAreaView>
   );
 };
