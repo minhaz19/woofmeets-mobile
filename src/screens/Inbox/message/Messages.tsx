@@ -203,7 +203,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
                       styles.imageStyle,
                       {borderColor: colors.borderColor},
                     ]}>
-                    <TitleText text={userInfo.firstName?.slice(0,1)} />
+                    <TitleText text={userInfo?.firstName?.slice(0,1)} />
                   </View>
                 </View>
               </View>
