@@ -28,7 +28,6 @@ const ReportCard = ({navigation, route}: Props) => {
   const {colors} = useTheme();
   const {id, serviceTypeId, appointmentId} = route?.params;
   const [singleReportData, setSingleReportData] = useState({});
-  const {proposalServiceInfo} = useAppSelector(state => state.proposal);
   const {request, loading} = useApi(methods._get);
   const {request: getMap, loading: mapLoading} = useApi(methods._get);
   const [mapData, setMapData] = useState(null);
@@ -48,6 +47,8 @@ const ReportCard = ({navigation, route}: Props) => {
   };
   useEffect(() => {
     serviceTypeId === 5 && appointmentId !== null && callGet();
+  }, [appointmentId]);
+  useEffect(() => {
     handleSingleReport();
   }, []);
   return (

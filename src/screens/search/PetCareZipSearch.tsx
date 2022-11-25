@@ -3,8 +3,6 @@
 import {
   View,
   StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
   RefreshControl,
   Pressable,
 } from 'react-native';
@@ -50,8 +48,9 @@ import methods from '../../api/methods';
 import {useApi} from '../../utils/helpers/api/useApi';
 import {baseUrlV} from '../../utils/helpers/httpRequest';
 import ShortText from '../../components/common/text/ShortText';
-import { getWhoAmI } from '../../store/slices/common/whoAmI/whoAmIAction';
-import { useTheme } from '../../constants/theme/hooks/useTheme';
+import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
+import {getUserOnboardStatus} from '../../store/slices/connect/stripe';
 
 const petData = [
   {
@@ -107,9 +106,10 @@ const PetCareZipSearch = (props: {
 
   const onRefresh = () => {
     setRefreshing(true);
-
+    dispatch(getWhoAmI());
     dispatch(getServiceTypes());
     dispatch(getAllPets());
+    dispatch(getUserOnboardStatus());
     setRefreshing(false);
   };
 
@@ -276,53 +276,51 @@ const PetCareZipSearch = (props: {
   const {colors} = useTheme();
   const backgroundStyle = {
     backgroundColor: colors.backgroundColor,
+    marginBottom: 20,
   };
   const RenderHeader = () => {
     return (
       <View>
-        <View style={{paddingHorizontal:20, paddingBottom:20}}>
-          {
-            isLoggedIn && !user?.timezone ? (
-              <View style={[styles.boxContainerIn, backgroundStyle]}>
-                <ShortText
-                  text={
-                    'Action Required! Please set your preferred time zone to continue.'
-                  }
-                  textStyle={{color: Colors.red}}
-                />
-                <Pressable
-                  onPress={() => {
-                    props.navigation.navigate('AccountSetting');
-                    dispatch(getWhoAmI());
-                  }}>
-                  <ShortText
-                    text={'Set Time Zone'}
-                    textStyle={{color: Colors.blue}}
-                  />
-                </Pressable>
-              </View>
-            ) : null
-          }
-          {user?.provider?.isApproved && userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
-          ?.length === 0 ? null : (
+        <View style={{paddingHorizontal: 20, paddingBottom: 20}}>
+          {isLoggedIn && !user?.timezone ? (
             <View style={[styles.boxContainerIn, backgroundStyle]}>
+              <ShortText
+                text={
+                  'Action Required! Please set your preferred time zone to continue.'
+                }
+                textStyle={{color: Colors.red}}
+              />
+              <Pressable
+                onPress={() => {
+                  props.navigation.navigate('AccountSetting');
+                  dispatch(getWhoAmI());
+                }}>
                 <ShortText
-                  text={
-                    'Action Required! Please set your payments and payout'
-                  }
-                  textStyle={{color: Colors.red}}
+                  text={'Set Time Zone'}
+                  textStyle={{color: Colors.blue}}
                 />
-                <Pressable
-                  onPress={() => {
-                    props.navigation.navigate('ReceivePayments');
-                    dispatch(getWhoAmI());
-                  }}>
-                  <ShortText
-                    text={'Set Payments and Payout'}
-                    textStyle={{color: Colors.blue}}
-                  />
-                </Pressable>
-              </View>
+              </Pressable>
+            </View>
+          ) : null}
+          {user?.provider?.isApproved &&
+          userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
+            ?.length === 0 ? null : (
+            <View style={[styles.boxContainerIn, backgroundStyle]}>
+              <ShortText
+                text={'Action Required! Please set your payments and payout'}
+                textStyle={{color: Colors.red}}
+              />
+              <Pressable
+                onPress={() => {
+                  props.navigation.navigate('ReceivePayments');
+                  dispatch(getWhoAmI());
+                }}>
+                <ShortText
+                  text={'Set Payments and Payout'}
+                  textStyle={{color: Colors.blue}}
+                />
+              </Pressable>
+            </View>
           )}
         </View>
         {serviceTypesLoading || !serviceTypes ? (
@@ -419,36 +417,36 @@ const PetCareZipSearch = (props: {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }>
-            <View style={styles.boxContainer}>
-              <SearchSlider navigation={props.navigation} />
-              <RenderHeader />
-              <View style={styles.zipContainer}>
-                <TitleText text="Near" textStyle={styles.zipText} />
-                {/* <GoogleAutoComplete
+          <View style={styles.boxContainer}>
+            <SearchSlider navigation={props.navigation} />
+            <RenderHeader />
+            <View style={styles.zipContainer}>
+              <TitleText text="Near" textStyle={styles.zipText} />
+              {/* <GoogleAutoComplete
                   onPressAddress={onPressAddress}
                   placeholder={'Type a place'}
                 /> */}
-                <GooglePredictLocation
-                  placeholder={'Type a place'}
-                  onPlaceSelected={onPressAddress}
-                  onChange={value => {
-                    setAddressLine(value);
-                    setErrorMessage(null);
-                  }}
+              <GooglePredictLocation
+                placeholder={'Type a place'}
+                onPlaceSelected={onPressAddress}
+                onChange={value => {
+                  setAddressLine(value);
+                  setErrorMessage(null);
+                }}
+              />
+              {errorMessage && <ErrorMessage error={errorMessage} />}
+              <View style={styles.footerContainer}>
+                <ButtonCom
+                  title="Search"
+                  loading={loading}
+                  textAlignment={btnStyles.textAlignment}
+                  containerStyle={btnStyles.containerStyleFullWidth}
+                  titleStyle={btnStyles.titleStyle}
+                  onSelect={handleSubmit}
                 />
-                {errorMessage && <ErrorMessage error={errorMessage} />}
-                <View style={styles.footerContainer}>
-                  <ButtonCom
-                    title="Search"
-                    loading={loading}
-                    textAlignment={btnStyles.textAlignment}
-                    containerStyle={btnStyles.containerStyleFullWidth}
-                    titleStyle={btnStyles.titleStyle}
-                    onSelect={handleSubmit}
-                  />
-                </View>
               </View>
             </View>
+          </View>
           <BottomSpacing />
         </KeyboardAwareScrollView>
       </ScreenRapper>
@@ -472,7 +470,7 @@ const styles = StyleSheet.create({
   },
   boxContainerIn: {
     padding: 10,
-    borderWidth:1,
+    borderWidth: 1,
   },
   textHeader: {
     fontSize: Text_Size.Text_1,

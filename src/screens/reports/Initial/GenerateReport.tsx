@@ -29,6 +29,7 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 // import CalendarInput from '../../../components/ScreenComponent/Service/FilterProvider/CalendarInput';
 // import DateRange from '../../../components/common/DateRange';
 import {StackActions} from '@react-navigation/native';
+import TitleText from '../../../components/common/text/TitleText';
 interface Props {
   route: any;
   navigation: any;
@@ -90,7 +91,7 @@ const GenerateReport = ({navigation, route}: Props) => {
       proposedServiceInfo?.appointmentOpk
     }/${
       proposedServiceInfo?.serviceTypeId === 5
-        ? appointmentDateId !== null
+        ? appointmentDateId !== null && appointmentDateId !== undefined
           ? appointmentDateId
           : reportInfo.id
         : reportInfo.id
@@ -145,13 +146,16 @@ const GenerateReport = ({navigation, route}: Props) => {
       proposedServiceInfo.serviceTypeId === 5
         ? {
             appointmentId: proposedServiceInfo?.billing[0]?.appointmentId,
-            appointmentDateId: appointmentDateId,
+            appointmentDateId:
+              appointmentDateId !== null && appointmentDateId !== undefined
+                ? appointmentDateId
+                : reportInfo.id,
             images: photo,
             petsData: petsArray,
             medication: isMedication,
             additionalNotes: isAdditionalNotes,
-            totalWalkTime: walkTime,
-            distance: distance,
+            // totalWalkTime: walkTime,
+            // distance: distance,
             distanceUnit: 'Miles',
             // generateTime: new Date(reportStartTime).toISOString(),
             submitTime: new Date().toISOString(),
@@ -177,7 +181,6 @@ const GenerateReport = ({navigation, route}: Props) => {
   };
   return (
     <>
-      {uploadLoading && <AppActivityIndicator visible={true} />}
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={[styles.container, {backgroundColor: Colors.iosBG}]}>
@@ -294,14 +297,30 @@ const GenerateReport = ({navigation, route}: Props) => {
             paddingHorizontal: 15,
             marginVertical: 10,
           }}>
-          <PhotoGalleryList
-            label={'Photos'}
-            imageUris={photo}
-            onRemoveImage={handleRemove}
-            onAddImage={handleAdd}
-            handlePress={() => {}}
-            marginTop={false}
-          />
+          {uploadLoading ? (
+            <View style={{marginVertical: '15%'}}>
+              <TitleText
+                text="Loading..."
+                textStyle={{
+                  fontSize: Text_Size.Text_1,
+                  fontWeight: 'bold',
+                  color: Colors.primary,
+                  textAlign: 'center',
+                  // marginTop: '50%',
+                  // height: '100%',
+                }}
+              />
+            </View>
+          ) : (
+            <PhotoGalleryList
+              label={'Photos'}
+              imageUris={photo}
+              onRemoveImage={handleRemove}
+              onAddImage={handleAdd}
+              handlePress={() => {}}
+              marginTop={false}
+            />
+          )}
         </View>
         <View style={{marginHorizontal: '5%'}}>
           <ButtonCom

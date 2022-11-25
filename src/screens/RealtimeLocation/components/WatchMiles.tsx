@@ -20,7 +20,6 @@ const WatchMiles = ({setTrackLocation, trackLocation}: Props) => {
 
   useEffect(() => {
     let interval: any = null;
-    console.log('rendi', trackLocation);
     if (trackLocation) {
       interval = setInterval(() => {
         setTime(time => time + 10);

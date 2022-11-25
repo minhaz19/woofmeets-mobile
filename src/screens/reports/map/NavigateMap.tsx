@@ -4,8 +4,6 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  Platform,
-  PermissionsAndroid,
 } from 'react-native';
 import MapView, {Polyline} from 'react-native-maps';
 
@@ -41,7 +39,6 @@ const NavigateMap = ({mapData}: any) => {
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           }}
-          // initialRegion={mapPoints && mapPoints?.[0] ? mapPoints[0] : {}}
           loadingEnabled={mapPoints?.lat === undefined ? true : false}
           zoomEnabled={false}>
           <Polyline
@@ -50,30 +47,6 @@ const NavigateMap = ({mapData}: any) => {
             strokeWidth={6}
           />
         </MapView>
-        {/* <MapView
-          style={styles.mapStyle}
-          region={{latitude: 37.8025259, longitude: -122.4351431}}>
-          <Polyline
-            coordinates={[
-              {latitude: 37.8025259, longitude: -122.4351431},
-              {latitude: 37.7896386, longitude: -122.421646},
-              {latitude: 37.7665248, longitude: -122.4161628},
-              {latitude: 37.7734153, longitude: -122.4577787},
-              {latitude: 37.7948605, longitude: -122.4596065},
-              {latitude: 37.8025259, longitude: -122.4351431},
-            ]}
-            strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-            strokeColors={[
-              '#7F0000',
-              '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-              '#B24112',
-              '#E5845C',
-              '#238C23',
-              '#7F0000',
-            ]}
-            strokeWidth={6}
-          />
-        </MapView> */}
       </View>
     </View>
   );
