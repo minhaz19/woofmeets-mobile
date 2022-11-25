@@ -20,7 +20,6 @@ const NavigateMap = ({mapData}: any) => {
 
   useEffect(() => {
     const da = mapData?.map((item: any) => item.points);
-    console.log('dat');
     const result = da?.reduce((r: any, e: any) => (r.push(...e), r), []);
     const formatted = result?.map((it: any) => ({
       latitude: it.lat !== null || it.lat !== 0 ? it.lat : result[3]?.lat,
@@ -31,10 +30,6 @@ const NavigateMap = ({mapData}: any) => {
 
   const mapRef = useRef<MapView>();
   const markerRef = useRef<MapView>();
-  console.log('mapPoints', mapPoints, mapData, {
-    latitude: mapPoints?.[0]?.latitude,
-    longitude: mapPoints?.[0]?.longitude,
-  });
   return (
     <View style={styles.container}>
       <View style={styles.mapcontainer}>

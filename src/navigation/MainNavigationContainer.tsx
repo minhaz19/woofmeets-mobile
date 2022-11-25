@@ -56,6 +56,7 @@ import {setOpenSettings} from '../store/slices/misc/openFilter';
 import ReportCardInitial from '../screens/reports/Initial';
 import GenerateReport from '../screens/reports/Initial/GenerateReport';
 import ShowAllReport from '../screens/reports/ShowReport';
+import ReportCard from '../screens/reports/Initial/ReportCard';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -607,6 +608,17 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="GenerateReport"
           component={GenerateReport}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Reports" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ReportCard"
+          component={ReportCard}
           options={({navigation}) => ({
             title: '',
             header: () => (

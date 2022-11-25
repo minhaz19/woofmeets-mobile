@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, ScrollView, Alert} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import PhotoGalleryList from '../../../components/common/ImagePicker/PhotoGalleryList';
 import HeaderText from '../../../components/common/text/HeaderText';
@@ -26,15 +26,15 @@ import Text_Size from '../../../constants/textScaling';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
-import CalendarInput from '../../../components/ScreenComponent/Service/FilterProvider/CalendarInput';
-import DateRange from '../../../components/common/DateRange';
+// import CalendarInput from '../../../components/ScreenComponent/Service/FilterProvider/CalendarInput';
+// import DateRange from '../../../components/common/DateRange';
 import {StackActions} from '@react-navigation/native';
 interface Props {
   route: any;
   navigation: any;
 }
 const GenerateReport = ({navigation, route}: Props) => {
-  const [reportStartTime, setReportStartTime] = useState<any>(null);
+  // const [reportStartTime, setReportStartTime] = useState<any>(null);
   // const [reportEndTime, setReportEndTime] = useState<string>('');
   // const [startDateVisible, setStartDateVisible] = useState(false);
   const walkTime = route?.params?.walkTime;
@@ -44,7 +44,7 @@ const GenerateReport = ({navigation, route}: Props) => {
 
   const [isMedication, setIsMedication] = useState('');
   const [isAdditionalNotes, setIsAdditionalNotes] = useState('');
-  const [OpenDropIn, setOpenDropIn] = useState(false);
+  // const [OpenDropIn, setOpenDropIn] = useState(false);
 
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
@@ -52,10 +52,10 @@ const GenerateReport = ({navigation, route}: Props) => {
     useAppSelector((state: any) => state?.reportCard);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
 
-  const handleDropIn = () => {
-    setOpenDropIn(!OpenDropIn);
-    // setOpenDropOut(false);
-  };
+  // const handleDropIn = () => {
+  //   setOpenDropIn(!OpenDropIn);
+  //   // setOpenDropOut(false);
+  // };
 
   // methods for api call
   const {request: uploadRequest, loading: uploadLoading} = useApi(
@@ -77,7 +77,8 @@ const GenerateReport = ({navigation, route}: Props) => {
   //Upload photo
   // const {request: uploadRequest, loading: uploadLoading} = useApi(
   //   methods._post,
-  // );
+  // )
+
   const handleAdd = async (_e: any) => {
     const formData = new FormData();
     formData.append('files', {
@@ -89,7 +90,9 @@ const GenerateReport = ({navigation, route}: Props) => {
       proposedServiceInfo?.appointmentOpk
     }/${
       proposedServiceInfo?.serviceTypeId === 5
-        ? appointmentDateId
+        ? appointmentDateId !== null
+          ? appointmentDateId
+          : reportInfo.id
         : reportInfo.id
     }`;
     const result = await uploadRequest(uploadEndPoint, formData);
@@ -109,7 +112,7 @@ const GenerateReport = ({navigation, route}: Props) => {
     let petsArray: any = [];
     proposedServiceInfo?.petsInfo?.map((item: any) => {
       let petsObj = {};
-      isPeeSelected?.map(i => {
+      isPeeSelected?.map((i: any) => {
         if (item.id === i.id) {
           Object.assign(petsObj, {
             petId: i.petId,
@@ -119,17 +122,17 @@ const GenerateReport = ({navigation, route}: Props) => {
           });
         }
       });
-      isPooSelected?.map(i => {
+      isPooSelected?.map((i: any) => {
         if (item.id === i.id) {
           Object.assign(petsObj, {poo: i.poo});
         }
       });
-      isFoodSelected?.map(i => {
+      isFoodSelected?.map((i: any) => {
         if (item.id === i.id) {
           Object.assign(petsObj, {food: i.food});
         }
       });
-      isWaterSelected?.map(i => {
+      isWaterSelected?.map((i: any) => {
         if (item.id === i.id) {
           Object.assign(petsObj, {water: i.water});
         }
@@ -150,7 +153,7 @@ const GenerateReport = ({navigation, route}: Props) => {
             totalWalkTime: walkTime,
             distance: distance,
             distanceUnit: 'Miles',
-            generateTime: new Date(reportStartTime).toISOString(),
+            // generateTime: new Date(reportStartTime).toISOString(),
             submitTime: new Date().toISOString(),
           }
         : {
@@ -163,7 +166,6 @@ const GenerateReport = ({navigation, route}: Props) => {
             submitTime: reportInfo?.stopTime,
           };
     const result = await reportRequest(endPoint, formattedData);
-    console.log(result, formattedData);
     if (result?.ok) {
       navigation.dispatch(
         StackActions.replace('ActivityScreen', {
@@ -226,7 +228,7 @@ const GenerateReport = ({navigation, route}: Props) => {
             setReportStartTime={setReportStartTime}
             setReportEndTime={setReportEndTime}
           /> */}
-          <HeaderText text="Start Date" textStyle={styles.label} />
+          {/* <HeaderText text="Start Date" textStyle={styles.label} />
           <View style={{width: '48%'}}>
             <CalendarInput
               placeholder={'Start date'}
@@ -240,7 +242,7 @@ const GenerateReport = ({navigation, route}: Props) => {
               setOpenCal={handleDropIn}
               setTime={setReportStartTime}
             />
-          )}
+          )} */}
         </View>
         <View>
           <HeaderText

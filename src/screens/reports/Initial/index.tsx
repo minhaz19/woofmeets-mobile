@@ -40,7 +40,6 @@ const ReportCardInitial = ({navigation, route}: Props) => {
         user: user.id,
         visit: appointmentId,
       });
-      console.log('r', result);
       if (result.ok) {
         navigation.navigate('GenerateReport', {
           screen: 'InboxNavigator',
@@ -53,7 +52,6 @@ const ReportCardInitial = ({navigation, route}: Props) => {
       }
     }
   };
-  console.log('appointmentId', appointmentId);
   return (
     <ScreenRapperGrey rapperStyle={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>

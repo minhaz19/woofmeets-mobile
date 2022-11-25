@@ -53,7 +53,6 @@ const RealtimeLocation = ({
     longitude: 0,
     coordinates: [],
   });
-  // console.log(trackLocation);
   async function requestLocationPermission() {
     if (Platform.OS === 'ios') {
       const c = await Geolocation.requestAuthorization('whenInUse');
@@ -136,7 +135,6 @@ const RealtimeLocation = ({
     getCurrentPosition();
     const _watchId = Geolocation.watchPosition(
       (position: any) => {
-        // console.log('poisit', position);
         setMapInfo({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -169,7 +167,6 @@ const RealtimeLocation = ({
     }
   }, [socket]);
   const callApi = (payloadData: any) => {
-    console.log('ca;;', payloadData);
     return new Promise(resolve => socket.emit('update-location', payloadData));
   };
   useMemo(() => {
@@ -186,7 +183,6 @@ const RealtimeLocation = ({
       callApi(payloadData);
     }
   }, [trackLocation, mapInfo]);
-  console.log('hello');
   return (
     <>
       <View style={styles.container}>

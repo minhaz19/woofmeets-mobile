@@ -33,7 +33,6 @@ const RefundDetails: FC<Props> = props => {
   useEffect(() => {
     dispatch(getProposalPricing(proposedServiceInfo?.appointmentOpk));
   }, []);
-  console.log('proposedServiceInfo', proposedServiceInfo);
   return (
     <>
       {loading || sLoader ? (

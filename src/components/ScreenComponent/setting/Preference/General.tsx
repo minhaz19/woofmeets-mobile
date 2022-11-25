@@ -20,7 +20,6 @@ const General = ({handleSubmit, loading}: Props) => {
     formState: {errors},
   } = useFormContext();
   const timezoneData = getValues();
-  console.log(timezoneData);
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}

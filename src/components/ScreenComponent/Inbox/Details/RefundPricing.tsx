@@ -18,7 +18,6 @@ interface Props {
 const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
   const {colors} = useTheme();
   const {user} = useAppSelector(state => state.whoAmI);
-  console.log('ppp', proposalPricing);
   return (
     <View>
       <View
