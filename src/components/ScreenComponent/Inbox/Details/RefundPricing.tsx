@@ -10,34 +10,16 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppSelector} from '../../../../store/store';
 import changeTextLetter from '../../../common/changeTextLetter';
 import ShortText from '../../../common/text/ShortText';
-import TitleText from '../../../common/text/TitleText';
 interface Props {
   screen: string;
+  proposedServiceInfo: any;
+  proposalPricing: any;
 }
-const RefundPricing = ({}: Props) => {
+const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
   const {colors} = useTheme();
   const {user} = useAppSelector(state => state.whoAmI);
-  const {proposalPricing, loading} = useAppSelector(
-    state => state.proposalPricing,
-  );
-  const {proposedServiceInfo, loading: sLoader} = useAppSelector(
-    state => state.proposal,
-  );
-  return loading || sLoader ? (
-    <View style={{marginVertical: '50%'}}>
-      <TitleText
-        text="Loading..."
-        textStyle={{
-          fontSize: Text_Size.Text_1,
-          fontWeight: 'bold',
-          color: Colors.primary,
-          textAlign: 'center',
-          // marginTop: '50%',
-          // height: '100%',
-        }}
-      />
-    </View>
-  ) : (
+  console.log('ppp', proposalPricing);
+  return (
     <View>
       <View
         style={{
@@ -49,19 +31,6 @@ const RefundPricing = ({}: Props) => {
           text={'Charges & Services'}
           textStyle={styles._textHeader}
         />
-        {/* <HeaderText
-          text={'Refund'}
-          textStyle={{
-            fontSize: Text_Size.Text_0,
-            lineHeight: 20,
-            marginBottom: 6,
-            fontWeight: 'bold',
-            backgroundColor: Colors.green,
-            padding: 10,
-            color: Colors.background,
-            borderRadius: 5,
-          }}
-        /> */}
       </View>
       {proposalPricing?.petsRates?.map((item: any, index: number) => {
         return (
@@ -111,35 +80,36 @@ const RefundPricing = ({}: Props) => {
           </View>
         );
       })}
-      {proposalPricing?.sixtyMinutesRate?.count && (
-        <View style={[styles.mapContainer]}>
-          <View style={styles.flexContainer}>
-            <HeaderText
-              text={changeTextLetter(
-                proposalPricing?.sixtyMinutesRate?.rate.name,
-              )}
-              textStyle={styles.priceTextHeader}
+      {proposalPricing?.sixtyMinutesRate?.rate?.name !== undefined &&
+        proposalPricing?.sixtyMinutesRate?.rate?.name !== '' && (
+          <View style={[styles.mapContainer]}>
+            <View style={styles.flexContainer}>
+              <HeaderText
+                text={changeTextLetter(
+                  proposalPricing?.sixtyMinutesRate?.rate?.name,
+                )}
+                textStyle={styles.priceTextHeader}
+              />
+              <HeaderText
+                text={`$${
+                  proposalPricing?.sixtyMinutesRate?.count *
+                  proposalPricing?.sixtyMinutesRate?.rate?.amount
+                }`}
+                textStyle={styles.priceText}
+              />
+            </View>
+
+            <ShortText
+              text={`Applied ${proposalPricing?.sixtyMinutesRate.rate.name}`}
+              textStyle={{fontWeight: 'bold'}}
             />
-            <HeaderText
-              text={`$${
-                proposalPricing?.sixtyMinutesRate?.count *
-                proposalPricing?.sixtyMinutesRate?.rate.amount
-              }`}
-              textStyle={styles.priceText}
+
+            <DescriptionText
+              text={`${proposalPricing?.sixtyMinutesRate?.count} visit @ $${proposalPricing?.sixtyMinutesRate?.rate?.amount} / visit`}
+              textStyle={{color: colors.descriptionText, lineHeight: 20}}
             />
           </View>
-
-          <ShortText
-            text={`Applied ${proposalPricing?.sixtyMinutesRate.rate.name}`}
-            textStyle={{fontWeight: 'bold'}}
-          />
-
-          <DescriptionText
-            text={`${proposalPricing?.sixtyMinutesRate.count} visit @ $${proposalPricing?.sixtyMinutesRate.rate.amount} / visit`}
-            textStyle={{color: colors.descriptionText, lineHeight: 20}}
-          />
-        </View>
-      )}
+        )}
       <View
         style={[styles.divider, {backgroundColor: colors.descriptionText}]}
       />
@@ -294,7 +264,9 @@ const RefundPricing = ({}: Props) => {
             />
             {user?.id === proposedServiceInfo?.userId ? (
               <HeaderText
-                text={`$${proposedServiceInfo?.refundDetails?.userAmount}`}
+                text={`$${Number(
+                  proposedServiceInfo?.refundDetails?.userAmount,
+                )?.toFixed(2)}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
                   color: Colors.background,
@@ -302,7 +274,9 @@ const RefundPricing = ({}: Props) => {
               />
             ) : (
               <HeaderText
-                text={`$${proposedServiceInfo?.refundDetails?.providerAmount}`}
+                text={`$${Number(
+                  proposedServiceInfo?.refundDetails?.providerAmount,
+                )?.toFixed(2)}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
                   color: Colors.background,

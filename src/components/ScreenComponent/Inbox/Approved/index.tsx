@@ -22,7 +22,7 @@ const ApprovedStatus = ({statusType}: Props) => {
   const {userInprogress, loading} = useAppSelector(
     state => state.userInprogress,
   );
-  const {providerInprogress} = useAppSelector(
+  const {providerInprogress, loading: providerLoading} = useAppSelector(
     state => state.providerInprogress,
   );
 
@@ -47,7 +47,7 @@ const ApprovedStatus = ({statusType}: Props) => {
   }, [statusType]);
   return (
     <>
-      {loading ? (
+      {loading || providerLoading ? (
         <InboxLoader />
       ) : (
         <ScrollView

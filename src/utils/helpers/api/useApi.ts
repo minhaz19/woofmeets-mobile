@@ -20,21 +20,6 @@ export const useApi = (apiFunc: any) => {
         Alert.alert('Something went wrong! please try again later');
       } else if (response.problem === 'TIMEOUT_ERROR') {
         Alert.alert('Response Timeout! Go back and try again');
-        // Alert.alert(
-        //   'Response Timeout',
-        //   'would you like to retry?',
-        //   [
-        //     {
-        //       text: 'No',
-        //       onPress: () => navigation.goBack(),
-        //     },
-        //     {
-        //       text: 'Yes',
-        //       onPress: async () => await request(...args),
-        //     },
-        //   ],
-        //   {cancelable: false},
-        // );
       } else if (response.status === 402) {
         Alert.alert(response.data.message);
       } else {

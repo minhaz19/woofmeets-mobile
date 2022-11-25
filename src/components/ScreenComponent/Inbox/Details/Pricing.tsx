@@ -99,39 +99,40 @@ const Pricing = ({}: Props) => {
               </View>
             );
           })}
-          {proposalPricing?.sixtyMinutesRate?.count && (
-            <View style={[styles.mapContainer]}>
-              <View style={styles.flexContainer}>
-                <HeaderText
-                  text={changeTextLetter(
-                    proposalPricing?.sixtyMinutesRate?.rate.name,
-                  )}
-                  textStyle={styles.priceTextHeader}
+          {proposalPricing?.sixtyMinutesRate?.rate?.name !== undefined &&
+            proposalPricing?.sixtyMinutesRate?.rate?.name !== '' && (
+              <View style={[styles.mapContainer]}>
+                <View style={styles.flexContainer}>
+                  <HeaderText
+                    text={changeTextLetter(
+                      proposalPricing?.sixtyMinutesRate?.rate.name,
+                    )}
+                    textStyle={styles.priceTextHeader}
+                  />
+                  <HeaderText
+                    text={`$${Number(
+                      proposalPricing?.sixtyMinutesRate?.count *
+                        proposalPricing?.sixtyMinutesRate?.rate?.amount,
+                    )?.toFixed(2)}`}
+                    textStyle={styles.priceText}
+                  />
+                </View>
+
+                <ShortText
+                  text={`Applied ${proposalPricing?.sixtyMinutesRate.rate.name}`}
+                  textStyle={{fontWeight: 'bold'}}
                 />
-                <HeaderText
-                  text={`$${Number(
-                    proposalPricing?.sixtyMinutesRate?.count *
-                      proposalPricing?.sixtyMinutesRate?.rate?.amount,
-                  )?.toFixed(2)}`}
-                  textStyle={styles.priceText}
+
+                <DescriptionText
+                  text={`${
+                    proposalPricing?.sixtyMinutesRate.count
+                  } visit @ $${Number(
+                    proposalPricing?.sixtyMinutesRate?.rate?.amount,
+                  )?.toFixed(2)} / visit`}
+                  textStyle={{color: colors.descriptionText, lineHeight: 20}}
                 />
               </View>
-
-              <ShortText
-                text={`Applied ${proposalPricing?.sixtyMinutesRate.rate.name}`}
-                textStyle={{fontWeight: 'bold'}}
-              />
-
-              <DescriptionText
-                text={`${
-                  proposalPricing?.sixtyMinutesRate.count
-                } visit @ $${Number(
-                  proposalPricing?.sixtyMinutesRate?.rate?.amount,
-                )?.toFixed(2)} / visit`}
-                textStyle={{color: colors.descriptionText, lineHeight: 20}}
-              />
-            </View>
-          )}
+            )}
           <View
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
           />

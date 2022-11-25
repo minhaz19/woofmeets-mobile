@@ -8,7 +8,7 @@ import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../../../../../constants/textScaling';
 import DescriptionText from '../../../../../../../common/text/DescriptionText';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 interface Props {
   item: {
     title: string;
@@ -32,9 +32,12 @@ const SitterInfo = ({item}: Props) => {
           {item.Icon && <item.Icon fill={'black'} />}
         </View>
         {item.title === 'About' ? (
-          <TouchableOpacity onPress={() => navigation.navigate('AboutProvider', {
-            description: item.subInfo
-          })}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('AboutProvider', {
+                description: item.subInfo,
+              })
+            }>
             <TitleText textStyle={styles.titleBlue} text={item.viewAll} />
           </TouchableOpacity>
         ) : null}
@@ -54,7 +57,7 @@ const SitterInfo = ({item}: Props) => {
                 fontSize: Text_Size.Text_9,
                 marginTop: 10,
               }}
-              text={'No home information found'}
+              text={'No skill information found'}
             />
           </View>
         ) : (
@@ -108,7 +111,7 @@ const styles = StyleSheet.create({
   title: {
     marginRight: 5,
     fontWeight: 'bold',
-    fontSize: Text_Size.Text_0
+    fontSize: Text_Size.Text_0,
   },
   titleBlue: {
     marginRight: 5,

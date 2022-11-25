@@ -20,22 +20,22 @@ import UserProviderInbox from '../../components/ScreenComponent/Inbox/utils/Comm
 const data = [
   {
     id: 1,
-    title: 'Pending',
+    title: 'Requested',
     opacity: 1,
   },
   {
     id: 2,
-    title: 'Approved',
+    title: 'Upcoming',
     opacity: 1,
   },
   {
     id: 3,
-    title: 'Completed',
+    title: 'Past',
     opacity: 1,
   },
   {
     id: 4,
-    title: 'Declined',
+    title: 'Deleted',
     opacity: 1,
   },
 ];

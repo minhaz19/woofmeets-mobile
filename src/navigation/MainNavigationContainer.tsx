@@ -52,7 +52,10 @@ import UpgradePlan from '../components/ScreenComponent/becomeSitter/subscription
 import SubscriptionList from '../screens/profile/SubscriptionList';
 import AboutProvider from '../screens/Service/ProviderProfile/AboutProvider';
 import ProviderAvailablity from '../screens/provider/ProviderAvailablity';
-import { setOpenSettings } from '../store/slices/misc/openFilter';
+import {setOpenSettings} from '../store/slices/misc/openFilter';
+import ReportCardInitial from '../screens/reports/Initial';
+import GenerateReport from '../screens/reports/Initial/GenerateReport';
+import ShowAllReport from '../screens/reports/ShowReport';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -586,6 +589,39 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 title="Subscription List"
                 notification
               />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ReportCardInitial"
+          component={ReportCardInitial}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Reports" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="GenerateReport"
+          component={GenerateReport}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Reports" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ShowAllReport"
+          component={ShowAllReport}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Reports" />
             ),
             backgroundColor: Colors.primary,
           })}

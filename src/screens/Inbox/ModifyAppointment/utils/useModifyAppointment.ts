@@ -55,8 +55,7 @@ export const useModifyAppointment = (route: any) => {
     ) {
       Alert.alert('You must select schedule dates');
     } else if (
-      (serviceTypeId === 1 ||
-        (serviceTypeId === 2 && serviceTypeId === 4 && isRecurring)) &&
+      (serviceTypeId === 1 || serviceTypeId === 2 || serviceTypeId === 4) &&
       (dropOffStartTime === '' ||
         dropOffEndTime === '' ||
         pickUpStartTime === '' ||

@@ -2,7 +2,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  useColorScheme,
+  
   View,
 } from 'react-native';
 import React, {useEffect} from 'react';
@@ -34,7 +34,7 @@ const AuthFooter = ({
   authType,
   navigateScreen,
 }: Props) => {
-  const isDarkMode = useColorScheme() === 'dark';
+
   const navigation = useNavigation<NavigationProps | any>();
   const {handleGFauth} = useHandleProviderAuth();
   const {isLoggedIn} = useAppSelector(state => state.auth);

@@ -22,7 +22,7 @@ const PendingStatus = ({statusType}: Props) => {
   const {appointmentStatus, loading} = useAppSelector(
     state => state.appointmentStatus,
   );
-  const {providerApntStatus} = useAppSelector(
+  const {providerApntStatus, loading: providerLoading} = useAppSelector(
     state => state.providerApntStatus,
   );
 
@@ -40,7 +40,7 @@ const PendingStatus = ({statusType}: Props) => {
 
   return (
     <>
-      {loading ? (
+      {loading || providerLoading ? (
         <InboxLoader />
       ) : (
         <ScrollView
