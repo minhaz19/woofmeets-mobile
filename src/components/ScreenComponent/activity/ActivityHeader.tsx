@@ -173,7 +173,6 @@ const ActivityHeader = (props: {
   const isDateFound = () => {
     return allDates?.findIndex((f: any) => new Date(f.date) === today) !== -1;
   };
-
   useEffect(() => {
     if (
       proposedServiceInfo?.serviceTypeId === 1 ||
@@ -251,7 +250,6 @@ const ActivityHeader = (props: {
       const startRes = await ssReqest(startEndpoint + currentDate?.id, {
         startTime: new Date().toISOString(),
       });
-      console.log('res', startRes);
       if (startRes.ok) {
         if (proposedServiceInfo.serviceTypeId === 5) {
           navigation.navigate('ReportCardInitial', {
@@ -264,7 +262,6 @@ const ActivityHeader = (props: {
       }
     }
   };
-  console.log('red', currentDate, appointmentStart);
   const handleStop = async () => {
     if (false) {
     } else {

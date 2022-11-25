@@ -86,7 +86,7 @@ const PetCareZipSearch = (props: {
     lat: null,
     lng: null,
   });
-  const [addressLine, setAddressLine] = useState('');
+  const [addressLine, setAddressLine] = useState(null);
   const [sequence, setSequence] = useState<number>(1);
   const [serviceData, setServiceData] = useState({
     service: 'boarding',
@@ -124,7 +124,6 @@ const PetCareZipSearch = (props: {
       service: data?.slug,
       serviceId: data?.id,
     });
-    setErrorMessage(null);
   };
 
   // select pet
@@ -156,6 +155,7 @@ const PetCareZipSearch = (props: {
     const lng = details?.geometry?.location.lng;
     setCareLocation({lat: lat, lng: lng});
     setAddressLine(details?.formatted_address);
+    setErrorMessage(null);
   };
   // submitting the data and get request
   const {request, loading} = useApi(methods._get);
@@ -177,7 +177,7 @@ const PetCareZipSearch = (props: {
           lat: careLocation.lat,
           lng: careLocation.lng,
           page: 1,
-          limit: 10,
+          limit: 20,
         };
       } else {
         formattedData = {
@@ -187,7 +187,7 @@ const PetCareZipSearch = (props: {
           lat: careLocation.lat,
           lng: careLocation.lng,
           page: 1,
-          limit: 10,
+          limit: 20,
         };
       }
       dispatch(
@@ -213,7 +213,7 @@ const PetCareZipSearch = (props: {
       dispatch(setServiceFrequency(days));
       dispatch(setScheduleId(null));
       props.navigation.navigate('AllProvider');
-    } else {
+    } else if (addressLine) {
       const locationAddressEndPoint = `${baseUrlV}/v2/location?address=${addressLine}`;
       const result = await request(locationAddressEndPoint);
       if (result.ok) {
@@ -266,8 +266,11 @@ const PetCareZipSearch = (props: {
         dispatch(setIsYardEnabled(''));
         dispatch(setServiceFrequency(days));
         dispatch(setScheduleId(null));
+        setErrorMessage(null);
         props.navigation.navigate('AllProvider');
       }
+    } else {
+      setErrorMessage('Please enter your zip code or address');
     }
   };
   const {colors} = useTheme();
@@ -346,9 +349,6 @@ const PetCareZipSearch = (props: {
             </View>
           </View>
         )}
-        <View style={styles.textHeader}>
-          {errorMessage && <ErrorMessage error={errorMessage} />}
-        </View>
         <View style={styles.headerContainer}>
           <TitleText
             text="Looking service for my"
@@ -410,6 +410,8 @@ const PetCareZipSearch = (props: {
           extraScrollHeight={120}
           enableAutomaticScroll={true}
           enableOnAndroid={true}
+          keyboardDismissMode="interactive"
+          keyboardShouldPersistTaps="handled"
           // keyboardVerticalOffset={20}
           // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.rootContainer}
@@ -431,8 +433,10 @@ const PetCareZipSearch = (props: {
                   onPlaceSelected={onPressAddress}
                   onChange={value => {
                     setAddressLine(value);
+                    setErrorMessage(null);
                   }}
                 />
+                {errorMessage && <ErrorMessage error={errorMessage} />}
                 <View style={styles.footerContainer}>
                   <ButtonCom
                     title="Search"

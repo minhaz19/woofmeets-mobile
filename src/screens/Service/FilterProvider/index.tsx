@@ -103,7 +103,7 @@ const FilterProvider = () => {
           minPrice: multiSliderValue[0],
           maxPrice: multiSliderValue[1],
           page: 1,
-          limit: 10,
+          limit: 20,
         };
       } else {
         formattedData = {
@@ -132,7 +132,7 @@ const FilterProvider = () => {
           minPrice: multiSliderValue[0],
           maxPrice: multiSliderValue[1],
           page: 1,
-          limit: 10,
+          limit: 20,
         };
       }
       dispatch(
@@ -176,7 +176,7 @@ const FilterProvider = () => {
           minPrice: multiSliderValue[0],
           maxPrice: multiSliderValue[1],
           page: 1,
-          limit: 10,
+          limit: 20,
         };
       } else {
         formattedData = {
@@ -205,7 +205,7 @@ const FilterProvider = () => {
           minPrice: multiSliderValue[0],
           maxPrice: multiSliderValue[1],
           page: 1,
-          limit: 10,
+          limit: 20,
         };
       }
       dispatch(setLocation({lat: location.lat, lng: location.lng}));
@@ -243,7 +243,7 @@ const FilterProvider = () => {
             minPrice: multiSliderValue[0],
             maxPrice: multiSliderValue[1],
             page: 1,
-            limit: 10,
+            limit: 20,
           };
         } else {
           formattedData = {
@@ -272,7 +272,7 @@ const FilterProvider = () => {
             minPrice: multiSliderValue[0],
             maxPrice: multiSliderValue[1],
             page: 1,
-            limit: 10,
+            limit: 20,
           };
         }
         dispatch(

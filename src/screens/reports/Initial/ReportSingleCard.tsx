@@ -45,7 +45,7 @@ const ReportSingleCard = ({pee, poo, water, food, title, image, id}: Props) => {
           color={Colors.primary}
           style={styles.iconStyle}
         />
-        <HeaderText text={pee + ' pee breaks'} />
+        <HeaderText text={pee ? pee + ' pee breaks' : '0 pee breaks'} />
       </View>
 
       <View style={styles.innerContainer}>
@@ -55,7 +55,7 @@ const ReportSingleCard = ({pee, poo, water, food, title, image, id}: Props) => {
           color={Colors.primary}
           style={styles.iconStyle}
         />
-        <HeaderText text={poo + ' poo breaks'} />
+        <HeaderText text={poo ? poo + ' poo breaks' : '0 poo breaks'} />
       </View>
 
       <View style={styles.innerContainer}>
@@ -65,7 +65,7 @@ const ReportSingleCard = ({pee, poo, water, food, title, image, id}: Props) => {
           color={Colors.primary}
           style={styles.iconStyle}
         />
-        <HeaderText text={food + ' food breaks'} />
+        <HeaderText text={food ? food + ' food breaks' : '0 food breaks'} />
       </View>
 
       <View style={styles.innerContainer}>
@@ -75,7 +75,7 @@ const ReportSingleCard = ({pee, poo, water, food, title, image, id}: Props) => {
           color={Colors.primary}
           style={styles.iconStyle}
         />
-        <HeaderText text={water + ' water breaks'} />
+        <HeaderText text={water ? water + ' water breaks' : '0 water breaks'} />
       </View>
     </View>
   );

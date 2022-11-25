@@ -81,7 +81,7 @@ const InboxNavigator = () => {
           backgroundColor: Colors.primary,
         })}
       /> */}
-      <Stack1.Screen
+      {/* <Stack1.Screen
         name="ShowAllReport"
         component={ShowAllReport}
         options={({navigation}) => ({
@@ -113,7 +113,7 @@ const InboxNavigator = () => {
           ),
           backgroundColor: Colors.primary,
         })}
-      />
+      /> */}
     </Stack1.Navigator>
   );
 };

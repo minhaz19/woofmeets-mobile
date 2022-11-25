@@ -30,7 +30,7 @@ const usePlaceAutoComplete = () => {
   const handleDebouncedSearch = useCallback(
     debounce(text => {
       handleSearch(text);
-    }, 100),
+    }, 300),
     [],
   );
 
@@ -146,10 +146,9 @@ const GooglePredictLocation = ({
         //   visible={showPredictionDropDown}
         //   transparent
         //   animationType="slide">
-        <View
+        <AppTouchableOpacity
           style={styles.overlay}
-          // onPress={() => setShowPredictionDropDown(false)}
-        >
+          onPress={() => setShowPredictionDropDown(false)}>
           <View style={styles.dropdown}>
             {predictedPlaces?.map((place: any) => (
               <AppTouchableOpacity
@@ -157,7 +156,7 @@ const GooglePredictLocation = ({
                 onPress={() => {
                   onSelectPlaceId(place);
                   onChange && onChange(place.description);
-                  setShowPredictionDropDown(false);
+                  // setShowPredictionDropDown(false);
                 }}>
                 <TitleText
                   text={place.description}
@@ -166,7 +165,7 @@ const GooglePredictLocation = ({
               </AppTouchableOpacity>
             ))}
           </View>
-        </View>
+        </AppTouchableOpacity>
         // </Modal>
       )}
       {errors && <ErrorMessage error={errors[name!]?.message} />}

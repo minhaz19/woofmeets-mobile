@@ -40,7 +40,6 @@ const ReportCard = ({navigation, route}: Props) => {
       setSingleReportData(result?.data?.data);
     }
   };
-  // console.log('calling', trackInfo);
   const callGet = async () => {
     const response = await getMap(
       msgUrl + `/v1/locations/visit/${appointmentId}`,
@@ -51,7 +50,6 @@ const ReportCard = ({navigation, route}: Props) => {
     serviceTypeId === 5 && appointmentId !== null && callGet();
     handleSingleReport();
   }, []);
-  console.log('object', id, mapData, appointmentId, serviceTypeId);
   return (
     <>
       {(loading || mapLoading) && (
@@ -130,8 +128,8 @@ const ReportCard = ({navigation, route}: Props) => {
                 poo={item?.poo}
                 pee={item?.pee}
                 water={item?.water}
-                // title={item?.petName}
-                // image={item?.image}
+                title={item?.petName}
+                image={item?.image}
               />
             ))}
           </View>
@@ -160,31 +158,35 @@ const ReportCard = ({navigation, route}: Props) => {
             }
           />
         </View>
-        <HeaderText
-          text={'Photos'}
-          textStyle={{marginHorizontal: 15, marginBottom: 10}}
-        />
-        <View
-          style={[
-            styles.galleryContainer,
-            {backgroundColor: colors.backgroundColor},
-          ]}>
-          <ScrollView
-            horizontal
-            ref={scrollRef}
-            onContentSizeChange={() => scrollRef?.current?.scrollToEnd()}
-            showsHorizontalScrollIndicator={false}>
-            <View style={{flexDirection: 'row'}}>
-              {singleReportData?.images?.map((item: any, index: number) => {
-                return (
-                  <View key={index} style={styles.imageContainer}>
-                    <Image source={{uri: item}} style={styles.image} />
-                  </View>
-                );
-              })}
+        {singleReportData?.images?.length > 0 && (
+          <>
+            <HeaderText
+              text={'Photos'}
+              textStyle={{marginHorizontal: 15, marginBottom: 10}}
+            />
+            <View
+              style={[
+                styles.galleryContainer,
+                {backgroundColor: colors.backgroundColor},
+              ]}>
+              <ScrollView
+                horizontal
+                ref={scrollRef}
+                onContentSizeChange={() => scrollRef?.current?.scrollToEnd()}
+                showsHorizontalScrollIndicator={false}>
+                <View style={{flexDirection: 'row'}}>
+                  {singleReportData?.images?.map((item: any, index: number) => {
+                    return (
+                      <View key={index} style={styles.imageContainer}>
+                        <Image source={{uri: item}} style={styles.image} />
+                      </View>
+                    );
+                  })}
+                </View>
+              </ScrollView>
             </View>
-          </ScrollView>
-        </View>
+          </>
+        )}
         <BottomSpacing />
         <BottomSpacing />
         {/* <BottomSpacing /> */}

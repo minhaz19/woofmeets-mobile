@@ -51,11 +51,10 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   const {
     control,
     setValue,
-    getValues,
+    // getValues,
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
-  // const {countryId} = useWatch();
   const basicData = useWatch();
 
   // add google address
@@ -181,6 +180,8 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
       horizontal={false}
       extraHeight={60}
       extraScrollHeight={120}
+      keyboardDismissMode="interactive"
+      keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
       renderItem={({item}) => {
         return (
@@ -206,9 +207,11 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                     label={item.title}
                     placeholder={item.placeholder}
                     name={'addressLine1'}
-                    defaultValue={getValues('addressLine1')}
+                    defaultValue={basicData.addressLine1}
                     onChange={value => {
                       setValue('addressLine1', value);
+                      setValue('latitude', null);
+                      setValue('longitude', null);
                     }}
                     onPlaceSelected={onPressAddress}
                     errors={errors}

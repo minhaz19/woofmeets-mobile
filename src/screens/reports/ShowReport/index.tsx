@@ -12,6 +12,8 @@ import TitleText from '../../../components/common/text/TitleText';
 import Lottie from 'lottie-react-native';
 import Colors from '../../../constants/Colors';
 import {useAppSelector} from '../../../store/store';
+import { formatDate } from '../../../components/common/formatDate';
+
 
 const ShowAllReport = (props: {
   navigation: {navigate: (arg0: string, arg1?: any) => any};
@@ -31,7 +33,6 @@ const ShowAllReport = (props: {
   useEffect(() => {
     getAllReport();
   }, []);
-  console.log('all re', allReports);
   return (
     <>
       {loading ? null : ( // <AppActivityIndicator visible={loading} />
@@ -67,6 +68,7 @@ const ShowAllReport = (props: {
               {allReports?.map((item: any) => {
                 return (
                   <AppTouchableOpacity
+                    key={item?.id}
                     onPress={() =>
                       props.navigation.navigate('ReportCard', {
                         id: item?.id,
@@ -90,7 +92,12 @@ const ShowAllReport = (props: {
                           text={proposedServiceInfo?.serviceName}
                           textStyle={styles.header}
                         />
-                        <DescriptionText text={'Demo description'} />
+                        <DescriptionText
+                          text={
+                            'Finished Service at: ' +
+                            formatDate(item?.submitTime, 'iii LLL d')
+                          }
+                        />
                       </View>
                     </View>
                   </AppTouchableOpacity>

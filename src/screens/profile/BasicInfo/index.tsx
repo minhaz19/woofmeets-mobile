@@ -10,7 +10,7 @@ import AppForm from '../../../components/common/Form/AppForm';
 
 const BasicInfo = ({route}) => {
   const {colors} = useTheme();
-  const {loading, handleSubmit} = useBasicInfo(route);
+  const {loading, handleSubmit, locationLoading} = useBasicInfo(route);
   return (
     <>
       <View
@@ -23,7 +23,10 @@ const BasicInfo = ({route}) => {
         <AppForm
           initialValues={useBasicInitalState()}
           validationSchema={basicInfoValidationSchema}>
-          <BasicInfoInput handleSubmit={handleSubmit} loading={loading} />
+          <BasicInfoInput
+            handleSubmit={handleSubmit}
+            loading={loading || locationLoading}
+          />
         </AppForm>
       </View>
     </>

@@ -42,7 +42,6 @@ const ActivityScreen = (props: {
     dispatch(getAllPets());
     dispatch(getWhoAmI());
   }, [dispatch, appointmentOpk]);
-  console.log('vistit', visitId);
   return (
     <>
       {(loading || petLoading || providerLoading) && (
