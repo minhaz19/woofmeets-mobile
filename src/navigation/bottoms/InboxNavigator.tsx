@@ -7,6 +7,7 @@ import ReportCardInitial from '../../screens/reports/Initial';
 // import Appointment from '../../screens/Appointment';
 import GenerateReport from '../../screens/reports/Initial/GenerateReport';
 import ReportCard from '../../screens/reports/Initial/ReportCard';
+import ShowAllReport from '../../screens/reports/ShowReport';
 
 const Stack1 = createStackNavigator();
 
@@ -69,9 +70,20 @@ const InboxNavigator = () => {
           backgroundColor: Colors.primary,
         })}
       /> */}
-      <Stack1.Screen
+      {/* <Stack1.Screen
         name="ReportCardInitial"
         component={ReportCardInitial}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack navigation={navigation} title="Reports" />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      /> */}
+      <Stack1.Screen
+        name="ShowAllReport"
+        component={ShowAllReport}
         options={({navigation}) => ({
           title: '',
           header: () => (

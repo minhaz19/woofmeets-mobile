@@ -31,42 +31,6 @@ const ServiceNavigator = () => {
   getDecodedToken();
   return (
     <Stack1.Navigator initialRouteName="PetCareZipSearch">
-      {/* will be deleted */}
-      {/* <Stack1.Screen
-        name="ReportCardInitial"
-        component={ReportCardInitial}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack navigation={navigation} title="Reports" />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
-        name="GenerateReport"
-        component={GenerateReport}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack navigation={navigation} title="Reports" />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
-        name="ReportCard"
-        component={ReportCard}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack navigation={navigation} title="Reports" />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      /> */}
-      {/* will be deleted */}
-
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}

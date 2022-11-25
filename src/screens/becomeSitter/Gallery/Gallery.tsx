@@ -64,11 +64,11 @@ const Gallery = () => {
     if (result.ok) {
       setGetLoading(false);
       const imageData = [];
-      for (let i = 0; i < result.data.data?.length; i++) {
+      for (let i = 0; i < result?.data?.data?.length; i++) {
         imageData.push({
-          key: result.data.data[i]?.id,
-          name: result.data.data[i]?.imageSrc.url,
-          caption: result.data.data[i]?.caption,
+          key: result?.data?.data[i]?.id,
+          name: result?.data?.data[i]?.imageSrc.url,
+          caption: result?.data?.data[i]?.caption,
         });
       }
       setPhoto(imageData);

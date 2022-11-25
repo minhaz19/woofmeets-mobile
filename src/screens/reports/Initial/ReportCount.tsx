@@ -111,46 +111,45 @@ const ReportCount = ({
   };
   return (
     <View>
-      {isPeeSelected &&
-        isPeeSelected?.map((item: any) => {
-          return (
-            item?.id === id && (
-              <View key={item?.id}>
-                <View style={styles.container}>
-                  <HeaderText text={'Pee'} />
-                  <View style={styles.countContainer}>
-                    <Pressable onPress={() => handlePee(id, 'minus')}>
-                      <FontAwesome
-                        name="minus"
-                        size={20}
-                        color={Colors.primary}
-                        style={styles.iconStyles}
-                      />
-                    </Pressable>
-                    <HeaderText
-                      text={item?.pee ? item?.pee : 0}
-                      textStyle={styles.header}
+      {isPeeSelected && isPeeSelected?.map((item: any) => {
+        return (
+          item?.id === id && (
+            <View key={item?.id}>
+              <View style={styles.container}>
+                <HeaderText text={'Pee'} />
+                <View style={styles.countContainer}>
+                  <Pressable onPress={() => handlePee(id, 'minus')}>
+                    <FontAwesome
+                      name="minus"
+                      size={20}
+                      color={Colors.primary}
+                      style={styles.iconStyles}
                     />
-                    <Pressable onPress={() => handlePee(id, 'plus')}>
-                      <FontAwesome
-                        name="plus"
-                        size={20}
-                        color={Colors.primary}
-                        style={styles.iconStyles}
-                      />
-                    </Pressable>
-                  </View>
+                  </Pressable>
+                  <HeaderText
+                    text={item?.pee ? item?.pee : 0}
+                    textStyle={styles.header}
+                  />
+                  <Pressable onPress={() => handlePee(id, 'plus')}>
+                    <FontAwesome
+                      name="plus"
+                      size={20}
+                      color={Colors.primary}
+                      style={styles.iconStyles}
+                    />
+                  </Pressable>
                 </View>
-                <View
-                  style={[
-                    styles.divider,
-                    {backgroundColor: colors.descriptionText},
-                  ]}
-                />
               </View>
-            )
-          );
-        })}
+              <View
+                style={[
+                  styles.divider,
+                  {backgroundColor: colors.descriptionText},
+                ]}
+              />
+            </View>
+          )
+        );
+      })}
       {isPooSelected &&
         isPooSelected?.map((item: any) => {
           return (
