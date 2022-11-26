@@ -168,7 +168,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
             <TouchableOpacity onPress={() => onRefresh()}>
               <TitleText
                 text={'Refresh Again'}
-                textStyle={{paddingTop: 10, color: Colors.blue}}
+                textStyle={{paddingTop: 10, color: Colors.primaryDif}}
               />
             </TouchableOpacity>
           </View>
@@ -203,7 +203,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
                       styles.imageStyle,
                       {borderColor: colors.borderColor},
                     ]}>
-                    <TitleText text={userInfo?.firstName?.slice(0,1)} />
+                    <TitleText text={userInfo?.firstName?.slice(0, 1)} />
                   </View>
                 </View>
               </View>
@@ -216,9 +216,18 @@ const Messages = (props: {roomId: any; opk: any}) => {
                       styles.imageStyle,
                       {borderColor: colors.borderColor},
                     ]}>
-                    <TitleText text={proposedServiceInfo?.providerId === userInfo?.provider?.id
-                      ? changeTextLetter(proposedServiceInfo?.userName)?.slice(0,1)
-                      : changeTextLetter(proposedServiceInfo?.providerName)?.slice(0,1)} />
+                    <TitleText
+                      text={
+                        proposedServiceInfo?.providerId ===
+                        userInfo?.provider?.id
+                          ? changeTextLetter(
+                              proposedServiceInfo?.userName,
+                            )?.slice(0, 1)
+                          : changeTextLetter(
+                              proposedServiceInfo?.providerName,
+                            )?.slice(0, 1)
+                      }
+                    />
                   </View>
                 </View>
                 <View

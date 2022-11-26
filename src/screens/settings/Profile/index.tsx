@@ -75,7 +75,7 @@ const Profile = (props: {
           {!user?.provider?.isApproved && (
             <View style={{paddingVertical: 20}}>
               <TitleText
-                textStyle={{color: Colors.blue, textAlign: 'center'}}
+                textStyle={{color: Colors.primaryDif, textAlign: 'center'}}
                 text={'Your sitter request status in under review'}
               />
             </View>

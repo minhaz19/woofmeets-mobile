@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   titleBlue: {
     marginRight: 5,
     fontWeight: 'bold',
-    color: Colors.blue,
+    color: Colors.primaryDif,
   },
   info: {marginVertical: 8},
   iconStyle: {paddingRight: 10},

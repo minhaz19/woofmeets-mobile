@@ -259,7 +259,7 @@ const GenerateReport = ({navigation, route}: Props) => {
                 id={item?.id}
                 title={item?.pet?.name}
                 rowImage
-                image={item?.pet?.profile_image.url}
+                image={item?.pet?.profile_image?.url}
                 isPeeSelected={isPeeSelected}
                 isPooSelected={isPooSelected}
                 isFoodSelected={isFoodSelected}

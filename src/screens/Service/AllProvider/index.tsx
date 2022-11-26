@@ -154,7 +154,7 @@ const AllProvider = ({navigation}: Props) => {
                 title={'Search Again'}
                 textAlignment={btnStyles.textAlignment}
                 containerStyle={btnStyles.containerStyleFullWidth}
-                titleStyle={{color: Colors.blue}}
+                titleStyle={{color: Colors.primaryDif}}
                 onSelect={() => navigation.goBack()}
               />
             </View>

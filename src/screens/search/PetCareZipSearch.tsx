@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import {View, StyleSheet, Pressable, RefreshControl} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  RefreshControl,
+  Platform,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Text_Size from '../../constants/textScaling';
 import TitleText from '../../components/common/text/TitleText';
@@ -38,12 +44,12 @@ import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import {getUserOnboardStatus} from '../../store/slices/connect/stripe';
 import ScreenRapper from '../../components/common/ScreenRapper';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
 import GooglePredictLocation from '../../components/common/GooglePredictLocations';
 import ErrorMessage from '../../components/common/Form/ErrorMessage';
 import ButtonCom from '../../components/UI/ButtonCom';
-import { btnStyles } from '../../constants/theme/common/buttonStyles';
+import {btnStyles} from '../../constants/theme/common/buttonStyles';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 
 const petData = [
@@ -292,7 +298,7 @@ const PetCareZipSearch = (props: {
                 }}>
                 <ShortText
                   text={'Set Time Zone'}
-                  textStyle={{color: Colors.blue}}
+                  textStyle={{color: Colors.primaryDif, fontWeight: 'bold'}}
                 />
               </Pressable>
             </View>
@@ -313,7 +319,7 @@ const PetCareZipSearch = (props: {
                   }}>
                   <ShortText
                     text={'Set Payments and Payout'}
-                    textStyle={{color: Colors.blue}}
+                    textStyle={{color: Colors.primaryDif, fontWeight: 'bold'}}
                   />
                 </Pressable>
               </View>
@@ -456,7 +462,7 @@ const styles = StyleSheet.create({
     // paddingBottom: 80,
   },
   rapperStyle: {
-    paddingTop: 20,
+    paddingTop: Platform.OS === 'android' ? 20 : 60,
   },
   scrollContainer: {
     // paddingHorizontal: '5%',

@@ -16,7 +16,7 @@ const vistWalkEndpoint = '/appointment/visit-walk/get-modified-price';
 export const useProposalPricing = () => {
   const [pricingInfo, setPricingInfo] = useState<any>([]);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  const {request: postRequest} = useApi(methods._post);
+  const {request: postRequest} = useApi(methods._post, (alert = 'STOP'));
 
   const {
     proposalStartDate,

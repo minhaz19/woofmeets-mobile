@@ -133,9 +133,7 @@ const ServiceSetting = () => {
                         textStyle={styles.titleStyle}
                       />
                       <DescriptionText
-                        text={item.isActive
-                          ? 'Active'
-                          : 'Inactive'}
+                        text={item.isActive ? 'Active' : 'Inactive'}
                         textStyle={styles.shortText}
                       />
                     </View>
@@ -241,7 +239,7 @@ const ServiceSetting = () => {
                   fontWeight: 'bold',
                   textAlign: 'center',
 
-                  color: Colors.blue,
+                  color: Colors.primaryDif,
                 }}
               />
             </AppTouchableOpacity>

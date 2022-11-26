@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import MapView, {Polyline} from 'react-native-maps';
 
 import Colors from '../../../constants/Colors';
@@ -43,7 +39,7 @@ const NavigateMap = ({mapData}: any) => {
           zoomEnabled={false}>
           <Polyline
             coordinates={mapPoints}
-            strokeColor={Colors.blue} // fallback for when `strokeColors` is not supported by the map-provider
+            strokeColor={Colors.primaryDif} // fallback for when `strokeColors` is not supported by the map-provider
             strokeWidth={6}
           />
         </MapView>

@@ -20,6 +20,7 @@ const ImageAndTitle = ({id, title, Icon, subTitle, image, rowImage}: Props) => {
       style={{
         flexDirection: rowImage ? 'row' : 'column',
         alignItems: 'center',
+        width: '80%',
       }}>
       <View style={styles.iconContainer}>
         {Icon && (

@@ -44,7 +44,6 @@ export const useModifyAppointment = (route: any) => {
       multiDate,
       providerTimeZone,
     } = data;
-
     if (isRecurring && serviceTypeId === 4 && recurringStartDate === '') {
       Alert.alert('You have to select recurring start date');
     } else if (serviceTypeId === 4 && !isRecurring && multiDate.length === 0) {

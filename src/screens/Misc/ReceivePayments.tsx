@@ -91,7 +91,7 @@ const ReceivePayments = () => {
           disabled={loading}
           textAlignment={{
             backgroundColor: colors.backgroundColor,
-            borderColor: Colors.blue,
+            borderColor: Colors.primaryDif,
             borderWidth: 1,
             borderRadius: 100,
             flexDirection: 'column',
@@ -99,7 +99,7 @@ const ReceivePayments = () => {
             alignItems: 'center',
           }}
           titleStyle={{
-            color: Colors.blue,
+            color: Colors.primaryDif,
           }}
           title={
             loading

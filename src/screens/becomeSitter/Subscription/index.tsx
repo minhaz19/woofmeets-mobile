@@ -11,10 +11,15 @@ import ButtonCom from '../../../components/UI/ButtonCom';
 import Welcome from '../../../components/ScreenComponent/becomeSitter/subscription/Welcome/Welcome';
 import Colors from '../../../constants/Colors';
 import QuestionModals from '../../../components/ScreenComponent/becomeSitter/subscription/QuestionModal/QuestionModals';
+import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import TitleText from '../../../components/common/text/TitleText';
 interface Props {
   route: any;
+  navigation: any;
 }
-const SubscriptionScreen = ({route}: Props) => {
+const SubscriptionScreen = ({route, navigation}: Props) => {
   const opk = route?.params?.opk;
   const headerBack = route?.params?.headerBack;
   const {colors} = useTheme();
@@ -52,6 +57,23 @@ const SubscriptionScreen = ({route}: Props) => {
           </>
         ) : (
           <>
+            {opk === 'current_plan' && (
+              <AppTouchableOpacity
+                style={styles.leftContainer}
+                onPress={() => {
+                  navigation.goBack();
+                }}>
+                <Ionicons
+                  name="ios-chevron-back"
+                  size={
+                    SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
+                  }
+                  style={styles.iconStyle}
+                  color={Colors.primary}
+                />
+                <TitleText text={'Back'} textStyle={styles.backText} />
+              </AppTouchableOpacity>
+            )}
             <QuestionModals />
             {formattedPackageRate?.map((item: any) => (
               <PackageCard
@@ -100,6 +122,17 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     fontWeight: 'bold',
   },
+  iconStyle: {paddingRight: 5},
+  leftContainer: {
+    // position: 'absolute',
+
+    // left: '2%',
+    paddingTop: 4,
+    paddingBottom: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backText: {color: Colors.primary, fontWeight: 'bold'},
 });
 
 export default SubscriptionScreen;

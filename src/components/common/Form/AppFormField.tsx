@@ -128,7 +128,7 @@ const AppFormField = ({
           <TitleText
             textStyle={{
               ...styles.forgotPassword,
-              color: Colors.blue,
+              color: Colors.primaryDif,
             }}
             text="Forgot Password ?"
           />

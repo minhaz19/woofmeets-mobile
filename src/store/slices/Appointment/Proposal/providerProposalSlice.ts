@@ -101,6 +101,7 @@ const providerProposalSlice = createSlice({
                 review: modpayload.appointment.review,
                 providerTimeZone: modpayload.appointment.providerTimeZone,
                 refundDetails: modpayload.proposal.refundDetails,
+                messageGroupId: modpayload.appointment.messageGroupId,
               }
             : modpayload.appointment.providerService.serviceTypeId === 3 ||
               modpayload.appointment.providerService.serviceTypeId === 5
@@ -183,6 +184,7 @@ const providerProposalSlice = createSlice({
                 providerTimeZone: modpayload.appointment.providerTimeZone,
                 rating: modpayload.rating,
                 review: modpayload.appointment.review,
+                messageGroupId: modpayload.appointment.messageGroupId,
                 refundDetails: modpayload.proposal.refundDetails,
               }
             : modpayload.appointment.providerService.serviceTypeId === 4
@@ -247,6 +249,7 @@ const providerProposalSlice = createSlice({
                 review: modpayload.appointment.review,
                 providerTimeZone: modpayload.appointment.providerTimeZone,
                 refundDetails: modpayload.proposal.refundDetails,
+                messageGroupId: modpayload.appointment.messageGroupId,
               }
             : null;
       })

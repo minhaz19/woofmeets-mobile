@@ -95,7 +95,7 @@ const ContactScreen = ({route}) => {
               <Text
                 style={[
                   styles.details,
-                  {color: Colors.blue, textDecorationLine: 'underline'},
+                  {color: Colors.primaryDif, textDecorationLine: 'underline'},
                 ]}>
                 Terms of Service
               </Text>
@@ -107,7 +107,7 @@ const ContactScreen = ({route}) => {
             <Text
               style={[
                 styles.details,
-                {color: Colors.blue, textDecorationLine: 'underline'},
+                {color: Colors.primaryDif, textDecorationLine: 'underline'},
               ]}>
               Privacy
             </Text>
