@@ -102,7 +102,12 @@ export const useHandleRange = (
       setValue && setValue('markedStyle', styledMarkedRange);
       setValue && setValue('proposalStartDate', startingDate);
       setValue && setValue('proposalEndDate', endingDate);
-      setValue && setValue('selectedRange', orderRange);
+      setValue &&
+        setValue(
+          'proposalEndDate',
+          endingDate === '' ? startingDate : endingDate,
+        );
+      // setValue && setValue('selectedRange', orderRange);
     }
   }, [endingDate, startingDate, type]);
 

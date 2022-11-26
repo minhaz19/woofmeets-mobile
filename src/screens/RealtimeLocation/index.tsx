@@ -230,11 +230,11 @@ const RealtimeLocation = ({
             /> */}
           </MapView>
         </View>
+        <WatchMiles
+          trackLocation={trackLocation}
+          setTrackLocation={setTrackLocation}
+        />
       </View>
-      <WatchMiles
-        trackLocation={trackLocation}
-        setTrackLocation={setTrackLocation}
-      />
     </>
   );
 };
@@ -243,13 +243,12 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',
+    flex: 1,
     backgroundColor: 'white',
   },
   mapcontainer: {
-    height: '100%',
     width: '100%',
-    // flex: 1,
-    backgroundColor: 'red',
+    height: 350,
   },
   inpuStyle: {
     backgroundColor: 'white',
@@ -262,8 +261,8 @@ const styles = StyleSheet.create({
   },
   bottom: {height: 70},
   mapStyle: {
-    width: '100%',
     height: '100%',
+    width: '100%',
   },
 });
 

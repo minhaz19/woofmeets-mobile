@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {BellIcon} from '../../../assets/svgs/SVG_LOGOS';
@@ -81,6 +82,26 @@ const HeaderWithBack = (props: {
               </View>
             )}
           </>
+        )}
+        {props.SecondIcon && !props.notification && (
+          <View
+            style={{
+              marginRight: 20,
+              flexDirection: 'row',
+              position: 'absolute',
+              right: 0,
+            }}>
+            <TouchableOpacity
+              style={styles.touchContainer}
+              onPress={props.onPress}>
+              <props.SecondIcon
+                height={
+                  SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
+                }
+              />
+              {/* <View style={styles.bellView} /> */}
+            </TouchableOpacity>
+          </View>
         )}
       </View>
     </Screen>

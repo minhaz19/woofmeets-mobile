@@ -23,6 +23,9 @@ import changeTextLetter from '../../common/changeTextLetter';
 import {convertToLocalTZ, formatDate} from '../../common/formatDate';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
+import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
+import {msgUrl} from '../../../utils/helpers/httpRequest';
+import {io} from 'socket.io-client';
 // import {format} from 'date-fns';
 // import AppActivityIndicator from '../../common/Loaders/AppActivityIndicator';
 const acceptEndpoint = '/appointment/accept/proposal/';
@@ -51,6 +54,8 @@ const ActivityHeader = (props: {
   const [allDates, setAllDates] = useState<any>([]);
   const user = useAppSelector(state => state.whoAmI);
   const timezone = proposedServiceInfo?.providerTimeZone;
+  const [socket, setSocket] = useState<any>(null);
+
   const datePassed = (date: any) => {
     return new Date(date) < today;
   };
@@ -158,6 +163,7 @@ const ActivityHeader = (props: {
       navigation.navigate('ProviderProfile', {
         providerOpk: proposedServiceInfo?.providerOpk,
       });
+      await dispatch(getProviderServices(proposedServiceInfo?.providerOpk));
     }
   };
   // const callApi = async () => {
@@ -285,25 +291,36 @@ const ActivityHeader = (props: {
             appointmentId: currentDate?.id,
           });
         }
+        const payloadData: any = {
+          sender: user?.userId,
+          group: proposedServiceInfo?.messageGroupId,
+          content: `${proposedServiceInfo.providerName} has started appointment`,
+          createdAt: new Date(),
+        };
+        socket.emit('send-message', payloadData);
         setCurrentDate(startRes?.data?.data);
         setAppointmentStart('STOP');
       }
     }
   };
   const handleStop = async () => {
-    if (false) {
-    } else {
-      const stopRes = await ssReqest(stopEndpoint + currentDate?.id, {
-        stopTime: new Date().toISOString(),
+    const stopRes = await ssReqest(stopEndpoint + currentDate?.id, {
+      stopTime: new Date().toISOString(),
+    });
+    if (stopRes.ok) {
+      const payloadData: any = {
+        sender: user?.userId,
+        group: proposedServiceInfo?.messageGroupId,
+        content: `${proposedServiceInfo.providerName} has completed appointment`,
+        createdAt: new Date(),
+      };
+      socket.emit('send-message', payloadData);
+      setAppointmentStart('START');
+      navigation.navigate('GenerateReport', {
+        screen: 'InboxNavigator',
+        reportInfo: stopRes.data.data,
       });
-      if (stopRes) {
-        setAppointmentStart('START');
-        navigation.navigate('GenerateReport', {
-          screen: 'InboxNavigator',
-          reportInfo: stopRes.data.data,
-        });
-        setCurrentDate(stopRes?.data?.data);
-      }
+      setCurrentDate(stopRes?.data?.data);
     }
   };
   const handleStatus = () => {
@@ -321,6 +338,19 @@ const ActivityHeader = (props: {
       Alert.alert('No sure about the status');
     }
   };
+  useEffect(() => {
+    if (socket === null) {
+      let tempSocket = io(`${msgUrl}`);
+      setSocket(tempSocket);
+    }
+  }, [socket]);
+  // const payloadData: any = {
+  //             sender: user?.id,
+  //             group: result.data.data.appointment.messageGroupId,
+  //             content: boardingSittingFT,
+  //             createdAt: new Date(),
+  //           };
+  //           socket.emit(‘send-message’, payloadData);
   return (
     <>
       {/* {loading && <AppActivityIndicator visible={true} />} */}

@@ -2,7 +2,7 @@
 import {useState} from 'react';
 import {Alert} from 'react-native';
 
-export const useApi = (apiFunc: any) => {
+export const useApi = (apiFunc: any, alert?: string) => {
   // const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [error, setError] = useState();
@@ -23,7 +23,7 @@ export const useApi = (apiFunc: any) => {
       } else if (response.status === 402) {
         Alert.alert(response.data.message);
       } else {
-        Alert.alert('An unexpected error occurred.');
+        alert === 'STOP' ? null : Alert.alert('An unexpected error occurred.');
       }
       setError(response.data);
     }

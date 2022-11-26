@@ -61,15 +61,15 @@ const ProviderHome = (props: {
   };
   return (
     <>
-      {loading && <InboxLoader />}
-
-      {providerInprogress === null &&
-      providerInprogress?.length === 0 &&
-      !loading ? (
+      {loading ? (
+        <InboxLoader />
+      ) : providerInprogress === null ||
+        providerInprogress === undefined ||
+        providerInprogress?.length === 0 ? (
         <>
           <AnimatedLottieView
             autoPlay
-            // loop={true}
+            loop={false}
             source={require('../../../assets/paidApnt.json')}
             style={styles.loaderStyle}
           />
@@ -78,6 +78,7 @@ const ProviderHome = (props: {
               fontWeight: 'bold',
               fontSize: Text_Size.Text_2,
               textAlign: 'center',
+              color: Colors.primaryDif,
             }}
             text={'No inprogress appointment found'}
           />
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
   },
   bookingText: {
     fontWeight: '600',
-    color: Colors.blue,
+    color: Colors.primaryDif,
     paddingBottom: 6,
   },
   bookingTextDes: {

@@ -330,7 +330,7 @@ const SettingMain = (props: {
                 }}>
                 <ShortText
                   text={'Set Time Zone'}
-                  textStyle={{color: Colors.blue}}
+                  textStyle={{color: Colors.primaryDif, fontWeight: 'bold'}}
                 />
               </Pressable>
             </View>
@@ -351,7 +351,7 @@ const SettingMain = (props: {
                   }}>
                   <ShortText
                     text={'Set Payments and Payout'}
-                    textStyle={{color: Colors.blue}}
+                    textStyle={{color: Colors.primaryDif, fontWeight: 'bold'}}
                   />
                 </Pressable>
               </View>

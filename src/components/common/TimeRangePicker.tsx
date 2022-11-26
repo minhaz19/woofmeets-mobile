@@ -100,7 +100,7 @@ const TimeSlotPicker = ({
             <TitleText
               text={'Close'}
               textStyle={{
-                color: Colors.blue,
+                color: Colors.primaryDif,
                 fontWeight: 'bold',
                 fontSize: Text_Size.Text_1,
                 paddingVertical: 20,

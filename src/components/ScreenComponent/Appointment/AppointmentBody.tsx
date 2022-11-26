@@ -25,10 +25,7 @@ const AppointmentBody = ({handleSubmit, loading, appointmentType}: Props) => {
   const {serviceTypeId} = watch();
   return (
     <View style={styles.container}>
-      <ServicePicker
-        name="providerServiceId"
-        setValue={setValue}
-      />
+      <ServicePicker name="providerServiceId" setValue={setValue} />
       {(serviceTypeId === 1 || serviceTypeId === 2) && (
         <BoardingSitting watch={watch} setValue={setValue} />
       )}

@@ -33,7 +33,7 @@ const WatchMiles = ({setTrackLocation, trackLocation}: Props) => {
   }, [trackLocation]);
 
   return (
-    <>
+    <View style={{height: '100%'}}>
       <View
         style={{
           padding: 10,
@@ -76,7 +76,7 @@ const WatchMiles = ({setTrackLocation, trackLocation}: Props) => {
           <TitleText text="Distance" textStyle={{fontWeight: 'bold'}} />
           <BigText text="00:00:40" textStyle={{fontSize: Text_Size.Text_1}} />
         </View> */}
-        <View style={{width: '30%', zIndex: 9999}}>
+        <View style={{width: '30%'}}>
           <ButtonCom
             title={trackLocation ? 'Stop' : 'Start'}
             textAlignment={btnStyles.textAlignment}
@@ -93,7 +93,7 @@ const WatchMiles = ({setTrackLocation, trackLocation}: Props) => {
           />
         </View>
       </View>
-    </>
+    </View>
   );
 };
 

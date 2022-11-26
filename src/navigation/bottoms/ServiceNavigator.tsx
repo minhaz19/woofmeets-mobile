@@ -34,26 +34,29 @@ const ServiceNavigator = () => {
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
-        options={({navigation}) => ({
-          header: () =>
-            // token?.provider ? (
-            //   <HeaderWithBack
-            //     navigation={navigation}
-            //     title="Services"
-            //     notification
-            //     onPress={() => dispatch(setOpenFilter(true))}
-            //   />
-            // ) : (
-              <Header
-                navigation={navigation}
-                title="Services"
-                notification
-                onPress={() => dispatch(setOpenFilter(true))}
-              />,
-            // ),
-          backgroundColor: Colors.primary,
-          gestureEnabled: false,
-        })}
+        options={{
+          headerShown: false,
+        }}
+        // options={({navigation}) => ({
+        //   header: () =>
+        //     // token?.provider ? (
+        //     //   <HeaderWithBack
+        //     //     navigation={navigation}
+        //     //     title="Services"
+        //     //     notification
+        //     //     onPress={() => dispatch(setOpenFilter(true))}
+        //     //   />
+        //     // ) : (
+        //       <Header
+        //         navigation={navigation}
+        //         title="Services"
+        //         notification
+        //         onPress={() => dispatch(setOpenFilter(true))}
+        //       />,
+        //     // ),
+        //   backgroundColor: Colors.primary,
+        //   gestureEnabled: false,
+        // })}
       />
 
       <Stack1.Screen
@@ -72,7 +75,7 @@ const ServiceNavigator = () => {
               navigation={navigation}
               title="All Provider"
               SecondIcon={FilterIcon}
-              notification
+              // notification={FilterIcon}
               onPress={() => dispatch(setOpenFilter(true))}
             />
           ),

@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  
-  View,
-} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {Divider} from '@rneui/themed';
 import Colors from '../../../../constants/Colors';
@@ -34,7 +28,6 @@ const AuthFooter = ({
   authType,
   navigateScreen,
 }: Props) => {
-
   const navigation = useNavigation<NavigationProps | any>();
   const {handleGFauth} = useHandleProviderAuth();
   const {isLoggedIn} = useAppSelector(state => state.auth);
@@ -71,7 +64,10 @@ const AuthFooter = ({
       <View style={styles.textContainer}>
         <ShortText textStyle={styles.haveAccount} text={accountType} />
         <TouchableOpacity onPress={() => navigation.navigate(navigateScreen)}>
-          <ShortText textStyle={{...styles.screenRoute, color: Colors.blue}} text={authType} />
+          <ShortText
+            textStyle={{...styles.screenRoute, color: Colors.primaryDif}}
+            text={authType}
+          />
         </TouchableOpacity>
       </View>
     </View>

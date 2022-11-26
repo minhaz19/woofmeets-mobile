@@ -97,8 +97,8 @@ const ContactInput = (props: {handleSubmit: any}) => {
           },
         );
         if (!response.ok) {
-          setPhoneNumberError(response.data.message);
-          Alert.alert(response.data.message);
+          setPhoneNumberError(response.data?.messages?.phoneNumber);
+          Alert.alert(response.data?.messages?.phoneNumber);
           throw new Error(response.data.message);
         }
         if (response.ok) {
@@ -153,7 +153,11 @@ const ContactInput = (props: {handleSubmit: any}) => {
           text="OTP has sent successfully, Please verify the OTP"
           textStyle={styles.textStyle1}
         />
-        <VerifyCode resendCode={handleSubmit} onPress={sendOtp} />
+        <VerifyCode
+          resendCode={handleSubmit}
+          onPress={sendOtp}
+          loading={loading}
+        />
       </MiddleModal>
       <View style={styles.inputContainer}>
         <ServiceReusableModal
@@ -195,12 +199,12 @@ const ContactInput = (props: {handleSubmit: any}) => {
                     {/* <Text style={{width: 30, color: 'transparent', backgroundColor: 'green'}}>{flag}</Text> */}
                     <BigText
                       text={countryCode}
-                      textStyle={{color: Colors.blue}}
+                      textStyle={{color: Colors.primaryDif}}
                     />
                     <AntDesign
                       name="caretdown"
                       size={12}
-                      color={Colors.blue}
+                      color={Colors.primaryDif}
                       style={{paddingLeft: 5}}
                     />
                   </TouchableOpacity>
@@ -336,7 +340,7 @@ const styles = StyleSheet.create({
     paddingVertical: '6%',
   },
   titleStyle: {
-    color: Colors.blue,
+    color: Colors.primaryDif,
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: Text_Size.Text_1,

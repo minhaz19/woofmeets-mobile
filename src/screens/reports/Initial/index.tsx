@@ -53,9 +53,11 @@ const ReportCardInitial = ({navigation, route}: Props) => {
     }
   };
   return (
-    <ScreenRapperGrey rapperStyle={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{height: 350}}>
+    <>
+      <ScrollView
+        style={{flex: 1, backgroundColor: Colors.background}}
+        showsVerticalScrollIndicator={false}>
+        <View>
           <RealtimeLocation
             appointmentId={appointmentId}
             trackLocation={trackLocation}
@@ -65,22 +67,21 @@ const ReportCardInitial = ({navigation, route}: Props) => {
 
         <BottomSpacing />
       </ScrollView>
-      {
-        <View style={styles.buttonContainer}>
-          <ButtonCom
-            loading={loading}
-            title={'Generate Report'}
-            textAlignment={btnStyles.textAlignment}
-            containerStyle={{
-              ...btnStyles.containerStyleFullWidth,
-              borderRadius: 8,
-            }}
-            titleStyle={btnStyles.titleStyle}
-            onSelect={handleGenerate}
-          />
-        </View>
-      }
-    </ScreenRapperGrey>
+
+      <View style={styles.buttonContainer}>
+        <ButtonCom
+          loading={loading}
+          title={'Generate Report'}
+          textAlignment={btnStyles.textAlignment}
+          containerStyle={{
+            ...btnStyles.containerStyleFullWidth,
+            borderRadius: 8,
+          }}
+          titleStyle={btnStyles.titleStyle}
+          onSelect={handleGenerate}
+        />
+      </View>
+    </>
   );
 };
 
