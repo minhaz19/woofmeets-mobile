@@ -36,9 +36,9 @@ import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 import {CommonActions} from '@react-navigation/native';
 import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
 import {getCurrentplan} from '../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
-import { Setting } from '../../assets/svgs/SVG_LOGOS';
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { getUserOnboardStatus } from '../../store/slices/connect/stripe';
+import {getUserOnboardStatus} from '../../store/slices/connect/stripe';
 
 const SettingMain = (props: {
   navigation: {
@@ -67,8 +67,6 @@ const SettingMain = (props: {
       return decode;
     }
   };
-
-  
 
   const makeCall = (phone: string | number) => {
     let phoneNumber = '';
@@ -248,7 +246,13 @@ const SettingMain = (props: {
     {
       id: 1,
       title: 'Availability Calendar',
-      iconSetIcon: <MaterialIcons name="event-available" size={24} color={Colors.primary}/>,
+      iconSetIcon: (
+        <MaterialIcons
+          name="event-available"
+          size={24}
+          color={Colors.primary}
+        />
+      ),
       rightIcon: true,
       screenName: () => props.navigation.navigate('ProviderAvailablity'),
       opacity: 1,
@@ -256,9 +260,11 @@ const SettingMain = (props: {
     {
       id: 2,
       title: 'Manage services',
-      iconSetIcon: <MaterialIcons name="my-library-add" size={24} color={Colors.primary}/>,
+      iconSetIcon: (
+        <MaterialIcons name="my-library-add" size={24} color={Colors.primary} />
+      ),
       screenName: () => {
-        props.navigation.navigate('ServiceSetting')
+        props.navigation.navigate('ServiceSetting');
       },
       rightIcon: true,
       opacity: 1,
@@ -298,48 +304,46 @@ const SettingMain = (props: {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         <View>
-          {
-            isLoggedIn && !user?.timezone ? (
-              <View style={[styles.boxContainer, backgroundStyle]}>
-                <ShortText
-                  text={
-                    'Action Required! Please set your preferred time zone to continue.'
-                  }
-                  textStyle={{color: Colors.red}}
-                />
-                <Pressable
-                  onPress={() => {
-                    props.navigation.navigate('AccountSetting');
-                    dispatch(getWhoAmI());
-                  }}>
-                  <ShortText
-                    text={'Set Time Zone'}
-                    textStyle={{color: Colors.blue}}
-                  />
-                </Pressable>
-              </View>
-            ) : null
-          }
-          {user?.provider?.isApproved && userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
-          ?.length === 0 ? null : (
+          {isLoggedIn && !user?.timezone ? (
             <View style={[styles.boxContainer, backgroundStyle]}>
+              <ShortText
+                text={
+                  'Action Required! Please set your preferred time zone to continue.'
+                }
+                textStyle={{color: Colors.red}}
+              />
+              <Pressable
+                onPress={() => {
+                  props.navigation.navigate('AccountSetting');
+                  dispatch(getWhoAmI());
+                }}>
                 <ShortText
-                  text={
-                    'Action Required! Please set your payments and payout'
-                  }
-                  textStyle={{color: Colors.red}}
+                  text={'Set Time Zone'}
+                  textStyle={{color: Colors.blue}}
                 />
-                <Pressable
-                  onPress={() => {
-                    props.navigation.navigate('ReceivePayments');
-                    dispatch(getWhoAmI());
-                  }}>
-                  <ShortText
-                    text={'Set Payments and Payout'}
-                    textStyle={{color: Colors.blue}}
-                  />
-                </Pressable>
-              </View>
+              </Pressable>
+            </View>
+          ) : null}
+          {isLoggedIn &&
+          user?.provider?.isApproved &&
+          userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
+            ?.length === 0 ? null : (
+            <View style={[styles.boxContainer, backgroundStyle]}>
+              <ShortText
+                text={'Action Required! Please set your payments and payout'}
+                textStyle={{color: Colors.red}}
+              />
+              <Pressable
+                onPress={() => {
+                  props.navigation.navigate('ReceivePayments');
+                  dispatch(getWhoAmI());
+                }}>
+                <ShortText
+                  text={'Set Payments and Payout'}
+                  textStyle={{color: Colors.blue}}
+                />
+              </Pressable>
+            </View>
           )}
           {!isLoggedIn && (
             <View

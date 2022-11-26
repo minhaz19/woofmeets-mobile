@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView, View} from 'react-native';
@@ -26,7 +27,7 @@ const ActivityScreen = (props: {
   const {loading: providerLoading} = useAppSelector(
     state => state.providerProfile,
   );
-  const {appointmentOpk} = props.route.params;
+  const {appointmentOpk} = props?.route?.params;
 
   const {user} = useAppSelector(state => state.whoAmI);
   const reviewGiven = proposedServiceInfo?.review?.filter(
@@ -41,11 +42,13 @@ const ActivityScreen = (props: {
     dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAllPets());
     dispatch(getWhoAmI());
-  }, [dispatch, appointmentOpk]);
+  }, [appointmentOpk]);
   return (
     <>
       {(loading || petLoading || providerLoading) && (
-        <AppActivityIndicator visible={true} />
+        <AppActivityIndicator
+          visible={loading || petLoading || providerLoading}
+        />
       )}
       <View
         style={{

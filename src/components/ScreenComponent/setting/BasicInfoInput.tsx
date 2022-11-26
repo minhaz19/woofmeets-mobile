@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {Button, FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
@@ -30,7 +30,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Colors from '../../../constants/Colors';
 import MiddleModal from '../../UI/modal/MiddleModal';
 import AppInput from '../../common/Form/AppInput';
-import { format } from 'date-fns';
+import {format} from 'date-fns';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -39,8 +39,8 @@ interface Props {
 
 const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   // const [countryId, setCountryId] = useState('1');
-  const [date, setDate] = useState(new Date())
-  const [shown, setShown] = useState(false)
+  const [date, setDate] = useState(new Date());
+  const [shown, setShown] = useState(false);
   const {loading: gLoading, userInfo} = useAppSelector(
     state => state?.userProfile,
   );
@@ -127,14 +127,12 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
             <View>
               <AppInput
                 placeholder="DOB"
-                value={format(new Date(getValues('dob')), 'P')}
+                value={format(new Date(basicData.dob), 'P')}
               />
-              <TouchableOpacity onPress={() =>  setShown(!shown)} style={{position: 'absolute', right: 10, top: 10}}>
-                <AntDesign
-                  name="calendar"
-                  size={28}
-                  color={Colors.primary}
-                />
+              <TouchableOpacity
+                onPress={() => setShown(!shown)}
+                style={{position: 'absolute', right: 10, top: 10}}>
+                <AntDesign name="calendar" size={28} color={Colors.primary} />
               </TouchableOpacity>
             </View>
           </View>
@@ -188,20 +186,20 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
           <>
             {!item.select && (
               <View style={styles.inputContainer}>
-            <MiddleModal onBlur={undefined} 
-            setIsModalVisible={setShown} 
-            isModalVisible={shown}
-             handlePress={() => {}}>
-            <DatePicker
-                date={new Date(getValues('dob'))}
-                mode="date"
-                onDateChange={(date) => {
-                  setDate(new Date(date))
-                  setValue('dob', date)
-  
-                }} 
-              />
-            </MiddleModal>
+                <MiddleModal
+                  onBlur={undefined}
+                  setIsModalVisible={setShown}
+                  isModalVisible={shown}
+                  handlePress={() => {}}>
+                  <DatePicker
+                    date={new Date(basicData.dob)}
+                    mode="date"
+                    onDateChange={d => {
+                      setDate(new Date(d));
+                      setValue('dob', d);
+                    }}
+                  />
+                </MiddleModal>
                 {item.name === 'addressLine1' ? (
                   <GooglePredictLocation
                     label={item.title}

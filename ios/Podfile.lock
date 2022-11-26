@@ -492,8 +492,6 @@ PODS:
     - React-Core
   - RNCPicker (2.4.8):
     - React-Core
-  - RNDateTimePicker (6.7.0):
-    - React-Core
   - RNFBApp (15.7.1):
     - Firebase/CoreOnly (= 10.0.0)
     - React-Core
@@ -644,7 +642,6 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
-  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -794,8 +791,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCPicker:
     :path: "../node_modules/@react-native-picker/picker"
-  RNDateTimePicker:
-    :path: "../node_modules/@react-native-community/datetimepicker"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBMessaging:
@@ -900,7 +895,6 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
   RNCPicker: 0bf8ef8f7800524f32d2bb2a8bcadd53eda0ecd1
-  RNDateTimePicker: c6b404647f45472443b0fdcdd31296fc3516b0eb
   RNFBApp: 19b77166a07d45a1d36c41af77dd77127acb5a74
   RNFBMessaging: ee9b11e57b590306997b900b8860386eb10ae3a9
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
