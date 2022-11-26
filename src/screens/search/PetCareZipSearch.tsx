@@ -1,11 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import {
-  View,
-  StyleSheet,
-  RefreshControl,
-  Pressable,
-} from 'react-native';
+import {View, StyleSheet, RefreshControl, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Text_Size from '../../constants/textScaling';
 import TitleText from '../../components/common/text/TitleText';
@@ -100,6 +95,8 @@ const PetCareZipSearch = (props: {
   useEffect(() => {
     if (pets) {
       setMyPet(pets);
+    } else {
+      setPetType([]);
     }
   }, [pets]);
   const [refreshing, setRefreshing] = useState(false);
@@ -129,7 +126,7 @@ const PetCareZipSearch = (props: {
   // select pet
   const onPressPet = (id: number) => {
     if (isMyPetEnabled) {
-      const myNewPet = myPet.map((item: any) => {
+      const myNewPet = myPet?.map((item: any) => {
         if (item.id === id) {
           return {...item, selected: !item.selected};
         } else {
@@ -148,7 +145,6 @@ const PetCareZipSearch = (props: {
       setSelectPetType(newPetType);
     }
   };
-
   // lat lng
   const onPressAddress = (details: any) => {
     const lat = details?.geometry?.location.lat;
@@ -303,26 +299,26 @@ const PetCareZipSearch = (props: {
             </View>
           ) : null}
           {isLoggedIn &&
-          user?.provider?.isApproved &&
-          userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
-            ?.length !== 0 ? (
-            <View style={[styles.boxContainerIn, backgroundStyle]}>
-              <ShortText
-                text={'Action Required! Please set your payments and payout'}
-                textStyle={{color: Colors.red}}
-              />
-              <Pressable
-                onPress={() => {
-                  props.navigation.navigate('ReceivePayments');
-                  dispatch(getWhoAmI());
-                }}>
+            user?.provider?.isApproved &&
+            userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
+              ?.length !== 0 && (
+              <View style={[styles.boxContainerIn, backgroundStyle]}>
                 <ShortText
-                  text={'Set Payments and Payout'}
-                  textStyle={{color: Colors.blue}}
+                  text={'Action Required! Please set your payments and payout'}
+                  textStyle={{color: Colors.red}}
                 />
-              </Pressable>
-            </View>
-          ) : null}
+                <Pressable
+                  onPress={() => {
+                    props.navigation.navigate('ReceivePayments');
+                    dispatch(getWhoAmI());
+                  }}>
+                  <ShortText
+                    text={'Set Payments and Payout'}
+                    textStyle={{color: Colors.blue}}
+                  />
+                </Pressable>
+              </View>
+            )}
         </View>
         {serviceTypesLoading || !serviceTypes ? (
           <ServiceTypesLoader />
@@ -377,8 +373,8 @@ const PetCareZipSearch = (props: {
             justifyContent: 'center',
             flexWrap: 'wrap',
           }}>
-          {isMyPetEnabled && pets.length > 0
-            ? pets?.map((item: any) => (
+          {isMyPetEnabled && myPet?.length > 0
+            ? myPet?.map((item: any) => (
                 <PetCard
                   key={item.id}
                   data={item}

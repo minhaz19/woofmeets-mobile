@@ -190,6 +190,7 @@ const MyPets = ({appointmentType, setValue, watch}: Props) => {
                       textStyle={{
                         textAlign: 'center',
                         paddingVertical: 10,
+                        paddingHorizontal: 10,
                         fontWeight: 'bold',
                         color: item.active
                           ? Colors.background

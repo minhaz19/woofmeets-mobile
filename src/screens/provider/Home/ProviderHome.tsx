@@ -16,6 +16,14 @@ import InboxLoader from '../../Inbox/Loader/InboxLoader';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 import ScreenRapper from '../../../components/common/ScreenRapper';
 import Text_Size from '../../../constants/textScaling';
+import {
+  BoardingIcon,
+  DoggyDayCareIcon,
+  DogWalkingIcon,
+  DropInVisitIcon,
+  HouseSittingIcon,
+} from '../../../assets/svgs/Services_SVG';
+import AnimatedLottieView from 'lottie-react-native';
 
 const ProviderHome = (props: {
   navigation: {navigate: (arg0: string) => any};
@@ -37,72 +45,113 @@ const ProviderHome = (props: {
     onRefresh();
   }, []);
 
+  const getIcon = (iconId: number) => {
+    switch (iconId) {
+      case 1:
+        return BoardingIcon;
+      case 2:
+        return HouseSittingIcon;
+      case 3:
+        return DropInVisitIcon;
+      case 4:
+        return DoggyDayCareIcon;
+      case 5:
+        return DogWalkingIcon;
+    }
+  };
   return (
     <>
       {loading && <InboxLoader />}
-      <ScreenRapper>
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          style={styles.container}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }>
-          <View style={styles.headerContainer}>
-            <HeaderText text="Today" textStyle={{paddingBottom: 4}} />
-            <ShortText
-              text={`${
-                providerInprogress ? providerInprogress?.length : 0
-              } Booking`}
-              textStyle={{fontSize: Text_Size.Text_1}}
-            />
-          </View>
-          <View style={styles.spacing}>
-            <TitleText
-              text={new Date().toLocaleDateString()}
-              textStyle={{paddingBottom: 4}}
-            />
-          </View>
-          {/* <View style={styles.spacing}>
+
+      {providerInprogress === null &&
+      providerInprogress?.length === 0 &&
+      !loading ? (
+        <>
+          <AnimatedLottieView
+            autoPlay
+            // loop={true}
+            source={require('../../../assets/paidApnt.json')}
+            style={styles.loaderStyle}
+          />
+          <HeaderText
+            textStyle={{
+              fontWeight: 'bold',
+              fontSize: Text_Size.Text_2,
+              textAlign: 'center',
+            }}
+            text={'No inprogress appointment found'}
+          />
+        </>
+      ) : (
+        <ScreenRapper>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            style={styles.container}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
+            <View style={styles.headerContainer}>
+              <HeaderText text="Today" textStyle={{paddingBottom: 4}} />
+              <ShortText
+                text={`${
+                  providerInprogress ? providerInprogress?.length : 0
+                } Booking`}
+                textStyle={{fontSize: Text_Size.Text_1}}
+              />
+            </View>
+            <View style={styles.spacing}>
+              <TitleText
+                text={new Date().toLocaleDateString()}
+                textStyle={{paddingBottom: 4}}
+              />
+            </View>
+            {/* <View style={styles.spacing}>
           <ShortText text="Booking" textStyle={styles.bookingText} />
         </View> */}
-          <View>
-            {providerInprogress ? (
-              providerInprogress?.map((item: any, index: number) => {
-                return (
-                  <BookingCard
-                    key={index}
-                    item={item}
-                    buttonStyles={Colors.yellow}
-                    // onScreen={() => props.navigation.navigate('OngoingActivityScreen')}
-                    onScreen={() =>
-                      props.navigation.navigate('ActivityScreen', {
-                        appointmentOpk: item.opk,
-                      })
-                    }
-                  />
-                );
-              })
-            ) : (
-              <DescriptionText
-                text={'No upcoming schedules found!'}
-                textStyle={{paddingVertical: '10%', fontSize: Text_Size.Text_1}}
+            <View>
+              {providerInprogress ? (
+                providerInprogress?.map((item: any, index: number) => {
+                  return (
+                    <BookingCard
+                      key={index}
+                      item={item}
+                      buttonStyles={Colors.yellow}
+                      // onScreen={() => props.navigation.navigate('OngoingActivityScreen')}
+                      Icon={getIcon(item?.providerService?.serviceTypeId)}
+                      onScreen={() =>
+                        props.navigation.navigate('ActivityScreen', {
+                          appointmentOpk: item.opk,
+                        })
+                      }
+                    />
+                  );
+                })
+              ) : (
+                <DescriptionText
+                  text={'No upcoming schedules found!'}
+                  textStyle={{
+                    paddingVertical: '10%',
+                    fontSize: Text_Size.Text_1,
+                  }}
+                />
+              )}
+            </View>
+            <View style={styles.spacing}>
+              <ShortText
+                text={`Last checked today at ${formatDistance(
+                  subDays(new Date(), 0),
+                  new Date(),
+                  {addSuffix: true},
+                )}`}
+                textStyle={styles.bookingTextDes}
               />
-            )}
-          </View>
-          <View style={styles.spacing}>
-            <ShortText
-              text={`Last checked today at ${formatDistance(
-                subDays(new Date(), 0),
-                new Date(),
-                {addSuffix: true},
-              )}`}
-              textStyle={styles.bookingTextDes}
-            />
-          </View>
-          <BottomSpacing />
-        </ScrollView>
-      </ScreenRapper>
+            </View>
+            <BottomSpacing />
+            <BottomSpacing />
+          </ScrollView>
+        </ScreenRapper>
+      )}
     </>
   );
 };
@@ -129,6 +178,7 @@ const styles = StyleSheet.create({
   spacing: {
     paddingBottom: 10,
   },
+  loaderStyle: {width: '100%', alignSelf: 'center'},
 });
 
 export default ProviderHome;

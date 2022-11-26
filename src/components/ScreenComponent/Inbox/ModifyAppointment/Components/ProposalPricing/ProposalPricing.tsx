@@ -57,8 +57,9 @@ const ProposalPricing = () => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         marginBottom: 10,
+                        width: '100%',
                       }}>
-                      <View>
+                      <View style={{width: '70%'}}>
                         <TitleText
                           text={changeTextLetter(item?.name)!}
                           textStyle={{fontWeight: 'bold'}}

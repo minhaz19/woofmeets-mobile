@@ -20,7 +20,7 @@ import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/ge
 import RecurringModal from './components/RecurringModal';
 import {setBillingId} from '../../../store/slices/Appointment/Proposal/providerProposalSlice';
 import changeTextLetter from '../../common/changeTextLetter';
-import {formatDate} from '../../common/formatDate';
+import {convertToLocalTZ, formatDate} from '../../common/formatDate';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
 // import {format} from 'date-fns';
@@ -50,6 +50,7 @@ const ActivityHeader = (props: {
   const [appointmentStart, setAppointmentStart] = useState('START');
   const [allDates, setAllDates] = useState<any>([]);
   const user = useAppSelector(state => state.whoAmI);
+  const timezone = proposedServiceInfo?.providerTimeZone;
   const datePassed = (date: any) => {
     return new Date(date) < today;
   };
@@ -355,38 +356,43 @@ const ActivityHeader = (props: {
                     proposedServiceInfo?.serviceTypeId === 2
                       ? proposedServiceInfo?.serviceName +
                         ' from:  ' +
-                        formatDate(
+                        convertToLocalTZ(
                           proposedServiceInfo.proposalStartDate,
-                          'iii LLL d',
+                          timezone,
+                          'MMM ddd D',
                         )
                       : proposedServiceInfo?.serviceTypeId === 3 ||
                         proposedServiceInfo?.serviceTypeId === 5
                       ? proposedServiceInfo?.isRecurring
                         ? proposedServiceInfo?.serviceName +
                           ' from:  ' +
-                          formatDate(
+                          convertToLocalTZ(
                             proposedServiceInfo.recurringStartDate,
-                            'iii LLL d',
+                            timezone,
+                            'MMM ddd D',
                           )
                         : proposedServiceInfo?.serviceName +
                           ' from:  ' +
-                          formatDate(
+                          convertToLocalTZ(
                             proposedServiceInfo.proposalOtherDate[0].date,
-                            'iii LLL d',
+                            timezone,
+                            'MMM ddd D',
                           )
                       : proposedServiceInfo?.serviceTypeId === 4
                       ? proposedServiceInfo.isRecurring
                         ? proposedServiceInfo?.serviceName +
                           ' from:  ' +
-                          formatDate(
+                          convertToLocalTZ(
                             proposedServiceInfo.recurringStartDate,
-                            'iii LLL d',
+                            timezone,
+                            'MMM ddd D',
                           )
                         : proposedServiceInfo?.serviceName +
                           ' from:  ' +
-                          formatDate(
+                          convertToLocalTZ(
                             proposedServiceInfo.proposalOtherDate[0].date,
-                            'iii LLL d',
+                            timezone,
+                            'MMM ddd D',
                           )
                       : ''
                   }

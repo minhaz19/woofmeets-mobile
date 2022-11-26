@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {FlatList, Pressable, StyleSheet, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
-import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../../common/text/HeaderText';
 import ProfileHeader from '../profile/BasicInfo/ProfileHeader';
 import BottomSpacing from '../../UI/BottomSpacing';
@@ -31,6 +30,8 @@ import Colors from '../../../constants/Colors';
 import MiddleModal from '../../UI/modal/MiddleModal';
 import AppInput from '../../common/Form/AppInput';
 import {format} from 'date-fns';
+import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
+import TitleText from '../../common/text/TitleText';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -127,13 +128,20 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
             <View>
               <AppInput
                 placeholder="DOB"
-                value={getValues('dob') ? format(new Date(getValues('dob')), 'P') : new Date()}
+                onPressIn={() => {
+                  setShown(true);
+                }}
+                value={
+                  basicData?.dob
+                    ? format(new Date(basicData.dob), 'P')
+                    : new Date()
+                }
               />
-              <TouchableOpacity
-                onPress={() => setShown(!shown)}
+              <AppTouchableOpacity
+                onPress={() => setShown(true)}
                 style={{position: 'absolute', right: 10, top: 10}}>
                 <AntDesign name="calendar" size={28} color={Colors.primary} />
-              </TouchableOpacity>
+              </AppTouchableOpacity>
             </View>
           </View>
           <View style={styles.nameContainer}>
@@ -147,7 +155,15 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
         </View>
       </>
     );
-  }, [control, errors, firstName, gLoading, image?.url, lastName]);
+  }, [
+    control,
+    errors,
+    firstName,
+    gLoading,
+    basicData?.dob,
+    image?.url,
+    lastName,
+  ]);
 
   const renderFooter = useCallback(() => {
     return (
@@ -192,13 +208,17 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                   isModalVisible={shown}
                   handlePress={() => {}}>
                   <DatePicker
-                    date={basicData?.dob ? new Date(basicData?.dob) : new Date()}
+                    date={basicData?.dob ? new Date(basicData.dob) : new Date()}
+                    textColor="black"
                     mode="date"
                     onDateChange={d => {
-                      setDate(new Date(d));
                       setValue('dob', d);
+                      setDate(new Date(d));
                     }}
                   />
+                  <Pressable onPress={() => setShown(false)}>
+                    <TitleText text={'Close'} textStyle={styles.close} />
+                  </Pressable>
                 </MiddleModal>
                 {item.name === 'addressLine1' ? (
                   <GooglePredictLocation
@@ -300,5 +320,10 @@ const styles = StyleSheet.create({
   footerContainer: {
     paddingVertical: '6%',
     marginBottom: '6%',
+  },
+  close: {
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: Colors.primaryDif,
   },
 });

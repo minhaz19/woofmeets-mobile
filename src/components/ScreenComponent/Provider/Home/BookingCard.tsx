@@ -18,27 +18,32 @@ import changeTextLetter from '../../../common/changeTextLetter';
 import {format} from 'date-fns';
 
 interface Props {
-  item: {
-    id: number;
-    serviceName: string;
-    duration: string;
-    orderStatus: string;
-    ownerName: string;
-    petName: string;
-    ownerImage: string;
-  };
+  item:
+    | {
+        id: number;
+        serviceName: string;
+        duration: string;
+        orderStatus: string;
+        ownerName: string;
+        petName: string;
+        ownerImage: string;
+      }
+    | any;
   buttonStyles?: string;
+  Icon: any;
   handlePress?: () => void;
   onScreen?: () => void;
 }
-
+const imageUrl =
+  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 const BookingCard: FC<Props> = ({
   item,
   buttonStyles,
   handlePress,
   onScreen,
+  Icon,
 }) => {
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   const serviceTypeId = item?.providerService?.serviceTypeId;
   const proposalDate = item.appointmentProposal[0];
   const isRecurring = item.appointmentProposal[0]?.isRecurring;
@@ -52,11 +57,9 @@ const BookingCard: FC<Props> = ({
         <View style={styles.flexContainer}>
           <View style={styles.topContainer}>
             <View style={styles.imageContainer}>
-              <Image
-                source={item?.image}
-                style={{...styles.image, borderColor: colors.borderColor}}
-                resizeMode="contain"
-              />
+              <View style={styles.image}>
+                <Icon width={30} height={30} />
+              </View>
             </View>
             <View>
               <HeaderText
@@ -108,19 +111,26 @@ const BookingCard: FC<Props> = ({
         <View style={[styles.topContainer, {paddingTop: 10}]}>
           <View style={styles.imageContainer}>
             <Image
-              source={item?.user?.image}
+              source={{
+                uri: item?.user?.image ? item?.user?.image?.url : imageUrl,
+              }}
               style={{...styles.image, borderColor: colors.borderColor}}
               resizeMode="contain"
             />
           </View>
-          <View>
+          <View style={{width: '90%'}}>
             <TitleText
               text={changeTextLetter(
                 `${item?.user?.firstName} ${item?.user?.lastName}`,
               )}
               textStyle={styles.textHeader}
             />
-            <ShortText text={item.petName} textStyle={styles.textDescription} />
+            <ShortText
+              text={item?.appointmentProposal?.[0]?.appointmentPet
+                ?.map(pet => String(pet.pet.name)?.slice(0, 30))
+                .join(', ')}
+              textStyle={styles.textDescription}
+            />
           </View>
         </View>
       </TouchableOpacity>
@@ -136,7 +146,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
     height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
     marginRight: 10,
-    borderWidth: 1,
+    // borderWidth: 1,
   },
   itemContainer: {
     padding: '3%',
@@ -180,6 +190,7 @@ const styles = StyleSheet.create({
   textDescription: {
     lineHeight: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.02 : 20,
     fontSize: Text_Size.Text_8,
+    // width: '80%',
   },
   textHeader: {
     marginTop: 0,

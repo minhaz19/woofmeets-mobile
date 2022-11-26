@@ -53,10 +53,12 @@ const Pricing = ({}: Props) => {
             return (
               <View key={index} style={[styles.mapContainer]}>
                 <View style={styles.flexContainer}>
-                  <HeaderText
-                    text={changeTextLetter(item.name)}
-                    textStyle={styles.priceTextHeader}
-                  />
+                  <View style={{width: '70%'}}>
+                    <HeaderText
+                      text={changeTextLetter(item.name)}
+                      textStyle={styles.priceTextHeader}
+                    />
+                  </View>
                   <HeaderText
                     text={`$${Number(item?.count * item?.rate?.amount)?.toFixed(
                       2,
@@ -266,6 +268,8 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   flexContainer: {
+    // width: '100%',
+    flex: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignContent: 'center',
@@ -278,6 +282,9 @@ const styles = StyleSheet.create({
   },
   descriptionText: {},
   mapContainer: {
+    // width: '100%',
+    // flex: 0,
+    // backgroundColor: 'red',
     marginVertical:
       SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '1%' : '3%',
   },
