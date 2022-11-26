@@ -1,23 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import {View, StyleSheet, RefreshControl, Pressable} from 'react-native';
+import {View, StyleSheet, Pressable, RefreshControl} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Text_Size from '../../constants/textScaling';
 import TitleText from '../../components/common/text/TitleText';
-import ButtonCom from '../../components/UI/ButtonCom';
-import {btnStyles} from '../../constants/theme/common/buttonStyles';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import Colors from '../../constants/Colors';
-import ScreenRapper from '../../components/common/ScreenRapper';
-import ErrorMessage from '../../components/common/Form/ErrorMessage';
 import ServiceCard from '../../components/ScreenComponent/search/ServiceCard';
-import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
 import SwitchView from '../../components/common/switch/SwitchView';
 import PetCard from '../../components/ScreenComponent/search/PetCard';
-import BottomSpacing from '../../components/UI/BottomSpacing';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {getAllProviderOneTime} from '../../store/slices/Provider/allProvider/getAllProvider';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ServiceTypesLoader from './ServiceTypesLoader';
 import {getServiceTypes} from '../../store/slices/profile/services';
 import {getAllPets} from '../../store/slices/pet/allPets/allPetsAction';
@@ -37,8 +30,6 @@ import {
   setFormattedAddress,
 } from '../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
 import {days} from '../../utils/config/Data/filterProviderDatas';
-// import GoogleAutoComplete from '../../components/common/GoogleAutoComplete';
-import GooglePredictLocation from '../../components/common/GooglePredictLocations';
 import methods from '../../api/methods';
 import {useApi} from '../../utils/helpers/api/useApi';
 import {baseUrlV} from '../../utils/helpers/httpRequest';
@@ -46,6 +37,14 @@ import ShortText from '../../components/common/text/ShortText';
 import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import {getUserOnboardStatus} from '../../store/slices/connect/stripe';
+import ScreenRapper from '../../components/common/ScreenRapper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import SearchSlider from '../../components/ScreenComponent/search/SearchSlider';
+import GooglePredictLocation from '../../components/common/GooglePredictLocations';
+import ErrorMessage from '../../components/common/Form/ErrorMessage';
+import ButtonCom from '../../components/UI/ButtonCom';
+import { btnStyles } from '../../constants/theme/common/buttonStyles';
+import BottomSpacing from '../../components/UI/BottomSpacing';
 
 const petData = [
   {

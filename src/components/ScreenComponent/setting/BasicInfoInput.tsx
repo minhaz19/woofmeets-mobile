@@ -32,6 +32,7 @@ import AppInput from '../../common/Form/AppInput';
 import {format} from 'date-fns';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 import TitleText from '../../common/text/TitleText';
+import Text_Size from '../../../constants/textScaling';
 
 interface Props {
   handleSubmit: (value: any) => void;
