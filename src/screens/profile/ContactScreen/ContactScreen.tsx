@@ -1,5 +1,12 @@
-import {View, StyleSheet, Text, ScrollView, RefreshControl, KeyboardAvoidingView, Platform} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  RefreshControl,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
@@ -15,8 +22,8 @@ import {
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {setProfileData} from '../../../store/slices/onBoarding/initial';
 import AppForm from '../../../components/common/Form/AppForm';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useNavigation } from '@react-navigation/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useNavigation} from '@react-navigation/native';
 
 const ContactScreen = ({route}) => {
   const {colors} = useTheme();
@@ -32,7 +39,7 @@ const ContactScreen = ({route}) => {
   const [refreshing, setRefreshing] = useState(false);
   const contact = useAppSelector(state => state.contact);
 
-  const onRefresh = async() => {
+  const onRefresh = async () => {
     setRefreshing(true);
     await dispatch(getContactInfo());
     setRefreshing(false);
@@ -81,13 +88,18 @@ const ContactScreen = ({route}) => {
             adjust these settings anytime on the Notifications Preferences page.
             Reply HELP for help and STOP to unsubscribe. Message frequency
             varies. Message and data rates may apply. For more, see our{' '}
-            <Text
-              style={[
-                styles.details,
-                {color: Colors.blue, textDecorationLine: 'underline'},
-              ]}>
-              Terms of Service
-            </Text>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL('https://woofmeets.com/terms-and-conditions')
+              }>
+              <Text
+                style={[
+                  styles.details,
+                  {color: Colors.blue, textDecorationLine: 'underline'},
+                ]}>
+                Terms of Service
+              </Text>
+            </TouchableOpacity>
             <Text style={[styles.details, {color: colors.lightText}]}>
               {' '}
               and{' '}

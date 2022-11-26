@@ -336,31 +336,28 @@ const SettingMain = (props: {
             </View>
           ) : null}
           {isLoggedIn &&
-          user?.provider?.isApproved &&
-          userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
-            ?.length !== 0 ? (
-            <View style={[styles.boxContainer, backgroundStyle]}>
-              <ShortText
-                text={'Action Required! Please set your payments and payout'}
-                textStyle={{color: Colors.red}}
-              />
-              <Pressable
-                onPress={() => {
-                  props.navigation.navigate('ReceivePayments');
-                  dispatch(getWhoAmI());
-                }}>
+            user?.provider?.isApproved &&
+            userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
+              ?.length !== 0 && (
+              <View style={[styles.boxContainer, backgroundStyle]}>
                 <ShortText
-                  text={'Set Payments and Payout'}
-                  textStyle={{color: Colors.blue}}
+                  text={'Action Required! Please set your payments and payout'}
+                  textStyle={{color: Colors.red}}
                 />
-              </Pressable>
-            </View>
-          ) : null}
+                <Pressable
+                  onPress={() => {
+                    props.navigation.navigate('ReceivePayments');
+                    dispatch(getWhoAmI());
+                  }}>
+                  <ShortText
+                    text={'Set Payments and Payout'}
+                    textStyle={{color: Colors.blue}}
+                  />
+                </Pressable>
+              </View>
+            )}
           {!isLoggedIn && (
-            <View
-              style={{
-                backgroundColor: Colors.light.inputBackground,
-              }}>
+            <View style={styles.signUp}>
               {loginData?.map(item => (
                 <SettingItem data={item} key={item.id} />
               ))}
@@ -522,6 +519,10 @@ const styles = StyleSheet.create({
     paddingBottom: '0.8%',
   },
   iconStyle: {paddingRight: 0},
+  signUp: {
+    backgroundColor: Colors.light.inputBackground,
+    marginTop: 20,
+  },
 });
 
 export default SettingMain;

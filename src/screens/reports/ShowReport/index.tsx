@@ -12,8 +12,7 @@ import TitleText from '../../../components/common/text/TitleText';
 import Lottie from 'lottie-react-native';
 import Colors from '../../../constants/Colors';
 import {useAppSelector} from '../../../store/store';
-import { formatDate } from '../../../components/common/formatDate';
-
+import {formatDate} from '../../../components/common/formatDate';
 
 const ShowAllReport = (props: {
   navigation: {navigate: (arg0: string, arg1?: any) => any};
@@ -94,7 +93,7 @@ const ShowAllReport = (props: {
                         />
                         <DescriptionText
                           text={
-                            'Finished Service at: ' +
+                            'Generate Report at: ' +
                             formatDate(item?.submitTime, 'iii LLL d')
                           }
                         />

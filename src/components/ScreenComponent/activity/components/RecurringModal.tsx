@@ -15,6 +15,7 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import changeTextLetter from '../../../common/changeTextLetter';
 import {setBillingId} from '../../../../store/slices/Appointment/Proposal/providerProposalSlice';
 import {formatDate} from '../../../common/formatDate';
+import BottomSpacing from '../../../UI/BottomSpacing';
 interface Props {
   regenerateModal: any;
   setRegenerateModal: any;
@@ -128,7 +129,11 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
                   text={'Pets Name :'}
                 />
                 <TitleText
-                  textStyle={{fontSize: Text_Size.Text_1, marginVertical: 5}}
+                  textStyle={{
+                    fontSize: Text_Size.Text_1,
+                    marginVertical: 5,
+                    width: '60%',
+                  }}
                   text={`${changeTextLetter(
                     proposedServiceInfo?.petsInfo
                       ?.map((it: any) => it.pet.name)
@@ -230,6 +235,7 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
                 />
               </AppTouchableOpacity>
             </View>
+            <BottomSpacing />
           </View>
         }
       />

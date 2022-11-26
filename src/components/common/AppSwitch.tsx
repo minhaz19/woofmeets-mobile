@@ -26,8 +26,14 @@ const AppSwitch = ({name, terms, auth, title}: Props) => {
         {terms && (
           <View style={styles.textContainer}>
             <ShortText textStyle={styles.text} text="Agree to" />
-            <TouchableOpacity onPress={() => Linking.openURL('https://woofmeets.com/terms-and-conditions')}>
-              <ShortText textStyle={{...styles.link, color: Colors.blue}} text="Terms and Conditions" />
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL('https://woofmeets.com/terms-and-conditions')
+              }>
+              <ShortText
+                textStyle={{...styles.link, color: Colors.blue}}
+                text="Terms and Conditions"
+              />
             </TouchableOpacity>
           </View>
         )}
