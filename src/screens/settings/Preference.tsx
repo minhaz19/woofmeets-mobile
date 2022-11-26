@@ -33,14 +33,14 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 4,
       title: 'Privacy Policy',
       screenName: () => Linking.openURL('https://woofmeets.com/privacy-policy'),
-      details: 'https://woofmeets.com/terms-and-conditions',
+      details: 'https://woofmeets.com/privacy-policy',
       opacity: 1,
     },
     {
       id: 5,
       title: 'Version',
       screenName: () => {},
-      details: '1.0.5.10 - beta',
+      details: '1.0.0.0 - release',
       opacity: 1,
     },
   ];
