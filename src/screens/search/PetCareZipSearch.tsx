@@ -305,7 +305,7 @@ const PetCareZipSearch = (props: {
           {isLoggedIn &&
           user?.provider?.isApproved &&
           userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
-            ?.length === 0 ? null : (
+            ?.length !== 0 ? (
             <View style={[styles.boxContainerIn, backgroundStyle]}>
               <ShortText
                 text={'Action Required! Please set your payments and payout'}
@@ -322,7 +322,7 @@ const PetCareZipSearch = (props: {
                 />
               </Pressable>
             </View>
-          )}
+          ) : null}
         </View>
         {serviceTypesLoading || !serviceTypes ? (
           <ServiceTypesLoader />

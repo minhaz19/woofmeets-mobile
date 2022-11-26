@@ -131,13 +131,16 @@ const ContactInput = (props: {handleSubmit: any}) => {
   };
 
   useEffect(() => {
-    if (contact.phoneNumber?.slice(0, 2) == '+1') {
-      setTextInput(contact.phoneNumber?.slice(2))
-      setCountryCode(contact.phoneNumber?.slice(0, 2))
-    } else {
-      setTextInput(contact.phoneNumber?.slice(4))
-      setCountryCode(contact.phoneNumber?.slice(0, 4))
+    if (contact.phoneNumber) {
+      if (contact.phoneNumber?.slice(0, 2) == '+1') {
+        setTextInput(contact.phoneNumber?.slice(2))
+        setCountryCode(contact.phoneNumber?.slice(0, 2))
+      } else {
+        setTextInput(contact.phoneNumber?.slice(4))
+        setCountryCode(contact.phoneNumber?.slice(0, 4))
+      }
     }
+    setOtpVerificationStatus(contact.phoneNumber)
   }, [contact.phoneNumber])
 
   return (

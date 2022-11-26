@@ -162,7 +162,7 @@ const ActivityHeader = (props: {
   // const callApi = async () => {
   //   return await getRequest(cardEndpoint + props.opk);
   // };
-  const today = new Date('2022-11-27');
+  const today = new Date();
   const isSameDate = (date: string) => {
     const splitDate = date?.split('T')?.[0];
     const formattedToday = formatDate(today, 'yyyy-MM-dd');
