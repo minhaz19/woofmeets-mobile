@@ -39,6 +39,7 @@ import {getCurrentplan} from '../../store/slices/payment/Subscriptions/CurrentSu
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {getUserOnboardStatus} from '../../store/slices/connect/stripe';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const SettingMain = (props: {
   navigation: {
@@ -98,13 +99,22 @@ const SettingMain = (props: {
   const loginData = [
     {
       id: 1,
-      title: 'Sign Up',
-      icon: PreferenceIcon,
-      screenName: () => props.navigation.navigate('SignUp'),
+      title: 'Sign In',
+      iconSetIcon: <AntDesign name="login" color={Colors.primary} size={24} />,
+      screenName: () => props.navigation.navigate('LogIn'),
       rightIcon: true,
       opacity: 1,
       isGuest: true,
     },
+    // {
+    //   id: 2,
+    //   title: 'Sign Up',
+    //   icon: PreferenceIcon,
+    //   screenName: () => props.navigation.navigate('SignUp'),
+    //   rightIcon: true,
+    //   opacity: 1,
+    //   isGuest: true,
+    // },
   ];
   const profileData = [
     {
@@ -289,6 +299,7 @@ const SettingMain = (props: {
     setRefreshing(true);
     getDecodedToken();
     dispatch(getWhoAmI());
+    dispatch(getUserOnboardStatus());
     setRefreshing(false);
   };
   useEffect(() => {
@@ -327,7 +338,7 @@ const SettingMain = (props: {
           {isLoggedIn &&
           user?.provider?.isApproved &&
           userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
-            ?.length === 0 ? null : (
+            ?.length !== 0 ? (
             <View style={[styles.boxContainer, backgroundStyle]}>
               <ShortText
                 text={'Action Required! Please set your payments and payout'}
@@ -344,7 +355,7 @@ const SettingMain = (props: {
                 />
               </Pressable>
             </View>
-          )}
+          ) : null}
           {!isLoggedIn && (
             <View
               style={{

@@ -51,7 +51,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   const {
     control,
     setValue,
-    // getValues,
+    getValues,
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
@@ -127,7 +127,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
             <View>
               <AppInput
                 placeholder="DOB"
-                value={format(new Date(basicData.dob), 'P')}
+                value={getValues('dob') ? format(new Date(getValues('dob')), 'P') : new Date()}
               />
               <TouchableOpacity
                 onPress={() => setShown(!shown)}
@@ -192,7 +192,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                   isModalVisible={shown}
                   handlePress={() => {}}>
                   <DatePicker
-                    date={new Date(basicData.dob)}
+                    date={basicData?.dob ? new Date(basicData?.dob) : new Date()}
                     mode="date"
                     onDateChange={d => {
                       setDate(new Date(d));

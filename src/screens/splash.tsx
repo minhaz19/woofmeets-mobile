@@ -128,6 +128,7 @@ const Splash = ({}) => {
     dispatch(getWhoAmI());
     dispatch(getUserOnboardStatus());
     dispatch(getServiceTypes());
+    dispatch(getUserOnboardStatus());
     dispatch(getAllPets());
   }, []);
 
