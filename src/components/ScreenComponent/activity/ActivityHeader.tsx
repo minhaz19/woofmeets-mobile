@@ -50,6 +50,15 @@ const ActivityHeader = (props: {
   const [appointmentStart, setAppointmentStart] = useState('START');
   const [allDates, setAllDates] = useState<any>([]);
   const user = useAppSelector(state => state.whoAmI);
+  const datePassed = (date: any) => {
+    return new Date(date) < today;
+  };
+  const isComming = (date: any) => {
+    return new Date(date) > today;
+  };
+  const isDateNotFound = () => {
+    return allDates?.findIndex((f: any) => new Date(f.date) === today) === -1;
+  };
   const handleAccept = async () => {
     const result = await request(acceptEndpoint + props.opk);
     if (result.ok) {
@@ -66,29 +75,55 @@ const ActivityHeader = (props: {
   };
 
   const handleComplete = () => {
-    Alert.alert(
-      'Complete Appointment',
-      'Are you sure you want to Complete and close this appointment',
-      [
-        {
-          text: 'No',
-          onPress: () => {},
-        },
-        {
-          text: 'Yes',
-          onPress: async () => {
-            const r = await request(completeEndpoint + props.opk);
-            if (r.ok) {
-              dispatch(getAppointmentStatus('PAID'));
-              dispatch(getProviderApnt('PAID'));
-              navigation.navigate('InboxNavigator');
-            } else if (!r.ok) {
-              Alert.alert(r.data.message);
-            }
+    if (
+      (proposedServiceInfo.serviceTypeId === 1 ||
+        proposedServiceInfo.serviceTypeId === 2) &&
+      (!datePassed(allDates[allDates?.length - 1]?.date) ||
+        !isSameDate(allDates[allDates?.length - 1]?.date))
+    ) {
+      Alert.alert(
+        `You can not complete appointment before ${formatDate(
+          allDates[allDates?.length - 1]?.date,
+          'iii LLL d yyyy',
+        )}`,
+      );
+    } else if (
+      (proposedServiceInfo.serviceTypeId !== 1 ||
+        proposedServiceInfo.serviceTypeId !== 2) &&
+      (!datePassed(allDates[allDates?.length - 1]?.date) ||
+        !isSameDate(allDates[allDates?.length - 1]?.date))
+    ) {
+      Alert.alert(
+        `You can not complete appointment before ${formatDate(
+          allDates[allDates?.length - 1]?.date,
+          'iii LLL d yyyy',
+        )}`,
+      );
+    } else {
+      Alert.alert(
+        'Complete Appointment',
+        'Are you sure you want to Complete and close this appointment',
+        [
+          {
+            text: 'No',
+            onPress: () => {},
           },
-        },
-      ],
-    );
+          {
+            text: 'Yes',
+            onPress: async () => {
+              const r = await request(completeEndpoint + props.opk);
+              if (r.ok) {
+                dispatch(getAppointmentStatus('PAID'));
+                dispatch(getProviderApnt('PAID'));
+                navigation.navigate('InboxNavigator');
+              } else if (!r.ok) {
+                Alert.alert(r.data.message);
+              }
+            },
+          },
+        ],
+      );
+    }
   };
   const handleReject = async () => {
     Alert.alert(
@@ -131,7 +166,6 @@ const ActivityHeader = (props: {
   const isSameDate = (date: string) => {
     const splitDate = date?.split('T')?.[0];
     const formattedToday = formatDate(today, 'yyyy-MM-dd');
-
     if (formattedToday === splitDate) {
       return true;
     } else {
@@ -144,7 +178,6 @@ const ActivityHeader = (props: {
       const arr = data?.data?.data?.sort(function (x: any, y: any) {
         return new Date(x.date).getTime() - new Date(y.date).getTime();
       });
-
       if (arr?.length > 0) {
         setAllDates(arr);
         const findData = arr?.find(
@@ -164,15 +197,6 @@ const ActivityHeader = (props: {
     callApi();
   }, [appointmentStart, props.opk]);
 
-  const datePassed = (date: any) => {
-    return new Date(date) < today;
-  };
-  const isComming = (date: any) => {
-    return new Date(date) > today;
-  };
-  const isDateFound = () => {
-    return allDates?.findIndex((f: any) => new Date(f.date) === today) !== -1;
-  };
   useEffect(() => {
     if (
       proposedServiceInfo?.serviceTypeId === 1 ||
@@ -183,6 +207,7 @@ const ActivityHeader = (props: {
         isSameDate(allDates?.[0]?.date)
       ) {
         setAppointmentStart('START');
+        setCurrentDate(allDates?.[0]?.date);
       } else if (
         allDates?.[0]?.startTime !== null &&
         isSameDate(allDates[allDates?.length - 1]?.date)
@@ -193,8 +218,6 @@ const ActivityHeader = (props: {
         datePassed(allDates[allDates?.length - 1]?.date)
       ) {
         setAppointmentStart('ENDED');
-      } else if (isDateFound()) {
-        setAppointmentStart('NOAPPOINTMENT');
       } else if (
         allDates?.[0]?.startTime === null &&
         allDates?.[0]?.stopTime === null &&
@@ -203,6 +226,8 @@ const ActivityHeader = (props: {
         setAppointmentStart('UPCOMING');
       } else if (allDates?.[0]?.startTime !== null) {
         setAppointmentStart('INPROGRESS');
+      } else if (isDateNotFound()) {
+        setAppointmentStart('NOAPPOINTMENT');
       } else {
         setAppointmentStart('PAST');
       }
@@ -225,8 +250,10 @@ const ActivityHeader = (props: {
         (currentDate?.startTime === null && datePassed(currentDate?.date))
       ) {
         setAppointmentStart('PAST');
+      } else if (isDateNotFound()) {
+        setAppointmentStart('NOAPPOINTMENT');
       } else {
-        setAppointmentStart('');
+        // setAppointmentStart('NOAPPOINTMENT');
       }
     }
   }, [

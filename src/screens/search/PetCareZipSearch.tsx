@@ -302,7 +302,8 @@ const PetCareZipSearch = (props: {
               </Pressable>
             </View>
           ) : null}
-          {user?.provider?.isApproved &&
+          {isLoggedIn &&
+          user?.provider?.isApproved &&
           userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
             ?.length === 0 ? null : (
             <View style={[styles.boxContainerIn, backgroundStyle]}>
