@@ -23,9 +23,9 @@ const StripeOnboardScreen = (props: {
         onNavigationStateChange={navState => {
           // Keep track of going back navigation within component
           if (
-            navState.url == 'http://localhost:3000/provider-profile' ||
-            navState.url == 'http://woofmeets.com/provider-profile' ||
-            navState.url == 'http://www.woofmeets.com/provider-profile'
+            navState.url == 'https://woofmeets.com' ||
+            navState.url == 'https://woofmeets.com/provider-profile' ||
+            navState.url == 'https://www.woofmeets.com/provider-profile'
           ) {
             dispatch(getUserOnboardStatus());
             props.navigation.goBack();

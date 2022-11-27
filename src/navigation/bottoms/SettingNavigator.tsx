@@ -75,21 +75,6 @@ const SettingNavigator = () => {
         })}
       />
       <Stack1.Screen
-        name="AccountSetting"
-        component={AccountSetting}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Setting"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
         name="Profile"
         component={Profile}
         options={({navigation}) => ({
