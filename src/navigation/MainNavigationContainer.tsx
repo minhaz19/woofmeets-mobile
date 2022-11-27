@@ -57,6 +57,7 @@ import ReportCardInitial from '../screens/reports/Initial';
 import GenerateReport from '../screens/reports/Initial/GenerateReport';
 import ShowAllReport from '../screens/reports/ShowReport';
 import ReportCard from '../screens/reports/Initial/ReportCard';
+import AccountSetting from '../components/ScreenComponent/setting/Preference/AccountSetting';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -393,6 +394,21 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
               <HeaderWithBack
                 navigation={navigation}
                 title="Manage Business"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AccountSetting"
+          component={AccountSetting}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Setting"
                 notification
               />
             ),
