@@ -50,6 +50,7 @@ const SettingItem = (props: {
           {props.data.icon && <props.data.icon
             height={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 24 : 28}
             opacity={props.data.opacity}
+            color={'red'}
           />}
           {props.data.vectorIcon && props.data.vectorIcon}
           <View style={[styles.detailsContainer, {width: props.rightIcon ? '82%' : '85%'}]}>
