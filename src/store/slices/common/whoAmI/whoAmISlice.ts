@@ -22,7 +22,7 @@ const whoAmISlice = createSlice({
       .addCase(getWhoAmI.fulfilled, (state, {payload}) => {
         state.loading = false;
         state.user = payload.data;
-        state.userId = payload.data.id;
+        state.userId = payload.data?.id;
       })
       .addCase(getWhoAmI.rejected, (state, {payload}) => {
         state.loading = false;

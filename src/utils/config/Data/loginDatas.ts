@@ -1,4 +1,4 @@
-import {Facebook, Google} from '../../../assets/svgs/SVG_LOGOS';
+import {Apple, Facebook, Google} from '../../../assets/svgs/SVG_LOGOS';
 
 const loginInitalState = {
   title: 'Login',
@@ -12,6 +12,9 @@ const othersAuthIcons = [
   },
   {
     icon: Facebook,
+  },
+  {
+    icon: Apple,
   },
 ];
 export {loginInitalState, othersAuthIcons};

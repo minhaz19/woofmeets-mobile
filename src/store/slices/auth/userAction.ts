@@ -108,3 +108,37 @@ export const providerAuth = createAsyncThunk(
     }
   },
 );
+
+
+export const appleAuthLogin = createAsyncThunk(
+  'auth/appleAuthLogin',
+  async (userInfo: any, {rejectWithValue}) => {
+    try {
+      const response: ApiResponse<any> = await apiClient.post(
+        '/auth/apple/oauth',
+        userInfo,
+      );
+      if (!response.ok) {
+        if (response.data.message) {
+          Alert.alert(response.data.message);
+        } else if (response.problem === 'TIMEOUT_ERROR') {
+          Alert.alert('Response Timeout! Please try again');
+        } else {
+          Alert.alert('An unexpected error happened');
+        }
+        throw new Error(response.data.message);
+      }
+      if (response.ok) {
+        authStorage.storeToken(response.data.data.access_token);
+      }
+
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  },
+);
