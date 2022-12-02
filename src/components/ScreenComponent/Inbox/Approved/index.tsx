@@ -9,7 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getInprogressApnt} from '../../../../store/slices/Appointment/Inbox/User/InProgress/getInprogressApnt';
 import {getProviderInprogressApnt} from '../../../../store/slices/Appointment/Inbox/Provider/InProgress/getPInprogressApnt';
-import changeTextLetter from '../../../common/changeTextLetter';
+import changeTextLetter from '../../../common/ChangeTextLetter';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import InboxLoader from '../../../../screens/Inbox/Loader/InboxLoader';
 import {convertToLocalTZ} from '../../../common/formatDate';

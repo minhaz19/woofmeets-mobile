@@ -10,7 +10,7 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppSelector} from '../../../../store/store';
 import ShortText from '../../../common/text/ShortText';
 import TitleText from '../../../common/text/TitleText';
-import changeTextLetter from '../../../common/changeTextLetter';
+import changeTextLetter from '../../../common/ChangeTextLetter';
 interface Props {
   screen: string;
 }

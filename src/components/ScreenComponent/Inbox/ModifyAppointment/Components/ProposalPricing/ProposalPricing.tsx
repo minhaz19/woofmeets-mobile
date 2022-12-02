@@ -5,7 +5,7 @@ import TitleText from '../../../../../common/text/TitleText';
 import Text_Size from '../../../../../../constants/textScaling';
 import Colors from '../../../../../../constants/Colors';
 import ShortText from '../../../../../common/text/ShortText';
-import changeTextLetter from '../../../../../common/changeTextLetter';
+import changeTextLetter from '../../../../../common/ChangeTextLetter';
 import {useProposalPricing} from './utils/useProposalPricing';
 import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
 

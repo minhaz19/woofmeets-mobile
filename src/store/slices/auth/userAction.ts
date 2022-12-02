@@ -3,6 +3,7 @@ import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../api/client';
 import authStorage from '../../../utils/helpers/auth/storage';
+import { baseUrlV } from '../../../utils/helpers/httpRequest';
 export const userLogin = createAsyncThunk(
   'auth/login',
   async ({email, password}: any, {rejectWithValue}) => {
@@ -44,7 +45,7 @@ export const registerUser = createAsyncThunk(
     {rejectWithValue},
   ) => {
     try {
-      const response: ApiResponse<any> = await apiClient.post('/auth/signup', {
+      const response: ApiResponse<any> = await apiClient.post(`${baseUrlV}/v2/auth/signup`, {
         firstName,
         lastName,
         zipcode,

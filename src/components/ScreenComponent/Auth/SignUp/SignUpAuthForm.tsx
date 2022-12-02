@@ -48,13 +48,6 @@ const signUpData = [
     textContentType: 'password',
     name: 'password',
   },
-  {
-    label: 'Zip Code',
-    keyboardType: 'numeric',
-    placeholder: 'Enter your zip code',
-    textContentType: 'postalCode',
-    name: 'zipcode',
-  },
 ];
 const SignUpAuthForm = ({
   handleSubmit,
