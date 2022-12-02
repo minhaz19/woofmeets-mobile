@@ -36,6 +36,7 @@ const FilterProvider = () => {
     lng: null,
     address: null,
   });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const {pets} = useAppSelector((state: any) => state?.allPets);
   const {
     location,
@@ -56,6 +57,7 @@ const FilterProvider = () => {
     const lat = details?.geometry?.location?.lat;
     const lng = details?.geometry?.location?.lng;
     setSelectLatLng({lat: lat, lng: lng, address: details?.formatted_address});
+    setErrorMessage(null);
   };
   useEffect(() => {
     if (pets) {
@@ -213,7 +215,7 @@ const FilterProvider = () => {
       dispatch(setFormattedData(formattedData));
       dispatch(getAllProviderOneTime(formattedData));
       dispatch(setOpenFilter(false));
-    } else {
+    } else if (selectLatLng?.address) {
       const locationAddressEndPoint = `${baseUrlV}/v2/location?address=${selectLatLng?.address}`;
       const result = await request(locationAddressEndPoint);
       if (result.ok) {
@@ -286,6 +288,8 @@ const FilterProvider = () => {
         dispatch(getAllProviderOneTime(formattedData));
         dispatch(setOpenFilter(false));
       }
+    } else {
+      setErrorMessage('Please enter your zip code or address');
     }
   };
   const handleReset = () => {
@@ -297,7 +301,7 @@ const FilterProvider = () => {
     dispatch(setMultiSliderValue([0, 200]));
     dispatch(setDropIn(null));
     dispatch(setDropOut(null));
-    dispatch(setIsService({service: '', serviceId: ''}));
+    dispatch(setIsService({service: 'boarding', serviceId: 1}));
     dispatch(setIsYardEnabled(''));
     dispatch(setServiceFrequency(days));
     dispatch(setPetType(petData));
@@ -328,6 +332,8 @@ const FilterProvider = () => {
           loading={loading}
           setAddressLine={setSelectLatLng}
           formattedAddress={formattedAddress}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
         />
       </View>
     </View>

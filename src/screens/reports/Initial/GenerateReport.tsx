@@ -168,6 +168,7 @@ const GenerateReport = ({navigation, route}: Props) => {
             medication: isMedication,
             generateTime: reportInfo?.startTime,
             submitTime: reportInfo?.stopTime,
+            additionalNotes: isAdditionalNotes,
           };
     const result = await reportRequest(endPoint, formattedData);
     if (result?.ok) {

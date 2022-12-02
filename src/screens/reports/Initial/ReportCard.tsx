@@ -31,6 +31,7 @@ const ReportCard = ({navigation, route}: Props) => {
   const {request, loading} = useApi(methods._get);
   const {request: getMap, loading: mapLoading} = useApi(methods._get);
   const [mapData, setMapData] = useState(null);
+
   const handleSingleReport = async () => {
     const singleEndPoint = `/appointment/card/find/${id}`;
     const result = await request(singleEndPoint);
