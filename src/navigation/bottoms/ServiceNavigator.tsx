@@ -1,81 +1,81 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Colors from '../../constants/Colors';
-import ServiceMain from '../../screens/Service/SelectService';
-import PetCareZipSearch from '../../screens/PetCareZipSearch';
+import PetCareZipSearch from '../../screens/search/PetCareZipSearch';
 import AllProvider from '../../screens/Service/AllProvider';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import {FilterIcon} from '../../assets/svgs/SVG_LOGOS';
-import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../store/slices/misc/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
+import RealtimeLocation from '../../screens/RealtimeLocation';
+import Header from '../../components/common/header/Header';
 import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
-import ServiceDetails from '../../components/ScreenComponent/Service/ServiceDetails';
-
+import {useAppDispatch} from '../../store/store';
+import authStorage from '../../utils/helpers/auth/storage';
+import jwtDecode from 'jwt-decode';
+// import ReportCardInitial from '../../screens/reports/Initial';
+// import GenerateReport from '../../screens/reports/Initial/GenerateReport';
+// import ReportCard from '../../screens/reports/Initial/ReportCard';
 const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const [token, setToken] = useState<any>();
+  const getDecodedToken = async () => {
+    const tok: any = await authStorage.getToken();
+    if (tok) {
+      const decode: any = await jwtDecode(tok);
+      setToken(decode);
+      return decode;
+    }
+  };
+  getDecodedToken();
   return (
     <Stack1.Navigator initialRouteName="PetCareZipSearch">
       <Stack1.Screen
         name="PetCareZipSearch"
         component={PetCareZipSearch}
+        options={{
+          headerShown: false,
+        }}
+        // options={({navigation}) => ({
+        //   header: () =>
+        //     // token?.provider ? (
+        //     //   <HeaderWithBack
+        //     //     navigation={navigation}
+        //     //     title="Services"
+        //     //     notification
+        //     //     onPress={() => dispatch(setOpenFilter(true))}
+        //     //   />
+        //     // ) : (
+        //       <Header
+        //         navigation={navigation}
+        //         title="Services"
+        //         notification
+        //         onPress={() => dispatch(setOpenFilter(true))}
+        //       />,
+        //     // ),
+        //   backgroundColor: Colors.primary,
+        //   gestureEnabled: false,
+        // })}
+      />
+
+      <Stack1.Screen
+        name="RealtimeLocation"
+        component={RealtimeLocation}
         options={{headerShown: false}}
       />
-      <Stack1.Screen
-        name="ProviderAvailablity"
-        component={ProviderAvailablity}
-        options={{headerShown: false}}
-      />
-      <Stack1.Screen
-        name="ServiceMain"
-        component={ServiceMain}
-        options={() => ({
-          headerStyle: {
-            backgroundColor: Colors.background,
-            borderWidth: 0,
-            borderColor: Colors.primary,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: '600',
-            textAlign: 'center',
-          },
-          headerShown: false,
-          title: '',
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
-        name="ServiceDetails"
-        component={ServiceDetails}
-        options={() => ({
-          headerStyle: {
-            backgroundColor: Colors.background,
-            borderWidth: 0,
-            borderColor: Colors.primary,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: '600',
-            textAlign: 'center',
-          },
-          headerShown: false,
-          title: '',
-          backgroundColor: Colors.primary,
-        })}
-      />
+
       <Stack1.Screen
         name="AllProvider"
         component={AllProvider}
         options={({navigation}) => ({
-          title: '',
+          title: 'All Provider',
           header: () => (
             <HeaderWithBack
               navigation={navigation}
               title="All Provider"
               SecondIcon={FilterIcon}
-              notification
+              // notification={FilterIcon}
               onPress={() => dispatch(setOpenFilter(true))}
             />
           ),

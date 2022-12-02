@@ -4,7 +4,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  useColorScheme,
   View,
 } from 'react-native';
 import Colors from '../../../constants/Colors';
@@ -19,38 +18,51 @@ import {
 import {loginValidationSchema} from '../../../utils/config/ValidationSchema/validationSchema';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import AppForm from '../../../components/common/Form/AppForm';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+// import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {useLogin} from './utils/useLogin';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import TitleText from '../../../components/common/text/TitleText';
 interface Props {
-  navigation: {navigate: (arg0: string) => void};
+  navigation: {navigate: (arg0: string) => void} | any;
 }
 const Login = ({navigation}: Props) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const {handleSubmit, providerLoading, loading} = useLogin(navigation);
+  const {colors} = useTheme();
+  const {handleSubmit, loading} = useLogin(navigation);
   return (
     <>
-      {providerLoading && <AppActivityIndicator visible={true} />}
+      {/* {providerLoading && <AppActivityIndicator visible={true} />} */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
         style={[
           {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.secondary,
+            backgroundColor: colors.backgroundColor,
           },
         ]}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
           enabled={Platform.OS === 'ios' ? true : false}>
+          <AppTouchableOpacity
+            style={styles.leftContainer}
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <Ionicons
+              name="ios-chevron-back"
+              size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+              style={styles.iconStyle}
+              color={Colors.primary}
+            />
+            <TitleText text={'Back'} textStyle={styles.backText} />
+          </AppTouchableOpacity>
           <View
             style={[
               styles.infoContainer,
               {
-                backgroundColor: isDarkMode
-                  ? Colors.dark.lightDark
-                  : Colors.background,
+                backgroundColor: Colors.background,
               },
             ]}>
             <AuthHeader
@@ -86,9 +98,20 @@ const Login = ({navigation}: Props) => {
 export default Login;
 
 const styles = StyleSheet.create({
+  iconStyle: {paddingRight: 5},
+  leftContainer: {
+    // position: 'absolute',
+    top: -20,
+    left: '2%',
+    paddingTop: 4,
+    paddingBottom: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    paddingTop: 40,
   },
   infoContainer: {
     borderTopRightRadius: 30,
@@ -105,4 +128,5 @@ const styles = StyleSheet.create({
   view: {
     height: 40,
   },
+  backText: {color: Colors.primary, fontWeight: 'bold'},
 });

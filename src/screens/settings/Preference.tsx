@@ -1,70 +1,61 @@
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, Linking} from 'react-native';
 import React from 'react';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
 import PreferenceItem from '../../components/ScreenComponent/setting/Preference/PreferenceItem';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
 import Text_Size from '../../constants/textScaling';
+import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 import {useAppDispatch} from '../../store/store';
-import {logout} from '../../store/slices/auth/userSlice';
-import methods from '../../api/methods';
+import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
 
 const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
-  const {colors} = useTheme();
   const dispatch = useAppDispatch();
   const supportData = [
     {
       id: 1,
       title: 'Account Setting',
-      screenName: () => props.navigation.navigate('AccountSetting'),
-      opacity: 1,
-    },
-    {
-      id: 2,
-      title: 'Logout',
+      details: 'Find the account infos here',
       screenName: () => {
-        dispatch(logout());
-        methods._get('/auth/logout');
-        props.navigation.navigate('AuthNavigator');
+        props.navigation.navigate('AccountSetting');
+        dispatch(getWhoAmI());
       },
       opacity: 1,
     },
     {
       id: 3,
       title: 'Terms of Service',
-      screenName: () => {},
-      details: 'https://www.google.com',
+      screenName: () =>
+        Linking.openURL('https://woofmeets.com/terms-and-conditions'),
+      details: 'https://woofmeets.com/terms-and-conditions',
       opacity: 1,
     },
     {
       id: 4,
       title: 'Privacy Policy',
-      screenName: () => {},
-      details: 'https://www.google.com',
+      screenName: () => Linking.openURL('https://woofmeets.com/privacy-policy'),
+      details: 'https://woofmeets.com/privacy-policy',
       opacity: 1,
     },
     {
       id: 5,
       title: 'Version',
       screenName: () => {},
-      details: '1.0.2 - beta',
+      details: '1.0.0.0 - release',
       opacity: 1,
     },
   ];
   return (
-    <ScrollView
-      style={[
-        styles.container,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
-      <HeaderText text="General" textStyle={styles.textContainer} />
-      {supportData?.map(item => (
-        <PreferenceItem key={item.id} data={item} />
-      ))}
-      <HeaderText text="Woofmeets" textStyle={styles.bottomTextContainer} />
-    </ScrollView>
+    <ScreenRapperGrey>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={[styles.container]}>
+        <HeaderText text="General" textStyle={styles.textContainer} />
+        {supportData?.map(item => (
+          <PreferenceItem key={item.id} data={item} />
+        ))}
+        <HeaderText text="Woofmeets" textStyle={styles.bottomTextContainer} />
+      </ScrollView>
+    </ScreenRapperGrey>
   );
 };
 

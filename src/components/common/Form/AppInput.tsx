@@ -7,26 +7,28 @@ import Colors from '../../../constants/Colors';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const AppInput = ({...otherProps}) => {
   const [show, setShow] = useState(true);
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const {numberOfLines, textInputBoxStyle, inputBoxContainerStyle} = otherProps;
   return (
     <View
       style={[
         styles.container,
         {
-          borderColor: isDarkMode ? Colors.gray : Colors.border,
+          borderColor: Colors.border,
         },
         inputBoxContainerStyle,
       ]}>
       <TextInput
         placeholderTextColor={'gray'}
+        allowFontScaling={false}
         style={[
           styles.text,
           {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
-            height: numberOfLines >= 10 ? 120 : 40,
-            flex: 1,
-            color: isDarkMode ? 'white' : 'black',
+            height: numberOfLines >= 10 ? 120 : 45,
+            width: otherProps.secureTextEntry ? '90%' : '100%',
+            color: 'black',
+            fontSize: Text_Size.Text_11,
           },
           textInputBoxStyle,
         ]}
@@ -52,6 +54,7 @@ const AppInput = ({...otherProps}) => {
             fill={colors.descriptionText}
           />
         ))}
+      {otherProps.Icon ? otherProps?.Icon : null}
     </View>
   );
 };
@@ -74,9 +77,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    width: '90%',
-    fontSize: Text_Size.Text_0,
-    flex: 0,
+    // width: '90%',
+    fontFamily: 'Muli',
+    flex: 1,
   },
   check: {height: '100%', alignSelf: 'center'},
 });

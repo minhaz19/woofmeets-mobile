@@ -1,38 +1,67 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
-import {serivesData} from '../../../../../../../utils/config/Data/ProviderProfileDatas';
+import {petSizeType} from '../../../../../../../utils/config/Data/ProviderProfileDatas';
 import ServicesCalendar from './component/ServicesCalendar';
 import PetWeightType from './component/PetWeightType';
 import PetPricing from './component/PetPricing';
-
-const Services = () => {
-  const [activeDog, setActiveDog] = useState(0);
+import {useServices} from './utils/useServices';
+import BottomSpacing from '../../../../../../UI/BottomSpacing';
+interface useActiveIndex {
+  0: boolean;
+  1: boolean;
+  2: boolean;
+  3: boolean;
+  4: boolean;
+}
+const Services = (props: any) => {
+  const {formattedServices, availabilityData, atHome} = useServices();
+  const [activeIndex, setActiveIndex] = useState<useActiveIndex | any>({
+    0: true,
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+  });
   return (
     <View style={styles.container}>
-      {serivesData.map((d, index) => (
-        <View key={index}>
-          <View style={styles.petTypeContainer}>
-            {d.petType.map((item, key) => (
-              <PetWeightType
-                key={key}
-                item={item}
-                activeDog={activeDog}
-                setActiveDog={setActiveDog}
-              />
-            ))}
-          </View>
-
-          <View>
-            {d.petPricing.map((pricingD, inde) => (
-              //@ts-ignore
-              <PetPricing key={inde} pricingD={pricingD} />
-            ))}
-          </View>
-        </View>
-      ))}
-      <View style={styles.calendar}>
-        <ServicesCalendar />
+      <View style={styles.petTypeContainer}>
+        {atHome !== null &&
+          petSizeType?.map(
+            (item, key) =>
+              atHome[item.size] === true && (
+                <PetWeightType key={key} item={item} />
+              ),
+          )}
       </View>
+
+      <View style={styles.priceContainer}>
+        {formattedServices?.map((pricingD: any, inde: number) => (
+          <PetPricing
+            key={inde}
+            onPress={() => {
+              const indexKey = Object.keys(activeIndex).map(item => ({
+                i: item === inde.toString(),
+              }));
+
+              var modobject = indexKey.reduce(
+                (obj, item, i) => Object.assign(obj, {[i]: item.i}),
+                {},
+              );
+              setActiveIndex(modobject);
+            }}
+            pricingD={pricingD}
+            showRate={activeIndex[inde]}
+          />
+        ))}
+      </View>
+      <View style={styles.calendar}>
+        <ServicesCalendar
+          availabilityData={availabilityData}
+          providerOpk={props.providerOpk}
+        />
+      </View>
+      <BottomSpacing />
+      <BottomSpacing />
     </View>
   );
 };
@@ -43,10 +72,11 @@ const styles = StyleSheet.create({
   container: {},
   petTypeContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     flex: 1,
   },
   calendar: {
     marginTop: 10,
   },
+  priceContainer: {marginVertical: 10},
 });

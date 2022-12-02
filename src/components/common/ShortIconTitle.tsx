@@ -2,19 +2,23 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import ShortText from './text/ShortText';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
+import Colors from '../../constants/Colors';
 interface Props {
   Icon: any;
   text: string | number;
   color?: string;
+  jCenter?: boolean;
 }
-const ShortIconTitle = ({Icon, text, color}: Props) => {
-  const {isDarkMode} = useTheme();
+const ShortIconTitle = ({Icon, text, color, jCenter = false}: Props) => {
   return (
-    <View style={styles.container}>
-      <Icon fill={isDarkMode ? 'white' : 'black'} />
+    <View
+      style={[
+        styles.container,
+        {justifyContent: jCenter ? 'center' : 'flex-start'},
+      ]}>
+      <Icon fill={Colors.primary} width={13} height={13} />
       <ShortText
-        textStyle={{marginLeft: 3, color: color && color}}
+        textStyle={{marginLeft: 3}}
         text={text}
       />
     </View>
@@ -25,7 +29,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 5,
+    justifyContent: 'center',
+    flex: 1,
+    // marginRight: 5,
   },
 });
 export default ShortIconTitle;

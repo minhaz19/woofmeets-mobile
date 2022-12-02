@@ -5,12 +5,16 @@ import ShortText from '../../../common/text/ShortText';
 import Text_Size from '../../../../constants/textScaling';
 import Colors from '../../../../constants/Colors';
 interface Props {
-  pricing: string;
+  pricing: any;
 }
 const ProviderPricing = ({pricing}: Props) => {
+  const price = pricing.length > 0 ? pricing[0].amount : 0;
   return (
     <View style={styles.container}>
-      <TitleText textStyle={styles.title} text={pricing} />
+      <TitleText
+        textStyle={styles.title}
+        text={`$${price}`}
+      />
       <ShortText textStyle={styles.subTitle} text="per night" />
     </View>
   );

@@ -3,57 +3,55 @@ import React from 'react';
 import ImageContainer from './ImageContainer';
 import ProviderInfo from './ProviderInfo';
 import ProviderPricing from './ProviderPricing';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import Card from '../../../UI/Card';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 interface Props {
-  image: string;
-  name: string;
-  nature: string;
-  rating: number;
-  distance: string;
-  availablity: string;
-  pricing: string;
-  repeatClient: string;
+  item: any;
+  onPress: () => void;
 }
 
-type StackParamList = {
-  ProviderNavigator: {foo: string; onBar: () => void} | undefined;
-};
-type NavigationProps = StackNavigationProp<StackParamList>;
-const ProviderList = ({
-  image,
-  name,
-  nature,
-  rating,
-  distance,
-  availablity,
-  repeatClient,
-  pricing,
-}: Props) => {
-  const navigation = useNavigation<NavigationProps>();
+const ProviderList = ({item, onPress}: Props) => {
+  const {isDarkMode, colors} = useTheme();
   return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('ProviderNavigator')}
-      style={styles.providerContainer}>
-      <ImageContainer image={image} />
-      <ProviderInfo
-        rating={rating}
-        distance={distance}
-        nature={nature}
-        name={name}
-        availablity={availablity}
-        repeatClient={repeatClient}
-      />
-      <View style={styles.pricing}>
-        <ProviderPricing pricing={pricing} />
-      </View>
-    </TouchableOpacity>
+    <Card
+      style={{
+        ...styles.container,
+        backgroundColor: colors.backgroundColor,
+      }}>
+      <TouchableOpacity onPress={onPress} style={styles.providerContainer}>
+        <ImageContainer provider={item?.provider} />
+        <ProviderInfo
+          rating={null}
+          distance={item?.distance}
+          nature={'na na a'}
+          user={item?.provider?.user}
+          availability={item?.availability}
+          headline={
+            item?.provider?.providerDetails &&
+            item?.provider?.providerDetails?.headline
+          }
+          expYears={
+            item?.provider?.providerDetails &&
+            item?.provider?.providerDetails.yearsOfExperience
+          }
+          repeatClient={null}
+        />
+        <View style={styles.pricing}>
+          <ProviderPricing pricing={item.ServiceHasRates} />
+        </View>
+      </TouchableOpacity>
+    </Card>
   );
 };
 
 export default ProviderList;
 
 const styles = StyleSheet.create({
+  container: {
+    marginVertical: 8,
+    paddingHorizontal: 5,
+    borderRadius: 10,
+  },
   providerContainer: {
     flexDirection: 'row',
     position: 'relative',

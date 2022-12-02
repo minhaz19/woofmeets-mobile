@@ -1,7 +1,8 @@
 import {Platform, StyleSheet} from 'react-native';
 import Colors from '../../Colors';
-import {descriptionDarkText, titleDarkText} from '../../FontDetails';
+import Text_Size from '../../textScaling';
 import {SCREEN_WIDTH} from '../../WindowSize';
+import {textStyle} from './textStyle';
 // import {SCREEN_WIDTH} from '../../WindowSize';
 
 export const designs = StyleSheet.create({
@@ -22,6 +23,13 @@ export const designs = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor: 'rgba(52, 52, 52, 0.6)',
+  },
+  centeredViewBgLite: {
+    flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 32 : 0,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.2)',
   },
   modalCancel: {
     paddingRight: '5%',
@@ -46,10 +54,26 @@ export const designs = StyleSheet.create({
     minHeight: '40%',
     maxHeight: '90%',
     width: '100%',
-
     shadowColor: 'black',
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.75,
+    shadowRadius: 3.84,
+    elevation: 9,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
+    paddingTop: 20,
+  },
+  modalViewRoundedless: {
+    // minHeight: '40%',
+    // maxHeight: '100%',
+    width: '100%',
+    shadowColor: 'black',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
     shadowOffset: {
       width: 2,
       height: 2,
@@ -98,7 +122,7 @@ export const designs = StyleSheet.create({
   },
   textSuccess: {
     fontWeight: '500',
-    fontSize: titleDarkText.fontSize,
+    fontSize: Text_Size.Text_3,
     maxWidth: '70%',
     marginLeft: '15%',
     textAlign: 'center',
@@ -121,7 +145,7 @@ export const designs = StyleSheet.create({
     textAlign: 'center',
     width: '80%',
     fontWeight: '700',
-    fontSize: descriptionDarkText.fontSize,
+    fontSize: Text_Size.Text_3,
     color: 'black',
   },
 });

@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
-  password: Yup.string().required().min(8).label('Password'),
+  password: Yup.string().required().min(6).label('Password'),
 });
 
 const signUpValidationSchema = Yup.object().shape({
@@ -18,15 +18,10 @@ const signUpValidationSchema = Yup.object().shape({
     .max(40)
     .required()
     .label('Last Name'),
-  zipcode: Yup.string()
-    .required('Zipcode is required')
-    .matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/, 'Invalid Zipcode')
-    .nullable()
-    .label('Zip Code'),
   email: Yup.string().required().email().label('Email'),
   password: Yup.string()
     .required('No password provided.')
-    .min(8, 'Too short - should be min 8 character.')
+    .min(6, 'Too short - should be min 6 character.')
     .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   terms: Yup.boolean()
     .required('The terms and conditions must be accepted.')
@@ -34,10 +29,10 @@ const signUpValidationSchema = Yup.object().shape({
 });
 
 const setPasswordValidationSchema = Yup.object().shape({
-  oldPassword: Yup.string().required().min(8).label('Old Password'),
+  oldPassword: Yup.string().required().min(6).label('Old Password'),
   newPassword: Yup.string()
     .required('No password provided.')
-    .min(8, 'Too short - should be min 8 character.')
+    .min(6, 'Too short - should be min 6 character.')
     .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   confirmPassword: Yup.string()
     .label('confirm password')
@@ -47,7 +42,7 @@ const setPasswordValidationSchema = Yup.object().shape({
 const forgotPasswordResetValidationSchema = Yup.object().shape({
   newPassword: Yup.string()
     .required('No password provided.')
-    .min(8, 'Too short - should be min 8 character.')
+    .min(6, 'Too short - should be min 6 character.')
     .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   confirmPassword: Yup.string()
     .label('confirm password')
@@ -65,7 +60,7 @@ const otpValidationSchema = Yup.object().shape({
 const verifyAccountValidationSchema = Yup.object().shape({
   code: Yup.string().required().min(6).max(6).label('OTP'),
 });
-const addPetValidationSchema = Yup.object().shape({
+const addPetHomeValidationSchema = Yup.object().shape({
   profile_image: Yup.string().required('Image is required'),
   type: Yup.string().required('Pet type is required'),
   name: Yup.string().required('Pet name is required'),
@@ -79,11 +74,13 @@ const addPetValidationSchema = Yup.object().shape({
     .nullable(true)
     .positive()
     .integer()
+    .min(0)
     .required('Year Required')
     .typeError('A Number is Required'),
   ageMonth: Yup.number()
     .nullable(true)
     .positive()
+    .min(0)
     .integer()
     .required('Month Required')
     .typeError('A Number is Required'),
@@ -96,7 +93,8 @@ const addPetValidationSchema = Yup.object().shape({
         id: Yup.number().required(),
       }),
     ),
-
+});
+const addPetCheckValidationSchema = Yup.object().shape({
   microchipped: Yup.boolean().nullable(true),
   houseTrained: Yup.string(),
   houseTrainedAdditionalDetails: Yup.string(),
@@ -116,6 +114,8 @@ const addPetValidationSchema = Yup.object().shape({
   canLeftAlone: Yup.string(),
   canLeftAloneDetails: Yup.string(),
   additionalDescription: Yup.string(),
+});
+const addPetSubmitValidationSchema = Yup.object().shape({
   pill: Yup.boolean(),
   topical: Yup.boolean(),
   injection: Yup.boolean(),
@@ -142,61 +142,138 @@ const providerAvailablityValidationSchema = Yup.object().shape({
 const BoardingSettingsSchema = Yup.object().shape({
   baserate: Yup.number()
     .nullable(true)
+    .positive()
+    .min(0)
     .required('Pet per service is required')
-    .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  sixtyMinRate: Yup.number()
-    .nullable(true)
-    // .required('holiday rate is required')
-    // .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
+    .typeError('A Number is Required'),
   holidayrate: Yup.number()
     .nullable(true)
+    .positive()
+    .min(0)
     .required('holiday rate is required')
-    .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
+    .typeError('A Number is Required'),
   additionaldog: Yup.number()
     .nullable(true)
+    .positive()
+    .min(0)
     .required('Additional dog rate is required')
-    .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  puppyRate: Yup.number()
-    .nullable(true)
-    // .required('Puppy rate is required')
-    // .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
+    .typeError('A Number is Required'),
   catcare: Yup.number()
     .nullable(true)
+    .positive()
+    .min(0)
     .required('Cate rate is required')
-    .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  additionalCat: Yup.number()
+    .typeError('A Number is Required'),
+  puppyrate: Yup.number()
     .nullable(true)
-    // .required('Additional cat rate is required')
-    // .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  extendedStayRate: Yup.number()
+    .positive()
+    .min(0)
+    .required('Puppy rate rate is required')
+    .typeError('A Number is Required'),
+  additionalcat: Yup.number()
     .nullable(true)
-    // .required('Extended stay rate is required')
-    // .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  bathingGrooming: Yup.number()
-    .nullable(true)
-    // .required('Bathing grooming is required')
-    // .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
-  pickUpDropOff: Yup.number()
-    .nullable(true)
-    // .required('Pick up drop off is required')
-    // .typeError('A Number is Required')
-    .max(150, 'Please enter a value less than or equal to 150.'),
+    .positive()
+    .min(0)
+    .required('Additional cat rate is required')
+    .typeError('A Number is Required'),
+  // bathgroomingrate: Yup.number()
+  //   .nullable(true)
+  //   .required('Bathgrooming rate is required')
+  //   .typeError('A Number is Required'),
+  // extendedCare: Yup.number()
+  //   .nullable(true)
+  //   .required('Extended care rate is required')
+  //   .typeError('A Number is Required'),
+  // costadjustment: Yup.number()
+  //   .nullable(true)
+  //   .required('Cost adjustment rate is required')
+  //   .typeError('A Number is Required'),
+  // discountadjustment: Yup.number()
+  //   .nullable(true)
+  //   .required('Discount adjustment rate is required')
+  //   .typeError('A Number is Required'),
+  // extendedstayrate: Yup.number()
+  //   .nullable(true)
+  //   .required('Extendedstay rate is required')
+  //   .typeError('A Number is Required'),
 });
 const safetyQuizValidationSchema = Yup.object().shape({
-  quiz_one: Yup.string(),
-  quiz_two: Yup.string(),
-  quiz_three: Yup.string(),
-  quiz_four: Yup.string(),
-  quiz_five: Yup.string(),
+  '1': Yup.string().required('Please choose the corrent answer'),
+  '2': Yup.string().required('Please choose the corrent answer'),
+  '3': Yup.string().required('Please choose the corrent answer'),
+  '4': Yup.string().required('Please choose the corrent answer'),
+  '5': Yup.string().required('Please choose the corrent answer'),
+  '6': Yup.string().required('Please choose the corrent answer'),
+  '7': Yup.string().required('Please choose the corrent answer'),
+});
+const backgroundCheckValidationSchema = Yup.object().shape({
+  dob: Yup.string(),
+  // dob: Yup.string().required('Please provide date of birth'),
+  state: Yup.string(),
+  dlld: Yup.string(),
+  stateId: Yup.string(),
+  imageGallery: Yup.array(),
+});
+const planCheckoutValidationSchema = Yup.object().shape({
+  email: Yup.string().email().required('Email is a required field'),
+  phone: Yup.string().required('Provide your number'),
+  cardInfo: Yup.object().shape({
+    country: Yup.string().required('country is required'),
+    postalCode: Yup.string().required('postalCode is required'),
+  }),
+});
+
+const cardExpValidationSchema = Yup.object().shape({
+  month: Yup.number().required('Month is required'),
+  year: Yup.number().required('Year is required'),
+});
+
+const appointmentValidationSchema = Yup.object().shape({
+  providerServiceId: Yup.number()
+    .nullable(true)
+    .typeError('A Number is Required'),
+  serviceTypeId: Yup.number().nullable(true).typeError('A Number is Required'),
+  visitLength: Yup.number().nullable(true).typeError('A Number is Required'),
+  isRecurring: Yup.boolean(),
+  dropOffStartTime: Yup.string(),
+  dropOffEndTime: Yup.string(),
+  pickUpStartTime: Yup.string(),
+  pickUpEndTime: Yup.string(),
+  petsId: Yup.array(),
+  firstMessage: Yup.string(),
+  isRecivedPhotos: Yup.boolean(),
+  recurringStartDate: Yup.string(),
+  recurringSelectedDay: Yup.array(),
+  repeatDate: Yup.array(),
+  proposalStartDate: Yup.string(),
+  proposalEndDate: Yup.string(),
+  proposalOtherDate: Yup.array(),
+  recurringModDates: Yup.array(),
+  specificModDates: Yup.array(),
+  multiDate: Yup.array(),
+  selectedRange: Yup.array(),
+  selectDate: Yup.array(),
+});
+const appointmentModifyValidationSchema = Yup.object().shape({
+  visitLength: Yup.number().nullable(true).typeError('A Number is Required'),
+  isRecurring: Yup.boolean(),
+  dropOffStartTime: Yup.string(),
+  dropOffEndTime: Yup.string(),
+  pickUpStartTime: Yup.string(),
+  pickUpEndTime: Yup.string(),
+  petsId: Yup.array(),
+  recurringStartDate: Yup.string(),
+  recurringSelectedDay: Yup.array(),
+  repeatDate: Yup.array(),
+  proposalStartDate: Yup.string(),
+  proposalEndDate: Yup.string(),
+  proposalOtherDate: Yup.array(),
+  recurringModDates: Yup.array(),
+  specificModDates: Yup.array(),
+  multiDate: Yup.array(),
+  selectedRange: Yup.array(),
+  selectDate: Yup.array(),
+  markedStyle: Yup.object(),
 });
 
 export {
@@ -206,10 +283,17 @@ export {
   forgotPasswordValidationSchema,
   otpValidationSchema,
   verifyAccountValidationSchema,
-  addPetValidationSchema,
+  addPetHomeValidationSchema,
+  addPetCheckValidationSchema,
+  addPetSubmitValidationSchema,
   filterProviderValidationSchema,
   BoardingSettingsSchema,
   forgotPasswordResetValidationSchema,
   providerAvailablityValidationSchema,
   safetyQuizValidationSchema,
+  backgroundCheckValidationSchema,
+  planCheckoutValidationSchema,
+  cardExpValidationSchema,
+  appointmentValidationSchema,
+  appointmentModifyValidationSchema,
 };

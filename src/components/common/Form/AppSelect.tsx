@@ -1,10 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import Colors from '../../../constants/Colors';
 import {Dropdown} from 'react-native-element-dropdown';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import {setIsService} from '../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import TitleText from '../text/TitleText';
 interface Props {
   name: string;
   data: any[];
@@ -12,6 +15,7 @@ interface Props {
   defaultText?: string;
   placeholder: string;
   onChange: (arg: any) => void;
+  setSelectedService?: (arg: any) => void;
 }
 const AppSelect = ({
   data,
@@ -19,17 +23,29 @@ const AppSelect = ({
   placeholder,
   disable = false,
   onChange,
+  setSelectedService,
 }: Props) => {
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
+  const dispatch = useAppDispatch();
   const [value, setValuee] = useState(defaultText);
+  const {isService} = useAppSelector((state: any) => state.providerFilter);
   const [isFocus, setIsFocus] = useState(false);
-  const renderItem = useCallback((item: any) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.selectedTextStyle}>{item.label}</Text>
-      </View>
-    );
-  }, []);
+  const renderItem = useCallback(
+    (item: any) => {
+      return (
+        <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
+          <TitleText
+            textStyle={{...styles.selectedTextStyle, color: colors.headerText}}
+            text={item.label}
+          />
+        </View>
+      );
+    },
+    [colors.backgroundColor],
+  );
+  useEffect(() => {
+    setValuee(defaultText);
+  }, [defaultText]);
   return (
     <View>
       <Dropdown
@@ -37,12 +53,21 @@ const AppSelect = ({
           styles.dropdown,
           {
             backgroundColor: colors.backgroundColor,
-            borderColor: isDarkMode ? Colors.gray : Colors.border,
+            borderColor: Colors.border,
           },
         ]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
+        placeholderStyle={{
+          ...styles.placeholderStyle,
+          color: colors.descriptionText,
+        }}
+        selectedTextStyle={{
+          ...styles.selectedTextStyle,
+          color: colors.headerText,
+        }}
+        inputSearchStyle={{
+          ...styles.inputSearchStyle,
+          color: colors.headerText,
+        }}
         iconStyle={styles.iconStyle}
         containerStyle={{
           backgroundColor: colors.backgroundColor,
@@ -53,7 +78,7 @@ const AppSelect = ({
         labelField="label"
         valueField="value"
         placeholder={!isFocus ? placeholder : '...'}
-        value={value}
+        value={isService.service !== '' ? isService?.service : value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         disable={disable}
@@ -62,6 +87,9 @@ const AppSelect = ({
           setValuee(item.value);
           setIsFocus(false);
           onChange(item.value);
+          setSelectedService && setSelectedService(item.id);
+          setIsService &&
+            dispatch(setIsService({service: item.value, serviceId: item.id}));
         }}
       />
     </View>
@@ -85,11 +113,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   placeholderStyle: {
-    fontSize: Text_Size.Text_0,
-    color: 'gray',
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_11 : Text_Size.Text_12,
+  },
+  itemTextStyle: {
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_11 : Text_Size.Text_12,
   },
   selectedTextStyle: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_11 : Text_Size.Text_12,
   },
   iconStyle: {
     width: 20,
@@ -97,7 +127,7 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: Text_Size.Text_0,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
   },
   icon: {
     marginRight: 5,
@@ -108,6 +138,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    // backgroundColor: 'red',
   },
   selectedStyle: {
     backgroundColor: Colors.primary,
@@ -128,10 +159,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
-  },
-  textSelectedStyle: {
-    marginRight: 5,
-    fontSize: Text_Size.Text_0,
-    color: Colors.background,
   },
 });

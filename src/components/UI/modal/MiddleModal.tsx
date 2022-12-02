@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   TouchableWithoutFeedback,
@@ -8,7 +9,9 @@ import {
 } from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
-import {SCREEN_WIDTH} from '../../../constants/WindowSize';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import IOSButton from '../IOSButton';
 
 const MiddleModal = (props: {
   onBlur: ((e: NativeSyntheticEvent<TargetedEvent>) => void) | undefined;
@@ -21,7 +24,12 @@ const MiddleModal = (props: {
     | React.ReactPortal
     | null
     | undefined;
+  isButton?: boolean;
+  notOutsidePress?: boolean;
+  height?: string;
+  handlePress: () => void;
 }) => {
+  const {colors} = useTheme();
   return (
     <TouchableWithoutFeedback
       onBlur={props.onBlur}
@@ -30,9 +38,45 @@ const MiddleModal = (props: {
         animationType="fade"
         transparent={true}
         visible={props.isModalVisible}>
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          disabled={props.notOutsidePress ? true : false}
+          onPress={() => props.setIsModalVisible(false)}>
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>{props.children}</View>
+            <View
+              style={[
+                styles.modalView,
+                {
+                  backgroundColor: colors.backgroundColor,
+                  minHeight: props.height ? props.height : '20%',
+                },
+              ]}>
+              {props.children}
+              {/*Bottom Buttons */}
+              {props.isButton && (
+                <View style={{flexDirection: 'row', width: '100%'}}>
+                  <IOSButton
+                    containerStyle={styles.containerStyle}
+                    onSelect={() => {
+                      props.setIsModalVisible(false);
+                      props.handlePress && props.handlePress();
+                    }}
+                    textAlignment={styles.textAlignment}
+                    titleStyle={styles.textStyle}
+                    title={'Cancel'}
+                  />
+                  <IOSButton
+                    containerStyle={styles.containerStyle}
+                    onSelect={() => {
+                      props.setIsModalVisible(false);
+                      props.handlePress && props.handlePress();
+                    }}
+                    textAlignment={styles.textAlignment}
+                    titleStyle={styles.textStyle}
+                    title={'Okay'}
+                  />
+                </View>
+              )}
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -41,6 +85,9 @@ const MiddleModal = (props: {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   centeredView: {
     flex: 1,
     width: '100%',
@@ -56,7 +103,7 @@ const styles = StyleSheet.create({
   iconView: {height: 80, width: 80, marginBottom: 10},
   modalView: {
     width: SCREEN_WIDTH > 800 ? '60%' : '90%',
-    minHeight: '20%',
+    maxHeight: '80%',
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: {
@@ -71,6 +118,19 @@ const styles = StyleSheet.create({
     // flexDirection: 'row',
     overflow: 'hidden',
     borderRadius: 10,
+  },
+  containerStyle: {
+    height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.05 : 50,
+    width: '40%',
+    marginTop: '1%',
+    borderRadius: 4,
+  },
+  textAlignment: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textStyle: {
+    fontSize: Text_Size.Text_8,
   },
 });
 

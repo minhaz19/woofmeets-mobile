@@ -1,5 +1,5 @@
 export const availabilityInput = {
-  title: 'Are you home full - time during the week?',
+  title: 'Are you home full-time during the week?',
   name: 'fulltime',
   id: 100,
   radio: true,
@@ -20,23 +20,23 @@ export const availabilityInput = {
   ],
 };
 export const availabilitySelectDay = {
-  title: 'What days of the week will you typically be available for Boarding?',
+  title: 'What days of the week will you typically be available?',
   name: 'selectDay',
   subtitle:
-    'Select the days you are typically available. You can update your calendar at any time.',
+    'This will update your generic availability. You can edit any date individually by going to your calendar.',
   id: 101,
   options: [
-    {id: 29, type: 'Sat', value: false, name: 'sat'},
-    {id: 30, type: 'Sun', value: false, name: 'sun'},
-    {id: 31, type: 'Mon', value: false, name: 'mon'},
-    {id: 32, type: 'Tue', value: false, name: 'tue'},
-    {id: 33, type: 'Wed', value: false, name: 'wed'},
-    {id: 34, type: 'Thu', value: false, name: 'thu'},
-    {id: 35, type: 'Fri', value: false, name: 'fri'},
+    {id: 29, type: 'Sat', value: null, name: 'sat'},
+    {id: 30, type: 'Sun', value: null, name: 'sun'},
+    {id: 31, type: 'Mon', value: null, name: 'mon'},
+    {id: 32, type: 'Tue', value: null, name: 'tue'},
+    {id: 33, type: 'Wed', value: null, name: 'wed'},
+    {id: 34, type: 'Thu', value: null, name: 'thu'},
+    {id: 35, type: 'Fri', value: null, name: 'fri'},
   ],
 };
 export const availabilityHomeFullTimeInDay = {
-  title: 'How frequently can you provide potty break?',
+  title: 'How frequently can you provide potty breaks?',
   name: 'pottyBreak',
   id: 102,
   radio: true,
@@ -44,17 +44,17 @@ export const availabilityHomeFullTimeInDay = {
   options: [
     {
       id: 1,
-      type: '0-2 hours',
+      type: '0 - 2 hours',
       checked: false,
     },
     {
       id: 2,
-      type: '2-4 hours',
+      type: '2 - 4 hours',
       checked: false,
     },
     {
       id: 3,
-      type: '4-8 hours',
+      type: '4 - 8 hours',
       checked: false,
     },
     {

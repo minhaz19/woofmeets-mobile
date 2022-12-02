@@ -1,17 +1,27 @@
 import React from 'react';
-import {View, Text, StyleSheet, useColorScheme, Platform} from 'react-native';
+import {View, StyleSheet, useColorScheme, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Finder, Setting} from '../assets/svgs/SVG_LOGOS';
 import Colors from '../constants/Colors';
 import {SCREEN_WIDTH} from '../constants/WindowSize';
-import Text_Size from '../constants/textScaling';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
+import BottomTabText from '../components/common/text/BottomTabText';
+import {useTheme} from '../constants/theme/hooks/useTheme';
 
 const Tab = createBottomTabNavigator();
 
 function GuestBottomTabNavigator() {
   const isDarkMode = useColorScheme() === 'dark';
+  const {colors} = useTheme();
+  const height =
+    SCREEN_WIDTH <= 380
+      ? Platform.OS === 'ios'
+        ? 70
+        : 60
+      : Platform.OS === 'ios'
+      ? 90
+      : 80;
   return (
     <Tab.Navigator
       initialRouteName="ServiceNavigator"
@@ -19,24 +29,16 @@ function GuestBottomTabNavigator() {
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.background,
-          height:
-            SCREEN_WIDTH <= 380
-              ? Platform.OS === 'ios'
-                ? 70
-                : 60
-              : Platform.OS === 'ios'
-              ? 95
-              : 75,
-
+          backgroundColor: Colors.background,
+          height: height,
           position: 'absolute',
           bottom: 0,
           elevation: 9,
           shadowOpacity: 0.9,
           shadowOffset: {width: 2, height: 8},
-          shadowColor: isDarkMode ? Colors.dark.background : Colors.background,
+          shadowColor: Colors.background,
+          borderTopWidth: 2,
+          borderColor: colors.borderColor,
         },
       }}>
       <Tab.Screen
@@ -50,18 +52,14 @@ function GuestBottomTabNavigator() {
             <View style={styles.bottomContainer}>
               <Finder
                 fill={focused ? Colors.primary : Colors.light.lightText}
-                height={SCREEN_WIDTH <= 380 ? 24 : 28}
-                width={SCREEN_WIDTH <= 380 ? 26 : 33}
+                height={SCREEN_WIDTH <= 380 ? 20 : 24}
+                width={SCREEN_WIDTH <= 380 ? 20 : 26}
               />
-              <Text
-                style={[
-                  focused
-                    ? {color: Colors.primary}
-                    : {color: Colors.light.lightText},
-                  styles.textStyle,
-                ]}>
-                Services
-              </Text>
+              <BottomTabText
+                text="Services"
+                focused={focused}
+                textStyle={styles.textStyle}
+              />
             </View>
           ),
         }}
@@ -76,18 +74,14 @@ function GuestBottomTabNavigator() {
             <View style={styles.bottomContainer}>
               <Setting
                 fill={focused ? Colors.primary : Colors.subText}
-                height={SCREEN_WIDTH <= 380 ? 24 : 28}
-                width={SCREEN_WIDTH <= 380 ? 26 : 33}
+                height={SCREEN_WIDTH <= 380 ? 20 : 24}
+                width={SCREEN_WIDTH <= 380 ? 20 : 26}
               />
-              <Text
-                style={[
-                  focused
-                    ? {color: Colors.primary}
-                    : {color: Colors.light.lightText},
-                  styles.textStyle,
-                ]}>
-                Setting
-              </Text>
+              <BottomTabText
+                text="Setting"
+                focused={focused}
+                textStyle={styles.textStyle}
+              />
             </View>
           ),
         }}
@@ -104,9 +98,8 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH / 4,
   },
   textStyle: {
-    fontSize: Text_Size.Text_0,
-    fontWeight: '500',
-    paddingVertical: 5,
+    paddingVertical: 2,
+    paddingTop: 4,
   },
 });
 

@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Colors from '../../../../../constants/Colors';
@@ -10,38 +10,66 @@ import SubmitButton from '../../../../common/Form/SubmitButton';
 import BottomSpacing from '../../../../UI/BottomSpacing';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import {useFormContext} from 'react-hook-form';
-
+import {useSubRates} from './ulils/useSubRates';
+import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
+import ServiceReusableModal from '../Common/ServiceReusableModal';
 interface Props {
   handleRates: (arg: any) => void;
   rateFields: any;
   loading: boolean;
+  fieldValue: any;
+  ratesMeta: any;
 }
 
-const SubRates = ({handleRates, rateFields, loading}: Props) => {
-  const [showAdditionalRates, setShowAdditionalRates] = useState(true);
-  const [updateRates, setUpdateRates] = useState(false);
-  const handlePress = () => {
-    setShowAdditionalRates(!showAdditionalRates);
-  };
+const SubRates = ({
+  handleRates,
+  rateFields,
+
+  loading,
+}: Props) => {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {
     formState: {errors},
     control,
     setValue,
     watch,
   } = useFormContext();
-  const baseRateWatch = watch('baserate');
-  useMemo(() => {
-    setValue('catcare', baseRateWatch);
-    setValue('additionaldog', baseRateWatch);
-    setValue('holidayrate', baseRateWatch);
-  }, [baseRateWatch, setValue]);
+  const {
+    baseRateWatch,
+    handlePress,
+    rates,
+    showAdditionalRates,
+    updateRates,
+    setUpdateRates,
+  } = useSubRates(rateFields, watch);
   return (
     <View>
+      <ServiceReusableModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        question="Need help with rates?"
+        description="If you click the box that says “Update my additional rates based on my pay rate,” the system will automatically update the rest of your rates based on the hourly base rate you set. Some pet sitters find that to be a convenient feature. However, it’s not required that you use it. Instead, you can always fill out those additional rates yourself. Make sure that the base rate and additional rates you’ve set are not unreasonable, though. If you’re not sure what a reasonable hourly rate would be for something like dog walking, have a look at what other sitters are requesting and model your own rates based on that. Your aim is to make yourself affordable to pet owners."
+      />
       <View style={styles.headerContainer}>
-        <BigText text={'Rates'} textStyle={styles.headerText} />
-        {rateFields?.map(
+        <View style={styles.flexContainer}>
+          <BigText text={'Rates'} textStyle={styles.headerText} />
+          <TouchableOpacity
+            onPress={() => setModalVisible(true)}
+            style={styles.iconContainer}>
+            <QuestionIcon fill={Colors.primary} />
+          </TouchableOpacity>
+        </View>
+        {rates?.map(
           (
-            item: {slug: string; name: string; unitLabel: string},
+            item: {
+              slug: string;
+              name: string;
+              unitLabel: string;
+              percentage: number;
+              rateUnitLabel: string;
+              helpText: string;
+              convertedValue: number;
+            },
             index: number,
           ) => {
             return (
@@ -57,6 +85,7 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                       keyboardType={'numeric'}
                       textContentType={'none'}
                       name={item.slug.replace('-', '')}
+                      percentage={item.percentage}
                       label={item.name}
                       handlePress={handlePress}
                       showAdditionalRates={showAdditionalRates}
@@ -67,11 +96,14 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                       errors={errors}
                       editable={true}
                       setValue={setValue}
+                      unit={item.rateUnitLabel}
+                      icon={false}
+                      helpText={item.helpText}
                     />
                     <AppCheckboxField
                       title={'Update my additional rates based on my base rate'}
                       square
-                      active={updateRates}
+                      active={!updateRates}
                       onPress={() => {
                         setUpdateRates(!updateRates);
                       }}
@@ -92,13 +124,22 @@ const SubRates = ({handleRates, rateFields, loading}: Props) => {
                     autoCorrect={false}
                     keyboardType={'numeric'}
                     textContentType={'none'}
-                    name={item.slug.replace('-', '')}
+                    name={item.slug.replace('-', '').replace('-', '')}
                     label={item.name}
                     handlePress={handlePress}
+                    percentage={item.percentage}
                     showAdditionalRates={showAdditionalRates}
                     editable={updateRates}
                     control={control}
                     errors={errors}
+                    baseRateWatch={Number(baseRateWatch)}
+                    convertedValue={item.convertedValue}
+                    setValue={setValue}
+                    updateRates={updateRates}
+                    // checked={checked}
+                    unit={item.rateUnitLabel}
+                    icon={true}
+                    helpText={item.helpText}
                   />
                 )}
               </View>
@@ -143,8 +184,6 @@ const styles = StyleSheet.create({
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   headerText: {
-    paddingBottom:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
     lineHeight: 20,
   },
   subHeaderText: {
@@ -172,5 +211,18 @@ const styles = StyleSheet.create({
   shortText: {
     color: Colors.gray,
     marginVertical: '2%',
+  },
+  flexContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom:
+      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+  },
+  iconContainer: {
+    paddingLeft: 10,
+  },
+  textContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

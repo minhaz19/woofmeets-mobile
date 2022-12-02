@@ -22,9 +22,19 @@ const serviceRateFieldSlice = createSlice({
       .addCase(getRateFieldValue.fulfilled, (state, {payload}) => {
         state.loading = false;
         state.fieldValue = payload.data?.map(
-          (item: {serviceTypeHasRatesId: number; amount: number}) => {
+          (item: {
+            id: number;
+            amount: number;
+            serviceTypeRate: {serviceRateTypeId: number};
+          }) => {
             return {
-              id: item.serviceTypeHasRatesId,
+              id: item.id,
+              modRatesId: item?.serviceTypeRate?.serviceRateTypeId,
+              // modRatesId: payload?.data.find(
+              //   (it: any) =>
+              //     it?.serviceTypeRate?.serviceRateTypeId ===
+              //     item?.serviceTypeRate?.serviceRateTypeId,
+              // )?.serviceTypeRate?.serviceRateTypeId,
               amount: item.amount,
             };
           },

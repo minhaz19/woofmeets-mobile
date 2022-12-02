@@ -1,10 +1,6 @@
 import {Dimensions, StyleSheet} from 'react-native';
 import Colors from '../../Colors';
-import {
-  descriptionDarkText,
-  descriptionLightText,
-  descriptionPrimaryText,
-} from '../../FontDetails';
+import Text_Size from '../../textScaling';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -55,18 +51,18 @@ export const inputStyles = StyleSheet.create({
   inputStylePet: {
     color: 'black',
     letterSpacing: 1,
-    fontSize: descriptionDarkText.fontSize,
+    fontSize: Text_Size.Text_3,
     paddingLeft: 17,
   },
   inputStyle: {
     color: Colors.light.text,
     letterSpacing: 1,
-    fontSize: descriptionPrimaryText.fontSize,
+    fontSize: Text_Size.Text_1,
     paddingLeft: 15,
   },
   inputFontStyle: {
     color: '#424244',
-    fontSize: descriptionLightText.fontSize,
+    fontSize: Text_Size.Text_3,
   },
   marginTop: {marginTop: 5},
   marginBottom: {marginBottom: 5},
@@ -80,6 +76,6 @@ export const inputStyles = StyleSheet.create({
   inputStyleBook: {
     color: 'black',
     letterSpacing: 1,
-    fontSize: descriptionDarkText.fontSize,
+    fontSize: Text_Size.Text_1,
   },
 });

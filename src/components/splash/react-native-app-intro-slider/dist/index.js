@@ -75,16 +75,18 @@ class AppIntroSlider extends React.Component {
             ...styles.skipPositionContainer,
           }}>
           {this.props.renderItem(props)}
-          <TouchableOpacity
-            onPress={() => {
-              clearTimeout(this.timer1);
-              clearTimeout(this.timer2);
-              clearTimeout(this.timer3);
-              this.props.onDone();
-            }}
-            style={styles.skipContainerView}>
-            <TitleText text="SKIP" textStyle={styles.skipText} />
-          </TouchableOpacity>
+          {this.props.showSkipButton && (
+            <TouchableOpacity
+              onPress={() => {
+                clearTimeout(this.timer1);
+                clearTimeout(this.timer2);
+                clearTimeout(this.timer3);
+                this.props.onDone();
+              }}
+              style={styles.skipContainerView}>
+              <TitleText text="SKIP" textStyle={styles.skipText} />
+            </TouchableOpacity>
+          )}
         </View>
       );
     };
@@ -362,7 +364,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: windowWidth * 0.04,
+    fontSize: Text_Size.Text_0,
     fontWeight: 'bold',
   },
   skipContainerView: {
@@ -398,7 +400,7 @@ const styles = StyleSheet.create({
   skipText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: Text_Size.Text_1,
+    fontSize: Text_Size.Text_0,
   },
   containerStyleFullWidth: {
     height:

@@ -1,17 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  GestureResponderEvent,
-} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import React, {FC} from 'react';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import HeaderText from '../../../common/text/HeaderText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import {getIconType} from '@rneui/base';
 import {
   BoardingIcon,
   DoggyDayCareIcon,
@@ -50,7 +44,7 @@ const ReusableServices: FC<Props> = props => {
           styles.container,
           {
             backgroundColor: colors.backgroundColor,
-            borderWidth: 1,
+            borderWidth: props.sequence === props.data.sequence ? 3 : 1,
             borderColor:
               props.sequence === props.data.sequence
                 ? Colors.primary
@@ -67,10 +61,10 @@ const ReusableServices: FC<Props> = props => {
               text={props.data.description}
               textStyle={styles.description}
             />
-            <DescriptionText
+            {/* <DescriptionText
               text={props.data.price}
               textStyle={styles.description}
-            />
+            /> */}
           </View>
         </View>
         {props.sequence === props.data.sequence && (
@@ -91,7 +85,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 5,
     paddingVertical: 10,
-    minHeight: 160,
+    minHeight: 180,
+    // height: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -112,13 +107,14 @@ const styles = StyleSheet.create({
   description: {
     paddingVertical: 6,
     textAlign: 'center',
+    paddingHorizontal: 4,
   },
   rightSelection: {
-    height: 8,
-    width: 8,
+    height: 12,
+    width: 12,
     borderRadius: 10,
     borderColor: Colors.primary,
-    borderWidth: 2,
+    borderWidth: 4,
     position: 'absolute',
     right: 10,
     top: 10,

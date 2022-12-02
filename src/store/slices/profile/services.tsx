@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
+import {Alert} from 'react-native';
 import apiClient from '../../../api/client';
 
 export const getServiceTypes = createAsyncThunk(
@@ -20,18 +21,23 @@ export const getUserServices = createAsyncThunk(
       '/provider-services',
     );
     if (!response.ok) {
+      // Alert.alert(response.data.message);
       throw new Error(response.data.message);
     }
-    return response.data;
+    if (response.ok) {
+      return response.data;
+    }
   },
 );
 
 const initialState: any = {
   serviceTypes: null,
+  providerServiceId: null,
   error: null,
   loading: false,
   success: false,
   userServices: null,
+  userActiveServices: null,
   userServicesLoading: false,
   userServicesError: null,
 };
@@ -63,7 +69,10 @@ const services = createSlice({
       .addCase(getUserServices.fulfilled, (state, {payload}) => {
         state.userServicesLoading = false;
         state.userServices = payload.data;
-        state.userServicesError = null;
+        state.userActiveServices = payload.data?.filter(
+          (ser: any) => ser.isActive === true && ser.AvailableDay?.length !== 0,
+        );
+        state.userServicesError = payload.message;
       })
       .addCase(getUserServices.rejected, (state, {payload}) => {
         state.userServicesLoading = false;

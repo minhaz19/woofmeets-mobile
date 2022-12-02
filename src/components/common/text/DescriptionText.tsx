@@ -13,11 +13,12 @@ const DescriptionText = (props: {
   return (
     <View>
       <Text
+        allowFontScaling={false}
         numberOfLines={props.numberOfLines}
         ellipsizeMode={props.ellipsizeMode}
         style={[
           styles.details,
-          {color: colors.headerText},
+          {color: colors.lightText},
           {...props.textStyle},
         ]}>
         {props.text}
@@ -28,7 +29,8 @@ const DescriptionText = (props: {
 
 const styles = StyleSheet.create({
   details: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_9,
+      fontFamily: 'Muli',
   },
 });
 

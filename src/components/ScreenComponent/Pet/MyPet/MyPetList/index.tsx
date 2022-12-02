@@ -17,6 +17,7 @@ interface Props {
   ageYear?: number;
   gender?: string;
   profile_image?: string;
+
   dataList?: [
     {
       id: string;
@@ -44,10 +45,8 @@ const MyPetList = ({
           {
             backgroundColor: !dataList
               ? Colors.none
-              : isDarkMode
-              ? colors.lightBackgroundColor
               : colors.backgroundColor,
-            borderColor: isDarkMode ? Colors.shadow : Colors.border,
+            borderColor: Colors.border,
           },
         ]}>
         {dataList ? (
@@ -61,9 +60,7 @@ const MyPetList = ({
               style={[
                 styles.textContainer,
                 {
-                  backgroundColor: isDarkMode
-                    ? colors.lightBackgroundColor
-                    : colors.backgroundColor,
+                  backgroundColor: colors.backgroundColor,
                 },
               ]}>
               <HeaderText
@@ -88,7 +85,7 @@ const MyPetList = ({
           </View>
         ) : (
           <View style={styles.addPet}>
-            <PlusRounded fill={isDarkMode ? 'white' : Colors.light.lightText} />
+            <PlusRounded fill={Colors.light.lightText} />
           </View>
         )}
       </View>
@@ -122,9 +119,9 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     paddingTop: 10,
   },
-  title: {fontSize: Text_Size.Text_9, fontWeight: '600'},
-  subTitle: {fontSize: Text_Size.Text_0, fontWeight: '500', marginVertical: 2},
-  description: {fontSize: Text_Size.Text_0},
+  title: {fontSize: Text_Size.Text_0, fontWeight: '600'},
+  subTitle: {fontSize: Text_Size.Text_8, fontWeight: '500', marginVertical: 2},
+  description: {fontSize: Text_Size.Text_8},
   addPet: {
     flex: 1,
     paddingTop: '50%',

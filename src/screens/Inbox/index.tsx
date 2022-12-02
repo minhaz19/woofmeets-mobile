@@ -1,23 +1,31 @@
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
-import HeaderText from '../../components/common/text/HeaderText';
-import {SCREEN_WIDTH} from '../../constants/WindowSize';
+/* eslint-disable react-native/no-inline-styles */
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import Colors from '../../constants/Colors';
-import Upcoming from '../../components/ScreenComponent/Inbox/Upcoming';
-import Pending from '../../components/ScreenComponent/Inbox/Pending';
-import Past from '../../components/ScreenComponent/Inbox/Past';
-import Archived from '../../components/ScreenComponent/Inbox/Archived';
+import BottomSpacing from '../../components/UI/BottomSpacing';
+import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
+import {SCREEN_WIDTH} from '../../constants/WindowSize';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
+import TitleText from '../../components/common/text/TitleText';
+import PendingStatus from '../../components/ScreenComponent/Inbox/Pending';
+import ApprovedStatus from '../../components/ScreenComponent/Inbox/Approved';
+import CompletedStatus from '../../components/ScreenComponent/Inbox/Completed';
+import DeclinedStatus from '../../components/ScreenComponent/Inbox/Declined';
+import UserProviderInbox from '../../components/ScreenComponent/Inbox/utils/Common/UserProviderInbox';
 
+// export const convertDateAndTime = (date, timeZone) => {
+
+//   return new Date(convertDate);
+// };
 const data = [
   {
     id: 1,
-    title: 'Upcoming',
+    title: 'Requested',
     opacity: 1,
   },
   {
     id: 2,
-    title: 'Pending',
+    title: 'Upcoming',
     opacity: 1,
   },
   {
@@ -27,45 +35,59 @@ const data = [
   },
   {
     id: 4,
-    title: 'Archived',
+    title: 'Deleted',
     opacity: 1,
   },
 ];
 
 const Inbox = () => {
   const [showInbox, setShowInbox] = useState(1);
+  const [active, setActive] = useState('USER');
   const {colors} = useTheme();
+  useEffect(() => {
+    setShowInbox(1);
+  }, []);
   return (
-    <View style={[styles.container, {backgroundColor: colors.backgroundColor}]}>
-      <View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.flexContainer}>
-          {data.map((item, index) => {
-            return (
-              <View key={index} style={styles.itemContainer}>
-                <TouchableOpacity
-                  onPress={() => setShowInbox(item.id)}
-                  style={showInbox === item.id && styles.bottom1}>
-                  <HeaderText
-                    text={item.title}
-                    textStyle={
-                      showInbox === item.id ? styles.text1 : styles.text2
-                    }
-                  />
-                </TouchableOpacity>
-              </View>
-            );
-          })}
-          <View style={styles.height} />
-        </ScrollView>
-        {showInbox === 1 && <Upcoming />}
-        {showInbox === 2 && <Pending />}
-        {showInbox === 3 && <Past />}
-        {showInbox === 4 && <Archived />}
+    <ScreenRapperGrey rapperStyle={styles.container}>
+      <View style={styles.tabContainer}>
+        {data.map((item, index) => {
+          return (
+            <View
+              key={index}
+              style={[
+                styles.itemContainer,
+                {
+                  backgroundColor:
+                    showInbox === item.id ? Colors.primary : Colors.background,
+                  borderRightWidth: 1,
+                  borderRightColor: Colors.primary,
+                },
+              ]}>
+              <TouchableOpacity onPress={() => setShowInbox(item.id)}>
+                <TitleText
+                  text={item.title}
+                  textStyle={{
+                    fontWeight: '700',
+                    marginBottom: '1%',
+                    textAlign: 'center',
+                    color: showInbox === item.id ? 'white' : colors.headerText,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          );
+        })}
       </View>
-    </View>
+      <View>
+        <UserProviderInbox setActive={setActive} active={active} />
+      </View>
+      {showInbox === 1 && <PendingStatus statusType={active} />}
+      {showInbox === 2 && <ApprovedStatus statusType={active} />}
+      {showInbox === 3 && <CompletedStatus statusType={active} />}
+      {showInbox === 4 && <DeclinedStatus statusType={active} />}
+
+      <BottomSpacing />
+    </ScreenRapperGrey>
   );
 };
 
@@ -74,22 +96,35 @@ export default Inbox;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
+    // marginHorizontal: 10,
   },
-  height: {
-    width: 90,
+  tabContainer: {
+    flexDirection: 'row',
+
+    // paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // backgroundColor: 'black',
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    // paddingVertical: 5,
   },
   itemContainer: {
-    paddingTop: '4%',
-    paddingRight:
-      SCREEN_WIDTH <= 380 ? '4%' : SCREEN_WIDTH <= 600 ? '6%' : '7%',
-    paddingLeft: 10,
+    paddingVertical: '2.5%',
+    width: SCREEN_WIDTH / 4,
+
+    // alignSelf: 'center',
   },
   flexContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   text1: {
-    fontWeight: '600',
-    paddingBottom: '3%',
+    fontWeight: '700',
+    marginBottom: '1%',
+    textAlign: 'center',
+    width: '100%',
   },
   bottom1: {
     borderBottomWidth: 2,
@@ -97,6 +132,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   text2: {
-    fontWeight: '400',
+    fontWeight: '600',
+    paddingBottom: '1%',
   },
 });

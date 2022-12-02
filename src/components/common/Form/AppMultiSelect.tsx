@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {memo, useCallback, useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Text, Platform} from 'react-native';
 import {MultiSelect} from 'react-native-element-dropdown';
 import Text_Size from '../../../constants/textScaling';
 import Colors from '../../../constants/Colors';
@@ -13,15 +13,22 @@ interface Props {
   onChange: (arg0: any) => void;
   placeholder: string;
   value?: [];
+  search?: boolean;
 }
-const AppMultiSelect = ({data, onChange, placeholder, value}: Props) => {
+const AppMultiSelect = ({
+  data,
+  onChange,
+  placeholder,
+  value,
+  search = true,
+}: Props) => {
   const [selected, setSelected] = useState(value);
   const {isDarkMode, colors} = useTheme();
   const renderItem = useCallback(
     (item: any, index) => {
       return (
         <View style={[styles.item, {backgroundColor: colors.backgroundColor}]}>
-          <Text style={styles.selectedTextStyle}>{item.label}</Text>
+          <TitleText textStyle={{...styles.selectedTextStyle, color: colors.headerText}} text={item.label} />
           {index === true ? (
             <Minus fill={Colors.primary} width={20} height={20} />
           ) : (
@@ -40,19 +47,19 @@ const AppMultiSelect = ({data, onChange, placeholder, value}: Props) => {
           styles.dropdown,
           {
             backgroundColor: colors.backgroundColor,
-            borderColor: isDarkMode ? Colors.gray : Colors.border,
+            borderColor: Colors.border,
           },
         ]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
+        placeholderStyle={{...styles.placeholderStyle, color: colors.descriptionText}}
+        selectedTextStyle={{...styles.selectedTextStyle, color: colors.headerText}}
+        inputSearchStyle={{...styles.inputSearchStyle, color: colors.headerText}}
         iconStyle={styles.iconStyle}
         data={data ? data : [{label: 'Item 1', value: '1'}]}
         labelField="label"
         valueField="value"
         placeholder={placeholder}
         value={selected}
-        search
+        search={search}
         searchPlaceholder="Search..."
         containerStyle={{
           backgroundColor: colors.backgroundColor,
@@ -69,7 +76,7 @@ const AppMultiSelect = ({data, onChange, placeholder, value}: Props) => {
             <TouchableOpacity onPress={() => unSelect && unSelect(item)}>
               <View style={styles.selectedStyle}>
                 <TitleText
-                  textStyle={styles.textSelectedStyle}
+                  textStyle={{...styles.textSelectedStyle, color: Colors.light.background}}
                   text={item?.label}
                 />
                 <Cross fill="white" />
@@ -93,11 +100,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   placeholderStyle: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_11 : Text_Size.Text_12,
     color: 'gray',
   },
   selectedTextStyle: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
   },
   iconStyle: {
     width: 20,
@@ -105,7 +112,7 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: Text_Size.Text_0,
+    fontSize: Platform.OS === 'ios' ? Text_Size.Text_10 : Text_Size.Text_12,
   },
   icon: {
     marginRight: 5,
@@ -140,6 +147,5 @@ const styles = StyleSheet.create({
   textSelectedStyle: {
     marginRight: 5,
     fontSize: Text_Size.Text_0,
-    color: Colors.background,
   },
 });

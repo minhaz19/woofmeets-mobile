@@ -1,5 +1,6 @@
-import {View, Image, ScrollView} from 'react-native';
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import {View, Image, ScrollView, Alert} from 'react-native';
+import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BigText from '../../../components/common/text/BigText';
 import TitleText from '../../../components/common/text/TitleText';
@@ -9,15 +10,39 @@ import HeaderText from '../../../components/common/text/HeaderText';
 import BulletPoints from '../../../components/UI/Points/BulletPoints';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import CardQuotes from '../../../components/ScreenComponent/becomeSitter/Card/CardQuotes';
-import ServicesCom from '../../../components/ScreenComponent/becomeSitter/works/ServicesCom';
 import HowItWorks from '../../../components/ScreenComponent/becomeSitter/works/HowItWorks';
-import { bulletData1, bulletData2, bulletData3 } from './data';
-import { styles } from './styles';
+import {bulletData1, bulletData2, bulletData3} from './data';
+import {styles} from './styles';
+import {getOnboardingProgress} from '../../../store/slices/onBoarding/initial';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {getCurrentplan} from '../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
+import { getSkillsData } from '../../../store/slices/profile/details';
 
 const SitterInitialScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
 }) => {
+  const dispatch = useAppDispatch();
   const {colors} = useTheme();
+  useEffect(() => {
+    dispatch(getOnboardingProgress());
+    dispatch(getCurrentplan());
+    dispatch(getSkillsData());
+  }, []);
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const currentPlan = useAppSelector(state => state.currentPlan);
+
+  const handlePress = () => {
+    if (isLoggedIn) {
+      if (currentPlan?.currentPlan?.subscriptionInfo?.status) {
+        props.navigation.navigate('Profile');
+      } else {
+        props.navigation.navigate('SitterLandingPage');
+      }
+    } else {
+      props.navigation.navigate('SignUp');
+    }
+  };
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -29,7 +54,8 @@ const SitterInitialScreen = (props: {
       ]}>
       <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://picsum.photos/800'}}
+          // source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
+          source={require('../../../assets/image/onboarding/pet-with-owner.jpeg')}
           style={styles.image}
         />
       </View>
@@ -50,13 +76,13 @@ const SitterInitialScreen = (props: {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => props.navigation.navigate('SitterLandingPage')}
+            onSelect={handlePress}
           />
         </View>
         {/* Flexibility */}
         <HeaderText
           textStyle={styles.titleStylePadding}
-          text="Flexibility puts you in Control"
+          text="Be Your Own Boss"
         />
         {/* Bullets */}
         {bulletData1.map(item => (
@@ -68,16 +94,17 @@ const SitterInitialScreen = (props: {
       {/* Image Quotes 1 */}
       <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://picsum.photos/800'}}
+          source={require('../../../assets/image/onboarding/testimonial-dogs.jpg')}
+          // source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
           style={styles.image}
         />
       </View>
       <CardQuotes
-        comment="It's easy . I go to the calendar and mark myself as available when I want to be ."
-        writter="Cari C ., Plano TX"
+        comment="Woofmeets makes it easy to earn. There's a holiday rate every month!"
+        writter="Evelyn Rodriguez"
       />
       {/* Tools to success */}
-      <View style={styles.innerContainer}>
+      {/* <View style={styles.innerContainer}>
         <HeaderText
           textStyle={styles.titleStylePadding2}
           text="The tools to succeed"
@@ -86,18 +113,18 @@ const SitterInitialScreen = (props: {
           <BulletPoints text={item.text} key={item.id} />
         ))}
       </View>
-      <View style={styles.verticalPadding} />
+      <View style={styles.verticalPadding} /> */}
       {/* Image Quotes 2 */}
-      <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
+      {/* <View style={[styles.imageContainer, {borderColor: colors.borderColor}]}>
         <Image
-          source={{uri: 'https://picsum.photos/800'}}
+          source={{uri: 'https://source.unsplash.com/random/800x800/?img=1'}}
           style={styles.image}
         />
       </View>
       <CardQuotes
         comment="Thanks to the Woofmeets App, I know about mu business requests immediately and I'm quick to respond!"
         writter="Carol U., Atlanta GA"
-      />
+      /> */}
       {/* How it works */}
       <View style={styles.innerContainer}>
         <HeaderText textStyle={styles.titleStylePadding2} text="How it Works" />
@@ -108,25 +135,20 @@ const SitterInitialScreen = (props: {
             textAlignment={btnStyles.textAlignment}
             containerStyle={btnStyles.containerStyleFullWidth}
             titleStyle={btnStyles.titleStyle}
-            onSelect={() => props.navigation.navigate('SitterLandingPage')}
+            onSelect={handlePress}
           />
         </View>
-      </View>
-      {/* Services */}
-      <View style={styles.innerContainer}>
-        <HeaderText textStyle={styles.titleStylePadding2} text="Services" />
-        <ServicesCom />
       </View>
       {/* Safety First */}
       <View style={styles.innerContainer}>
         <HeaderText
           textStyle={styles.titleStyle}
-          text="Safety first. Always."
+          text="What are Woofmeets requirement?"
         />
-        <TitleText
+        {/* <TitleText
           textStyle={styles.titleStylePaddingMedium}
           text="We work tirelessly to ensure tails keep wagging and pet owner's minds are at ease."
-        />
+        /> */}
         {bulletData3.map(item => (
           <BulletPoints text={item.text} key={item.id} />
         ))}
@@ -144,7 +166,7 @@ const SitterInitialScreen = (props: {
           textAlignment={btnStyles.textAlignment}
           containerStyle={btnStyles.containerStyleFullWidth}
           titleStyle={btnStyles.titleStyle}
-          onSelect={() => props.navigation.navigate('SitterLandingPage')}
+          onSelect={handlePress}
         />
       </View>
       <BottomSpacing />

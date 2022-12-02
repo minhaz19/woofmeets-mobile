@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {Divider} from '@rneui/themed';
 import Colors from '../../../../constants/Colors';
@@ -14,8 +8,9 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useHandleProviderAuth} from '../../../../utils/helpers/auth/useHandleProviderAuth';
 import {useAppSelector} from '../../../../store/store';
+import ShortText from '../../../common/text/ShortText';
 interface Props {
-  icons: {image: any; icon: any}[];
+  icons: {icon: any}[];
   title: string;
   accountType: string;
   authType: string;
@@ -33,7 +28,6 @@ const AuthFooter = ({
   authType,
   navigateScreen,
 }: Props) => {
-  const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation<NavigationProps | any>();
   const {handleGFauth} = useHandleProviderAuth();
   const {isLoggedIn} = useAppSelector(state => state.auth);
@@ -52,10 +46,8 @@ const AuthFooter = ({
             style={[
               styles.loginTitle,
               {
-                backgroundColor: isDarkMode
-                  ? Colors.dark.lightDark
-                  : Colors.background,
-                color: isDarkMode ? Colors.background : Colors.light.text,
+                backgroundColor: Colors.background,
+                color: Colors.light.text,
               },
             ]}>
             {title}
@@ -64,15 +56,20 @@ const AuthFooter = ({
       </View>
       <View style={styles.iconContainer}>
         {icons.map((icon, index) => (
-          <TouchableOpacity key={index} onPress={() => handleGFauth(index)}>
-            <Icon IconComp={icon?.icon} />
-          </TouchableOpacity>
+          Platform.OS === 'android' && index !== 2 ? <TouchableOpacity key={index} onPress={() => handleGFauth(index)}>
+          <Icon IconComp={icon?.icon} />
+        </TouchableOpacity> : Platform.OS === 'ios' && <TouchableOpacity key={index} onPress={() => handleGFauth(index)}>
+          <Icon IconComp={icon?.icon} />
+        </TouchableOpacity>
         ))}
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.haveAccount}>{accountType}</Text>
+        <ShortText textStyle={styles.haveAccount} text={accountType} />
         <TouchableOpacity onPress={() => navigation.navigate(navigateScreen)}>
-          <Text style={styles.screenRoute}>{authType}</Text>
+          <ShortText
+            textStyle={{...styles.screenRoute, color: Colors.primaryDif}}
+            text={authType}
+          />
         </TouchableOpacity>
       </View>
     </View>

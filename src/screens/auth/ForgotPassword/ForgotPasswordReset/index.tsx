@@ -5,7 +5,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  useColorScheme,
   View,
 } from 'react-native';
 import React from 'react';
@@ -19,6 +18,8 @@ import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import AppForm from '../../../../components/common/Form/AppForm';
 import {RouteProp} from '@react-navigation/native';
 import {useFPReset} from './utils/useFPReset';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
 
 interface Props {
   navigation: {
@@ -29,34 +30,17 @@ interface Props {
 }
 const ForgotPasswordReset = ({route, navigation}: Props) => {
   const height = SCREEN_HEIGHT;
-  const isDarkMode = useColorScheme() === 'dark';
+  const {isDarkMode} = useTheme();
   const {handleSubmit, loading} = useFPReset(navigation, route);
+
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flex: height > 800 ? 1 : 0,
-        justifyContent: height > 800 ? 'flex-end' : 'flex-start',
-      }}
-      showsVerticalScrollIndicator={false}
-      style={[
-        styles.container,
-        {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
-        },
-      ]}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-        enabled={Platform.OS === 'ios' ? true : false}>
+    <ScrollViewRapper extraHeight={40} extraScrollHeight={160}>
+      <View style={styles.container}>
         <View
           style={[
             styles.infoContainer,
             {
-              backgroundColor: isDarkMode
-                ? Colors.dark.lightDark
-                : Colors.background,
+              backgroundColor: Colors.background,
             },
           ]}>
           <AuthHeader
@@ -77,8 +61,8 @@ const ForgotPasswordReset = ({route, navigation}: Props) => {
           </AppForm>
           <View style={styles.view} />
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+    </ScrollViewRapper>
   );
 };
 
@@ -86,14 +70,15 @@ export default ForgotPasswordReset;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    height: SCREEN_HEIGHT,
+    backgroundColor: 'green',
   },
   infoContainer: {
     flexGrow: 1,
-    marginTop: 120,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
+    justifyContent: "center",
     paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {

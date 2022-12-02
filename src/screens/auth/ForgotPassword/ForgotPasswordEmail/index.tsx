@@ -3,7 +3,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  useColorScheme,
   View,
 } from 'react-native';
 import React from 'react';
@@ -12,11 +11,14 @@ import AuthForm from '../../../../components/ScreenComponent/Auth/Common/AuthFor
 import {forgotPasswordValue} from '../../../../utils/config/initalValues/initalValues';
 import {forgotPasswordValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
 import ImageAndTitle from '../../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
-import {AuthPassword} from '../../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import BottomSpacing from '../../../../components/UI/BottomSpacing';
 import AppForm from '../../../../components/common/Form/AppForm';
 import {useFPEmail} from './utils/useFPEmail';
+import {AuthPassword} from '../../../../assets/svgs/SVG_LOGOS';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
+import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 const forgotPassData = {
   title: 'Forgot Password?',
 };
@@ -27,33 +29,19 @@ interface Props {
   };
 }
 const ForgotPassword = ({navigation}: Props) => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const {isDarkMode} = useTheme();
   const {handleSubmit, loading} = useFPEmail(navigation);
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-      style={[
-        {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
-        },
-      ]}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-        enabled={Platform.OS === 'ios' ? true : false}>
+    <ScrollViewRapper extraHeight={40} extraScrollHeight={120}>
+      <View style={styles.container}>
         <View
           style={[
             styles.infoContainer,
             {
-              backgroundColor: isDarkMode
-                ? Colors.dark.lightDark
-                : Colors.background,
+              backgroundColor: Colors.background,
             },
           ]}>
-          <ImageAndTitle Icon={AuthPassword} title={forgotPassData.title} />
+          <ImageAndTitle Icon={AuthPassword} title={forgotPassData.title} id={0} />
           <AppForm
             initialValues={forgotPasswordValue}
             validationSchema={forgotPasswordValidationSchema}>
@@ -66,10 +54,9 @@ const ForgotPassword = ({navigation}: Props) => {
             />
           </AppForm>
           <View style={styles.view} />
-          {SCREEN_WIDTH > 800 && <BottomSpacing />}
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+    </ScrollViewRapper>
   );
 };
 
@@ -77,15 +64,14 @@ export default ForgotPassword;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'flex-end',
+    height: SCREEN_HEIGHT,
+    justifyContent: 'center',
   },
   infoContainer: {
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     padding: 20,
     bottom: 0,
-
     paddingHorizontal: SCREEN_WIDTH > 800 ? '20%' : 20,
   },
   view: {height: 20},

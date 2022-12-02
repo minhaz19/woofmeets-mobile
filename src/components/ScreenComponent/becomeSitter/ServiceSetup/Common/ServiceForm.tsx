@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Controller} from 'react-hook-form';
 import TitleText from '../../../../common/text/TitleText';
 import {InfoSvg} from '../../../Inbox/utils/SvgComponent/SvgComponent';
@@ -8,8 +8,8 @@ import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import Text_Size from '../../../../../constants/textScaling';
 import Colors from '../../../../../constants/Colors';
 import ServiceInput from './ServiceInput';
-import {useAppDispatch} from '../../../../../store/store';
-import {setBaseRate} from '../../../../../store/slices/onBoarding/setUpService/rates/baseRateSlice';
+import AppTouchableOpacity from '../../../../common/AppClickEvents/AppTouchableOpacity';
+import ServiceReusableModal from './ServiceReusableModal';
 
 interface Props {
   name: string;
@@ -36,7 +36,15 @@ interface Props {
   control: any;
   errors: any;
   dValue?: any;
-  setValue?: (arg1: any, arg2: any, arg3: any) => void;
+  setValue?: (arg1: any, arg2: any, arg3?: any) => void;
+  percentage: number;
+  baseRateWatch?: number;
+  convertedValue?: number;
+  onChange?: () => void;
+  updateRates?: boolean;
+  checked?: boolean;
+  unit: string;
+  helpText: string;
 }
 
 const ServiceForm = ({
@@ -57,16 +65,34 @@ const ServiceForm = ({
   editable,
   control,
   errors,
+  baseRateWatch,
+  convertedValue,
+  setValue,
+  updateRates,
+
+  unit,
+  helpText,
 }: Props) => {
-  const dispatch = useAppDispatch();
+  useEffect(() => {
+    name !== 'baserate' &&
+      updateRates === false &&
+      // checked === false &&
+      setValue &&
+      setValue(name, convertedValue, {
+        shouldValidate: errors[name] ? true : false,
+      });
+  }, [name, updateRates, setValue, convertedValue, errors]);
+  const [isVisible, setIsVisible] = useState(false);
   return (
     <>
       <View>
-        <View style={styles.titleContainer}>
+        <AppTouchableOpacity
+          style={styles.titleContainer}
+          onPress={() => setIsVisible(true)}>
           <TitleText textStyle={styles.label} text={label} />
 
           {icon && <InfoSvg width={16} height={16} style={styles.svg} />}
-        </View>
+        </AppTouchableOpacity>
 
         {subTitle && showAdditionalRates && (
           <DescriptionText textStyle={styles.subTitle} text={subTitle} />
@@ -74,7 +100,6 @@ const ServiceForm = ({
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}, fieldState: {error}}) => {
-            console.log('error', value);
             return (
               <ServiceInput
                 autoCapitalize={autoCapitalize}
@@ -83,23 +108,24 @@ const ServiceForm = ({
                 editable={editable}
                 keyboardType={keyboardType}
                 textContentType={textContentType}
-                onChangeText={(e: number) => {
-                  onChange(e);
-                  if (name === 'baserate') {
-                    dispatch(setBaseRate(e));
-                  }
-                }}
+                onChangeText={onChange}
                 onBlur={onBlur}
-                value={value.toString()}
+                value={
+                  name === 'baserate' && value !== null
+                    ? value?.toString()
+                    : updateRates === false && baseRateWatch !== undefined
+                    ? convertedValue!.toString()
+                    : value !== null && value?.toString()
+                }
                 error={error?.message}
                 textInputStyle={textInputStyle}
+                unit={unit}
               />
             );
           }}
           name={name}
         />
         <ErrorMessage error={errors[name]?.message} auth={auth} />
-
         {additionalRates && showAdditionalRates && (
           <TouchableOpacity onPress={handlePress}>
             <DescriptionText
@@ -109,6 +135,12 @@ const ServiceForm = ({
           </TouchableOpacity>
         )}
       </View>
+      <ServiceReusableModal
+        modalVisible={isVisible}
+        setModalVisible={setIsVisible}
+        question={'Help text for particular rates!'}
+        description={helpText}
+      />
     </>
   );
 };
@@ -143,4 +175,8 @@ const styles = StyleSheet.create({
     color: Colors.light.blue,
     marginVertical: '2%',
   },
+  modcon: {
+    padding: 30,
+  },
+  modTest: {textAlign: 'justify'},
 });

@@ -1,7 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   GestureResponderEvent,
   StyleSheet,
   TouchableOpacity,
+  useColorScheme,
   View,
 } from 'react-native';
 import React, {FC} from 'react';
@@ -13,6 +15,7 @@ import {NumberProp} from 'react-native-svg';
 
 interface PreferenceItemProps {
   data: {
+    id?: number;
     screenName: ((event: GestureResponderEvent) => void) | undefined;
     opacity: NumberProp | undefined;
     title: string;
@@ -22,8 +25,18 @@ interface PreferenceItemProps {
 
 const PreferenceItem: FC<PreferenceItemProps> = ({data}) => {
   const {colors} = useTheme();
+  const isDarkMode = useColorScheme();
+  const backgroundStyle = {
+    backgroundColor: colors.backgroundColor,
+  };
   return (
-    <>
+    <View
+      style={{
+        backgroundColor: backgroundStyle.backgroundColor,
+        borderBottomWidth: 1,
+        borderTopWidth: data.id === 1 ? 1 : 0,
+        borderColor: colors.borderColor,
+      }}>
       <TouchableOpacity onPress={data.screenName}>
         <View style={styles.container}>
           <HeaderText text={data.title} />
@@ -33,7 +46,7 @@ const PreferenceItem: FC<PreferenceItemProps> = ({data}) => {
       <View
         style={[styles.divider, {backgroundColor: colors.descriptionText}]}
       />
-    </>
+    </View>
   );
 };
 
@@ -46,9 +59,9 @@ const styles = StyleSheet.create({
     paddingVertical: '2%',
   },
   divider: {
-    height: 1,
-    opacity: 0.3,
-    marginVertical:
-      SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '1%',
+    // height: 1,
+    // opacity: 0.3,
+    // marginVertical:
+    //   SCREEN_WIDTH <= 380 ? '2%' : SCREEN_WIDTH <= 600 ? '3%' : '1%',
   },
 });

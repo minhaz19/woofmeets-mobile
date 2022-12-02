@@ -9,17 +9,19 @@ import React, {FC} from 'react';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import Card from '../../../../UI/Card';
 import HeaderText from '../../../../common/text/HeaderText';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
+import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+import Text_Size from '../../../../../constants/textScaling';
 
 interface Props {
   item: {
     name: string;
-    image: any;
+    image: string;
     description: string;
     boardingTime: string;
     status: string;
+    pickUpStartTime?: string;
   };
   buttonStyles?: string;
   handlePress?: () => void;
@@ -27,49 +29,52 @@ interface Props {
 
 const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
   const {isDarkMode, colors} = useTheme();
+  const img = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
   return (
     <Card
       style={{
         ...styles.itemContainer,
-        backgroundColor: isDarkMode
-          ? colors.lightBackgroundColor
-          : colors.backgroundColor,
+        backgroundColor: colors.backgroundColor,
       }}>
       <TouchableOpacity onPress={handlePress}>
         <View style={styles.flexContainer}>
-          <View style={styles.imageContainer}>
+          <View
+            style={{...styles.imageContainer, borderColor: colors.borderColor}}>
             <Image
-              source={item?.image}
+              source={{uri: item?.image?.url ? item?.image?.url : img}}
               style={styles.image}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           </View>
           <View style={styles.detailsContainer}>
             <HeaderText text={item.name} textStyle={styles.textHeader} />
             <DescriptionText
               text={item.boardingTime}
-              textStyle={styles.textDescription}
+              textStyle={styles.textDescriptionOne}
             />
             <DescriptionText
               text={item.description}
               textStyle={styles.textDescription}
               numberOfLines={1}
-              ellipsizeMode={'tail'}
+              ellipsizeMode="tail"
             />
           </View>
           <View style={styles.timeContainer}>
             <DescriptionText
-              text="9:00 AM"
+              text={item.pickUpStartTime}
               textStyle={styles.textTimeDescription}
             />
-          </View>
-        </View>
-        <View style={styles.buttonContainer}>
-          <View style={[styles.buttonStyles, {backgroundColor: buttonStyles}]}>
-            <DescriptionText
-              text={item.status}
-              textStyle={{color: Colors.light.background}}
-            />
+
+            <View
+              style={[styles.buttonStyles, {backgroundColor: buttonStyles}]}>
+              <DescriptionText
+                text={item.status}
+                textStyle={{
+                  fontSize: Text_Size.Text_10,
+                  color: Colors.light.background,
+                }}
+              />
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -81,21 +86,19 @@ export default ReusableCard;
 
 const styles = StyleSheet.create({
   image: {
-    borderRadius: 100,
-    width: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
-    height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
-    marginRight: 10,
+    width: '100%',
+    height: '100%',
   },
   itemContainer: {
     padding: '3%',
+
     borderRadius: 4,
-    marginHorizontal: 2,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
-    shadowOpacity: 0.3,
-    shadowOffset: {width: 1, height: 1},
-    shadowRadius: 3,
-    elevation: Platform.OS === 'android' ? 8 : 1,
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 0},
+    shadowRadius: 1,
+    elevation: Platform.OS === 'android' ? 1 : 1,
     marginHorizontal: '3%',
   },
   flexContainer: {
@@ -103,32 +106,44 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flex: 1,
   },
-  imageContainer: {marginRight: 10},
+  imageContainer: {
+    marginRight: 10,
+    width: '15%',
+    borderRadius: 10,
+    borderWidth: 1,
+    overflow: 'hidden',
+  },
   detailsContainer: {
     flex: 1,
   },
   timeContainer: {
-    width: '20%',
-    alignItems: 'center',
+    // width: '25%',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
   },
   buttonStyles: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 100,
-    paddingVertical: '2%',
-    paddingHorizontal: '3%',
+    borderRadius: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    marginTop: 6,
   },
   buttonContainer: {
     alignItems: 'flex-end',
     width: '100%',
   },
   textDescription: {
-    lineHeight: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.02 : 20,
+    fontSize: Text_Size.Text_9,
   },
   textHeader: {
     marginTop: 0,
   },
+  textDescriptionOne: {
+    fontSize: Text_Size.Text_9,
+  },
   textTimeDescription: {
     color: Colors.gray,
+    fontSize: Text_Size.Text_12,
   },
 });

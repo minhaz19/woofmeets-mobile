@@ -8,18 +8,14 @@ export const genders = [
     value: 'FEMALE',
   },
 ];
-export const contries = [
-  {
-    label: 'Bangladesh',
-    value: 'Bangladesh',
-  },
+export const countries = [
   {
     label: 'USA',
-    value: 'USA',
+    value: '1',
   },
   {
-    label: 'India',
-    value: 'India',
+    label: 'Canada',
+    value: '2',
   },
 ];
 
@@ -241,20 +237,18 @@ export const medicationChecks = {
   title: 'Medicaition (select all that apply)',
   id: 112,
   pet: [
-    {id: 0, type: 'Pill', name: 'pill', value: null, active: false},
+    {id: 0, type: 'Pill', name: 'pill', value: null},
     {
       id: 1,
       type: 'Topical',
       value: null,
       name: 'topical',
-      active: false,
     },
     {
       id: 2,
       type: 'Injection',
       value: null,
       name: 'injection',
-      active: false,
     },
   ],
   input: [

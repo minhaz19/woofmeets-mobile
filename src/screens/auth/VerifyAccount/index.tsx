@@ -18,7 +18,7 @@ const forgotPassData = {
   image: require('../../../assets/image/verifyAccount/logo.png'),
   title: 'Verify Account',
   subTitle:
-    'We have sent an OTP (One Time Password) to your [Email]. Please enter the 4 digit code below to continue.',
+    'We have sent an OTP (One Time Password) to your [Email]. Please enter the 6 digit code below to continue.',
 };
 interface Props {
   navigation: {navigate: (arg0: string) => void};
@@ -35,9 +35,7 @@ const VerifyAccount = ({navigation}: Props) => {
       showsVerticalScrollIndicator={false}
       style={[
         {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
+          backgroundColor: Colors.secondary,
         },
       ]}>
       <KeyboardAvoidingView
@@ -48,9 +46,7 @@ const VerifyAccount = ({navigation}: Props) => {
           style={[
             styles.infoContainer,
             {
-              backgroundColor: isDarkMode
-                ? Colors.dark.lightDark
-                : Colors.background,
+              backgroundColor: Colors.background,
             },
           ]}>
           <ImageAndTitle

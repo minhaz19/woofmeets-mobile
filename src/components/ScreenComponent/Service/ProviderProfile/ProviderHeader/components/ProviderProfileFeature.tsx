@@ -12,35 +12,37 @@ import ShortText from '../../../../../common/text/ShortText';
 import Text_Size from '../../../../../../constants/textScaling';
 import Colors from '../../../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
+import {useAppSelector} from '../../../../../../store/store';
 
 const ProviderProfileFeature = () => {
+  const {featured} = useAppSelector(state => state.providerProfile);
   const infos = [
     {
       Icon: MapDistance,
       title: 'Distance',
-      value: '1.2 km',
+      value: `${featured?.distance ? featured.distance : 0} Miles`,
     },
     {
       Icon: Experience,
       title: 'Experience',
-      value: '2 years',
+      value: `${featured?.experience ? featured.experience : 0} years`,
     },
     {
       Icon: PetHandled,
       title: 'Pet Handled',
-      value: '12',
+      value: `${featured?.petHandled ? featured?.petHandled : 0} `,
     },
     {
       Icon: Reviews,
       title: 'Reviews',
-      value: '110',
+      value: `${featured?.reviewsCount ? featured?.reviewsCount : 0} `,
     },
   ];
   return (
     <View style={styles.container}>
       <ProviderProfileFeaturedSVG
         width={'100%'}
-        height={SCREEN_WIDTH > 800 ? 290 : 194}
+        height={SCREEN_WIDTH > 800 ? 290 : 216}
       />
       <View style={styles.textContainer}>
         <TitleText textStyle={styles.title} text="Featured" />

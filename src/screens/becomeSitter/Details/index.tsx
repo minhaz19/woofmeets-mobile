@@ -1,81 +1,103 @@
-import {View, StyleSheet, Text, ScrollView, RefreshControl, ActivityIndicator} from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import {View, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../constants/textScaling';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import HeaderText from '../../../components/common/text/HeaderText';
 import TitleText from '../../../components/common/text/TitleText';
 import DescriptionText from '../../../components/common/text/DescriptionText';
-import AppForm from '../../../components/common/Form/AppForm';
-import { sitterDetailsValue } from '../../../utils/config/becomeSitter/initalValues';
-import { sitterDetailsValidationSchema } from '../../../utils/config/becomeSitter/validationSchema';
+import {sitterDetailsValidationSchema} from '../../../utils/config/becomeSitter/validationSchema';
 import SitterDetailsInput from '../../../components/ScreenComponent/becomeSitter/details/SitterDetailsInput';
-import { getSitterDetails, postSitterDetails } from '../../../store/slices/profile/details';
-import { useDetailsInitalValue } from './useDetailsInitialValue';
+import {
+  getSitterDetails,
+  getSkillsData,
+  postSitterDetails,
+} from '../../../store/slices/profile/details';
+import {useDetailsInitalValue} from './useDetailsInitialValue';
+import {
+  setProfileData,
+  setSitterData,
+} from '../../../store/slices/onBoarding/initial';
+import AppForm from '../../../components/common/Form/AppForm';
+import ScrollViewRapperRefresh from '../../../components/common/ScrollViewRapperRefresh';
+import BulletPoints from '../../../components/UI/Points/BulletPoints';
 
-const SitterDetails = (props: { navigation: { navigate: (arg0: string) => void; }; }) => {
+const SitterDetails = ({route, navigation}) => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
-  const sitterDetailsSubmit = (sitterData: any) => {
-    dispatch(postSitterDetails(sitterData));
+  const [isLoading, setIsLoading] = useState(false);
+  const sitterInfo = useAppSelector(
+    state => state.details.sitterInfo?.providerDetails,
+  );
+  const sitterDetailsSubmit = async (sitterData: any) => {
+    setIsLoading(true);
+    const mtd = sitterInfo ? 'patch' : 'post';
+    const skill: any[] = [];
+    sitterData?.skills?.map((item: {active: boolean; id: any}) => {
+      if (item.active === true) {
+        skill.push(item.id);
+      }
+    });
+    const data = {...sitterData, mtd, skill};
+    await dispatch(postSitterDetails(data));
+    await dispatch(getSitterDetails());
+    setIsLoading(false);
+    if (route?.name) {
+      return navigation.goBack();
+    }
+    dispatch(setProfileData({pass: 2}));
+    // new update onboarding
+    dispatch(setSitterData({pass: 2}));
   };
 
   const [refreshing, setRefreshing] = useState(false);
-  const {sitterInfo, loading} = useAppSelector(
-    state => state.details,
-  );
 
-  const onRefresh = useCallback(() => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    dispatch(getSitterDetails());
+    await dispatch(getSitterDetails());
+    await dispatch(getSkillsData());
     setRefreshing(false);
-  }, [dispatch]);
+  };
 
   useEffect(() => {
     onRefresh();
   }, []);
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
+    <ScrollViewRapperRefresh onRefresh={onRefresh} refreshing={refreshing}>
+      <View style={styles.nameContainer}>
+        <HeaderText text="Create Your Profile" textStyle={styles.textStyle} />
+        <TitleText
+          text="Details about your pet-care experience"
+          textStyle={styles.titleTextStyle}
         />
-      }
-      style={[
-        styles.rootContainer,
-        {
-          backgroundColor: colors.backgroundColor,
-        },
-      ]}>
-        <View style={styles.nameContainer}>
-            <HeaderText
-              text="Create Your Profile"
-              textStyle={styles.textStyle}
-            />
-            <TitleText
-              text="Details about your pet-care experience"
-              textStyle={styles.titleTextStyle}
-            />
-            <DescriptionText
-              text="Let pet owners know about your personal qualities and overall love of animals"
-              textStyle={{...styles.details, color: colors.descriptionText}}
-            />
-            <DescriptionText
-              text="Quick tips:"
-              textStyle={styles.details}
-            />
-          <AppForm
-            initialValues={useDetailsInitalValue()}
-            validationSchema={sitterDetailsValidationSchema}>
-            <SitterDetailsInput handleSubmit={sitterDetailsSubmit} />
-          </AppForm>
-          </View>
+        <DescriptionText
+          text="Let pet owners know about your personal qualities and overall love of animals"
+          textStyle={{...styles.details, color: colors.descriptionText}}
+        />
+        <DescriptionText text="Quick tips:" textStyle={styles.details} />
+        <BulletPoints
+          textStyle={{color: colors.descriptionText}}
+          text={
+            'We recommend keeping personal identifiers—like your last name or workplace—out of your profile.'
+          }
+        />
+        <BulletPoints
+          textStyle={{color: colors.descriptionText}}
+          text={'This is a chance to let your potential clients know how much animals mean to you and why you’re the ideal candidate to care for their pets. Be honest about your background with animals, and don’t embellish any of your experiences caring for them.'}
+        />
+        <AppForm
+          initialValues={useDetailsInitalValue()}
+          validationSchema={sitterDetailsValidationSchema}>
+          <SitterDetailsInput
+            handleSubmit={sitterDetailsSubmit}
+            isLoading={isLoading}
+          />
+        </AppForm>
+      </View>
       <BottomSpacing />
-    </ScrollView>
+    </ScrollViewRapperRefresh>
   );
 };
 

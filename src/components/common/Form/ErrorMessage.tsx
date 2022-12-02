@@ -3,6 +3,7 @@ import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Colors from '../../../constants/Colors';
+import ShortText from '../text/ShortText';
 interface Props {
   error: string | undefined | any;
   auth?: boolean;
@@ -19,10 +20,14 @@ const ErrorMessage = ({error, auth}: Props) => {
         styles.container,
         {
           backgroundColor:
-            auth && isDarkMode ? Colors.dark.lightDark : colors.backgroundColor,
+            colors.backgroundColor,
         },
       ]}>
-      <Text style={[styles.error, {color: colors.alert}]}>{error}</Text>
+      <Text
+        allowFontScaling={false}
+        style={[styles.error, {color: colors.alert}]}>
+        {error}
+      </Text>
     </View>
   );
 };
@@ -32,7 +37,7 @@ export default ErrorMessage;
 const styles = StyleSheet.create({
   container: {},
   error: {
-    fontSize: Text_Size.Text_0,
+    fontSize: Text_Size.Text_8,
     marginBottom: 10,
     marginTop: 5,
   },

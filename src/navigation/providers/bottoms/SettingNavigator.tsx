@@ -4,12 +4,11 @@ import Colors from '../../../constants/Colors';
 import SettingMain from '../../../screens/settings/SettingMain';
 import HeaderWithBack from '../../../components/common/header/HeaderWithBack';
 import MyAccount from '../../../screens/settings/MyAccount';
-import BasicInfo from '../../../screens/profile/BasicInfo';
-import ContactScreen from '../../../screens/profile/ContactScreen';
 import Preference from '../../../screens/settings/Preference';
 import AccountSetting from '../../../components/ScreenComponent/setting/Preference/AccountSetting';
-import CreditAndDebitCard from '../../../screens/checkout/CreditAndDebitCard';
+import CreditAndDebitCard from '../../../screens/profile/PaymentMethod';
 import SetNewPassword from '../../../screens/auth/ResetPassword';
+import Profile from '../../../screens/settings/Profile';
 
 const Stack1 = createStackNavigator();
 
@@ -31,6 +30,7 @@ const ProSettingNavigator = () => {
           backgroundColor: Colors.primary,
         })}
       />
+
       <Stack1.Screen
         name="MyAccount"
         component={MyAccount}
@@ -47,21 +47,6 @@ const ProSettingNavigator = () => {
         })}
       />
       <Stack1.Screen
-        name="BasicInfo"
-        component={BasicInfo}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Basic Info"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
         name="ResetPassword"
         component={SetNewPassword}
         options={({navigation}) => ({
@@ -70,22 +55,6 @@ const ProSettingNavigator = () => {
             <HeaderWithBack
               navigation={navigation}
               title="Basic Info"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-
-      <Stack1.Screen
-        name="ContactScreen"
-        component={ContactScreen}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Contact"
               notification
             />
           ),
@@ -108,21 +77,6 @@ const ProSettingNavigator = () => {
         })}
       />
       <Stack1.Screen
-        name="AccountSetting"
-        component={AccountSetting}
-        options={({navigation}) => ({
-          title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Setting"
-              notification
-            />
-          ),
-          backgroundColor: Colors.primary,
-        })}
-      />
-      <Stack1.Screen
         name="CreditAndDebitCard"
         component={CreditAndDebitCard}
         options={({navigation}) => ({
@@ -131,6 +85,21 @@ const ProSettingNavigator = () => {
             <HeaderWithBack
               navigation={navigation}
               title="Checkout"
+              notification
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      />
+      <Stack1.Screen
+        name="Profile"
+        component={Profile}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="Profile"
               notification
             />
           ),

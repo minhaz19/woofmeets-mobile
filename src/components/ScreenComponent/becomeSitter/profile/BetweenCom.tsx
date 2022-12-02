@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import HeaderText from '../../../common/text/HeaderText';
@@ -7,6 +8,7 @@ import TitleText from '../../../common/text/TitleText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Colors from '../../../../constants/Colors';
+import ShortText from '../../../common/text/ShortText';
 
 const BetweenCom = (props: {
   data: {
@@ -33,9 +35,9 @@ const BetweenCom = (props: {
         )}
         <View style={styles.textContainer}>
           <HeaderText text={props.data.name} />
-          <DescriptionText
+          <ShortText
             text={props.data.description}
-            textStyle={{color: colors.descriptionText}}
+            textStyle={{color: colors.descriptionText, paddingVertical: 2}}
           />
         </View>
       </View>
@@ -64,11 +66,12 @@ const styles = StyleSheet.create({
   boxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '65%',
+    width: '50%',
   },
   boxContainerEnd: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingLeft: 10,
   },
   imageContainer: {
     marginRight: 10,
@@ -77,7 +80,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  textContainer: {},
+  textContainer: {
+    // width: '70%',
+  },
   iconStyle: {paddingRight: 0},
 });
 

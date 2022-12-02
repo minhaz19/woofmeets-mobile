@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
@@ -6,6 +6,7 @@ import ErrorMessage from './Form/ErrorMessage';
 import SwitchView from './switch/SwitchView';
 import ShortText from './text/ShortText';
 import {useRHFContext} from '../../utils/helpers/Form/useRHFContext';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
 interface Props {
   name: string;
   terms?: boolean;
@@ -16,6 +17,7 @@ interface Props {
 }
 const AppSwitch = ({name, terms, auth, title}: Props) => {
   const [isEnabled, setIsEnabled] = useState(false);
+  const {isDarkMode} = useTheme();
 
   const {errors, value, setValue} = useRHFContext(name);
   return (
@@ -24,8 +26,14 @@ const AppSwitch = ({name, terms, auth, title}: Props) => {
         {terms && (
           <View style={styles.textContainer}>
             <ShortText textStyle={styles.text} text="Agree to" />
-            <TouchableOpacity>
-              <ShortText textStyle={styles.link} text="Terms and Conditions" />
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL('https://woofmeets.com/terms-and-conditions')
+              }>
+              <ShortText
+                textStyle={{...styles.link, color: Colors.primaryDif}}
+                text="Terms and Conditions"
+              />
             </TouchableOpacity>
           </View>
         )}
@@ -62,7 +70,6 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_0,
   },
   link: {
-    color: Colors.primary,
     fontSize: Text_Size.Text_0,
     textDecorationLine: 'underline',
   },

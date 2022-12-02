@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Pressable, StyleSheet,  View} from 'react-native';
 import React from 'react';
 import {
   Circle_,
@@ -8,7 +8,6 @@ import {
   SquareCheck,
 } from '../../../assets/svgs/SVG_LOGOS';
 import Text_Size from '../../../constants/textScaling';
-import HeaderText from '../text/HeaderText';
 import ShortText from '../text/ShortText';
 interface Props {
   radio?: boolean;
@@ -31,8 +30,7 @@ const AppCheckbox = ({
   small,
 }: Props) => {
   return (
-    <TouchableOpacity
-      activeOpacity={1}
+    <Pressable
       onPress={onPress}
       onBlur={onBlur}
       style={[
@@ -47,11 +45,11 @@ const AppCheckbox = ({
         {title && small ? (
           <ShortText text={title} textStyle={styles.shortTitle} />
         ) : (
-          <HeaderText text={title} textStyle={styles.title} />
+          <ShortText text={title} textStyle={styles.title} />
         )}
       </View>
       {Comp && <Comp />}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 export default AppCheckbox;

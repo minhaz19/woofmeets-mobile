@@ -8,7 +8,7 @@ export const btnStyles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: Text_Size.Text_1,
+    fontSize: Text_Size.Text_0,
     flex: 1,
   },
   textAlignment: {
@@ -16,7 +16,7 @@ export const btnStyles = StyleSheet.create({
     alignItems: 'center',
   },
   containerStyle: {
-    height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.06 : 55,
+    height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.05 : 50,
     width: '90%',
     marginTop: '1%',
     borderRadius: 4,
@@ -24,7 +24,7 @@ export const btnStyles = StyleSheet.create({
   containerStyleFullWidth: {
     height:
       SCREEN_HEIGHT > 400 && SCREEN_HEIGHT <= 800
-        ? SCREEN_HEIGHT * 0.06
+        ? SCREEN_HEIGHT * 0.05
         : SCREEN_HEIGHT <= 400
         ? SCREEN_HEIGHT * 0.04
         : 45,
@@ -42,7 +42,7 @@ export const btnStyles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: Text_Size.Text_8,
+    fontSize: Text_Size.Text_5,
     flex: 1,
   },
   containerStyleSmall: {

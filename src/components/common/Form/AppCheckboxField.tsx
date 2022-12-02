@@ -36,7 +36,6 @@ const AppCheckboxField = ({
         <Controller
           control={control}
           render={({field: {onBlur, value}}) => {
-            // console.log('value', name, value, active);
             return (
               <AppCheckbox
                 title={title}
@@ -59,7 +58,7 @@ const AppCheckboxField = ({
           name={name}
         />
       </View>
-      {typeKey === 1 && (
+      {errors !== false && typeKey === 1 && (
         <View style={styles.errorContainer}>
           <ErrorMessage error={errors[name]?.message} />
         </View>

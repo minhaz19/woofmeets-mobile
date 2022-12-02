@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import React from 'react';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
@@ -18,7 +18,7 @@ const InviteFriends = () => {
       <View style={styles.textContainer}>
         <HeaderText text="Everybody wins" textStyle={styles.headerText} />
         <DescriptionText
-          text="Invite a friend to Rover and they'll get $20 toward their first booking. Once they book, you'll get a $20 credit!"
+          text="Invite a friend to Woofmeets and they'll get $20 toward their first booking. Once they book, you'll get a $20 credit!"
           textStyle={{
             ...styles.textStyle,
             color: colors.descriptionText,
@@ -33,7 +33,9 @@ const InviteFriends = () => {
         />
         <IOSButton
             containerStyle={styles.containerStyleSmall}
-            onSelect={() => {}}
+            onSelect={() => {
+              Alert.alert('Development is in progress');
+            }}
             textAlignment={{
               backgroundColor: colors.backgroundColor,
               borderColor: colors.borderColor,

@@ -6,8 +6,9 @@ interface Props {
   title: string;
   onPress?: any;
   loading?: boolean;
+  color?: string;
 }
-const SubmitButton = ({title, onPress, loading}: Props) => {
+const SubmitButton = ({title, onPress, color, loading}: Props) => {
   const {handleSubmit} = useFormContext();
   return (
     <ButtonCom
@@ -17,6 +18,7 @@ const SubmitButton = ({title, onPress, loading}: Props) => {
       containerStyle={btnStyles.containerStyleFullWidth}
       titleStyle={btnStyles.titleStyle}
       onSelect={handleSubmit(onPress)}
+      color={color}
     />
   );
 };

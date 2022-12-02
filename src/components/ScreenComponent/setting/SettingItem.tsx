@@ -13,28 +13,55 @@ import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import HeaderText from '../../common/text/HeaderText';
 import DescriptionText from '../../common/text/DescriptionText';
 import {NumberProp} from 'react-native-svg';
+import {useTheme} from '../../../constants/theme/hooks/useTheme';
 
 const SettingItem = (props: {
   data: {
-    icon: any;
+    icon?: any;
     screenName: ((event: GestureResponderEvent) => void) | undefined;
     opacity: NumberProp | undefined;
     title: string;
     details?: string;
     rightIcon?: any;
+    vectorIcon?: any;
+    id: any;
+    color?: string;
+    iconSetIcon?: any;
   };
   descriptionStyle?: TextStyle;
+  key?: number;
 }) => {
+  const {colors} = useTheme();
+  const backgroundStyle = {
+    backgroundColor: colors.backgroundColor,
+  };
   return (
-    <TouchableOpacity onPress={props.data.screenName}>
+    <TouchableOpacity
+      onPress={props.data.screenName}
+      style={{
+        backgroundColor: backgroundStyle.backgroundColor,
+        borderBottomWidth: 1,
+        borderTopWidth: props.data.id === 1 ? 1 : 0,
+        borderColor: colors.borderColor,
+      }}>
       <View style={styles.rootContainer}>
         <View style={styles.titleContainer}>
-          <props.data.icon
+          {props.data.iconSetIcon && props.data.iconSetIcon}
+          {props.data.icon && <props.data.icon
             height={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 24 : 28}
             opacity={props.data.opacity}
-          />
-          <View style={styles.detailsContainer}>
-            <HeaderText text={props.data.title} />
+            color={'red'}
+          />}
+          {props.data.vectorIcon && props.data.vectorIcon}
+          <View
+            style={[
+              styles.detailsContainer,
+              {width: props.rightIcon ? '82%' : '85%'},
+            ]}>
+            <HeaderText
+              text={props.data.title}
+              textStyle={props.data.color && {color: props.data.color}}
+            />
             {props.data.details && (
               <DescriptionText
                 text={props.data.details}
@@ -60,7 +87,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal:
+    paddingHorizontal:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '6%' : '8%',
     alignItems: 'center',
     paddingVertical: '2%',

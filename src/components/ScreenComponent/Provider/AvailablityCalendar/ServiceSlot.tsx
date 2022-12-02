@@ -1,49 +1,47 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
-import AppCheckbox from '../../../common/Form/AppCheckbox';
-import IncreDecreButton from '../../../common/IncreDecreButton';
+import React, {useEffect, useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import ShortText from '../../../common/text/ShortText';
 import Text_Size from '../../../../constants/textScaling';
-const serviceData = [
-  {
-    serivce: 'Boarding',
-    active: false,
-    id: 0,
-  },
-  {
-    serivce: 'House Sitting',
-    active: false,
-    id: 1,
-  },
-  {
-    serivce: 'Drop-In Visits',
-    active: false,
-    id: 2,
-  },
-  {
-    serivce: 'Doggy Day Care',
-    active: false,
-    id: 3,
-  },
-  {
-    serivce: 'Dog Walking',
-    active: false,
-    id: 4,
-  },
-];
-const ServiceSlot = () => {
-  const [servcies, setServices] = useState<any>(serviceData);
+import {useAppSelector} from '../../../../store/store';
+import Colors from '../../../../constants/Colors';
+import AppCheckbox from '../../../common/Form/AppCheckbox';
 
+interface Props {
+  setSelectedService: any;
+}
+let modSelectedService: any = [];
+const ServiceSlot = ({setSelectedService}: Props) => {
+  const {userActiveServices} = useAppSelector(state => state.services);
+  const [servcies, setServices] = useState<any>([]);
   const handleOnChange = (id: number) => {
     const newHoliday = [...servcies];
     const index = newHoliday.findIndex(item => item.id === id);
     newHoliday[index].active = !newHoliday[index].active;
     setServices(newHoliday);
+    const matchIndex = modSelectedService?.indexOf(id);
+    if (matchIndex === -1) {
+      modSelectedService.push(id);
+    } else {
+      modSelectedService.splice(matchIndex, 1);
+    }
+    setSelectedService([...modSelectedService]);
   };
+  useEffect(() => {
+    const modService = userActiveServices?.map((item: any) => ({
+      service: item.serviceType.name,
+      id: item.id,
+      active:
+        modSelectedService.findIndex((it: any) => it === item.id) !== -1
+          ? true
+          : false,
+    }));
+
+    setServices(modService);
+  }, [userActiveServices]);
   return (
     <View style={styles.parent}>
-      {servcies.map((item: any, index: number) => (
+      {servcies?.map((item: any, index: number) => (
         <View key={index} style={styles.container}>
           <View style={styles.serviceContainer}>
             <AppCheckbox
@@ -51,15 +49,16 @@ const ServiceSlot = () => {
               radio
               onPress={() => handleOnChange(item.id)}
               Comp={() => (
-                <View style={styles.textContainer}>
-                  <TitleText textStyle={styles.title} text={item.serivce} />
-                  <ShortText text={'0 of 5 booked '} />
+                <View style={styles.serviceContainer}>
+                  <View>
+                    <View style={styles.textContainer}>
+                      <TitleText textStyle={styles.title} text={item.service} />
+                      <ShortText text={'Tab to mark unavailable'} />
+                    </View>
+                  </View>
                 </View>
               )}
             />
-          </View>
-          <View>
-            <IncreDecreButton />
           </View>
         </View>
       ))}
@@ -70,21 +69,42 @@ const ServiceSlot = () => {
 export default ServiceSlot;
 
 const styles = StyleSheet.create({
-  parent: {width: '100%'},
+  parent: {width: '100%', padding: 10},
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
     width: '100%',
+    // backgroundColor: Colors.primary,
   },
   serviceContainer: {
     flexDirection: 'row',
-    flex: 1,
+    // flex: 1,
   },
   textContainer: {
-    marginLeft: 10,
-    flex: 1,
+    // marginLeft: 10,
+    // flex: 1,
   },
   title: {fontWeight: 'bold', fontSize: Text_Size.Text_1},
+  unMarkBtn: {
+    paddingVertical: 10,
+    backgroundColor: Colors.gray,
+    flex: 0,
+    paddingHorizontal: 4,
+    borderRadius: 10,
+  },
+  markBtn: {
+    paddingVertical: 10,
+    backgroundColor: Colors.primary,
+    flex: 0,
+    paddingHorizontal: 4,
+    borderRadius: 10,
+  },
+  btnText: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  btnCont: {width: '40%', marginLeft: 20},
 });

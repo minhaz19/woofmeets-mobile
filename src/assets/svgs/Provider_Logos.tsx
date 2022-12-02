@@ -1,8 +1,13 @@
-import * as React from "react"
-import Svg, { SvgProps, G, Path } from "react-native-svg"
+import * as React from 'react';
+import Svg, {SvgProps, G, Path} from 'react-native-svg';
 
 export const ProHomeIcon = (props: SvgProps) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 34 34" {...props}>
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    viewBox="0 0 34 34"
+    {...props}>
     <G data-name="Group 37542">
       <G data-name="Group 37541" fill={props?.stroke}>
         <Path
@@ -16,37 +21,42 @@ export const ProHomeIcon = (props: SvgProps) => (
       </G>
     </G>
   </Svg>
-)
+);
 
 export const ProRescheduleIcon = (props: SvgProps) => (
-    <Svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 34 34" {...props}>
-      <G data-name="Group 37543" fill={props?.stroke}>
-        <G data-name="Group 37543">
-          <Path
-            data-name="Path 5515"
-            d="M12.637 21.465a2.845 2.845 0 0 1 2.126-3.272l2.772-.682a2.122 2.122 0 0 1 2.234 3.248c-.483.743-1.26 1.09-1.754 1.87s-.592 1.634-1.011 2.386a2.118 2.118 0 0 1-3.858-.747Z"
-          />
-          <Path
-            data-name="Path 5516"
-            d="M8.304 22.732c.834-1.911 4.681-.475 4.058 1.513-.886 1.974-4.782.293-4.058-1.513Z"
-          />
-          <Path
-            data-name="Path 5517"
-            d="M11.842 20.832c-1.329 1.965-5.247-.58-3.992-2.593 1.326-1.96 5.245.585 3.992 2.593Z"
-          />
-          <Path
-            data-name="Path 5518"
-            d="M15.815 17.094a2.91 2.91 0 0 1-2.011-2.046c-.365-1.826 1.72-2.249 2.967-.894 1.2 1.091 1.033 3.343-.956 2.94Z"
-          />
-          <Path
-            data-name="Path 5519"
-            d="M13.866 17.717c-1.33 1.965-5.247-.58-3.992-2.593 1.323-1.956 5.242.59 3.992 2.593Z"
-          />
-        </G>
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    viewBox="0 0 34 34"
+    {...props}>
+    <G data-name="Group 37543" fill={props?.stroke}>
+      <G data-name="Group 37543">
         <Path
-          data-name="Icon ionic-ios-refresh"
-          d="M26.759 18.622a1.082 1.082 0 0 0-1.081.986A11.773 11.773 0 1 1 13.641 6.924a.284.284 0 0 1 .3.29v3.648a1.163 1.163 0 0 0 1.784.979l6.975-4.88a1.16 1.16 0 0 0 0-1.965L15.729.18a1.163 1.163 0 0 0-1.784.979v3.314a.285.285 0 0 1-.283.29A13.864 13.864 0 1 0 27.84 19.789a1.078 1.078 0 0 0-1.081-1.168Z"
+          data-name="Path 5515"
+          d="M12.637 21.465a2.845 2.845 0 0 1 2.126-3.272l2.772-.682a2.122 2.122 0 0 1 2.234 3.248c-.483.743-1.26 1.09-1.754 1.87s-.592 1.634-1.011 2.386a2.118 2.118 0 0 1-3.858-.747Z"
+        />
+        <Path
+          data-name="Path 5516"
+          d="M8.304 22.732c.834-1.911 4.681-.475 4.058 1.513-.886 1.974-4.782.293-4.058-1.513Z"
+        />
+        <Path
+          data-name="Path 5517"
+          d="M11.842 20.832c-1.329 1.965-5.247-.58-3.992-2.593 1.326-1.96 5.245.585 3.992 2.593Z"
+        />
+        <Path
+          data-name="Path 5518"
+          d="M15.815 17.094a2.91 2.91 0 0 1-2.011-2.046c-.365-1.826 1.72-2.249 2.967-.894 1.2 1.091 1.033 3.343-.956 2.94Z"
+        />
+        <Path
+          data-name="Path 5519"
+          d="M13.866 17.717c-1.33 1.965-5.247-.58-3.992-2.593 1.323-1.956 5.242.59 3.992 2.593Z"
         />
       </G>
-    </Svg>
-  )
+      <Path
+        data-name="Icon ionic-ios-refresh"
+        d="M26.759 18.622a1.082 1.082 0 0 0-1.081.986A11.773 11.773 0 1 1 13.641 6.924a.284.284 0 0 1 .3.29v3.648a1.163 1.163 0 0 0 1.784.979l6.975-4.88a1.16 1.16 0 0 0 0-1.965L15.729.18a1.163 1.163 0 0 0-1.784.979v3.314a.285.285 0 0 1-.283.29A13.864 13.864 0 1 0 27.84 19.789a1.078 1.078 0 0 0-1.081-1.168Z"
+      />
+    </G>
+  </Svg>
+);

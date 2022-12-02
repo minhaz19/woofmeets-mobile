@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   View,
-  Text,
   TouchableWithoutFeedback,
   Modal,
   TouchableOpacity,
@@ -12,10 +11,12 @@ import React from 'react';
 import * as ImagePicker from 'react-native-image-picker';
 import mime from 'mime';
 import Text_Size from '../../../constants/textScaling';
+import TitleText from '../../common/text/TitleText';
 interface OptionType {
   maxWidth: number;
   maxHeight: number;
   title: string;
+  includeBase64?: boolean;
   storageOptions: {
     skipBackup: boolean;
     path: string;
@@ -43,6 +44,7 @@ const ImageUploadModal = (props: {
       maxWidth: 1080,
       maxHeight: 720,
       quality: 0.4,
+      includeBase64: true,
       title: 'Select Photo',
       storageOptions: {
         skipBackup: true,
@@ -137,7 +139,7 @@ const ImageUploadModal = (props: {
                   source={require('../../../assets/camera.png')}
                   style={styles.iconView}
                 />
-                <Text style={styles.modalText}>Open Camera</Text>
+                <TitleText text={'Open Camera'} textStyle={styles.modalText} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.iconContainer}
@@ -146,7 +148,7 @@ const ImageUploadModal = (props: {
                   source={require('../../../assets/image-gallery.png')}
                   style={styles.iconView}
                 />
-                <Text style={styles.modalText}>Choose from Gallery</Text>
+                <TitleText text={'Choose from Gallery'} textStyle={styles.modalText} />
               </TouchableOpacity>
             </View>
           </View>
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     color: 'black',
-    fontSize: Text_Size.Text_1,
+    fontSize: Text_Size.Text_9,
   },
   iconContainer: {padding: 10, justifyContent: 'center', alignItems: 'center'},
   iconView: {height: 80, width: 80, marginBottom: 10},

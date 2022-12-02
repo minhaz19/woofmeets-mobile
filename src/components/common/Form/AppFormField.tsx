@@ -8,6 +8,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import TitleText from '../text/TitleText';
 import DescriptionText from '../text/DescriptionText';
 import {Controller} from 'react-hook-form';
+import Colors from '../../../constants/Colors';
 interface Props {
   name: string;
   label: string;
@@ -29,6 +30,9 @@ interface Props {
   errors: any;
   control: any;
   defaultValue?: string;
+  onPressIn?: () => void;
+  onPressOut?: () => void;
+  editable?: boolean;
 }
 type StackParamList = {
   ForgotPasswordEmail: {foo: string; onBar: () => void} | undefined;
@@ -55,6 +59,9 @@ const AppFormField = ({
   errors,
   control,
   defaultValue,
+  onPressIn,
+  onPressOut,
+  editable = true,
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
   return (
@@ -74,12 +81,28 @@ const AppFormField = ({
                   autoCapitalize={autoCapitalize}
                   autoCorrect={autoCorrect}
                   icon={icon}
-                  keyboardType={keyboardType}
+                  keyboardType={name === 'dob' ? 'number-pad' : keyboardType}
                   defaultValue={defaultValue}
                   placeholder={placeholder}
                   name={name}
                   textContentType={textContentType}
-                  onChangeText={onChange}
+                  onChangeText={(text: string) => {
+                    if (name === 'dob' && text.length > 10) {
+                      return;
+                    }
+                    name === 'dob'
+                      ? onChange(
+                          text.length === 3 && !text.includes('/')
+                            ? `${text.substring(0, 2)}/${text.substring(2)}`
+                            : text.length === 6 && !/\/.*\//.test(text)
+                            ? `${text.substring(0, 5)}/${text.substring(5)}`
+                            : text,
+                        )
+                      : onChange(text);
+                  }}
+                  onPressIn={onPressIn}
+                  onPressOut={onPressOut}
+                  editable={editable}
                   onBlur={onBlur}
                   value={value?.toString()}
                   secureTextEntry={secureTextEntry}
@@ -103,7 +126,10 @@ const AppFormField = ({
         <TouchableOpacity
           onPress={() => navigation.navigate('ForgotPasswordEmail')}>
           <TitleText
-            textStyle={styles.forgotPassword}
+            textStyle={{
+              ...styles.forgotPassword,
+              color: Colors.primaryDif,
+            }}
             text="Forgot Password ?"
           />
         </TouchableOpacity>

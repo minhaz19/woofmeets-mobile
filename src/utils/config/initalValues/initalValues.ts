@@ -67,7 +67,48 @@ const filterProviderValue: filterProviderType = {
   priceRange: [],
   homeType: '',
 };
-
+const backgroundCheckInit = {
+  dob: '',
+  state: '',
+  dlld: '',
+  stateId: '',
+  imageGallery: [],
+};
+const planCheckoutInit = {
+  email: '',
+  phone: '',
+  cardInfo: {
+    country: '',
+    postalCode: '',
+  },
+};
+const appointmentInit = {
+  providerServiceId: null,
+  serviceTypeId: 1,
+  visitLength: 30,
+  isRecurring: false,
+  dropOffStartTime: '',
+  dropOffEndTime: '',
+  pickUpStartTime: '',
+  pickUpEndTime: '',
+  recurringStartDate: '',
+  recurringSelectedDay: [],
+  selectedDays: [],
+  repeatDate: [],
+  proposalStartDate: '',
+  proposalEndDate: '',
+  proposalOtherDate: [],
+  petsId: [],
+  firstMessage: '',
+  recurringModDates: [],
+  specificModDates: [],
+  recurringModDatesRef: [],
+  specificModDatesRef: [],
+  multiDate: [],
+  selectedRange: [],
+  selectDate: [],
+  isRecivedPhotos: false,
+};
 export {
   loginValue,
   signupValue,
@@ -78,4 +119,7 @@ export {
   addPetValue,
   filterProviderValue,
   forgotPasswordReset,
+  backgroundCheckInit,
+  planCheckoutInit,
+  appointmentInit,
 };

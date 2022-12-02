@@ -1,45 +1,68 @@
-/* eslint-disable radix */
+import Colors from '../../../constants/Colors';
 
-export const orderAndStyleRange = (range: any, color: string) => {
-  const unorderedRange =
-    range &&
-    range?.map(
-      (date: string | number | Date) =>
-        new Date(date).getFullYear() +
-        '-' +
-        // @ts-ignore
-        parseInt(new Date(date).getMonth() + 1) +
-        '-' +
-        new Date(date).getDate(),
-    );
+// const orderMultiDates: any = [];
+export const orderAndStyleRange = (
+  range: any,
+  type: string,
+  color?: string,
+) => {
   let orderRange: any = [];
-  unorderedRange &&
-    unorderedRange.map((or: string) =>
-      orderRange.push(
-        or
-          .split('-')
-          .map((p: string) => (parseInt(p) <= 9 ? '0' + p : p))
-          .join('-'),
-      ),
-    );
+  let styledMarkedRange: any = {};
+  if (type === 'RANGE') {
+    const styledRange =
+      range.length !== 0 &&
+      range.map((_: string, i: number) => ({
+        [range[i]]: {
+          customStyles: {
+            container: {
+              backgroundColor: color !== undefined ? color : Colors.primary,
+              // backgroundColor: 'black',
+              elevation: 2,
+              borderRadius: 0,
+              borderBottomLeftRadius: i === 0 ? 30 : 0,
+              borderTopLeftRadius: i === 0 ? 30 : 0,
+              borderBottomRightRadius: i === range.length - 1 ? 30 : 0,
+              borderTopRightRadius: i === range.length - 1 ? 30 : 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+            },
+            text: {
+              color: 'white',
+            },
+          },
+        },
+      }));
 
-  const styledRange =
-    orderRange.length !== 0 &&
-    orderRange.map((_: string, i: number) => ({
-      [orderRange[i]]: {
-        startingDay: i === 0,
-        color: color,
-        textColor: 'white',
-        endingDay: i === orderRange.length - 1,
+    styledRange &&
+      styledRange?.map(
+        (item: any) =>
+          // @ts-ignore
+          (styledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
+      );
+  } else if (type === 'MULTI') {
+    const styledRange = range?.map((_: string, i: number) => ({
+      [range[i]]: {
+        customStyles: {
+          container: {
+            backgroundColor: Colors.primary,
+            elevation: 2,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          text: {
+            color: 'white',
+          },
+        },
       },
     }));
-  let styledMarkedRange: any = {};
-
-  styledRange !== false &&
-    styledRange?.map(
-      (item: any) =>
-        // @ts-ignore
-        (styledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
-    );
-  return {styledMarkedRange};
+    styledRange &&
+      styledRange?.map(
+        (item: any) =>
+          // @ts-ignore
+          (styledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
+      );
+  }
+  return {styledMarkedRange, orderRange};
 };

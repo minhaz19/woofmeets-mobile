@@ -13,10 +13,8 @@ const AppInputSelect = ({...otherProps}) => {
       style={[
         styles.container,
         {
-          backgroundColor: isDarkMode
-            ? colors.lightBackgroundColor
-            : colors.backgroundColor,
-          borderColor: isDarkMode ? Colors.gray : Colors.border,
+          backgroundColor: colors.backgroundColor,
+          borderColor: Colors.border,
         },
       ]}>
       <TextInput
@@ -29,7 +27,7 @@ const AppInputSelect = ({...otherProps}) => {
             alignSelf: numberOfLines >= 2 ? 'flex-start' : 'center',
             height: numberOfLines >= 10 ? 120 : 40,
             flex: 1,
-            color: isDarkMode ? Colors.gray : Colors.black,
+            color: Colors.black,
           },
         ]}
         {...otherProps}
@@ -69,7 +67,8 @@ const styles = StyleSheet.create({
   },
   text: {
     width: '90%',
-    fontSize: Text_Size.Text_9,
+    fontSize: Text_Size.Text_11,
+    fontFamily: 'Muli',
     flex: 0,
   },
   check: {height: '100%', alignSelf: 'center'},

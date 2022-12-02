@@ -5,25 +5,32 @@ import {CalendarList} from 'react-native-calendars';
 import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-
-const FullCalendar = () => {
+import {useMarkedStyles} from '../ProviderProfile/ProvderTab/components/Services/component/utils/useMarkedStyles';
+interface Props {
+  availability: [string];
+}
+const FullCalendar = ({availability}: Props) => {
   const {colors} = useTheme();
+  const {_markedStyle} = useMarkedStyles(availability);
+  const today = new Date();
+  const maxRange = 11 - today.getMonth() + 12;
+
   return (
     <View style={styles.container}>
       <CalendarList
         // Callback which gets executed when visible months change in scroll view. Default = undefined
         calendarStyle={styles.calenderStyles}
-        onVisibleMonthsChange={months => {
-          // console.log('now these months are visible', months);
-        }}
+        onVisibleMonthsChange={months => {}}
         // Max amount of months allowed to scroll to the past. Default = 50
-        pastScrollRange={50}
+        pastScrollRange={0}
         // Max amount of months allowed to scroll to the future. Default = 50
-        futureScrollRange={50}
+        futureScrollRange={maxRange}
         // Enable or disable scrolling of calendar list
         scrollEnabled={true}
         // Enable or disable vertical scroll indicator. Default = false
         showScrollIndicator={false}
+        markingType={'custom'}
+        markedDates={_markedStyle}
         theme={{
           backgroundColor: colors.backgroundColor,
           calendarBackground: colors.backgroundColor,

@@ -5,7 +5,11 @@ import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
 import {getSinglePet} from '../../../../store/slices/pet/singlePet/signlePetAction';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 
-export const useMyPetUtils = (navigation: any) => {
+interface Props {
+  navigation: any;
+  onBoarding: boolean;
+}
+export const useMyPetUtils = (navigation: any, onBoarding = false): Props => {
   const dispatch = useAppDispatch();
   const {pets, loading} = useAppSelector(state => state.allPets);
   const {loading: singlePetLoading} = useAppSelector(state => state.singlePet);
@@ -18,9 +22,12 @@ export const useMyPetUtils = (navigation: any) => {
       timeoutAlert(data, getSinglePet, opk);
       data.payload.ok === false || data === undefined
         ? null
-        : navigation.navigate('AddPet', {opk: opk!});
+        : navigation.navigate('AddPetHome', {
+            opk: opk,
+            onBoarding: onBoarding,
+          });
     } else {
-      navigation.navigate('AddPet', {opk: null});
+      navigation.navigate('AddPetHome', {opk: null, onBoarding: onBoarding});
     }
   };
   const callApi = async () => {

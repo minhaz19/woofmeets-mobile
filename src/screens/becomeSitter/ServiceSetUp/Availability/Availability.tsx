@@ -1,33 +1,73 @@
-import {StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
-// import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
+import {RefreshControl, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import SubAvailability from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubAvailabilty/SubAvailability';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import AppForm from '../../../../components/common/Form/AppForm';
 import {useAvailabilityUtils} from './utils/useAvailabilityUtils';
 import {
   AvailabilityInitialValues,
   availabilityValidation,
 } from './utils/AvailabilityInitialValues';
-
-const Availability = (props: {
-  navigation: {navigate: (arg0: string, arg1: any) => void};
-  route: {params: any};
-}) => {
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {getAvailability} from '../../../../store/slices/onBoarding/setUpService/availability/getAvailability';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+interface Props {
+  navigation: any;
+  route: any;
+}
+const Availability = ({navigation, route}: Props) => {
   const {colors} = useTheme();
-  const {itemId, name, image, description} = props?.route?.params;
+  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  const {itemId, name, image, description, service} = serviceSetup.routeData;
+  const providerServiceId = service.map(
+    (data: {providerServiceId: any}) => data.providerServiceId,
+  );
+  const serviceId = service.map((data: {id: any}) => data.id);
 
-  const {handlePost, PLoading} = useAvailabilityUtils(itemId, props.navigation);
+  const {availability, loading} = useAppSelector(
+    (state: any) => state?.availability,
+  );
+
+  // hook for post/put
+  const {handlePost, isLoading} = useAvailabilityUtils(
+    serviceId[0],
+    navigation,
+    route,
+  );
+  const [refreshing, setRefreshing] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await dispatch(getAvailability(itemId));
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
 
   return (
     <>
-      {/* {loading && <AppActivityIndicator visible={true} />} */}
-      <ScrollView
+      {(loading || refreshing) && <AppActivityIndicator visible={true} />}
+      <KeyboardAwareScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         style={[
           styles.rootContainer,
-          {backgroundColor: colors.backgroundColor},
-        ]}>
+          {
+            backgroundColor: colors.backgroundColor,
+          },
+        ]}
+        extraHeight={100}
+        extraScrollHeight={200}
+        enableAutomaticScroll={true}
+        enableOnAndroid={true}>
         <ReusableHeader
           itemId={itemId}
           name={name}
@@ -35,11 +75,16 @@ const Availability = (props: {
           description={description}
         />
         <AppForm
-          initialValues={AvailabilityInitialValues(itemId)}
-          validationSchema={availabilityValidation}>
-          <SubAvailability handlePost={handlePost} loading={PLoading} />
+          initialValues={AvailabilityInitialValues(
+            providerServiceId[0],
+            availability,
+            itemId,
+          )}
+          validationSchema={availabilityValidation}
+          enableReset>
+          <SubAvailability handlePost={handlePost} loading={isLoading} />
         </AppForm>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </>
   );
 };

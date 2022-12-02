@@ -6,40 +6,69 @@ import AuthNavigator from './AuthNavigator';
 import Notifications from '../screens/notification/Notifications';
 import HeaderWithBack from '../components/common/header/HeaderWithBack';
 import Colors from '../constants/Colors';
-import BasicInfoSitter from '../screens/becomeSitter/BasicInfo';
 import PhoneNumberSitter from '../screens/becomeSitter/PhoneNumber';
 import SitterInitialScreen from '../screens/becomeSitter/InitialScreen';
-import ProviderNavigator from './ProviderNavigator';
-import BoardingSetting from '../screens/boardingSetting/BoardingSetting';
 import InviteFriends from '../screens/Misc/InviteFriends';
 import PromoGiftCodes from '../screens/Misc/PromoGiftCodes';
 import ReceivePayments from '../screens/Misc/ReceivePayments';
 import Gallery from '../screens/becomeSitter/Gallery/Gallery';
-import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
 import GuestBottomTabNavigator from './GuestBottomTabNavigator';
-import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
 import HomeProfile from '../screens/becomeSitter/HomeProfile';
-import Rates from '../screens/becomeSitter/ServiceSetUp/Rates';
-import SitterLandingPage from '../screens/becomeSitter/LandingPage';
-import CreateProfileLanding from '../screens/becomeSitter/CreateProfileLanding';
-import BasicInfo from '../screens/profile/BasicInfo';
-import ContactScreen from '../screens/profile/ContactScreen';
 import PetNavigator from './bottoms/PetNavigator';
-import PetPreference from '../screens/becomeSitter/ServiceSetUp/PetPreference';
+import {_deleteSinglePet} from '../utils/helpers/HeaderWithBack/_deleteSinglePet';
+import {Delete, Setting} from '../assets/svgs/SVG_LOGOS';
+import {useAppDispatch} from '../store/store';
+import SitterLandingPage from '../screens/becomeSitter/LandingPage';
+import ServiceSetting from '../components/ScreenComponent/setting/subProfile/ServiceSetting';
+import ProfileModify from '../components/ScreenComponent/setting/subProfile/ProfileModify';
+import ManageBusiness from '../components/ScreenComponent/setting/subProfile/ManageBusiness';
+import SchedulePetSettings from '../components/ScreenComponent/search/SchedulePetSettings';
+import AddPetCheckScreen from '../screens/pet/AddPet/AddPetCheck';
+import AddPetSubmit from '../screens/pet/AddPet/AddPetSubmit';
 import SitterDetails from '../screens/becomeSitter/Details';
-import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy';
-import YourHome from '../screens/becomeSitter/ServiceSetUp/YourHome';
-import Availability from '../screens/becomeSitter/ServiceSetUp/Availability/Availability';
-import SafetyQuiz from '../screens/becomeSitter/SafetyQuiz';
+import BasicInfo from '../screens/profile/BasicInfo';
+import ServiceNavigator from './bottoms/ServiceNavigator';
+import PaymentMethods from '../screens/profile/PaymentMethod';
+import AddCardForm from '../components/ScreenComponent/profile/PaymentMethod/AddCardForm';
+import BasicPayment from '../components/ScreenComponent/becomeSitter/subscription/BasicPayment/BasicPayment';
+import Appointment from '../screens/Appointment';
 import SubscriptionScreen from '../screens/becomeSitter/Subscription';
+import ActivityScreen from '../screens/Inbox/activity/ActivityScreen';
+import ScreenSlider from '../components/ScreenComponent/search/ScreenSlider';
+import ServiceSetUp from '../screens/becomeSitter/ServiceSetUp';
+import ServiceSelection from '../screens/becomeSitter/ServiceSelection';
+import StripeOnboardScreen from '../screens/settings/Profile/StripeOnboardScreen';
+import ProviderProfile from '../screens/Service/ProviderProfile';
+import ProviderCalendar from '../screens/Service/ProviderCalender';
+import SingleServiceLanding from '../components/ScreenComponent/setting/subProfile/service/SingleServiceLanding';
+import Rates from '../screens/becomeSitter/ServiceSetUp/Rates';
+import Availability from '../screens/becomeSitter/ServiceSetUp/Availability/Availability';
+import CancellationPolicy from '../screens/becomeSitter/ServiceSetUp/CancellationPolicy/CancellationPolicy';
+import AddPetHome from '../screens/pet/AddPet/AddPetHome';
+import CheckoutDetails from '../screens/Inbox/checkout/CheckoutDetails';
+import ModifyAppointment from '../screens/Inbox/ModifyAppointment';
+import AppointmentSuccess from '../screens/Inbox/checkout/AppointmentSuccess';
+import UpgradePlan from '../components/ScreenComponent/becomeSitter/subscription/UpgradePlan/UpgradePlan';
+import SubscriptionList from '../screens/profile/SubscriptionList';
+import AboutProvider from '../screens/Service/ProviderProfile/AboutProvider';
+import ProviderAvailablity from '../screens/provider/ProviderAvailablity';
+import {setOpenSettings} from '../store/slices/misc/openFilter';
+import ReportCardInitial from '../screens/reports/Initial';
+import GenerateReport from '../screens/reports/Initial/GenerateReport';
+import ShowAllReport from '../screens/reports/ShowReport';
+import ReportCard from '../screens/reports/Initial/ReportCard';
+import AccountSetting from '../components/ScreenComponent/setting/Preference/AccountSetting';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
+  const dispatch = useAppDispatch();
   return (
     <NavigationContainer>
       <Stack.Navigator
+        screenOptions={{
+          gestureEnabled: false,
+        }}
         initialRouteName={
-          // !props.previousLoggedIn ? 'BottomTabNavigator' : 'HomeProfile'
           props.previousLoggedIn ? 'BottomTabNavigator' : 'AuthNavigator'
         }>
         <Stack.Screen
@@ -55,11 +84,6 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="GuestBottomTabNavigator"
           component={GuestBottomTabNavigator}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="ProviderNavigator"
-          component={ProviderNavigator}
           options={{headerShown: false}}
         />
         <Stack.Screen
@@ -90,22 +114,32 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
+              <HeaderWithBack navigation={navigation} title="Become a Sitter" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SitterLandingPage"
+          component={SitterLandingPage}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
               <HeaderWithBack
                 navigation={navigation}
-                title="Dog Sitting Jobs"
+                title="Become A Sitter"
+                notification
               />
             ),
             backgroundColor: Colors.primary,
           })}
         />
         <Stack.Screen
-          name="BasicInfoSitter"
-          component={BasicInfoSitter}
-          options={({navigation}) => ({
+          name="SitterServiceNavigator"
+          component={ServiceNavigator}
+          options={() => ({
+            headerShown: false,
             title: '',
-            header: () => (
-              <HeaderWithBack navigation={navigation} title="Profile" />
-            ),
             backgroundColor: Colors.primary,
           })}
         />
@@ -121,97 +155,34 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           })}
         />
         <Stack.Screen
+          name="SitterBasicInfo"
+          component={BasicInfo}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Basic Info" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SitterDetails"
+          component={SitterDetails}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Details" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
           name="GallerySitter"
           component={Gallery}
           options={({navigation}) => ({
             title: '',
             header: () => (
               <HeaderWithBack navigation={navigation} title="Profile" />
-            ),
-            backgroundColor: Colors.primary,
-          })}
-        />
-        <Stack.Screen
-          name="BoardingSetting"
-          component={BoardingSetting}
-          options={({navigation}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack
-                navigation={navigation}
-                title="Boarding Setting"
-                notification
-              />
-            ),
-            backgroundColor: Colors.primary,
-          })}
-        />
-        <Stack.Screen
-          name="ServiceSetup"
-          component={ServiceSetUp}
-          options={({navigation}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack
-                navigation={navigation}
-                title="Service Setup"
-                notification
-              />
-            ),
-            backgroundColor: Colors.primary,
-          })}
-        />
-        <Stack.Screen
-          name="Rates"
-          component={Rates}
-          options={({navigation}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack navigation={navigation} title="Service Setup" />
-            ),
-            backgroundColor: Colors.primary,
-          })}
-        />
-        <Stack.Screen
-          name="Availability"
-          component={Availability}
-          options={({navigation}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack navigation={navigation} title="Service Setup" />
-            ),
-            backgroundColor: Colors.primary,
-          })}
-        />
-        <Stack.Screen
-          name="PetPreference"
-          component={PetPreference}
-          options={({navigation}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack navigation={navigation} title="Service Setup" />
-            ),
-            backgroundColor: Colors.primary,
-          })}
-        />
-        <Stack.Screen
-          name="CancellationPolicy"
-          component={CancellationPolicy}
-          options={({navigation}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack navigation={navigation} title="Service Setup" />
-            ),
-            backgroundColor: Colors.primary,
-          })}
-        />
-        <Stack.Screen
-          name="YourHome"
-          component={YourHome}
-          options={({navigation}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack navigation={navigation} title="Service Setup" />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -262,6 +233,285 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           })}
         />
         <Stack.Screen
+          name="PetScreens"
+          component={PetNavigator}
+          options={() => ({
+            title: '',
+            headerShown: false,
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AddPetHome"
+          component={AddPetHome}
+          options={({navigation, route}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Add pet"
+                Icon={route.params!.opk && Delete}
+                onPress={() => {
+                  _deleteSinglePet(dispatch, navigation, route);
+                }}
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AddPetCheck"
+          component={AddPetCheckScreen}
+          options={({navigation, route}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Add pet"
+                Icon={route.params!.opk && Delete}
+                onPress={() => {
+                  _deleteSinglePet(dispatch, navigation, route);
+                }}
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AddPetSubmit"
+          component={AddPetSubmit}
+          options={({navigation, route}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Add pet"
+                Icon={route.params!.opk && Delete}
+                onPress={() => {
+                  _deleteSinglePet(dispatch, navigation, route);
+                }}
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SingleServiceLanding"
+          component={SingleServiceLanding}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Setup"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="RatesScreen"
+          component={Rates}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Setup"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AvailabilityScreen"
+          component={Availability}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Setup"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="CancellationPolicyScreen"
+          component={CancellationPolicy}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Setup"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSetting"
+          component={ServiceSetting}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Settings"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ProfileModify"
+          component={ProfileModify}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Modify Accounts"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ManageBusiness"
+          component={ManageBusiness}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Manage Business"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="AccountSetting"
+          component={AccountSetting}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Setting"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SchedulePetSettings"
+          component={SchedulePetSettings}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ScreenSlider"
+          component={ScreenSlider}
+          options={{headerShown: false}}
+        />
+        {/* Payment Navigations */}
+        <Stack.Screen
+          name="SubscriptionScreen"
+          component={SubscriptionScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="AddCardForm"
+          component={AddCardForm}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="BasicPayment"
+          component={BasicPayment}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="PaymentMethod"
+          component={PaymentMethods}
+          options={({navigation}) => ({
+            title: 'Payment Cards',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Cards" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="Appointment"
+          component={Appointment}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Appointment"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ActivityScreen"
+          component={ActivityScreen}
+          options={() => ({
+            headerShown: false,
+            gestureEnabled: false,
+          })}
+        />
+        <Stack.Screen
+          name="Checkout"
+          component={CheckoutDetails}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Checkout" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="EditDetails"
+          component={ModifyAppointment}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Edit Details" />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSetUp"
+          component={ServiceSetUp}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Set Up"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
           name="ServiceSelection"
           component={ServiceSelection}
           options={({navigation}) => ({
@@ -277,14 +527,14 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           })}
         />
         <Stack.Screen
-          name="SitterLandingPage"
-          component={SitterLandingPage}
+          name="StripeOnboardScreen"
+          component={StripeOnboardScreen}
           options={({navigation}) => ({
             title: '',
             header: () => (
               <HeaderWithBack
                 navigation={navigation}
-                title="Become A Sitter"
+                title="Get paid by woofmeets"
                 notification
               />
             ),
@@ -292,89 +542,68 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           })}
         />
         <Stack.Screen
-          name="CreateProfileLanding"
-          component={CreateProfileLanding}
+          name="ProviderProfile"
+          component={ProviderProfile}
           options={({navigation}) => ({
             title: '',
             header: () => (
               <HeaderWithBack
                 navigation={navigation}
-                title="Create Your Profile"
-                notification
+                title="Provider Profile"
               />
             ),
             backgroundColor: Colors.primary,
           })}
         />
         <Stack.Screen
-          name="SafetyQuiz"
-          component={SafetyQuiz}
+          name="AboutProvider"
+          component={AboutProvider}
           options={({navigation}) => ({
-            headerStyle: {
-              backgroundColor: Colors.background,
-              borderWidth: 0,
-              borderColor: Colors.primary,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: '600',
-              textAlign: 'center',
-            },
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Safety Quiz" />
+              <HeaderWithBack navigation={navigation} title="About Provider" />
             ),
             backgroundColor: Colors.primary,
           })}
         />
         <Stack.Screen
-          name="SitterBasicInfo"
-          component={BasicInfo}
+          name="ProviderCalendar"
+          component={ProviderCalendar}
           options={({navigation}) => ({
             title: '',
             header: () => (
               <HeaderWithBack
                 navigation={navigation}
-                title="Basic Info"
-                notification
+                title="Calendar"
+                notification={true}
               />
             ),
             backgroundColor: Colors.primary,
           })}
         />
         <Stack.Screen
-          name="SitterContactScreen"
-          component={ContactScreen}
-          options={({navigation}) => ({
-            title: '',
-            header: () => (
-              <HeaderWithBack
-                navigation={navigation}
-                title="Contact"
-                notification
-              />
-            ),
-            backgroundColor: Colors.primary,
-          })}
-        />
-        <Stack.Screen
-          name="PetScreens"
-          component={PetNavigator}
+          name="AppointmentSuccess"
+          component={AppointmentSuccess}
           options={() => ({
-            title: '',
             headerShown: false,
-            backgroundColor: Colors.primary,
           })}
         />
         <Stack.Screen
-          name="SitterDetails"
-          component={SitterDetails}
+          name="UpgradePlan"
+          component={UpgradePlan}
+          options={() => ({
+            headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name="SubscriptionList"
+          component={SubscriptionList}
           options={({navigation}) => ({
             title: '',
             header: () => (
               <HeaderWithBack
                 navigation={navigation}
-                title="Details"
+                title="Subscription List"
                 notification
               />
             ),
@@ -382,15 +611,61 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           })}
         />
         <Stack.Screen
-          name="SubscriptionScreen"
-          component={SubscriptionScreen}
+          name="ReportCardInitial"
+          component={ReportCardInitial}
           options={({navigation}) => ({
             title: '',
             header: () => (
+              <HeaderWithBack navigation={navigation} title="Reports" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="GenerateReport"
+          component={GenerateReport}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Reports" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ReportCard"
+          component={ReportCard}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Reports" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ShowAllReport"
+          component={ShowAllReport}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Reports" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ProviderAvailablity"
+          component={ProviderAvailablity}
+          options={({navigation}) => ({
+            title: 'Provider Availability',
+            header: () => (
               <HeaderWithBack
                 navigation={navigation}
-                title="Subscription"
-                notification
+                title="Provider Availability"
+                Icon={Setting}
+                onPress={() => dispatch(setOpenSettings(true))}
+                // notification
               />
             ),
             backgroundColor: Colors.primary,

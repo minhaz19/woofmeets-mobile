@@ -1,106 +1,99 @@
-import {StyleSheet, View} from 'react-native';
-import React from 'react';
-import {ArrowRight} from '../../../assets/svgs/Services_SVG';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-native/no-inline-styles */
+import {ScrollView, StyleSheet, View} from 'react-native';
+import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import SelectServiceTitle from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/SelectServiceTitle';
-import ReusableHeader from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
+import {getAvailability} from '../../../store/slices/onBoarding/setUpService/availability/getAvailability';
+import {getYourHome} from '../../../store/slices/onBoarding/setUpService/yourHome/getYourHome';
+import {getPetPreference} from '../../../store/slices/onBoarding/setUpService/petPreference/getPetPreference';
 
-const ServiceSetUp = (props: {
-  navigation: {navigate: (arg0: string, arg1: any) => void};
-  route: {params: any};
-}) => {
+const ServiceSetUp = () => {
   const {colors} = useTheme();
-  const {itemId, name, image, description, serviceTypeId, providerServicesId} = props?.route?.params;
-  const boardingSelection = [
-    {
-      title: 'Rates',
-      checked: true,
-      icon: <ArrowRight />,
-      screen: () => {
-        props.navigation.navigate('Rates', {
-          itemId: itemId,
-          name: name,
-          image: image,
-          description: description,
-          serviceId: serviceTypeId,
-          providerServicesId: providerServicesId,
-        });
-      },
-    },
-    {
-      title: 'Availability',
-      checked: false,
-      icon: <ArrowRight />,
-      screen: () => {
-        props.navigation.navigate('Availability', {
-          itemId: itemId,
-          name: name,
-          image: image,
-          description: description,
-        });
-      },
-    },
-    {
-      title: 'Pet Preference',
-      checked: false,
-      icon: <ArrowRight />,
-      screen: () => {
-        props.navigation.navigate('PetPreference', {
-          itemId: itemId,
-          name: name,
-          image: image,
-          description: description,
-        });
-      },
-    },
-    {
-      title: 'Your Home',
-      checked: false,
-      icon: <ArrowRight />,
-      screen: () => {
-        props.navigation.navigate('YourHome', {
-          itemId: itemId,
-          name: name,
-          image: image,
-          description: description,
-        });
-      },
-    },
-    {
-      title: 'Cancellation Policy',
-      checked: false,
-      icon: <ArrowRight />,
-      screen: () => {
-        props.navigation.navigate('CancellationPolicy', {
-          itemId: itemId,
-          name: name,
-          image: image,
-          description: description,
-        });
-      },
-    },
-  ];
+  const dispatch = useAppDispatch();
+  const boardingSelection = useAppSelector(
+    (state: any) => state.initial.boardingSelection,
+  );
+  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  const servicesData = serviceSetup ? serviceSetup.routeData : '';
+  const {service} = servicesData;
+  const providerServiceId =
+    service &&
+    service.map((data: {providerServiceId: string}) => data.providerServiceId);
+  const {availability, loading: availabilityLoader} = useAppSelector(
+    (state: any) => state?.availability,
+  );
+  const {yourHome, loading: yourHomeLoader} = useAppSelector(
+    (state: any) => state?.yourHome,
+  );
+  const {petPreference, loading: petPreferenceLoader} = useAppSelector(
+    (state: any) => state?.petPreference,
+  );
+
+  useEffect(() => {
+    dispatch(getAvailability(providerServiceId[0]));
+    yourHome === null && dispatch(getYourHome());
+    petPreference === null && dispatch(getPetPreference());
+  }, [dispatch, petPreference, yourHome]);
+
   return (
-    <View
-      style={[styles.rootContainer, {backgroundColor: colors.backgroundColor}]}>
-      <ReusableHeader
-        itemId={itemId}
-        name={name}
-        image={image}
-        description={description}
-      />
-      <View>
-        {boardingSelection?.map((item, index) => (
-          <SelectServiceTitle
-            key={index}
-            title={item.title}
-            icon={item.icon}
-            checked={item.checked}
-            screen={item.screen}
-          />
-        ))}
+    <>
+      {/* {(availabilityLoader || yourHomeLoader || petPreferenceLoader) && (
+        <AppActivityIndicator visible={true} />
+      )} */}
+      <View
+        style={[
+          styles.rootContainer,
+          {backgroundColor: colors.backgroundColor},
+        ]}>
+        <ScrollView horizontal={true}>
+          <View style={styles.innerContainer}>
+            {/* completed */}
+            {boardingSelection.map(
+              (item: any) =>
+                item.isCompleted && (
+                  <ProfileItemCard
+                    key={item.id}
+                    name={item.name}
+                    title={item.title}
+                    id={item.id}
+                    isCompleted={item.isCompleted}
+                    handleClick={item.onPress}
+                    inProgress={item.inProgress}
+                    isBoarding={true}
+                  />
+                ),
+            )}
+            {/* not completed */}
+            {boardingSelection.map(
+              (item: any) =>
+                !item.isCompleted && (
+                  <ProfileItemCard
+                    key={item.id}
+                    name={item.name}
+                    title={item.title}
+                    id={item.id}
+                    isCompleted={item.isCompleted}
+                    handleClick={item.onPress}
+                    inProgress={item.inProgress}
+                    isBoarding={true}
+                  />
+                ),
+            )}
+          </View>
+        </ScrollView>
+        {boardingSelection.map((item: any) => {
+          if (item.inProgress) {
+            return (
+              <View key={item.id} style={{flex: 32}}>
+                <item.screen />
+              </View>
+            );
+          }
+        })}
       </View>
-    </View>
+    </>
   );
 };
 
@@ -109,6 +102,10 @@ export default ServiceSetUp;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
+    paddingTop: 10,
+  },
+  innerContainer: {
+    flexDirection: 'row',
   },
 });

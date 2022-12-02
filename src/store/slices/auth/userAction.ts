@@ -3,6 +3,7 @@ import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../api/client';
 import authStorage from '../../../utils/helpers/auth/storage';
+import { baseUrlV } from '../../../utils/helpers/httpRequest';
 export const userLogin = createAsyncThunk(
   'auth/login',
   async ({email, password}: any, {rejectWithValue}) => {
@@ -11,8 +12,9 @@ export const userLogin = createAsyncThunk(
         email,
         password,
       });
+
       if (!response.ok) {
-        if (response.data) {
+        if (response.data.message) {
           Alert.alert(response.data.message);
         } else if (response.problem === 'TIMEOUT_ERROR') {
           Alert.alert('Response Timeout! Please try again');
@@ -24,6 +26,7 @@ export const userLogin = createAsyncThunk(
       if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
       }
+
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {
@@ -42,7 +45,7 @@ export const registerUser = createAsyncThunk(
     {rejectWithValue},
   ) => {
     try {
-      const response: ApiResponse<any> = await apiClient.post('/auth/signup', {
+      const response: ApiResponse<any> = await apiClient.post(`${baseUrlV}/v2/auth/signup`, {
         firstName,
         lastName,
         zipcode,
@@ -50,7 +53,7 @@ export const registerUser = createAsyncThunk(
         password,
       });
       if (!response.ok) {
-        if (response.data) {
+        if (response.data.message) {
           Alert.alert(response.data.message);
         } else if (response.problem === 'TIMEOUT_ERROR') {
           Alert.alert('Response Timeout! Please try again');
@@ -82,7 +85,7 @@ export const providerAuth = createAsyncThunk(
         userInfo,
       );
       if (!response.ok) {
-        if (response.data) {
+        if (response.data.message) {
           Alert.alert(response.data.message);
         } else if (response.problem === 'TIMEOUT_ERROR') {
           Alert.alert('Response Timeout! Please try again');
@@ -94,6 +97,41 @@ export const providerAuth = createAsyncThunk(
       if (response.ok) {
         authStorage.storeToken(response.data.data.access_token);
       }
+
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  },
+);
+
+
+export const appleAuthLogin = createAsyncThunk(
+  'auth/appleAuthLogin',
+  async (userInfo: any, {rejectWithValue}) => {
+    try {
+      const response: ApiResponse<any> = await apiClient.post(
+        '/auth/apple/oauth',
+        userInfo,
+      );
+      if (!response.ok) {
+        if (response.data.message) {
+          Alert.alert(response.data.message);
+        } else if (response.problem === 'TIMEOUT_ERROR') {
+          Alert.alert('Response Timeout! Please try again');
+        } else {
+          Alert.alert('An unexpected error happened');
+        }
+        throw new Error(response.data.message);
+      }
+      if (response.ok) {
+        authStorage.storeToken(response.data.data.access_token);
+      }
+
       return response.data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {

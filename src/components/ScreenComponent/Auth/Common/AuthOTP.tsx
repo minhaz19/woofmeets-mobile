@@ -20,12 +20,14 @@ const AuthOTP = ({name, auth}: Props) => {
         // handleChange={code => setValue(name, code)}
         handleChange={onChange}
         numberOfInputs={6}
+        clearTextOnFocus
+        keyboardType='phone-pad'
         autofillFromClipboard={true}
         onBlur={onBlur}
         placeholder={'-'}
         style={[
           styles.inputContainer,
-          {backgroundColor: isDarkMode ? Colors.dark.lightDark : 'white'},
+          {backgroundColor: 'white'},
         ]}
         inputStyles={[styles.input]}
       />
@@ -47,11 +49,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.light.borderColor,
     backgroundColor: 'white',
-    width: 40,
-    height: 40,
+    width: 48,
+    height: 48,
     fontSize: Text_Size.Text_0,
     textAlign: 'center',
     color: 'black',
+    marginRight: 5,
   },
 });
 export default AuthOTP;

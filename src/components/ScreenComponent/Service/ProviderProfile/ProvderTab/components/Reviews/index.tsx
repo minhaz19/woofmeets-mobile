@@ -1,13 +1,24 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import ReviewItem from './components/ReviewItem';
+import {useAppSelector} from '../../../../../../../store/store';
+import HeaderText from '../../../../../../common/text/HeaderText';
 
 const Reviews = () => {
+  const {reviews} = useAppSelector(state => state.providerProfile);
+
   return (
     <View style={styles.container}>
-      {[1, 2, 3, 4, 5].map((_, i) => (
-        <ReviewItem key={i} />
-      ))}
+      {reviews.length > 0 ? (
+        reviews?.map((item: any, i: React.Key | null | undefined) => (
+          <ReviewItem key={i} item={item} />
+        ))
+      ) : (
+        <HeaderText
+          textStyle={{textAlign: 'center', marginVertical: 10}}
+          text={'No Reviews found'}
+        />
+      )}
     </View>
   );
 };

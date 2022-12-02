@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {
   View,
@@ -13,6 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
 import DotLoader from '../common/Loaders/DotLoader';
+import TitleText from '../common/text/TitleText';
 import Card from './Card';
 interface Props {
   containerStyle: any;
@@ -21,9 +22,10 @@ interface Props {
   textAlignment: ViewStyle | undefined;
   isLeftIcon?: any;
   titleStyle: TextStyle | undefined;
-  title: String | undefined;
+  title: any;
   icon?: any;
   loading?: boolean;
+  color?: string;
 }
 const ButtonCom = ({
   containerStyle,
@@ -31,6 +33,7 @@ const ButtonCom = ({
   onSelect,
   textAlignment,
   isLeftIcon,
+  color,
   titleStyle,
   title,
   icon,
@@ -42,7 +45,9 @@ const ButtonCom = ({
     <Card
       style={{
         ...styles.cardlist,
-        backgroundColor: isDarkMode ? Colors.button.grey : Colors.primary,
+        backgroundColor: color
+          ? color
+          : Colors.primary,
         ...containerStyle,
       }}>
       <View style={{...styles.progressContainer, ...progressStyle}} />
@@ -53,13 +58,13 @@ const ButtonCom = ({
               <DotLoader />
             ) : (
               <>
-                <Text
-                  style={{
+                <TitleText
+                  textStyle={{
                     ...styles.title,
                     ...titleStyle,
-                  }}>
-                  {title}
-                </Text>
+                  }}
+                  text={title}
+                />
                 {icon && (
                   <Icon
                     name="keyboard-arrow-right"

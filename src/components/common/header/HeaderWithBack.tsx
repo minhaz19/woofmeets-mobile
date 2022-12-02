@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {BellIcon} from '../../../assets/svgs/SVG_LOGOS';
@@ -43,6 +44,8 @@ const HeaderWithBack = (props: {
               style={styles.filterContainer}
               onPress={props.onPress}>
               <props.Icon
+                fill={Colors.primary}
+                width={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
                 height={
                   SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
                 }
@@ -52,7 +55,7 @@ const HeaderWithBack = (props: {
         )}
         {props.notification && (
           <>
-            <View style={styles.headerContainer}>
+            {/* <View style={styles.headerContainer}>
               <TouchableOpacity
                 style={styles.bellContainer}
                 onPress={() => props.navigation.navigate('Notifications')}>
@@ -63,7 +66,7 @@ const HeaderWithBack = (props: {
                 />
                 <View style={styles.bellView} />
               </TouchableOpacity>
-            </View>
+            </View> */}
             {props.SecondIcon && (
               <View style={styles.secondContainer}>
                 <TouchableOpacity
@@ -80,6 +83,26 @@ const HeaderWithBack = (props: {
             )}
           </>
         )}
+        {props.SecondIcon && !props.notification && (
+          <View
+            style={{
+              marginRight: 20,
+              flexDirection: 'row',
+              position: 'absolute',
+              right: 0,
+            }}>
+            <TouchableOpacity
+              style={styles.touchContainer}
+              onPress={props.onPress}>
+              <props.SecondIcon
+                height={
+                  SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
+                }
+              />
+              {/* <View style={styles.bellView} /> */}
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </Screen>
   );
@@ -93,6 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     paddingVertical: Platform.OS === 'ios' ? 0 : 5,
+    paddingBottom: 4,
   },
   iconStyle: {paddingRight: 10},
   headerContainer: {

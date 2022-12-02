@@ -1,33 +1,78 @@
-import {ScrollView, StyleSheet} from 'react-native';
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import {RefreshControl, StyleSheet} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import AppForm from '../../../../components/common/Form/AppForm';
 import SubRates from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/SubRates';
 import {BoardingSettingsSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
 import {useServiceRateInit} from './utils/useServiceRateInit';
 import AppActivityIndicator from '../../../../components/common/Loaders/AppActivityIndicator';
 import {useServiceRates} from './utils/useServiceRate';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {getServiceRateFields} from '../../../../store/slices/onBoarding/setUpService/rates/Field/serviceRateFieldAction';
+import {getRateFieldValue} from '../../../../store/slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueAction';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 interface Props {
-  route: {
-    params: any;
-  };
+  navigation: any;
+  route: any;
 }
-
-const Rates = ({route}: Props) => {
+const Rates = ({navigation, route}: Props) => {
+  const {serviceSetup} = useAppSelector(
+    (state: {serviceSetup: any}) => state?.serviceSetup,
+  );
+  const {itemId, name, image, description, serviceId, providerServicesId} =
+    serviceSetup.routeData;
   const {colors} = useTheme();
-  const {itemId, name, image, description} = route?.params;
-  const {handleRates, loading, serviceRateFields} = useServiceRates(route);
+  const dispatch = useAppDispatch();
+  const [refreshing, setRefreshing] = useState(false);
+  const {
+    handleRates,
+    loading,
+    btnLoading,
+    fLoading,
+    serviceRateFields,
+    fieldValue,
+    ratesMeta,
+  } = useServiceRates(serviceSetup, navigation, route);
+  useEffect(() => {
+    dispatch(getServiceRateFields(serviceId));
+    dispatch(getRateFieldValue(providerServicesId));
+  }, [providerServicesId, serviceId]);
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await dispatch(getServiceRateFields(serviceId));
+    await dispatch(getRateFieldValue(providerServicesId));
+    setRefreshing(false);
+  }, []);
+
+  useEffect(() => {
+    onRefresh();
+  }, []);
+
+  const data = useServiceRateInit(fieldValue, ratesMeta);
 
   return (
     <>
-      {loading && <AppActivityIndicator visible={true} />}
-      <ScrollView
+      {(loading || fLoading || refreshing) && (
+        <AppActivityIndicator visible={true} />
+      )}
+      <KeyboardAwareScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         style={[
           styles.rootContainer,
-          {backgroundColor: colors.backgroundColor},
+          {
+            backgroundColor: colors.backgroundColor,
+          },
         ]}
-        showsVerticalScrollIndicator={false}>
+        extraHeight={100}
+        extraScrollHeight={200}
+        enableAutomaticScroll={true}
+        enableOnAndroid={true}>
         <ReusableHeader
           itemId={itemId}
           name={name}
@@ -35,15 +80,18 @@ const Rates = ({route}: Props) => {
           description={description}
         />
         <AppForm
-          initialValues={useServiceRateInit()}
-          validationSchema={BoardingSettingsSchema}>
+          initialValues={data}
+          validationSchema={BoardingSettingsSchema}
+          enableReset>
           <SubRates
             handleRates={handleRates}
             rateFields={serviceRateFields}
-            loading={false}
+            fieldValue={fieldValue}
+            loading={btnLoading}
+            ratesMeta={ratesMeta}
           />
         </AppForm>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </>
   );
 };

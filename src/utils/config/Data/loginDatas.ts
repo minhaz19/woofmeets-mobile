@@ -1,4 +1,5 @@
-import {Facebook, Google} from '../../../assets/svgs/SVG_LOGOS';
+import { Platform } from 'react-native';
+import {Apple, Facebook, Google} from '../../../assets/svgs/SVG_LOGOS';
 
 const loginInitalState = {
   title: 'Login',
@@ -8,16 +9,13 @@ const loginInitalState = {
 
 const othersAuthIcons = [
   {
-    image: require('../../../assets/image/login/google.png'),
     icon: Google,
   },
   {
-    image: require('../../../assets/image/login/facebook.png'),
     icon: Facebook,
   },
-  // {
-  //   image: require('../../../assets/image/login/apple.png'),
-  //   icon: Apple,
-  // },
+  {
+    icon: Platform.OS === 'ios' ? Apple : '',
+  },
 ];
 export {loginInitalState, othersAuthIcons};

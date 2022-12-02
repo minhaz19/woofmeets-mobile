@@ -1,98 +1,215 @@
-import {StyleSheet, Text, TextStyle, View} from 'react-native';
-import React, {useMemo, useState} from 'react';
-import {CalendarList} from 'react-native-calendars';
-import {orderAndStyleRange} from '../../../../utils/helpers/CalendarRange/orderAndStyleRange';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {Platform, ScrollView, StyleSheet, View} from 'react-native';
+import React, {useEffect, useMemo, useState} from 'react';
+import {Calendar} from 'react-native-calendars';
 import {_dateRange} from '../../../../utils/helpers/datesArray';
 import {useHandleRange} from '../../../../utils/helpers/CalendarRange/useHandleRange';
 import Colors from '../../../../constants/Colors';
 import EditCart from './EditCart';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import Text_Size from '../../../../constants/textScaling';
+import {useProviderAvailability} from './utils/useProviderAvailability';
+import {getAvailableDays} from '../../../../store/slices/Provider/Unavailability/getAvailableDay';
+import format from 'date-fns/format';
+import {useAppDispatch} from '../../../../store/store';
+import AvailableService from './AvailableService';
+import TitleText from '../../../common/text/TitleText';
+import BottomSpacing from '../../../UI/BottomSpacing';
+import CalendarSK from '../../../common/Skeleton/CalendarSK';
 
 const RANGE = 12;
-const initialDate = '2022-08-17';
+const today = new Date();
+const selectType = 'RANGE';
+function isBeforeToday(date: Date) {
+  today.setHours(0, 0, 0, 0);
+  return date < today;
+}
 const AvailablityCalendar = () => {
-  const [_markedStyle, setMarkedStyle] = useState({});
+  const {colors} = useTheme();
+  const [preMarked, setPremarked] = useState({});
+  const [availabledays, setAvailableDays] = useState([]);
+  const [resetAvailableService, setResetAvailableService] = useState([]);
+  const [resetLoading, setResetLoading] = useState(false);
+  const [modMarkDate, setModMarkDate] = useState({});
+  const [monthRef, setMonthRef] = useState({});
+  const {loading, availabileDates, getAvailablity, availableService} =
+    useProviderAvailability();
+  const selectColor = Colors.black;
 
-  const {startingDate, endingDate, resetRange, handleDayPress} =
-    useHandleRange('range');
-
+  const [foundAvailable, setFoundAvailable] = useState(false);
+  const {
+    singleSelect,
+    startingDate,
+    _markedStyle,
+    endingDate,
+    handleDayPress,
+    resetSelection,
+  } = useHandleRange(selectType, undefined, selectColor);
+  const dispatch = useAppDispatch();
   useMemo(() => {
-    const range: Boolean | Date[] =
-      typeof startingDate !== 'undefined' &&
-      typeof endingDate !== 'undefined' &&
-      _dateRange(startingDate, endingDate);
-
-    const {styledMarkedRange} = orderAndStyleRange(range, Colors.primary);
-
-    setMarkedStyle(styledMarkedRange);
-  }, [startingDate, endingDate]);
-  return (
-    <View style={styles.container}>
-      <CalendarList
-        current={initialDate}
-        pastScrollRange={0}
-        futureScrollRange={RANGE}
-        onDayPress={handleDayPress}
-        markingType={'period'}
-        markedDates={_markedStyle}
-        renderHeader={renderCustomHeader}
-        calendarHeight={390}
-        theme={theme}
-        horizontal={false}
-        pagingEnabled={true}
-        staticHeader={false}
-      />
-      <EditCart startingDate={startingDate} resetRange={resetRange} />
-    </View>
-  );
-};
-
-const theme = {
-  stylesheet: {
-    calendar: {
-      header: {
-        dayHeader: {
-          fontWeight: '600',
-          color: '#48BFE3',
+    const preStyled = availabledays.map((_: string, i: number) => ({
+      [availabledays[i]]: {
+        customStyles: {
+          container: {
+            backgroundColor: Colors.primary,
+            elevation: 2,
+            // borderRadius: 10,
+            width: '100%',
+            borderRadius: 0,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          text: {
+            color: 'white',
+          },
         },
       },
-    },
-  },
-  'stylesheet.day.basic': {
-    today: {
-      borderColor: '#48BFE3',
-      borderWidth: 0.8,
-    },
-    todayText: {
-      color: '#5390D9',
-      fontWeight: '800',
-    },
-  },
-};
+    }));
+    let preStyledMarkedRange: any = {};
+    const b =
+      preStyled &&
+      preStyled?.map(
+        (item: any) =>
+          // @ts-ignore
+          (preStyledMarkedRange[Object.keys(item)] = Object.values(item)[0]),
+      );
+    b && setPremarked(preStyledMarkedRange);
+  }, [availabledays]);
 
-function renderCustomHeader(date: any) {
-  const header = date.toString('MMMM yyyy');
-  const [month, year] = header.split(' ');
-  const textStyle: TextStyle = {
-    fontSize: 18,
-    fontWeight: 'bold',
-    paddingTop: 10,
-    paddingBottom: 10,
-    color: Colors.primary,
-    paddingRight: 5,
-  };
+  useEffect(() => {
+    const matchIndex = availabileDates.findIndex(item => item === startingDate);
+    matchIndex !== -1 ? setFoundAvailable(true) : setFoundAvailable(false);
+  }, [availabileDates, startingDate]);
+  useEffect(() => {
+    dispatch(getAvailableDays());
+    const monthData = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      dateString: format(new Date(), 'yyyy-MM-dd'),
+    };
+    getAvailablity(monthData, 'current');
+  }, []);
 
+  useEffect(() => {
+    setAvailableDays(availabileDates);
+    setModMarkDate(_markedStyle);
+    setResetAvailableService(availableService);
+    setResetLoading(loading);
+  }, [availabileDates, loading, _markedStyle, availableService]);
   return (
-    <View style={styles.header}>
-      <Text style={[styles.month, textStyle]}>{`${month}`}</Text>
-      <Text style={[styles.year, textStyle]}>{year}</Text>
-    </View>
+    <>
+      {(resetLoading || loading) && (
+        <View style={styles.loader}>
+          <CalendarSK />
+        </View>
+      )}
+
+      <View style={styles.container}>
+        <ScrollView style={styles.scrollView}>
+          <View>
+            <AvailableService availableService={resetAvailableService} />
+          </View>
+          <TitleText
+            textStyle={styles.calendarText}
+            text={'Availability Calendar View'}
+          />
+          <Calendar
+            current={new Date().toString()}
+            pastScrollRange={0}
+            futureScrollRange={RANGE}
+            onDayPress={handleDayPress}
+            markingType={'custom'}
+            markedDates={{
+              ...preMarked,
+              ...modMarkDate,
+              [singleSelect]: {
+                customStyles: {
+                  container: {
+                    backgroundColor: Colors.black,
+                    elevation: 2,
+                    borderRadius: 10,
+
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  },
+                  text: {
+                    color: 'white',
+                    fontWeight: 'bold',
+                  },
+                },
+              },
+            }}
+            style={styles.calenderStyles}
+            minDate={today.toString()}
+            enableSwipeMonths
+            onMonthChange={monthData => {
+              setMonthRef(monthData);
+              if (monthData.month === today.getMonth() + 1) {
+                getAvailablity(monthData, 'current');
+              } else if (isBeforeToday(new Date(monthData.dateString))) {
+                return;
+              } else {
+                getAvailablity(monthData, 'next');
+              }
+            }}
+            displayLoadingIndicator={loading}
+            onPressArrowLeft={subtractMonth => subtractMonth()}
+            onPressArrowRight={addMonth => addMonth()}
+            theme={{
+              backgroundColor: colors.backgroundColor,
+              calendarBackground: colors.backgroundColor,
+              selectedDayBackgroundColor: Colors.primary,
+              selectedDayTextColor: Colors.headerText,
+              todayTextColor: Colors.primary,
+              dayTextColor: colors.headerText,
+              textDisabledColor: Colors.gray,
+              arrowColor: Colors.headerText,
+              disabledArrowColor: Colors.subText,
+              monthTextColor: colors.headerText,
+              indicatorColor: colors.headerText,
+              textDayFontWeight: '300',
+              textMonthFontWeight: 'bold',
+              textDayHeaderFontWeight: '300',
+              textDayFontSize: 14,
+              textMonthFontSize: 16,
+              textDayHeaderFontSize: 14,
+            }}
+          />
+          <BottomSpacing />
+          <BottomSpacing />
+        </ScrollView>
+        <EditCart
+          startingDate={startingDate}
+          endingDate={endingDate}
+          foundAvailable={foundAvailable}
+          monthRef={monthRef}
+          resetSelection={resetSelection}
+          getAvailablity={getAvailablity}
+        />
+      </View>
+    </>
   );
-}
+};
 
 export default AvailablityCalendar;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
+  loader: {
+    backgroundColor: Colors.background,
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    zIndex: 999,
+  },
+  calenderStyles: {
+    marginHorizontal: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
   header: {
     flexDirection: 'row',
     width: '100%',
@@ -106,4 +223,23 @@ const styles = StyleSheet.create({
   year: {
     marginRight: 5,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: Platform.OS === 'ios' ? 10 : 15,
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  headerText: {
+    fontWeight: 'bold',
+    fontSize: Text_Size.Text_3,
+  },
+  calendarText: {
+    fontWeight: 'bold',
+    fontSize: Text_Size.Text_3,
+    marginHorizontal: 20,
+    marginBottom: 30,
+  },
+  scrollView: {flex: 1},
 });

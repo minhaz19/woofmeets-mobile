@@ -48,13 +48,6 @@ const signUpData = [
     textContentType: 'password',
     name: 'password',
   },
-  {
-    label: 'Zip Code',
-    keyboardType: 'numeric',
-    placeholder: 'Enter your zip code',
-    textContentType: 'postalCode',
-    name: 'zipcode',
-  },
 ];
 const SignUpAuthForm = ({
   handleSubmit,
@@ -83,6 +76,7 @@ const SignUpAuthForm = ({
             secureTextEntry={item.name === 'password' ? true : false}
             errors={errors}
             control={control}
+            auth
           />
         </View>
       ))}

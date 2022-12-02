@@ -1,53 +1,50 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+
+import React from 'react';
+import {View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import Stories, {
   ICustomStoryView,
   IUserStory,
 } from 'react-native-story-component';
 import {Cross} from '../../../../../assets/svgs/SVG_LOGOS';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../../constants/WindowSize';
-import {ProviderStories} from '../../../../../utils/config/Data/ProviderProfileDatas';
+import {useAppSelector} from '../../../../../store/store';
+import TitleText from '../../../../common/text/TitleText';
 import StoryContainer from './StoryContainer';
 
-interface Props {
-  image: string;
-}
-
-const ProviderStory = ({image}: Props) => {
+const ProviderStory = () => {
+  const {gallery, profileInfo} = useAppSelector(state => state.providerProfile);
+  const providerStories: any = [
+    {
+      id: 1,
+      avatar: profileInfo?.avatar?.url,
+      name: `${profileInfo?.firstName + ' ' + profileInfo?.lastName}`,
+      stories: gallery?.map((item: any) => ({
+        id: item.id,
+        image: item.imageSrc?.url,
+      })),
+    },
+  ];
   return (
     <View>
       <Stories
-        data={ProviderStories}
+        data={providerStories}
         duration={5}
         onStart={(openedStory: IUserStory) => {}}
         onClose={(closedStory: IUserStory) => {}}
         customSwipeUpButton={() => (
           <View>
-            <Text>Swipe</Text>
+            <TitleText text={'Swipe'} />
           </View>
         )}
         customCloseButton={() => <Cross width={15} height={15} />}
         customStoryList={(props: ICustomStoryView) => {
           return (
             <TouchableOpacity onPress={props.onStoryPress}>
-              <StoryContainer />
+              <StoryContainer image={gallery[0]?.imageSrc.url} />
             </TouchableOpacity>
           );
         }}
-        // customStoryImage={props => {
-        //   return (
-        //     <TouchableOpacity>
-        //       <Image
-        //         source={{
-        //           uri: props.image,
-        //         }}
-        //         resizeMode="cover"
-        //         style={styles.storyImage}
-        //       />
-        //     </TouchableOpacity>
-        //   );
-        // }}
       />
     </View>
   );

@@ -1,9 +1,7 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
-import {Cross} from '../../../../assets/svgs/SVG_LOGOS';
+import {EditPen, Delete} from '../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../constants/Colors';
-import {FeatherSvg} from '../../Inbox/utils/SvgComponent/SvgComponent';
 
 interface Props {
   id: string;
@@ -21,12 +19,7 @@ const ImageView = ({id, name, handlePress, handleEdit}: Props) => {
           handlePress(id);
         }}>
         <View style={Styles.delete}>
-          <Cross
-            height={16}
-            width={16}
-            color={Colors.dark.text}
-            style={{justifyContent: 'center', alignItems: 'center'}}
-          />
+          <Delete width={18} height={18} fill={Colors.primary} />
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -34,11 +27,7 @@ const ImageView = ({id, name, handlePress, handleEdit}: Props) => {
           handleEdit(id);
         }}>
         <View style={Styles.edit}>
-          <FeatherSvg
-            height={16}
-            width={16}
-            style={{justifyContent: 'center', alignItems: 'center'}}
-          />
+          <EditPen height={24} width={24} fill={Colors.primary} />
         </View>
       </TouchableOpacity>
     </View>
@@ -47,31 +36,24 @@ const ImageView = ({id, name, handlePress, handleEdit}: Props) => {
 export default ImageView;
 const Styles = StyleSheet.create({
   image: {
-    borderRadius: 10,
     width: '100%',
     height: '100%',
+    borderColor: Colors.primary,
+    borderWidth: 1,
+    borderRadius: 10,
   },
   area: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.73,
-    shadowRadius: 1.62,
-    elevation: 4,
-
-    width: 160,
-    height: 160,
+    width: 140,
+    height: 140,
   },
   delete: {
     width: 26,
     height: 26,
     opacity: 0.8,
     position: 'absolute',
-    bottom: 130,
-    right: 6,
-    backgroundColor: Colors.dark.lightDark,
+    bottom: 106,
+    right: 8,
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -80,9 +62,9 @@ const Styles = StyleSheet.create({
     height: 26,
     opacity: 0.8,
     position: 'absolute',
-    bottom: 5,
-    right: 6,
-    backgroundColor: Colors.dark.lightDark,
+    bottom: 8,
+    right: 8,
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },

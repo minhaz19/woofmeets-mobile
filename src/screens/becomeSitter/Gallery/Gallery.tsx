@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {
@@ -27,9 +26,17 @@ import * as Yup from 'yup';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import {setProfileData} from '../../../store/slices/onBoarding/initial';
+import {useAppDispatch} from '../../../store/store';
+import apiClient from '../../../api/client';
+import {ApiResponse} from 'apisauce';
+import { useNavigation } from '@react-navigation/native';
 
 const Gallery = () => {
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
   const [photo, setPhoto] = useState<any>([]);
+  const [getLoading, setGetLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
   const [captionImage, setCaptionImage] = useState({
@@ -37,33 +44,38 @@ const Gallery = () => {
     caption: '',
     uri: '',
   });
-  const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
+  const [, setIsImageLoading] = useState<boolean>(false);
   const [scrolling, setScrolling] = useState<boolean>(true);
   const {colors, isDarkMode} = useTheme();
 
+  const onHandleGallery = () => {
+    // dispatch(setProfileData({pass: 3}));
+    navigation.goBack()
+  };
+
   // Get all image
   const endPoint = '/gallery/photo/get-all';
-  const {request: getRequest, loading: getLoading} = useApi(methods._get);
   useEffect(() => {
     getImage();
   }, []);
   const getImage = async () => {
-    const result = await getRequest(endPoint);
-    const imageData = [];
-    for (let i = 0; i < result.data.data?.length; i++) {
-      imageData.push({
-        key: result.data.data[i]?.id,
-        name: result.data.data[i]?.imageSrc.url,
-        caption: result.data.data[i]?.caption,
-      });
+    setGetLoading(true);
+    const result: ApiResponse<any> = await apiClient.get(endPoint);
+    if (result.ok) {
+      setGetLoading(false);
+      const imageData = [];
+      for (let i = 0; i < result?.data?.data?.length; i++) {
+        imageData.push({
+          key: result?.data?.data[i]?.id,
+          name: result?.data?.data[i]?.imageSrc.url,
+          caption: result?.data?.data[i]?.caption,
+        });
+      }
+      setPhoto(imageData);
+    } else {
+      setGetLoading(false);
     }
-    setPhoto(imageData);
   };
-  // const uid = () =>
-  //   String(Date.now().toString(32) + Math.random().toString(16)).replace(
-  //     /\./g,
-  //     '',
-  //   );
 
   //Remove photo
   const {request: deleteRequest, loading: deleteLoading} = useApi(
@@ -90,7 +102,6 @@ const Gallery = () => {
       };
       setPhoto([...photo, imageData]);
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -105,7 +116,7 @@ const Gallery = () => {
     const data = {
       photos: formattedPhotos,
     };
-    const result = await dragRequest(dragEndpoint, data);
+    await dragRequest(dragEndpoint, data);
   };
 
   const handlePress = (id: string) => {
@@ -169,9 +180,7 @@ const Gallery = () => {
               style={[
                 styles.uploadContainer,
                 {
-                  backgroundColor: isDarkMode
-                    ? Colors.dark.lightDark
-                    : Colors.primaryLight,
+                  backgroundColor: Colors.primaryLight,
                 },
               ]}>
               <View style={styles.uploadInfo}>
@@ -233,7 +242,7 @@ const Gallery = () => {
               textAlignment={btnStyles.textAlignment}
               containerStyle={btnStyles.containerStyleFullWidth}
               titleStyle={btnStyles.titleStyle}
-              onSelect={() => {}}
+              onSelect={onHandleGallery}
             />
           </View>
           <BottomSpacing />
@@ -249,9 +258,11 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   photoContainer: {
     flexDirection: 'row',
+    padding: 10,
   },
   uploadContainer: {
     width: '100%',
@@ -279,8 +290,8 @@ const styles = StyleSheet.create({
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 160,
-    height: 160,
+    width: 140,
+    height: 140,
     borderWidth: 1,
     borderStyle: 'dashed',
     marginTop: 10,

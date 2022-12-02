@@ -1,12 +1,14 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Modal, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import React from 'react';
 import {designs} from '../../../constants/theme/common/modalEndStyles';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import {useDispatch} from 'react-redux';
 import {setOpenFilter} from '../../../store/slices/misc/openFilter';
+import {useAppDispatch} from '../../../store/store';
 const BottomHalfModal = (props: {
   setIsModalVisible?: (arg0: boolean) => void;
   isModalVisible?: boolean | undefined;
+  height?: string;
   children:
     | boolean
     | React.ReactChild
@@ -16,7 +18,7 @@ const BottomHalfModal = (props: {
     | undefined;
 }) => {
   const {colors} = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -40,7 +42,11 @@ const BottomHalfModal = (props: {
           <View
             style={[
               designs.modalViewRounded,
-              {backgroundColor: colors.backgroundColor},
+
+              {
+                backgroundColor: colors.backgroundColor,
+                minHeight: props.height ? props.height : '40%',
+              },
             ]}>
             <View>{props.children}</View>
           </View>

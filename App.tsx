@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {Provider} from 'react-redux';
 import 'react-native-gesture-handler';
@@ -13,10 +14,10 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Splash from './src/screens/splash';
 import store from './src/store/store';
-// import MainNavigationContainer from './src/navigation/MainNavigationContainer';
-// import {SafeAreaView} from 'react-native';
-// import GlobalStyles from './GlobalStyles';
-
+import ForceUpdates from './src/utils/helpers/ForceUpdates';
+// import 'intl';
+// import 'intl/locale-data/jsonp/en-US';
+// import 'date-time-format-timezone';
 Icon.loadFont();
 Fst.loadFont();
 Mci.loadFont();
@@ -27,9 +28,10 @@ Ant.loadFont();
 EvilIcons.loadFont();
 Fe.loadFont();
 Foundation.loadFont();
+// FontAwesome5.loadFont();
 
 const App = () => {
-  // Geocoder.init(GOOGLE_MAP_KEY);
+  ForceUpdates();
   return (
     <Provider store={store}>
       <Splash />

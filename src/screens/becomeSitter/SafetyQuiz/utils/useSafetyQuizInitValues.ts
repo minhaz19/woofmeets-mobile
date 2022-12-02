@@ -1,9 +1,11 @@
 export const useSafetyQuizInitValues = () => {
   return {
-    quiz_one: '',
-    quiz_two: '',
-    quiz_three: '',
-    quiz_four: '',
-    quiz_five: '',
+    '1': '',
+    '2': '',
+    '3': '',
+    '4': '',
+    '5': '',
+    '6': '',
+    '7': '',
   };
 };

@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import storage from '../../../utils/helpers/auth/storage';
-import {providerAuth, registerUser, userLogin} from './userAction';
+import {appleAuthLogin, providerAuth, registerUser, userLogin} from './userAction';
 
 const initialState: any = {
   isLoggedIn: false,
@@ -69,18 +69,33 @@ const userSlice = createSlice({
         state.error = payload;
       })
       .addCase(providerAuth.pending, state => {
-        // state.providerLoading = true;
+        state.providerLoading = true;
         state.error = null;
       })
       .addCase(providerAuth.fulfilled, (state, {payload}) => {
-        // state.providerLoading = false;
+        state.providerLoading = false;
         state.isLoggedIn = true; // provider authentication successful
         state.userInfo = payload;
         state.success = true;
         state.userToken = payload.data.access_token;
       })
       .addCase(providerAuth.rejected, (state, {payload}) => {
-        // state.providerLoading = false;
+        state.providerLoading = false;
+        state.error = payload;
+      })
+      .addCase(appleAuthLogin.pending, state => {
+        state.providerLoading = true;
+        state.error = null;
+      })
+      .addCase(appleAuthLogin.fulfilled, (state, {payload}) => {
+        state.providerLoading = false;
+        state.isLoggedIn = true; // provider authentication successful
+        state.userInfo = payload;
+        state.success = true;
+        state.userToken = payload.data.access_token;
+      })
+      .addCase(appleAuthLogin.rejected, (state, {payload}) => {
+        state.providerLoading = false;
         state.error = payload;
       });
   },

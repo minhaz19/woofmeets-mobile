@@ -1,44 +1,28 @@
 import {View, StyleSheet} from 'react-native';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import LandingCard from '../../../components/ScreenComponent/becomeSitter/landingPage';
-import ButtonCom from '../../../components/UI/ButtonCom';
-import { btnStyles } from '../../../constants/theme/common/buttonStyles';
+import Colors from '../../../constants/Colors';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { getUserServices } from '../../../store/slices/profile/services';
 
-const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => any; }; }) => {
+const SitterLandingPage = () => {
   const {colors} = useTheme();
-  const sitterData = [
-    {
-      id: 1,
-      title: 'Select Service',
-      isCompleted: true,
-      onPress: () => props.navigation.navigate('ServiceSelection'),
-    },
-    {
-      id: 2,
-      title: 'Set Up Services',
-      isCompleted: false,
-      onPress: () => props.navigation.navigate('HomeProfile'),
-    },
-    {
-        id: 3,
-        title: 'Create Your Profile',
-        isCompleted: false,
-        onPress: () => props.navigation.navigate('CreateProfileLanding'),
-      },
-      {
-        id: 4,
-        title: 'Safety Quiz',
-        isCompleted: false,
-        onPress: () => props.navigation.navigate('SafetyQuiz'),
-      },
-      {
-        id: 5,
-        title: 'Choose a Subscription',
-        isCompleted: false,
-        onPress: () => props.navigation.navigate('SubscriptionScreen'),
-      },
-  ];
+  const sitterData = useAppSelector(state => state.initial.sitterData);
+  const dispatch = useAppDispatch();
+
+  const [, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(getUserServices());
+    setRefreshing(false);
+  }, [dispatch]);
+
+  useEffect(() => {
+    onRefresh();
+  }, []); 
+
   return (
     <View
       style={[
@@ -47,17 +31,31 @@ const SitterLandingPage = (props: { navigation: { navigate: (arg0: string) => an
           backgroundColor: colors.backgroundColor,
         },
       ]}>
-      {sitterData.map(item => (
-        <LandingCard key={item.id} title={item.title} id={item.id} isCompleted={item.isCompleted} handleClick={item.onPress} />
-      ))}
-      <View style={styles.footerContainer}>
-        <ButtonCom
-          title="Submit"
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={btnStyles.containerStyleFullWidth}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={() => {}}
-        />
+      <View style={{...styles.innerContainer, borderBottomColor: colors.borderColor}}>
+        <View style={styles.leftContainer}>
+          {/* completed */}
+          {sitterData.map((item: any) => (
+            item.isCompleted && !item.inProgress && item.id !=1 &&<LandingCard key={item.id} item={item} />
+          ))}
+          {/* in progress */}
+          <View style={styles.inProgressContainer}>
+            <LandingCard item={sitterData.find((item: any) => {
+              return item.inProgress === true && item.screen;
+            })} />
+          </View>
+        </View>
+        <View style={styles.rightContainer}>
+          {/* not completed */}
+          {sitterData.map((item: any) => (
+            !item.isCompleted && !item.inProgress && <LandingCard key={item.id} item={item} />
+          ))}
+        </View>
+      </View>
+      {/* main component screen render */}
+      <View style={{flex: 1}}>
+        {sitterData.find((item: any) => {
+            return item.inProgress === true && item.screen;
+        })?.screen}
       </View>
     </View>
   );
@@ -68,11 +66,33 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
   },
+  innerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: '5%',
+    borderBottomWidth: 1,
+  },
   footerContainer: {
     width: '90%',
     paddingLeft: '10%',
     paddingTop: 20,
     paddingBottom: 100,
+  },
+  leftContainer: {
+    flexDirection: 'row',
+  },
+  rightContainer: {
+    flexDirection: 'row',
+    paddingBottom: 10,
+  },
+  itemContainer: {
+    alignContent: 'flex-end',
+    alignSelf: 'flex-end',
+  },
+  inProgressContainer: {
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    borderColor: Colors.primary,
   },
 });
 

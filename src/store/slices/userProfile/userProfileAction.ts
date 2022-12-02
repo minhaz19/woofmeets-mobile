@@ -2,11 +2,12 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../api/client';
+import methods from '../../../api/methods';
 export const getUserProfileInfo = createAsyncThunk(
   '/user-profile',
   async () => {
     try {
-      const response: ApiResponse<any> = await apiClient.get('/user-profile');
+      const response: ApiResponse<any> = await methods._get('/user-profile');
       if (!response.ok) {
         if (response.data) {
           Alert.alert(response.data.message);

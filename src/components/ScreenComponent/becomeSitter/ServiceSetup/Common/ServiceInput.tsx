@@ -4,9 +4,10 @@ import React, {memo} from 'react';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import ShortText from '../../../../common/text/ShortText';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
-import Text_Size from '../../../../../constants/textScaling';
 import Colors from '../../../../../constants/Colors';
 import TitleText from '../../../../common/text/TitleText';
+import Text_Size from '../../../../../constants/textScaling';
+import changeTextLetter from '../../../../common/changeTextLetter';
 
 const ServiceInput = ({...otherProps}) => {
   const {isDarkMode, colors} = useTheme();
@@ -29,13 +30,16 @@ const ServiceInput = ({...otherProps}) => {
               styles.text,
               {
                 flex: 1,
-                color: isDarkMode ? 'white' : 'black',
+                color: 'black',
               },
             ]}
             {...otherProps}
           />
         </View>
-        <TitleText text={'/night'} textStyle={{...styles.headerText}} />
+        <TitleText
+          text={changeTextLetter(`/ ${otherProps.unit}`)}
+          textStyle={{...styles.headerText}}
+        />
       </View>
       {!otherProps.icon ? (
         <ShortText
@@ -76,10 +80,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: Text_Size.Text_0,
     height: 40,
     flex: 0,
     textAlign: 'right',
+    fontFamily: 'Muli',
+    fontSize: Text_Size.Text_11,
   },
   headerText: {
     paddingHorizontal: 5,

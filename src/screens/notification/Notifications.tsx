@@ -1,14 +1,17 @@
 import moment from 'moment';
-import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, TouchableOpacity, FlatList, Platform, Alert} from 'react-native';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import TitleText from '../../components/common/text/TitleText';
 import DescriptionText from '../../components/common/text/DescriptionText';
 import HeaderText from '../../components/common/text/HeaderText';
-import {useTheme} from '../../constants/theme/hooks/useTheme';
-import MiddleModal from '../../components/UI/modal/MiddleModal';
+import {useTheme} from '../../constants/theme/hooks/useTheme'; 
+import messaging from '@react-native-firebase/messaging';
+import { ApiResponse } from 'apisauce';
+import { apiNotification } from '../../api/client';
+import authStorage from '../../utils/helpers/auth/storage';
 
 const Notifications = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -46,6 +49,71 @@ const Notifications = () => {
     },
   ];
 
+  const NotificationListner = () => {
+    messaging().onNotificationOpenedApp(remoteMessage => {});
+
+    // Check whether an initial notification is available
+    messaging()
+      .getInitialNotification()
+      .then((remoteMessage: any) => {
+        if (remoteMessage) {}
+        // setLoading(false);
+      });
+    messaging().onMessage(async remoteMessage => {});
+  };
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {}
+  }
+
+  const tokenManagement = async () => {
+    if (
+      Platform.OS === 'ios' &&
+      !messaging().isDeviceRegisteredForRemoteMessages
+    ) {
+    }
+
+    try {
+      await authStorage.getToken();
+      messaging()
+        .getToken()
+        .then(async (deviceToken: any) => {
+          const response: ApiResponse<any> = await apiNotification.post('/v1/push-notifications', {
+            registrationToken: deviceToken,
+          });
+        });
+    } catch (error) {
+    }
+  };
+
+  useEffect(() => {
+    // Get the device token
+    requestUserPermission();
+    tokenManagement();
+
+    NotificationListner();
+    // Listen to whether the token changes
+    return messaging().onTokenRefresh(token => {});
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert(
+        'A new notification arrived!',
+        remoteMessage.notification.body,
+        remoteMessage.notification.description,
+      );
+    });
+
+    return unsubscribe;
+  });
+
+
   if (!notifi) {
     return (
       <View style={styles.loadingText}>
@@ -55,7 +123,7 @@ const Notifications = () => {
   }
 
   const onPress = () => {
-    setIsModalVisible(true);
+    // setIsModalVisible(true);
   };
 
   return (
@@ -68,12 +136,12 @@ const Notifications = () => {
           opacity: isModalVisible ? 0.4 : 1,
         },
       ]}>
-      <MiddleModal
+      {/* <MiddleModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
         onBlur={undefined}>
         <TitleText text="Hello this is a new notification" />
-      </MiddleModal>
+      </MiddleModal> */}
       {notifi?.length > 0 && (
         <FlatList
           data={notifi}
@@ -145,7 +213,7 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 0,
     borderRadius: 0,
-    borderBottomWidth: 5,
+    borderBottomWidth: 1,
     borderBottomColor: '#FFF0F6',
   },
   touchable: {

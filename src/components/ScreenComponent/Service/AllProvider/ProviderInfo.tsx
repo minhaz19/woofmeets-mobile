@@ -2,56 +2,93 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {MapMarker, RoundedCheckbox} from '../../../../assets/svgs/SVG_LOGOS';
 import ShortIconTitle from '../../../common/ShortIconTitle';
-import ShortText from '../../../common/text/ShortText';
 import Colors from '../../../../constants/Colors';
 import HeaderText from '../../../common/text/HeaderText';
 import {AirbnbRating} from 'react-native-ratings';
+import ShortText from '../../../common/text/ShortText';
 interface Props {
-  name: string;
+  user: any;
+  rating: number | null;
+  distance: any;
+  availability?: any;
   nature: string;
-  rating: number;
-  distance: string;
-  availablity?: string;
-  repeatClient?: string;
+  headline?: any;
+  expYears?: any;
+  repeatClient?: any;
 }
 const ProviderInfo = ({
-  name,
-  nature,
+  user,
   rating,
   distance,
-  availablity,
+  availability,
+  headline,
+  expYears,
   repeatClient,
 }: Props) => {
+  function getMonthAndDat(date: string | number | Date) {
+    const dateStr = new Date(date).toDateString();
+    if (dateStr) {
+      const dateStrArr = dateStr?.split(' ');
+      return dateStrArr;
+    }
+  }
+  const startDate = getMonthAndDat(
+    new Date(availability && availability.dates[0]),
+  );
+  const endDate = getMonthAndDat(
+    new Date(availability && availability.dates.slice(-1)),
+  );
+
   return (
     <View style={styles.container}>
-      <HeaderText textStyle={styles.title} text={name} />
+      <HeaderText
+        textStyle={styles.title}
+        text={`${user.firstName} ${user.lastName}`}
+      />
+      {headline ? (
+        <ShortText
+          text={headline}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+          textStyle={styles.shortText}
+        />
+      ) : null}
       <View style={styles.shortInfo}>
-        <View>
-          <AirbnbRating
-            showRating={false}
-            count={rating}
-            defaultRating={4}
-            size={10}
-          />
-        </View>
-        {/* <ShortIconTitle Icon={Star} text={rating} /> */}
-        <ShortIconTitle Icon={MapMarker} text={distance} />
+        <ShortIconTitle
+          Icon={MapMarker}
+          text={`${distance?.distance.toFixed(2)} ${distance?.unit}`}
+        />
       </View>
-      <ShortText text={nature} />
-      {availablity && (
+      {availability && (
         <View style={styles.availableTime}>
           <ShortIconTitle
             Icon={RoundedCheckbox}
-            text={availablity}
+            text={`Availability: ${startDate[1]} ${startDate[2]} - ${endDate[1]} ${endDate[2]} `}
             color={Colors.green}
           />
         </View>
       )}
-      {repeatClient && (
-        <View style={styles.repeat}>
-          <ShortText text={repeatClient} />
+      {repeatClient ? (
+        <View style={styles.repeatContainer}>
+          <View style={styles.repeat}>
+            <ShortText text={repeatClient} />
+          </View>
+          {rating ? (
+            <AirbnbRating
+              showRating={false}
+              count={5}
+              defaultRating={rating}
+              size={10}
+              isDisabled
+            />
+          ) : null}
         </View>
-      )}
+      ) : expYears ? (
+        <ShortText
+          text={expYears + ' years of experience'}
+          textStyle={styles.shortText}
+        />
+      ) : null}
     </View>
   );
 };
@@ -61,6 +98,7 @@ export default ProviderInfo;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
+    width: '100%',
   },
   title: {
     fontWeight: '600',
@@ -69,17 +107,25 @@ const styles = StyleSheet.create({
   shortInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 5,
+    paddingTop: 4,
     width: '60%',
   },
   availableTime: {
-    marginVertical: 5,
+    paddingTop: 4,
+    maxWidth: '75%',
   },
   rating: {marginRight: 5},
   repeat: {
-    padding: 3,
+    paddingVertical: 3,
+    paddingHorizontal: 5,
     backgroundColor: Colors.shadow,
-    width: '50%',
-    justifyContent: 'center',
+  },
+  repeatContainer: {
+    flexDirection: 'row',
+    paddingTop: 4,
+  },
+  shortText: {
+    maxWidth: '65%',
+    paddingTop: 4,
   },
 });

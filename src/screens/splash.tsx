@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {Image, StyleSheet, useColorScheme, View} from 'react-native';
+import {Alert, Image, SafeAreaView, StyleSheet, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DescriptionText from '../components/common/text/DescriptionText';
 import HeaderText from '../components/common/text/HeaderText';
@@ -11,14 +11,17 @@ import MainNavigationContainer from '../navigation/MainNavigationContainer';
 import FirstScreen from './FirstScreen';
 import authStorage from '../utils/helpers/auth/storage';
 import jwt_decode from 'jwt-decode';
-import {useDispatch} from 'react-redux';
 import {slides} from '../utils/config/Data/splashDatas';
 import {signIn} from '../store/slices/auth/userSlice';
-
+import {useAppDispatch} from '../store/store';
+import {getServiceTypes} from '../store/slices/profile/services';
+import {getAllPets} from '../store/slices/pet/allPets/allPetsAction';
+import {NetInfoState, useNetInfo} from '@react-native-community/netinfo';
+import {getWhoAmI} from '../store/slices/common/whoAmI/whoAmIAction';
+import {getUserOnboardStatus} from '../store/slices/connect/stripe';
 const Splash = ({}) => {
-  const isDarkMode = useColorScheme() === 'dark';
   const [isPreviousUser, setIsPreviousUser] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [state, setState] = useState({
     showRealApp: false,
   });
@@ -29,9 +32,7 @@ const Splash = ({}) => {
         style={[
           styles.slide,
           {
-            backgroundColor: isDarkMode
-              ? Colors.dark.background
-              : Colors.background,
+            backgroundColor: Colors.background,
           },
         ]}>
         <Image source={item.image} style={styles.image} />
@@ -119,13 +120,16 @@ const Splash = ({}) => {
           authStorage.removeToken();
         }
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {
     signInHandler();
+    dispatch(getWhoAmI());
+    dispatch(getUserOnboardStatus());
+    dispatch(getServiceTypes());
+    dispatch(getUserOnboardStatus());
+    dispatch(getAllPets());
   }, []);
 
   const RenderIcon = () => {
@@ -135,6 +139,17 @@ const Splash = ({}) => {
       </View>
     );
   };
+
+  const internetState: NetInfoState = useNetInfo();
+  useEffect(() => {
+    if (internetState.isConnected === false) {
+      Alert.alert(
+        'No Internet! ❌',
+        'Sorry, we need an Internet connection for Woofmeets to run correctly.',
+        [{text: 'Okay'}],
+      );
+    }
+  }, [internetState.isConnected]);
 
   if (ldIcon) {
     return <RenderIcon />;
@@ -146,16 +161,18 @@ const Splash = ({}) => {
         ) : state.showRealApp ? (
           <MainNavigationContainer previousLoggedIn={false} />
         ) : (
-          <AppIntroSlider
-            activeDotStyle={styles.activeDotStyle}
-            dotStyle={styles.dotStyle}
-            renderItem={_renderItem}
-            data={slides}
-            onDone={_onDone}
-            renderDoneButton={_renderDoneButton}
-            renderNextButton={_renderNextButton}
-            showSkipButton={true}
-          />
+          <SafeAreaView style={{flex: 1}}>
+            <AppIntroSlider
+              activeDotStyle={styles.activeDotStyle}
+              dotStyle={styles.dotStyle}
+              renderItem={_renderItem}
+              data={slides}
+              onDone={_onDone}
+              renderDoneButton={_renderDoneButton}
+              renderNextButton={_renderNextButton}
+              showSkipButton={true}
+            />
+          </SafeAreaView>
         )}
       </>
     );
@@ -171,14 +188,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontSize: Text_Size.Text_4,
+    fontSize: Text_Size.Text_5,
     fontWeight: 'bold',
     marginHorizontal: '10%',
     textAlign: 'center',
   },
   headerText: {
     fontSize: Text_Size.Text_5,
-    // fontFamily: 'Arial',
+    fontFamily: 'Muli',
     paddingHorizontal: '5%',
     paddingVertical: '2%',
   },
@@ -214,7 +231,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footerContainer: {
-    height: '60%',
+    height: '50%',
     paddingTop: '20%',
     width: '100%',
   },

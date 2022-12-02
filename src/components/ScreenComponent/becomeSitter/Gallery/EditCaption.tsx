@@ -2,20 +2,17 @@ import {
   StyleSheet,
   Image,
   View,
-  KeyboardAvoidingView,
-  Platform,
   TouchableOpacity,
+  useColorScheme,
 } from 'react-native';
 import React from 'react';
-import HeaderText from '../../../common/text/HeaderText';
 import AppFormField from '../../../common/Form/AppFormField';
 import {useFormContext} from 'react-hook-form';
-import SubmitButton from '../../../common/Form/SubmitButton';
-import Text_Size from '../../../../constants/textScaling';
 import Colors from '../../../../constants/Colors';
 import {useApi} from '../../../../utils/helpers/api/useApi';
 import methods from '../../../../api/methods';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import TitleText from '../../../common/text/TitleText';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 
 interface Props {
   captionImage: {
@@ -27,11 +24,12 @@ interface Props {
 }
 
 const EditCaption = ({captionImage, setIsModalVisible}: Props) => {
+  const isDarkMode = useColorScheme() === 'dark';
   const {
     control,
+    handleSubmit,
     formState: {errors},
   } = useFormContext();
-  const {colors} = useTheme();
   const {request, loading} = useApi(methods._put);
   const handleEdit = async (e: any) => {
     const formatCaption = {caption: e.caption};
@@ -42,67 +40,78 @@ const EditCaption = ({captionImage, setIsModalVisible}: Props) => {
     }
   };
   return (
-    <View
-      style={[styles.rootContainer, {backgroundColor: colors.backgroundColor}]}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        // keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-        enabled={Platform.OS === 'ios' ? true : false}>
-        <HeaderText
-          text={'Add a caption to your photo'}
-          textStyle={styles.headerText}
-        />
-        <View style={styles.imageContainer}>
-          <Image source={{uri: captionImage.uri}} style={styles.image} />
-        </View>
-        <AppFormField
-          name={'caption'}
-          label={'Caption'}
-          errors={errors}
-          control={control}
-        />
-        <View style={styles.submitButton}>
-          <TouchableOpacity onPress={() => setIsModalVisible(false)}>
-            <HeaderText text={'Cancel'} textStyle={styles.cancelButton} />
-          </TouchableOpacity>
-          <SubmitButton
-            title="Save Caption"
-            onPress={handleEdit}
-            loading={loading}
+    <>
+      <View style={styles.CaptionBody}>
+        <View>
+          <Image
+            source={{uri: captionImage?.uri}}
+            style={styles.image}
+            resizeMode="cover"
           />
+          <View style={styles.inputBody}>
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              name={'caption'}
+              label={'Enter your caption'}
+              placeholder="write a caption"
+              control={control}
+              errors={errors}
+            />
+          </View>
         </View>
-      </KeyboardAvoidingView>
-    </View>
+      </View>
+      <View style={styles.btnContainer}>
+        <TouchableOpacity
+          style={[
+            styles.cancelBtn,
+            {backgroundColor: Colors.primary},
+          ]}
+          onPress={() => setIsModalVisible(false)}>
+          <TitleText text="Cancel" textStyle={styles.text} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.saveBtn,
+            {backgroundColor: Colors.primary},
+          ]}
+          onPress={handleSubmit(handleEdit)}>
+          <TitleText
+            text={loading ? 'Loading...' : 'Save'}
+            textStyle={styles.text}
+          />
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
 export default EditCaption;
 
 const styles = StyleSheet.create({
-  rootContainer: {
+  btnContainer: {flexDirection: 'row'},
+  cancelBtn: {
+    backgroundColor: Colors.primary,
     flex: 1,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.light.borderColor,
   },
-
-  headerText: {
-    fontSize: Text_Size.Text_2,
-    marginBottom: 6,
+  saveBtn: {
+    backgroundColor: Colors.primary,
+    flex: 1,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.light.borderColor,
   },
+  text: {color: 'white', textAlign: 'center'},
+  CaptionBody: {width: '100%'},
   image: {
-    height: '100%',
+    flex: 0,
     width: '100%',
+    height: 200,
   },
-  imageContainer: {
-    height: '50%',
-    width: '100%',
-  },
-  submitButton: {
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  cancelButton: {
-    color: Colors.light.blue,
-    paddingRight: 10,
-    textDecorationLine: 'underline',
+  inputBody: {
+    padding: SCREEN_WIDTH > 800 ? 20 : 10,
   },
 });

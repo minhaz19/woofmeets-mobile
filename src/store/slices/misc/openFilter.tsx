@@ -5,14 +5,16 @@ import {createSlice} from '@reduxjs/toolkit';
 // }
 export const openFilter = createSlice({
   name: 'filter',
-  initialState: {isOpen: false},
+  initialState: {isOpen: false, isSettingVisible: false},
   reducers: {
     setOpenFilter: (state, action) => {
       state.isOpen = action.payload;
     },
+    setOpenSettings: (state, action) => {
+      state.isSettingVisible = action.payload;
+    },
   },
 });
-export const {setOpenFilter} = openFilter.actions;
-// export const filter = useSelector((state: any) => state.filter);
+export const {setOpenFilter, setOpenSettings} = openFilter.actions;
 
 export default openFilter.reducer;

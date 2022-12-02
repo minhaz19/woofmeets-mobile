@@ -6,12 +6,17 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 const ShortText = (props: {
   children?: ReactNode;
   textStyle?: TextStyle;
-  text: string | number;
+  text: string | number | undefined;
+  numberOfLines?: number;
+  ellipsizeMode?: any;
 }) => {
   const {colors} = useTheme();
   return (
     <View>
       <Text
+        allowFontScaling={false}
+        ellipsizeMode={props.ellipsizeMode}
+        numberOfLines={props.numberOfLines}
         style={[
           styles.details,
           {color: colors.lightText},
@@ -27,7 +32,7 @@ const ShortText = (props: {
 const styles = StyleSheet.create({
   details: {
     fontSize: Text_Size.Text_8,
-    fontWeight: '500',
+    fontFamily: 'Muli',
   },
 });
 

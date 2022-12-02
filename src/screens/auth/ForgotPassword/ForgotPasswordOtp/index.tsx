@@ -3,7 +3,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  useColorScheme,
   View,
 } from 'react-native';
 import React from 'react';
@@ -13,54 +12,44 @@ import {otpValue} from '../../../../utils/config/initalValues/initalValues';
 import {otpValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
 import ImageAndTitle from '../../../../components/ScreenComponent/Auth/Common/ImageAndTitle';
 import {AuthEmail} from '../../../../assets/svgs/SVG_LOGOS';
-import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import BottomSpacing from '../../../../components/UI/BottomSpacing';
 import AppForm from '../../../../components/common/Form/AppForm';
 import {RouteProp} from '@react-navigation/native';
 import {useFPOtp} from './utils/useFPOtp';
+import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
 const forgotPassData = {
   icon: AuthEmail,
   title: 'Forgot Password?',
   subTitle:
-    'We have sent an OTP (One Time Password) to your [Email]. Please enter the 4 digit code below to continue.',
+    'We have sent an OTP (One Time Password) to your [Email]. Please enter the 6 digit code below to continue.',
 };
 interface Props {
   navigation: {
+    goBack(): void;
     navigate: (arg0: string, arg2: {token: string}) => void;
   };
   route: RouteProp<{params: {email: string}}, 'params'>;
 }
 const ForgotPasswordOtp = ({route, navigation}: Props) => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const {isDarkMode} = useTheme();
   const {handleSubmit, loading} = useFPOtp(route, navigation);
+
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-      style={[
-        {
-          backgroundColor: isDarkMode
-            ? Colors.dark.background
-            : Colors.secondary,
-        },
-      ]}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-        enabled={Platform.OS === 'ios' ? true : false}>
+      <ScrollViewRapper extraHeight={40} extraScrollHeight={120}>
+        <View style={styles.container}>
         <View
           style={[
             styles.infoContainer,
             {
-              backgroundColor: isDarkMode
-                ? Colors.dark.lightDark
-                : Colors.background,
+              backgroundColor: Colors.background,
             },
           ]}>
           <ImageAndTitle
             Icon={forgotPassData.icon}
             title={forgotPassData.title}
-            subTitle={forgotPassData.subTitle}
+            subTitle={forgotPassData.subTitle} id={0}
           />
           <AppForm
             initialValues={otpValue}
@@ -68,15 +57,16 @@ const ForgotPasswordOtp = ({route, navigation}: Props) => {
             <AuthForm
               handleSubmit={handleSubmit}
               btnTitle="Continue"
-              btn2Title="Resend Code"
+              btn2Title="Cancel"
               forgotPasswordOpt
               loading={loading}
+              onPress={() => navigation.goBack()}
             />
           </AppForm>
           {SCREEN_WIDTH > 800 && <BottomSpacing />}
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+        </View>
+      </ScrollViewRapper>
   );
 };
 
@@ -85,7 +75,8 @@ export default ForgotPasswordOtp;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
+    height: SCREEN_HEIGHT,
+    justifyContent: 'center',
   },
   infoContainer: {
     borderTopRightRadius: 30,

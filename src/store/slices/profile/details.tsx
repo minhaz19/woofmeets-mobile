@@ -11,32 +11,66 @@ export const postSitterDetails = createAsyncThunk(
       experienceDescription,
       environmentDescription,
       scheduleDescription,
+      mtd,
+      skill,
+      about,
     }: any,
-    {rejectWithValue},
+    method: any,
   ) => {
+    // const dispatch = useAppDispatch();
     const body = {
       headline: headline,
       yearsOfExperience: yearsOfExperience,
       experienceDescription: experienceDescription,
       environmentDescription: environmentDescription,
       scheduleDescription: scheduleDescription,
+      about: about,
+      skills: skill,
     };
     try {
-      const response: ApiResponse<any> = await apiClient.post(
-        '/user-profile/provider-details',
-        body,
-      );
-      if (!response.ok) {
-        throw new Error(response.data.message);
-      }
-      return response.data;
-    } catch (error: any) {
-      if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message);
+      if (mtd === 'patch') {
+        const response: ApiResponse<any> = await apiClient.patch(
+          '/user-profile/provider-details',
+          body,
+        );
+        if (!response.ok) {
+          throw new Error(response.data.message);
+        }
+        if (response.ok) {
+          // const dispatch = useAppDispatch();
+          // dispatch(setProfileData({pass:2}));
+          // dispatch(getSitterDetails());
+          return response.data;
+        }
       } else {
-        return rejectWithValue(error.message);
+        const response: ApiResponse<any> = await apiClient.post(
+          '/user-profile/provider-details',
+          body,
+        );
+        if (!response.ok) {
+          throw new Error(response.data.message);
+        }
+        if (response.ok) {
+          // const dispatch = useAppDispatch();
+          // dispatch(setProfileData({pass:2}));
+          // dispatch(getSitterDetails());
+          return response.data;
+        }
       }
+    } catch (error: any) {}
+  },
+);
+
+export const getSkillsData = createAsyncThunk(
+  'details/getSkillsData',
+  async () => {
+    const response: ApiResponse<any> = await apiClient.get(
+      '/user-profile/profile-skill-types',
+    );
+    if (!response.ok) {
+      throw new Error(response.data.message);
     }
+    return response.data;
   },
 );
 
@@ -55,8 +89,11 @@ export const getSitterDetails = createAsyncThunk(
 
 const initialState: any = {
   sitterInfo: null,
+  sitterInfoPost: null,
+  skillsData: null,
   error: null,
   loading: false,
+  loadingSitter: false,
   success: false,
 };
 
@@ -68,16 +105,16 @@ const details = createSlice({
   extraReducers(builder) {
     builder
       .addCase(postSitterDetails.pending, state => {
-        state.loading = true;
+        state.loadingSitter = true;
         state.error = null;
       })
       .addCase(postSitterDetails.fulfilled, (state, {payload}) => {
-        state.loading = false;
-        state.sitterInfo = payload;
+        state.loadingSitter = false;
+        state.sitterInfoPost = payload;
         state.error = null;
       })
       .addCase(postSitterDetails.rejected, (state, {payload}) => {
-        state.loading = false;
+        state.loadingSitter = false;
         state.error = payload;
       })
       .addCase(getSitterDetails.pending, state => {
@@ -90,6 +127,19 @@ const details = createSlice({
         state.error = null;
       })
       .addCase(getSitterDetails.rejected, (state, {payload}) => {
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(getSkillsData.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSkillsData.fulfilled, (state, {payload}) => {
+        state.loading = false;
+        state.skillsData = payload.data;
+        state.error = null;
+      })
+      .addCase(getSkillsData.rejected, (state, {payload}) => {
         state.loading = false;
         state.error = payload;
       });

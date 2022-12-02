@@ -1,69 +1,119 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {useEffect} from 'react';
-import {Alert} from 'react-native';
 import methods from '../../../../../api/methods';
-import {getServiceRateFields} from '../../../../../store/slices/onBoarding/setUpService/rates/Field/serviceRateFieldAction';
+import {setBoardingSelection} from '../../../../../store/slices/onBoarding/initial';
 import {getRateFieldValue} from '../../../../../store/slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueAction';
 import {useAppDispatch, useAppSelector} from '../../../../../store/store';
 import {useApi} from '../../../../../utils/helpers/api/useApi';
-interface HandleProps {
-  baserate: string;
-  additionaldog: string;
-  catcare: string;
-  holidayrate: string;
-}
-const ratePostEndpoint = '/service-rates';
-const ratePutEndpoint = '/service-rates/';
-export const useServiceRates = (route: any) => {
-  const {serviceId, providerServicesId} = route.params;
+
+const ratePostEndpoint = '/service-rates/multiple/create';
+const ratePutEndpoint = '/service-rates/multiple/update';
+export const useServiceRates = (
+  serviceSetup: any,
+  navigation: any,
+  route: any,
+) => {
+  const {providerServicesId} = serviceSetup?.routeData;
   const dispatch = useAppDispatch();
-  const {loading, serviceRateFields} = useAppSelector(
+  const {loading, serviceRateFields, ratesMeta} = useAppSelector(
     state => state.serviceRates,
   );
   const {loading: fLoading, fieldValue} = useAppSelector(
     state => state.fieldValue,
   );
-  const addRateApi = (data: any, serviceRateId: string) => {
-    // return fieldValue === null
-    //   ? methods._post(ratePostEndpoint, data)
-    //   : methods._put(`${ratePutEndpoint + serviceRateId}`, data.amount);
+  const addRateApi = (data: any) => {
+    return fieldValue === null || fieldValue === undefined
+      ? methods._post(ratePostEndpoint, data)
+      : methods._put(ratePutEndpoint, data);
   };
+
   const {loading: btnLoading, request} = useApi(addRateApi);
   const rateFieldId = serviceRateFields?.map(
-    (item: {slug: string; id: number}) => {
+    (item: {slug: string; rateId: number; id: number}) => {
       return {
-        name: item.slug.replace('-', ''),
-        id: item.id,
+        name: item.slug.replace('-', '').replace('-', ''),
+        postId: item.rateId,
+        rateTypeId: item.id,
+        putId: null,
       };
     },
   );
-
+  rateFieldId &&
+    rateFieldId !== undefined &&
+    fieldValue &&
+    fieldValue?.map((item: {id: number; modRatesId: number}) => {
+      const fIndex = rateFieldId.findIndex(
+        (elm: any) => elm.rateTypeId === item.modRatesId,
+      );
+      if (fIndex !== -1) {
+        return (rateFieldId[fIndex].putId = item.id);
+      }
+    });
   const handleRates = async (e: any) => {
+    let payload: any = {
+      serviceRate: [],
+    };
+    let putPayload: any = {
+      ratesToUpdate: [],
+      ratesToAdd: [],
+    };
     rateFieldId &&
-      rateFieldId.forEach((element: {id: number; name: string}) => {
-        Object.keys(e).map(async item => {
-          if (item === element.name) {
-            const payload = {
-              serviceId: providerServicesId,
-              rateId: element.id,
-              amount: e[element.name],
-            };
-            // const result = await request(payload, element.id);
-          }
-        });
-      });
-    return Alert.alert('Submission not supported yet...!');
+      rateFieldId.length !== 0 &&
+      rateFieldId?.forEach(
+        (element: {postId: number; name: string; putId: number}) => {
+          Object.keys(e).map(item => {
+            if (item === element.name) {
+              if (fieldValue === null || fieldValue === undefined) {
+                payload.serviceRate.push({
+                  serviceId: providerServicesId,
+                  rateId:
+                    fieldValue === null || fieldValue === undefined
+                      ? element.postId
+                      : element.putId,
+                  amount: Number(e[element.name]),
+                });
+              } else {
+                if (element.putId === null) {
+                  putPayload.ratesToAdd.push({
+                    serviceId: providerServicesId,
+                    rateId: element.postId,
+                    amount: Number(e[element.name]),
+                  });
+                } else {
+                  putPayload.ratesToUpdate.push({
+                    serviceId: providerServicesId,
+                    rateId: element.putId,
+                    amount: Number(e[element.name]),
+                  });
+                }
+                payload = putPayload;
+              }
+            }
+          });
+        },
+      );
+    const result = await request(payload);
+    if (result.ok) {
+      dispatch(setBoardingSelection({pass: 0}));
+      dispatch(getRateFieldValue(providerServicesId));
+      if (route.name === 'RatesScreen') {
+        navigation.goBack();
+      }
+    }
   };
-  useEffect(() => {
-    serviceRateFields === null && dispatch(getServiceRateFields(serviceId));
-    dispatch(getRateFieldValue(providerServicesId));
-  }, []);
   return {
     handleRates,
     loading,
     fLoading,
     btnLoading,
     serviceRateFields,
+    fieldValue,
+    ratesMeta,
   };
 };
+// payload.serviceRate.push({
+//   serviceId: providerServicesId,
+//   rateId:
+//     fieldValue === null || fieldValue === undefined
+//       ? element.postId
+//       : element.putId,
+//   amount: Number(e[element.name]),
+// });

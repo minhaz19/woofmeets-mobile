@@ -1,6 +1,4 @@
-import {parse} from 'date-fns';
 import * as Yup from 'yup';
-import { phoneNumberReg, emailReg } from '../../../constants/regex';
 
 const basicInfoValidationSchema = Yup.object().shape({
   profileImage: Yup.string(),
@@ -10,25 +8,16 @@ const basicInfoValidationSchema = Yup.object().shape({
   state: Yup.string().required('State is required'),
   street: Yup.string(),
   zipCode: Yup.string().required('Zip code is required'),
-  countryId: Yup.number(),
+  countryId: Yup.string().required('Country name is required'),
   name: Yup.string().required('Name is required'),
-  dob: Yup.date()
-    .transform(function (value, originalValue) {
-      if (this.isType(value)) {
-        return value;
-      }
-      const result = parse(originalValue, 'dd/MM/yyyy', new Date());
-      return result;
-    })
-    .typeError('please enter a valid date')
-    .required()
-    .min('1969-11-13', 'Date is too early'),
+  dob: Yup.date().typeError('please enter a valid date').required(),
+  // latitude: Yup.number().required('Address is required'),
+  // longitude: Yup.number().required('Address is required'),
 });
 
 const contactValidationSchema = Yup.object().shape({
-  emergencyContactName: Yup.string().required('Emergency Contact Name is required'),
-  email: Yup.string().required('Email is required').matches(emailReg, 'Please Input a valid E-mail address'),
-  emergencyPhone: Yup.string().matches(phoneNumberReg, 'Please input a valid phone number').required('Phone Number is required'),
+  emergencyContactName: Yup.string(),
+  emergencyPhone: Yup.string(),
 });
 
 export {basicInfoValidationSchema, contactValidationSchema};
