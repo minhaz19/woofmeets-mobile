@@ -79,6 +79,8 @@
 	<string>In order to take pictures of your Pet for the Profile, Woofmeets requires permission to access the camera.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Woofmeets needs to access your location to help you search providers in your area.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Woofmeets needs to access your location to help you search providers in your area.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>In order to upload pictures of your Pet on the Profile, Woofmeets requires permission to access the photo library.</string>
 	<key>UIAppFonts</key>

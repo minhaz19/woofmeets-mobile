@@ -5,9 +5,14 @@ import {
 } from '@react-native-google-signin/google-signin';
 import {Alert} from 'react-native';
 import {LoginManager, Profile, Settings} from 'react-native-fbsdk-next';
-import {providerAuth} from '../../../store/slices/auth/userAction';
+import {providerAuth, appleAuthLogin} from '../../../store/slices/auth/userAction';
 import {useAppDispatch} from '../../../store/store';
 import {authProviderLoading} from '../../../store/slices/auth/userSlice';
+
+import {
+  appleAuth,
+  AppleAuthError,
+} from '@invertase/react-native-apple-authentication'
 
 export const useHandleProviderAuth = () => {
   const [user, setUser] = useState({});
@@ -51,6 +56,13 @@ export const useHandleProviderAuth = () => {
     }
   };
 
+  useEffect(() => {
+    // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
+    return appleAuth.onCredentialRevoked(async () => {
+      console.warn('If this function executes, User Credentials have been Revoked');
+    });
+  }, []);
+
   const facebook = async () => {
     Settings.initializeSDK();
     try {
@@ -82,6 +94,40 @@ export const useHandleProviderAuth = () => {
       Alert.alert('Login failed');
     }
   };
+  
+  const apple = async () => {
+    try {
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+      });
+      if (!appleAuthRequestResponse.identityToken) {
+        throw 'Apple Sign-In failed - no identify token returned';
+      }
+      
+      // get current authentication state for user
+      const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+    
+      // use credentialState response to ensure the user is authenticated
+      if (credentialState === appleAuth.State.AUTHORIZED) {
+        // user is authenticated
+        const {identityToken} = appleAuthRequestResponse
+        const userInfo = {
+          token: identityToken,
+          firstname: appleAuthRequestResponse.fullName?.givenName ? appleAuthRequestResponse.fullName?.givenName : ' ',
+          lastname: appleAuthRequestResponse.fullName?.familyName ? appleAuthRequestResponse.fullName?.familyName : ' ',
+        }
+        dispatch(appleAuthLogin(userInfo))
+      }
+
+    } catch (error) {
+      if (error?.code === AppleAuthError.CANCELED) {
+
+      } else {
+        // other unknown error
+      }
+    }
+  }
 
   const handleGFauth = (auth: number | boolean) => {
     switch (auth) {
@@ -89,10 +135,14 @@ export const useHandleProviderAuth = () => {
         return google();
       case 1:
         return facebook();
+      case 2: 
+        return apple();
       default:
         false;
     }
   };
+
+
 
   return {handleGFauth, user};
 };
