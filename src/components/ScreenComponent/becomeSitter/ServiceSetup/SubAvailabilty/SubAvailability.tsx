@@ -22,7 +22,6 @@ import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 
-
 interface Props {
   handlePost: (arg1: any) => void;
   loading: boolean;
@@ -46,7 +45,9 @@ const SubAvailability = ({handlePost, loading}: Props) => {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         question={'Why is availability important?'}
-        description={'Letting your potential clients know about your availability is a crucial part of setting up your profile that you should not overlook. Allowing pet owners who are browsing the Woofmeets site a chance to see your weekly schedule is the first step toward seeing whether you’re going to be compatible with them. Be sure to immediately update the availability on your profile for each day if you ever want to make any changes.'}
+        description={
+          'Letting your potential clients know about your availability is a crucial part of setting up your profile that you should not overlook. Allowing pet owners who are browsing the Woofmeets site a chance to see your weekly schedule is the first step toward seeing whether you’re going to be compatible with them. Be sure to immediately update the availability on your profile for each day if you ever want to make any changes.'
+        }
       />
       <View style={styles.headerContainer}>
         <View style={styles.flexContainer}>
@@ -108,7 +109,9 @@ const SubAvailability = ({handlePost, loading}: Props) => {
                   active={data[item.name]}
                   onPress={() => {
                     handleMultipleCheck(item.id);
-                    setValue(item.name, item.value);
+                    setValue(item.name, item.value, {
+                      shouldValidate: true,
+                    });
                   }}
                   name={item.name}
                   control={control}

@@ -21,6 +21,7 @@ import {Calendar, Repeat} from '../../../../assets/svgs/SVG_LOGOS';
 import {setOpenFilter} from '../../../../store/slices/misc/openFilter';
 import {setScheduleId} from '../../../../store/slices/Provider/ProviderFilter/ProviderFilterSlice';
 import GooglePredictLocation from '../../../common/GooglePredictLocations';
+import ErrorMessage from '../../../common/Form/ErrorMessage';
 
 const schedule = [
   {
@@ -52,6 +53,8 @@ interface Props {
   loading: boolean;
   setAddressLine: (arg: any) => void;
   formattedAddress: any;
+  errorMessage: any;
+  setErrorMessage: (arg: any) => void;
 }
 
 const FilterProviderBody = ({
@@ -68,6 +71,8 @@ const FilterProviderBody = ({
   loading,
   setAddressLine,
   formattedAddress,
+  errorMessage,
+  setErrorMessage,
 }: Props) => {
   const dispatch = useAppDispatch();
   const [OpenDropIn, setOpenDropIn] = useState(false);
@@ -121,9 +126,11 @@ const FilterProviderBody = ({
           onPlaceSelected={onPressAddress}
           onChange={value => {
             setAddressLine({address: value});
+            setErrorMessage(null);
           }}
           // onReset={}
         />
+        {errorMessage && <ErrorMessage error={errorMessage} />}
         {(isService.serviceId === 3 ||
           isService.serviceId === 4 ||
           isService.serviceId === 5) && (
