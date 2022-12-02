@@ -4,7 +4,7 @@ import React from 'react';
 import Colors from '../../../../constants/Colors';
 import TitleText from '../../../common/text/TitleText';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import changeTextLetter from '../../../common/changeTextLetter';
+import changeTextLetter from '../../../common/ChangeTextLetter';
 interface Props {
   data: any;
 }

@@ -12,7 +12,6 @@ export const postUserOnboarding = createAsyncThunk(
         }
         return response.data;
       } catch (error: any) {
-        
       }
     },
   );

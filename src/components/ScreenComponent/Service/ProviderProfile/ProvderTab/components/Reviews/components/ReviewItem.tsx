@@ -6,7 +6,7 @@ import ShortText from '../../../../../../../common/text/ShortText';
 import Colors from '../../../../../../../../constants/Colors';
 import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
 import {colors} from '../../../../../../../../constants/theme/textTheme';
-import changeTextLetter from '../../../../../../../common/changeTextLetter';
+import changeTextLetter from '../../../../../../../common/ChangeTextLetter';
 import {format} from 'date-fns';
 
 interface Props {

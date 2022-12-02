@@ -7,7 +7,7 @@ import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
 import TitleText from '../../../../common/text/TitleText';
 import Text_Size from '../../../../../constants/textScaling';
-import changeTextLetter from '../../../../common/changeTextLetter';
+import changeTextLetter from '../../../../common/ChangeTextLetter';
 
 const ServiceInput = ({...otherProps}) => {
   const {isDarkMode, colors} = useTheme();

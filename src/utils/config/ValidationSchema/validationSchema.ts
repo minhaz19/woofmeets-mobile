@@ -18,11 +18,6 @@ const signUpValidationSchema = Yup.object().shape({
     .max(40)
     .required()
     .label('Last Name'),
-  zipcode: Yup.string()
-    .required('Zipcode is required')
-    .matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/, 'Invalid Zipcode')
-    .nullable()
-    .label('Zip Code'),
   email: Yup.string().required().email().label('Email'),
   password: Yup.string()
     .required('No password provided.')

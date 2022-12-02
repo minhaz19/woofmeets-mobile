@@ -10,7 +10,7 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
 import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import BottomSpacing from '../../../UI/BottomSpacing';
-import changeTextLetter from '../../../common/changeTextLetter';
+import changeTextLetter from '../../../common/ChangeTextLetter';
 import InboxLoader from '../../../../screens/Inbox/Loader/InboxLoader';
 import {convertToLocalTZ} from '../../../common/formatDate';
 interface Props {
