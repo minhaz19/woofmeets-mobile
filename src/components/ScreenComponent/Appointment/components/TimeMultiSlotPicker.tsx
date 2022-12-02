@@ -25,9 +25,11 @@ const TimeMultiSlotPicker = ({
         horizontal
         keyExtractor={(item, index) => (item.slot + index).toString()}
         showsHorizontalScrollIndicator={false}
-        renderItem={({item}) => {
+        renderItem={({item, index}) => {
           return (
             <Pressable
+              disabled={item.disable}
+              // disabled={checkDisabledTime(item, times[index - 1])}
               onPress={() => {
                 if (isRecurring) {
                   const matchDate = Days.findIndex(
@@ -102,7 +104,9 @@ const TimeMultiSlotPicker = ({
               style={[
                 styles.slots,
                 {
-                  backgroundColor: item.active
+                  backgroundColor: item.disable
+                    ? Colors.iosBG
+                    : item.active
                     ? Colors.primary
                     : Colors.background,
                 },
@@ -110,7 +114,11 @@ const TimeMultiSlotPicker = ({
               <TitleText
                 text={item.slot}
                 textStyle={{
-                  color: item.active ? Colors.background : Colors.text,
+                  color: item.disable
+                    ? Colors.gray
+                    : item.active
+                    ? Colors.background
+                    : Colors.text,
                   fontWeight: 'bold',
                 }}
               />
