@@ -5,5 +5,6 @@ declare module 'react-native-svg' {
     xmlnsXlink?: string;
     fill?: string | undefined;
     stroke?: string | undefined;
+    color?: string;
   }
 }

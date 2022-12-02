@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ScrollView, Alert} from 'react-native';
 import {
   CallIcon,
   CardsIcon,
   ChangePasswordIcon,
+  DeleteIcon,
   Payment2Icon,
   PaymentIcon,
   PetsIcon,
@@ -21,13 +22,45 @@ import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileActi
 import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
 import storage from '../../utils/helpers/auth/storage';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
+import { CommonActions } from '@react-navigation/native';
+import { logout } from '../../store/slices/auth/userSlice';
+import methods from '../../api/methods';
+import { Delete } from '../../assets/svgs/SVG_LOGOS';
 
 const MyAccount = (props: {
-  navigation: {navigate: (arg0: string, arg1?: any) => any};
+  navigation: {
+    navigate: (arg0: string, arg1?: any) => any;
+    dispatch: (arg0: CommonActions.Action) => void;
+  };
 }) => {
   const dispatch = useAppDispatch();
   const {loading, userInfo} = useAppSelector(state => state.userProfile);
   const [newData, setNewData] = useState<any>([]);
+
+  const deleteAccountConfirmation = () => {
+    Alert.alert(
+      'Woofmeets',
+      'Are you sure you want to delete your account ?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: async () => {
+          const response = await methods._delete('/user');
+          response.ok &&
+          dispatch(logout());
+          props.navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{name: 'AuthNavigator'}],
+            }),
+          );
+        }},
+      ]
+    );
+  };
 
   const supportData = [
     {
@@ -88,6 +121,15 @@ const MyAccount = (props: {
       details: 'Edit, pet, add new pet',
       opacity: 1,
     },
+    {
+      id: 8,
+      title: 'Delete Account',
+      icon: Delete,
+      screenName: () => deleteAccountConfirmation(),
+      color: Colors.red,
+      details: 'Delete your account permanently',
+      opacity: 1,
+    },
   ];
   const {colors} = useTheme();
   const b = async () => {
@@ -122,7 +164,7 @@ const MyAccount = (props: {
               data={item}
               key={item.id}
               descriptionStyle={{
-                color: colors.lightText,
+                color: item?.id === 8 ? Colors.red : colors.lightText,
                 fontSize: Text_Size.Text_8,
               }}
             />
