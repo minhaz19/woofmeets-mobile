@@ -12,7 +12,7 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getProviderProposal} from '../../../../store/slices/Appointment/Proposal/getProviderProposal';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
-import changeTextLetter from '../../../common/ChangeTextLetter';
+import changeTextLetter from '../../../common/changeTextLetter';
 import {setBillingId} from '../../../../store/slices/Appointment/Proposal/providerProposalSlice';
 import {formatDate} from '../../../common/formatDate';
 import BottomSpacing from '../../../UI/BottomSpacing';

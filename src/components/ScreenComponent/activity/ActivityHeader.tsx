@@ -19,7 +19,7 @@ import {getProviderApnt} from '../../../store/slices/Appointment/Inbox/Provider/
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 import RecurringModal from './components/RecurringModal';
 import {setBillingId} from '../../../store/slices/Appointment/Proposal/providerProposalSlice';
-import changeTextLetter from '../../common/ChangeTextLetter';
+import changeTextLetter from '../../common/changeTextLetter';
 import {convertToLocalTZ, formatDate} from '../../common/formatDate';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';

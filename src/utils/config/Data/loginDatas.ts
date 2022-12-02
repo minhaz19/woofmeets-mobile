@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import {Apple, Facebook, Google} from '../../../assets/svgs/SVG_LOGOS';
 
 const loginInitalState = {
@@ -14,7 +15,7 @@ const othersAuthIcons = [
     icon: Facebook,
   },
   {
-    icon: Apple,
+    icon: Platform.OS === 'ios' ? Apple : '',
   },
 ];
 export {loginInitalState, othersAuthIcons};

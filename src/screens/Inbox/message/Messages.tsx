@@ -24,7 +24,7 @@ import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/ge
 // import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
 // import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 import Colors from '../../../constants/Colors';
-import changeTextLetter from '../../../components/common/ChangeTextLetter';
+import changeTextLetter from '../../../components/common/changeTextLetter';
 
 const Messages = (props: {roomId: any; opk: any}) => {
   const {colors} = useTheme();

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {Divider} from '@rneui/themed';
 import Colors from '../../../../constants/Colors';
@@ -56,9 +56,11 @@ const AuthFooter = ({
       </View>
       <View style={styles.iconContainer}>
         {icons.map((icon, index) => (
-          <TouchableOpacity key={index} onPress={() => handleGFauth(index)}>
-            <Icon IconComp={icon?.icon} />
-          </TouchableOpacity>
+          Platform.OS === 'android' && index !== 2 ? <TouchableOpacity key={index} onPress={() => handleGFauth(index)}>
+          <Icon IconComp={icon?.icon} />
+        </TouchableOpacity> : Platform.OS === 'ios' && <TouchableOpacity key={index} onPress={() => handleGFauth(index)}>
+          <Icon IconComp={icon?.icon} />
+        </TouchableOpacity>
         ))}
       </View>
       <View style={styles.textContainer}>
