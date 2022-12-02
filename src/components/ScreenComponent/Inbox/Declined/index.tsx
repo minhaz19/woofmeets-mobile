@@ -10,7 +10,7 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getUserCanceled} from '../../../../store/slices/Appointment/Inbox/User/Cancelled/getUserCancelled';
 import {getProviderCancelled} from '../../../../store/slices/Appointment/Inbox/Provider/Cancelled/getProviderCancelled';
 import BottomHalfModal from '../../../UI/modal/BottomHalfModal';
-import changeTextLetter from '../../../common/ChangeTextLetter';
+import changeTextLetter from '../../../common/changeTextLetter';
 import {getProviderProposal} from '../../../../store/slices/Appointment/Proposal/getProviderProposal';
 import RefundDetails from '../Details/RefundDetails';
 import InboxLoader from '../../../../screens/Inbox/Loader/InboxLoader';

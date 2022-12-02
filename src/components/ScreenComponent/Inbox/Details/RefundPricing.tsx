@@ -8,7 +8,7 @@ import HeaderText from '../../../common/text/HeaderText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppSelector} from '../../../../store/store';
-import changeTextLetter from '../../../common/ChangeTextLetter';
+import changeTextLetter from '../../../common/changeTextLetter';
 import ShortText from '../../../common/text/ShortText';
 interface Props {
   screen: string;

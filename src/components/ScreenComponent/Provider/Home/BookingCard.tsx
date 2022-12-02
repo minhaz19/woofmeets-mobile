@@ -14,7 +14,7 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import ShortText from '../../../common/text/ShortText';
 import TitleText from '../../../common/text/TitleText';
 import Text_Size from '../../../../constants/textScaling';
-import changeTextLetter from '../../../common/ChangeTextLetter';
+import changeTextLetter from '../../../common/changeTextLetter';
 import {format} from 'date-fns';
 
 interface Props {

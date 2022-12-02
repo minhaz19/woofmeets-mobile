@@ -9,7 +9,7 @@ import DescriptionText from '../../../../../../common/text/DescriptionText';
 import Colors from '../../../../../../../constants/Colors';
 import Text_Size from '../../../../../../../constants/textScaling';
 import BottomSpacing from '../../../../../../UI/BottomSpacing';
-import changeTextLetter from '../../../../../../common/ChangeTextLetter';
+import changeTextLetter from '../../../../../../common/changeTextLetter';
 
 const Overview = () => {
   const {overview, profileInfo} = useAppSelector(
