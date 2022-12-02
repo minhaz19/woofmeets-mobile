@@ -238,7 +238,7 @@ const SettingMain = (props: {
         color={Colors.alert}
       />
     ),
-    screenName: () => {
+    screenName: async () => {
       dispatch(logout());
       methods._get('/auth/logout');
       props.navigation.dispatch(

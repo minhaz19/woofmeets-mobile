@@ -63,7 +63,9 @@ const ActivityHeader = (props: {
     return new Date(date) > today;
   };
   const isDateNotFound = () => {
-    return allDates?.findIndex((f: any) => new Date(f.date) === today) === -1;
+    return (
+      allDates?.findIndex((f: any) => new Date(f.localDate) === today) === -1
+    );
   };
   const handleAccept = async () => {
     const result = await request(acceptEndpoint + props.opk);
@@ -84,24 +86,24 @@ const ActivityHeader = (props: {
     if (
       (proposedServiceInfo.serviceTypeId === 1 ||
         proposedServiceInfo.serviceTypeId === 2) &&
-      (!datePassed(allDates[allDates?.length - 1]?.date) ||
-        !isSameDate(allDates[allDates?.length - 1]?.date))
+      (!datePassed(allDates[allDates?.length - 1]?.localDate) ||
+        !isSameDate(allDates[allDates?.length - 1]?.localDate))
     ) {
       Alert.alert(
         `You can not complete appointment before ${formatDate(
-          allDates[allDates?.length - 1]?.date,
+          allDates[allDates?.length - 1]?.localDate,
           'iii LLL d yyyy',
         )}`,
       );
     } else if (
       (proposedServiceInfo.serviceTypeId !== 1 ||
         proposedServiceInfo.serviceTypeId !== 2) &&
-      (!datePassed(allDates[allDates?.length - 1]?.date) ||
-        !isSameDate(allDates[allDates?.length - 1]?.date))
+      (!datePassed(allDates[allDates?.length - 1]?.localDate) ||
+        !isSameDate(allDates[allDates?.length - 1]?.localDate))
     ) {
       Alert.alert(
         `You can not complete appointment before ${formatDate(
-          allDates[allDates?.length - 1]?.date,
+          allDates[allDates?.length - 1]?.localDate,
           'iii LLL d yyyy',
         )}`,
       );
@@ -170,30 +172,31 @@ const ActivityHeader = (props: {
   //   return await getRequest(cardEndpoint + props.opk);
   // };
   const today = new Date();
-  const isSameDate = (date: string) => {
-    const splitDate = date?.split('T')?.[0];
+  function isSameDate(date: string) {
     const formattedToday = formatDate(today, 'yyyy-MM-dd');
-    if (formattedToday === splitDate) {
+
+    if (date === formattedToday) {
       return true;
-    } else {
-      return false;
     }
-  };
+    return false;
+  }
+
   useEffect(() => {
     const callApi = async () => {
       const data = await getRequest(cardEndpoint + props.opk);
       const arr = data?.data?.data?.sort(function (x: any, y: any) {
         return new Date(x.date).getTime() - new Date(y.date).getTime();
       });
+      // console.log('arr', arr);
       if (arr?.length > 0) {
         setAllDates(arr);
         const findData = arr?.find(
           (d: any) =>
-            (isSameDate(d?.date) === true &&
+            (isSameDate(d?.localDate) === true &&
               (d?.startTime === null || d?.stopTime === null)) ||
-            (!isSameDate(d?.date) && d?.startTime === null),
+            (!isSameDate(d?.localDate) && d?.startTime === null),
         );
-        // ,
+        console.log('findData', findData);
         if (findData && findData !== undefined) {
           setCurrentDate(findData);
           props.setVisitId(findData.id);
@@ -203,7 +206,7 @@ const ActivityHeader = (props: {
     };
     callApi();
   }, [appointmentStart, props.opk]);
-
+  // appointmentStart, props.opk;
   useEffect(() => {
     if (
       proposedServiceInfo?.serviceTypeId === 1 ||
@@ -211,24 +214,24 @@ const ActivityHeader = (props: {
     ) {
       if (
         allDates?.[0]?.startTime === null &&
-        isSameDate(allDates?.[0]?.date)
+        isSameDate(allDates?.[0]?.localDate)
       ) {
         setAppointmentStart('START');
-        setCurrentDate(allDates?.[0]?.date);
+        setCurrentDate(allDates?.[0]);
       } else if (
         allDates?.[0]?.startTime !== null &&
-        isSameDate(allDates[allDates?.length - 1]?.date)
+        isSameDate(allDates[allDates?.length - 1]?.localDate)
       ) {
         setAppointmentStart('STOP');
       } else if (
         allDates?.[0]?.startTime !== null &&
-        datePassed(allDates[allDates?.length - 1]?.date)
+        datePassed(allDates[allDates?.length - 1]?.localDate)
       ) {
         setAppointmentStart('ENDED');
       } else if (
         allDates?.[0]?.startTime === null &&
         allDates?.[0]?.stopTime === null &&
-        isComming(allDates?.[0]?.date)
+        isComming(allDates?.[0]?.localDate)
       ) {
         setAppointmentStart('UPCOMING');
       } else if (allDates?.[0]?.startTime !== null) {
@@ -239,22 +242,26 @@ const ActivityHeader = (props: {
         setAppointmentStart('PAST');
       }
     } else {
-      if (currentDate.startTime === null && isSameDate(currentDate?.date)) {
+      if (
+        currentDate.startTime === null &&
+        isSameDate(currentDate?.localDate)
+      ) {
         setAppointmentStart('START');
       } else if (
         currentDate.startTime !== null &&
         currentDate.stopTime === null &&
-        isSameDate(currentDate?.date)
+        isSameDate(currentDate?.localDate)
       ) {
         setAppointmentStart('STOP');
       } else if (
         currentDate.startTime === null &&
-        isComming(currentDate?.date)
+        isComming(currentDate?.localDate)
       ) {
         setAppointmentStart('UPCOMING');
       } else if (
-        (currentDate?.startTime !== null && datePassed(currentDate?.date)) ||
-        (currentDate?.startTime === null && datePassed(currentDate?.date))
+        (currentDate?.startTime !== null &&
+          datePassed(currentDate?.localDate)) ||
+        (currentDate?.startTime === null && datePassed(currentDate?.localDate))
       ) {
         setAppointmentStart('PAST');
       } else if (isDateNotFound()) {
@@ -272,11 +279,11 @@ const ActivityHeader = (props: {
   ]);
 
   const handleStart = async () => {
-    if (!isSameDate(currentDate.date)) {
-      // currentDate?.date &&
+    if (!isSameDate(currentDate?.localDate)) {
+      // currentDate?.localDate &&
       Alert.alert(
         `You can not start appointment before or after ${formatDate(
-          new Date(currentDate?.date),
+          new Date(currentDate?.localDate),
           'iii LLL d yyyy',
         )}`,
       );
@@ -291,6 +298,7 @@ const ActivityHeader = (props: {
             appointmentId: currentDate?.id,
           });
         }
+        setCurrentDate(startRes?.data?.data);
         const payloadData: any = {
           sender: user?.userId,
           group: proposedServiceInfo?.messageGroupId,
@@ -298,11 +306,11 @@ const ActivityHeader = (props: {
           createdAt: new Date(),
         };
         socket.emit('send-message', payloadData);
-        setCurrentDate(startRes?.data?.data);
         setAppointmentStart('STOP');
       }
     }
   };
+
   const handleStop = async () => {
     const stopRes = await ssReqest(stopEndpoint + currentDate?.id, {
       stopTime: new Date().toISOString(),
@@ -344,13 +352,6 @@ const ActivityHeader = (props: {
       setSocket(tempSocket);
     }
   }, [socket]);
-  // const payloadData: any = {
-  //             sender: user?.id,
-  //             group: result.data.data.appointment.messageGroupId,
-  //             content: boardingSittingFT,
-  //             createdAt: new Date(),
-  //           };
-  //           socket.emit(‘send-message’, payloadData);
   return (
     <>
       {/* {loading && <AppActivityIndicator visible={true} />} */}
