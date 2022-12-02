@@ -85,7 +85,7 @@ const SitterDetails = ({route, navigation}) => {
         />
         <BulletPoints
           textStyle={{color: colors.descriptionText}}
-          text={`This is a chance to let your potential clients know how much animals mean to you and why you’re the ideal candidate to care for their pets. Be honest about your background with animals, and don’t embellish any of your experiences caring for them.`}
+          text={'This is a chance to let your potential clients know how much animals mean to you and why you’re the ideal candidate to care for their pets. Be honest about your background with animals, and don’t embellish any of your experiences caring for them.'}
         />
         <AppForm
           initialValues={useDetailsInitalValue()}
