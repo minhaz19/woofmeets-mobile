@@ -419,6 +419,8 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
+  - react-native-version-check (3.4.3):
+    - React
   - react-native-webview (11.23.1):
     - React-Core
   - React-perflogger (0.68.2)
@@ -494,6 +496,8 @@ PODS:
     - React-Core
   - RNCPicker (2.4.8):
     - React-Core
+  - RNExitApp (1.1.0):
+    - React
   - RNFBApp (15.7.1):
     - Firebase/CoreOnly (= 10.0.0)
     - React-Core
@@ -628,6 +632,7 @@ DEPENDENCIES:
   - react-native-maps (from `../node_modules/react-native-maps`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-version-check (from `../node_modules/react-native-version-check`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -645,6 +650,7 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
+  - RNExitApp (from `../node_modules/react-native-exit-app`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -762,6 +768,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-version-check:
+    :path: "../node_modules/react-native-version-check"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-perflogger:
@@ -796,6 +804,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCPicker:
     :path: "../node_modules/@react-native-picker/picker"
+  RNExitApp:
+    :path: "../node_modules/react-native-exit-app"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBMessaging:
@@ -884,6 +894,7 @@ SPEC CHECKSUMS:
   react-native-maps: 085f614cf14d3637b2048bb9752da5b1c27c2886
   react-native-netinfo: f80db8cac2151405633324cb645c60af098ee461
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
+  react-native-version-check: e85c2e21d0955b7cdfd91c0ddacc3edf14b7abd7
   react-native-webview: d33e2db8925d090871ffeb232dfa50cb3a727581
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162
@@ -901,6 +912,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
   RNCPicker: 0bf8ef8f7800524f32d2bb2a8bcadd53eda0ecd1
+  RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
   RNFBApp: 19b77166a07d45a1d36c41af77dd77127acb5a74
   RNFBMessaging: ee9b11e57b590306997b900b8860386eb10ae3a9
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
