@@ -2,9 +2,9 @@ import {create} from 'apisauce';
 import authStorage from '../utils/helpers/auth/storage';
 
 const apiClient = create({
-  baseURL: 'https://api.woofmeets.com/v1',
+  baseURL: 'https://api-stg.woofmeets.com/v1',
   // baseURL: 'https://woof-api.hirebeet.com/v1',
-  // baseURL: 'https://api.woofmeets.com/v1',
+  // baseURL: 'https://api-stg.woofmeets.com/v1',
   timeout: 30000,
 });
 

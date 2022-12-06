@@ -38,7 +38,6 @@ const ProviderInfo = ({
   const endDate = getMonthAndDat(
     new Date(availability && availability.dates.slice(-1)),
   );
-
   return (
     <View style={styles.container}>
       <HeaderText
@@ -56,10 +55,11 @@ const ProviderInfo = ({
       <View style={styles.shortInfo}>
         <ShortIconTitle
           Icon={MapMarker}
+          textStyle={{textTransform: 'uppercase'}}
           text={`${distance?.distance.toFixed(2)} ${distance?.unit}`}
         />
       </View>
-      {availability && (
+      {availability?.dates?.length > 0 && (
         <View style={styles.availableTime}>
           <ShortIconTitle
             Icon={RoundedCheckbox}
