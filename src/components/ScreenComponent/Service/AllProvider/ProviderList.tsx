@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ProviderList = ({item, onPress}: Props) => {
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   return (
     <Card
       style={{
@@ -37,7 +37,7 @@ const ProviderList = ({item, onPress}: Props) => {
           repeatClient={null}
         />
         <View style={styles.pricing}>
-          <ProviderPricing pricing={item.ServiceHasRates} />
+          <ProviderPricing provider={item?.provider} pricing={item?.ServiceHasRates} />
         </View>
       </TouchableOpacity>
     </Card>
