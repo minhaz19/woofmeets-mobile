@@ -196,7 +196,6 @@ const ActivityHeader = (props: {
               (d?.startTime === null || d?.stopTime === null)) ||
             (!isSameDate(d?.localDate) && d?.startTime === null),
         );
-        console.log('findData', findData);
         if (findData && findData !== undefined) {
           setCurrentDate(findData);
           props.setVisitId(findData.id);
