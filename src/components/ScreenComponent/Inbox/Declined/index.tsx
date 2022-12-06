@@ -57,7 +57,7 @@ const DeclinedStatus = ({statusType}: Props) => {
             <View style={styles.errorContainer}>
               <MessageNotSend
                 svg={<UpcomingSvg width={200} height={200} />}
-                title={'No messages in Delined inbox'}
+                title={'No messages in Declined inbox'}
                 description={
                   " You'll find messages here when you or sitter have cancelled or reject a booking"
                 }
@@ -197,7 +197,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                 // handlePress={() => setIsVisible(true)}
                 <MessageNotSend
                   svg={<UpcomingSvg width={200} height={200} />}
-                  title={'No messages in Delined inbox'}
+                  title={'No messages in Declined inbox'}
                   description={
                     " You'll find messages here when you or sitter have cancelled or reject a booking"
                   }
