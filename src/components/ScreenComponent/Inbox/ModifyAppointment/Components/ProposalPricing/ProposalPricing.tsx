@@ -12,6 +12,12 @@ import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
 const ProposalPricing = () => {
   const {pricingInfo, proposedServiceInfo} = useProposalPricing();
   const {colors} = useTheme();
+  const getCurrency = () => {
+    return proposedServiceInfo?.currency === null ||
+      proposedServiceInfo?.currency === 'usd'
+      ? '$'
+      : 'C$';
+  };
   return (
     <View>
       <TitleText text={'Pricing Summary'} textStyle={styles.titleText} />
@@ -46,7 +52,10 @@ const ProposalPricing = () => {
                       />
                     </View>
                     <View>
-                      <TitleText textStyle={{}} text={`$${item.subTotal}`} />
+                      <TitleText
+                        textStyle={{}}
+                        text={`${getCurrency()}${item.subTotal}`}
+                      />
                     </View>
                   </View>
                 ) : (
@@ -77,7 +86,9 @@ const ProposalPricing = () => {
                               : proposedServiceInfo.serviceTypeId === 5
                               ? ' walk'
                               : ''
-                          } @ $${Number(item?.rate?.amount)?.toFixed(2)} /${
+                          } @ ${getCurrency()}${Number(
+                            item?.rate?.amount,
+                          )?.toFixed(2)} /${
                             proposedServiceInfo.serviceTypeId === 1 ||
                             proposedServiceInfo.serviceTypeId === 2
                               ? ' night'
@@ -98,7 +109,7 @@ const ProposalPricing = () => {
                       <View>
                         <TitleText
                           textStyle={{}}
-                          text={`$${Number(
+                          text={`${getCurrency()}${Number(
                             item?.rate?.amount * item?.count,
                           )?.toFixed(2)}`}
                         />

@@ -248,7 +248,6 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
             };
-        console.log('helo', dropDogPayload);
         const response = await request(endpoint, dropDogPayload);
         if (response.ok) {
           navigation.dispatch(

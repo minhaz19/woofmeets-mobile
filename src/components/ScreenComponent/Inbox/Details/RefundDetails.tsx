@@ -24,7 +24,7 @@ const RefundDetails: FC<Props> = props => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
 
-  const {proposedServiceInfo, sLoader} = useAppSelector(
+  const {proposedServiceInfo, loading: sLoader} = useAppSelector(
     state => state.proposal,
   );
   const {proposalPricing, loading} = useAppSelector(
@@ -32,7 +32,8 @@ const RefundDetails: FC<Props> = props => {
   );
   useEffect(() => {
     dispatch(getProposalPricing(proposedServiceInfo?.appointmentOpk));
-  }, []);
+  }, [proposedServiceInfo?.appointmentOpk]);
+ 
   return (
     <>
       {loading || sLoader ? (

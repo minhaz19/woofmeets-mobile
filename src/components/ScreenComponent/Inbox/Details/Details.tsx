@@ -24,7 +24,6 @@ const Details: FC<Props> = props => {
   useEffect(() => {
     dispatch(getProposalPricing(proposedServiceInfo?.appointmentOpk));
   }, []);
-
   return (
     <View>
       <View style={styles.headerContainer}>

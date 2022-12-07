@@ -94,7 +94,7 @@ const ShowAllReport = (props: {
                         <DescriptionText
                           text={
                             'Generate Report at: ' +
-                            formatDate(item?.submitTime, 'iii LLL d')
+                            formatDate(item?.submitTime, 'iii LLL d hh:mm aa ')
                           }
                         />
                       </View>

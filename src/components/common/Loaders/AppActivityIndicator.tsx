@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#rgba(0, 0, 0, 0.5)',
     zIndex: 9999,
   },
-  loaderStyle: {width: '50%'},
+  loaderStyle: {width: '30%'},
 });
 
 export default AppActivityIndicator;

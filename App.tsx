@@ -31,7 +31,7 @@ Foundation.loadFont();
 // FontAwesome5.loadFont();
 
 const App = () => {
-  ForceUpdates();
+  // ForceUpdates();
   return (
     <Provider store={store}>
       <Splash />

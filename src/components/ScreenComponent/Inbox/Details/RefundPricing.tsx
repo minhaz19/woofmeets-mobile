@@ -18,6 +18,12 @@ interface Props {
 const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
   const {colors} = useTheme();
   const {user} = useAppSelector(state => state.whoAmI);
+  const getCurrency = () => {
+    return proposedServiceInfo?.currency === null ||
+      proposedServiceInfo?.currency === 'usd'
+      ? '$'
+      : 'C$';
+  };
   return (
     <View>
       <View
@@ -40,7 +46,7 @@ const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
                 textStyle={styles.priceTextHeader}
               />
               <HeaderText
-                text={`$${item.count * item?.rate.amount}`}
+                text={`${getCurrency()}${item.count * item?.rate.amount}`}
                 textStyle={styles.priceText}
               />
             </View>
@@ -62,7 +68,7 @@ const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
                   : proposedServiceInfo.serviceTypeId === 5
                   ? ' walk'
                   : ''
-              } @ $${item?.rate.amount} /${
+              } @ ${getCurrency()}${item?.rate.amount} /${
                 proposedServiceInfo.serviceTypeId === 1 ||
                 proposedServiceInfo.serviceTypeId === 2
                   ? ' night'
@@ -90,7 +96,7 @@ const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
                 textStyle={styles.priceTextHeader}
               />
               <HeaderText
-                text={`$${
+                text={`${getCurrency()}${
                   proposalPricing?.sixtyMinutesRate?.count *
                   proposalPricing?.sixtyMinutesRate?.rate?.amount
                 }`}
@@ -104,7 +110,11 @@ const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
             />
 
             <DescriptionText
-              text={`${proposalPricing?.sixtyMinutesRate?.count} visit @ $${proposalPricing?.sixtyMinutesRate?.rate?.amount} / visit`}
+              text={`${
+                proposalPricing?.sixtyMinutesRate?.count
+              } visit @ ${getCurrency()}${
+                proposalPricing?.sixtyMinutesRate?.rate?.amount
+              } / visit`}
               textStyle={{color: colors.descriptionText, lineHeight: 20}}
             />
           </View>
@@ -125,14 +135,16 @@ const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
         />
         {user?.id === proposedServiceInfo?.userId ? (
           <HeaderText
-            text={`$${proposalPricing?.subTotal}`}
+            text={`${getCurrency()}${proposalPricing?.subTotal}`}
             textStyle={{
               fontSize: Text_Size.Text_2,
             }}
           />
         ) : (
           <HeaderText
-            text={`$${proposalPricing?.providerFee?.providerTotal}`}
+            text={`${getCurrency()}${
+              proposalPricing?.providerFee?.providerTotal
+            }`}
             textStyle={{
               fontSize: Text_Size.Text_2,
             }}
@@ -153,18 +165,24 @@ const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
           {user?.id === proposedServiceInfo?.userId ? (
             <>
               <ShortText
-                text={` ( + ) ${proposalPricing?.serviceChargeInParcentage}% of $${proposalPricing?.subTotal}`}
+                text={` ( + ) ${
+                  proposalPricing?.serviceChargeInParcentage
+                }% of ${getCurrency()}${proposalPricing?.subTotal}`}
               />
             </>
           ) : (
             <ShortText
-              text={` ( - ) ${proposalPricing?.providerFee?.subscriptionFeeInParcentage}% of $${proposalPricing?.providerFee?.providerTotal}`}
+              text={` ( - ) ${
+                proposalPricing?.providerFee?.subscriptionFeeInParcentage
+              }% of ${getCurrency()}${
+                proposalPricing?.providerFee?.providerTotal
+              }`}
             />
           )}
         </View>
         {user?.id === proposedServiceInfo?.userId ? (
           <HeaderText
-            text={`$${(
+            text={`${getCurrency()}${(
               proposalPricing?.total - proposalPricing?.subTotal
             ).toFixed(2)}`}
             textStyle={{
@@ -173,7 +191,7 @@ const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
           />
         ) : (
           <HeaderText
-            text={`$${proposalPricing?.providerFee?.subscriptionFee?.toFixed(
+            text={`${getCurrency()}${proposalPricing?.providerFee?.subscriptionFee?.toFixed(
               2,
             )}`}
             textStyle={{
@@ -197,14 +215,16 @@ const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
         />
         {user?.id === proposedServiceInfo?.userId ? (
           <HeaderText
-            text={`$${proposalPricing?.total}`}
+            text={`${getCurrency()}${proposalPricing?.total}`}
             textStyle={{
               fontSize: Text_Size.Text_2,
             }}
           />
         ) : (
           <HeaderText
-            text={`$${proposalPricing?.providerFee?.providerTotal}`}
+            text={`${getCurrency()}${
+              proposalPricing?.providerFee?.providerTotal
+            }`}
             textStyle={{
               fontSize: Text_Size.Text_2,
             }}
@@ -263,7 +283,7 @@ const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
             />
             {user?.id === proposedServiceInfo?.userId ? (
               <HeaderText
-                text={`$${Number(
+                text={`${getCurrency()}${Number(
                   proposedServiceInfo?.refundDetails?.userAmount,
                 )?.toFixed(2)}`}
                 textStyle={{
@@ -273,7 +293,7 @@ const RefundPricing = ({proposalPricing, proposedServiceInfo}: Props) => {
               />
             ) : (
               <HeaderText
-                text={`$${Number(
+                text={`${getCurrency()}${Number(
                   proposedServiceInfo?.refundDetails?.providerAmount,
                 )?.toFixed(2)}`}
                 textStyle={{
