@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, ScrollView, Platform} from 'react-native';
+import {StyleSheet, View, ScrollView, Platform, Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import PhotoGalleryList from '../../../components/common/ImagePicker/PhotoGalleryList';
 import HeaderText from '../../../components/common/text/HeaderText';
@@ -21,7 +21,6 @@ import AppInput from '../../../components/common/Form/AppInput';
 import Text_Size from '../../../constants/textScaling';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {StackActions} from '@react-navigation/native';
 import TitleText from '../../../components/common/text/TitleText';
 import {formatDate} from '../../../components/common/formatDate';
@@ -30,8 +29,8 @@ interface Props {
   navigation: any;
 }
 const GenerateReport = ({navigation, route}: Props) => {
-  const walkTime = route?.params?.walkTime;
-  const distance = route?.params?.distance;
+  // const walkTime = route?.params?.walkTime;
+  // const distance = route?.params?.distance;
   const appointmentDateId = route?.params?.appointmentDateId;
   const reportInfo = route?.params?.reportInfo;
 
@@ -131,73 +130,104 @@ const GenerateReport = ({navigation, route}: Props) => {
     });
 
     const endPoint = '/appointment/card/create';
-    const formattedData =
-      proposedServiceInfo.serviceTypeId === 5
-        ? {
-            appointmentId: proposedServiceInfo?.billing[0]?.appointmentId,
-            appointmentDateId:
-              appointmentDateId !== null && appointmentDateId !== undefined
-                ? appointmentDateId
-                : reportInfo.id,
-            images: photo,
-            petsData: petsArray,
-            medication: isMedication,
-            additionalNotes: isAdditionalNotes,
-            // totalWalkTime: walkTime,
-            // distance: distance,
-            distanceUnit: 'Miles',
-            // generateTime: new Date(reportStartTime).toISOString(),
-            submitTime: new Date().toISOString(),
+
+    Alert.alert('Send Report', 'Are you sure you want to send report info', [
+      {
+        text: 'No',
+        onPress: () => {},
+      },
+      {
+        text: 'Yes',
+        onPress: async () => {
+          const formattedData =
+            proposedServiceInfo.serviceTypeId === 5
+              ? {
+                  appointmentId: proposedServiceInfo?.billing[0]?.appointmentId,
+                  appointmentDateId:
+                    appointmentDateId !== null &&
+                    appointmentDateId !== undefined
+                      ? appointmentDateId
+                      : reportInfo.id,
+                  images: photo,
+                  petsData: petsArray,
+                  medication: isMedication,
+                  additionalNotes: isAdditionalNotes,
+                  // totalWalkTime: walkTime,
+                  // distance: distance,
+                  distanceUnit: 'Miles',
+                  // generateTime: new Date(reportStartTime).toISOString(),
+                  submitTime: new Date().toISOString(),
+                }
+              : {
+                  appointmentId: reportInfo?.appointmentId,
+                  appointmentDateId: reportInfo?.id,
+                  images: photo,
+                  petsData: petsArray,
+                  medication: isMedication,
+                  // generateTime: reportInfo?.startTime,
+                  submitTime: new Date().toISOString(),
+                  additionalNotes: isAdditionalNotes,
+                };
+          const result = await reportRequest(endPoint, formattedData);
+          if (result?.ok) {
+            navigation.dispatch(
+              StackActions.replace('ActivityScreen', {
+                appointmentOpk: proposedServiceInfo?.appointmentOpk,
+                screen: 'Inbox',
+              }),
+            );
           }
-        : {
-            appointmentId: reportInfo?.appointmentId,
-            appointmentDateId: reportInfo?.id,
-            images: photo,
-            petsData: petsArray,
-            medication: isMedication,
-            // generateTime: reportInfo?.startTime,
-            submitTime: new Date().toISOString(),
-            additionalNotes: isAdditionalNotes,
-          };
-    const result = await reportRequest(endPoint, formattedData);
-    if (result?.ok) {
-      navigation.dispatch(
-        StackActions.replace('ActivityScreen', {
-          appointmentOpk: proposedServiceInfo?.appointmentOpk,
-          screen: 'Inbox',
-        }),
-      );
-    }
+        },
+      },
+    ]);
   };
 
   // send empty report card
   const handleEmptyReportCard = async () => {
     const endPoint = '/appointment/card/create';
-    const formattedData =
-      proposedServiceInfo.serviceTypeId === 5
-        ? {
-            appointmentId: proposedServiceInfo?.billing[0]?.appointmentId,
-            appointmentDateId:
-              appointmentDateId !== null && appointmentDateId !== undefined
-                ? appointmentDateId
-                : reportInfo.id,
-            submitTime: new Date().toISOString(),
-          }
-        : {
-            appointmentId: reportInfo?.appointmentId,
-            appointmentDateId: reportInfo?.id,
-            submitTime: new Date().toISOString(),
-          };
-    const result = await reportEmptyRequest(endPoint, formattedData);
-    if (result?.ok) {
-      navigation.dispatch(
-        StackActions.replace('ActivityScreen', {
-          appointmentOpk: proposedServiceInfo?.appointmentOpk,
-          screen: 'Inbox',
-        }),
-      );
-    }
+    Alert.alert(
+      'Send Empty Report',
+      'Are you sure you want to send empty report',
+      [
+        {
+          text: 'No',
+          onPress: () => {},
+        },
+        {
+          text: 'Yes',
+          onPress: async () => {
+            const formattedData =
+              proposedServiceInfo.serviceTypeId === 5
+                ? {
+                    appointmentId:
+                      proposedServiceInfo?.billing[0]?.appointmentId,
+                    appointmentDateId:
+                      appointmentDateId !== null &&
+                      appointmentDateId !== undefined
+                        ? appointmentDateId
+                        : reportInfo.id,
+                    submitTime: new Date().toISOString(),
+                  }
+                : {
+                    appointmentId: reportInfo?.appointmentId,
+                    appointmentDateId: reportInfo?.id,
+                    submitTime: new Date().toISOString(),
+                  };
+            const result = await reportEmptyRequest(endPoint, formattedData);
+            if (result?.ok) {
+              navigation.dispatch(
+                StackActions.replace('ActivityScreen', {
+                  appointmentOpk: proposedServiceInfo?.appointmentOpk,
+                  screen: 'Inbox',
+                }),
+              );
+            }
+          },
+        },
+      ],
+    );
   };
+
   return (
     <>
       <ScrollView
@@ -303,7 +333,7 @@ const GenerateReport = ({navigation, route}: Props) => {
               ...btnStyles.containerStyleFullWidth,
               borderRadius: 8,
               marginRight: 10,
-              width: Platform.OS === 'android' ? '40%' : '49%',
+              width: Platform.OS === 'android' ? '40%' : '48%',
             }}
             titleStyle={btnStyles.titleStyle}
             onSelect={() => handleEmptyReportCard()}
@@ -315,7 +345,7 @@ const GenerateReport = ({navigation, route}: Props) => {
             containerStyle={{
               ...btnStyles.containerStyleFullWidth,
               borderRadius: 8,
-              width: '49%',
+              width: Platform.OS === 'android' ? '40%' : '48%',
             }}
             titleStyle={btnStyles.titleStyle}
             onSelect={() => handleReportCard()}

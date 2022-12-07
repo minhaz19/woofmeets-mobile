@@ -204,7 +204,6 @@ const ActivityHeader = (props: {
       const arr = data?.data?.data?.sort(function (x: any, y: any) {
         return new Date(x.date).getTime() - new Date(y.date).getTime();
       });
-      // console.log('arr', arr);
       if (arr?.length > 0) {
         setAllDates(arr);
         const findData = arr?.find(
@@ -328,72 +327,104 @@ const ActivityHeader = (props: {
         )}`,
       );
     } else {
-      const startRes = await ssReqest(startEndpoint + currentDate?.id, {
-        startTime: new Date().toISOString(),
-      });
-      if (startRes.ok) {
-        if (proposedServiceInfo.serviceTypeId === 5) {
-          navigation.navigate('ReportCardInitial', {
-            screen: 'InboxNavigator',
-            appointmentId: currentDate?.id,
-          });
-        }
-        setCurrentDate(startRes?.data?.data);
-        const payloadData: any = {
-          sender: user?.userId,
-          group: proposedServiceInfo?.messageGroupId,
-          content: `${proposedServiceInfo.providerName} has started appointment`,
-          createdAt: new Date(),
-        };
-        socket.emit('send-message', payloadData);
-        setAppointmentStart('STOP');
-      }
+      Alert.alert(
+        'Start Appointment',
+        'Are you sure you want to start this appointment',
+        [
+          {
+            text: 'No',
+            onPress: () => {},
+          },
+          {
+            text: 'Yes',
+            onPress: async () => {
+              const startRes = await ssReqest(startEndpoint + currentDate?.id, {
+                startTime: new Date().toISOString(),
+              });
+              if (startRes.ok) {
+                if (proposedServiceInfo.serviceTypeId === 5) {
+                  navigation.navigate('ReportCardInitial', {
+                    screen: 'InboxNavigator',
+                    appointmentId: currentDate?.id,
+                  });
+                }
+                setCurrentDate(startRes?.data?.data);
+                const payloadData: any = {
+                  sender: user?.userId,
+                  group: proposedServiceInfo?.messageGroupId,
+                  content: `${proposedServiceInfo.providerName} has started appointment`,
+                  createdAt: new Date(),
+                };
+                socket.emit('send-message', payloadData);
+                setAppointmentStart('STOP');
+              }
+            },
+          },
+        ],
+      );
     }
   };
 
   const handleStop = async () => {
-    const stopId =
-      proposedServiceInfo?.serviceTypeId === 1 ||
-      proposedServiceInfo?.serviceTypeId === 2
-        ? allDates?.[1].id
-        : currentDate?.id;
-    const stopRes = await ssReqest(stopEndpoint + stopId, {
-      stopTime: new Date().toISOString(),
-    });
+    Alert.alert(
+      'Stop Appointment',
+      'Are you sure you want to stop this appointment',
+      [
+        {
+          text: 'No',
+          onPress: () => {},
+        },
+        {
+          text: 'Yes',
+          onPress: async () => {
+            const stopId =
+              proposedServiceInfo?.serviceTypeId === 1 ||
+              proposedServiceInfo?.serviceTypeId === 2
+                ? allDates?.[1].id
+                : currentDate?.id;
+            const stopRes = await ssReqest(stopEndpoint + stopId, {
+              stopTime: new Date().toISOString(),
+            });
 
-    if (stopRes.ok) {
-      const payloadData: any = {
-        sender: user?.userId,
-        group: proposedServiceInfo?.messageGroupId,
-        content: `${proposedServiceInfo.providerName} has completed appointment`,
-        createdAt: new Date(),
-      };
-      socket.emit('send-message', payloadData);
-      setAppointmentStart('START');
+            if (stopRes.ok) {
+              const payloadData: any = {
+                sender: user?.userId,
+                group: proposedServiceInfo?.messageGroupId,
+                content: `${proposedServiceInfo.providerName} has completed appointment`,
+                createdAt: new Date(),
+              };
+              socket.emit('send-message', payloadData);
+              setAppointmentStart('START');
 
-      const result = await getRequest(
-        `${
-          checkReport +
-          stopRes?.data?.data.appointmentId +
-          '/' +
-          stopRes?.data?.data.id
-        }`,
-      );
-      if (result?.ok && !result.data.data.cardFound) {
-        navigation.navigate('GenerateReport', {
-          screen: 'InboxNavigator',
-          reportInfo: stopRes.data.data,
-        });
-      } else if (result?.ok && result?.data?.data.cardFound) {
-        Alert.alert('Appointment complete and report has been generated');
-      }
+              const result = await getRequest(
+                `${
+                  checkReport +
+                  stopRes?.data?.data.appointmentId +
+                  '/' +
+                  stopRes?.data?.data.id
+                }`,
+              );
+              if (result?.ok && !result.data.data.cardFound) {
+                navigation.navigate('GenerateReport', {
+                  screen: 'InboxNavigator',
+                  reportInfo: stopRes.data.data,
+                });
+              } else if (result?.ok && result?.data?.data.cardFound) {
+                Alert.alert(
+                  'Appointment complete and report has been generated',
+                );
+              }
 
-      setCurrentDate(stopRes?.data?.data);
-    }
+              setCurrentDate(stopRes?.data?.data);
+            }
+          },
+        },
+      ],
+    );
   };
   const handleStatus = () => {
     if (appointmentStart === 'UPCOMING') {
-      Alert.alert('You appointment is comming soon');
+      Alert.alert('You appointment is coming soon');
     } else if (appointmentStart === 'NOAPPOINTMENT') {
       Alert.alert('You have no appointment on this particular day');
     } else if (appointmentStart === 'INPROGRESS') {

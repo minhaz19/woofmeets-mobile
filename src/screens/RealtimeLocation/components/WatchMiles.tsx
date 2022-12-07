@@ -88,7 +88,6 @@ const WatchMiles = ({setTrackLocation, trackLocation}: Props) => {
             titleStyle={btnStyles.titleStyle}
             onSelect={() => {
               setTrackLocation(!trackLocation);
-              //   console.log('hello');
             }}
           />
         </View>

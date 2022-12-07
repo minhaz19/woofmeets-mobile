@@ -26,7 +26,6 @@ const ServiceCheckbox = ({
   onPress,
   control,
 }: Props) => {
-  // console.log(active);
   return (
     <View>
       <Controller
