@@ -72,7 +72,7 @@ const ShowAllReport = (props: {
                       props.navigation.navigate('ReportCard', {
                         id: item?.id,
                         serviceTypeId: proposedServiceInfo?.serviceTypeId,
-                        appointmentId: item.appointmentDateId,
+                        appointmentId: item?.appointmentDateId,
                       })
                     }>
                     <View

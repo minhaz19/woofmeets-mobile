@@ -54,7 +54,7 @@ const Services = (props: any) => {
             }}
             pricingD={pricingD}
             showRate={activeIndex[inde]}
-            currencyCode={providerProfile?.provider?.address?.country?.currencyCode}
+            // currencyCode={providerProfile?.provider?.address?.country?.currencyCode}
           />
         ))}
       </View>

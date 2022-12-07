@@ -10,7 +10,7 @@ import Text_Size from '../../../../../constants/textScaling';
 import changeTextLetter from '../../../../common/changeTextLetter';
 
 const ServiceInput = ({...otherProps}) => {
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   return (
     <View style={styles.mainContainer}>
       <View style={styles.rootContainer}>

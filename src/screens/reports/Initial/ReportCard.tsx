@@ -16,6 +16,7 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 import Text_Size from '../../../constants/textScaling';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
 import {useAppSelector} from '../../../store/store';
+import {formatDate} from '../../../components/common/formatDate';
 
 interface Props {
   navigation: {
@@ -52,6 +53,7 @@ const ReportCard = ({navigation, route}: Props) => {
   useEffect(() => {
     handleSingleReport();
   }, []);
+
   return (
     <>
       {(loading || mapLoading) && (
@@ -116,24 +118,37 @@ const ReportCard = ({navigation, route}: Props) => {
           </>
         )}
 
+        {singleReportData?.submitTime && (
+          <HeaderText
+            textStyle={{marginHorizontal: 15, marginTop: 15}}
+            text={
+              'Generate Report at: ' +
+              formatDate(singleReportData?.submitTime, 'iii LLL d hh:mm a')
+            }
+          />
+        )}
         <HeaderText
           text={'Activities'}
           textStyle={{marginHorizontal: 15, marginTop: 15, marginBottom: 10}}
         />
         {
           <View>
-            {singleReportData?.petsData?.map((item: any) => (
-              <ReportSingleCard
-                key={item?.petId}
-                id={item?.petId}
-                food={item?.food}
-                poo={item?.poo}
-                pee={item?.pee}
-                water={item?.water}
-                title={item?.petName}
-                image={item?.image}
-              />
-            ))}
+            {singleReportData?.petsData?.length > 0 ? (
+              singleReportData?.petsData?.map((item: any) => (
+                <ReportSingleCard
+                  key={item?.petId}
+                  id={item?.petId}
+                  food={item?.food}
+                  poo={item?.poo}
+                  pee={item?.pee}
+                  water={item?.water}
+                  title={item?.petName}
+                  image={item?.image}
+                />
+              ))
+            ) : (
+              <DescriptionText text="N/A" />
+            )}
           </View>
         }
         <View
@@ -156,7 +171,7 @@ const ReportCard = ({navigation, route}: Props) => {
             text={
               singleReportData?.additionalNotes
                 ? singleReportData?.additionalNotes
-                : 'No notes in this report'
+                : 'No additional notes in this report'
             }
           />
         </View>

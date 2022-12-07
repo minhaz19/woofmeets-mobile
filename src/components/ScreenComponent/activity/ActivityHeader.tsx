@@ -104,7 +104,6 @@ const ActivityHeader = (props: {
   const handleRegenerate = async () => {
     setRegenerateModal(true);
   };
-
   const handleComplete = () => {
     if (
       (proposedServiceInfo.serviceTypeId === 1 ||

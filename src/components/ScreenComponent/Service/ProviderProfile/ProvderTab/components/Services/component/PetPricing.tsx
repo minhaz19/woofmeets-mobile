@@ -10,7 +10,7 @@ import {useAppSelector} from '../../../../../../../../store/store';
 interface Props {
   onPress: () => void;
   showRate: boolean;
-  currencyCode: string;
+  // currencyCode: string;
   pricingD: {
     Icon: (props: SvgProps) => JSX.Element;
     sittingType: string;

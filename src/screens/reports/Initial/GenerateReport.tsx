@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView, Platform} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import PhotoGalleryList from '../../../components/common/ImagePicker/PhotoGalleryList';
 import HeaderText from '../../../components/common/text/HeaderText';
@@ -17,27 +17,19 @@ import {
   setPhoto,
 } from '../../../store/slices/reportCard/reportCardSlice';
 import Colors from '../../../constants/Colors';
-// import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
-// import TitleText from '../../../components/common/text/TitleText';
-// import {ClockSvg} from '../../../assets/svgs/SVG_LOGOS';
-// import ReportTimePicker from './ReportTimePicker';
 import AppInput from '../../../components/common/Form/AppInput';
 import Text_Size from '../../../constants/textScaling';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
-// import CalendarInput from '../../../components/ScreenComponent/Service/FilterProvider/CalendarInput';
-// import DateRange from '../../../components/common/DateRange';
 import {StackActions} from '@react-navigation/native';
 import TitleText from '../../../components/common/text/TitleText';
+import {formatDate} from '../../../components/common/formatDate';
 interface Props {
   route: any;
   navigation: any;
 }
 const GenerateReport = ({navigation, route}: Props) => {
-  // const [reportStartTime, setReportStartTime] = useState<any>(null);
-  // const [reportEndTime, setReportEndTime] = useState<string>('');
-  // const [startDateVisible, setStartDateVisible] = useState(false);
   const walkTime = route?.params?.walkTime;
   const distance = route?.params?.distance;
   const appointmentDateId = route?.params?.appointmentDateId;
@@ -45,7 +37,6 @@ const GenerateReport = ({navigation, route}: Props) => {
 
   const [isMedication, setIsMedication] = useState('');
   const [isAdditionalNotes, setIsAdditionalNotes] = useState('');
-  // const [OpenDropIn, setOpenDropIn] = useState(false);
 
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
@@ -53,16 +44,14 @@ const GenerateReport = ({navigation, route}: Props) => {
     useAppSelector((state: any) => state?.reportCard);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
 
-  // const handleDropIn = () => {
-  //   setOpenDropIn(!OpenDropIn);
-  //   // setOpenDropOut(false);
-  // };
-
   // methods for api call
   const {request: uploadRequest, loading: uploadLoading} = useApi(
     methods._post,
   );
   const {request: reportRequest, loading: reportLoading} = useApi(
+    methods._post,
+  );
+  const {request: reportEmptyRequest, loading: reportEmptyLoading} = useApi(
     methods._post,
   );
   //Remove photo
@@ -166,11 +155,40 @@ const GenerateReport = ({navigation, route}: Props) => {
             images: photo,
             petsData: petsArray,
             medication: isMedication,
-            generateTime: reportInfo?.startTime,
-            submitTime: reportInfo?.stopTime,
+            // generateTime: reportInfo?.startTime,
+            submitTime: new Date().toISOString(),
             additionalNotes: isAdditionalNotes,
           };
     const result = await reportRequest(endPoint, formattedData);
+    if (result?.ok) {
+      navigation.dispatch(
+        StackActions.replace('ActivityScreen', {
+          appointmentOpk: proposedServiceInfo?.appointmentOpk,
+          screen: 'Inbox',
+        }),
+      );
+    }
+  };
+
+  // send empty report card
+  const handleEmptyReportCard = async () => {
+    const endPoint = '/appointment/card/create';
+    const formattedData =
+      proposedServiceInfo.serviceTypeId === 5
+        ? {
+            appointmentId: proposedServiceInfo?.billing[0]?.appointmentId,
+            appointmentDateId:
+              appointmentDateId !== null && appointmentDateId !== undefined
+                ? appointmentDateId
+                : reportInfo.id,
+            submitTime: new Date().toISOString(),
+          }
+        : {
+            appointmentId: reportInfo?.appointmentId,
+            appointmentDateId: reportInfo?.id,
+            submitTime: new Date().toISOString(),
+          };
+    const result = await reportEmptyRequest(endPoint, formattedData);
     if (result?.ok) {
       navigation.dispatch(
         StackActions.replace('ActivityScreen', {
@@ -185,70 +203,16 @@ const GenerateReport = ({navigation, route}: Props) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={[styles.container, {backgroundColor: Colors.iosBG}]}>
-        <View
-          style={[
-            styles.slotContainer,
-            {
-              backgroundColor: colors.backgroundColor,
-            },
-          ]}>
-          {/* <AppTouchableOpacity
-            style={[
-              styles.slot,
-              {
-                backgroundColor: Colors.border,
-              },
-            ]}
-            onPress={() => setStartDateVisible(!startDateVisible)}>
-            <View>
-              <HeaderText textStyle={styles.done} text={'Start and End Time'} />
-              <TitleText
-                textStyle={{fontSize: Text_Size.Text_12}}
-                text={
-                  reportStartTime !== ''
-                    ? 'Start:' + reportStartTime
-                    : 'Tap to start'
-                }
-              />
-              {reportEndTime !== '' && (
-                <TitleText
-                  textStyle={{fontSize: Text_Size.Text_12}}
-                  text={'End:' + reportEndTime}
-                />
-              )}
-            </View>
-            <View style={styles.iconContainer}>
-              <ClockSvg fill="black" />
-            </View>
-          </AppTouchableOpacity>
-          <ReportTimePicker
-            visible={startDateVisible}
-            setVisible={setStartDateVisible}
-            title={'Start and End time slot ⏰'}
-            startName={'reportStartTime'}
-            endName={'reportEndTime'}
-            reportStartTime={reportStartTime}
-            reportEndTime={reportEndTime}
-            setReportStartTime={setReportStartTime}
-            setReportEndTime={setReportEndTime}
-          /> */}
-          {/* <HeaderText text="Start Date" textStyle={styles.label} />
-          <View style={{width: '48%'}}>
-            <CalendarInput
-              placeholder={'Start date'}
-              value={reportStartTime}
-              setOpenCal={handleDropIn}
-            />
-          </View>
-          {OpenDropIn && (
-            <DateRange
-              value={null}
-              setOpenCal={handleDropIn}
-              setTime={setReportStartTime}
-            />
-          )} */}
-        </View>
         <View>
+          <HeaderText
+            text={
+              'Generate Report for: ' +
+              formatDate(reportInfo?.localDate, 'LLL d yyyy') +
+              ' ' +
+              reportInfo?.visitStartTimeString
+            }
+            textStyle={{paddingVertical: 10, marginHorizontal: 15}}
+          />
           <HeaderText
             text="Activities"
             textStyle={{paddingVertical: 10, marginHorizontal: 15}}
@@ -320,23 +284,44 @@ const GenerateReport = ({navigation, route}: Props) => {
               onAddImage={handleAdd}
               handlePress={() => {}}
               marginTop={false}
+              deleteShow={false}
             />
           )}
         </View>
-        <View style={{marginHorizontal: '5%'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginHorizontal: '5%',
+          }}>
           <ButtonCom
-            title={'Send Report Card'}
+            title={'Send Empty Report'}
+            loading={reportEmptyLoading}
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={{
+              ...btnStyles.containerStyleFullWidth,
+              borderRadius: 8,
+              marginRight: 10,
+              width: Platform.OS === 'android' ? '40%' : '49%',
+            }}
+            titleStyle={btnStyles.titleStyle}
+            onSelect={() => handleEmptyReportCard()}
+          />
+          <ButtonCom
+            title={'Proceed'}
             loading={reportLoading}
             textAlignment={btnStyles.textAlignment}
             containerStyle={{
               ...btnStyles.containerStyleFullWidth,
               borderRadius: 8,
+              width: '49%',
             }}
             titleStyle={btnStyles.titleStyle}
             onSelect={() => handleReportCard()}
           />
-          <BottomSpacing />
         </View>
+        <BottomSpacing />
       </ScrollView>
     </>
   );
