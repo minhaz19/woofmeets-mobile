@@ -29,6 +29,7 @@ const providerProfileSlice = createSlice({
         state.error = null;
       })
       .addCase(getProviderProfile.fulfilled, (state, {payload}) => {
+        console.log(payload?.data?.provider, '::services::');
         state.loading = false;
         state.providerProfile = payload.data;
         state.profileInfo = payload.data.provider;
