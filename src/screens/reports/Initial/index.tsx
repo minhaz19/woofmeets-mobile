@@ -40,16 +40,17 @@ const ReportCardInitial = ({navigation, route}: Props) => {
         user: user.id,
         visit: appointmentId,
       });
-      if (result.ok) {
-        navigation.navigate('GenerateReport', {
-          screen: 'InboxNavigator',
-          distance: distance,
-          walkTime: walkTime,
-          appointmentDateId: appointmentId,
-        });
-      } else {
-        Alert.alert('Please generate your walk again...');
-      }
+      console.log('generate report', result);
+      // if (result.ok) {
+      //   navigation.navigate('GenerateReport', {
+      //     screen: 'InboxNavigator',
+      //     distance: distance,
+      //     walkTime: walkTime,
+      //     appointmentDateId: appointmentId,
+      //   });
+      // } else {
+      //   Alert.alert('Please generate your walk again...');
+      // }
     }
   };
   return (

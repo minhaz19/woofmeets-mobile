@@ -12,6 +12,7 @@ interface Props {
   onAddImage: (arg0: string) => void;
   handlePress: (arg: string) => void;
   marginTop?: boolean;
+  deleteShow?: boolean;
 }
 
 const PhotoGalleryList = ({
@@ -22,6 +23,7 @@ const PhotoGalleryList = ({
   onAddImage,
   handlePress,
   marginTop,
+  deleteShow,
 }: Props) => {
   const scrollRef = useRef<ScrollView | null>(null);
 
@@ -44,6 +46,7 @@ const PhotoGalleryList = ({
                 handlePress={() => handlePress(uri)}
                 onChangeImage={() => onRemoveImage(uri)}
                 marginTop={marginTop}
+                deleteShow={deleteShow}
               />
             </View>
           ))}

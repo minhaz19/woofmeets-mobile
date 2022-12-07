@@ -22,12 +22,14 @@ interface Props {
   onChangeImage: any;
   handlePress?: () => void;
   marginTop?: boolean;
+  deleteShow?: boolean;
 }
 const PhotoGallery = ({
   imageUri,
   handlePress,
   onChangeImage,
   marginTop = true,
+  deleteShow = true,
 }: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
@@ -66,16 +68,18 @@ const PhotoGallery = ({
               borderColor: Colors.primary,
             }}>
             <Image source={{uri: imageUri}} style={styles.image} />
-            <TouchableOpacity
-              style={[
-                styles.delete,
-                {
-                  backgroundColor: Colors.primaryLight,
-                },
-              ]}
-              onPress={handleDelete}>
-              <Delete width={18} height={18} fill={Colors.primary} />
-            </TouchableOpacity>
+            {deleteShow && (
+              <TouchableOpacity
+                style={[
+                  styles.delete,
+                  {
+                    backgroundColor: Colors.primaryLight,
+                  },
+                ]}
+                onPress={handleDelete}>
+                <Delete width={18} height={18} fill={Colors.primary} />
+              </TouchableOpacity>
+            )}
           </View>
         ) : (
           <>

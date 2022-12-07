@@ -6,7 +6,6 @@ import ShortText from '../../../components/common/text/ShortText';
 import TitleText from '../../../components/common/text/TitleText';
 import BookingCard from '../../../components/ScreenComponent/Provider/Home/BookingCard';
 import Colors from '../../../constants/Colors';
-import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 import {getProviderInprogressApnt} from '../../../store/slices/Appointment/Inbox/Provider/InProgress/getPInprogressApnt';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import subDays from 'date-fns/subDays';

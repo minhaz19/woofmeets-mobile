@@ -53,6 +53,7 @@ const RealtimeLocation = ({
     longitude: 0,
     coordinates: [],
   });
+  // console.log('user ', user);
   async function requestLocationPermission() {
     if (Platform.OS === 'ios') {
       const c = await Geolocation.requestAuthorization('whenInUse');
@@ -167,6 +168,7 @@ const RealtimeLocation = ({
     }
   }, [socket]);
   const callApi = (payloadData: any) => {
+    console.log('gnerate report payload', payloadData);
     return new Promise(resolve => socket.emit('update-location', payloadData));
   };
   useMemo(() => {
