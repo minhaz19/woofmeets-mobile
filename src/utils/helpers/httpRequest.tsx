@@ -1,7 +1,6 @@
-// const baseUrl = 'https://woof-api.hirebeet.com/v1';
-// const baseUrl = 'https://woof-api.hirebeet.com/v1'
-const baseUrl = 'https://woof-api.hirebeet.com/v1';
-export const msgUrl = 'https://msg.woofmeets.com';
-// export const baseUrlV = 'https://woof-api.hirebeet.com';
-export const baseUrlV = 'https://woof-api.hirebeet.com';
+import { API_MSG, API_URL } from "@env";
+
+const baseUrl = `${API_URL}/v1`;
+export const msgUrl = API_MSG;
+export const baseUrlV = API_URL;
 export default baseUrl;
