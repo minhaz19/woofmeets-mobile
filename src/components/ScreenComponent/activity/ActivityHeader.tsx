@@ -26,14 +26,20 @@ import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile
 import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
 import {io} from 'socket.io-client';
-// import {format} from 'date-fns';
-// import AppActivityIndicator from '../../common/Loaders/AppActivityIndicator';
+// import {
+//   dateEquOrPassed,
+//   datePassed,
+//   isComming,
+//   isDateNotFound,
+//   isSameDate,
+// } from '../../common/Dates/datesFunc';
 const acceptEndpoint = '/appointment/accept/proposal/';
 const completeEndpoint = '/appointment/complete/';
 const rejectEndpoint = '/appointment/proposal/reject/';
 const cardEndpoint = '/appointment/card/all-dates/';
 const startEndpoint = '/appointment/card/start-appointment/';
 const stopEndpoint = '/appointment/card/stop-appointment/';
+const checkReport = '/appointment/card/check/';
 const ActivityHeader = (props: {
   setIsDetailsModal: (arg0: boolean) => void;
   setIsThreeDotsModal: (arg0: boolean) => void;
@@ -43,11 +49,12 @@ const ActivityHeader = (props: {
 }) => {
   let navigation = useNavigation<any>();
   const {colors} = useTheme();
-  const {request: getRequest} = useApi(methods._get);
-  const {request} = useApi(methods._put);
+  const {request: getRequest, loading: getLoading} = useApi(methods._get);
+  const {request, loading: putLoading} = useApi(methods._put);
   const {request: ssReqest, loading} = useApi(methods._put);
   const dispatch = useAppDispatch();
   const [regenerateModal, setRegenerateModal] = useState(false);
+  const [otherDay, setOtherDay] = useState<any>({});
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const [currentDate, setCurrentDate] = useState<any>({});
   const [appointmentStart, setAppointmentStart] = useState('START');
@@ -55,16 +62,32 @@ const ActivityHeader = (props: {
   const user = useAppSelector(state => state.whoAmI);
   const timezone = proposedServiceInfo?.providerTimeZone;
   const [socket, setSocket] = useState<any>(null);
-
+  const today = new Date();
+  function isSameDate(date: string) {
+    if (
+      today.toDateString() === new Date(date?.replace(/-/g, '/')).toDateString()
+    ) {
+      return true;
+    }
+    return false;
+  }
+  const lessThenLastDate = (date: any) => {
+    return today < new Date(date?.replace(/-/g, '/'));
+  };
   const datePassed = (date: any) => {
-    return new Date(date) < today;
+    return new Date(date?.replace(/-/g, '/')) < today;
+  };
+  const dateEquOrPassed = (date: any) => {
+    return today >= new Date(date?.replace(/-/g, '/'));
   };
   const isComming = (date: any) => {
-    return new Date(date) > today;
+    return new Date(date?.replace(/-/g, '/')) > today;
   };
-  const isDateNotFound = () => {
+  const isDateNotFound = (allD: any) => {
     return (
-      allDates?.findIndex((f: any) => new Date(f.localDate) === today) === -1
+      allD?.findIndex(
+        (f: any) => new Date(f.localDate?.replace(/-/g, '/')) === today,
+      ) === -1
     );
   };
   const handleAccept = async () => {
@@ -86,8 +109,9 @@ const ActivityHeader = (props: {
     if (
       (proposedServiceInfo.serviceTypeId === 1 ||
         proposedServiceInfo.serviceTypeId === 2) &&
-      (!datePassed(allDates[allDates?.length - 1]?.localDate) ||
-        !isSameDate(allDates[allDates?.length - 1]?.localDate))
+      !dateEquOrPassed(allDates[allDates?.length - 1]?.localDate)
+      // (!datePassed(allDates[allDates?.length - 1]?.localDate) ||
+      //   !isSameDate(allDates[allDates?.length - 1]?.localDate))
     ) {
       Alert.alert(
         `You can not complete appointment before ${formatDate(
@@ -98,8 +122,7 @@ const ActivityHeader = (props: {
     } else if (
       (proposedServiceInfo.serviceTypeId !== 1 ||
         proposedServiceInfo.serviceTypeId !== 2) &&
-      (!datePassed(allDates[allDates?.length - 1]?.localDate) ||
-        !isSameDate(allDates[allDates?.length - 1]?.localDate))
+      !dateEquOrPassed(allDates[allDates?.length - 1]?.localDate)
     ) {
       Alert.alert(
         `You can not complete appointment before ${formatDate(
@@ -123,6 +146,13 @@ const ActivityHeader = (props: {
               if (r.ok) {
                 dispatch(getAppointmentStatus('PAID'));
                 dispatch(getProviderApnt('PAID'));
+                const payloadData: any = {
+                  sender: user?.userId,
+                  group: proposedServiceInfo?.messageGroupId,
+                  content: `${proposedServiceInfo.userName} has successfully ended the appointment`,
+                  createdAt: new Date(),
+                };
+                socket.emit('send-message', payloadData);
                 navigation.navigate('InboxNavigator');
               } else if (!r.ok) {
                 Alert.alert(r.data.message);
@@ -168,18 +198,6 @@ const ActivityHeader = (props: {
       await dispatch(getProviderServices(proposedServiceInfo?.providerOpk));
     }
   };
-  // const callApi = async () => {
-  //   return await getRequest(cardEndpoint + props.opk);
-  // };
-  const today = new Date();
-  function isSameDate(date: string) {
-    const formattedToday = formatDate(today, 'yyyy-MM-dd');
-
-    if (date === formattedToday) {
-      return true;
-    }
-    return false;
-  }
 
   useEffect(() => {
     const callApi = async () => {
@@ -192,20 +210,30 @@ const ActivityHeader = (props: {
         setAllDates(arr);
         const findData = arr?.find(
           (d: any) =>
-            (isSameDate(d?.localDate) === true &&
-              (d?.startTime === null || d?.stopTime === null)) ||
-            (!isSameDate(d?.localDate) && d?.startTime === null),
+            isSameDate(d?.localDate) &&
+            (d?.startTime === null || d?.stopTime === null),
         );
-        if (findData && findData !== undefined) {
+        if (findData === undefined) {
+          const findOtherDate = arr?.find(
+            (d: any) =>
+              !isSameDate(d?.localDate) &&
+              isComming(d?.localDate) &&
+              d?.startTime === null,
+          );
+          setOtherDay(findOtherDate);
+          props.setVisitId(findOtherDate.id);
+        } else if (
+          findData &&
+          findData !== undefined &&
+          isSameDate(findData.localDate)
+        ) {
           setCurrentDate(findData);
           props.setVisitId(findData.id);
-        } else {
         }
       }
     };
     callApi();
   }, [appointmentStart, props.opk]);
-  // appointmentStart, props.opk;
   useEffect(() => {
     if (
       proposedServiceInfo?.serviceTypeId === 1 ||
@@ -218,12 +246,16 @@ const ActivityHeader = (props: {
         setAppointmentStart('START');
         setCurrentDate(allDates?.[0]);
       } else if (
-        allDates?.[0]?.startTime !== null &&
-        isSameDate(allDates[allDates?.length - 1]?.localDate)
+        (allDates?.[1]?.stopTime === null &&
+          allDates?.[0]?.startTime !== null &&
+          isSameDate(allDates[allDates?.length - 1]?.localDate)) ||
+        (allDates?.[1]?.stopTime === null &&
+          allDates?.[0]?.startTime !== null &&
+          datePassed(allDates?.[1]?.localDate))
       ) {
         setAppointmentStart('STOP');
       } else if (
-        allDates?.[0]?.startTime !== null &&
+        allDates?.[0]?.startTime === null &&
         datePassed(allDates[allDates?.length - 1]?.localDate)
       ) {
         setAppointmentStart('ENDED');
@@ -233,28 +265,37 @@ const ActivityHeader = (props: {
         isComming(allDates?.[0]?.localDate)
       ) {
         setAppointmentStart('UPCOMING');
-      } else if (allDates?.[0]?.startTime !== null) {
+      } else if (
+        allDates?.[0]?.startTime !== null &&
+        allDates?.[1]?.stopTime === null &&
+        lessThenLastDate(allDates?.[1]?.localDate)
+      ) {
         setAppointmentStart('INPROGRESS');
-      } else if (isDateNotFound()) {
+      } else if (
+        isDateNotFound(allDates) &&
+        allDates?.[0]?.startTime !== null &&
+        allDates?.[1]?.stopTime !== null
+      ) {
         setAppointmentStart('NOAPPOINTMENT');
       } else {
         setAppointmentStart('PAST');
       }
     } else {
       if (
-        currentDate.startTime === null &&
+        currentDate?.startTime === null &&
         isSameDate(currentDate?.localDate)
       ) {
         setAppointmentStart('START');
       } else if (
-        currentDate.startTime !== null &&
-        currentDate.stopTime === null &&
+        currentDate?.startTime !== null &&
+        currentDate?.stopTime === null &&
         isSameDate(currentDate?.localDate)
       ) {
         setAppointmentStart('STOP');
       } else if (
-        currentDate.startTime === null &&
-        isComming(currentDate?.localDate)
+        (currentDate?.startTime === null &&
+          isComming(currentDate?.localDate)) ||
+        (otherDay?.startTime === null && isComming(otherDay?.localDate))
       ) {
         setAppointmentStart('UPCOMING');
       } else if (
@@ -263,7 +304,7 @@ const ActivityHeader = (props: {
         (currentDate?.startTime === null && datePassed(currentDate?.localDate))
       ) {
         setAppointmentStart('PAST');
-      } else if (isDateNotFound()) {
+      } else if (isDateNotFound(allDates)) {
         setAppointmentStart('NOAPPOINTMENT');
       } else {
         // setAppointmentStart('NOAPPOINTMENT');
@@ -274,6 +315,7 @@ const ActivityHeader = (props: {
     appointmentStart,
     today,
     currentDate,
+    otherDay,
     proposedServiceInfo?.serviceTypeId,
   ]);
 
@@ -311,9 +353,15 @@ const ActivityHeader = (props: {
   };
 
   const handleStop = async () => {
-    const stopRes = await ssReqest(stopEndpoint + currentDate?.id, {
+    const stopId =
+      proposedServiceInfo?.serviceTypeId === 1 ||
+      proposedServiceInfo?.serviceTypeId === 2
+        ? allDates?.[1].id
+        : currentDate?.id;
+    const stopRes = await ssReqest(stopEndpoint + stopId, {
       stopTime: new Date().toISOString(),
     });
+
     if (stopRes.ok) {
       const payloadData: any = {
         sender: user?.userId,
@@ -323,10 +371,24 @@ const ActivityHeader = (props: {
       };
       socket.emit('send-message', payloadData);
       setAppointmentStart('START');
-      navigation.navigate('GenerateReport', {
-        screen: 'InboxNavigator',
-        reportInfo: stopRes.data.data,
-      });
+
+      const result = await getRequest(
+        `${
+          checkReport +
+          stopRes?.data?.data.appointmentId +
+          '/' +
+          stopRes?.data?.data.id
+        }`,
+      );
+      if (result?.ok && !result.data.data.cardFound) {
+        navigation.navigate('GenerateReport', {
+          screen: 'InboxNavigator',
+          reportInfo: stopRes.data.data,
+        });
+      } else if (result?.ok && result?.data?.data.cardFound) {
+        Alert.alert('Appointment complete and report has been generated');
+      }
+
       setCurrentDate(stopRes?.data?.data);
     }
   };
@@ -547,7 +609,7 @@ const ActivityHeader = (props: {
                       }>
                       <TitleText
                         text={
-                          loading
+                          loading || getLoading
                             ? 'loading...'
                             : appointmentStart === 'START'
                             ? 'Start Appointment'
@@ -599,9 +661,10 @@ const ActivityHeader = (props: {
                       <View style={styles.divider} />
                       <TouchableOpacity
                         // style={{width: SCREEN_WIDTH / 5}}
+                        disabled={putLoading}
                         onPress={handleComplete}>
                         <TitleText
-                          text="Complete"
+                          text={putLoading ? 'loading...' : 'Complete'}
                           textStyle={{
                             ...styles.textStyle,
                             textAlign: 'center',
@@ -655,9 +718,10 @@ const ActivityHeader = (props: {
                       <View style={styles.divider} />
                       <TouchableOpacity
                         // style={{width: SCREEN_WIDTH / 5}}
+                        disabled={putLoading}
                         onPress={handleComplete}>
                         <TitleText
-                          text="Complete"
+                          text={putLoading ? 'loading..' : 'Complete'}
                           textStyle={{
                             ...styles.textStyle,
                             textAlign: 'center',

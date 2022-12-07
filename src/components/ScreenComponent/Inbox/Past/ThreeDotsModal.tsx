@@ -10,7 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../../../constants/Colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useAppSelector} from '../../../../store/store';
 
 interface Props {
@@ -19,39 +19,58 @@ interface Props {
   setModalVisible: (arg1: boolean) => void;
   isReviewed: any;
   appointmentId: any;
+  opk: string;
 }
 
 const ThreeDotsModal: FC<Props> = props => {
   const {colors} = useTheme();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  const {user} = useAppSelector(state => state.whoAmI);
   const modalData = [
     {
       id: 1,
+      name: 'Generate Report',
+      icon: (
+        <FontAwesome name="video-camera" size={24} color={Colors.primary} />
+      ),
+      screen: () => {
+        if (user?.id === proposedServiceInfo?.userId) {
+          Alert.alert('Pet owner can not generate report for appointment');
+        } else if (
+          proposedServiceInfo?.status !== 'PAID' &&
+          user?.provider?.id === proposedServiceInfo?.providerId
+        ) {
+          Alert.alert(
+            'You can only generate report once appointment is inprogress',
+          );
+        } else {
+          props.setIsThreeDotsModal(false);
+          navigation.navigate('ReportSlots', {
+            opk: props?.opk,
+          });
+        }
+      },
+    },
+    {
+      id: 2,
       name: 'Report Summary',
       icon: <Entypo name="documents" size={24} color={Colors.primary} />,
       screen: () => {
-        props.setIsThreeDotsModal(false);
-        navigation.navigate('ShowAllReport', {
-          screen: 'InboxNavigator',
-          appointmentOpk: proposedServiceInfo?.appointmentOpk,
-        });
+        if (proposedServiceInfo?.status === 'PROPOSAL') {
+          Alert.alert(
+            'You can not see report while appointment is in pending status',
+          );
+        } else {
+          props.setIsThreeDotsModal(false);
+          navigation.navigate('ShowAllReport', {
+            screen: 'InboxNavigator',
+            appointmentOpk: proposedServiceInfo?.appointmentOpk,
+          });
+        }
       },
     },
-    // {
-    //   id: 2,
-    //   name: 'Generate Report',
-    //   icon: (
-    //     <FontAwesome name="video-camera" size={24} color={Colors.primary} />
-    //   ),
-    //   screen: () => {
-    //     props.setIsThreeDotsModal(false);
-    //     navigation.navigate('GenerateReport', {
-    //       screen: 'InboxNavigator',
-    //       appointmentId: props.appointmentId,
-    //     });
-    //   },
-    // },
+
     {
       id: 3,
       name: props?.isReviewed?.length > 0 ? 'Already reviewed' : 'Review',

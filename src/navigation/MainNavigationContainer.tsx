@@ -58,6 +58,7 @@ import GenerateReport from '../screens/reports/Initial/GenerateReport';
 import ShowAllReport from '../screens/reports/ShowReport';
 import ReportCard from '../screens/reports/Initial/ReportCard';
 import AccountSetting from '../components/ScreenComponent/setting/Preference/AccountSetting';
+import ReportSlots from '../screens/reports/Initial/ReportSlots';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -624,6 +625,17 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="GenerateReport"
           component={GenerateReport}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Reports" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ReportSlots"
+          component={ReportSlots}
           options={({navigation}) => ({
             title: '',
             header: () => (

@@ -80,6 +80,7 @@ const providerProposalSlice = createSlice({
                 dropOffEndTime: modpayload.proposal.dropOffEndTime,
                 pickUpStartTime: modpayload.proposal.pickUpStartTime,
                 pickUpEndTime: modpayload.proposal.pickUpEndTime,
+                currency: modpayload.proposal.currency,
                 // proposalStartDate: modpayload.proposal.proposalStartDate,
                 // proposalEndDate: modpayload.proposal.proposalEndDate,
                 proposalStartDate: convertToLocalTZ(
@@ -186,6 +187,7 @@ const providerProposalSlice = createSlice({
                 review: modpayload.appointment.review,
                 messageGroupId: modpayload.appointment.messageGroupId,
                 refundDetails: modpayload.proposal.refundDetails,
+                currency: modpayload.proposal.currency,
               }
             : modpayload.appointment.providerService.serviceTypeId === 4
             ? {
@@ -250,6 +252,7 @@ const providerProposalSlice = createSlice({
                 providerTimeZone: modpayload.appointment.providerTimeZone,
                 refundDetails: modpayload.proposal.refundDetails,
                 messageGroupId: modpayload.appointment.messageGroupId,
+                currency: modpayload.proposal.currency,
               }
             : null;
       })
