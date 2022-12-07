@@ -129,7 +129,6 @@ Props) => {
     }
   }, [socket]);
   const callApi = (payloadData: any) => {
-    console.log('gnerate report payload', payloadData);
     return new Promise(resolve => socket.emit('update-location', payloadData));
   };
   useMemo(() => {

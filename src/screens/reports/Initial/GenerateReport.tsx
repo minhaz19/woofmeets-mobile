@@ -227,7 +227,6 @@ const GenerateReport = ({navigation, route}: Props) => {
       ],
     );
   };
-
   return (
     <>
       <ScrollView
@@ -235,12 +234,14 @@ const GenerateReport = ({navigation, route}: Props) => {
         style={[styles.container, {backgroundColor: Colors.iosBG}]}>
         <View>
           <HeaderText
-            text={
-              'Generate Report for: ' +
-              formatDate(reportInfo?.localDate, 'LLL d yyyy') +
-              ' ' +
-              reportInfo?.visitStartTimeString
-            }
+            text={`Generate Report for: ${formatDate(
+              reportInfo?.localDate,
+              'LLL d yyyy',
+            )} ${
+              reportInfo?.visitStartTimeString !== null
+                ? reportInfo?.visitStartTimeString
+                : ''
+            } `}
             textStyle={{paddingVertical: 10, marginHorizontal: 15}}
           />
           <HeaderText

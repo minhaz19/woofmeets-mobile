@@ -39,7 +39,6 @@ const WatchMiles = ({}: Props) => {
       clearInterval(interval);
     };
   }, [time, trackingStatus]);
-  console.log('time', trackingStatus, timee);
   return (
     <>
       <AppTouchableOpacity

@@ -24,7 +24,7 @@ const ReportSlots = ({route, navigation}: any) => {
       const arr = data?.data?.data?.sort(function (x: any, y: any) {
         return new Date(x.date).getTime() - new Date(y.date).getTime();
       });
-  
+
       if (arr?.length > 0) {
         setAllDates(arr);
       }
@@ -97,7 +97,7 @@ const ReportSlots = ({route, navigation}: any) => {
               borderBottomWidth: 1,
               borderBottomColor: isComming(item.localDate)
                 ? Colors.gray
-                : Colors.primary,
+                : Colors.primaryDif,
             }}
             onPress={() => handleGenRep(item)}>
             <TitleText

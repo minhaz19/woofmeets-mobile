@@ -146,7 +146,10 @@ const ReportCard = ({navigation, route}: Props) => {
                 />
               ))
             ) : (
-              <DescriptionText text="N/A" textStyle={{marginHorizontal: 15, marginBottom: 10}} />
+              <DescriptionText
+                text="N/A"
+                textStyle={{marginHorizontal: 15, marginBottom: 10}}
+              />
             )}
           </View>
         }

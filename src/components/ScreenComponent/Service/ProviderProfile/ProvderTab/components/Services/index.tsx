@@ -16,8 +16,7 @@ interface useActiveIndex {
 }
 const Services = (props: any) => {
   const {formattedServices, availabilityData, atHome} = useServices();
-  const {providerProfile} = useAppSelector(state => state.providerProfile);
-  console.log(providerProfile, 'kkkkk');
+  // const {providerProfile} = useAppSelector(state => state.providerProfile);
   const [activeIndex, setActiveIndex] = useState<useActiveIndex | any>({
     0: true,
     1: false,
