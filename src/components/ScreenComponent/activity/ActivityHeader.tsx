@@ -836,6 +836,7 @@ const ActivityHeader = (props: {
                 navigation.navigate('ReportCardInitial', {
                   screen: 'InboxNavigator',
                   appointmentId: currentDate?.id,
+                  reportInfo: currentDate,
                 });
               }}
               style={[

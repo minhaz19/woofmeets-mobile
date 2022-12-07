@@ -29,7 +29,7 @@ interface Props {
   route: any;
 }
 const ReportCardInitial = ({navigation, route}: Props) => {
-  const {appointmentId} = route?.params;
+  const {appointmentId, reportInfo} = route?.params;
   const [trackLocation, setTrackLocation] = useState(false);
   const [distance, setDistance] = useState(0);
   const [walkTime, setWalkTime] = useState('');
@@ -45,35 +45,21 @@ const ReportCardInitial = ({navigation, route}: Props) => {
         user: user.id,
         visit: appointmentId,
       });
-      console.log('generate report', result);
-      // if (result.ok) {
-      //   navigation.navigate('GenerateReport', {
-      //     screen: 'InboxNavigator',
-      //     distance: distance,
-      //     walkTime: walkTime,
-      //     appointmentDateId: appointmentId,
-      //   });
-      // } else {
-      //   Alert.alert('Please generate your walk again...');
-      // }
+      if (result.ok) {
+        navigation.navigate('GenerateReport', {
+          screen: 'InboxNavigator',
+          reportInfo: reportInfo,
+          distance: distance,
+          walkTime: walkTime,
+          appointmentDateId: appointmentId,
+        });
+      } else {
+        Alert.alert('Please generate your walk again...');
+      }
     }
   };
   return (
     <>
-      {/* <AppTouchableOpacity
-        style={styles.leftContainer}
-        onPress={() => {
-          navigation.goBack();
-        }}>
-        <Ionicons
-          name="ios-chevron-back"
-          size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
-          style={styles.iconStyle}
-          color={Colors.black}
-        />
-        <TitleText text={'Back'} textStyle={styles.backText} />
-      </AppTouchableOpacity> */}
-
       <ScrollView
         style={{flex: 1, backgroundColor: Colors.background}}
         showsVerticalScrollIndicator={false}>

@@ -10,7 +10,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../../../constants/Colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+// import FontAwesome from 'react-native-vector-icons/FontAwesome';
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useAppSelector} from '../../../../store/store';
 
 interface Props {
@@ -31,9 +32,7 @@ const ThreeDotsModal: FC<Props> = props => {
     {
       id: 1,
       name: 'Generate Report',
-      icon: (
-        <FontAwesome name="video-camera" size={24} color={Colors.primary} />
-      ),
+      icon: <MaterialIcons name="report" size={24} color={Colors.primary} />,
       screen: () => {
         if (user?.id === proposedServiceInfo?.userId) {
           Alert.alert('Pet owner can not generate report for appointment');
