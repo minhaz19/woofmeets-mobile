@@ -616,9 +616,10 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           component={ReportCardInitial}
           options={({navigation}) => ({
             title: '',
-            header: () => (
-              <HeaderWithBack navigation={navigation} title="Reports" />
-            ),
+            headerShown: false,
+            // header: () => (
+            //   <HeaderWithBack navigation={navigation} title="Reports" />
+            // ),
             backgroundColor: Colors.primary,
           })}
         />

@@ -53,6 +53,7 @@ import inprogressApntSlice from './slices/Appointment/Inbox/User/InProgress/inpr
 import proposalPricingSlice from './slices/Appointment/Details/proposalPricingSlice';
 import completedApntSlice from './slices/Appointment/Inbox/User/Completed/completedApntSlice';
 import pCompletedApntSlice from './slices/Appointment/Inbox/Provider/Completed/pCompletedApntSlice';
+import trackingToggle from './slices/misc/trackingToggle';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -99,6 +100,7 @@ const appReducer = combineReducers({
   userInprogress: inprogressApntSlice,
   userCompleted: completedApntSlice,
   providerCompleted: pCompletedApntSlice,
+  trackingStatus: trackingToggle,
 });
 
 const RootReducer = (

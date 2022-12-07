@@ -13,6 +13,7 @@ import {useFormContext} from 'react-hook-form';
 import {useSubRates} from './ulils/useSubRates';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
+import TitleText from '../../../../common/text/TitleText';
 interface Props {
   handleRates: (arg: any) => void;
   rateFields: any;
@@ -58,6 +59,14 @@ const SubRates = ({
             style={styles.iconContainer}>
             <QuestionIcon fill={Colors.primary} />
           </TouchableOpacity>
+        </View>
+        <View style={styles.currencyWrap}>
+          <TitleText
+            textStyle={styles.currencyText}
+            text={
+              'The currency rate Icon will update to ( $ or C$ ) based on your location information'
+            }
+          />
         </View>
         {rates?.map(
           (
@@ -224,5 +233,17 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  currencyWrap: {
+    borderWidth: 1,
+    borderColor: Colors.border,
+    padding: 10,
+    backgroundColor: Colors.iosBG,
+    marginBottom: 20,
+  },
+  currencyText: {
+    fontWeight: 'bold',
+    textAlign: 'justify',
+    color: Colors.primaryDif,
   },
 });

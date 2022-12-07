@@ -24,6 +24,7 @@ const ReportSlots = ({route, navigation}: any) => {
       const arr = data?.data?.data?.sort(function (x: any, y: any) {
         return new Date(x.date).getTime() - new Date(y.date).getTime();
       });
+  
       if (arr?.length > 0) {
         setAllDates(arr);
       }
@@ -68,9 +69,6 @@ const ReportSlots = ({route, navigation}: any) => {
           fontWeight: 'bold',
           color: Colors.primary,
           textAlign: 'center',
-
-          // marginTop: '50%',
-          // height: '100%',
         }}
       />
     </View>

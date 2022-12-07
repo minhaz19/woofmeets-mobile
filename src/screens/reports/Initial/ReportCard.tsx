@@ -14,6 +14,8 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 
 import Text_Size from '../../../constants/textScaling';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
+import {useAppSelector} from '../../../store/store';
+import {formatDate} from '../../../components/common/formatDate';
 
 interface Props {
   navigation: {
@@ -113,6 +115,16 @@ const ReportCard = ({navigation, route}: Props) => {
           />
             </View> */}
           </>
+        )}
+
+        {singleReportData?.submitTime && (
+          <HeaderText
+            textStyle={{marginHorizontal: 15, marginTop: 15}}
+            text={
+              'Generate Report at: ' +
+              formatDate(singleReportData?.submitTime, 'iii LLL d hh:mm a')
+            }
+          />
         )}
         <HeaderText
           text={'Activities'}

@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet, Alert} from 'react-native';
 import React, {useState} from 'react';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 
-import {SCREEN_HEIGHT} from '../../../constants/WindowSize';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -18,6 +21,8 @@ import methods from '../../../api/methods';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
 import {useAppSelector} from '../../../store/store';
 import storage from '../../../utils/helpers/auth/storage';
+import TitleText from '../../../components/common/text/TitleText';
+import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
 const reportEndPoint = `${msgUrl}/v1/locations/visit/`;
 interface Props {
   navigation: any;
@@ -55,6 +60,20 @@ const ReportCardInitial = ({navigation, route}: Props) => {
   };
   return (
     <>
+      {/* <AppTouchableOpacity
+        style={styles.leftContainer}
+        onPress={() => {
+          navigation.goBack();
+        }}>
+        <Ionicons
+          name="ios-chevron-back"
+          size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+          style={styles.iconStyle}
+          color={Colors.black}
+        />
+        <TitleText text={'Back'} textStyle={styles.backText} />
+      </AppTouchableOpacity> */}
+
       <ScrollView
         style={{flex: 1, backgroundColor: Colors.background}}
         showsVerticalScrollIndicator={false}>
@@ -114,5 +133,20 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_8,
   },
   buttonContainer: {position: 'absolute', right: 20, left: 20, bottom: 60},
+  leftContainer: {
+    position: 'absolute',
+    top: 50,
+    zIndex: 999,
+    left: '2%',
+    paddingTop: 4,
+    // paddingVertical: 20,
+    paddingBottom: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    borderRadius: 20,
+  },
+  iconStyle: {paddingRight: 5, paddingLeft: 10},
+  backText: {color: Colors.black, fontWeight: 'bold', paddingRight: 20},
 });
 export default ReportCardInitial;

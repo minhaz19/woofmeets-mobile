@@ -8,9 +8,12 @@ import Colors from '../../../../../constants/Colors';
 import TitleText from '../../../../common/text/TitleText';
 import Text_Size from '../../../../../constants/textScaling';
 import changeTextLetter from '../../../../common/changeTextLetter';
+import {useAppSelector} from '../../../../../store/store';
 
 const ServiceInput = ({...otherProps}) => {
   const {colors} = useTheme();
+  const {user} = useAppSelector(state => state.whoAmI);
+  const {currencyCode} = user?.basicInfo?.country;
   return (
     <View style={styles.mainContainer}>
       <View style={styles.rootContainer}>
@@ -24,7 +27,10 @@ const ServiceInput = ({...otherProps}) => {
                 : colors.borderColor,
             },
           ]}>
-          <TitleText text={'$'} textStyle={{...styles.headerText}} />
+          <TitleText
+            text={currencyCode === null || currencyCode === 'usd' ? '$' : 'C$'}
+            textStyle={{...styles.headerText}}
+          />
           <TextInput
             style={[
               styles.text,
@@ -44,12 +50,16 @@ const ServiceInput = ({...otherProps}) => {
       {!otherProps.icon ? (
         <ShortText
           textStyle={styles.label}
-          text={`You will earn per service: $${otherProps.value}`}
+          text={`You will earn per service: ${
+            currencyCode === null || currencyCode === 'usd' ? '$' : 'C$'
+          }${otherProps.value}`}
         />
       ) : (
         <ShortText
           textStyle={styles.label}
-          text={`You keep: $${otherProps.value}`}
+          text={`You keep: ${
+            currencyCode === null || currencyCode === 'usd' ? '$' : 'C$'
+          }${otherProps.value}`}
         />
       )}
     </View>
