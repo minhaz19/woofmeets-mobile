@@ -157,7 +157,7 @@ const CompletedStatus = ({statusType}: Props) => {
                                   'MMM ddd D',
                                 )}`
                               : `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.proposalVisits[0].date,
+                                  proposalDate.proposalVisits[0]?.date,
                                   timezone,
                                   'MMM ddd D',
                                 )}`

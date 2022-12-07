@@ -85,9 +85,9 @@ const Messages = (props: {roomId: any; opk: any}) => {
     // dispatch(getWhoAmI());
     setRefreshing(false);
   };
-  // useEffect(() => {
-  //   onRefresh();
-  // }, []);
+  useEffect(() => {
+    onRefresh();
+  }, []);
 
   useEffect(() => {
     if (socket === null) {
