@@ -20,7 +20,6 @@ export const useTimeMultiSlotPicker = (singleItem: any, visits: any) => {
   Days = [...recurringModDates];
   Dates = [...specificModDates];
   let times: any = [];
-  // console.log('timesArray', timesArray);
   const modSorted = timesArray
     .map((item: any) => item.slot)
     .map(
