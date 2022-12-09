@@ -21,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -77,9 +77,9 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>In order to take pictures of your Pet for the Profile, Woofmeets requires permission to access the camera.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Woofmeets needs to access your location to help you search providers in your area.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Woofmeets needs to access your location to help you search providers in your area.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Woofmeets needs to access your location to help you search providers in your area.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>In order to upload pictures of your Pet on the Profile, Woofmeets requires permission to access the photo library.</string>
