@@ -19,10 +19,11 @@ import {useApi} from '../../../utils/helpers/api/useApi';
 
 import methods from '../../../api/methods';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import storage from '../../../utils/helpers/auth/storage';
 import TitleText from '../../../components/common/text/TitleText';
 import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
+import {setTimee} from '../../../store/slices/misc/trackingToggle';
 const reportEndPoint = `${msgUrl}/v1/locations/visit/`;
 interface Props {
   navigation: any;
@@ -36,6 +37,7 @@ const ReportCardInitial = ({navigation, route}: Props) => {
   const {request, loading} = useApi(methods._put);
   const token = storage.getToken();
   const {user} = useAppSelector(state => state.whoAmI);
+  const dispatch = useAppDispatch();
   const handleGenerate = async () => {
     if (trackLocation) {
       Alert.alert('Stop tracking to generate report');
@@ -46,6 +48,7 @@ const ReportCardInitial = ({navigation, route}: Props) => {
         visit: appointmentId,
       });
       if (result.ok) {
+        dispatch(setTimee(0));
         navigation.navigate('GenerateReport', {
           screen: 'InboxNavigator',
           reportInfo: reportInfo,

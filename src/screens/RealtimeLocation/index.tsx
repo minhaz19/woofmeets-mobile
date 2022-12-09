@@ -125,11 +125,13 @@ Props) => {
   useEffect(() => {
     if (socket === null) {
       let tempSocket = io(`${msgUrl}`);
+      tempSocket.emit('user', user?.id);
       setSocket(tempSocket);
     }
   }, [socket]);
   const callApi = (payloadData: any) => {
-    return new Promise(resolve => socket.emit('update-location', payloadData));
+    return socket.emit('update-location', payloadData);
+    // return new Promise(resolve => socket.emit('update-location', payloadData));
   };
   useMemo(() => {
     if (!trackingStatus) {

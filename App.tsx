@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import {Provider} from 'react-redux';
 import 'react-native-gesture-handler';
@@ -15,6 +14,9 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import Splash from './src/screens/splash';
 import store from './src/store/store';
 import ForceUpdates from './src/utils/helpers/ForceUpdates';
+import PushNotification from './src/utils/helpers/PushNotification/PushNotification';
+import {requestLocationPermission} from './src/utils/helpers/LocationPermission/requestLocationPermission';
+
 // import 'intl';
 // import 'intl/locale-data/jsonp/en-US';
 // import 'date-time-format-timezone';
@@ -32,6 +34,8 @@ Foundation.loadFont();
 
 const App = () => {
   ForceUpdates();
+  PushNotification();
+  requestLocationPermission();
   return (
     <Provider store={store}>
       <Splash />
