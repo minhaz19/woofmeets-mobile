@@ -8,12 +8,11 @@ import RNExitApp from 'react-native-exit-app';
 
 const ForceUpdates = () => {
   let currentVersion = VersionCheck.getCurrentVersion(); // Automatically choose profer provider using `Platform.select` by device platform.
-
   const checkIfUpdateIsNeeded = async () => {
     const response = await methods._get(
       `user-application-version/compare?platform=${Platform.OS.toUpperCase()}&version=${currentVersion}`,
     );
-   if (response.ok && response?.data?.data?.isForceUpdate) {
+    if (response.ok && response?.data?.data?.isForceUpdate) {
       Alert.alert(
         'Please Update',
         'You will have to update your app to the latest version to continue.',

@@ -50,10 +50,8 @@ const ReportCard = ({navigation, route}: Props) => {
     serviceTypeId === 5 && appointmentId !== null && callGet();
   }, [appointmentId]);
   useEffect(() => {
-    console.log(mapData, 'map dataaaa');
     handleSingleReport();
   }, []);
-
   return (
     <>
       {(loading || mapLoading) && (
@@ -68,7 +66,7 @@ const ReportCard = ({navigation, route}: Props) => {
               <View style={{height: 300}}>
                 <StaticMap mapData={mapData} />
               </View>
-            )}
+            )} */}
             {/* <View
               style={{padding: 15, backgroundColor: colors.backgroundColor}}>
               <View style={styles.flexContainer}>
