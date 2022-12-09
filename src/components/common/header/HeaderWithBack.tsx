@@ -56,7 +56,7 @@ const HeaderWithBack = (props: {
         {props.notification && (
           <>
             <View style={styles.headerContainer}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.bellContainer}
                 onPress={() => props.navigation.navigate('Notifications')}>
                 <BellIcon
@@ -65,7 +65,7 @@ const HeaderWithBack = (props: {
                   }
                 />
                 <View style={styles.bellView} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             {props.SecondIcon && (
               <View style={styles.secondContainer}>

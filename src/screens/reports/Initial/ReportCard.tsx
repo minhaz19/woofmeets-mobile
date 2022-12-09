@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, ScrollView, Image} from 'react-native';
+import {StyleSheet, View, ScrollView, Image, Text} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import StaticMap from '../map/NavigateMap';
 import HeaderText from '../../../components/common/text/HeaderText';
@@ -30,7 +30,7 @@ const ReportCard = ({navigation, route}: Props) => {
   const [singleReportData, setSingleReportData] = useState({});
   const {request, loading} = useApi(methods._get);
   const {request: getMap, loading: mapLoading} = useApi(methods._get);
-  const [mapData, setMapData] = useState(null);
+  const [mapData, setMapData] = useState([]);
 
   const handleSingleReport = async () => {
     const singleEndPoint = `/appointment/card/find/${id}`;
@@ -50,6 +50,7 @@ const ReportCard = ({navigation, route}: Props) => {
     serviceTypeId === 5 && appointmentId !== null && callGet();
   }, [appointmentId]);
   useEffect(() => {
+    console.log(mapData, 'map dataaaa');
     handleSingleReport();
   }, []);
 
@@ -63,7 +64,7 @@ const ReportCard = ({navigation, route}: Props) => {
         style={[styles.container, {backgroundColor: Colors.iosBG}]}>
         {serviceTypeId === 5 && (
           <>
-            {appointmentId !== null && (
+            {(appointmentId !== null && mapData.length > 0) && (
               <View style={{height: 300}}>
                 <StaticMap mapData={mapData} />
               </View>

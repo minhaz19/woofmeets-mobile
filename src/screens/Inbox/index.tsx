@@ -35,7 +35,7 @@ const data = [
   },
   {
     id: 4,
-    title: 'Deleted',
+    title: 'Archived',
     opacity: 1,
   },
 ];
