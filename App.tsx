@@ -14,7 +14,6 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import Splash from './src/screens/splash';
 import store from './src/store/store';
 import ForceUpdates from './src/utils/helpers/ForceUpdates';
-import PushNotification from './src/utils/helpers/PushNotification/PushNotification';
 import {requestLocationPermission} from './src/utils/helpers/LocationPermission/requestLocationPermission';
 
 // import 'intl';
@@ -34,7 +33,6 @@ Foundation.loadFont();
 
 const App = () => {
   ForceUpdates();
-  PushNotification();
   requestLocationPermission();
   return (
     <Provider store={store}>
