@@ -10,10 +10,10 @@ const LATITUDE_DELTA = 0.04;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const NavigateMap = ({mapData}: any) => {
-  const [mapPoints, setMapPoints] = useState<any>([]);
+  const [mapPoints, setMapPoints] = useState<any>([{latitude: 0, longitude: 0}]);
 
   useEffect(() => {
-    const da = mapData?.map((item: any) => item.points);
+    const da = mapData?.map((item: any) => item?.points);
     const result = da?.reduce((r: any, e: any) => (r.push(...e), r), []);
     const formatted = result?.map((it: any) => ({
       latitude: it.lat !== null || it.lat !== 0 ? it.lat : result[3]?.lat,

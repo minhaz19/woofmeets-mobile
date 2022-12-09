@@ -219,7 +219,7 @@ const ActivityHeader = (props: {
               d?.startTime === null,
           );
           setOtherDay(findOtherDate);
-          props.setVisitId(findOtherDate.id);
+          props.setVisitId(findOtherDate?.id);
         } else if (
           findData &&
           findData !== undefined &&
