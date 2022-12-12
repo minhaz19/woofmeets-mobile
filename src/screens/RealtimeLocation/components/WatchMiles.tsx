@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import TitleText from '../../../components/common/text/TitleText';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
@@ -15,6 +15,7 @@ import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTo
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+let interval: any = null;
 // import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 // import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
 interface Props {}
@@ -25,8 +26,7 @@ const WatchMiles = ({}: Props) => {
   const [time, setTime] = useState(timee);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    let interval: any = null;
+  useMemo(() => {
     if (trackingStatus) {
       interval = setInterval(() => {
         setTime(tim => tim + 10);
@@ -35,10 +35,10 @@ const WatchMiles = ({}: Props) => {
     } else {
       clearInterval(interval);
     }
-    return () => {
-      clearInterval(interval);
-    };
-  }, [time, trackingStatus]);
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  }, [trackingStatus]);
   return (
     <>
       <AppTouchableOpacity
@@ -110,6 +110,7 @@ const WatchMiles = ({}: Props) => {
               titleStyle={btnStyles.titleStyle}
               onSelect={() => {
                 dispatch(setTrackingStatus(!trackingStatus));
+                // handleTimer();
               }}
             />
           </View>

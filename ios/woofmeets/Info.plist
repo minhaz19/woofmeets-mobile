@@ -83,6 +83,8 @@
 	<string>Woofmeets needs to access your location to help you search providers in your area.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>In order to upload pictures of your Pet on the Profile, Woofmeets requires permission to access the photo library.</string>
+	<key>NSUserTrackingUsageDescription</key>
+    <string>In order to track the pets with their pet sitter, Woofmeets requires permission to access the live tracking.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FontAwesome5_Solid.ttf</string>
