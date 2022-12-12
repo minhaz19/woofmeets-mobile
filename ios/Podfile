@@ -25,6 +25,7 @@ target 'woofmeets' do
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
   pod 'Permission-AppTrackingTransparency', :path => "#{permissions_path}/AppTrackingTransparency"
 
+
   target 'woofmeetsTests' do
     inherit! :complete
     # Pods for testing
