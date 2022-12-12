@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, PermissionsAndroid, Platform} from 'react-native';
 import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
 
 import MapView from 'react-native-maps';
@@ -37,7 +37,57 @@ Props) => {
     longitude: 0,
     coordinates: [],
   });
+  async function requestLocationPermission() {
+    if (Platform.OS === 'ios') {
+      const c = await Geolocation.requestAuthorization('whenInUse');
+      return null;
+    } else if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Access Required',
+            message: 'This App needs to Access your location',
+            buttonPositive: '',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (err: any) {
+        console.warn(err.message);
+        return false;
+      }
+    }
+  }
+  // async function getCurrentPosition() {
+  //   const hasLocationPermission = await requestLocationPermission();
+
+  //   if (hasLocationPermission === false) {
+  //     return;
+  //   }
+
+  //   Geolocation.getCurrentPosition(
+  //     position => {
+  //       setMapInfo({
+  //         latitude: position.coords.latitude,
+  //         longitude: position.coords.longitude,
+  //         coordinates: mapInfo.coordinates.concat({
+  //           latitude: position.coords.latitude,
+  //           longitude: position.coords.longitude,
+  //         }),
+  //       });
+  //     },
+  //     error => {},
+  //     {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000},
+  //   );
+  // }
+
   useEffect(() => {
+  requestLocationPermission();
+
     if (trackingStatus) {
       _watchId = Geolocation.watchPosition(
         (position: any) => {
@@ -80,6 +130,7 @@ Props) => {
       callApi(payloadData);
     }
   }, [trackingStatus, mapInfo]);
+  console.log('something');
   return (
     <>
       <View style={styles.container}>
