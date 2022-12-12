@@ -34,7 +34,7 @@ import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile
 import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
 import {io} from 'socket.io-client';
-import {PERMISSIONS} from 'react-native-permissions';
+import {PERMISSIONS, request as requestPermission} from 'react-native-permissions';
 // import {
 //   dateEquOrPassed,
 //   datePassed,
@@ -837,7 +837,7 @@ const ActivityHeader = (props: {
                 if (Platform.OS === 'ios') {
                   const callback = (status: AppStateStatus) => {
                     if (status === 'active') {
-                      request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
+                      requestPermission(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
                         .then((result: any) => {
                           if (result !== 'granted') {
                             Alert.alert(

@@ -16,6 +16,8 @@ import store from './src/store/store';
 import ForceUpdates from './src/utils/helpers/ForceUpdates';
 import { PERMISSIONS, request } from 'react-native-permissions';
 import {AppState, AppStateStatus, Platform } from 'react-native';
+import { io } from 'socket.io-client';
+import { msgUrl } from './src/utils/helpers/httpRequest';
 
 // import 'intl';
 // import 'intl/locale-data/jsonp/en-US';
