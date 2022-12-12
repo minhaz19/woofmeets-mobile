@@ -1,6 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import {View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  Platform,
+  AppStateStatus,
+  AppState,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TitleText from '../../common/text/TitleText';
@@ -26,6 +34,7 @@ import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile
 import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
 import {io} from 'socket.io-client';
+import {PERMISSIONS} from 'react-native-permissions';
 // import {
 //   dateEquOrPassed,
 //   datePassed,
@@ -825,19 +834,39 @@ const ActivityHeader = (props: {
           appointmentStart === 'STOP' ? (
             <TouchableOpacity
               onPress={() => {
-                // if (appointmentStart === 'START') {
-                //   ('You have to start the appointment to generate report');
-                // } else if (appointmentStart === 'STOP') {
-                //   navigation.navigate('ReportCardInitial', {
-                //     screen: 'InboxNavigator',
-                //     appointmentId: currentDate?.id,
-                //   });
-                // }
-                navigation.navigate('ReportCardInitial', {
-                  screen: 'InboxNavigator',
-                  appointmentId: currentDate?.id,
-                  reportInfo: currentDate,
-                });
+                if (Platform.OS === 'ios') {
+                  const callback = (status: AppStateStatus) => {
+                    if (status === 'active') {
+                      request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
+                        .then((result: any) => {
+                          if (result !== 'granted') {
+                            Alert.alert(
+                              'Please enable App Tracking permission in "Settings > Woofmeets" to generate the report.',
+                            );
+                          } else {
+                            navigation.navigate('ReportCardInitial', {
+                              screen: 'InboxNavigator',
+                              appointmentId: currentDate?.id,
+                              reportInfo: currentDate,
+                            });
+                          }
+                        })
+                        .catch((error: any) => console.log(error));
+                    }
+                  };
+                  callback(AppState.currentState); // initial call
+                  const listener = AppState.addEventListener(
+                    'change',
+                    callback,
+                  );
+                  return listener.remove;
+                } else {
+                  navigation.navigate('ReportCardInitial', {
+                    screen: 'InboxNavigator',
+                    appointmentId: currentDate?.id,
+                    reportInfo: currentDate,
+                  });
+                }
               }}
               style={[
                 styles.detailsButtonStyle,

@@ -66,7 +66,7 @@ const ReportCard = ({navigation, route}: Props) => {
               <View style={{height: 300}}>
                 <StaticMap mapData={mapData} />
               </View>
-            )}
+            )} */}
             {/* <View
               style={{padding: 15, backgroundColor: colors.backgroundColor}}>
               <View style={styles.flexContainer}>

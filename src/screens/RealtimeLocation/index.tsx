@@ -1,40 +1,34 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  View,
-  StyleSheet,
-  Platform,
-  PermissionsAndroid,
-  Text,
-  Dimensions,
-} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
 
-import MapView, {Marker, Polyline, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
-import {io} from 'socket.io-client';
-import {msgUrl} from '../../utils/helpers/httpRequest';
+
 import {useAppSelector} from '../../store/store';
 import WatchMiles from './components/WatchMiles';
+import {socket} from '../../../App';
 const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.04;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+let _watchId: number | null = null;
 interface Props {
   appointmentId: number;
   trackLocation: any;
   setTrackLocation: any;
 }
-let trackInfo: any = {};
+// let trackInfo: any = {};
 const RealtimeLocation = ({
   appointmentId,
 }: // trackLocation,
 // setTrackLocation,
 Props) => {
   const mapRef = useRef<MapView>();
-  const markerRef = useRef<MapView>();
+  // const markerRef = useRef<MapView>();
   // const [trackLocation, setTrackLocation] = useState(false);
-  const [socket, setSocket] = useState<any>(null);
+  // const [socket, setSocket] = useState<any>(null);
   const {user} = useAppSelector(state => state.whoAmI);
   const {trackingStatus} = useAppSelector(state => state.trackingStatus);
   // const {request: getRequest} = useApi(methods._get);
@@ -43,60 +37,9 @@ Props) => {
     longitude: 0,
     coordinates: [],
   });
-  // console.log('user ', user);
-  async function requestLocationPermission() {
-    if (Platform.OS === 'ios') {
-      const c = await Geolocation.requestAuthorization('whenInUse');
-      return null;
-    } else if (Platform.OS === 'android') {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Location Access Required',
-            message: 'This App needs to Access your location',
-            buttonPositive: '',
-          },
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          return true;
-        } else {
-          return false;
-        }
-      } catch (err: any) {
-        console.warn(err.message);
-        return false;
-      }
-    }
-  }
-  async function getCurrentPosition() {
-    const hasLocationPermission = await requestLocationPermission();
-
-    if (hasLocationPermission === false) {
-      return;
-    }
-
-    Geolocation.getCurrentPosition(
-      position => {
-        setMapInfo({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          coordinates: mapInfo.coordinates.concat({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          }),
-        });
-      },
-      error => {},
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000},
-    );
-  }
-
   useEffect(() => {
-    getCurrentPosition();
-    const _watchId =
-      trackingStatus &&
-      Geolocation.watchPosition(
+    if (trackingStatus) {
+      _watchId = Geolocation.watchPosition(
         (position: any) => {
           setMapInfo({
             latitude: position.coords.latitude,
@@ -115,23 +58,13 @@ Props) => {
           fastestInterval: 2000,
         },
       );
-    return () => {
-      if (_watchId) {
-        Geolocation.clearWatch(_watchId);
-      }
-    };
+    } else if (_watchId !== null) {
+      Geolocation.clearWatch(_watchId);
+    }
   }, [trackingStatus]);
 
-  useEffect(() => {
-    if (socket === null) {
-      let tempSocket = io(`${msgUrl}`);
-      tempSocket.emit('user', user?.id);
-      setSocket(tempSocket);
-    }
-  }, [socket]);
   const callApi = (payloadData: any) => {
     return socket.emit('update-location', payloadData);
-    // return new Promise(resolve => socket.emit('update-location', payloadData));
   };
   useMemo(() => {
     if (!trackingStatus) {
@@ -193,10 +126,7 @@ Props) => {
             /> */}
           </MapView>
         </View>
-        <WatchMiles
-        // trackLocation={trackLocation}
-        // setTrackLocation={setTrackLocation}
-        />
+        <WatchMiles />
       </View>
     </>
   );
