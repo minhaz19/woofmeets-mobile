@@ -48,7 +48,7 @@ const CheckoutDetails = () => {
           </View>
           <View style={styles.footerContainer}>
             <ButtonCom
-              title="Procced To Payment"
+              title="Proceed To Payment"
               textAlignment={btnStyles.textAlignment}
               containerStyle={btnStyles.containerStyleFullWidth}
               titleStyle={btnStyles.titleStyle}

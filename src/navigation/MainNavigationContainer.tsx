@@ -59,6 +59,7 @@ import ShowAllReport from '../screens/reports/ShowReport';
 import ReportCard from '../screens/reports/Initial/ReportCard';
 import AccountSetting from '../components/ScreenComponent/setting/Preference/AccountSetting';
 import ReportSlots from '../screens/reports/Initial/ReportSlots';
+import SeePetReview from '../components/ScreenComponent/Inbox/Details/SeePetReview';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -663,6 +664,17 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             title: '',
             header: () => (
               <HeaderWithBack navigation={navigation} title="Reports" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SeePetReview"
+          component={SeePetReview}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Show pet review" />
             ),
             backgroundColor: Colors.primary,
           })}
