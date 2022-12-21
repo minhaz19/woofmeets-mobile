@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Colors from '../../../../constants/Colors';
@@ -11,18 +11,23 @@ import {useAppSelector} from '../../../../store/store';
 import ShortText from '../../../common/text/ShortText';
 import TitleText from '../../../common/text/TitleText';
 import changeTextLetter from '../../../common/changeTextLetter';
+import {useNavigation} from '@react-navigation/native';
+import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 interface Props {
   screen: string;
+  setIsDetailsModal: (arg: any) => void;
 }
-const Pricing = ({}: Props) => {
+const Pricing = ({setIsDetailsModal}: Props) => {
   const {colors} = useTheme();
   const {user} = useAppSelector(state => state.whoAmI);
+  const navigation = useNavigation<any>();
   const {proposalPricing, loading} = useAppSelector(
     state => state.proposalPricing,
   );
   const {proposedServiceInfo, loading: sLoading} = useAppSelector(
     state => state.proposal,
   );
+  
   const getCurrency = () => {
     return proposedServiceInfo?.currency === null ||
       proposedServiceInfo?.currency === 'usd'
@@ -59,12 +64,21 @@ const Pricing = ({}: Props) => {
             return (
               <View key={index} style={[styles.mapContainer]}>
                 <View style={styles.flexContainer}>
-                  <View style={{width: '70%'}}>
+                  <AppTouchableOpacity
+                    onPress={() => {
+                      setIsDetailsModal(false);
+                      navigation.navigate('SeePetReview', {petId: item?.id, petInfo:proposedServiceInfo.petsInfo});
+                    }}
+                    style={{width: '70%'}}>
                     <HeaderText
                       text={changeTextLetter(item.name)}
-                      textStyle={styles.priceTextHeader}
+                      textStyle={{
+                        ...styles.priceTextHeader,
+                        textDecorationLine: 'underline',
+                        color: Colors.primaryDif,
+                      }}
                     />
-                  </View>
+                  </AppTouchableOpacity>
                   <HeaderText
                     text={`${getCurrency()}${Number(
                       item?.count * item?.rate?.amount,

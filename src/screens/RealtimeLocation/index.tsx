@@ -130,7 +130,6 @@ Props) => {
       callApi(payloadData);
     }
   }, [trackingStatus, mapInfo]);
-  console.log('something');
   return (
     <>
       <View style={styles.container}>
