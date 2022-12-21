@@ -67,7 +67,7 @@ const SeePetReview = (props: {
               <AirbnbRating
                 showRating={false}
                 count={5}
-                defaultRating={petReview?.rating?.average}
+                defaultRating={petReview?.rating?.average ? petReview?.rating?.average : 0}
                 size={15}
                 isDisabled
               />

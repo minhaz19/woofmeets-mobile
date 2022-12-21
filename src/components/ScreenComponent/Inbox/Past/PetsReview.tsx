@@ -96,12 +96,6 @@ const styles = StyleSheet.create({
         width: '100%',
         fontSize: Text_Size.Text_11,
       },
-      containerStyleSmall: {
-        height: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.035 : 40,
-        marginLeft: 0,
-        marginRight: 0,
-        justifyContent: 'center',
-      },
       header: {
         fontSize: Text_Size.Text_2,
         marginVertical: 10,
