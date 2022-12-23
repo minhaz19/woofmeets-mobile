@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.6,
     shadowOffset: {width: 0, height: 0},
     shadowRadius: 1,
     elevation: Platform.OS === 'android' ? 1 : 1,

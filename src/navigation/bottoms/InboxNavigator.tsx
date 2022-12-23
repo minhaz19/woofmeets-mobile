@@ -5,9 +5,9 @@ import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import Inbox from '../../screens/Inbox';
 // import ReportCardInitial from '../../screens/reports/Initial';
 // import Appointment from '../../screens/Appointment';
-import GenerateReport from '../../screens/reports/Initial/GenerateReport';
-import ReportCard from '../../screens/reports/Initial/ReportCard';
-import ShowAllReport from '../../screens/reports/ShowReport';
+// import GenerateReport from '../../screens/reports/Initial/GenerateReport';
+// import ReportCard from '../../screens/reports/Initial/ReportCard';
+// import ShowAllReport from '../../screens/reports/ShowReport';
 
 const Stack1 = createStackNavigator();
 

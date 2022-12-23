@@ -118,6 +118,7 @@ function BottomTabNavigator() {
           component={InboxNavigator}
           options={() => ({
             headerShown: false,
+            unmountOnBlur: true,
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <Pets

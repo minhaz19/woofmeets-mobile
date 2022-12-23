@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import React from 'react';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Colors from '../../../../constants/Colors';
@@ -15,28 +15,31 @@ import {useNavigation} from '@react-navigation/native';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 interface Props {
   screen: string;
-  setIsDetailsModal: (arg: any) => void;
+  setIsDetailsModal?: (arg: any) => void;
 }
 const Pricing = ({setIsDetailsModal}: Props) => {
   const {colors} = useTheme();
   const {user} = useAppSelector(state => state.whoAmI);
   const navigation = useNavigation<any>();
-  const {proposalPricing, loading} = useAppSelector(
-    state => state.proposalPricing,
-  );
-  const {proposedServiceInfo, loading: sLoading} = useAppSelector(
-    state => state.proposal,
-  );
-  
+  // const {loading} = useAppSelector(
+  //   state => state.proposalPricing,
+  // );
+  const {
+    proposedServiceInfo,
+    stableProposalPrcing,
+    loading: sLoading,
+  } = useAppSelector(state => state.proposal);
+
   const getCurrency = () => {
     return proposedServiceInfo?.currency === null ||
       proposedServiceInfo?.currency === 'usd'
       ? '$'
       : 'C$';
   };
+  // console.log('stableProposalPrcing', stableProposalPrcing, proposalPricing);
   return (
     <>
-      {loading || sLoading ? (
+      {sLoading ? (
         <View style={{marginVertical: '50%'}}>
           <TitleText
             text="Loading..."
@@ -48,10 +51,10 @@ const Pricing = ({setIsDetailsModal}: Props) => {
             }}
           />
         </View>
-      ) : typeof proposalPricing === 'string' &&
-        proposalPricing?.includes('Invalid Request!') ? (
+      ) : typeof stableProposalPrcing === 'string' &&
+        stableProposalPrcing?.includes('Invalid Request!') ? (
         <TitleText
-          text={`${proposalPricing}. Please modify appointment request`}
+          text={`${stableProposalPrcing}. Please modify appointment request`}
           textStyle={styles._textHeader}
         />
       ) : (
@@ -60,14 +63,17 @@ const Pricing = ({setIsDetailsModal}: Props) => {
             text={'Charges & Services'}
             textStyle={styles._textHeader}
           />
-          {proposalPricing?.petsRates?.map((item: any, index: number) => {
+          {stableProposalPrcing?.petsRates?.map((item: any, index: number) => {
             return (
               <View key={index} style={[styles.mapContainer]}>
                 <View style={styles.flexContainer}>
                   <AppTouchableOpacity
                     onPress={() => {
-                      setIsDetailsModal(false);
-                      navigation.navigate('SeePetReview', {petId: item?.id, petInfo:proposedServiceInfo.petsInfo});
+                      setIsDetailsModal && setIsDetailsModal(false);
+                      navigation.navigate('SeePetReview', {
+                        petId: item?.id,
+                        petInfo: proposedServiceInfo.petsInfo,
+                      });
                     }}
                     style={{width: '70%'}}>
                     <HeaderText
@@ -123,35 +129,35 @@ const Pricing = ({setIsDetailsModal}: Props) => {
               </View>
             );
           })}
-          {proposalPricing?.sixtyMinutesRate?.rate?.name !== undefined &&
-            proposalPricing?.sixtyMinutesRate?.rate?.name !== '' && (
+          {stableProposalPrcing?.sixtyMinutesRate?.rate?.name !== undefined &&
+            stableProposalPrcing?.sixtyMinutesRate?.rate?.name !== '' && (
               <View style={[styles.mapContainer]}>
                 <View style={styles.flexContainer}>
                   <HeaderText
                     text={changeTextLetter(
-                      proposalPricing?.sixtyMinutesRate?.rate.name,
+                      stableProposalPrcing?.sixtyMinutesRate?.rate.name,
                     )}
                     textStyle={styles.priceTextHeader}
                   />
                   <HeaderText
                     text={`${getCurrency()}${Number(
-                      proposalPricing?.sixtyMinutesRate?.count *
-                        proposalPricing?.sixtyMinutesRate?.rate?.amount,
+                      stableProposalPrcing?.sixtyMinutesRate?.count *
+                        stableProposalPrcing?.sixtyMinutesRate?.rate?.amount,
                     )?.toFixed(2)}`}
                     textStyle={styles.priceText}
                   />
                 </View>
 
                 <ShortText
-                  text={`Applied ${proposalPricing?.sixtyMinutesRate.rate.name}`}
+                  text={`Applied ${stableProposalPrcing?.sixtyMinutesRate.rate.name}`}
                   textStyle={{fontWeight: 'bold'}}
                 />
 
                 <DescriptionText
                   text={`${
-                    proposalPricing?.sixtyMinutesRate.count
+                    stableProposalPrcing?.sixtyMinutesRate.count
                   } visit @ ${getCurrency()}${Number(
-                    proposalPricing?.sixtyMinutesRate?.rate?.amount,
+                    stableProposalPrcing?.sixtyMinutesRate?.rate?.amount,
                   )?.toFixed(2)} / visit`}
                   textStyle={{color: colors.descriptionText, lineHeight: 20}}
                 />
@@ -173,7 +179,7 @@ const Pricing = ({setIsDetailsModal}: Props) => {
             />
             {user?.id === proposedServiceInfo?.userId ? (
               <HeaderText
-                text={`${getCurrency()}${proposalPricing?.subTotal}`}
+                text={`${getCurrency()}${stableProposalPrcing?.subTotal}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
                 }}
@@ -181,7 +187,7 @@ const Pricing = ({setIsDetailsModal}: Props) => {
             ) : (
               <HeaderText
                 text={`${getCurrency()}${
-                  proposalPricing?.providerFee?.providerTotal
+                  stableProposalPrcing?.providerFee?.providerTotal
                 }`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
@@ -204,16 +210,17 @@ const Pricing = ({setIsDetailsModal}: Props) => {
                 <>
                   <ShortText
                     text={` ( + ) ${
-                      proposalPricing?.serviceChargeInParcentage
-                    }% of ${getCurrency()}${proposalPricing?.subTotal}`}
+                      stableProposalPrcing?.serviceChargeInParcentage
+                    }% of ${getCurrency()}${stableProposalPrcing?.subTotal}`}
                   />
                 </>
               ) : (
                 <ShortText
                   text={` ( - ) ${
-                    proposalPricing?.providerFee?.subscriptionFeeInParcentage
+                    stableProposalPrcing?.providerFee
+                      ?.subscriptionFeeInParcentage
                   }% of ${getCurrency()}${
-                    proposalPricing?.providerFee?.providerTotal
+                    stableProposalPrcing?.providerFee?.providerTotal
                   }`}
                 />
               )}
@@ -221,7 +228,7 @@ const Pricing = ({setIsDetailsModal}: Props) => {
             {user?.id === proposedServiceInfo?.userId ? (
               <HeaderText
                 text={`${getCurrency()}${(
-                  proposalPricing?.total - proposalPricing?.subTotal
+                  stableProposalPrcing?.total - stableProposalPrcing?.subTotal
                 )?.toFixed(2)}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
@@ -229,7 +236,7 @@ const Pricing = ({setIsDetailsModal}: Props) => {
               />
             ) : (
               <HeaderText
-                text={`${getCurrency()}${proposalPricing?.providerFee?.subscriptionFee?.toFixed(
+                text={`${getCurrency()}${stableProposalPrcing?.providerFee?.subscriptionFee?.toFixed(
                   2,
                 )}`}
                 textStyle={{
@@ -253,7 +260,7 @@ const Pricing = ({setIsDetailsModal}: Props) => {
             />
             {user?.id === proposedServiceInfo?.userId ? (
               <HeaderText
-                text={`${getCurrency()}${proposalPricing?.total}`}
+                text={`${getCurrency()}${stableProposalPrcing?.total}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
                 }}
@@ -261,7 +268,7 @@ const Pricing = ({setIsDetailsModal}: Props) => {
             ) : (
               <HeaderText
                 text={`${getCurrency()}${
-                  proposalPricing?.providerFee?.providerTotal
+                  stableProposalPrcing?.providerFee?.providerTotal
                 }`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,

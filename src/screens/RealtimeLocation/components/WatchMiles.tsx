@@ -1,10 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
-import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import TitleText from '../../../components/common/text/TitleText';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
-import Text_Size from '../../../constants/textScaling';
 import Colors from '../../../constants/Colors';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {
@@ -15,30 +14,28 @@ import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTo
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-let interval: any = null;
-// import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
-// import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
+//@ts-ignore
+import {Stopwatch} from 'react-native-stopwatch-timer';
 interface Props {}
+// let interval: any = null;
 const WatchMiles = ({}: Props) => {
-  //   const [isPaused, setIsPaused] = useState(true);
-  //   const [isActive, setIsActive] = useState(false);
-  const {trackingStatus, timee} = useAppSelector(state => state.trackingStatus);
+  const {trackingStatus, timee, reset} = useAppSelector(
+    state => state.trackingStatus,
+  );
   const [time, setTime] = useState(timee);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  useMemo(() => {
-    if (trackingStatus) {
-      interval = setInterval(() => {
-        setTime(tim => tim + 10);
-        // dispatch(setTime(time + 10));
-      }, 10);
-    } else {
-      clearInterval(interval);
-    }
-    // return () => {
-    //   clearInterval(interval);
-    // };
+  const [isTimerStart, setIsTimerStart] = useState(false);
+  const [resetStopwatch, setResetStopwatch] = useState(false);
+
+  useEffect(() => {
+    setResetStopwatch(reset);
+  }, [reset]);
+  useEffect(() => {
+    setIsTimerStart(trackingStatus);
   }, [trackingStatus]);
+
+
   return (
     <>
       <AppTouchableOpacity
@@ -86,24 +83,28 @@ const WatchMiles = ({}: Props) => {
           }}>
           <View>
             <TitleText textStyle={{fontWeight: 'bold'}} text="Dog Walk Time" />
-
-            <TitleText
+            <Stopwatch
+              start={isTimerStart}
+              reset={resetStopwatch}
+              startTime={timee}
+              options={options}
+              getMsecs={(t: any) => {
+                setTime(t);
+              }}
+            />
+            {/* <TitleText
               textStyle={{fontSize: Text_Size.Text_1}}
               text={`${('0' + Math.floor((time / 60000) % 60)).slice(-2)}:${(
                 '0' + Math.floor((time / 1000) % 60)
-              ).slice(-2)}.${('0' + ((time / 10) % 100)).slice(-2)}`}
-            />
+              ).slice(-2)}:${('0' + ((time / 10) % 100)).slice(-2)}`}
+            /> */}
           </View>
-          {/* <View>
-          <TitleText text="Distance" textStyle={{fontWeight: 'bold'}} />
-          <BigText text="00:00:40" textStyle={{fontSize: Text_Size.Text_1}} />
-        </View> */}
+
           <View style={{width: '30%'}}>
             <ButtonCom
               title={trackingStatus ? 'Stop' : 'Start'}
               textAlignment={btnStyles.textAlignment}
               containerStyle={{
-                // ...btnStyles.containerStyleFullWidth,
                 borderRadius: 8,
                 height: 45,
               }}
@@ -127,7 +128,6 @@ const styles = StyleSheet.create({
     zIndex: 999,
     left: '2%',
     paddingTop: 4,
-    // paddingVertical: 20,
     paddingBottom: 4,
     flexDirection: 'row',
     alignItems: 'center',
@@ -137,4 +137,13 @@ const styles = StyleSheet.create({
   iconStyle: {paddingRight: 5, paddingLeft: 10},
   backText: {color: Colors.black, fontWeight: 'bold', paddingRight: 20},
 });
+const options = {
+  container: {
+    borderRadius: 5,
+    marginTop: 5,
+  },
+  text: {
+    color: Colors.black,
+  },
+};
 export default memo(WatchMiles);

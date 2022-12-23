@@ -37,7 +37,6 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, [statusType]);
-
   return (
     <>
       {loading || providerLoading ? (
@@ -117,6 +116,7 @@ const PendingStatus = ({statusType}: Props) => {
                       handlePress={() =>
                         navigation.navigate('ActivityScreen', {
                           appointmentOpk: item.opk,
+                          messageGroupId: item.messageGroupId,
                         })
                       }
                     />
@@ -182,6 +182,7 @@ const PendingStatus = ({statusType}: Props) => {
                       handlePress={() =>
                         navigation.navigate('ActivityScreen', {
                           appointmentOpk: item.opk,
+                          messageGroupId: item.messageGroupId,
                         })
                       }
                     />

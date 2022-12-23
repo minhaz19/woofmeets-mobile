@@ -96,6 +96,8 @@ const PetCareZipSearch = (props: {
   const {user} = useAppSelector((state: any) => state.whoAmI);
   const {userOnboardStatus} = useAppSelector(state => state.stripe);
 
+
+  
   // updating the state
   useEffect(() => {
     if (pets) {

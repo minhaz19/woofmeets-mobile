@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC, useEffect} from 'react';
@@ -9,76 +8,51 @@ import Ion from 'react-native-vector-icons/Ionicons';
 import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import BottomSpacing from '../../../UI/BottomSpacing';
-import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {getProposalPricing} from '../../../../store/slices/Appointment/Details/getProposalPricing';
+import {useAppDispatch} from '../../../../store/store';
+// import {getSettleProposalPricing} from '../../../../store/slices/Appointment/Details/getProposalPricing';
+// import {getProviderServices} from '../../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import RefundPricing from './RefundPricing';
-import TitleText from '../../../common/text/TitleText';
+import {getProviderProposal} from '../../../../store/slices/Appointment/Proposal/getProviderProposal';
 
 interface Props {
   setIsPayment?: (value: boolean) => void;
   setIsDetailsModal?: (value: boolean) => void;
   setModalVisible?: (arg1: boolean) => void;
+  modalOpk: string;
 }
 
 const RefundDetails: FC<Props> = props => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
 
-  const {proposedServiceInfo, loading: sLoader} = useAppSelector(
-    state => state.proposal,
-  );
-  const {proposalPricing, loading} = useAppSelector(
-    state => state.proposalPricing,
-  );
   useEffect(() => {
-    dispatch(getProposalPricing(proposedServiceInfo?.appointmentOpk));
-  }, [proposedServiceInfo?.appointmentOpk]);
- 
+    dispatch(getProviderProposal(props.modalOpk));
+  }, [props.modalOpk]);
   return (
     <>
-      {loading || sLoader ? (
-        <View style={{marginVertical: '50%'}}>
-          <TitleText
-            text="Loading..."
-            textStyle={{
-              fontSize: Text_Size.Text_1,
-              fontWeight: 'bold',
-              color: Colors.primary,
-              textAlign: 'center',
-              // marginTop: '50%',
-              // height: '100%',
-            }}
-          />
+      <View>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              props?.setIsDetailsModal
+                ? props.setIsDetailsModal(false)
+                : props.setIsPayment && props.setIsPayment(false);
+            }}>
+            <Ion
+              name="ios-chevron-back"
+              size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+              style={styles.iconStyle}
+              color={Colors.primary}
+            />
+          </TouchableOpacity>
+          <HeaderText text={'Details'} textStyle={styles.textHeader} />
         </View>
-      ) : (
-        <View>
-          <View style={styles.headerContainer}>
-            <TouchableOpacity
-              onPress={() => {
-                props?.setIsDetailsModal
-                  ? props.setIsDetailsModal(false)
-                  : props.setIsPayment && props.setIsPayment(false);
-              }}>
-              <Ion
-                name="ios-chevron-back"
-                size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
-                style={styles.iconStyle}
-                color={Colors.primary}
-              />
-            </TouchableOpacity>
-            <HeaderText text={'Details'} textStyle={styles.textHeader} />
-          </View>
-          <View
-            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-          />
-          <RefundPricing
-            screen={''}
-            proposalPricing={proposalPricing}
-            proposedServiceInfo={proposedServiceInfo}
-          />
-          <BottomSpacing />
-        </View>
-      )}
+        <View
+          style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+        />
+        <RefundPricing screen={''} />
+        <BottomSpacing />
+      </View>
     </>
   );
 };

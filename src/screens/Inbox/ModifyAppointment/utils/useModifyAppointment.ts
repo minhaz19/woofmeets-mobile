@@ -2,7 +2,8 @@
 import {useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
-import {io} from 'socket.io-client';
+import {socket} from '../../../../../App';
+// import {io} from 'socket.io-client';
 import methods from '../../../../api/methods';
 import {
   convertDateTZ,
@@ -13,10 +14,10 @@ import {getProviderServices} from '../../../../store/slices/Appointment/Provider
 import {getAllPets} from '../../../../store/slices/pet/allPets/allPetsAction';
 import {useAppSelector, useAppDispatch} from '../../../../store/store';
 import {useApi} from '../../../../utils/helpers/api/useApi';
-import {msgUrl} from '../../../../utils/helpers/httpRequest';
+// import {msgUrl} from '../../../../utils/helpers/httpRequest';
 
 export const useModifyAppointment = (route: any) => {
-  const [socket, setSocket] = useState<any>(null);
+  // const [socket, setSocket] = useState<any>(null);
   const {loading, request} = useApi(methods._put);
   const {appointmentOpk} = route.params;
   const dispatch = useAppDispatch();
@@ -371,11 +372,11 @@ export const useModifyAppointment = (route: any) => {
     onRefresh();
   }, []);
 
-  useEffect(() => {
-    if (socket === null) {
-      let tempSocket = io(`${msgUrl}`);
-      setSocket(tempSocket);
-    }
-  }, [socket]);
+  // useEffect(() => {
+  //   if (socket === null) {
+  //     let tempSocket = io(`${msgUrl}`);
+  //     setSocket(tempSocket);
+  //   }
+  // }, [socket]);
   return {handleSubmit, loading, refreshing, onRefresh};
 };

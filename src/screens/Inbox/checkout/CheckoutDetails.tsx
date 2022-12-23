@@ -13,19 +13,23 @@ import BottomSpacingNav from '../../../components/UI/BottomSpacingNav';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import AppointmentProposalInfo from '../../../components/ScreenComponent/Checkout/components/AppointmentProposalInfo';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {getProposalPricing} from '../../../store/slices/Appointment/Details/getProposalPricing';
+import {
+  // getProposalPricing,
+  getSettleProposalPricing,
+} from '../../../store/slices/Appointment/Details/getProposalPricing';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {useNavigation} from '@react-navigation/native';
 import AppStripe from '../../../components/common/Stripe/AppStripe';
 
 const CheckoutDetails = () => {
   const {colors} = useTheme();
-  const dispatch = useAppDispatch();
   const navigation = useNavigation<any>();
-  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  useEffect(() => {
-    dispatch(getProposalPricing(proposedServiceInfo.appointmentOpk));
-  }, []);
+  // const dispatch = useAppDispatch();
+  // const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  // useEffect(() => {
+  //   dispatch(getSettleProposalPricing(proposedServiceInfo.appointmentOpk));
+  //   // dispatch(getProposalPricing(proposedServiceInfo.appointmentOpk));
+  // }, []);
   const handlePayment = () => {
     navigation.navigate('PaymentMethod', {
       sequence: 'Appointment',

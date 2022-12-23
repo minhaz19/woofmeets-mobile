@@ -24,9 +24,7 @@ import {
 } from '../../../assets/svgs/Services_SVG';
 import AnimatedLottieView from 'lottie-react-native';
 
-const ProviderHome = (props: {
-  navigation: {navigate: (arg0: string) => any};
-}) => {
+const ProviderHome = (props: {navigation: any}) => {
   const dispatch = useAppDispatch();
 
   const {providerInprogress, loading} = useAppSelector(
@@ -120,6 +118,8 @@ const ProviderHome = (props: {
                           onScreen={() =>
                             props.navigation.navigate('ActivityScreen', {
                               appointmentOpk: item.opk,
+                              messageGroupId: item.messageGroupId,
+                              AppointmentTab: true,
                             })
                           }
                         />

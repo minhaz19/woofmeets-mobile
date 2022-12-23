@@ -5,6 +5,7 @@ import {useTheme} from '../../constants/theme/hooks/useTheme';
 import Colors from '../../constants/Colors';
 import Text_Size from '../../constants/textScaling';
 import TitleText from './text/TitleText';
+import {API_MAP} from '@env';
 
 interface Props {
   onPressAddress: (data: any, details: any) => void;
@@ -17,9 +18,9 @@ const GoogleAutoComplete = ({
   onPressAddress,
   label,
   placeholder,
-  // value,
-}: Props) => {
-  const {colors, isDarkMode} = useTheme();
+}: // value,
+Props) => {
+  const {colors} = useTheme();
   return (
     <View>
       {label && <TitleText textStyle={styles.label} text={label} />}
@@ -31,11 +32,11 @@ const GoogleAutoComplete = ({
         placeholder={placeholder}
         textInputProps={{
           placeholderTextColor: Colors.light.subText,
-          returnKeyType: "default"
+          returnKeyType: 'default',
         }}
         onPress={onPressAddress}
         query={{
-          key: 'AIzaSyBfNC-SGgbvOOFj9FqoA6HQhrCh_hq5Zo0',
+          key: API_MAP,
           // components: ':us',
         }}
         autoFocus={false}

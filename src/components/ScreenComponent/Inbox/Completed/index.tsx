@@ -121,6 +121,7 @@ const CompletedStatus = ({statusType}: Props) => {
                       handlePress={() =>
                         navigation.navigate('ActivityScreen', {
                           appointmentOpk: item.opk,
+                          messageGroupId: item.messageGroupId,
                         })
                       }
                     />
@@ -186,6 +187,7 @@ const CompletedStatus = ({statusType}: Props) => {
                       handlePress={() =>
                         navigation.navigate('ActivityScreen', {
                           appointmentOpk: item.opk,
+                          messageGroupId: item.messageGroupId,
                         })
                       }
                     />

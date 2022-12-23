@@ -58,7 +58,7 @@ const MyPets = ({appointmentType, setValue, watch}: Props) => {
         };
       });
       modArray?.push({
-        id: allPets.length,
+        id: allPets?.length,
         Icon: Plus,
         text: '',
         new: true,
