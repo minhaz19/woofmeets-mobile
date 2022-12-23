@@ -43,7 +43,12 @@ const ApprovedStatus = ({statusType}: Props) => {
     setRefreshing(false);
   };
   useEffect(() => {
+    let isRefreshSubscribed = true;
     onRefresh();
+    return () => {
+      // cancel the subscription
+      isRefreshSubscribed = false;
+    };
   }, [statusType]);
   return (
     <>
@@ -125,6 +130,7 @@ const ApprovedStatus = ({statusType}: Props) => {
                       handlePress={() =>
                         navigation.navigate('ActivityScreen', {
                           appointmentOpk: item.opk,
+                          messageGroupId: item.messageGroupId,
                         })
                       }
                     />
@@ -191,6 +197,7 @@ const ApprovedStatus = ({statusType}: Props) => {
                       handlePress={() =>
                         navigation.navigate('ActivityScreen', {
                           appointmentOpk: item.opk,
+                          messageGroupId: item.messageGroupId,
                         })
                       }
                     />

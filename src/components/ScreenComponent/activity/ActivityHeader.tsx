@@ -32,9 +32,13 @@ import {convertToLocalTZ, formatDate} from '../../common/formatDate';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
 import {getProviderServices} from '../../../store/slices/Appointment/ProviderServices/getProviderServices';
-import {msgUrl} from '../../../utils/helpers/httpRequest';
-import {io} from 'socket.io-client';
-import {PERMISSIONS, request as requestPermission} from 'react-native-permissions';
+// import {msgUrl} from '../../../utils/helpers/httpRequest';
+// import {io} from 'socket.io-client';
+import {
+  PERMISSIONS,
+  request as requestPermission,
+} from 'react-native-permissions';
+import {socket} from '../../../../App';
 // import {
 //   dateEquOrPassed,
 //   datePassed,
@@ -55,6 +59,7 @@ const ActivityHeader = (props: {
   setVisitId: any;
   opk?: any;
   proposedServiceInfo?: any;
+  AppointmentTab?: boolean;
 }) => {
   let navigation = useNavigation<any>();
   const {colors} = useTheme();
@@ -70,7 +75,7 @@ const ActivityHeader = (props: {
   const [allDates, setAllDates] = useState<any>([]);
   const user = useAppSelector(state => state.whoAmI);
   const timezone = proposedServiceInfo?.providerTimeZone;
-  const [socket, setSocket] = useState<any>(null);
+  // const [socket, setSocket] = useState<any>(null);
   const today = new Date();
   function isSameDate(date: string) {
     if (
@@ -446,22 +451,20 @@ const ActivityHeader = (props: {
       Alert.alert('No sure about the status');
     }
   };
-  useEffect(() => {
-    if (socket === null) {
-      let tempSocket = io(`${msgUrl}`);
-      setSocket(tempSocket);
-    }
-  }, [socket]);
+
   return (
     <>
-      {/* {loading && <AppActivityIndicator visible={true} />} */}
       <View style={[styles.container, {borderColor: colors.borderColor}]}>
         <View style={styles.containerInner}>
           <View style={styles.headerTitleContainer}>
             <TouchableOpacity
               style={styles.leftContainer}
               onPress={() => {
-                navigation.navigate('InboxNavigator');
+                if (props?.AppointmentTab) {
+                  navigation.goBack();
+                } else {
+                  navigation.navigate('InboxNavigator');
+                }
               }}>
               <Ionicons
                 name="ios-chevron-back"
@@ -837,7 +840,9 @@ const ActivityHeader = (props: {
                 if (Platform.OS === 'ios') {
                   const callback = (status: AppStateStatus) => {
                     if (status === 'active') {
-                      requestPermission(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY)
+                      requestPermission(
+                        PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY,
+                      )
                         .then((result: any) => {
                           if (result !== 'granted') {
                             Alert.alert(

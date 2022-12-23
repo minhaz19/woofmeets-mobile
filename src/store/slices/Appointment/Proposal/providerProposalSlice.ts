@@ -13,6 +13,7 @@ const initialState: any = {
   proposedService: null,
   proposalInfo: null,
   proposedServiceInfo: null,
+  stableProposalPrcing: null,
   error: null,
   loading: false,
   billingId: null,
@@ -37,6 +38,8 @@ const providerProposalSlice = createSlice({
         const modpayload = payload?.data;
         state.loading = false;
         state.proposal = modpayload;
+        state.stableProposalPrcing =
+          modpayload?.proposal?.priceCalculationDetails;
         state.providerInfo = modpayload.appointment.provider.user;
         state.proposedService =
           modpayload.appointment.providerService.serviceType;

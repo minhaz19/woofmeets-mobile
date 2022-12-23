@@ -4,9 +4,8 @@
 import {View, StyleSheet, Alert} from 'react-native';
 import React, {useState} from 'react';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
-import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
-
-import Ionicons from 'react-native-vector-icons/Ionicons';
+// import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
@@ -21,9 +20,9 @@ import methods from '../../../api/methods';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import storage from '../../../utils/helpers/auth/storage';
-import TitleText from '../../../components/common/text/TitleText';
-import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
-import {setTimee} from '../../../store/slices/misc/trackingToggle';
+// import TitleText from '../../../components/common/text/TitleText';
+// import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
+import {setReset, setTimee} from '../../../store/slices/misc/trackingToggle';
 const reportEndPoint = `${msgUrl}/v1/locations/visit/`;
 interface Props {
   navigation: any;
@@ -47,8 +46,9 @@ const ReportCardInitial = ({navigation, route}: Props) => {
         user: user.id,
         visit: appointmentId,
       });
+      dispatch(setTimee(0));
+      dispatch(setReset(true));
       if (result.ok) {
-        dispatch(setTimee(0));
         navigation.navigate('GenerateReport', {
           screen: 'InboxNavigator',
           reportInfo: reportInfo,

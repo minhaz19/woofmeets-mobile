@@ -11,27 +11,35 @@ import {useAppSelector} from '../../../../store/store';
 import ShortText from '../../../common/text/ShortText';
 import TitleText from '../../../common/text/TitleText';
 import changeTextLetter from '../../../common/changeTextLetter';
+import {useNavigation} from '@react-navigation/native';
+import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
 interface Props {
   screen: string;
+  setIsDetailsModal?: (arg: any) => void;
 }
-const Pricing = ({}: Props) => {
+const Pricing = ({setIsDetailsModal}: Props) => {
   const {colors} = useTheme();
   const {user} = useAppSelector(state => state.whoAmI);
-  const {proposalPricing, loading} = useAppSelector(
-    state => state.proposalPricing,
-  );
-  const {proposedServiceInfo, loading: sLoading} = useAppSelector(
-    state => state.proposal,
-  );
+  const navigation = useNavigation<any>();
+  // const {loading} = useAppSelector(
+  //   state => state.proposalPricing,
+  // );
+  const {
+    proposedServiceInfo,
+    stableProposalPrcing,
+    loading: sLoading,
+  } = useAppSelector(state => state.proposal);
+
   const getCurrency = () => {
     return proposedServiceInfo?.currency === null ||
       proposedServiceInfo?.currency === 'usd'
       ? '$'
       : 'C$';
   };
+  // console.log('stableProposalPrcing', stableProposalPrcing, proposalPricing);
   return (
     <>
-      {loading || sLoading ? (
+      {sLoading ? (
         <View style={{marginVertical: '50%'}}>
           <TitleText
             text="Loading..."
@@ -43,10 +51,10 @@ const Pricing = ({}: Props) => {
             }}
           />
         </View>
-      ) : typeof proposalPricing === 'string' &&
-        proposalPricing?.includes('Invalid Request!') ? (
+      ) : typeof stableProposalPrcing === 'string' &&
+        stableProposalPrcing?.includes('Invalid Request!') ? (
         <TitleText
-          text={`${proposalPricing}. Please modify appointment request`}
+          text={`${stableProposalPrcing}. Please modify appointment request`}
           textStyle={styles._textHeader}
         />
       ) : (
@@ -55,16 +63,28 @@ const Pricing = ({}: Props) => {
             text={'Charges & Services'}
             textStyle={styles._textHeader}
           />
-          {proposalPricing?.petsRates?.map((item: any, index: number) => {
+          {stableProposalPrcing?.petsRates?.map((item: any, index: number) => {
             return (
               <View key={index} style={[styles.mapContainer]}>
                 <View style={styles.flexContainer}>
-                  <View style={{width: '70%'}}>
+                  <AppTouchableOpacity
+                    onPress={() => {
+                      setIsDetailsModal && setIsDetailsModal(false);
+                      navigation.navigate('SeePetReview', {
+                        petId: item?.id,
+                        petInfo: proposedServiceInfo.petsInfo,
+                      });
+                    }}
+                    style={{width: '70%'}}>
                     <HeaderText
                       text={changeTextLetter(item.name)}
-                      textStyle={styles.priceTextHeader}
+                      textStyle={{
+                        ...styles.priceTextHeader,
+                        textDecorationLine: 'underline',
+                        color: Colors.primaryDif,
+                      }}
                     />
-                  </View>
+                  </AppTouchableOpacity>
                   <HeaderText
                     text={`${getCurrency()}${Number(
                       item?.count * item?.rate?.amount,
@@ -109,35 +129,35 @@ const Pricing = ({}: Props) => {
               </View>
             );
           })}
-          {proposalPricing?.sixtyMinutesRate?.rate?.name !== undefined &&
-            proposalPricing?.sixtyMinutesRate?.rate?.name !== '' && (
+          {stableProposalPrcing?.sixtyMinutesRate?.rate?.name !== undefined &&
+            stableProposalPrcing?.sixtyMinutesRate?.rate?.name !== '' && (
               <View style={[styles.mapContainer]}>
                 <View style={styles.flexContainer}>
                   <HeaderText
                     text={changeTextLetter(
-                      proposalPricing?.sixtyMinutesRate?.rate.name,
+                      stableProposalPrcing?.sixtyMinutesRate?.rate.name,
                     )}
                     textStyle={styles.priceTextHeader}
                   />
                   <HeaderText
                     text={`${getCurrency()}${Number(
-                      proposalPricing?.sixtyMinutesRate?.count *
-                        proposalPricing?.sixtyMinutesRate?.rate?.amount,
+                      stableProposalPrcing?.sixtyMinutesRate?.count *
+                        stableProposalPrcing?.sixtyMinutesRate?.rate?.amount,
                     )?.toFixed(2)}`}
                     textStyle={styles.priceText}
                   />
                 </View>
 
                 <ShortText
-                  text={`Applied ${proposalPricing?.sixtyMinutesRate.rate.name}`}
+                  text={`Applied ${stableProposalPrcing?.sixtyMinutesRate.rate.name}`}
                   textStyle={{fontWeight: 'bold'}}
                 />
 
                 <DescriptionText
                   text={`${
-                    proposalPricing?.sixtyMinutesRate.count
+                    stableProposalPrcing?.sixtyMinutesRate.count
                   } visit @ ${getCurrency()}${Number(
-                    proposalPricing?.sixtyMinutesRate?.rate?.amount,
+                    stableProposalPrcing?.sixtyMinutesRate?.rate?.amount,
                   )?.toFixed(2)} / visit`}
                   textStyle={{color: colors.descriptionText, lineHeight: 20}}
                 />
@@ -159,7 +179,7 @@ const Pricing = ({}: Props) => {
             />
             {user?.id === proposedServiceInfo?.userId ? (
               <HeaderText
-                text={`${getCurrency()}${proposalPricing?.subTotal}`}
+                text={`${getCurrency()}${stableProposalPrcing?.subTotal}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
                 }}
@@ -167,7 +187,7 @@ const Pricing = ({}: Props) => {
             ) : (
               <HeaderText
                 text={`${getCurrency()}${
-                  proposalPricing?.providerFee?.providerTotal
+                  stableProposalPrcing?.providerFee?.providerTotal
                 }`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
@@ -190,16 +210,17 @@ const Pricing = ({}: Props) => {
                 <>
                   <ShortText
                     text={` ( + ) ${
-                      proposalPricing?.serviceChargeInParcentage
-                    }% of ${getCurrency()}${proposalPricing?.subTotal}`}
+                      stableProposalPrcing?.serviceChargeInParcentage
+                    }% of ${getCurrency()}${stableProposalPrcing?.subTotal}`}
                   />
                 </>
               ) : (
                 <ShortText
                   text={` ( - ) ${
-                    proposalPricing?.providerFee?.subscriptionFeeInParcentage
+                    stableProposalPrcing?.providerFee
+                      ?.subscriptionFeeInParcentage
                   }% of ${getCurrency()}${
-                    proposalPricing?.providerFee?.providerTotal
+                    stableProposalPrcing?.providerFee?.providerTotal
                   }`}
                 />
               )}
@@ -207,7 +228,7 @@ const Pricing = ({}: Props) => {
             {user?.id === proposedServiceInfo?.userId ? (
               <HeaderText
                 text={`${getCurrency()}${(
-                  proposalPricing?.total - proposalPricing?.subTotal
+                  stableProposalPrcing?.total - stableProposalPrcing?.subTotal
                 )?.toFixed(2)}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
@@ -215,7 +236,7 @@ const Pricing = ({}: Props) => {
               />
             ) : (
               <HeaderText
-                text={`${getCurrency()}${proposalPricing?.providerFee?.subscriptionFee?.toFixed(
+                text={`${getCurrency()}${stableProposalPrcing?.providerFee?.subscriptionFee?.toFixed(
                   2,
                 )}`}
                 textStyle={{
@@ -239,7 +260,7 @@ const Pricing = ({}: Props) => {
             />
             {user?.id === proposedServiceInfo?.userId ? (
               <HeaderText
-                text={`${getCurrency()}${proposalPricing?.total}`}
+                text={`${getCurrency()}${stableProposalPrcing?.total}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
                 }}
@@ -247,7 +268,7 @@ const Pricing = ({}: Props) => {
             ) : (
               <HeaderText
                 text={`${getCurrency()}${
-                  proposalPricing?.providerFee?.providerTotal
+                  stableProposalPrcing?.providerFee?.providerTotal
                 }`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,

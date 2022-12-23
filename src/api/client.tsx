@@ -1,6 +1,6 @@
 import {create} from 'apisauce';
 import authStorage from '../utils/helpers/auth/storage';
-import {API_MSG, API_URL} from "@env"
+import {API_MSG, API_URL} from '@env';
 
 const apiClient = create({
   baseURL: `${API_URL}/v1`,

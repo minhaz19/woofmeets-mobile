@@ -38,10 +38,7 @@ const ImageContainer = ({provider, rounded}: Props) => {
           style={[
             styles.batchContainer,
             {
-              backgroundColor:
-                provider?.backGroundCheck === 'BASIC'
-                  ? Colors.yellow
-                  : Colors.primary,
+              backgroundColor: Colors.yellow,
             },
           ]}>
           <DogFeet />

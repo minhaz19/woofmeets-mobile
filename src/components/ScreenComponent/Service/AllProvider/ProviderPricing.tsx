@@ -15,7 +15,13 @@ const ProviderPricing = ({pricing, provider}: Props) => {
     <View style={styles.container}>
       <TitleText
         textStyle={styles.title}
-        text={`${currencyCode === 'usd' ? '$' : 'C$'}${price}`}
+        text={`${
+          currencyCode === null ||
+          currencyCode === undefined ||
+          currencyCode === 'usd'
+            ? '$'
+            : 'C$'
+        }${price}`}
       />
       <ShortText textStyle={styles.subTitle} text="per night" />
     </View>

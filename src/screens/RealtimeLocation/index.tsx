@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {View, StyleSheet, Dimensions, PermissionsAndroid, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
 
 import MapView from 'react-native-maps';
@@ -26,12 +32,8 @@ const RealtimeLocation = ({
 // setTrackLocation,
 Props) => {
   const mapRef = useRef<MapView>();
-  // const markerRef = useRef<MapView>();
-  // const [trackLocation, setTrackLocation] = useState(false);
-  // const [socket, setSocket] = useState<any>(null);
   const {user} = useAppSelector(state => state.whoAmI);
   const {trackingStatus} = useAppSelector(state => state.trackingStatus);
-  // const {request: getRequest} = useApi(methods._get);
   const [mapInfo, setMapInfo] = useState<any>({
     latitude: 0,
     longitude: 0,
@@ -86,8 +88,7 @@ Props) => {
   // }
 
   useEffect(() => {
-  requestLocationPermission();
-
+    requestLocationPermission();
     if (trackingStatus) {
       _watchId = Geolocation.watchPosition(
         (position: any) => {
@@ -114,7 +115,7 @@ Props) => {
   }, [trackingStatus]);
 
   const callApi = (payloadData: any) => {
-    return socket.emit('update-location', payloadData);
+    return socket.connected && socket.emit('update-location', payloadData);
   };
   useMemo(() => {
     if (!trackingStatus) {
@@ -130,13 +131,12 @@ Props) => {
       callApi(payloadData);
     }
   }, [trackingStatus, mapInfo]);
-  console.log('something');
+  // console.log('something', socket);
   return (
     <>
       <View style={styles.container}>
         <View style={styles.mapcontainer}>
           <MapView
-            // provider={}
             ref={mapRef}
             style={styles.mapStyle}
             initialRegion={{
@@ -154,7 +154,6 @@ Props) => {
             userLocationPriority="high"
             onUserLocationChange={e => null}
             showsPointsOfInterest={true}
-            // onRegionChangeComplete={onChangeValue}
           >
             {/* <Polyline
               coordinates={mapInfo.coordinates}

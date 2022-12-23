@@ -1,10 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   ScrollView,
   Image,
   TouchableOpacity,
   Keyboard,
-  ActivityIndicator,
   RefreshControl,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
@@ -13,8 +13,6 @@ import TitleText from '../../../components/common/text/TitleText';
 import ShortText from '../../../components/common/text/ShortText';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
-import io from 'socket.io-client';
-import {msgUrl} from '../../../utils/helpers/httpRequest';
 import SendMessage from './SendMessage';
 import {apiMsg} from '../../../api/client';
 import {formatDistance, subDays} from 'date-fns';
@@ -25,13 +23,13 @@ import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/ge
 // import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 import Colors from '../../../constants/Colors';
 import changeTextLetter from '../../../components/common/changeTextLetter';
+import {socket} from '../../../../App';
 
 const Messages = (props: {roomId: any; opk: any}) => {
   const {colors} = useTheme();
-  const [socket, setSocket] = useState<any>(null);
   const dispatch = useAppDispatch();
   const [messages, setMessages] = useState([]);
-  const [isLoadingMsg, setIsLoadingMsg] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState(false);
   const userInfo = useAppSelector((state: any) => state.whoAmI.user);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const [user, setUser] = useState();
@@ -43,46 +41,24 @@ const Messages = (props: {roomId: any; opk: any}) => {
     getTokenDecoded();
   }, []);
   const getPreviousMessages = async () => {
-    if (socket === null) {
-      let tempSocket = io(`${msgUrl}`);
-      tempSocket.emit('user', user?.id);
-      setSocket(tempSocket);
-      if (props.roomId) {
-        const slug = `/v1/messages/group/${props.roomId}`;
-        setIsLoadingMsg(true);
-        const result = await apiMsg.get(slug);
-        if (result.ok) {
-          setMessages(result.data?.data?.reverse());
-          setIsLoadingMsg(false);
-        }
-        if (!result.ok) {
-          setIsLoadingMsg(false);
-        }
+    if (props.roomId) {
+      const slug = `/v1/messages/group/${props.roomId}`;
+      // setIsLoadingMsg(true);
+      const result: any = await apiMsg.get(slug);
+      if (result.ok) {
+        setMessages(result.data?.data?.reverse());
+        // setIsLoadingMsg(false);
       }
-    } else {
-      if (props.roomId) {
-        socket.emit('user', user?.id);
-        const slug = `/v1/messages/group/${props.roomId}`;
-        setIsLoadingMsg(true);
-        const result = await apiMsg.get(slug);
-        if (result.ok) {
-          setMessages(result.data?.data?.reverse());
-          setIsLoadingMsg(false);
-        }
-        if (!result.ok) {
-          setIsLoadingMsg(false);
-        }
+      if (!result.ok) {
+        // setIsLoadingMsg(false);
       }
     }
   };
 
-  const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
     setRefreshing(true);
-    getPreviousMessages();
-    dispatch(getProviderProposal(props.opk));
-    // dispatch(getAllPets());
-    // dispatch(getWhoAmI());
+    await getPreviousMessages();
+    await dispatch(getProviderProposal(props.opk));
     setRefreshing(false);
   };
   useEffect(() => {
@@ -90,26 +66,17 @@ const Messages = (props: {roomId: any; opk: any}) => {
   }, []);
 
   useEffect(() => {
-    if (socket === null) {
-      let tempSocket = io(`${msgUrl}`);
-      tempSocket.emit('user', user?.id);
-      setSocket(tempSocket);
-    } else {
-      getPreviousMessages();
-      socket.on('message', (data: any) => {
-        if (data?.group === props.roomId) {
-          setMessages(prevMess => [...prevMess, data]);
-        }
-      });
-    }
-    // return () => {};
-  }, [socket, props.roomId]);
+    setRefreshing(true);
+    getPreviousMessages();
+    socket.on('message', (data: any) => {
+      if (data?.group === props.roomId) {
+        // @ts-ignore
+        setMessages(prevMess => [...prevMess, data]);
+      }
+    });
+    setRefreshing(false);
+  }, [props.roomId]);
 
-  useEffect(() => {
-    if (socket !== null) {
-      socket.emit('user', user?.id);
-    }
-  }, [user, socket]);
   const [paddingHeight, setPaddingHeight] = useState(0);
   const scrollViewRef = useRef<any>();
   const navigation = useNavigation();
@@ -144,27 +111,13 @@ const Messages = (props: {roomId: any; opk: any}) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {isLoadingMsg ? (
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              flex: 1,
-              paddingTop: 100,
-            }}>
-            <ActivityIndicator size="large" />
-          </View>
-        ) : messages.length === 0 ? (
+        {messages?.length === 0 ? (
           <View
             style={{
               justifyContent: 'center',
               alignItems: 'center',
               paddingTop: 20,
             }}>
-            {/* <TitleText
-              textStyle={styles.emptyContainer}
-              text={`The Conversation just got created, No texts yet...`}
-            /> */}
             <TouchableOpacity onPress={() => onRefresh()}>
               <TitleText
                 text={'Refresh Again'}
@@ -282,7 +235,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
       <SendMessage
         roomId={props.roomId}
         setMessages={setMessages}
-        socket={socket}
+        // socket={socket}
         user={user}
         opk={props.opk}
       />
@@ -291,3 +244,14 @@ const Messages = (props: {roomId: any; opk: any}) => {
 };
 
 export default Messages;
+// isLoadingMsg ? (
+//           <View
+//             style={{
+//               justifyContent: 'center',
+//               alignItems: 'center',
+//               flex: 1,
+//               paddingTop: 100,
+//             }}>
+//             <ActivityIndicator size="large" />
+//           </View>
+//         ) :

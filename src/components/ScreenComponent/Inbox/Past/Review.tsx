@@ -6,8 +6,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from 'react-native';
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {SCREEN_HEIGHT} from '../../../../constants/WindowSize';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {AirbnbRating} from 'react-native-ratings';
@@ -23,6 +24,8 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import {useNavigation} from '@react-navigation/native';
 import BottomSpacing from '../../../UI/BottomSpacing';
+import PetsReview from './PetsReview';
+import { baseUrlV } from '../../../../utils/helpers/httpRequest';
 
 interface Props {
   setIsReviewModal: (value: boolean) => void;
@@ -31,11 +34,13 @@ interface Props {
 }
 
 const Review: FC<Props> = props => {
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const [isRatings, setIsRatings] = useState(5);
   const [isEnjoyRating, setIsEnjoyRating] = useState(5);
   const [isText, setIsText] = useState('');
   const [enjoyText, setEnjoyText] = useState('');
+  const [petsReview, setPetReview] = useState<any[]>([]);
+
   const dispatch = useAppDispatch();
   const {user} = useAppSelector((state: any) => state.whoAmI);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
@@ -47,15 +52,30 @@ const Review: FC<Props> = props => {
   const handleEnjoyRatings = (value: number) => {
     setIsEnjoyRating(value);
   };
-  const endPoint = '/review';
+
+  useEffect(() => {
+    proposedServiceInfo?.petsInfo?.map((item:any) => {
+      return setPetReview(petsetReview => [
+        ...petsetReview,
+        {
+          petId: item?.petId,
+          rating: 5,
+          comment: null,
+        },
+      ]);
+    });
+  }, []);
+
+  const endPoint = `${baseUrlV}/v2/review`;
   const {loading, request} = useApi(methods._post);
   const handleSubmit = async () => {
     let formattedData;
-    if (user?.provider?.isApproved) {
+    if (proposedServiceInfo.userId !== user?.provider?.userId) {
       formattedData = {
         appointmentId: props.appointmentId,
         rating: isRatings,
         comment: isText,
+        petsReview,
       };
     } else {
       formattedData = {
@@ -68,9 +88,12 @@ const Review: FC<Props> = props => {
     }
     const result = await request(endPoint, formattedData);
     if (result.ok) {
-      props.setIsReviewModal(false);
+      props.setIsReviewModal(false)
       dispatch(getProviderApnt(proposedServiceInfo.appointmentOpk));
       navigation.navigate('Inbox');
+    }
+    else {
+      Alert.alert('something went wrong! please try again later');
     }
   };
   return (
@@ -84,9 +107,9 @@ const Review: FC<Props> = props => {
           <View>
             <HeaderText
               text={
-                user?.provider?.isApproved
-                  ? 'How do you want to rate the owner?'
-                  : 'How do you want to rate the sitter?'
+                proposedServiceInfo.userId === user?.provider?.userId
+                  ? 'How do you want to rate the sitter?'
+                  : 'How do you want to rate the owner?'
               }
               textStyle={styles.header}
             />
@@ -114,7 +137,9 @@ const Review: FC<Props> = props => {
               onChangeText={value => setIsText(value)}
             />
           </View>
-          {!user?.provider?.isApproved && (
+          {proposedServiceInfo.userId !== user?.provider?.userId &&
+            proposedServiceInfo?.petsInfo.map((data: any, index: number) => <PetsReview pet={data} key={index} petsReview={petsReview} setPetReview={setPetReview}/>)}
+          {proposedServiceInfo.userId === user?.provider?.userId && (
             <>
               <View>
                 <HeaderText

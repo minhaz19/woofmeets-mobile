@@ -13,7 +13,7 @@ import {useAppSelector} from '../../../../../store/store';
 const ServiceInput = ({...otherProps}) => {
   const {colors} = useTheme();
   const {user} = useAppSelector(state => state.whoAmI);
-  const {currencyCode} = user?.basicInfo?.country;
+  const currencyCode = user?.basicInfo?.country?.currencyCode;
   return (
     <View style={styles.mainContainer}>
       <View style={styles.rootContainer}>
@@ -28,7 +28,13 @@ const ServiceInput = ({...otherProps}) => {
             },
           ]}>
           <TitleText
-            text={currencyCode === null || currencyCode === 'usd' ? '$' : 'C$'}
+            text={
+              currencyCode === null ||
+              currencyCode === undefined ||
+              currencyCode === 'usd'
+                ? '$'
+                : 'C$'
+            }
             textStyle={{...styles.headerText}}
           />
           <TextInput
@@ -51,14 +57,22 @@ const ServiceInput = ({...otherProps}) => {
         <ShortText
           textStyle={styles.label}
           text={`You will earn per service: ${
-            currencyCode === null || currencyCode === 'usd' ? '$' : 'C$'
+            currencyCode === null ||
+            currencyCode === undefined ||
+            currencyCode === 'usd'
+              ? '$'
+              : 'C$'
           }${otherProps.value}`}
         />
       ) : (
         <ShortText
           textStyle={styles.label}
           text={`You keep: ${
-            currencyCode === null || currencyCode === 'usd' ? '$' : 'C$'
+            currencyCode === null ||
+            currencyCode === undefined ||
+            currencyCode === 'usd'
+              ? '$'
+              : 'C$'
           }${otherProps.value}`}
         />
       )}

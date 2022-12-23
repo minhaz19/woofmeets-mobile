@@ -52,7 +52,7 @@ const ServiceDaySlot = ({setValue}: Props) => {
           />
         ))
       )}
-      {modDays.length <= 2 && (
+      {modDays?.length <= 2 && (
         <>
           <BottomSpacing />
           <BottomSpacing />

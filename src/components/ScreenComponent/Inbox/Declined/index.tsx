@@ -20,6 +20,7 @@ interface Props {
 }
 const DeclinedStatus = ({statusType}: Props) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [modalOpk, setModalOpk] = useState('');
   const dispatch = useAppDispatch();
   const {userCancelled, loading} = useAppSelector(state => state.userCancelled);
   const {providerCancelled, loading: providerLoading} = useAppSelector(
@@ -124,6 +125,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                       buttonStyles={Colors.primary}
                       handlePress={() => {
                         setIsVisible(true);
+                        setModalOpk(item.opk);
                         dispatch(getProviderProposal(item.opk));
                       }}
                     />
@@ -188,6 +190,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                       buttonStyles={Colors.primary}
                       handlePress={() => {
                         setIsVisible(true);
+                        setModalOpk(item.opk);
                         dispatch(getProviderProposal(item.opk));
                       }}
                     />
@@ -213,7 +216,7 @@ const DeclinedStatus = ({statusType}: Props) => {
       <BottomHalfModal
         isModalVisible={isVisible}
         setIsModalVisible={setIsVisible}>
-        <RefundDetails setIsDetailsModal={setIsVisible} />
+        <RefundDetails setIsDetailsModal={setIsVisible} modalOpk={modalOpk} />
       </BottomHalfModal>
     </>
   );
