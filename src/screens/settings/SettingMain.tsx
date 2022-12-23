@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   StyleSheet,
@@ -40,6 +41,8 @@ import {getCurrentplan} from '../../store/slices/payment/Subscriptions/CurrentSu
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {getUserOnboardStatus} from '../../store/slices/connect/stripe';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import AppTouchableOpacity from '../../components/common/AppClickEvents/AppTouchableOpacity';
+import Text_Size from '../../constants/textScaling';
 
 const SettingMain = (props: {
   navigation: {
@@ -468,6 +471,22 @@ const SettingMain = (props: {
           />
           {isLoggedIn && <SettingItem data={logOut} key={logOut.id} />}
         </View>
+        <AppTouchableOpacity
+          style={styles.tWrap}
+          onPress={() => {
+            Linking.openURL('https://www.trustpilot.com/review/woofmeets.com');
+          }}>
+          <TitleText textStyle={{...styles.trustP}} text={`Trusted by `} />
+          <TitleText
+            textStyle={{
+              ...styles.trustP,
+              borderBottomColor: Colors.primaryDif,
+              borderBottomWidth: 2,
+              color: Colors.primaryDif,
+            }}
+            text={'Trust_Pilot'}
+          />
+        </AppTouchableOpacity>
         <BottomSpacing />
         <BottomSpacing />
       </ScrollView>
@@ -479,6 +498,17 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 0,
+  },
+  tWrap: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  trustP: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 20,
+    fontSize: Text_Size.Text_1,
+    // color: Colors.primaryDif,
   },
   paddingTop: {paddingTop: '2%'},
   divider: {

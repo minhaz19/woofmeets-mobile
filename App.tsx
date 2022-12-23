@@ -18,8 +18,8 @@ import {PERMISSIONS, request} from 'react-native-permissions';
 import {AppState, AppStateStatus, Platform} from 'react-native';
 import {API_LOG_ROCKET, API_MSG} from '@env';
 import {io} from 'socket.io-client';
-// import {msgUrl} from './src/utils/helpers/httpRequest';
 import LogRocket from '@logrocket/react-native';
+
 
 Icon.loadFont();
 Fst.loadFont();
@@ -34,9 +34,9 @@ Foundation.loadFont();
 // FontAwesome5.loadFont();
 
 export const socket = io(`${API_MSG}`);
+
 const App = () => {
   ForceUpdates();
-
   useEffect(() => {
     LogRocket.init(API_LOG_ROCKET);
 
@@ -53,6 +53,7 @@ const App = () => {
       return listener.remove;
     }
   }, []);
+
   return (
     <Provider store={store}>
       <Splash />

@@ -105,7 +105,7 @@ const AppointmentSuccess = () => {
         </AppTouchableOpacity>
         <AppTouchableOpacity
           onPress={() => {
-            navigation.navigate('Inbox');
+            navigation.navigate('InboxNavigator');
             dispatch(getAppointmentStatus('PROPOSAL'));
             dispatch(getProviderApnt('PROPOSAL'));
           }}

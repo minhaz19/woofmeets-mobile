@@ -417,7 +417,7 @@ PODS:
     - React-Core
   - react-native-geolocation-service (5.3.1):
     - React
-  - react-native-image-picker (4.10.2):
+  - react-native-image-picker (4.10.3):
     - React-Core
   - react-native-maps (1.3.2):
     - React-Core
@@ -514,7 +514,7 @@ PODS:
     - RNFBApp
   - RNGestureHandler (2.8.0):
     - React-Core
-  - RNGoogleSignin (8.2.1):
+  - RNGoogleSignin (8.2.2):
     - GoogleSignIn (~> 6.2)
     - React-Core
   - RNPermissions (3.6.1):
@@ -906,7 +906,7 @@ SPEC CHECKSUMS:
   react-native-fbsdk-next: d6e1c6ad1693c891add104ab529d96906784ba9c
   react-native-geolocation: 3ed60c3d7f613c36b777b9fd0bc3453214e1b0d5
   react-native-geolocation-service: 608e1da71a1ac31b4de64d9ef2815f697978c55b
-  react-native-image-picker: bf34f3f516d139ed3e24c5f5a381a91819e349ea
+  react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-maps: 085f614cf14d3637b2048bb9752da5b1c27c2886
   react-native-netinfo: 2517ad504b3d303e90d7a431b0fcaef76d207983
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
@@ -932,7 +932,7 @@ SPEC CHECKSUMS:
   RNFBApp: 19b77166a07d45a1d36c41af77dd77127acb5a74
   RNFBMessaging: ee9b11e57b590306997b900b8860386eb10ae3a9
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
-  RNGoogleSignin: 3db2d849581299f425f5b61b90cb482a9e68c7af
+  RNGoogleSignin: 81521697b2c8f97f9a586ac7257b1a1d9b51b115
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNReanimated: b21b362b4b8ca921932e8b1718e88cf3a36f157e
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
