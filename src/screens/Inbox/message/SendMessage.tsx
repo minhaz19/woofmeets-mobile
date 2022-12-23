@@ -7,8 +7,9 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import MessageImageUploadModal from '../../../components/UI/modal/MessageImageUploadModal';
+import {socket} from '../../../../App';
 
-const SendMessage = ({roomId, setMessages, socket, user, opk}) => {
+const SendMessage = ({roomId, setMessages, user, opk}) => {
   const {colors} = useTheme();
   const [content, setContent] = useState({text: '', image: ''});
   const [isImageLoading, setIsImageLoading] = useState(false);
@@ -24,9 +25,9 @@ const SendMessage = ({roomId, setMessages, socket, user, opk}) => {
         image: content?.image,
         createdAt: new Date(),
       };
-
       setMessages(prevMess => [...prevMess, data]);
-      socket.emit('send-message', data);
+      socket.emit('send-message', data, (error: any) => {
+      });
       setContent({text: '', image: ''});
     }
   };

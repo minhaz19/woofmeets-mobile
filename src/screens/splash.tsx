@@ -13,18 +13,51 @@ import authStorage from '../utils/helpers/auth/storage';
 import jwt_decode from 'jwt-decode';
 import {slides} from '../utils/config/Data/splashDatas';
 import {signIn} from '../store/slices/auth/userSlice';
-import {useAppDispatch} from '../store/store';
+import {useAppDispatch, useAppSelector} from '../store/store';
 import {getServiceTypes} from '../store/slices/profile/services';
 import {getAllPets} from '../store/slices/pet/allPets/allPetsAction';
 import {NetInfoState, useNetInfo} from '@react-native-community/netinfo';
 import {getWhoAmI} from '../store/slices/common/whoAmI/whoAmIAction';
 import {getUserOnboardStatus} from '../store/slices/connect/stripe';
+import {identifyLogRocketUser} from '../utils/helpers/logRocket/identifyUser';
+import {socket} from '../../App';
+import storage from '../utils/helpers/auth/storage';
 const Splash = ({}) => {
   const [isPreviousUser, setIsPreviousUser] = useState(false);
   const dispatch = useAppDispatch();
   const [state, setState] = useState({
     showRealApp: false,
   });
+  const [user, setUser] = useState(null);
+  // const {user: redUser} = useAppSelector(state => state.whoAmI);
+  const {isLoggedIn} = useAppSelector(state => state.auth);
+  const getTokenDecoded = async () => {
+    const decoded: any = await storage.getUser();
+    setUser(decoded);
+  };
+  useEffect(() => {
+    if (user === null) {
+      getTokenDecoded();
+    }
+  }, [isLoggedIn, user]);
+
+  useEffect(() => {
+    if (user !== null || isLoggedIn) {
+      identifyLogRocketUser(user);
+      socket.emit(
+        'user',
+        {
+          userId: user?.id,
+        },
+        (error: any) => {
+          if (error) {
+            // console.log('emit error', error);
+          }
+        },
+      );
+      socket.on('ack', d => console.log('d', d)); // GOOD
+    }
+  }, [user, isLoggedIn]);
 
   const _renderItem = ({item}: any): JSX.Element => {
     return (

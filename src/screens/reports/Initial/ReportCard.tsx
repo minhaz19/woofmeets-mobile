@@ -1,9 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, ScrollView, Image} from 'react-native';
+import {StyleSheet, View, ScrollView, Image, Text} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import StaticMap from '../map/NavigateMap';
 import HeaderText from '../../../components/common/text/HeaderText';
-import {RightArrow} from '../../../components/ScreenComponent/Inbox/utils/SvgComponent/SvgComponent';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import DescriptionText from '../../../components/common/text/DescriptionText';
 import ReportSingleCard from './ReportSingleCard';
@@ -16,6 +15,7 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 import Text_Size from '../../../constants/textScaling';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
 import {useAppSelector} from '../../../store/store';
+import {formatDate} from '../../../components/common/formatDate';
 
 interface Props {
   navigation: {
@@ -30,7 +30,7 @@ const ReportCard = ({navigation, route}: Props) => {
   const [singleReportData, setSingleReportData] = useState({});
   const {request, loading} = useApi(methods._get);
   const {request: getMap, loading: mapLoading} = useApi(methods._get);
-  const [mapData, setMapData] = useState(null);
+  const [mapData, setMapData] = useState([]);
 
   const handleSingleReport = async () => {
     const singleEndPoint = `/appointment/card/find/${id}`;
@@ -62,7 +62,7 @@ const ReportCard = ({navigation, route}: Props) => {
         style={[styles.container, {backgroundColor: Colors.iosBG}]}>
         {serviceTypeId === 5 && (
           <>
-            {appointmentId !== null && (
+            {(appointmentId !== null && mapData.length > 0) && (
               <View style={{height: 300}}>
                 <StaticMap mapData={mapData} />
               </View>
@@ -116,24 +116,40 @@ const ReportCard = ({navigation, route}: Props) => {
           </>
         )}
 
+        {singleReportData?.submitTime && (
+          <HeaderText
+            textStyle={{marginHorizontal: 15, marginTop: 15}}
+            text={
+              'Generate Report at: ' +
+              formatDate(singleReportData?.submitTime, 'iii LLL d hh:mm a')
+            }
+          />
+        )}
         <HeaderText
           text={'Activities'}
           textStyle={{marginHorizontal: 15, marginTop: 15, marginBottom: 10}}
         />
         {
           <View>
-            {singleReportData?.petsData?.map((item: any) => (
-              <ReportSingleCard
-                key={item?.petId}
-                id={item?.petId}
-                food={item?.food}
-                poo={item?.poo}
-                pee={item?.pee}
-                water={item?.water}
-                title={item?.petName}
-                image={item?.image}
+            {singleReportData?.petsData?.length > 0 ? (
+              singleReportData?.petsData?.map((item: any) => (
+                <ReportSingleCard
+                  key={item?.petId}
+                  id={item?.petId}
+                  food={item?.food}
+                  poo={item?.poo}
+                  pee={item?.pee}
+                  water={item?.water}
+                  title={item?.petName}
+                  image={item?.image}
+                />
+              ))
+            ) : (
+              <DescriptionText
+                text="N/A"
+                textStyle={{marginHorizontal: 15, marginBottom: 10}}
               />
-            ))}
+            )}
           </View>
         }
         <View
@@ -156,7 +172,7 @@ const ReportCard = ({navigation, route}: Props) => {
             text={
               singleReportData?.additionalNotes
                 ? singleReportData?.additionalNotes
-                : 'No notes in this report'
+                : 'No additional notes in this report'
             }
           />
         </View>
@@ -240,6 +256,6 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: 'bold',
-    textSize: Text_Size.Text_1,
+    fontSize: Text_Size.Text_1,
   },
 });

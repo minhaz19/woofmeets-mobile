@@ -43,7 +43,12 @@ const ApprovedStatus = ({statusType}: Props) => {
     setRefreshing(false);
   };
   useEffect(() => {
+    let isRefreshSubscribed = true;
     onRefresh();
+    return () => {
+      // cancel the subscription
+      isRefreshSubscribed = false;
+    };
   }, [statusType]);
   return (
     <>
@@ -125,6 +130,7 @@ const ApprovedStatus = ({statusType}: Props) => {
                       handlePress={() =>
                         navigation.navigate('ActivityScreen', {
                           appointmentOpk: item.opk,
+                          messageGroupId: item.messageGroupId,
                         })
                       }
                     />
@@ -161,7 +167,7 @@ const ApprovedStatus = ({statusType}: Props) => {
                                   'MMM ddd D',
                                 )}`
                               : `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.proposalVisits[0].date,
+                                  proposalDate.proposalVisits[0]?.date,
                                   timezone,
                                   'MMM ddd D',
                                 )}`
@@ -191,6 +197,7 @@ const ApprovedStatus = ({statusType}: Props) => {
                       handlePress={() =>
                         navigation.navigate('ActivityScreen', {
                           appointmentOpk: item.opk,
+                          messageGroupId: item.messageGroupId,
                         })
                       }
                     />

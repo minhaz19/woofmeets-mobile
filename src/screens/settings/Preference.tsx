@@ -7,6 +7,7 @@ import Text_Size from '../../constants/textScaling';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
 import {useAppDispatch} from '../../store/store';
 import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
+import VersionCheck from 'react-native-version-check';
 
 const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const dispatch = useAppDispatch();
@@ -40,7 +41,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       id: 5,
       title: 'Version',
       screenName: () => {},
-      details: '1.0.0.0 - release',
+      details: `${VersionCheck.getCurrentVersion()} - release`,
       opacity: 1,
     },
   ];

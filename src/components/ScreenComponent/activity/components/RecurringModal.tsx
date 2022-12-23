@@ -164,7 +164,7 @@ const RecurringModal = ({regenerateModal, setRegenerateModal}: Props) => {
                       'iii LLL d',
                     )}\n${proposedServiceInfo?.recurringSelectedDay.map(
                       (item: any) =>
-                        `${item.visits.length} Visits on: ${
+                        `${item?.visits?.length} Visits on: ${
                           item.date
                         } at ${item.visits
                           .map((ti: any) => ti.time)

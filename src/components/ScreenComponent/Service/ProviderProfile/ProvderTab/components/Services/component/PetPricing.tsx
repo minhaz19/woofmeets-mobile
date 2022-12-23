@@ -5,10 +5,12 @@ import ShortText from '../../../../../../../common/text/ShortText';
 import {SvgProps} from 'react-native-svg';
 import Colors from '../../../../../../../../constants/Colors';
 import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
+import {useAppSelector} from '../../../../../../../../store/store';
 
 interface Props {
   onPress: () => void;
   showRate: boolean;
+  // currencyCode: string;
   pricingD: {
     Icon: (props: SvgProps) => JSX.Element;
     sittingType: string;
@@ -26,6 +28,7 @@ interface Props {
 }
 
 const PetPricing = ({pricingD, showRate, onPress}: Props) => {
+  const {providerProfile} = useAppSelector(state => state.providerProfile);
   const {colors} = useTheme();
   return (
     <View>
@@ -44,7 +47,11 @@ const PetPricing = ({pricingD, showRate, onPress}: Props) => {
         <View>
           <TitleText
             textStyle={styles.pricingDPrice}
-            text={`$${pricingD.price}`}
+            text={`${
+              providerProfile?.provider?.country?.currencyCode === 'usd'
+                ? '$'
+                : 'C$'
+            }${pricingD.price}`}
           />
           <ShortText
             text={pricingD.perNight}
@@ -71,7 +78,12 @@ const PetPricing = ({pricingD, showRate, onPress}: Props) => {
                     <View>
                       <TitleText
                         textStyle={styles.pInfoPrice}
-                        text={`$${pInfo.price}`}
+                        text={`${
+                          providerProfile?.provider?.country?.currencyCode ===
+                          'usd'
+                            ? '$'
+                            : 'C$'
+                        }${pInfo.price}`}
                       />
                       <ShortText text={pInfo.perNight} />
                     </View>

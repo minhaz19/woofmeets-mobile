@@ -6,14 +6,22 @@ import Text_Size from '../../../../constants/textScaling';
 import Colors from '../../../../constants/Colors';
 interface Props {
   pricing: any;
+  provider: any;
 }
-const ProviderPricing = ({pricing}: Props) => {
-  const price = pricing.length > 0 ? pricing[0].amount : 0;
+const ProviderPricing = ({pricing, provider}: Props) => {
+  const price = pricing?.length > 0 ? pricing[0]?.amount : 0;
+  const currencyCode = provider?.user?.basicInfo?.country?.currencyCode;
   return (
     <View style={styles.container}>
       <TitleText
         textStyle={styles.title}
-        text={`$${price}`}
+        text={`${
+          currencyCode === null ||
+          currencyCode === undefined ||
+          currencyCode === 'usd'
+            ? '$'
+            : 'C$'
+        }${price}`}
       />
       <ShortText textStyle={styles.subTitle} text="per night" />
     </View>

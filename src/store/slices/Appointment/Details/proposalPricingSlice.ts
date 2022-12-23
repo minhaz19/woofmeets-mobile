@@ -3,6 +3,7 @@ import {getProposalPricing} from './getProposalPricing';
 
 const initialState: any = {
   proposalPricing: null,
+
   error: null,
   loading: false,
 };

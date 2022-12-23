@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet, Alert} from 'react-native';
 import React, {useState} from 'react';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
-import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
-
-import {SCREEN_HEIGHT} from '../../../constants/WindowSize';
+// import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Colors from '../../../constants/Colors';
 import Text_Size from '../../../constants/textScaling';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -16,21 +18,25 @@ import {useApi} from '../../../utils/helpers/api/useApi';
 
 import methods from '../../../api/methods';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import storage from '../../../utils/helpers/auth/storage';
+// import TitleText from '../../../components/common/text/TitleText';
+// import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
+import {setReset, setTimee} from '../../../store/slices/misc/trackingToggle';
 const reportEndPoint = `${msgUrl}/v1/locations/visit/`;
 interface Props {
   navigation: any;
   route: any;
 }
 const ReportCardInitial = ({navigation, route}: Props) => {
-  const {appointmentId} = route?.params;
+  const {appointmentId, reportInfo} = route?.params;
   const [trackLocation, setTrackLocation] = useState(false);
   const [distance, setDistance] = useState(0);
   const [walkTime, setWalkTime] = useState('');
   const {request, loading} = useApi(methods._put);
   const token = storage.getToken();
   const {user} = useAppSelector(state => state.whoAmI);
+  const dispatch = useAppDispatch();
   const handleGenerate = async () => {
     if (trackLocation) {
       Alert.alert('Stop tracking to generate report');
@@ -40,9 +46,12 @@ const ReportCardInitial = ({navigation, route}: Props) => {
         user: user.id,
         visit: appointmentId,
       });
+      dispatch(setTimee(0));
+      dispatch(setReset(true));
       if (result.ok) {
         navigation.navigate('GenerateReport', {
           screen: 'InboxNavigator',
+          reportInfo: reportInfo,
           distance: distance,
           walkTime: walkTime,
           appointmentDateId: appointmentId,
@@ -113,5 +122,20 @@ const styles = StyleSheet.create({
     fontSize: Text_Size.Text_8,
   },
   buttonContainer: {position: 'absolute', right: 20, left: 20, bottom: 60},
+  leftContainer: {
+    position: 'absolute',
+    top: 50,
+    zIndex: 999,
+    left: '2%',
+    paddingTop: 4,
+    // paddingVertical: 20,
+    paddingBottom: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    borderRadius: 20,
+  },
+  iconStyle: {paddingRight: 5, paddingLeft: 10},
+  backText: {color: Colors.black, fontWeight: 'bold', paddingRight: 20},
 });
 export default ReportCardInitial;

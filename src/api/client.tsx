@@ -1,10 +1,9 @@
 import {create} from 'apisauce';
 import authStorage from '../utils/helpers/auth/storage';
+import {API_MSG, API_URL} from '@env';
 
 const apiClient = create({
-  baseURL: 'https://api.woofmeets.com/v1',
-  // baseURL: 'https://woof-api.hirebeet.com/v1',
-  // baseURL: 'https://api.woofmeets.com/v1',
+  baseURL: `${API_URL}/v1`,
   timeout: 30000,
 });
 
@@ -18,12 +17,12 @@ apiClient.addAsyncRequestTransform(async request => {
 });
 
 export const apiMsg = create({
-  baseURL: 'https://msg.woofmeets.com',
+  baseURL: API_MSG,
   timeout: 30000,
 });
 
 export const apiNotification = create({
-  baseURL: 'https://msg.woofmeets.com',
+  baseURL: API_MSG,
   timeout: 30000,
 });
 

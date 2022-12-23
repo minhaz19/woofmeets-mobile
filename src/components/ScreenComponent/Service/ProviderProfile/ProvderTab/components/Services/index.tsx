@@ -6,6 +6,7 @@ import PetWeightType from './component/PetWeightType';
 import PetPricing from './component/PetPricing';
 import {useServices} from './utils/useServices';
 import BottomSpacing from '../../../../../../UI/BottomSpacing';
+import { useAppSelector } from '../../../../../../../store/store';
 interface useActiveIndex {
   0: boolean;
   1: boolean;
@@ -15,6 +16,7 @@ interface useActiveIndex {
 }
 const Services = (props: any) => {
   const {formattedServices, availabilityData, atHome} = useServices();
+  // const {providerProfile} = useAppSelector(state => state.providerProfile);
   const [activeIndex, setActiveIndex] = useState<useActiveIndex | any>({
     0: true,
     1: false,
@@ -51,6 +53,7 @@ const Services = (props: any) => {
             }}
             pricingD={pricingD}
             showRate={activeIndex[inde]}
+            // currencyCode={providerProfile?.provider?.address?.country?.currencyCode}
           />
         ))}
       </View>

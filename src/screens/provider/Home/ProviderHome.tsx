@@ -6,7 +6,6 @@ import ShortText from '../../../components/common/text/ShortText';
 import TitleText from '../../../components/common/text/TitleText';
 import BookingCard from '../../../components/ScreenComponent/Provider/Home/BookingCard';
 import Colors from '../../../constants/Colors';
-import ScreenRapperGrey from '../../../components/common/ScreenRapperGrey';
 import {getProviderInprogressApnt} from '../../../store/slices/Appointment/Inbox/Provider/InProgress/getPInprogressApnt';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import subDays from 'date-fns/subDays';
@@ -25,9 +24,7 @@ import {
 } from '../../../assets/svgs/Services_SVG';
 import AnimatedLottieView from 'lottie-react-native';
 
-const ProviderHome = (props: {
-  navigation: {navigate: (arg0: string) => any};
-}) => {
+const ProviderHome = (props: {navigation: any}) => {
   const dispatch = useAppDispatch();
 
   const {providerInprogress, loading} = useAppSelector(
@@ -63,26 +60,6 @@ const ProviderHome = (props: {
     <>
       {loading ? (
         <InboxLoader />
-      ) : providerInprogress === null ||
-        providerInprogress === undefined ||
-        providerInprogress?.length === 0 ? (
-        <>
-          <AnimatedLottieView
-            autoPlay
-            loop={false}
-            source={require('../../../assets/paidApnt.json')}
-            style={styles.loaderStyle}
-          />
-          <HeaderText
-            textStyle={{
-              fontWeight: 'bold',
-              fontSize: Text_Size.Text_2,
-              textAlign: 'center',
-              color: Colors.primaryDif,
-            }}
-            text={'No inprogress appointment found'}
-          />
-        </>
       ) : (
         <ScreenRapper>
           <ScrollView
@@ -92,64 +69,86 @@ const ProviderHome = (props: {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
-            <View style={styles.headerContainer}>
-              <HeaderText text="Today" textStyle={{paddingBottom: 4}} />
-              <ShortText
-                text={`${
-                  providerInprogress ? providerInprogress?.length : 0
-                } Booking`}
-                textStyle={{fontSize: Text_Size.Text_1}}
-              />
-            </View>
-            <View style={styles.spacing}>
-              <TitleText
-                text={new Date().toLocaleDateString()}
-                textStyle={{paddingBottom: 4}}
-              />
-            </View>
-            {/* <View style={styles.spacing}>
-          <ShortText text="Booking" textStyle={styles.bookingText} />
-        </View> */}
-            <View>
-              {providerInprogress ? (
-                providerInprogress?.map((item: any, index: number) => {
-                  return (
-                    <BookingCard
-                      key={index}
-                      item={item}
-                      buttonStyles={Colors.yellow}
-                      // onScreen={() => props.navigation.navigate('OngoingActivityScreen')}
-                      Icon={getIcon(item?.providerService?.serviceTypeId)}
-                      onScreen={() =>
-                        props.navigation.navigate('ActivityScreen', {
-                          appointmentOpk: item.opk,
-                        })
-                      }
-                    />
-                  );
-                })
-              ) : (
-                <DescriptionText
-                  text={'No upcoming schedules found!'}
-                  textStyle={{
-                    paddingVertical: '10%',
-                    fontSize: Text_Size.Text_1,
-                  }}
+            {providerInprogress === null ||
+            providerInprogress === undefined ||
+            providerInprogress?.length === 0 ? (
+              <>
+                <AnimatedLottieView
+                  autoPlay
+                  loop={false}
+                  source={require('../../../assets/paidApnt.json')}
+                  style={styles.loaderStyle}
                 />
-              )}
-            </View>
-            <View style={styles.spacing}>
-              <ShortText
-                text={`Last checked today at ${formatDistance(
-                  subDays(new Date(), 0),
-                  new Date(),
-                  {addSuffix: true},
-                )}`}
-                textStyle={styles.bookingTextDes}
-              />
-            </View>
-            <BottomSpacing />
-            <BottomSpacing />
+                <HeaderText
+                  textStyle={{
+                    fontWeight: 'bold',
+                    fontSize: Text_Size.Text_2,
+                    textAlign: 'center',
+                    color: Colors.primaryDif,
+                  }}
+                  text={'No inprogress appointment found'}
+                />
+              </>
+            ) : (
+              <>
+                <View style={styles.headerContainer}>
+                  <HeaderText text="Today" textStyle={{paddingBottom: 4}} />
+                  <ShortText
+                    text={`${
+                      providerInprogress ? providerInprogress?.length : 0
+                    } Booking`}
+                    textStyle={{fontSize: Text_Size.Text_1}}
+                  />
+                </View>
+                <View style={styles.spacing}>
+                  <TitleText
+                    text={new Date().toLocaleDateString()}
+                    textStyle={{paddingBottom: 4}}
+                  />
+                </View>
+                <View>
+                  {providerInprogress ? (
+                    providerInprogress?.map((item: any, index: number) => {
+                      return (
+                        <BookingCard
+                          key={index}
+                          item={item}
+                          buttonStyles={Colors.yellow}
+                          Icon={getIcon(item?.providerService?.serviceTypeId)}
+                          onScreen={() =>
+                            props.navigation.navigate('ActivityScreen', {
+                              appointmentOpk: item.opk,
+                              messageGroupId: item.messageGroupId,
+                              AppointmentTab: true,
+                            })
+                          }
+                        />
+                      );
+                    })
+                  ) : (
+                    <DescriptionText
+                      text={'No upcoming schedules found!'}
+                      textStyle={{
+                        paddingVertical: '10%',
+                        fontSize: Text_Size.Text_1,
+                      }}
+                    />
+                  )}
+                </View>
+                <View style={styles.spacing}>
+                  <ShortText
+                    text={`Last checked today at ${formatDistance(
+                      subDays(new Date(), 0),
+                      new Date(),
+                      {addSuffix: true},
+                    )}`}
+                    textStyle={styles.bookingTextDes}
+                  />
+                </View>
+                <BottomSpacing />
+                <BottomSpacing />
+              </>
+            )}
           </ScrollView>
         </ScreenRapper>
       )}

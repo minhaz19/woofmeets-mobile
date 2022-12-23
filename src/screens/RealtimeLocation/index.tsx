@@ -3,51 +3,37 @@
 import {
   View,
   StyleSheet,
-  Platform,
-  PermissionsAndroid,
-  Text,
   Dimensions,
+  PermissionsAndroid,
+  Platform,
 } from 'react-native';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
 
-import MapView, {Marker, Polyline, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
-// import Text_Size from '../../constants/textScaling';
-// import {SCREEN_WIDTH} from '../../constants/WindowSize';
-// import Colors from '../../constants/Colors';
-// import TitleText from '../../components/common/text/TitleText';
-// import BigText from '../../components/common/text/BigText';
-// import ButtonCom from '../../components/UI/ButtonCom';
-// import {btnStyles} from '../../constants/theme/common/buttonStyles';
-import {io} from 'socket.io-client';
-import {msgUrl} from '../../utils/helpers/httpRequest';
+
 import {useAppSelector} from '../../store/store';
 import WatchMiles from './components/WatchMiles';
-import {request} from 'react-native-permissions';
-import {useApi} from '../../utils/helpers/api/useApi';
-import methods from '../../api/methods';
-import Colors from '../../constants/Colors';
+import {socket} from '../../../App';
 const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.04;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+let _watchId: number | null = null;
 interface Props {
   appointmentId: number;
   trackLocation: any;
   setTrackLocation: any;
 }
-let trackInfo: any = {};
+// let trackInfo: any = {};
 const RealtimeLocation = ({
   appointmentId,
-  trackLocation,
-  setTrackLocation,
-}: Props) => {
+}: // trackLocation,
+// setTrackLocation,
+Props) => {
   const mapRef = useRef<MapView>();
-  const markerRef = useRef<MapView>();
-  // const [trackLocation, setTrackLocation] = useState(false);
-  const [socket, setSocket] = useState<any>(null);
   const {user} = useAppSelector(state => state.whoAmI);
-  // const {request: getRequest} = useApi(methods._get);
+  const {trackingStatus} = useAppSelector(state => state.trackingStatus);
   const [mapInfo, setMapInfo] = useState<any>({
     latitude: 0,
     longitude: 0,
@@ -78,102 +64,64 @@ const RealtimeLocation = ({
       }
     }
   }
-  async function getCurrentPosition() {
-    const hasLocationPermission = await requestLocationPermission();
+  // async function getCurrentPosition() {
+  //   const hasLocationPermission = await requestLocationPermission();
 
-    if (hasLocationPermission === false) {
-      return;
-    }
+  //   if (hasLocationPermission === false) {
+  //     return;
+  //   }
 
-    Geolocation.getCurrentPosition(
-      position => {
-        setMapInfo({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          coordinates: mapInfo.coordinates.concat({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          }),
-        });
-      },
-      error => {},
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000},
-    );
-  }
-  // const trackProvider = (track = false) => {
-  //   return track
-  //     ? Geolocation.watchPosition(
-  //         (position: any) => {
-  //           // console.log('poisit', position);
-  //           setMapInfo({
-  //             latitude: position.coords.latitude,
-  //             longitude: position.coords.longitude,
-  //             coordinates: mapInfo.coordinates.concat({
-  //               latitude: position.coords.latitude,
-  //               longitude: position.coords.longitude,
-  //             }),
-  //           });
-  //         },
-  //         (error: any) => {},
-  //         {
-  //           enableHighAccuracy: true,
-  //           distanceFilter: 0,
-  //           interval: 5000,
-  //           fastestInterval: 2000,
-  //         },
-  //       )
-  //     : {};
-  // };
-  // useEffect(() => {
-  //   trackProvider(trackLocation);
-  // }, [trackLocation]);
-
-  // useEffect(() => {
-  //   getCurrentPosition();
-  // }, []);
-  useEffect(() => {
-    getCurrentPosition();
-    const _watchId = Geolocation.watchPosition(
-      (position: any) => {
-        setMapInfo({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          coordinates: mapInfo.coordinates.concat({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          }),
-        });
-      },
-      (error: any) => {},
-      {
-        enableHighAccuracy: true,
-        distanceFilter: 0,
-        interval: 5000,
-        fastestInterval: 2000,
-      },
-    );
-
-    return () => {
-      if (_watchId) {
-        Geolocation.clearWatch(_watchId);
-      }
-    };
-  }, []);
+  //   Geolocation.getCurrentPosition(
+  //     position => {
+  //       setMapInfo({
+  //         latitude: position.coords.latitude,
+  //         longitude: position.coords.longitude,
+  //         coordinates: mapInfo.coordinates.concat({
+  //           latitude: position.coords.latitude,
+  //           longitude: position.coords.longitude,
+  //         }),
+  //       });
+  //     },
+  //     error => {},
+  //     {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000},
+  //   );
+  // }
 
   useEffect(() => {
-    if (socket === null) {
-      let tempSocket = io(`${msgUrl}`);
-      setSocket(tempSocket);
+    requestLocationPermission();
+    if (trackingStatus) {
+      _watchId = Geolocation.watchPosition(
+        (position: any) => {
+          setMapInfo({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            coordinates: mapInfo.coordinates.concat({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            }),
+          });
+        },
+        (error: any) => {},
+        {
+          enableHighAccuracy: true,
+          distanceFilter: 0,
+          interval: 5000,
+          fastestInterval: 2000,
+        },
+      );
+    } else if (_watchId !== null) {
+      Geolocation.clearWatch(_watchId);
     }
-  }, [socket]);
+  }, [trackingStatus]);
+
   const callApi = (payloadData: any) => {
-    return new Promise(resolve => socket.emit('update-location', payloadData));
+    return socket.connected && socket.emit('update-location', payloadData);
   };
   useMemo(() => {
-    if (!trackLocation) {
+    if (!trackingStatus) {
       return;
     }
-    if (user.id !== null && trackLocation) {
+    if (user.id !== null && trackingStatus) {
       const payloadData: any = {
         user: user.id,
         visit: appointmentId,
@@ -182,13 +130,13 @@ const RealtimeLocation = ({
       };
       callApi(payloadData);
     }
-  }, [trackLocation, mapInfo]);
+  }, [trackingStatus, mapInfo]);
+  // console.log('something', socket);
   return (
     <>
       <View style={styles.container}>
         <View style={styles.mapcontainer}>
           <MapView
-            // provider={}
             ref={mapRef}
             style={styles.mapStyle}
             initialRegion={{
@@ -198,14 +146,14 @@ const RealtimeLocation = ({
               longitudeDelta: LONGITUDE_DELTA,
             }}
             loadingEnabled
+            zoomEnabled
+            zoomTapEnabled
             showsUserLocation
             followsUserLocation
             showsCompass
             userLocationPriority="high"
-            // zoomEnabled
             onUserLocationChange={e => null}
             showsPointsOfInterest={true}
-            // onRegionChangeComplete={onChangeValue}
           >
             {/* <Polyline
               coordinates={mapInfo.coordinates}
@@ -228,10 +176,7 @@ const RealtimeLocation = ({
             /> */}
           </MapView>
         </View>
-        <WatchMiles
-          trackLocation={trackLocation}
-          setTrackLocation={setTrackLocation}
-        />
+        <WatchMiles />
       </View>
     </>
   );
@@ -246,7 +191,7 @@ const styles = StyleSheet.create({
   },
   mapcontainer: {
     width: '100%',
-    height: 350,
+    height: 400,
   },
   inpuStyle: {
     backgroundColor: 'white',
@@ -264,4 +209,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RealtimeLocation;
+export default memo(RealtimeLocation);

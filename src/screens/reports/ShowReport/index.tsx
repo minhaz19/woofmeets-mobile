@@ -72,7 +72,7 @@ const ShowAllReport = (props: {
                       props.navigation.navigate('ReportCard', {
                         id: item?.id,
                         serviceTypeId: proposedServiceInfo?.serviceTypeId,
-                        appointmentId: item.appointmentDateId,
+                        appointmentId: item?.appointmentDateId,
                       })
                     }>
                     <View
@@ -94,7 +94,7 @@ const ShowAllReport = (props: {
                         <DescriptionText
                           text={
                             'Generate Report at: ' +
-                            formatDate(item?.submitTime, 'iii LLL d')
+                            formatDate(item?.submitTime, 'iii LLL d hh:mm aa ')
                           }
                         />
                       </View>

@@ -248,7 +248,6 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
               formattedMessage: dropInVisitFT,
             };
-        console.log('helo', dropDogPayload);
         const response = await request(endpoint, dropDogPayload);
         if (response.ok) {
           navigation.dispatch(
@@ -321,7 +320,6 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
             };
         const response = await request(endpoint, doggyPayload);
-        // console.log('response', response, doggyPayload);
         if (response.ok) {
           navigation.dispatch(
             StackActions.replace('ActivityScreen', {

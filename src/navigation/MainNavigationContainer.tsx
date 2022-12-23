@@ -58,6 +58,9 @@ import GenerateReport from '../screens/reports/Initial/GenerateReport';
 import ShowAllReport from '../screens/reports/ShowReport';
 import ReportCard from '../screens/reports/Initial/ReportCard';
 import AccountSetting from '../components/ScreenComponent/setting/Preference/AccountSetting';
+import ReportSlots from '../screens/reports/Initial/ReportSlots';
+import {setReset} from '../store/slices/misc/trackingToggle';
+import SeePetReview from '../components/ScreenComponent/Inbox/Details/SeePetReview';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -615,15 +618,33 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           component={ReportCardInitial}
           options={({navigation}) => ({
             title: '',
-            header: () => (
-              <HeaderWithBack navigation={navigation} title="Reports" />
-            ),
+            headerShown: false,
+            // header: () => (
+            //   <HeaderWithBack navigation={navigation} title="Reports" />
+            // ),
             backgroundColor: Colors.primary,
           })}
         />
         <Stack.Screen
           name="GenerateReport"
           component={GenerateReport}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Reports"
+                onPressBack={() => {
+                  dispatch(setReset(false));
+                }}
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ReportSlots"
+          component={ReportSlots}
           options={({navigation}) => ({
             title: '',
             header: () => (
@@ -650,6 +671,17 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             title: '',
             header: () => (
               <HeaderWithBack navigation={navigation} title="Reports" />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SeePetReview"
+          component={SeePetReview}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Show pet review" />
             ),
             backgroundColor: Colors.primary,
           })}

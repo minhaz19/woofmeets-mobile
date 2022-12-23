@@ -17,7 +17,13 @@ import styles from './styles';
 import Messages from '../message/Messages';
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
-  route: {params: {appointmentOpk: string}};
+  route: {
+    params: {
+      appointmentOpk: string;
+      messageGroupId?: string;
+      AppointmentTab?: boolean;
+    };
+  };
 }) => {
   const dispatch = useAppDispatch();
   const {loading: petLoading} = useAppSelector(state => state.allPets);
@@ -27,7 +33,7 @@ const ActivityScreen = (props: {
   const {loading: providerLoading} = useAppSelector(
     state => state.providerProfile,
   );
-  const {appointmentOpk} = props?.route?.params;
+  const {appointmentOpk, messageGroupId, AppointmentTab} = props?.route?.params;
 
   const {user} = useAppSelector(state => state.whoAmI);
   const reviewGiven = proposedServiceInfo?.review?.filter(
@@ -66,6 +72,7 @@ const ActivityScreen = (props: {
                 opk={appointmentOpk}
                 setVisitId={setVisitId}
                 proposedServiceInfo={proposedServiceInfo}
+                AppointmentTab={AppointmentTab}
               />
               <BottomHalfModal
                 isModalVisible={isDetailsModal}
@@ -85,6 +92,7 @@ const ActivityScreen = (props: {
                   setIsReviewModal={setIsReviewModal}
                   isReviewed={reviewGiven}
                   appointmentId={visitId}
+                  opk={appointmentOpk}
                   setModalVisible={function (): void {
                     throw new Error('Function not implemented.');
                   }}
@@ -102,7 +110,12 @@ const ActivityScreen = (props: {
                 />
               </BottomHalfModal>
               <Messages
-                roomId={proposal?.appointment?.messageGroupId}
+                roomId={
+                  messageGroupId !== undefined
+                    ? messageGroupId
+                    : proposedServiceInfo?.messageGroupId
+                }
+                // roomId={proposal?.appointment?.messageGroupId}
                 opk={appointmentOpk}
               />
             </>

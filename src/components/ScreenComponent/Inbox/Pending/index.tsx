@@ -37,7 +37,6 @@ const PendingStatus = ({statusType}: Props) => {
   useEffect(() => {
     onRefresh();
   }, [statusType]);
-
   return (
     <>
       {loading || providerLoading ? (
@@ -92,7 +91,7 @@ const PendingStatus = ({statusType}: Props) => {
                                   'MMM ddd D',
                                 )}`
                               : `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.proposalVisits[0].date,
+                                  proposalDate.proposalVisits[0]?.date,
                                   timezone,
                                   'MMM ddd D',
                                 )}`
@@ -117,6 +116,7 @@ const PendingStatus = ({statusType}: Props) => {
                       handlePress={() =>
                         navigation.navigate('ActivityScreen', {
                           appointmentOpk: item.opk,
+                          messageGroupId: item.messageGroupId,
                         })
                       }
                     />
@@ -153,7 +153,7 @@ const PendingStatus = ({statusType}: Props) => {
                                   'MMM ddd D',
                                 )}`
                               : `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.proposalVisits[0].date,
+                                  proposalDate.proposalVisits[0]?.date,
                                   timezone,
                                   'MMM ddd D',
                                 )}`
@@ -182,6 +182,7 @@ const PendingStatus = ({statusType}: Props) => {
                       handlePress={() =>
                         navigation.navigate('ActivityScreen', {
                           appointmentOpk: item.opk,
+                          messageGroupId: item.messageGroupId,
                         })
                       }
                     />

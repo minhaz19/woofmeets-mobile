@@ -38,7 +38,10 @@ const ProviderInfo = ({
   const endDate = getMonthAndDat(
     new Date(availability && availability.dates.slice(-1)),
   );
-
+  const formattedDistance =
+    user?.basicInfo?.country?.name === 'USA'
+      ? distance?.distance
+      : distance?.distance * 1.60934;
   return (
     <View style={styles.container}>
       <HeaderText
@@ -56,10 +59,12 @@ const ProviderInfo = ({
       <View style={styles.shortInfo}>
         <ShortIconTitle
           Icon={MapMarker}
-          text={`${distance?.distance.toFixed(2)} ${distance?.unit}`}
+          text={`${formattedDistance.toFixed(2)} ${
+            user?.basicInfo?.country?.name === 'USA' ? 'mi' : 'km'
+          }`}
         />
       </View>
-      {availability && (
+      {availability?.dates?.length > 0 && (
         <View style={styles.availableTime}>
           <ShortIconTitle
             Icon={RoundedCheckbox}

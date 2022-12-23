@@ -8,8 +8,8 @@ import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Pricing from './Pricing';
 import BottomSpacing from '../../../UI/BottomSpacing';
-import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {getProposalPricing} from '../../../../store/slices/Appointment/Details/getProposalPricing';
+// import {useAppDispatch, useAppSelector} from '../../../../store/store';
+// import {getSettleProposalPricing} from '../../../../store/slices/Appointment/Details/getProposalPricing';
 
 interface Props {
   setIsPayment?: (value: boolean) => void;
@@ -19,12 +19,12 @@ interface Props {
 
 const Details: FC<Props> = props => {
   const {colors} = useTheme();
-  const dispatch = useAppDispatch();
-  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  useEffect(() => {
-    dispatch(getProposalPricing(proposedServiceInfo?.appointmentOpk));
-  }, []);
-
+  // const dispatch = useAppDispatch();
+  // const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  // useEffect(() => {
+  //   // dispatch(getProposalPricing(proposedServiceInfo?.appointmentOpk));
+  //   dispatch(getSettleProposalPricing(proposedServiceInfo?.appointmentOpk));
+  // }, []);
   return (
     <View>
       <View style={styles.headerContainer}>
@@ -46,7 +46,7 @@ const Details: FC<Props> = props => {
       <View
         style={[styles.divider, {backgroundColor: colors.descriptionText}]}
       />
-      <Pricing screen={''} />
+      <Pricing screen={''} setIsDetailsModal={props.setIsDetailsModal} />
       <BottomSpacing />
     </View>
   );

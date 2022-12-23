@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native';
-import {BellIcon} from '../../../assets/svgs/SVG_LOGOS';
+// import {BellIcon} from '../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Ion from 'react-native-vector-icons/Ionicons';
@@ -17,6 +17,7 @@ const HeaderWithBack = (props: {
   Icon?: any;
   SecondIcon?: any;
   onPress?: (arg: any) => void;
+  onPressBack?: () => void;
 }) => {
   const {colors} = useTheme();
   return (
@@ -27,6 +28,7 @@ const HeaderWithBack = (props: {
           style={styles.leftContainer}
           onPress={() => {
             props.navigation.goBack();
+            props.onPressBack && props.onPressBack();
           }}>
           <Ion
             name="ios-chevron-back"
@@ -55,8 +57,8 @@ const HeaderWithBack = (props: {
         )}
         {props.notification && (
           <>
-            {/* <View style={styles.headerContainer}>
-              <TouchableOpacity
+            <View style={styles.headerContainer}>
+              {/* <TouchableOpacity
                 style={styles.bellContainer}
                 onPress={() => props.navigation.navigate('Notifications')}>
                 <BellIcon
@@ -65,8 +67,8 @@ const HeaderWithBack = (props: {
                   }
                 />
                 <View style={styles.bellView} />
-              </TouchableOpacity>
-            </View> */}
+              </TouchableOpacity> */}
+            </View>
             {props.SecondIcon && (
               <View style={styles.secondContainer}>
                 <TouchableOpacity

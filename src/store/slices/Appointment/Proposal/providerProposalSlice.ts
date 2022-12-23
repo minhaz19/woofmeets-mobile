@@ -13,6 +13,7 @@ const initialState: any = {
   proposedService: null,
   proposalInfo: null,
   proposedServiceInfo: null,
+  stableProposalPrcing: null,
   error: null,
   loading: false,
   billingId: null,
@@ -37,6 +38,8 @@ const providerProposalSlice = createSlice({
         const modpayload = payload?.data;
         state.loading = false;
         state.proposal = modpayload;
+        state.stableProposalPrcing =
+          modpayload?.proposal?.priceCalculationDetails;
         state.providerInfo = modpayload.appointment.provider.user;
         state.proposedService =
           modpayload.appointment.providerService.serviceType;
@@ -80,6 +83,7 @@ const providerProposalSlice = createSlice({
                 dropOffEndTime: modpayload.proposal.dropOffEndTime,
                 pickUpStartTime: modpayload.proposal.pickUpStartTime,
                 pickUpEndTime: modpayload.proposal.pickUpEndTime,
+                currency: modpayload.proposal.currency,
                 // proposalStartDate: modpayload.proposal.proposalStartDate,
                 // proposalEndDate: modpayload.proposal.proposalEndDate,
                 proposalStartDate: convertToLocalTZ(
@@ -186,6 +190,7 @@ const providerProposalSlice = createSlice({
                 review: modpayload.appointment.review,
                 messageGroupId: modpayload.appointment.messageGroupId,
                 refundDetails: modpayload.proposal.refundDetails,
+                currency: modpayload.proposal.currency,
               }
             : modpayload.appointment.providerService.serviceTypeId === 4
             ? {
@@ -250,6 +255,7 @@ const providerProposalSlice = createSlice({
                 providerTimeZone: modpayload.appointment.providerTimeZone,
                 refundDetails: modpayload.proposal.refundDetails,
                 messageGroupId: modpayload.appointment.messageGroupId,
+                currency: modpayload.proposal.currency,
               }
             : null;
       })

@@ -20,6 +20,7 @@ interface Props {
 }
 const DeclinedStatus = ({statusType}: Props) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [modalOpk, setModalOpk] = useState('');
   const dispatch = useAppDispatch();
   const {userCancelled, loading} = useAppSelector(state => state.userCancelled);
   const {providerCancelled, loading: providerLoading} = useAppSelector(
@@ -57,7 +58,7 @@ const DeclinedStatus = ({statusType}: Props) => {
             <View style={styles.errorContainer}>
               <MessageNotSend
                 svg={<UpcomingSvg width={200} height={200} />}
-                title={'No messages in Delined inbox'}
+                title={'No messages in Declined inbox'}
                 description={
                   " You'll find messages here when you or sitter have cancelled or reject a booking"
                 }
@@ -96,7 +97,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                                   'MMM ddd D',
                                 )}`
                               : `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.proposalVisits[0].date,
+                                  proposalDate.proposalVisits[0]?.date,
                                   timezone,
                                   'MMM ddd D',
                                 )}`
@@ -124,6 +125,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                       buttonStyles={Colors.primary}
                       handlePress={() => {
                         setIsVisible(true);
+                        setModalOpk(item.opk);
                         dispatch(getProviderProposal(item.opk));
                       }}
                     />
@@ -160,7 +162,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                                   'MMM ddd D',
                                 )}`
                               : `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.proposalVisits[0].date,
+                                  proposalDate.proposalVisits[0]?.date,
                                   timezone,
                                   'MMM ddd D',
                                 )}`
@@ -188,6 +190,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                       buttonStyles={Colors.primary}
                       handlePress={() => {
                         setIsVisible(true);
+                        setModalOpk(item.opk);
                         dispatch(getProviderProposal(item.opk));
                       }}
                     />
@@ -197,7 +200,7 @@ const DeclinedStatus = ({statusType}: Props) => {
                 // handlePress={() => setIsVisible(true)}
                 <MessageNotSend
                   svg={<UpcomingSvg width={200} height={200} />}
-                  title={'No messages in Delined inbox'}
+                  title={'No messages in Declined inbox'}
                   description={
                     " You'll find messages here when you or sitter have cancelled or reject a booking"
                   }
@@ -213,7 +216,7 @@ const DeclinedStatus = ({statusType}: Props) => {
       <BottomHalfModal
         isModalVisible={isVisible}
         setIsModalVisible={setIsVisible}>
-        <RefundDetails setIsDetailsModal={setIsVisible} />
+        <RefundDetails setIsDetailsModal={setIsVisible} modalOpk={modalOpk} />
       </BottomHalfModal>
     </>
   );
