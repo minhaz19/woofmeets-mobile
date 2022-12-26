@@ -13,10 +13,7 @@ import CompletedStatus from '../../components/ScreenComponent/Inbox/Completed';
 import DeclinedStatus from '../../components/ScreenComponent/Inbox/Declined';
 import UserProviderInbox from '../../components/ScreenComponent/Inbox/utils/Common/UserProviderInbox';
 
-// export const convertDateAndTime = (date, timeZone) => {
 
-//   return new Date(convertDate);
-// };
 const data = [
   {
     id: 1,

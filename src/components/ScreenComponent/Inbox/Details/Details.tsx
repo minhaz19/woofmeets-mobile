@@ -1,5 +1,5 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';
 import HeaderText from '../../../common/text/HeaderText';

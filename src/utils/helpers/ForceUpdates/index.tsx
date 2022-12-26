@@ -5,15 +5,14 @@ import {Linking} from 'react-native';
 import VersionCheck from 'react-native-version-check';
 import methods from '../../../api/methods';
 import RNExitApp from 'react-native-exit-app';
+import {ApiResponse} from 'apisauce';
 
 const ForceUpdates = () => {
   let currentVersion = VersionCheck.getCurrentVersion(); // Automatically choose profer provider using `Platform.select` by device platform.
-  console.log(currentVersion);
   const checkIfUpdateIsNeeded = async () => {
-    const response = await methods._get(
-      `user-application-version/compare?platform=${Platform.OS.toUpperCase()}&version=${'1.8.2'}`,
+    const response: ApiResponse<any> = await methods._get(
+      `user-application-version/compare?platform=${Platform.OS.toUpperCase()}&version=${currentVersion}`,
     );
-    console.log(response?.data?.data);
     if (response.ok && response?.data?.data?.isForceUpdate) {
       Alert.alert(
         'Please Update',
@@ -21,7 +20,26 @@ const ForceUpdates = () => {
         [
           {
             text: 'Update',
-            onPress: async() => {
+            onPress: async () => {
+              await Linking.openURL(response?.data?.data?.storeRedirectUrl);
+              BackHandler.exitApp();
+              RNExitApp.exitApp();
+            },
+          },
+        ],
+      );
+    } else if (response.ok && response?.data?.data?.isUpdateAvailable) {
+      Alert.alert(
+        'Please Update',
+        'You can update your app to the latest version.',
+        [
+          {
+            text: 'Later',
+            onPress: () => {},
+          },
+          {
+            text: 'Update',
+            onPress: async () => {
               await Linking.openURL(response?.data?.data?.storeRedirectUrl);
               BackHandler.exitApp();
               RNExitApp.exitApp();
