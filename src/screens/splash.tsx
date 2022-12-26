@@ -51,7 +51,6 @@ const Splash = ({}) => {
         },
         (error: any) => {
           if (error) {
-            // console.log('emit error', error);
           }
         },
       );

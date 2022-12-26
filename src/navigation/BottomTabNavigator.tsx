@@ -269,7 +269,7 @@ function BottomTabNavigator() {
       </Tab.Navigator>
     );
   } else {
-    return <View></View>;
+    return <View />;
   }
 }
 

@@ -131,7 +131,6 @@ Props) => {
       callApi(payloadData);
     }
   }, [trackingStatus, mapInfo]);
-  // console.log('something', socket);
   return (
     <>
       <View style={styles.container}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, useColorScheme, Platform} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Finder, Setting} from '../assets/svgs/SVG_LOGOS';
 import Colors from '../constants/Colors';
@@ -12,7 +12,6 @@ import {useTheme} from '../constants/theme/hooks/useTheme';
 const Tab = createBottomTabNavigator();
 
 function GuestBottomTabNavigator() {
-  const isDarkMode = useColorScheme() === 'dark';
   const {colors} = useTheme();
   const height =
     SCREEN_WIDTH <= 380
