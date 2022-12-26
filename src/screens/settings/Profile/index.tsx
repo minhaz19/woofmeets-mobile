@@ -1,5 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, ScrollView, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  RefreshControl,
+  Alert,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ProfileInfo from '../../../components/ScreenComponent/profile/BasicInfo/ProfileInfo';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -12,7 +18,7 @@ import HeaderText from '../../../components/common/text/HeaderText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ShortText from '../../../components/common/text/ShortText';
 import {getProviderProfile} from '../../../store/slices/Provider/ProviderProfile/singlePet/providerProfileAction';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import jwtDecode from 'jwt-decode';
 import authStorage from '../../../utils/helpers/auth/storage';
 import TitleText from '../../../components/common/text/TitleText';
@@ -20,6 +26,11 @@ import {getUserOnboardStatus} from '../../../store/slices/connect/stripe';
 import {getSkillsData} from '../../../store/slices/profile/details';
 import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
+import SettingItem from '../../../components/ScreenComponent/setting/SettingItem';
+import Text_Size from '../../../constants/textScaling';
+import methods from '../../../api/methods';
+import {logout} from '../../../store/slices/auth/userSlice';
+import {Delete} from '../../../assets/svgs/SVG_LOGOS';
 
 const Profile = (props: {
   navigation: {navigate: (arg0: string, arg1?: any) => any};
@@ -57,6 +68,28 @@ const Profile = (props: {
   //   dispatch(getUserOnboardStatus());
   //   dispatch(getSkillsData());
   // }, []);
+  const deleteAccountConfirmation = () => {
+    Alert.alert('Woofmeets', 'Are you sure you want to delete your account ?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: async () => {
+          const response = await methods._delete('/user');
+          response.ok && dispatch(logout());
+          props.navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{name: 'AuthNavigator'}],
+            }),
+          );
+        },
+      },
+    ]);
+  };
 
   useEffect(() => {
     onRefresh();
@@ -162,6 +195,28 @@ const Profile = (props: {
               </View>
             </AppTouchableOpacity>
           </View>
+        </View>
+        <View
+          style={{
+            marginTop: 10,
+            borderTopWidth: 1,
+            borderTopColor: Colors.border,
+          }}>
+          <SettingItem
+            data={{
+              id: 8,
+              title: 'Delete Account',
+              icon: Delete,
+              screenName: () => deleteAccountConfirmation(),
+              color: Colors.red,
+              details: 'Delete your account permanently',
+              opacity: 1,
+            }}
+            descriptionStyle={{
+              color: Colors.red,
+              fontSize: Text_Size.Text_8,
+            }}
+          />
         </View>
       </ScrollView>
     </>

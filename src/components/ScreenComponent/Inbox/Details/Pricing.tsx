@@ -36,7 +36,6 @@ const Pricing = ({setIsDetailsModal}: Props) => {
       ? '$'
       : 'C$';
   };
-  // console.log('stableProposalPrcing', stableProposalPrcing, proposalPricing);
   return (
     <>
       {sLoading ? (
@@ -63,219 +62,262 @@ const Pricing = ({setIsDetailsModal}: Props) => {
             text={'Charges & Services'}
             textStyle={styles._textHeader}
           />
-          {stableProposalPrcing?.petsRates?.map((item: any, index: number) => {
-            return (
-              <View key={index} style={[styles.mapContainer]}>
-                <View style={styles.flexContainer}>
-                  <AppTouchableOpacity
-                    onPress={() => {
-                      setIsDetailsModal && setIsDetailsModal(false);
-                      navigation.navigate('SeePetReview', {
-                        petId: item?.id,
-                        petInfo: proposedServiceInfo.petsInfo,
-                      });
-                    }}
-                    style={{width: '70%'}}>
-                    <HeaderText
-                      text={changeTextLetter(item.name)}
+
+          {stableProposalPrcing === null ||
+          stableProposalPrcing === undefined ? (
+            <>
+              <View>
+                <TitleText
+                  textStyle={{
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    marginTop: '25%',
+                    color: Colors.alert,
+                    // justifyContent: 'space-between',
+                  }}
+                  text={
+                    'There is no valid charges and service fee details found for this particular appoinment'
+                  }
+                />
+              </View>
+            </>
+          ) : (
+            <>
+              {stableProposalPrcing?.petsRates?.map(
+                (item: any, index: number) => {
+                  return (
+                    <View key={index} style={[styles.mapContainer]}>
+                      <View style={styles.flexContainer}>
+                        <AppTouchableOpacity
+                          onPress={() => {
+                            setIsDetailsModal && setIsDetailsModal(false);
+                            navigation.navigate('SeePetReview', {
+                              petId: item?.id,
+                              petInfo: proposedServiceInfo.petsInfo,
+                            });
+                          }}
+                          style={{width: '70%'}}>
+                          <HeaderText
+                            text={changeTextLetter(item.name)}
+                            textStyle={{
+                              ...styles.priceTextHeader,
+                              textDecorationLine: 'underline',
+                              color: Colors.primaryDif,
+                            }}
+                          />
+                        </AppTouchableOpacity>
+                        <HeaderText
+                          text={`${getCurrency()}${Number(
+                            item?.count * item?.rate?.amount,
+                          )?.toFixed(2)}`}
+                          textStyle={styles.priceText}
+                        />
+                      </View>
+
+                      <ShortText
+                        text={`Applied ${item?.rate.name}`}
+                        textStyle={{fontWeight: 'bold'}}
+                      />
+
+                      <DescriptionText
+                        text={`${item.count} ${
+                          proposedServiceInfo.serviceTypeId === 1 ||
+                          proposedServiceInfo.serviceTypeId === 2
+                            ? ' night'
+                            : proposedServiceInfo.serviceTypeId === 3
+                            ? ' visit'
+                            : proposedServiceInfo.serviceTypeId === 4
+                            ? ' day'
+                            : proposedServiceInfo.serviceTypeId === 5
+                            ? ' walk'
+                            : ''
+                        } @ ${getCurrency()}${Number(
+                          item?.rate?.amount,
+                        )?.toFixed(2)} /${
+                          proposedServiceInfo.serviceTypeId === 1 ||
+                          proposedServiceInfo.serviceTypeId === 2
+                            ? ' night'
+                            : proposedServiceInfo.serviceTypeId === 3
+                            ? ' visit'
+                            : proposedServiceInfo.serviceTypeId === 4
+                            ? ' day'
+                            : proposedServiceInfo.serviceTypeId === 5
+                            ? ' walk'
+                            : ''
+                        }`}
+                        textStyle={{
+                          color: colors.descriptionText,
+                          lineHeight: 20,
+                        }}
+                      />
+                    </View>
+                  );
+                },
+              )}
+
+              {stableProposalPrcing?.sixtyMinutesRate?.rate?.name !==
+                undefined &&
+                stableProposalPrcing?.sixtyMinutesRate?.rate?.name !== '' && (
+                  <View style={[styles.mapContainer]}>
+                    <View style={styles.flexContainer}>
+                      <HeaderText
+                        text={changeTextLetter(
+                          stableProposalPrcing?.sixtyMinutesRate?.rate.name,
+                        )}
+                        textStyle={styles.priceTextHeader}
+                      />
+                      <HeaderText
+                        text={`${getCurrency()}${Number(
+                          stableProposalPrcing?.sixtyMinutesRate?.count *
+                            stableProposalPrcing?.sixtyMinutesRate?.rate
+                              ?.amount,
+                        )?.toFixed(2)}`}
+                        textStyle={styles.priceText}
+                      />
+                    </View>
+
+                    <ShortText
+                      text={`Applied ${stableProposalPrcing?.sixtyMinutesRate.rate.name}`}
+                      textStyle={{fontWeight: 'bold'}}
+                    />
+
+                    <DescriptionText
+                      text={`${
+                        stableProposalPrcing?.sixtyMinutesRate.count
+                      } visit @ ${getCurrency()}${Number(
+                        stableProposalPrcing?.sixtyMinutesRate?.rate?.amount,
+                      )?.toFixed(2)} / visit`}
                       textStyle={{
-                        ...styles.priceTextHeader,
-                        textDecorationLine: 'underline',
-                        color: Colors.primaryDif,
+                        color: colors.descriptionText,
+                        lineHeight: 20,
                       }}
                     />
-                  </AppTouchableOpacity>
+                  </View>
+                )}
+              <View
+                style={[
+                  styles.divider,
+                  {backgroundColor: colors.descriptionText},
+                ]}
+              />
+              <View style={styles.totalContainer}>
+                <HeaderText
+                  text={'Subtotal: '}
+                  textStyle={{
+                    color: colors.headerText,
+                    fontWeight: 'bold',
+                    fontSize: Text_Size.Text_2,
+                    marginBottom: 10,
+                    marginLeft: 0,
+                  }}
+                />
+                {user?.id === proposedServiceInfo?.userId ? (
                   <HeaderText
-                    text={`${getCurrency()}${Number(
-                      item?.count * item?.rate?.amount,
-                    )?.toFixed(2)}`}
-                    textStyle={styles.priceText}
+                    text={`${getCurrency()}${stableProposalPrcing?.subTotal}`}
+                    textStyle={{
+                      fontSize: Text_Size.Text_2,
+                    }}
                   />
-                </View>
-
-                <ShortText
-                  text={`Applied ${item?.rate.name}`}
-                  textStyle={{fontWeight: 'bold'}}
-                />
-
-                <DescriptionText
-                  text={`${item.count} ${
-                    proposedServiceInfo.serviceTypeId === 1 ||
-                    proposedServiceInfo.serviceTypeId === 2
-                      ? ' night'
-                      : proposedServiceInfo.serviceTypeId === 3
-                      ? ' visit'
-                      : proposedServiceInfo.serviceTypeId === 4
-                      ? ' day'
-                      : proposedServiceInfo.serviceTypeId === 5
-                      ? ' walk'
-                      : ''
-                  } @ ${getCurrency()}${Number(item?.rate?.amount)?.toFixed(
-                    2,
-                  )} /${
-                    proposedServiceInfo.serviceTypeId === 1 ||
-                    proposedServiceInfo.serviceTypeId === 2
-                      ? ' night'
-                      : proposedServiceInfo.serviceTypeId === 3
-                      ? ' visit'
-                      : proposedServiceInfo.serviceTypeId === 4
-                      ? ' day'
-                      : proposedServiceInfo.serviceTypeId === 5
-                      ? ' walk'
-                      : ''
-                  }`}
-                  textStyle={{color: colors.descriptionText, lineHeight: 20}}
-                />
+                ) : (
+                  <HeaderText
+                    text={`${getCurrency()}${
+                      stableProposalPrcing?.providerFee?.providerTotal
+                    }`}
+                    textStyle={{
+                      fontSize: Text_Size.Text_2,
+                    }}
+                  />
+                )}
               </View>
-            );
-          })}
-          {stableProposalPrcing?.sixtyMinutesRate?.rate?.name !== undefined &&
-            stableProposalPrcing?.sixtyMinutesRate?.rate?.name !== '' && (
-              <View style={[styles.mapContainer]}>
-                <View style={styles.flexContainer}>
+              <View style={[styles.totalContainer]}>
+                <View>
                   <HeaderText
-                    text={changeTextLetter(
-                      stableProposalPrcing?.sixtyMinutesRate?.rate.name,
-                    )}
-                    textStyle={styles.priceTextHeader}
+                    text={'Platform charge: '}
+                    textStyle={{
+                      color: colors.headerText,
+                      fontWeight: 'bold',
+                      fontSize: Text_Size.Text_2,
+                      marginLeft: 0,
+                    }}
                   />
-                  <HeaderText
-                    text={`${getCurrency()}${Number(
-                      stableProposalPrcing?.sixtyMinutesRate?.count *
-                        stableProposalPrcing?.sixtyMinutesRate?.rate?.amount,
-                    )?.toFixed(2)}`}
-                    textStyle={styles.priceText}
-                  />
+                  {user?.id === proposedServiceInfo?.userId ? (
+                    <>
+                      <ShortText
+                        text={` ( + ) ${
+                          stableProposalPrcing?.serviceChargeInParcentage
+                        }% of ${getCurrency()}${
+                          stableProposalPrcing?.subTotal
+                        }`}
+                      />
+                    </>
+                  ) : (
+                    <ShortText
+                      text={` ( - ) ${
+                        stableProposalPrcing?.providerFee
+                          ?.subscriptionFeeInParcentage
+                      }% of ${getCurrency()}${
+                        stableProposalPrcing?.providerFee?.providerTotal
+                      }`}
+                    />
+                  )}
                 </View>
-
-                <ShortText
-                  text={`Applied ${stableProposalPrcing?.sixtyMinutesRate.rate.name}`}
-                  textStyle={{fontWeight: 'bold'}}
-                />
-
-                <DescriptionText
-                  text={`${
-                    stableProposalPrcing?.sixtyMinutesRate.count
-                  } visit @ ${getCurrency()}${Number(
-                    stableProposalPrcing?.sixtyMinutesRate?.rate?.amount,
-                  )?.toFixed(2)} / visit`}
-                  textStyle={{color: colors.descriptionText, lineHeight: 20}}
-                />
-              </View>
-            )}
-          <View
-            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-          />
-          <View style={styles.totalContainer}>
-            <HeaderText
-              text={'Subtotal: '}
-              textStyle={{
-                color: colors.headerText,
-                fontWeight: 'bold',
-                fontSize: Text_Size.Text_2,
-                marginBottom: 10,
-                marginLeft: 0,
-              }}
-            />
-            {user?.id === proposedServiceInfo?.userId ? (
-              <HeaderText
-                text={`${getCurrency()}${stableProposalPrcing?.subTotal}`}
-                textStyle={{
-                  fontSize: Text_Size.Text_2,
-                }}
-              />
-            ) : (
-              <HeaderText
-                text={`${getCurrency()}${
-                  stableProposalPrcing?.providerFee?.providerTotal
-                }`}
-                textStyle={{
-                  fontSize: Text_Size.Text_2,
-                }}
-              />
-            )}
-          </View>
-          <View style={[styles.totalContainer]}>
-            <View>
-              <HeaderText
-                text={'Platform charge: '}
-                textStyle={{
-                  color: colors.headerText,
-                  fontWeight: 'bold',
-                  fontSize: Text_Size.Text_2,
-                  marginLeft: 0,
-                }}
-              />
-              {user?.id === proposedServiceInfo?.userId ? (
-                <>
-                  <ShortText
-                    text={` ( + ) ${
-                      stableProposalPrcing?.serviceChargeInParcentage
-                    }% of ${getCurrency()}${stableProposalPrcing?.subTotal}`}
+                {user?.id === proposedServiceInfo?.userId ? (
+                  <HeaderText
+                    text={`${getCurrency()}${(
+                      stableProposalPrcing?.total -
+                      stableProposalPrcing?.subTotal
+                    )?.toFixed(2)}`}
+                    textStyle={{
+                      fontSize: Text_Size.Text_2,
+                    }}
                   />
-                </>
-              ) : (
-                <ShortText
-                  text={` ( - ) ${
-                    stableProposalPrcing?.providerFee
-                      ?.subscriptionFeeInParcentage
-                  }% of ${getCurrency()}${
-                    stableProposalPrcing?.providerFee?.providerTotal
-                  }`}
+                ) : (
+                  <HeaderText
+                    text={`${getCurrency()}${stableProposalPrcing?.providerFee?.subscriptionFee?.toFixed(
+                      2,
+                    )}`}
+                    textStyle={{
+                      fontSize: Text_Size.Text_2,
+                    }}
+                  />
+                )}
+              </View>
+              <View
+                style={[
+                  styles.divider,
+                  {backgroundColor: colors.descriptionText},
+                ]}
+              />
+              <View style={styles.totalContainer}>
+                <HeaderText
+                  text={'Total Amount: '}
+                  textStyle={{
+                    color: colors.headerText,
+                    fontWeight: 'bold',
+                    fontSize: Text_Size.Text_2,
+                    marginLeft: 0,
+                  }}
                 />
-              )}
-            </View>
-            {user?.id === proposedServiceInfo?.userId ? (
-              <HeaderText
-                text={`${getCurrency()}${(
-                  stableProposalPrcing?.total - stableProposalPrcing?.subTotal
-                )?.toFixed(2)}`}
-                textStyle={{
-                  fontSize: Text_Size.Text_2,
-                }}
-              />
-            ) : (
-              <HeaderText
-                text={`${getCurrency()}${stableProposalPrcing?.providerFee?.subscriptionFee?.toFixed(
-                  2,
-                )}`}
-                textStyle={{
-                  fontSize: Text_Size.Text_2,
-                }}
-              />
-            )}
-          </View>
-          <View
-            style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-          />
-          <View style={styles.totalContainer}>
-            <HeaderText
-              text={'Total Amount: '}
-              textStyle={{
-                color: colors.headerText,
-                fontWeight: 'bold',
-                fontSize: Text_Size.Text_2,
-                marginLeft: 0,
-              }}
-            />
-            {user?.id === proposedServiceInfo?.userId ? (
-              <HeaderText
-                text={`${getCurrency()}${stableProposalPrcing?.total}`}
-                textStyle={{
-                  fontSize: Text_Size.Text_2,
-                }}
-              />
-            ) : (
-              <HeaderText
-                text={`${getCurrency()}${
-                  stableProposalPrcing?.providerFee?.providerTotal
-                }`}
-                textStyle={{
-                  fontSize: Text_Size.Text_2,
-                }}
-              />
-            )}
-          </View>
+                {user?.id === proposedServiceInfo?.userId ? (
+                  <HeaderText
+                    text={`${getCurrency()}${stableProposalPrcing?.total}`}
+                    textStyle={{
+                      fontSize: Text_Size.Text_2,
+                    }}
+                  />
+                ) : (
+                  <HeaderText
+                    text={`${getCurrency()}${
+                      stableProposalPrcing?.providerFee?.providerTotal
+                    }`}
+                    textStyle={{
+                      fontSize: Text_Size.Text_2,
+                    }}
+                  />
+                )}
+              </View>
+            </>
+          )}
         </View>
       )}
     </>
