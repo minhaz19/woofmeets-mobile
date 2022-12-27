@@ -69,7 +69,7 @@ const PaymentMethods = ({route, navigation}: Props) => {
       } else if (!result.ok && result.status === 400) {
         setAppointmentLoading(false);
         Alert.alert(
-          'We are unable to proccess your payment request right now, Please reload the application and try again ',
+          'We are unable to process your payment request right now, Please reload the application and try again ',
         );
       } else if (!result.ok && result.status === 409) {
         setAppointmentLoading(false);
@@ -102,7 +102,7 @@ const PaymentMethods = ({route, navigation}: Props) => {
       } else if (!result.ok && result.status === 400) {
         Alert.alert(result.data.message);
         // Alert.alert(
-        //   'We are unable to proccess your payment request right now, Please reload the application and try again ',
+        //   'We are unable to process your payment request right now, Please reload the application and try again ',
         // );
       } else if (!result.ok && result.status === 409) {
         Alert.alert(result?.data?.message);

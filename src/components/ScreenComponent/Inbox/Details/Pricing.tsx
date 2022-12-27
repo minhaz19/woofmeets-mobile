@@ -13,9 +13,8 @@ import TitleText from '../../../common/text/TitleText';
 import changeTextLetter from '../../../common/changeTextLetter';
 import {useNavigation} from '@react-navigation/native';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
-import AppInput from '../../../common/Form/AppInput';
-import { useApi } from '../../../../utils/helpers/api/useApi';
-import methods from '../../../../api/methods';
+import {useHandleCoupon} from './utils/useHandleCoupon';
+
 interface Props {
   screen: string;
   setIsDetailsModal?: (arg: any) => void;
@@ -25,32 +24,38 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
   const {user} = useAppSelector(state => state.whoAmI);
   const navigation = useNavigation<any>();
   const [isCoupon, setIsCoupon] = useState<string>('');
-  console.log(isCoupon);
-  // const {loading} = useAppSelector(
-  //   state => state.proposalPricing,
-  // );
+  const [couponData, setCouponData] = useState({
+    percentage: '',
+    code: '',
+    withCouponSubTotal: '',
+    withCouponTotal: '',
+  });
   const {
     proposedServiceInfo,
     stableProposalPrcing,
+    billingId,
     loading: sLoading,
   } = useAppSelector(state => state.proposal);
 
-  console.log(proposedServiceInfo.billing[0].id)
+  // get currency
   const getCurrency = () => {
     return proposedServiceInfo?.currency === null ||
       proposedServiceInfo?.currency === 'usd'
       ? '$'
       : 'C$';
   };
-  const endPoint = `/coupons/apply/${isCoupon}/billing/${proposedServiceInfo?.billing[0]?.id}`;
-  const {request, loading} = useApi(methods._get);
-  const handleApplyCoupon = async() => {
-    const result = await request(endPoint);
-    console.log(result.data);
-  };
+
+  const {handleApplyCoupon, handleDeleteCoupon, detailsLoading, loading} =
+    useHandleCoupon(
+      stableProposalPrcing,
+      proposedServiceInfo,
+      setCouponData,
+      isCoupon,
+      billingId,
+    );
   return (
     <>
-      {sLoading ? (
+      {sLoading || detailsLoading ? (
         <View style={{marginVertical: '50%'}}>
           <TitleText
             text="Loading..."
@@ -213,16 +218,24 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                 ]}
               />
               <View style={styles.totalContainer}>
-                <HeaderText
-                  text={'Subtotal: '}
-                  textStyle={{
-                    color: colors.headerText,
-                    fontWeight: 'bold',
-                    fontSize: Text_Size.Text_2,
-                    marginBottom: 10,
-                    marginLeft: 0,
-                  }}
-                />
+                <View>
+                  <HeaderText
+                    text={'Subtotal: '}
+                    textStyle={{
+                      color: colors.headerText,
+                      fontWeight: 'bold',
+                      fontSize: Text_Size.Text_2,
+                      marginBottom: 10,
+                      marginLeft: 0,
+                    }}
+                  />
+                  {/* {screen === 'details' && (
+                    <DescriptionText
+                      text={'After applying coupon'}
+                      textStyle={{marginBottom: 10}}
+                    />
+                  )} */}
+                </View>
                 {user?.id === proposedServiceInfo?.userId ? (
                   <HeaderText
                     text={`${getCurrency()}${stableProposalPrcing?.subTotal}`}
@@ -258,14 +271,65 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                   </View>
                   <AppTouchableOpacity
                     onPress={handleApplyCoupon}
-                    style={[styles.buttonContainer]}>
+                    style={[styles.buttonContainer]}
+                    disabled={loading}>
                     <DescriptionText
-                      text="Apply Coupon"
-                      textStyle={{textAlign: 'center', color: Colors.light.background}}
+                      text={loading ? 'Loading...' : 'Apply Coupon'}
+                      textStyle={{
+                        textAlign: 'center',
+                        color: Colors.light.background,
+                      }}
                     />
                   </AppTouchableOpacity>
                 </View>
               )}
+              {screen === 'checkout' && couponData.code !== '' && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: 10,
+                  }}>
+                  <DescriptionText
+                    text={`Coupon "${couponData?.code}" applied`}
+                    textStyle={{color: Colors.success, paddingRight: 10}}
+                  />
+                  <AppTouchableOpacity onPress={handleDeleteCoupon}>
+                    <DescriptionText
+                      text="Remove"
+                      textStyle={{
+                        color: Colors.alert,
+                        textDecorationLine: 'underline',
+                      }}
+                    />
+                  </AppTouchableOpacity>
+                </View>
+              )}
+              {screen === 'checkout' || 'details' &&
+                couponData.withCouponSubTotal !== '' && (
+                  <View style={[styles.totalContainer, {marginBottom: 10}]}>
+                    <View>
+                      <HeaderText
+                        text={'Subtotal:'}
+                        textStyle={{
+                          color: colors.headerText,
+                          fontWeight: 'bold',
+                          fontSize: Text_Size.Text_2,
+                          marginLeft: 0,
+                        }}
+                      />
+                      <ShortText
+                        text={`(-) After applying ${couponData?.percentage}% by coupon code`}
+                        // textStyle={{fontWeight: 'bold'}}
+                      />
+                    </View>
+
+                    <HeaderText
+                      text={`${getCurrency()}${couponData?.withCouponSubTotal}`}
+                    />
+                  </View>
+                )}
               <View style={[styles.totalContainer]}>
                 <View>
                   <HeaderText
@@ -337,7 +401,11 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                 />
                 {user?.id === proposedServiceInfo?.userId ? (
                   <HeaderText
-                    text={`${getCurrency()}${stableProposalPrcing?.total}`}
+                    text={`${getCurrency()}${
+                      couponData.withCouponTotal !== ''
+                        ? couponData.withCouponTotal
+                        : stableProposalPrcing?.total
+                    }`}
                     textStyle={{
                       fontSize: Text_Size.Text_2,
                     }}
@@ -416,7 +484,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    // borderRadius: 2,
+    marginTop: 2,
     marginBottom: 8,
   },
   inputContainer: {
