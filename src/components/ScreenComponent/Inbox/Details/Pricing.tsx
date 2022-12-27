@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, StyleSheet} from 'react-native';
-import React from 'react';
+import {View, StyleSheet, TextInput} from 'react-native';
+import React, {useState} from 'react';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
@@ -13,14 +13,19 @@ import TitleText from '../../../common/text/TitleText';
 import changeTextLetter from '../../../common/changeTextLetter';
 import {useNavigation} from '@react-navigation/native';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
+import AppInput from '../../../common/Form/AppInput';
+import { useApi } from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
 interface Props {
   screen: string;
   setIsDetailsModal?: (arg: any) => void;
 }
-const Pricing = ({setIsDetailsModal}: Props) => {
+const Pricing = ({setIsDetailsModal, screen}: Props) => {
   const {colors} = useTheme();
   const {user} = useAppSelector(state => state.whoAmI);
   const navigation = useNavigation<any>();
+  const [isCoupon, setIsCoupon] = useState<string>('');
+  console.log(isCoupon);
   // const {loading} = useAppSelector(
   //   state => state.proposalPricing,
   // );
@@ -30,11 +35,18 @@ const Pricing = ({setIsDetailsModal}: Props) => {
     loading: sLoading,
   } = useAppSelector(state => state.proposal);
 
+  console.log(proposedServiceInfo.billing[0].id)
   const getCurrency = () => {
     return proposedServiceInfo?.currency === null ||
       proposedServiceInfo?.currency === 'usd'
       ? '$'
       : 'C$';
+  };
+  const endPoint = `/coupons/apply/${isCoupon}/billing/${proposedServiceInfo?.billing[0]?.id}`;
+  const {request, loading} = useApi(methods._get);
+  const handleApplyCoupon = async() => {
+    const result = await request(endPoint);
+    console.log(result.data);
   };
   return (
     <>
@@ -229,6 +241,31 @@ const Pricing = ({setIsDetailsModal}: Props) => {
                   />
                 )}
               </View>
+              {screen === 'checkout' && (
+                <View
+                  style={[
+                    styles.couponContainer,
+                    {borderColor: Colors.border},
+                  ]}>
+                  <View style={{width: '70%'}}>
+                    <TextInput
+                      style={styles.inputContainer}
+                      onChangeText={(e: string) => setIsCoupon(e)}
+                      value={isCoupon}
+                      placeholder="Coupon Code"
+                      placeholderTextColor={'gray'}
+                    />
+                  </View>
+                  <AppTouchableOpacity
+                    onPress={handleApplyCoupon}
+                    style={[styles.buttonContainer]}>
+                    <DescriptionText
+                      text="Apply Coupon"
+                      textStyle={{textAlign: 'center', color: Colors.light.background}}
+                    />
+                  </AppTouchableOpacity>
+                </View>
+              )}
               <View style={[styles.totalContainer]}>
                 <View>
                   <HeaderText
@@ -373,6 +410,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  couponContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    // borderRadius: 2,
+    marginBottom: 8,
+  },
+  inputContainer: {
+    color: 'black',
+    fontSize: Text_Size.Text_10,
+    padding: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primary,
+    width: '30%',
+    height: '100%',
   },
 });
 
