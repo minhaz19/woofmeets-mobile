@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, StyleSheet} from 'react-native';
-import React from 'react';
+import {View, StyleSheet, TextInput} from 'react-native';
+import React, {useState} from 'react';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Colors from '../../../../constants/Colors';
 import Text_Size from '../../../../constants/textScaling';
@@ -13,32 +13,50 @@ import TitleText from '../../../common/text/TitleText';
 import changeTextLetter from '../../../common/changeTextLetter';
 import {useNavigation} from '@react-navigation/native';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
+import {useHandleCoupon} from './utils/useHandleCoupon';
+
 interface Props {
   screen: string;
   setIsDetailsModal?: (arg: any) => void;
 }
-const Pricing = ({setIsDetailsModal}: Props) => {
+const Pricing = ({setIsDetailsModal, screen}: Props) => {
   const {colors} = useTheme();
   const {user} = useAppSelector(state => state.whoAmI);
   const navigation = useNavigation<any>();
-  // const {loading} = useAppSelector(
-  //   state => state.proposalPricing,
-  // );
+  const [isCoupon, setIsCoupon] = useState<string>('');
+  const [couponData, setCouponData] = useState({
+    couponType: '',
+    coupons: '',
+    code: '',
+    excludeSubTotal: '',
+    withCouponTotal: '',
+  });
   const {
     proposedServiceInfo,
     stableProposalPrcing,
+    billingId,
     loading: sLoading,
   } = useAppSelector(state => state.proposal);
 
+  // get currency
   const getCurrency = () => {
     return proposedServiceInfo?.currency === null ||
       proposedServiceInfo?.currency === 'usd'
       ? '$'
       : 'C$';
   };
+
+  const {handleApplyCoupon, handleDeleteCoupon, detailsLoading, loading} =
+    useHandleCoupon(
+      stableProposalPrcing,
+      proposedServiceInfo,
+      setCouponData,
+      isCoupon,
+      billingId,
+    );
   return (
     <>
-      {sLoading ? (
+      {sLoading || detailsLoading ? (
         <View style={{marginVertical: '50%'}}>
           <TitleText
             text="Loading..."
@@ -201,16 +219,18 @@ const Pricing = ({setIsDetailsModal}: Props) => {
                 ]}
               />
               <View style={styles.totalContainer}>
-                <HeaderText
-                  text={'Subtotal: '}
-                  textStyle={{
-                    color: colors.headerText,
-                    fontWeight: 'bold',
-                    fontSize: Text_Size.Text_2,
-                    marginBottom: 10,
-                    marginLeft: 0,
-                  }}
-                />
+                <View>
+                  <HeaderText
+                    text={'Subtotal: '}
+                    textStyle={{
+                      color: colors.headerText,
+                      fontWeight: 'bold',
+                      fontSize: Text_Size.Text_2,
+                      marginBottom: 10,
+                      marginLeft: 0,
+                    }}
+                  />
+                </View>
                 {user?.id === proposedServiceInfo?.userId ? (
                   <HeaderText
                     text={`${getCurrency()}${stableProposalPrcing?.subTotal}`}
@@ -229,6 +249,87 @@ const Pricing = ({setIsDetailsModal}: Props) => {
                   />
                 )}
               </View>
+              {screen === 'checkout' && (
+                <View
+                  style={[
+                    styles.couponContainer,
+                    {borderColor: Colors.border},
+                  ]}>
+                  <View style={{width: '70%'}}>
+                    <TextInput
+                      style={styles.inputContainer}
+                      onChangeText={(e: string) => setIsCoupon(e)}
+                      value={isCoupon}
+                      placeholder="Coupon Code"
+                      placeholderTextColor={'gray'}
+                    />
+                  </View>
+                  <AppTouchableOpacity
+                    onPress={handleApplyCoupon}
+                    style={[styles.buttonContainer]}
+                    disabled={loading}>
+                    <DescriptionText
+                      text={loading ? 'Loading...' : 'Apply Coupon'}
+                      textStyle={{
+                        textAlign: 'center',
+                        color: Colors.light.background,
+                      }}
+                    />
+                  </AppTouchableOpacity>
+                </View>
+              )}
+              {screen === 'checkout' && couponData.code !== '' && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: 10,
+                  }}>
+                  <DescriptionText
+                    text={`Coupon "${couponData?.code}" applied`}
+                    textStyle={{color: Colors.success, paddingRight: 10}}
+                  />
+                  <AppTouchableOpacity onPress={handleDeleteCoupon}>
+                    <DescriptionText
+                      text="Remove"
+                      textStyle={{
+                        color: Colors.alert,
+                        textDecorationLine: 'underline',
+                      }}
+                    />
+                  </AppTouchableOpacity>
+                </View>
+              )}
+              {(screen === 'checkout' || screen === 'details') &&
+                couponData.excludeSubTotal !== '' &&
+                user?.id === proposedServiceInfo?.userId && (
+                  <View style={[styles.totalContainer, {marginBottom: 10}]}>
+                    <View>
+                      <HeaderText
+                        text={'Applied coupon:'}
+                        textStyle={{
+                          color: colors.headerText,
+                          fontWeight: 'bold',
+                          fontSize: Text_Size.Text_2,
+                          marginLeft: 0,
+                        }}
+                      />
+                      <ShortText
+                        text={`( - ) ${couponData?.couponType === 'FIXED_AMOUNT' ? getCurrency() : ''}${
+                          couponData?.coupons
+                        }${couponData?.couponType === 'PERCENTAGE' ? '%' : ''} of ${getCurrency()}${
+                          stableProposalPrcing?.subTotal
+                        }`}
+                        // textStyle={{fontWeight: 'bold'}}
+                      />
+                    </View>
+
+                    <HeaderText
+                      text={`${getCurrency()}${couponData?.excludeSubTotal}`}
+                    />
+                  </View>
+                )}
               <View style={[styles.totalContainer]}>
                 <View>
                   <HeaderText
@@ -300,7 +401,11 @@ const Pricing = ({setIsDetailsModal}: Props) => {
                 />
                 {user?.id === proposedServiceInfo?.userId ? (
                   <HeaderText
-                    text={`${getCurrency()}${stableProposalPrcing?.total}`}
+                    text={`${getCurrency()}${
+                      couponData.withCouponTotal !== ''
+                        ? couponData.withCouponTotal
+                        : stableProposalPrcing?.total
+                    }`}
                     textStyle={{
                       fontSize: Text_Size.Text_2,
                     }}
@@ -373,6 +478,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  couponContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    marginTop: 2,
+    marginBottom: 8,
+  },
+  inputContainer: {
+    color: 'black',
+    fontSize: Text_Size.Text_10,
+    padding: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primary,
+    width: '30%',
+    height: '100%',
   },
 });
 

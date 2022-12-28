@@ -576,6 +576,9 @@ const ActivityHeader = (props: {
                           navigation.navigate('Checkout'));
                       }
                     } else {
+                      dispatch(
+                        getProviderProposal(proposedServiceInfo.appointmentOpk),
+                      );
                       dispatch(setBillingId(proposedServiceInfo.billing[0].id));
                       navigation.navigate('Checkout');
                     }
