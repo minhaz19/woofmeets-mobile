@@ -14,6 +14,11 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import Splash from './src/screens/splash';
 import store from './src/store/store';
 import ForceUpdates from './src/utils/helpers/ForceUpdates';
+import { getDeviceToken, showForegroundNotifications } from './src/utils/helpers/NotificationServices';
+import messaging from '@react-native-firebase/messaging';
+// import 'intl';
+// import 'intl/locale-data/jsonp/en-US';
+// import 'date-time-format-timezone';
 import {PERMISSIONS, request} from 'react-native-permissions';
 import {AppState, AppStateStatus, Platform} from 'react-native';
 import {API_LOG_ROCKET, API_MSG} from '@env';
@@ -37,6 +42,16 @@ export const socket = io(`${API_MSG}`);
 
 const App = () => {
   ForceUpdates();
+  useEffect(() => {
+    getDeviceToken(); //getting fcm device token
+  }, []);
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      showForegroundNotifications(remoteMessage);
+    });
+    return unsubscribe;
+  }, []);
+
   useEffect(() => {
     LogRocket.init(API_LOG_ROCKET);
 

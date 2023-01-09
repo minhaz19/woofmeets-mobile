@@ -15,9 +15,9 @@ const InboxNavigator = () => {
   return (
     <Stack1.Navigator
       initialRouteName="Inbox"
-      // screenOptions={{
-      //   gestureEnabled: false,
-      // }}
+      screenOptions={{
+        gestureEnabled: false,
+      }}
     >
       <Stack1.Screen
         name="Inbox"

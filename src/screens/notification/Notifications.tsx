@@ -1,130 +1,41 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, FlatList, Platform, Alert} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, FlatList, Platform, Alert, ActivityIndicator} from 'react-native';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import TitleText from '../../components/common/text/TitleText';
 import DescriptionText from '../../components/common/text/DescriptionText';
 import HeaderText from '../../components/common/text/HeaderText';
-import {useTheme} from '../../constants/theme/hooks/useTheme'; 
-import messaging from '@react-native-firebase/messaging';
-import { ApiResponse } from 'apisauce';
-import { apiNotification } from '../../api/client';
-import authStorage from '../../utils/helpers/auth/storage';
+import {useTheme} from '../../constants/theme/hooks/useTheme';
+import { emptyNotificationsData, getNotifications } from '../../store/slices/notifications/notificationsSlice';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 const Notifications = () => {
+  const dispatch = useAppDispatch();
+  const {notificationsData, totalNotifications, footerLoading} = useAppSelector((state: { notification: any; }) => state.notification);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {colors} = useTheme();
-  const notifi = [
-    {
-      id: 1,
-      createdAt: new Date(),
-      title:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      id: 2,
-      createdAt: new Date(),
-      title:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      id: 3,
-      createdAt: new Date(),
-      title:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      id: 4,
-      createdAt: new Date(),
-      title:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      id: 5,
-      createdAt: new Date(),
-      title:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-  ];
 
-  const NotificationListner = () => {
-    messaging().onNotificationOpenedApp(remoteMessage => {});
-
-    // Check whether an initial notification is available
-    messaging()
-      .getInitialNotification()
-      .then((remoteMessage: any) => {
-        if (remoteMessage) {}
-        // setLoading(false);
-      });
-    messaging().onMessage(async remoteMessage => {});
-  };
-
-  async function requestUserPermission() {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-    if (enabled) {}
-  }
-
-  const tokenManagement = async () => {
-    if (
-      Platform.OS === 'ios' &&
-      !messaging().isDeviceRegisteredForRemoteMessages
-    ) {
-    }
-
-    try {
-      await authStorage.getToken();
-      messaging()
-        .getToken()
-        .then(async (deviceToken: any) => {
-          const response: ApiResponse<any> = await apiNotification.post('/v1/push-notifications', {
-            registrationToken: deviceToken,
-          });
-        });
-    } catch (error) {
+  const loadMore = () => {
+    if (totalNotifications?.total % notificationsData?.length !== 0 ) {
+      setCurrentPage(prev => prev + 1);
     }
   };
 
   useEffect(() => {
-    // Get the device token
-    requestUserPermission();
-    tokenManagement();
-
-    NotificationListner();
-    // Listen to whether the token changes
-    return messaging().onTokenRefresh(token => {});
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert(
-        'A new notification arrived!',
-        remoteMessage.notification.body,
-        remoteMessage.notification.description,
-      );
-    });
-
-    return unsubscribe;
-  });
-
-
-  if (!notifi) {
-    return (
-      <View style={styles.loadingText}>
-        <HeaderText text="Loading..." />
-      </View>
-    );
-  }
+    dispatch(getNotifications({limit: 20, page: currentPage}));
+  }, [currentPage]);
 
   const onPress = () => {
     // setIsModalVisible(true);
   };
+
+  useEffect(() => {
+    dispatch(emptyNotificationsData());
+  },[]);
 
   return (
     <View
@@ -142,9 +53,9 @@ const Notifications = () => {
         onBlur={undefined}>
         <TitleText text="Hello this is a new notification" />
       </MiddleModal> */}
-      {notifi?.length > 0 && (
+      {notificationsData?.length > 0 && (
         <FlatList
-          data={notifi}
+          data={notificationsData}
           renderItem={({item}) => (
             <View
               style={{...styles.touchable}}
@@ -158,7 +69,7 @@ const Notifications = () => {
                       <DescriptionText
                         text={moment(item?.createdAt).fromNow()}
                       />
-                      <TitleText text={item?.title} />
+                      <TitleText text={item?.message} />
                     </View>
                     <Icon
                       name="keyboard-arrow-right"
@@ -170,7 +81,11 @@ const Notifications = () => {
               </TouchableOpacity>
             </View>
           )}
-          onEndReachedThreshold={0.5}
+          ListFooterComponent={() => {
+            return (totalNotifications?.total % notificationsData?.length !== 0 ? <ActivityIndicator size={'small'} animating={footerLoading} /> : <></>);
+          }}
+          onEndReached={() => loadMore()}
+          onEndReachedThreshold={0.02}
         />
       )}
       <View style={{height: 40}} />

@@ -59,6 +59,7 @@ import ShowAllReport from '../screens/reports/ShowReport';
 import ReportCard from '../screens/reports/Initial/ReportCard';
 import AccountSetting from '../components/ScreenComponent/setting/Preference/AccountSetting';
 import ReportSlots from '../screens/reports/Initial/ReportSlots';
+import linking from '../utils/helpers/DeepLinking';
 import {setReset} from '../store/slices/misc/trackingToggle';
 import SeePetReview from '../components/ScreenComponent/Inbox/Details/SeePetReview';
 const Stack = createStackNavigator();
@@ -66,7 +67,7 @@ const Stack = createStackNavigator();
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
   const dispatch = useAppDispatch();
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking} >
       <Stack.Navigator
         screenOptions={{
           gestureEnabled: false,

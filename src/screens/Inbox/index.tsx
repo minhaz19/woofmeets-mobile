@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Colors from '../../constants/Colors';
 import BottomSpacing from '../../components/UI/BottomSpacing';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
@@ -41,9 +41,6 @@ const Inbox = () => {
   const [showInbox, setShowInbox] = useState(1);
   const [active, setActive] = useState('USER');
   const {colors} = useTheme();
-  useEffect(() => {
-    setShowInbox(1);
-  }, []);
   return (
     <ScreenRapperGrey rapperStyle={styles.container}>
       <View style={styles.tabContainer}>

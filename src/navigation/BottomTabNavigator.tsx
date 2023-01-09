@@ -206,6 +206,7 @@ function BottomTabNavigator() {
           name="InboxNavigator"
           component={InboxNavigator}
           options={{
+            unmountOnBlur: true,
             headerShown: false,
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
