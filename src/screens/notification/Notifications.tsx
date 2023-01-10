@@ -11,6 +11,7 @@ import HeaderText from '../../components/common/text/HeaderText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import { emptyNotificationsData, getNotifications } from '../../store/slices/notifications/notificationsSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
+import { Text } from 'react-native-svg';
 
 const Notifications = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ const Notifications = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {colors} = useTheme();
+
 
   const loadMore = () => {
     if (totalNotifications?.total % notificationsData?.length !== 0 ) {
@@ -55,6 +57,7 @@ const Notifications = () => {
       </MiddleModal> */}
       {notificationsData?.length > 0 && (
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={notificationsData}
           renderItem={({item}) => (
             <View
@@ -69,13 +72,13 @@ const Notifications = () => {
                       <DescriptionText
                         text={moment(item?.createdAt).fromNow()}
                       />
-                      <TitleText text={item?.message} />
+                      <TitleText text={item?.data?.message} />
                     </View>
-                    <Icon
+                    {/* <Icon
                       name="keyboard-arrow-right"
                       size={24}
                       color={Colors.primary}
-                    />
+                    /> */}
                   </View>
                 </Card>
               </TouchableOpacity>
@@ -88,6 +91,7 @@ const Notifications = () => {
           onEndReachedThreshold={0.02}
         />
       )}
+      {notificationsData.length === 0 && <TitleText text={'You have no notifications right now'} textStyle={{color: Colors.gray, textAlign: 'center'}} />}
       <View style={{height: 40}} />
     </View>
   );

@@ -1,5 +1,5 @@
 import {StyleSheet, ScrollView, Linking} from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PreferenceItem from '../../components/ScreenComponent/setting/Preference/PreferenceItem';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
@@ -11,6 +11,8 @@ import storage from '../../utils/helpers/auth/storage';
 import { API_MSG } from '@env';
 import apiClient from '../../api/client';
 import VersionCheck from 'react-native-version-check';
+
+const notificationEndPoint = '/v1/push-notifications';
 
 const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
   const {fcmToken} = useAppSelector(state => state.auth);
@@ -35,7 +37,6 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       opacity: 1,
       switchButton: true,
       changeNotificationSettings: async (val: boolean) => {
-        const notificationEndPoint = '/v1/push-notifications';
         setToggle(val);
         const authToken = await storage.getToken();
         const result = await apiClient.put(`${API_MSG + notificationEndPoint}`, {registrationToken: fcmToken}, {headers: {'Authorization': authToken}});
@@ -68,6 +69,21 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       switchButton: false,
     },
   ];
+
+  const getNotificationStatus = async ()  => {
+    const authToken = await storage.getToken();
+    const result = await apiClient.get(`${API_MSG + notificationEndPoint}`, {} ,  {headers: {'Authorization': authToken}});
+    const deviceTokenList = result?.data?.data;
+    const activeDeviceToken = deviceTokenList.find(item => {
+      return item.registrationToken === fcmToken;
+    });
+    setToggle(!activeDeviceToken.disable ? !activeDeviceToken.disable : true);
+  };
+
+  useEffect(() => {
+    getNotificationStatus();
+  });
+
   return (
     <ScreenRapperGrey>
       <ScrollView
