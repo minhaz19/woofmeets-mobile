@@ -159,16 +159,18 @@ const RefundPricing = ({}: Props) => {
             />
             {user?.id === proposedServiceInfo?.userId ? (
               <HeaderText
-                text={`${getCurrency()}${stableProposalPrcing?.subTotal}`}
+                text={`${getCurrency()}${stableProposalPrcing?.subTotal?.toFixed(
+                  2,
+                )}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
                 }}
               />
             ) : (
               <HeaderText
-                text={`${getCurrency()}${
-                  stableProposalPrcing?.providerFee?.providerTotal
-                }`}
+                text={`${getCurrency()}${stableProposalPrcing?.subTotal?.toFixed(
+                  2,
+                )}`}
                 textStyle={{
                   fontSize: Text_Size.Text_2,
                 }}

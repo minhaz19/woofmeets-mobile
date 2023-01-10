@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -13,43 +14,51 @@ import changeTextLetter from '../../../common/changeTextLetter';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import InboxLoader from '../../../../screens/Inbox/Loader/InboxLoader';
 import {convertToLocalTZ} from '../../../common/formatDate';
+import Filter from './component/Filter';
 interface Props {
   statusType: string;
 }
 const ApprovedStatus = ({statusType}: Props) => {
   let navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
-  const {userInprogress, loading} = useAppSelector(
+  const [daysCount, setDayCount] = useState({
+    title: 'One Week',
+    day: 365,
+  });
+  const [page, setPage] = useState(1);
+  // const [sortBy, setSortBy] = useState('');
+  const [limit, setLimit] = useState(40);
+  const [ascDesc, setAscDesc] = useState(true);
+  const {userInprogress, error, loading} = useAppSelector(
     state => state.userInprogress,
   );
-  const {providerInprogress, loading: providerLoading} = useAppSelector(
-    state => state.providerInprogress,
-  );
+  const {
+    providerInprogress,
+    error: providerError,
+    loading: providerLoading,
+  } = useAppSelector(state => state.providerInprogress);
 
   const [refreshing, setRefreshing] = useState(false);
-  // useEffect(() => {
-  //   showInbox === 2 &&
-  //     statusType === 'USER' &&
-  //     dispatch(getInprogressApnt('PAID'));
-  //   showInbox === 2 &&
-  //     statusType === 'PROVIDER' &&
-  //     dispatch(getProviderInprogressApnt('PAID'));
-  // }, [showInbox]);
-  const onRefresh = async () => {
+  const refreshUrl = `daysCount=${
+    daysCount.day
+  }&page=${page}&limit=${limit}&sortBy=createdAt&sortOrder=${
+    ascDesc ? 'desc' : 'asc'
+  }`;
+  const onRefresh = async (url: string) => {
     setRefreshing(true);
-    statusType === 'USER' && (await dispatch(getInprogressApnt('PAID')));
+    statusType === 'USER' && (await dispatch(getInprogressApnt(url)));
     statusType === 'PROVIDER' &&
-      (await dispatch(getProviderInprogressApnt('PAID')));
+      (await dispatch(getProviderInprogressApnt(url)));
     setRefreshing(false);
   };
   useEffect(() => {
-    let isRefreshSubscribed = true;
-    onRefresh();
-    return () => {
-      // cancel the subscription
-      isRefreshSubscribed = false;
-    };
-  }, [statusType]);
+    const url = `daysCount=${
+      daysCount.day
+    }&page=${page}&limit=${limit}&sortBy=createdAt&sortOrder=${
+      ascDesc ? 'desc' : 'asc'
+    }`;
+    onRefresh(url);
+  }, [statusType, daysCount, page, limit, ascDesc]);
   return (
     <>
       {loading || providerLoading ? (
@@ -58,16 +67,19 @@ const ApprovedStatus = ({statusType}: Props) => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => onRefresh(refreshUrl)}
+            />
           }>
           {(userInprogress === null || userInprogress === undefined) &&
           statusType === 'USER' ? (
             <View style={styles.errorContainer}>
               <MessageNotSend
                 svg={<UpcomingSvg width={200} height={200} />}
-                title={'No messages in Approved inbox'}
+                title={`No appointment in next ${daysCount.title}`}
                 description={
-                  " You'll find messages here when you and sitter have a inprogress booking"
+                  " You'll find appointment inbox here when you and sitter have a inprogress booking"
                 }
               />
             </View>
@@ -82,58 +94,67 @@ const ApprovedStatus = ({statusType}: Props) => {
                   const isRecurring = item.appointmentProposal[0]?.isRecurring;
                   const timezone = item?.providerTimeZone;
                   return (
-                    <ReusableCard
-                      key={item.opk}
-                      item={{
-                        name: changeTextLetter(
-                          `${item.provider.user.firstName} ${item.provider.user.lastName}`,
-                        )!,
-                        image: item.provider.user.image,
-                        description: item?.providerService
-                          ? serviceTypeId === 1 || serviceTypeId === 2
-                            ? `Starting From:  ${convertToLocalTZ(
-                                proposalDate.proposalStartDate,
-                                timezone,
-                                'MMM ddd D',
-                              )}`
-                            : serviceTypeId === 3 || serviceTypeId === 5
-                            ? isRecurring
+                    <>
+                      {/* <Filter
+                        dayCount={daysCount}
+                        setDayCount={setDayCount}
+                        setAscDesc={setAscDesc}
+                        ascDesc={ascDesc}
+                      /> */}
+                      <ReusableCard
+                        key={item.opk}
+                        item={{
+                          name: changeTextLetter(
+                            `${item.provider.user.firstName} ${item.provider.user.lastName}`,
+                          )!,
+                          image: item.provider.user.image,
+                          description: item?.providerService
+                            ? serviceTypeId === 1 || serviceTypeId === 2
                               ? `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.recurringStartDate,
+                                  proposalDate.proposalStartDate,
                                   timezone,
                                   'MMM ddd D',
                                 )}`
-                              : `Starting From:  ${convertToLocalTZ(
-                                  proposalDate?.proposalVisits[0]?.date,
-                                  timezone,
-                                  'MMM ddd D',
-                                )}`
-                            : serviceTypeId === 4
-                            ? isRecurring
-                              ? `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.recurringStartDate,
-                                  timezone,
-                                  'MMM ddd D',
-                                )}`
-                              : `Starting From:  ${convertToLocalTZ(
-                                  proposalDate?.proposalOtherDate[0]?.date,
+                              : serviceTypeId === 3 || serviceTypeId === 5
+                              ? isRecurring
+                                ? `Starting From:  ${convertToLocalTZ(
+                                    proposalDate.recurringStartDate,
+                                    timezone,
+                                    'MMM ddd D',
+                                  )}`
+                                : `Starting From:  ${convertToLocalTZ(
+                                    proposalDate?.proposalVisits[0]?.date,
+                                    timezone,
+                                    'MMM ddd D',
+                                  )}`
+                              : serviceTypeId === 4
+                              ? isRecurring
+                                ? `Starting From:  ${convertToLocalTZ(
+                                    proposalDate.recurringStartDate,
+                                    timezone,
+                                    'MMM ddd D',
+                                  )}`
+                                : `Starting From:  ${convertToLocalTZ(
+                                    proposalDate?.proposalOtherDate[0]?.date,
 
-                                  timezone,
-                                  'MMM ddd D',
-                                )}`
-                            : ''
-                          : 'No Mesaegs fonnd',
-                        boardingTime: item?.providerService?.serviceType?.name,
-                        status: item.status,
-                      }}
-                      buttonStyles={Colors.primary}
-                      handlePress={() =>
-                        navigation.navigate('ActivityScreen', {
-                          appointmentOpk: item.opk,
-                          messageGroupId: item.messageGroupId,
-                        })
-                      }
-                    />
+                                    timezone,
+                                    'MMM ddd D',
+                                  )}`
+                              : ''
+                            : 'No Mesaegs fonnd',
+                          boardingTime:
+                            item?.providerService?.serviceType?.name,
+                          status: item.status,
+                        }}
+                        buttonStyles={Colors.primary}
+                        handlePress={() =>
+                          navigation.navigate('ActivityScreen', {
+                            appointmentOpk: item.opk,
+                            messageGroupId: item.messageGroupId,
+                          })
+                        }
+                      />
+                    </>
                   );
                 })
               ) : providerInprogress !== null &&
@@ -145,68 +166,78 @@ const ApprovedStatus = ({statusType}: Props) => {
                   const isRecurring = item.appointmentProposal[0]?.isRecurring;
                   const timezone = item?.providerTimeZone;
                   return (
-                    <ReusableCard
-                      key={item.opk}
-                      item={{
-                        name: changeTextLetter(
-                          `${item.user.firstName} ${item.user.lastName}`,
-                        )!,
-                        image: item.user.image,
-                        description: item?.providerService
-                          ? serviceTypeId === 1 || serviceTypeId === 2
-                            ? `Starting From:  ${convertToLocalTZ(
-                                proposalDate.proposalStartDate,
-                                timezone,
-                                'MMM ddd D',
-                              )}`
-                            : serviceTypeId === 3 || serviceTypeId === 5
-                            ? isRecurring
-                              ? `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.recurringStartDate,
-                                  timezone,
-                                  'MMM ddd D',
-                                )}`
-                              : `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.proposalVisits[0]?.date,
-                                  timezone,
-                                  'MMM ddd D',
-                                )}`
-                            : // : `Starting From:  ${formatDate(
-                            //     proposalDate.proposalVisits[0].date,
-                            //     'iii LLL d',
-                            //   )}`
-                            serviceTypeId === 4
-                            ? isRecurring
-                              ? `Starting From:  ${convertToLocalTZ(
-                                  proposalDate.recurringStartDate,
-                                  timezone,
-                                  'MMM ddd D',
-                                )}`
-                              : `Starting From:  ${convertToLocalTZ(
-                                  proposalDate?.proposalOtherDate[0]?.date,
+                    <>
+                      {/* <Filter
+                        dayCount={daysCount}
+                        setDayCount={setDayCount}
+                        setAscDesc={setAscDesc}
+                        ascDesc={ascDesc}
+                      /> */}
 
+                      <ReusableCard
+                        key={item.opk}
+                        item={{
+                          name: changeTextLetter(
+                            `${item.user.firstName} ${item.user.lastName}`,
+                          )!,
+                          image: item.user.image,
+                          description: item?.providerService
+                            ? serviceTypeId === 1 || serviceTypeId === 2
+                              ? `Starting From:  ${convertToLocalTZ(
+                                  proposalDate.proposalStartDate,
                                   timezone,
                                   'MMM ddd D',
                                 )}`
-                            : ''
-                          : 'No Mesaegs fonnd',
-                        boardingTime: item?.providerService?.serviceType?.name,
-                        status: item.status,
-                      }}
-                      buttonStyles={Colors.primary}
-                      handlePress={() =>
-                        navigation.navigate('ActivityScreen', {
-                          appointmentOpk: item.opk,
-                          messageGroupId: item.messageGroupId,
-                        })
-                      }
-                    />
+                              : serviceTypeId === 3 || serviceTypeId === 5
+                              ? isRecurring
+                                ? `Starting From:  ${convertToLocalTZ(
+                                    proposalDate.recurringStartDate,
+                                    timezone,
+                                    'MMM ddd D',
+                                  )}`
+                                : `Starting From:  ${convertToLocalTZ(
+                                    proposalDate.proposalVisits[0]?.date,
+                                    timezone,
+                                    'MMM ddd D',
+                                  )}`
+                              : // : `Starting From:  ${formatDate(
+                              //     proposalDate.proposalVisits[0].date,
+                              //     'iii LLL d',
+                              //   )}`
+                              serviceTypeId === 4
+                              ? isRecurring
+                                ? `Starting From:  ${convertToLocalTZ(
+                                    proposalDate.recurringStartDate,
+                                    timezone,
+                                    'MMM ddd D',
+                                  )}`
+                                : `Starting From:  ${convertToLocalTZ(
+                                    proposalDate?.proposalOtherDate[0]?.date,
+
+                                    timezone,
+                                    'MMM ddd D',
+                                  )}`
+                              : ''
+                            : 'No Mesaegs fonnd',
+                          boardingTime:
+                            item?.providerService?.serviceType?.name,
+                          status: item.status,
+                        }}
+                        buttonStyles={Colors.primary}
+                        handlePress={() =>
+                          navigation.navigate('ActivityScreen', {
+                            appointmentOpk: item.opk,
+                            messageGroupId: item.messageGroupId,
+                          })
+                        }
+                      />
+                    </>
                   );
                 })
               ) : (
                 <MessageNotSend
                   svg={<UpcomingSvg width={200} height={200} />}
-                  title={'No messages in Approved inbox'}
+                  title={`No appointment in next ${daysCount.title}`}
                   description={
                     "  You'll find messages here when you and sitter have a inprogress booking"
                   }

@@ -9,37 +9,56 @@ import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 const data = [
   {
     id: 'USER',
-    title: 'Customer',
+    title: 'As Consumer',
   },
   {
     id: 'PROVIDER',
-    title: 'Provider',
+    title: 'As Sitter',
   },
 ];
 interface Props {
   active: string;
   setActive: (arg: string) => void;
+  setPage: (arg: number) => void;
+  setError: (arg: boolean) => void;
+  setUser: (arg: any[]) => void;
+  setProvider: (arg: any[]) => void;
 }
-const UserProviderInbox = ({active, setActive}: Props) => {
+const UserProviderInbox = ({
+  active,
+  setActive,
+  setPage,
+  setError,
+  setProvider,
+  setUser,
+}: Props) => {
   const {colors} = useTheme();
   return (
     <View
       style={[
         styles.container,
         {
-          backgroundColor: Colors.primaryLight,
+          backgroundColor: Colors.background,
+          // paddingTop: StatusBar.currentHeight,
         },
       ]}>
       {data.map((item, index) => (
         <AppTouchableOpacity
           onPress={() => {
+            setError(false);
+            setPage(1);
+            if (item.id === 'USER') {
+              setUser([]);
+            } else {
+              setProvider([]);
+            }
             setActive(item.id);
           }}
           key={index}
           style={{
             paddingVertical: 10,
             backgroundColor:
-              active === item.id ? Colors.primary : Colors.primaryLight,
+              active === item.id ? Colors.primaryDeep : Colors.lightShade,
             width: '46%',
             margin: '2%',
             borderRadius: 6,

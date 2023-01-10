@@ -173,7 +173,7 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                 },
               )}
 
-              {stableProposalPrcing?.sixtyMinutesRate?.rate?.name !==
+              {/* {stableProposalPrcing?.sixtyMinutesRate?.rate?.name !==
                 undefined &&
                 stableProposalPrcing?.sixtyMinutesRate?.rate?.name !== '' && (
                   <View style={[styles.mapContainer]}>
@@ -211,7 +211,7 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                       }}
                     />
                   </View>
-                )}
+                )} */}
               <View
                 style={[
                   styles.divider,
@@ -233,16 +233,18 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                 </View>
                 {user?.id === proposedServiceInfo?.userId ? (
                   <HeaderText
-                    text={`${getCurrency()}${stableProposalPrcing?.subTotal}`}
+                    text={`${getCurrency()}${stableProposalPrcing?.subTotal?.toFixed(
+                      2,
+                    )}`}
                     textStyle={{
                       fontSize: Text_Size.Text_2,
                     }}
                   />
                 ) : (
                   <HeaderText
-                    text={`${getCurrency()}${
-                      stableProposalPrcing?.providerFee?.providerTotal
-                    }`}
+                    text={`${getCurrency()}${stableProposalPrcing?.subTotal?.toFixed(
+                      2,
+                    )}`}
                     textStyle={{
                       fontSize: Text_Size.Text_2,
                     }}
@@ -316,11 +318,13 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                         }}
                       />
                       <ShortText
-                        text={`( - ) ${couponData?.couponType === 'FIXED_AMOUNT' ? getCurrency() : ''}${
-                          couponData?.coupons
-                        }${couponData?.couponType === 'PERCENTAGE' ? '%' : ''} of ${getCurrency()}${
-                          stableProposalPrcing?.subTotal
-                        }`}
+                        text={`( - ) ${
+                          couponData?.couponType === 'FIXED_AMOUNT'
+                            ? getCurrency()
+                            : ''
+                        }${couponData?.coupons}${
+                          couponData?.couponType === 'PERCENTAGE' ? '%' : ''
+                        } of ${getCurrency()}${stableProposalPrcing?.subTotal}`}
                         // textStyle={{fontWeight: 'bold'}}
                       />
                     </View>

@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Alert, ScrollView, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
-import AnimatedLottieView from 'lottie-react-native';
 import TitleText from '../../../../components/common/text/TitleText';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../constants/Colors';
@@ -17,8 +16,7 @@ import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provid
 import ButtonCom from '../../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../../constants/theme/common/buttonStyles';
 import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
-import {getProviderInprogressApnt} from '../../../../store/slices/Appointment/Inbox/Provider/InProgress/getPInprogressApnt';
-import {getInprogressApnt} from '../../../../store/slices/Appointment/Inbox/User/InProgress/getInprogressApnt';
+import {AppointmentDone} from '../../../../assets/svgs/SVG_LOGOS';
 const endPoint = '/appointment/cancel/';
 const AppointmentSuccess = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -41,9 +39,6 @@ const AppointmentSuccess = () => {
       payload,
     );
     if (result.ok) {
-      dispatch(getInprogressApnt('PAID'));
-      dispatch(getProviderInprogressApnt('PAID'));
-      // dispatch(getProviderApnt(proposedServiceInfo.appointmentOpk));
       setIsVisible(false);
       navigation.navigate('Inbox');
     } else {
@@ -62,14 +57,25 @@ const AppointmentSuccess = () => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <AnimatedLottieView
-          autoPlay
-          loop={true}
-          source={require('../../../../assets/appointmentSuccess.json')}
+        <View
           style={{
-            width: '95%',
-          }}
-        />
+            height: 250,
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: 20,
+          }}>
+          <AppointmentDone
+            width={'100%'}
+            height={'100%'}
+            style={{
+              alignSelf: 'center',
+              marginLeft: '10%',
+              marginVertical: 'auto',
+            }}
+          />
+        </View>
+
         <View
           style={{
             padding: 10,
@@ -180,6 +186,9 @@ const AppointmentSuccess = () => {
             </View>
           </>
         }
+        handlePress={function (): void {
+          throw new Error('Function not implemented.');
+        }}
       />
     </>
   );

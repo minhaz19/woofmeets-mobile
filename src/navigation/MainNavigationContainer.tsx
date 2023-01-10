@@ -62,6 +62,7 @@ import ReportSlots from '../screens/reports/Initial/ReportSlots';
 import linking from '../utils/helpers/DeepLinking';
 import {setReset} from '../store/slices/misc/trackingToggle';
 import SeePetReview from '../components/ScreenComponent/Inbox/Details/SeePetReview';
+import ScheduleAppointmentList from '../screens/provider/AppointmentScheduler/ScheduleAppointmentList';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -699,6 +700,22 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 Icon={Setting}
                 onPress={() => dispatch(setOpenSettings(true))}
                 // notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ScheduleAppointmentList"
+          component={ScheduleAppointmentList}
+          options={({navigation}) => ({
+            title: '',
+
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Appointment List"
+                notification
               />
             ),
             backgroundColor: Colors.primary,

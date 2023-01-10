@@ -250,7 +250,6 @@ const SettingMain = (props: {
       setLogoutState(true);
       const notificationEndPoint = '/v1/push-notifications';
         const authToken = await storage.getToken();
-        console.log(authToken, 'authtoken');
         const result = await apiClient.delete(`${API_MSG + notificationEndPoint}`, {}, {
           data: {registrationToken: fcmToken},
           headers: {

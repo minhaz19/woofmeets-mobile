@@ -123,12 +123,12 @@ export const useAppointment = (providerOpk: string) => {
           isRecivedPhotos: isRecivedPhotos,
           formattedMessage: boardingSittingFT,
         };
-
         const response = await request(endpoint, boardSittingPayload);
         if (response.ok) {
           navigation.dispatch(
             StackActions.replace('ActivityScreen', {
               appointmentOpk: response.data.data.appointment.opk,
+              messageGroupId: response.data.data.appointment.messageGroupId,
               screen: 'Inbox',
             }),
           );
@@ -253,6 +253,7 @@ export const useAppointment = (providerOpk: string) => {
           navigation.dispatch(
             StackActions.replace('ActivityScreen', {
               appointmentOpk: response.data.data.appointment.opk,
+              messageGroupId: response.data.data.appointment.messageGroupId,
               screen: 'Inbox',
             }),
           );
@@ -320,17 +321,15 @@ export const useAppointment = (providerOpk: string) => {
               isRecivedPhotos: isRecivedPhotos,
             };
         const response = await request(endpoint, doggyPayload);
+
         if (response.ok) {
           navigation.dispatch(
             StackActions.replace('ActivityScreen', {
               appointmentOpk: response.data.data.appointment.opk,
+              messageGroupId: response.data.data.appointment.messageGroupId,
               screen: 'Inbox',
             }),
           );
-          // navigation.navigate('ActivityScreen', {
-          //   appointmentOpk: response.data.data.appointment.opk,
-          //   screen: 'Inbox',
-          // });
         } else {
           Alert.alert(response.data.message);
         }

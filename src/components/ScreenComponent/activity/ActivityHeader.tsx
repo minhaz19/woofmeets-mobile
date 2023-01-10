@@ -9,7 +9,7 @@ import {
   AppStateStatus,
   AppState,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TitleText from '../../common/text/TitleText';
 import Colors from '../../../constants/Colors';
@@ -22,8 +22,8 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
-import {getAppointmentStatus} from '../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
-import {getProviderApnt} from '../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
+// import {getAppointmentStatus} from '../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
+// import {getProviderApnt} from '../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
 import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
 import RecurringModal from './components/RecurringModal';
 import {setBillingId} from '../../../store/slices/Appointment/Proposal/providerProposalSlice';
@@ -39,6 +39,7 @@ import {
   request as requestPermission,
 } from 'react-native-permissions';
 import {socket} from '../../../../App';
+import {getAppointmentCard} from '../../../store/slices/Appointment/AppointmentCard/getAppointmentCard';
 // import {
 //   dateEquOrPassed,
 //   datePassed,
@@ -49,7 +50,7 @@ import {socket} from '../../../../App';
 const acceptEndpoint = '/appointment/accept/proposal/';
 const completeEndpoint = '/appointment/complete/';
 const rejectEndpoint = '/appointment/proposal/reject/';
-const cardEndpoint = '/appointment/card/all-dates/';
+// const cardEndpoint = '/appointment/card/all-dates/';
 const startEndpoint = '/appointment/card/start-appointment/';
 const stopEndpoint = '/appointment/card/stop-appointment/';
 const checkReport = '/appointment/card/check/';
@@ -68,10 +69,12 @@ const ActivityHeader = (props: {
   const {request: ssReqest, loading} = useApi(methods._put);
   const dispatch = useAppDispatch();
   const [regenerateModal, setRegenerateModal] = useState(false);
+  const {appointmentCard} = useAppSelector(state => state.appointmentCard);
   const [otherDay, setOtherDay] = useState<any>({});
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const [currentDate, setCurrentDate] = useState<any>({});
   const [appointmentStart, setAppointmentStart] = useState('START');
+
   const [allDates, setAllDates] = useState<any>([]);
   const user = useAppSelector(state => state.whoAmI);
   const timezone = proposedServiceInfo?.providerTimeZone;
@@ -108,11 +111,11 @@ const ActivityHeader = (props: {
     const result = await request(acceptEndpoint + props.opk);
     if (result.ok) {
       dispatch(getProviderProposal(proposedServiceInfo.appointmentOpk));
-      dispatch(getAppointmentStatus('PROPOSAL'));
-      dispatch(getProviderApnt('PROPOSAL'));
+      // dispatch(getAppointmentStatus('PROPOSAL'));
+      // dispatch(getProviderApnt('PROPOSAL'));
       navigation.navigate('InboxNavigator');
     } else {
-      Alert.alert(result?.data?.message);
+      // Alert.alert(result?.data?.message);
     }
   };
   const handleRegenerate = async () => {
@@ -127,6 +130,7 @@ const ActivityHeader = (props: {
       //   !isSameDate(allDates[allDates?.length - 1]?.localDate))
     ) {
       Alert.alert(
+        'Complete Appointment',
         `You can not complete appointment before ${formatDate(
           allDates[allDates?.length - 1]?.localDate,
           'iii LLL d yyyy',
@@ -157,8 +161,8 @@ const ActivityHeader = (props: {
             onPress: async () => {
               const r = await request(completeEndpoint + props.opk);
               if (r.ok) {
-                dispatch(getAppointmentStatus('PAID'));
-                dispatch(getProviderApnt('PAID'));
+                // dispatch(getAppointmentStatus('PAID'));
+                // dispatch(getProviderApnt('PAID'));
                 const payloadData: any = {
                   sender: user?.userId,
                   group: proposedServiceInfo?.messageGroupId,
@@ -190,8 +194,8 @@ const ActivityHeader = (props: {
           onPress: async () => {
             const r = await request(rejectEndpoint + props.opk);
             if (r.ok) {
-              dispatch(getAppointmentStatus('PROPOSAL'));
-              dispatch(getProviderApnt('PROPOSAL'));
+              // dispatch(getAppointmentStatus('PROPOSAL'));
+              // dispatch(getProviderApnt('PROPOSAL'));
               navigation.navigate('InboxNavigator');
             } else if (!r.ok) {
               Alert.alert(r.data.message);
@@ -213,39 +217,34 @@ const ActivityHeader = (props: {
   };
 
   useEffect(() => {
-    const callApi = async () => {
-      const data = await getRequest(cardEndpoint + props.opk);
-      const arr = data?.data?.data?.sort(function (x: any, y: any) {
-        return new Date(x.date).getTime() - new Date(y.date).getTime();
-      });
-      if (arr?.length > 0) {
-        setAllDates(arr);
-        const findData = arr?.find(
+    if (appointmentCard?.length > 0) {
+      setAllDates(appointmentCard);
+      const findData = appointmentCard?.find(
+        (d: any) =>
+          isSameDate(d?.localDate) &&
+          (d?.startTime === null || d?.stopTime === null),
+      );
+      if (findData === undefined) {
+        const findOtherDate = appointmentCard?.find(
           (d: any) =>
-            isSameDate(d?.localDate) &&
-            (d?.startTime === null || d?.stopTime === null),
+            !isSameDate(d?.localDate) &&
+            isComming(d?.localDate) &&
+            d?.startTime === null,
         );
-        if (findData === undefined) {
-          const findOtherDate = arr?.find(
-            (d: any) =>
-              !isSameDate(d?.localDate) &&
-              isComming(d?.localDate) &&
-              d?.startTime === null,
-          );
-          setOtherDay(findOtherDate);
-          props.setVisitId(findOtherDate?.id);
-        } else if (
-          findData &&
-          findData !== undefined &&
-          isSameDate(findData.localDate)
-        ) {
-          setCurrentDate(findData);
-          props.setVisitId(findData.id);
-        }
+        setOtherDay(findOtherDate);
+        setCurrentDate({});
+        props.setVisitId(findOtherDate?.id);
+      } else if (
+        findData &&
+        findData !== undefined &&
+        isSameDate(findData.localDate)
+      ) {
+        setCurrentDate(findData);
+        setOtherDay({});
+        props.setVisitId(findData.id);
       }
-    };
-    callApi();
-  }, [appointmentStart, props.opk]);
+    }
+  }, [appointmentCard]);
   useEffect(() => {
     if (
       proposedServiceInfo?.serviceTypeId === 1 ||
@@ -253,10 +252,24 @@ const ActivityHeader = (props: {
     ) {
       if (
         allDates?.[0]?.startTime === null &&
-        isSameDate(allDates?.[0]?.localDate)
+        allDates?.[0]?.stopTime === null &&
+        isComming(allDates?.[0]?.localDate)
+      ) {
+        setAppointmentStart('UPCOMING');
+      } else if (
+        (allDates?.[0]?.startTime === null &&
+          isSameDate(allDates?.[0]?.localDate)) ||
+        (allDates?.[0]?.startTime === null &&
+          new Date(allDates?.[0]?.localDate) < today)
       ) {
         setAppointmentStart('START');
         setCurrentDate(allDates?.[0]);
+      } else if (
+        allDates?.[0]?.startTime !== null &&
+        allDates?.[1]?.stopTime === null &&
+        lessThenLastDate(allDates?.[1]?.localDate)
+      ) {
+        setAppointmentStart('INPROGRESS');
       } else if (
         (allDates?.[1]?.stopTime === null &&
           allDates?.[0]?.startTime !== null &&
@@ -266,23 +279,19 @@ const ActivityHeader = (props: {
           datePassed(allDates?.[1]?.localDate))
       ) {
         setAppointmentStart('STOP');
-      } else if (
-        allDates?.[0]?.startTime === null &&
-        datePassed(allDates[allDates?.length - 1]?.localDate)
-      ) {
-        setAppointmentStart('ENDED');
-      } else if (
-        allDates?.[0]?.startTime === null &&
-        allDates?.[0]?.stopTime === null &&
-        isComming(allDates?.[0]?.localDate)
-      ) {
-        setAppointmentStart('UPCOMING');
-      } else if (
+      }
+      // else if (
+      //   allDates?.[0]?.startTime === null &&
+      //   datePassed(allDates[allDates?.length - 1]?.localDate)
+      // ) {
+      //   setAppointmentStart('PAST');
+      //   // setAppointmentStart('ENDED');
+      // }
+      else if (
         allDates?.[0]?.startTime !== null &&
-        allDates?.[1]?.stopTime === null &&
-        lessThenLastDate(allDates?.[1]?.localDate)
+        allDates?.[1]?.stopTime !== null
       ) {
-        setAppointmentStart('INPROGRESS');
+        setAppointmentStart('COMPLETED');
       } else if (
         isDateNotFound(allDates) &&
         allDates?.[0]?.startTime !== null &&
@@ -290,10 +299,17 @@ const ActivityHeader = (props: {
       ) {
         setAppointmentStart('NOAPPOINTMENT');
       } else {
-        setAppointmentStart('PAST');
+        // setAppointmentStart('PAST');
+        // setAppointmentStart('NOAPPOINTMENT');
       }
     } else {
       if (
+        (currentDate?.startTime === null &&
+          isComming(currentDate?.localDate)) ||
+        (otherDay?.startTime === null && isComming(otherDay?.localDate))
+      ) {
+        setAppointmentStart('UPCOMING');
+      } else if (
         currentDate?.startTime === null &&
         isSameDate(currentDate?.localDate)
       ) {
@@ -304,23 +320,18 @@ const ActivityHeader = (props: {
         isSameDate(currentDate?.localDate)
       ) {
         setAppointmentStart('STOP');
-      } else if (
-        (currentDate?.startTime === null &&
-          isComming(currentDate?.localDate)) ||
-        (otherDay?.startTime === null && isComming(otherDay?.localDate))
-      ) {
-        setAppointmentStart('UPCOMING');
-      } else if (
-        (currentDate?.startTime !== null &&
-          datePassed(currentDate?.localDate)) ||
-        (currentDate?.startTime === null && datePassed(currentDate?.localDate))
-      ) {
-        setAppointmentStart('PAST');
       } else if (isDateNotFound(allDates)) {
         setAppointmentStart('NOAPPOINTMENT');
-      } else {
-        // setAppointmentStart('NOAPPOINTMENT');
       }
+      // else if (
+      //   (currentDate?.startTime !== null &&
+      //     datePassed(currentDate?.localDate)) ||
+      //   (currentDate?.startTime === null && datePassed(currentDate?.localDate))
+      // ) {
+      //   setAppointmentStart('PAST');
+      // } else {
+      //   // setAppointmentStart('NOAPPOINTMENT');
+      // }
     }
   }, [
     allDates,
@@ -332,57 +343,47 @@ const ActivityHeader = (props: {
   ]);
 
   const handleStart = async () => {
-    if (!isSameDate(currentDate?.localDate)) {
-      // currentDate?.localDate &&
-      Alert.alert(
-        `You can not start appointment before or after ${formatDate(
-          new Date(currentDate?.localDate),
-          'iii LLL d yyyy',
-        )}`,
-      );
-    } else {
-      Alert.alert(
-        'Start Appointment',
-        'Are you sure you want to start this appointment',
-        [
-          {
-            text: 'No',
-            onPress: () => {},
-          },
-          {
-            text: 'Yes',
-            onPress: async () => {
-              const startRes = await ssReqest(startEndpoint + currentDate?.id, {
-                startTime: new Date().toISOString(),
-              });
-              if (startRes.ok) {
-                if (proposedServiceInfo.serviceTypeId === 5) {
-                  navigation.navigate('ReportCardInitial', {
-                    screen: 'InboxNavigator',
-                    appointmentId: currentDate?.id,
-                  });
-                }
-                setCurrentDate(startRes?.data?.data);
-                const payloadData: any = {
-                  sender: user?.userId,
-                  group: proposedServiceInfo?.messageGroupId,
-                  content: `${proposedServiceInfo.providerName} has started appointment`,
-                  createdAt: new Date(),
-                };
-                socket.emit('send-message', payloadData);
-                setAppointmentStart('STOP');
+    Alert.alert(
+      'Start Appointment',
+      'Are you sure you want to start this appointment',
+      [
+        {
+          text: 'No',
+          onPress: () => {},
+        },
+        {
+          text: 'Yes',
+          onPress: async () => {
+            const startRes = await ssReqest(startEndpoint + currentDate?.id, {
+              startTime: new Date().toISOString(),
+            });
+            if (startRes.ok) {
+              if (proposedServiceInfo.serviceTypeId === 5) {
+                navigation.navigate('ReportCardInitial', {
+                  screen: 'InboxNavigator',
+                  appointmentId: currentDate?.id,
+                });
               }
-            },
+              setCurrentDate(startRes?.data?.data);
+              const payloadData: any = {
+                sender: user?.userId,
+                group: proposedServiceInfo?.messageGroupId,
+                content: `${proposedServiceInfo.providerName} has started appointment`,
+                createdAt: new Date(),
+              };
+              socket.emit('send-message', payloadData);
+              setAppointmentStart('STOP');
+            }
           },
-        ],
-      );
-    }
+        },
+      ],
+    );
   };
 
   const handleStop = async () => {
     Alert.alert(
-      'Stop Appointment',
-      'Are you sure you want to stop this appointment',
+      'Complete Appointment',
+      'Are you sure you want to complete this appointment',
       [
         {
           text: 'No',
@@ -408,7 +409,8 @@ const ActivityHeader = (props: {
                 createdAt: new Date(),
               };
               socket.emit('send-message', payloadData);
-              setAppointmentStart('START');
+              // setAppointmentStart('START');
+              dispatch(getAppointmentCard(props.opk));
 
               const result = await getRequest(
                 `${
@@ -425,7 +427,7 @@ const ActivityHeader = (props: {
                 });
               } else if (result?.ok && result?.data?.data.cardFound) {
                 Alert.alert(
-                  'Appointment complete and report has been generated',
+                  'Appointment completed and you have already generated report for this particular appointment',
                 );
               }
 
@@ -447,11 +449,12 @@ const ActivityHeader = (props: {
       Alert.alert('Your appointment date has already been passed.');
     } else if (appointmentStart === 'PAST') {
       Alert.alert('Your appointment has been passed.');
+    } else if (appointmentStart === 'COMPLETED') {
+      Alert.alert('Your appointment has completed.');
     } else {
       Alert.alert('No sure about the status');
     }
   };
-
   return (
     <>
       <View style={[styles.container, {borderColor: colors.borderColor}]}>
@@ -493,7 +496,7 @@ const ActivityHeader = (props: {
                         convertToLocalTZ(
                           proposedServiceInfo.proposalStartDate,
                           timezone,
-                          'MMM ddd D',
+                          'DD ddd MMM YYYY',
                         )
                       : proposedServiceInfo?.serviceTypeId === 3 ||
                         proposedServiceInfo?.serviceTypeId === 5
@@ -503,14 +506,14 @@ const ActivityHeader = (props: {
                           convertToLocalTZ(
                             proposedServiceInfo.recurringStartDate,
                             timezone,
-                            'MMM ddd D',
+                            'DD ddd MMM YYYY',
                           )
                         : proposedServiceInfo?.serviceName +
                           ' from:  ' +
                           convertToLocalTZ(
                             proposedServiceInfo.proposalOtherDate[0].date,
                             timezone,
-                            'MMM ddd D',
+                            'DD ddd MMM YYYY',
                           )
                       : proposedServiceInfo?.serviceTypeId === 4
                       ? proposedServiceInfo.isRecurring
@@ -519,14 +522,14 @@ const ActivityHeader = (props: {
                           convertToLocalTZ(
                             proposedServiceInfo.recurringStartDate,
                             timezone,
-                            'MMM ddd D',
+                            'DD ddd MMM YYYY',
                           )
                         : proposedServiceInfo?.serviceName +
                           ' from:  ' +
                           convertToLocalTZ(
                             proposedServiceInfo.proposalOtherDate[0].date,
                             timezone,
-                            'MMM ddd D',
+                            'DD ddd MMM YYYY',
                           )
                       : ''
                   }
@@ -534,15 +537,18 @@ const ActivityHeader = (props: {
               </View>
             </AppTouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.leftContainer}
-            onPress={() => props.setIsThreeDotsModal(true)}>
-            <Entypo
-              name="dots-three-vertical"
-              size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
-              color={Colors.primary}
-            />
-          </TouchableOpacity>
+          {proposedServiceInfo?.status === 'CANCELLED' ||
+          proposedServiceInfo?.status === 'REJECTED' ? null : (
+            <TouchableOpacity
+              style={styles.leftContainer}
+              onPress={() => props.setIsThreeDotsModal(true)}>
+              <Entypo
+                name="dots-three-vertical"
+                size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+                color={Colors.primary}
+              />
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.innerTwo}>
           <View style={styles.buttonContainer}>
@@ -587,7 +593,9 @@ const ActivityHeader = (props: {
                     text={
                       proposedServiceInfo?.proposedBy === 'PROVIDER' &&
                       proposedServiceInfo?.status !== 'ACCEPTED'
-                        ? 'Accept'
+                        ? putLoading
+                          ? 'loading...'
+                          : 'Accept'
                         : proposedServiceInfo?.status === 'ACCEPTED'
                         ? 'Pay Now'
                         : 'Pay'
@@ -610,7 +618,7 @@ const ActivityHeader = (props: {
               <>
                 <TouchableOpacity onPress={handleAccept}>
                   <TitleText
-                    text="Accept"
+                    text={putLoading ? 'loading' : 'Accept'}
                     textStyle={{
                       ...styles.textStyle,
                       textAlign: 'center',
@@ -670,6 +678,8 @@ const ActivityHeader = (props: {
                             ? 'In Progress'
                             : appointmentStart === 'PAST'
                             ? 'Past Appointment'
+                            : appointmentStart === 'COMPLETED'
+                            ? 'Appointment Completed'
                             : 'In Progress'
                         }
                         textStyle={{
@@ -784,6 +794,38 @@ const ActivityHeader = (props: {
                   onPress={() => {}}>
                   <TitleText
                     text={'Completed'}
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
+              </>
+            ) : proposedServiceInfo?.status === 'CANCELLED' ? (
+              <>
+                <TouchableOpacity
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  disabled
+                  onPress={() => {}}>
+                  <TitleText
+                    text={'Appointment Cancelled'}
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
+              </>
+            ) : proposedServiceInfo?.status === 'REJECTED' ? (
+              <>
+                <TouchableOpacity
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  disabled
+                  onPress={() => {}}>
+                  <TitleText
+                    text={'Appointment Rejected'}
                     textStyle={{
                       ...styles.textStyle,
                       textAlign: 'center',
@@ -975,4 +1017,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ActivityHeader;
+export default memo(ActivityHeader);

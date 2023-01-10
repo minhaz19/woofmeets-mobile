@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+// /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView, View} from 'react-native';
@@ -12,9 +12,11 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
 import ThreeDotsModal from '../../../components/ScreenComponent/Inbox/Past/ThreeDotsModal';
 import Review from '../../../components/ScreenComponent/Inbox/Past/Review';
-import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 import styles from './styles';
 import Messages from '../message/Messages';
+import {getAppointmentCard} from '../../../store/slices/Appointment/AppointmentCard/getAppointmentCard';
+import {socket} from '../../../../App';
+import {apiMsg} from '../../../api/client';
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
   route: {
@@ -26,16 +28,21 @@ const ActivityScreen = (props: {
   };
 }) => {
   const dispatch = useAppDispatch();
+  const {
+    appointmentOpk,
+    messageGroupId: roomId,
+    AppointmentTab,
+  } = props?.route?.params;
   const {loading: petLoading} = useAppSelector(state => state.allPets);
   const {loading, proposal, proposedServiceInfo} = useAppSelector(
     state => state.proposal,
   );
+
   const {loading: providerLoading} = useAppSelector(
     state => state.providerProfile,
   );
-  const {appointmentOpk, messageGroupId, AppointmentTab} = props?.route?.params;
-
   const {user} = useAppSelector(state => state.whoAmI);
+
   const reviewGiven = proposedServiceInfo?.review?.filter(
     (item: any) => item?.reviewedById === user?.id,
   );
@@ -43,12 +50,50 @@ const ActivityScreen = (props: {
   const [isDetailsModal, setIsDetailsModal] = useState(false);
   const [isThreeDotsModal, setIsThreeDotsModal] = useState(false);
   const [isReviewModal, setIsReviewModal] = useState(false);
+  const [messages, setMessages] = useState<any>([]);
+  const [msgLoading, setMsgLoadng] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [visitId, setVisitId] = useState(null);
+  const getPreviousMessages = async () => {
+    if (roomId) {
+      setMsgLoadng(true);
+      const slug = `/v1/messages/group/${roomId}`;
+      const result: any = await apiMsg.get(slug);
+      if (result.ok) {
+        setMessages(result.data?.data?.reverse());
+        setMsgLoadng(false);
+      }
+      if (!result.ok) {
+        setMsgLoadng(false);
+      }
+    }
+  };
+  const onRefresh = async () => {
+    setRefreshing(true);
+    getPreviousMessages();
+    dispatch(getProviderProposal(appointmentOpk));
+    dispatch(getAppointmentCard(appointmentOpk));
+    setRefreshing(false);
+  };
+
   useEffect(() => {
     dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAllPets());
-    dispatch(getWhoAmI());
-  }, [appointmentOpk]);
+    dispatch(getAppointmentCard(appointmentOpk));
+    getPreviousMessages();
+  }, []);
+
+  useEffect(() => {
+    const trackMessages = (data: any) => {
+      if (data?.group === roomId) {
+        setMessages((prevMess: any) => [...prevMess, data]);
+      }
+    };
+    socket.on('message', trackMessages);
+    return () => {
+      socket.off('message', trackMessages);
+    };
+  }, [roomId]);
   return (
     <>
       {(loading || petLoading || providerLoading) && (
@@ -110,12 +155,12 @@ const ActivityScreen = (props: {
                 />
               </BottomHalfModal>
               <Messages
-                roomId={
-                  messageGroupId !== undefined
-                    ? messageGroupId
-                    : proposedServiceInfo?.messageGroupId
-                }
-                // roomId={proposal?.appointment?.messageGroupId}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                messages={messages}
+                setMessages={setMessages}
+                loading={msgLoading}
+                roomId={roomId}
                 opk={appointmentOpk}
               />
             </>

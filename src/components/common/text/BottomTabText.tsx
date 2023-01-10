@@ -18,7 +18,7 @@ const BottomTabText = (props: {
           styles.details,
           props.focused
             ? {color: Colors.primary, fontWeight: '700'}
-            : {color: Colors.light.lightText, fontWeight: '500'},
+            : {color: Colors.gray, fontWeight: '500'},
           {...props.textStyle},
         ]}>
         {props.text}

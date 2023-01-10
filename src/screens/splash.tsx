@@ -55,7 +55,7 @@ const Splash = ({}) => {
           }
         },
       );
-      socket.on('ack', d => console.log('d', d)); // GOOD
+      // socket.on('ack', d => {}); // GOOD
     }
   }, [user, isLoggedIn]);
 

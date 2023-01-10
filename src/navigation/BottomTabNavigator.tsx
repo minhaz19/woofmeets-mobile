@@ -16,7 +16,6 @@ import ProHomeNavigator from './providers/bottoms/HomeNavigator';
 import {ProRescheduleIcon} from '../assets/svgs/Provider_Logos';
 import ProSettingNavigator from './providers/bottoms/SettingNavigator';
 import BottomTabText from '../components/common/text/BottomTabText';
-import {useTheme} from '../constants/theme/hooks/useTheme';
 import {useAppDispatch, useAppSelector} from '../store/store';
 import {getWhoAmI} from '../store/slices/common/whoAmI/whoAmIAction';
 import InboxNavigator from './bottoms/InboxNavigator';
@@ -24,7 +23,6 @@ import InboxNavigator from './bottoms/InboxNavigator';
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
-  const {colors} = useTheme();
   const dispatch = useAppDispatch();
   const [token, setToken] = useState<any>();
   const {user} = useAppSelector((state: any) => state.whoAmI);
@@ -43,11 +41,11 @@ function BottomTabNavigator() {
   const height =
     SCREEN_WIDTH <= 380
       ? Platform.OS === 'ios'
-        ? 70
+        ? 60
         : 60
       : Platform.OS === 'ios'
-      ? 90
-      : 80;
+      ? 78
+      : 70;
   getDecodedToken();
   if (user?.provider?.isApproved || token?.provider) {
     return (
@@ -59,14 +57,25 @@ function BottomTabNavigator() {
           tabBarStyle: {
             backgroundColor: Colors.background,
             height: height,
+            paddingBottom: 0,
             position: 'absolute',
             bottom: 0,
-            elevation: 9,
-            shadowOpacity: 0.9,
-            shadowOffset: {width: 2, height: 8},
-            shadowColor: Colors.background,
-            borderTopWidth: 2,
-            borderColor: colors.borderColor,
+
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 6,
+            },
+            shadowOpacity: 0.39,
+            shadowRadius: 8.3,
+
+            elevation: 13,
+
+            borderRadius: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: 10,
+            marginBottom: 20,
           },
         }}>
         <Tab.Screen
@@ -79,7 +88,7 @@ function BottomTabNavigator() {
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <Finder
-                  fill={focused ? Colors.primary : Colors.light.lightText}
+                  fill={focused ? Colors.primary : Colors.gray}
                   height={SCREEN_WIDTH <= 380 ? 20 : 24}
                   width={SCREEN_WIDTH <= 380 ? 20 : 26}
                 />
@@ -97,10 +106,11 @@ function BottomTabNavigator() {
           component={ProHomeNavigator}
           options={{
             headerShown: false,
+
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <ProRescheduleIcon
-                  stroke={focused ? Colors.primary : Colors.subText}
+                  stroke={focused ? Colors.primary : Colors.gray}
                   height={SCREEN_WIDTH <= 380 ? 18 : 20}
                   width={SCREEN_WIDTH <= 380 ? 18 : 20}
                 />
@@ -122,7 +132,7 @@ function BottomTabNavigator() {
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <Pets
-                  fill={focused ? Colors.primary : Colors.subText}
+                  fill={focused ? Colors.primary : Colors.gray}
                   height={SCREEN_WIDTH <= 380 ? 18 : 20}
                   width={SCREEN_WIDTH <= 380 ? 18 : 20}
                 />
@@ -144,7 +154,7 @@ function BottomTabNavigator() {
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <Setting
-                  fill={focused ? Colors.primary : Colors.subText}
+                  fill={focused ? Colors.primary : Colors.gray}
                   height={SCREEN_WIDTH <= 380 ? 20 : 24}
                   width={SCREEN_WIDTH <= 380 ? 20 : 26}
                 />
@@ -169,14 +179,25 @@ function BottomTabNavigator() {
           tabBarStyle: {
             backgroundColor: Colors.background,
             height: height,
+            paddingBottom: 0,
             position: 'absolute',
             bottom: 0,
-            elevation: 9,
-            shadowOpacity: 0.9,
-            shadowOffset: {width: 2, height: 8},
-            shadowColor: Colors.background,
-            borderTopWidth: 2,
-            borderColor: colors.borderColor,
+
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 6,
+            },
+            shadowOpacity: 0.39,
+            shadowRadius: 8.3,
+
+            elevation: 13,
+
+            borderRadius: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: 10,
+            marginBottom: 20,
           },
         }}>
         <Tab.Screen
@@ -189,7 +210,7 @@ function BottomTabNavigator() {
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <Finder
-                  fill={focused ? Colors.primary : Colors.light.lightText}
+                  fill={focused ? Colors.primary : Colors.gray}
                   height={SCREEN_WIDTH <= 380 ? 20 : 24}
                   width={SCREEN_WIDTH <= 380 ? 20 : 26}
                 />
@@ -211,7 +232,7 @@ function BottomTabNavigator() {
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <InboxIcon
-                  stroke={focused ? Colors.primary : Colors.subText}
+                  stroke={focused ? Colors.primary : Colors.gray}
                   height={SCREEN_WIDTH <= 380 ? 20 : 24}
                   width={SCREEN_WIDTH <= 380 ? 20 : 26}
                 />
@@ -232,7 +253,7 @@ function BottomTabNavigator() {
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <Pets
-                  fill={focused ? Colors.primary : Colors.subText}
+                  fill={focused ? Colors.primary : Colors.gray}
                   height={SCREEN_WIDTH <= 380 ? 20 : 22}
                   width={SCREEN_WIDTH <= 380 ? 20 : 24}
                 />
@@ -254,7 +275,7 @@ function BottomTabNavigator() {
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
                 <Setting
-                  fill={focused ? Colors.primary : Colors.subText}
+                  fill={focused ? Colors.primary : Colors.gray}
                   height={SCREEN_WIDTH <= 380 ? 20 : 24}
                   width={SCREEN_WIDTH <= 380 ? 20 : 26}
                 />
@@ -278,7 +299,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 8,
+    alignSelf: 'center',
     width: SCREEN_WIDTH / 4,
   },
   textStyle: {
