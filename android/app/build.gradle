@@ -140,8 +140,8 @@ android {
         applicationId "com.woofmeets.customer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
-        versionName "1.9.517"
+        versionCode 15
+        versionName "1.10.1"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         // androidXCore = "1.7.0"
         compileOptions {

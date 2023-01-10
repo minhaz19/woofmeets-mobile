@@ -96,7 +96,7 @@ const ScheduleAppointmentList = () => {
     setData([]);
     setError(false);
     setPage(1);
-    fetchData(source, 1, true);
+    fetchData(source, 1, false);
   };
 
   const handleLoadMore = () => {
