@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
@@ -12,10 +13,12 @@ import {useTheme} from '../../constants/theme/hooks/useTheme';
 import { emptyNotificationsData, getNotifications } from '../../store/slices/notifications/notificationsSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { Text } from 'react-native-svg';
+import FetchMoreLoader from '../../components/common/Loaders/FetchMoreLoader';
+import BottomSpacing from '../../components/UI/BottomSpacing';
 
 const Notifications = () => {
   const dispatch = useAppDispatch();
-  const {notificationsData, totalNotifications, footerLoading} = useAppSelector((state: { notification: any; }) => state.notification);
+  const {notificationsData, totalNotifications, footerLoading, loading} = useAppSelector((state: { notification: any; }) => state.notification);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {colors} = useTheme();
@@ -57,7 +60,7 @@ const Notifications = () => {
       </MiddleModal> */}
       {notificationsData?.length > 0 && (
         <FlatList
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
           data={notificationsData}
           renderItem={({item}) => (
             <View
@@ -84,14 +87,17 @@ const Notifications = () => {
               </TouchableOpacity>
             </View>
           )}
-          ListFooterComponent={() => {
-            return (totalNotifications?.total % notificationsData?.length !== 0 ? <ActivityIndicator size={'small'} animating={footerLoading} /> : <></>);
-          }}
+          // ListFooterComponent={() => {
+          //   return (totalNotifications?.total % notificationsData?.length !== 0 ? <ActivityIndicator size={'small'} animating={footerLoading} /> : <></>);
+          // }}
           onEndReached={() => loadMore()}
           onEndReachedThreshold={0.02}
         />
       )}
-      {notificationsData.length === 0 && <TitleText text={'You have no notifications right now'} textStyle={{color: Colors.gray, textAlign: 'center'}} />}
+      {notificationsData.length === 0 && (!loading && <TitleText text={'You have no notifications right now'} textStyle={{color: Colors.gray, textAlign: 'center'}} />)}
+      {loading && <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <FetchMoreLoader width={Platform.OS === 'ios' ? '20%' : '25%'} />
+      </View>}
       <View style={{height: 40}} />
     </View>
   );
