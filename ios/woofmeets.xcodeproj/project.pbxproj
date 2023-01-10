@@ -118,6 +118,7 @@
 			children = (
 				0FB7C54428FFA0CE00FFA285 /* woofmeetsRelease.entitlements */,
 				65DF9ADE28AC16C70010FB8F /* woofmeets.entitlements */,
+				0F3D80E428F7F8D10088A30F /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				6523C05D28AC1D2F00599D01 /* File.swift */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -170,7 +171,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				0F3D80E428F7F8D10088A30F /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* woofmeets */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* woofmeetsTests */,
@@ -576,9 +576,11 @@
 				CODE_SIGN_ENTITLEMENTS = woofmeets/woofmeets.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Z88T9AD5MC;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z88T9AD5MC;
 				ENABLE_BITCODE = NO;
+				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				INFOPLIST_FILE = woofmeets/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
@@ -586,7 +588,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.4;
+				MARKETING_VERSION = 1.10.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -610,9 +612,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = woofmeets/woofmeetsRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Z88T9AD5MC;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z88T9AD5MC;
+				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				INFOPLIST_FILE = woofmeets/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
@@ -620,7 +625,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.4;
+				MARKETING_VERSION = 1.10.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

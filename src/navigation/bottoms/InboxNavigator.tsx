@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Colors from '../../constants/Colors';
-import HeaderWithBack from '../../components/common/header/HeaderWithBack';
+// import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import Inbox from '../../screens/Inbox';
 // import ReportCardInitial from '../../screens/reports/Initial';
 // import Appointment from '../../screens/Appointment';
@@ -15,22 +15,23 @@ const InboxNavigator = () => {
   return (
     <Stack1.Navigator
       initialRouteName="Inbox"
-      // screenOptions={{
-      //   gestureEnabled: false,
-      // }}
-    >
+      screenOptions={{
+        gestureEnabled: false,
+      }}>
       <Stack1.Screen
         name="Inbox"
         component={Inbox}
-        options={({navigation}) => ({
+        options={({}) => ({
           title: '',
-          header: () => (
-            <HeaderWithBack
-              navigation={navigation}
-              title="Inbox"
-              notification
-            />
-          ),
+          headerShown: false,
+
+          // header: () => (
+          //   <HeaderWithBack
+          //     navigation={navigation}
+          //     title="Inbox"
+          //     notification
+          //   />
+          // ),
           backgroundColor: Colors.primary,
         })}
       />

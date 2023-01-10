@@ -6,11 +6,10 @@ import methods from '../../../../../../api/methods';
 import {getCurrentplan} from '../../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 import {useAppDispatch, useAppSelector} from '../../../../../../store/store';
 import {useApi} from '../../../../../../utils/helpers/api/useApi';
-import { baseUrlV } from '../../../../../../utils/helpers/httpRequest';
+import {baseUrlV} from '../../../../../../utils/helpers/httpRequest';
 
 const endpoint = '/subscriptions/check-basic-verification-payment';
-const subscriptionEndpoint =
-  `${baseUrlV}/v2/subscriptions/subscribe?`;
+const subscriptionEndpoint = `${baseUrlV}/v2/subscriptions/subscribe?`;
 const defaultCardEndpoint = '/stripe-payment-method/default-card-info';
 export const usePackageCard = (props: any) => {
   const uuid = Math.random().toString(36).substring(2, 36);
@@ -19,7 +18,7 @@ export const usePackageCard = (props: any) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const sequence = props.item.sequence;
   const dispatch = useAppDispatch();
-  const {loading: pLoading, request} = useApi(methods._post);
+  const {loading: pLoading, request} = useApi(methods._idempt_post);
   const {request: cardRequest} = useApi(methods._get);
   const {sitterData} = useAppSelector(state => state.initial);
   const handleSubmit = async () => {

@@ -1,18 +1,19 @@
+import {API_URL} from '@env';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../../../../api/client';
 export const getProviderInprogressApnt = createAsyncThunk(
-  '/appointment/provider/inprogress',
-  async (statusId: string) => {
+  '/v2/appointment/provider/upcoming-inbox/',
+  async (url: string) => {
     try {
       const response: ApiResponse<any> = await apiClient.get(
-        `/appointment/provider/inbox?status=${statusId}`,
+        `${API_URL}/v2/appointment/provider/upcoming-inbox?${url}`,
       );
       if (!response.ok) {
         if (response.data) {
         } else if (response.problem === 'TIMEOUT_ERROR') {
-          return response;
+          return response.data;
         } else {
           Alert.alert('An unexpected error happened');
         }

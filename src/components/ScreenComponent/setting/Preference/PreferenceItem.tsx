@@ -2,8 +2,8 @@
 import {
   GestureResponderEvent,
   StyleSheet,
+  Switch,
   TouchableOpacity,
-  useColorScheme,
   View,
 } from 'react-native';
 import React, {FC} from 'react';
@@ -20,15 +20,18 @@ interface PreferenceItemProps {
     opacity: NumberProp | undefined;
     title: string;
     details?: string;
+    switchButton?: boolean;
+    changeNotificationSettings: (val: boolean) => void | undefined;
+    switchValue?: boolean;
   };
 }
 
 const PreferenceItem: FC<PreferenceItemProps> = ({data}) => {
   const {colors} = useTheme();
-  const isDarkMode = useColorScheme();
   const backgroundStyle = {
     backgroundColor: colors.backgroundColor,
   };
+
   return (
     <View
       style={{
@@ -36,16 +39,22 @@ const PreferenceItem: FC<PreferenceItemProps> = ({data}) => {
         borderBottomWidth: 1,
         borderTopWidth: data.id === 1 ? 1 : 0,
         borderColor: colors.borderColor,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
       }}>
-      <TouchableOpacity onPress={data.screenName}>
-        <View style={styles.container}>
-          <HeaderText text={data.title} />
-          {data.details && <DescriptionText text={data.details} />}
-        </View>
-      </TouchableOpacity>
-      <View
-        style={[styles.divider, {backgroundColor: colors.descriptionText}]}
-      />
+      <View>
+        <TouchableOpacity onPress={data.screenName}>
+          <View style={styles.container}>
+            <HeaderText text={data.title} />
+            {data.details && <DescriptionText text={data.details} />}
+          </View>
+        </TouchableOpacity>
+        <View
+          style={[styles.divider, {backgroundColor: colors.descriptionText}]}
+        />
+      </View>
+      {data?.switchButton && <Switch onValueChange={(val) => data.changeNotificationSettings(val)} value={data.switchValue} />}
     </View>
   );
 };

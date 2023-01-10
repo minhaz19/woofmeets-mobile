@@ -29,6 +29,7 @@ const SettingItem = (props: {
     iconSetIcon?: any;
   };
   descriptionStyle?: TextStyle;
+  logoutState?: boolean;
   key?: number;
 }) => {
   const {colors} = useTheme();
@@ -38,6 +39,7 @@ const SettingItem = (props: {
   return (
     <TouchableOpacity
       onPress={props.data.screenName}
+      disabled={props.logoutState}
       style={{
         backgroundColor: backgroundStyle.backgroundColor,
         borderBottomWidth: 1,

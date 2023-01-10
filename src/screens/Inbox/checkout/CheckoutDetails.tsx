@@ -5,18 +5,17 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import Pricing from '../../../components/ScreenComponent/Inbox/Details/Pricing';
 import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
-import BottomSpacingNav from '../../../components/UI/BottomSpacingNav';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import AppointmentProposalInfo from '../../../components/ScreenComponent/Checkout/components/AppointmentProposalInfo';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {
-  // getProposalPricing,
-  getSettleProposalPricing,
-} from '../../../store/slices/Appointment/Details/getProposalPricing';
+// import {useAppDispatch, useAppSelector} from '../../../store/store';
+// import {
+//   // getProposalPricing,
+//   getSettleProposalPricing,
+// } from '../../../store/slices/Appointment/Details/getProposalPricing';
 import BottomSpacing from '../../../components/UI/BottomSpacing';
 import {useNavigation} from '@react-navigation/native';
 import AppStripe from '../../../components/common/Stripe/AppStripe';
@@ -59,7 +58,7 @@ const CheckoutDetails = () => {
               onSelect={handlePayment}
             />
           </View>
-          <BottomSpacingNav />
+          <BottomSpacing />
         </ScrollView>
       </AppStripe>
     </KeyboardAvoidingView>

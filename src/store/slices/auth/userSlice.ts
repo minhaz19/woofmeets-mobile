@@ -6,10 +6,12 @@ const initialState: any = {
   isLoggedIn: false,
   userInfo: null,
   userToken: null,
+  fcmToken: '',
   error: null,
   loading: false,
   providerLoading: false,
   success: false,
+  isNotificationPressed: '',
 };
 
 const userSlice = createSlice({
@@ -33,6 +35,12 @@ const userSlice = createSlice({
       state.error = null;
       state.isLoggedIn = false;
       storage.removeToken();
+    },
+    fcmDeviceToken: (state, action) => {
+      state.fcmToken = action.payload;
+    },
+    notiificationPressed: (state, action) => {
+      state.isNotificationPressed = action.payload;
     },
   },
 
@@ -101,6 +109,6 @@ const userSlice = createSlice({
   },
 });
 
-export const {signIn, authProviderLoading, logout} = userSlice.actions;
+export const {signIn, authProviderLoading, logout, fcmDeviceToken, notiificationPressed} = userSlice.actions;
 
 export default userSlice.reducer;

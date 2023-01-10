@@ -1,13 +1,14 @@
+import {API_URL} from '@env';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../../../../api/client';
 export const getInprogressApnt = createAsyncThunk(
-  '/appointment/inbox/paid/user',
-  async (statusId: string) => {
+  '/v2/appointment/upcoming-inbox/user',
+  async (url: string) => {
     try {
       const response: ApiResponse<any> = await apiClient.get(
-        `/appointment/inbox?status=${statusId}`,
+        `${API_URL}/v2/appointment/upcoming-inbox?${url}`,
       );
       if (!response.ok) {
         if (response.data) {

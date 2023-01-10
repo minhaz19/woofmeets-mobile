@@ -11,8 +11,11 @@ export const useApi = (apiFunc: any, alert?: string) => {
   const request = async (...args: any) => {
     setLoading(true);
     const response = await apiFunc(...args);
-    setLoading(false);
+    if (response.problem === 'CANCEL_ERROR' || response === undefined) {
+      return;
+    }
     if (!response.ok) {
+      setLoading(false);
       if (response.status === 400 || response.status === 404) {
         // Alert.alert(response.data.message);
         null;
@@ -29,6 +32,7 @@ export const useApi = (apiFunc: any, alert?: string) => {
     }
     if (response.ok) {
       setData(response.data);
+      setLoading(false);
     }
     return response;
   };

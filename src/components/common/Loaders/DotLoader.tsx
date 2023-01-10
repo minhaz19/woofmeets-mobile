@@ -1,20 +1,23 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet} from 'react-native';
 import React from 'react';
 import AnimatedLottieView from 'lottie-react-native';
-
-const DotLoader = () => {
+interface Props {
+  width?: string;
+}
+const DotLoader = ({width}: Props) => {
   return (
     <AnimatedLottieView
       autoPlay
       loop
       source={require('../../../assets/loadingDotStatic.json')}
-      style={styles.loaderStyle}
+      style={{
+        width: width ? width : '30%',
+      }}
     />
   );
 };
 
 export default DotLoader;
 
-const styles = StyleSheet.create({
-  loaderStyle: {width: '30%'},
-});
+const styles = StyleSheet.create({});

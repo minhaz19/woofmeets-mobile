@@ -24,6 +24,7 @@ import {socket} from '../../App';
 import storage from '../utils/helpers/auth/storage';
 const Splash = ({}) => {
   const [isPreviousUser, setIsPreviousUser] = useState(false);
+  const {isNotificationPressed} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   const [state, setState] = useState({
     showRealApp: false,
@@ -54,7 +55,7 @@ const Splash = ({}) => {
           }
         },
       );
-      socket.on('ack', d => console.log('d', d)); // GOOD
+      // socket.on('ack', d => {}); // GOOD
     }
   }, [user, isLoggedIn]);
 
@@ -193,18 +194,20 @@ const Splash = ({}) => {
         ) : state.showRealApp ? (
           <MainNavigationContainer previousLoggedIn={false} />
         ) : (
-          <SafeAreaView style={{flex: 1}}>
-            <AppIntroSlider
-              activeDotStyle={styles.activeDotStyle}
-              dotStyle={styles.dotStyle}
-              renderItem={_renderItem}
-              data={slides}
-              onDone={_onDone}
-              renderDoneButton={_renderDoneButton}
-              renderNextButton={_renderNextButton}
-              showSkipButton={true}
-            />
-          </SafeAreaView>
+          !isNotificationPressed && (
+            <SafeAreaView style={{flex: 1}}>
+              <AppIntroSlider
+                activeDotStyle={styles.activeDotStyle}
+                dotStyle={styles.dotStyle}
+                renderItem={_renderItem}
+                data={slides}
+                onDone={_onDone}
+                renderDoneButton={_renderDoneButton}
+                renderNextButton={_renderNextButton}
+                showSkipButton={true}
+              />
+            </SafeAreaView>
+          )
         )}
       </>
     );

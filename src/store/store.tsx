@@ -54,6 +54,11 @@ import proposalPricingSlice from './slices/Appointment/Details/proposalPricingSl
 import completedApntSlice from './slices/Appointment/Inbox/User/Completed/completedApntSlice';
 import pCompletedApntSlice from './slices/Appointment/Inbox/Provider/Completed/pCompletedApntSlice';
 import trackingToggle from './slices/misc/trackingToggle';
+import appointmentCardSlice from './slices/Appointment/AppointmentCard/appointmentCardSlice';
+import userAPNTListSlice from './slices/Appointment/Inbox/User/UserAPNTList/userAPNTListSlice';
+import providerAPNTListSlice from './slices/Appointment/Inbox/Provider/ProviderAPNTList/providerAPNTListSlice';
+import APNTScheduleSlice from './slices/Appointment/Schedular/APNTScheduleSlice';
+import notificationsSlice from './slices/notifications/notificationsSlice';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -101,6 +106,11 @@ const appReducer = combineReducers({
   userCompleted: completedApntSlice,
   providerCompleted: pCompletedApntSlice,
   trackingStatus: trackingToggle,
+  appointmentCard: appointmentCardSlice,
+  userAppointment: userAPNTListSlice,
+  providerAppointment: providerAPNTListSlice,
+  scheduler: APNTScheduleSlice,
+  notification: notificationsSlice,
 });
 
 const RootReducer = (

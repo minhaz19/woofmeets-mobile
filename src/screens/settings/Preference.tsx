@@ -1,16 +1,23 @@
 import {StyleSheet, ScrollView, Linking} from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PreferenceItem from '../../components/ScreenComponent/setting/Preference/PreferenceItem';
 import {SCREEN_WIDTH} from '../../constants/WindowSize';
 import HeaderText from '../../components/common/text/HeaderText';
 import Text_Size from '../../constants/textScaling';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
-import {useAppDispatch} from '../../store/store';
+import {useAppDispatch, useAppSelector} from '../../store/store';
 import {getWhoAmI} from '../../store/slices/common/whoAmI/whoAmIAction';
+import storage from '../../utils/helpers/auth/storage';
+import { API_MSG } from '@env';
+import apiClient from '../../api/client';
 import VersionCheck from 'react-native-version-check';
 
+const notificationEndPoint = '/v1/push-notifications';
+
 const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
+  const {fcmToken} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
+  const [toggle, setToggle] = useState(true);
   const supportData = [
     {
       id: 1,
@@ -21,6 +28,20 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
         dispatch(getWhoAmI());
       },
       opacity: 1,
+      switchButton: false,
+    },
+    {
+      id: 2,
+      title: 'Notifications',
+      details: 'Enable or disable the notifications',
+      opacity: 1,
+      switchButton: true,
+      changeNotificationSettings: async (val: boolean) => {
+        setToggle(val);
+        const authToken = await storage.getToken();
+        const result = await apiClient.put(`${API_MSG + notificationEndPoint}`, {registrationToken: fcmToken}, {headers: {'Authorization': authToken}});
+      },
+      switchValue: toggle,
     },
     {
       id: 3,
@@ -29,6 +50,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
         Linking.openURL('https://woofmeets.com/terms-and-conditions'),
       details: 'https://woofmeets.com/terms-and-conditions',
       opacity: 1,
+      switchButton: false,
     },
     {
       id: 4,
@@ -36,6 +58,7 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       screenName: () => Linking.openURL('https://woofmeets.com/privacy-policy'),
       details: 'https://woofmeets.com/privacy-policy',
       opacity: 1,
+      switchButton: false,
     },
     {
       id: 5,
@@ -43,8 +66,24 @@ const Preference = (props: {navigation: {navigate: (arg0: string) => any}}) => {
       screenName: () => {},
       details: `${VersionCheck.getCurrentVersion()} - release`,
       opacity: 1,
+      switchButton: false,
     },
   ];
+
+  const getNotificationStatus = async ()  => {
+    const authToken = await storage.getToken();
+    const result = await apiClient.get(`${API_MSG + notificationEndPoint}`, {} ,  {headers: {'Authorization': authToken}});
+    const deviceTokenList = result?.data?.data;
+    const activeDeviceToken = deviceTokenList.find(item => {
+      return item.registrationToken === fcmToken;
+    });
+    setToggle(!activeDeviceToken.disable ? !activeDeviceToken.disable : true);
+  };
+
+  useEffect(() => {
+    getNotificationStatus();
+  });
+
   return (
     <ScreenRapperGrey>
       <ScrollView
