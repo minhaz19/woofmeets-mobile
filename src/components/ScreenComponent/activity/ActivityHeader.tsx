@@ -594,7 +594,7 @@ const ActivityHeader = (props: {
                       proposedServiceInfo?.proposedBy === 'PROVIDER' &&
                       proposedServiceInfo?.status !== 'ACCEPTED'
                         ? putLoading
-                          ? 'loading...'
+                          ? 'loading'
                           : 'Accept'
                         : proposedServiceInfo?.status === 'ACCEPTED'
                         ? 'Pay Now'

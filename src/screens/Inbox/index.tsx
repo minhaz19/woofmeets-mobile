@@ -50,7 +50,10 @@ const Inbox = () => {
     cancelToken?: any,
     pageCount?: number,
     errorState?: boolean,
+    ud?: any[],
+    pd?: any[],
   ) => {
+    console.log('calling', userData, providerData);
     if (errorState ?? error) {
       return;
     }
@@ -67,9 +70,13 @@ const Inbox = () => {
     if (response.ok) {
       const newData: any = await response?.data?.data;
       if (userType === 'USER') {
-        setUserData(prevProps => [...prevProps, ...newData]);
+        setUserData(prevProps =>
+          ud ? [...newData] : [...prevProps, ...newData],
+        );
       } else {
-        setProviderData(prevProps => [...prevProps, ...newData]);
+        setProviderData(prevProps =>
+          pd ? [...newData] : [...prevProps, ...newData],
+        );
       }
     } else {
       setError(true);
@@ -81,11 +88,11 @@ const Inbox = () => {
     const source = CancelToken.source(); // <-- 1st step
     fetchDataa(active, source);
     const unsubscribe = navigation.addListener('focus', () => {
-      setError(false);
-      setPage(1);
       setUserData([]);
       setProviderData([]);
-      fetchDataa(active, source, 1);
+      setError(false);
+      setPage(1);
+      fetchDataa(active, source, 1, [], []);
     });
 
     return () => {
