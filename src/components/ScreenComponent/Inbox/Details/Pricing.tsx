@@ -408,7 +408,7 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                     text={`${getCurrency()}${
                       couponData.withCouponTotal !== ''
                         ? couponData.withCouponTotal
-                        : stableProposalPrcing?.total
+                        : stableProposalPrcing?.total?.toFixed(2)
                     }`}
                     textStyle={{
                       fontSize: Text_Size.Text_2,
@@ -416,9 +416,9 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                   />
                 ) : (
                   <HeaderText
-                    text={`${getCurrency()}${
-                      stableProposalPrcing?.providerFee?.providerTotal
-                    }`}
+                    text={`${getCurrency()}${stableProposalPrcing?.providerFee?.providerTotal?.toFixed(
+                      2,
+                    )}`}
                     textStyle={{
                       fontSize: Text_Size.Text_2,
                     }}
