@@ -43,6 +43,9 @@ import {getUserOnboardStatus} from '../../store/slices/connect/stripe';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AppTouchableOpacity from '../../components/common/AppClickEvents/AppTouchableOpacity';
 import Text_Size from '../../constants/textScaling';
+import storage from '../../utils/helpers/auth/storage';
+import apiClient from '../../api/client';
+import { API_MSG } from '@env';
 
 const SettingMain = (props: {
   navigation: {
@@ -50,6 +53,7 @@ const SettingMain = (props: {
     dispatch: (arg0: CommonActions.Action) => void;
   };
 }) => {
+  const {fcmToken} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   useEffect(() => {
     // dispatch(getOnboardingProgress());
@@ -59,6 +63,7 @@ const SettingMain = (props: {
   const currentPlan = useAppSelector(state => state.currentPlan);
   const {colors} = useTheme();
   const [token, setToken] = useState<any>();
+  const [logoutState, setLogoutState] = useState<boolean>(false);
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const {user} = useAppSelector((state: any) => state.whoAmI);
   const {userOnboardStatus} = useAppSelector(state => state.stripe);
@@ -238,21 +243,37 @@ const SettingMain = (props: {
         name="logout"
         size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
         style={styles.iconStyle}
-        color={Colors.alert}
+        color={logoutState ? Colors.gray : Colors.alert}
       />
     ),
     screenName: async () => {
+      setLogoutState(true);
+      const notificationEndPoint = '/v1/push-notifications';
+        const authToken = await storage.getToken();
+        const result = await apiClient.delete(`${API_MSG + notificationEndPoint}`, {}, {
+          data: {registrationToken: fcmToken},
+          headers: {
+            'Authorization': authToken,
+          },
+        });
+      if (result.ok) {
       dispatch(logout());
-      methods._get('/auth/logout');
-      props.navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [{name: 'AuthNavigator'}],
-        }),
-      );
+        methods._get('/auth/logout');
+        setLogoutState(false);
+        props.navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{name: 'AuthNavigator'}],
+          }),
+        );
+      } else {
+        Alert.alert('WoofMeets', 'Something Went wrong!! Please try again later');
+        setLogoutState(false);
+      }
     },
     opacity: 1,
-    color: Colors.alert,
+    color: logoutState ? Colors.gray : Colors.alert,
+    logoutState: logoutState,
   };
 
   const providerData = [

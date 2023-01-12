@@ -25,9 +25,10 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
   const navigation = useNavigation<any>();
   const [isCoupon, setIsCoupon] = useState<string>('');
   const [couponData, setCouponData] = useState({
-    percentage: '',
+    couponType: '',
+    coupons: '',
     code: '',
-    withCouponSubTotal: '',
+    excludeSubTotal: '',
     withCouponTotal: '',
   });
   const {
@@ -172,7 +173,7 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                 },
               )}
 
-              {stableProposalPrcing?.sixtyMinutesRate?.rate?.name !==
+              {/* {stableProposalPrcing?.sixtyMinutesRate?.rate?.name !==
                 undefined &&
                 stableProposalPrcing?.sixtyMinutesRate?.rate?.name !== '' && (
                   <View style={[styles.mapContainer]}>
@@ -210,7 +211,7 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                       }}
                     />
                   </View>
-                )}
+                )} */}
               <View
                 style={[
                   styles.divider,
@@ -229,25 +230,21 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                       marginLeft: 0,
                     }}
                   />
-                  {/* {screen === 'details' && (
-                    <DescriptionText
-                      text={'After applying coupon'}
-                      textStyle={{marginBottom: 10}}
-                    />
-                  )} */}
                 </View>
                 {user?.id === proposedServiceInfo?.userId ? (
                   <HeaderText
-                    text={`${getCurrency()}${stableProposalPrcing?.subTotal}`}
+                    text={`${getCurrency()}${stableProposalPrcing?.subTotal?.toFixed(
+                      2,
+                    )}`}
                     textStyle={{
                       fontSize: Text_Size.Text_2,
                     }}
                   />
                 ) : (
                   <HeaderText
-                    text={`${getCurrency()}${
-                      stableProposalPrcing?.providerFee?.providerTotal
-                    }`}
+                    text={`${getCurrency()}${stableProposalPrcing?.subTotal?.toFixed(
+                      2,
+                    )}`}
                     textStyle={{
                       fontSize: Text_Size.Text_2,
                     }}
@@ -306,12 +303,13 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                   </AppTouchableOpacity>
                 </View>
               )}
-              {screen === 'checkout' || 'details' &&
-                couponData.withCouponSubTotal !== '' && (
+              {(screen === 'checkout' || screen === 'details') &&
+                couponData.excludeSubTotal !== '' &&
+                user?.id === proposedServiceInfo?.userId && (
                   <View style={[styles.totalContainer, {marginBottom: 10}]}>
                     <View>
                       <HeaderText
-                        text={'Subtotal:'}
+                        text={'Applied coupon:'}
                         textStyle={{
                           color: colors.headerText,
                           fontWeight: 'bold',
@@ -320,13 +318,19 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                         }}
                       />
                       <ShortText
-                        text={`(-) After applying ${couponData?.percentage}% by coupon code`}
+                        text={`( - ) ${
+                          couponData?.couponType === 'FIXED_AMOUNT'
+                            ? getCurrency()
+                            : ''
+                        }${couponData?.coupons}${
+                          couponData?.couponType === 'PERCENTAGE' ? '%' : ''
+                        } of ${getCurrency()}${stableProposalPrcing?.subTotal}`}
                         // textStyle={{fontWeight: 'bold'}}
                       />
                     </View>
 
                     <HeaderText
-                      text={`${getCurrency()}${couponData?.withCouponSubTotal}`}
+                      text={`${getCurrency()}${couponData?.excludeSubTotal}`}
                     />
                   </View>
                 )}
@@ -404,7 +408,7 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                     text={`${getCurrency()}${
                       couponData.withCouponTotal !== ''
                         ? couponData.withCouponTotal
-                        : stableProposalPrcing?.total
+                        : stableProposalPrcing?.total?.toFixed(2)
                     }`}
                     textStyle={{
                       fontSize: Text_Size.Text_2,
@@ -412,9 +416,9 @@ const Pricing = ({setIsDetailsModal, screen}: Props) => {
                   />
                 ) : (
                   <HeaderText
-                    text={`${getCurrency()}${
-                      stableProposalPrcing?.providerFee?.providerTotal
-                    }`}
+                    text={`${getCurrency()}${stableProposalPrcing?.providerFee?.providerTotal?.toFixed(
+                      2,
+                    )}`}
                     textStyle={{
                       fontSize: Text_Size.Text_2,
                     }}

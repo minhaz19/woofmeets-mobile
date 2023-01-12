@@ -5,7 +5,7 @@ import SettingMain from '../../screens/settings/SettingMain';
 import HeaderWithBack from '../../components/common/header/HeaderWithBack';
 import MyAccount from '../../screens/settings/MyAccount';
 import Preference from '../../screens/settings/Preference';
-import AccountSetting from '../../components/ScreenComponent/setting/Preference/AccountSetting';
+// import AccountSetting from '../../components/ScreenComponent/setting/Preference/AccountSetting';
 import SetNewPassword from '../../screens/auth/ResetPassword';
 import Profile from '../../screens/settings/Profile';
 

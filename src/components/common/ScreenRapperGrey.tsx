@@ -1,4 +1,4 @@
-import {View, StyleSheet, ViewStyle, useColorScheme} from 'react-native';
+import {View, StyleSheet, ViewStyle} from 'react-native';
 import React from 'react';
 import Colors from '../../constants/Colors';
 
@@ -12,7 +12,6 @@ const ScreenRapperGrey = (props: {
     | null
     | undefined;
 }) => {
-  const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: Colors.light.inputBackground,
   };

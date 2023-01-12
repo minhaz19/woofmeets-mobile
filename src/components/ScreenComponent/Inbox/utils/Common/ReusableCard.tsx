@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   StyleSheet,
   Image,
@@ -13,6 +14,7 @@ import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../../constants/textScaling';
+import changeTextLetter from '../../../../common/changeTextLetter';
 
 interface Props {
   item: {
@@ -23,23 +25,33 @@ interface Props {
     status: string;
     pickUpStartTime?: string;
   };
-  buttonStyles?: string;
+  statusColor: string[];
   handlePress?: () => void;
 }
 
-const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
-  const {isDarkMode, colors} = useTheme();
-  const img = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+const img =
+  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+const ReusableCard: FC<Props> = ({item, statusColor, handlePress}) => {
+  const {colors} = useTheme();
   return (
     <Card
       style={{
         ...styles.itemContainer,
         backgroundColor: colors.backgroundColor,
+
+        shadowColor: Colors.lightShade,
+        shadowOffset: {
+          width: 0,
+          height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.0,
+
+        elevation: 24,
       }}>
       <TouchableOpacity onPress={handlePress}>
         <View style={styles.flexContainer}>
-          <View
-            style={{...styles.imageContainer, borderColor: colors.borderColor}}>
+          <View style={{...styles.imageContainer, borderColor: statusColor[1]}}>
             <Image
               source={{uri: item?.image?.url ? item?.image?.url : img}}
               style={styles.image}
@@ -56,22 +68,26 @@ const ReusableCard: FC<Props> = ({item, buttonStyles, handlePress}) => {
               text={item.description}
               textStyle={styles.textDescription}
               numberOfLines={1}
-              ellipsizeMode="tail"
+              // ellipsizeMode="tail"
             />
           </View>
           <View style={styles.timeContainer}>
-            <DescriptionText
-              text={item.pickUpStartTime}
-              textStyle={styles.textTimeDescription}
-            />
-
             <View
-              style={[styles.buttonStyles, {backgroundColor: buttonStyles}]}>
+              style={[
+                {
+                  backgroundColor: statusColor[0],
+                  borderRadius: 50,
+                  width: 107,
+                },
+              ]}>
               <DescriptionText
-                text={item.status}
+                text={changeTextLetter(item.status.toLowerCase())!}
                 textStyle={{
-                  fontSize: Text_Size.Text_10,
-                  color: Colors.light.background,
+                  fontSize: Text_Size.Text_8,
+                  color: statusColor[1],
+                  paddingVertical: 2,
+                  fontWeight: '900',
+                  textAlign: 'center',
                 }}
               />
             </View>
@@ -88,11 +104,15 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+    borderWidth: 2,
+    borderColor: Colors.background,
+    borderRadius: 100,
   },
   itemContainer: {
-    padding: '3%',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    borderRadius: 25,
 
-    borderRadius: 4,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
     shadowOpacity: 0.2,
@@ -107,19 +127,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageContainer: {
-    marginRight: 10,
-    width: '15%',
-    borderRadius: 10,
-    borderWidth: 1,
+    marginRight: 20,
+    height: 60,
+    width: 60,
+    borderRadius: 100,
+    borderWidth: 2,
     overflow: 'hidden',
+    alignSelf: 'center',
   },
   detailsContainer: {
     flex: 1,
   },
   timeContainer: {
     // width: '25%',
-    alignItems: 'flex-end',
-    justifyContent: 'space-between',
+    // alignItems: 'flex-end',
+    // justifyContent: 'space-between',
+    position: 'absolute',
+    right: 0,
+    top: 0,
   },
   buttonStyles: {
     justifyContent: 'center',
@@ -141,9 +166,11 @@ const styles = StyleSheet.create({
   },
   textDescriptionOne: {
     fontSize: Text_Size.Text_9,
+    marginVertical: 4,
   },
   textTimeDescription: {
     color: Colors.gray,
     fontSize: Text_Size.Text_12,
+    // backgroundColor: 'red',
   },
 });

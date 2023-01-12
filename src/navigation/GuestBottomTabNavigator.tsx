@@ -7,37 +7,61 @@ import {SCREEN_WIDTH} from '../constants/WindowSize';
 import SettingNavigator from './bottoms/SettingNavigator';
 import ServiceNavigator from './bottoms/ServiceNavigator';
 import BottomTabText from '../components/common/text/BottomTabText';
-import {useTheme} from '../constants/theme/hooks/useTheme';
 
 const Tab = createBottomTabNavigator();
 
 function GuestBottomTabNavigator() {
-  const {colors} = useTheme();
+  // const {colors} = useTheme();
   const height =
     SCREEN_WIDTH <= 380
       ? Platform.OS === 'ios'
-        ? 70
+        ? 60
         : 60
       : Platform.OS === 'ios'
-      ? 90
-      : 80;
+      ? 80
+      : 70;
   return (
     <Tab.Navigator
       initialRouteName="ServiceNavigator"
       screenOptions={{
+        // tabBarShowLabel: false,
+        // tabBarHideOnKeyboard: true,
+        // tabBarStyle: {
+        //   backgroundColor: Colors.background,
+        //   height: height,
+        //   position: 'absolute',
+        //   bottom: 0,
+        //   elevation: 9,
+        //   shadowOpacity: 0.9,
+        //   shadowOffset: {width: 2, height: 8},
+        //   shadowColor: Colors.background,
+        //   borderTopWidth: 2,
+        //   borderColor: colors.borderColor,
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
           backgroundColor: Colors.background,
+
           height: height,
+          paddingBottom: 0,
           position: 'absolute',
           bottom: 0,
-          elevation: 9,
-          shadowOpacity: 0.9,
-          shadowOffset: {width: 2, height: 8},
-          shadowColor: Colors.background,
-          borderTopWidth: 2,
-          borderColor: colors.borderColor,
+
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 6,
+          },
+          shadowOpacity: 0.39,
+          shadowRadius: 8.3,
+
+          elevation: 13,
+
+          borderRadius: 50,
+          justifyContent: 'center',
+          alignItems: 'center',
+          margin: 10,
+          marginBottom: Platform.os === 'IOS' ? 20 : 10,
         },
       }}>
       <Tab.Screen

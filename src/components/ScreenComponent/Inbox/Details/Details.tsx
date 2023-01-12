@@ -8,6 +8,8 @@ import Colors from '../../../../constants/Colors';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Pricing from './Pricing';
 import BottomSpacing from '../../../UI/BottomSpacing';
+import RefundPricing from './RefundPricing';
+import {useAppSelector} from '../../../../store/store';
 // import {useAppDispatch, useAppSelector} from '../../../../store/store';
 // import {getSettleProposalPricing} from '../../../../store/slices/Appointment/Details/getProposalPricing';
 
@@ -20,7 +22,7 @@ interface Props {
 const Details: FC<Props> = props => {
   const {colors} = useTheme();
   // const dispatch = useAppDispatch();
-  // const {proposedServiceInfo} = useAppSelector(state => state.proposal);
+  const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   // useEffect(() => {
   //   // dispatch(getProposalPricing(proposedServiceInfo?.appointmentOpk));
   //   dispatch(getSettleProposalPricing(proposedServiceInfo?.appointmentOpk));
@@ -46,7 +48,15 @@ const Details: FC<Props> = props => {
       <View
         style={[styles.divider, {backgroundColor: colors.descriptionText}]}
       />
-      <Pricing screen={'details'} setIsDetailsModal={props.setIsDetailsModal} />
+      {proposedServiceInfo?.status !== 'CANCELLED' ||
+      proposedServiceInfo?.status !== 'REJECTED' ? (
+        <Pricing
+          screen={'details'}
+          setIsDetailsModal={props.setIsDetailsModal}
+        />
+      ) : (
+        <RefundPricing screen={''} />
+      )}
       <BottomSpacing />
     </View>
   );

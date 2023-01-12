@@ -12,8 +12,14 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useAppSelector} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {useApi} from '../../../../utils/helpers/api/useApi';
+import methods from '../../../../api/methods';
+import {getAppointmentStatus} from '../../../../store/slices/Appointment/Inbox/User/Proposal/getAppointmentStatus';
+import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provider/Pending/getProviderApnt';
+import BottomSpacing from '../../../UI/BottomSpacing';
 
+const rejectEndpoint = '/appointment/proposal/reject/';
 interface Props {
   setIsReviewModal: (value: boolean) => void;
   setIsThreeDotsModal: (value: boolean) => void;
@@ -28,6 +34,8 @@ const ThreeDotsModal: FC<Props> = props => {
   const navigation = useNavigation<any>();
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {user} = useAppSelector(state => state.whoAmI);
+  const dispatch = useAppDispatch();
+  const {request} = useApi(methods._put);
   const modalData = [
     {
       id: 1,
@@ -35,12 +43,16 @@ const ThreeDotsModal: FC<Props> = props => {
       icon: <MaterialIcons name="report" size={24} color={Colors.primary} />,
       screen: () => {
         if (user?.id === proposedServiceInfo?.userId) {
-          Alert.alert('Pet owner can not generate report for appointment');
+          Alert.alert(
+            'Report',
+            'Pet owner can not generate report for appointment',
+          );
         } else if (
           proposedServiceInfo?.status !== 'PAID' &&
           user?.provider?.id === proposedServiceInfo?.providerId
         ) {
           Alert.alert(
+            'Report',
             'You can only generate report once appointment is inprogress',
           );
         } else {
@@ -58,6 +70,7 @@ const ThreeDotsModal: FC<Props> = props => {
       screen: () => {
         if (proposedServiceInfo?.status === 'PROPOSAL') {
           Alert.alert(
+            'Report Summery',
             'You can not see report while appointment is in pending status',
           );
         } else {
@@ -79,13 +92,51 @@ const ThreeDotsModal: FC<Props> = props => {
       screen: () => {
         if (proposedServiceInfo?.status !== 'COMPLETED') {
           Alert.alert(
+            'Review',
             'You can only review once you complete the appointment successfully',
           );
         } else {
           props?.isReviewed?.length === 0 && props?.setIsReviewModal(true);
           props?.isReviewed?.length === 0 && props?.setIsThreeDotsModal(false);
           props?.isReviewed?.length > 0 &&
-            Alert.alert('You have already reviewed');
+            Alert.alert('Review', 'You have already reviewed');
+        }
+      },
+    },
+    {
+      id: 4,
+      name: 'Cancel Appointment',
+      icon: <MaterialIcons name="cancel" size={24} color={Colors.primary} />,
+      screen: () => {
+        if (proposedServiceInfo?.status === 'COMPLETED') {
+          Alert.alert(
+            'Cancel Appointment',
+            'Opps! This appointment is already completed, can not be cancelled',
+          );
+        } else {
+          Alert.alert(
+            'Cancel Appointment',
+            'Are you sure you want to decline this appointment',
+            [
+              {
+                text: 'No',
+                onPress: () => {},
+              },
+              {
+                text: 'Yes',
+                onPress: async () => {
+                  const r = await request(rejectEndpoint + props.opk);
+                  if (r.ok) {
+                    dispatch(getAppointmentStatus('PROPOSAL'));
+                    dispatch(getProviderApnt('PROPOSAL'));
+                    navigation.navigate('InboxNavigator');
+                  } else if (!r.ok) {
+                    Alert.alert(r.data.message);
+                  }
+                },
+              },
+            ],
+          );
         }
       },
     },
@@ -95,17 +146,25 @@ const ThreeDotsModal: FC<Props> = props => {
       <View>
         {modalData?.map(item => {
           return (
-            <AppTouchableOpacity
-              key={item.id}
-              onPress={item.screen}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginVertical: 20,
-              }}>
-              {item.icon}
-              <HeaderText text={item.name} textStyle={styles.descriptionText} />
-            </AppTouchableOpacity>
+            <View key={item.id}>
+              {(item.id === 1 || item.id === 3 || item.id === 4) &&
+              (proposedServiceInfo.status === 'CANCELLED' ||
+                proposedServiceInfo.status === 'REJECTED') ? null : (
+                <AppTouchableOpacity
+                  onPress={item.screen}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginVertical: 20,
+                  }}>
+                  {item.icon}
+                  <HeaderText
+                    text={item.name}
+                    textStyle={styles.descriptionText}
+                  />
+                </AppTouchableOpacity>
+              )}
+            </View>
           );
         })}
       </View>
@@ -126,6 +185,7 @@ const ThreeDotsModal: FC<Props> = props => {
         }}
         title={'Close'}
       />
+      <BottomSpacing />
     </>
   );
 };

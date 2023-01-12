@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Keyboard,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import styles from '../activity/styles';
@@ -14,72 +15,27 @@ import ShortText from '../../../components/common/text/ShortText';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import SendMessage from './SendMessage';
-import {apiMsg} from '../../../api/client';
-import {formatDistance, subDays} from 'date-fns';
-import storage from '../../../utils/helpers/auth/storage';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {getProviderProposal} from '../../../store/slices/Appointment/Proposal/getProviderProposal';
-// import {getAllPets} from '../../../store/slices/pet/allPets/allPetsAction';
-// import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
-import Colors from '../../../constants/Colors';
 import changeTextLetter from '../../../components/common/changeTextLetter';
-import {socket} from '../../../../App';
+import {formatDistance, subDays} from 'date-fns';
+import {useAppSelector} from '../../../store/store';
 
-const Messages = (props: {roomId: any; opk: any}) => {
+const Messages = (props: {
+  roomId: any;
+  opk: any;
+  messages: any;
+  setMessages: any;
+  loading: boolean;
+  refreshing: boolean;
+  onRefresh: () => void;
+}) => {
+  const {messages, loading, onRefresh, refreshing} = props;
   const {colors} = useTheme();
-  const dispatch = useAppDispatch();
-  const [messages, setMessages] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
-  const userInfo = useAppSelector((state: any) => state.whoAmI.user);
+  const user = useAppSelector((state: any) => state.whoAmI.user);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  const [user, setUser] = useState();
-  const getTokenDecoded = async () => {
-    const decoded: any = await storage.getUser();
-    setUser(decoded);
-  };
-  useEffect(() => {
-    getTokenDecoded();
-  }, []);
-  const getPreviousMessages = async () => {
-    if (props.roomId) {
-      const slug = `/v1/messages/group/${props.roomId}`;
-      // setIsLoadingMsg(true);
-      const result: any = await apiMsg.get(slug);
-      if (result.ok) {
-        setMessages(result.data?.data?.reverse());
-        // setIsLoadingMsg(false);
-      }
-      if (!result.ok) {
-        // setIsLoadingMsg(false);
-      }
-    }
-  };
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await getPreviousMessages();
-    await dispatch(getProviderProposal(props.opk));
-    setRefreshing(false);
-  };
-  useEffect(() => {
-    onRefresh();
-  }, []);
-
-  useEffect(() => {
-    setRefreshing(true);
-    getPreviousMessages();
-    socket.on('message', (data: any) => {
-      if (data?.group === props.roomId) {
-        // @ts-ignore
-        setMessages(prevMess => [...prevMess, data]);
-      }
-    });
-    setRefreshing(false);
-  }, [props.roomId]);
 
   const [paddingHeight, setPaddingHeight] = useState(0);
   const scrollViewRef = useRef<any>();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -99,34 +55,43 @@ const Messages = (props: {roomId: any; opk: any}) => {
       keyboardDidShowListener.remove();
     };
   }, []);
-
   return (
     <View style={{flex: 1}}>
-      <ScrollView
-        ref={scrollViewRef}
-        style={styles.scrollTop}
-        onContentSizeChange={() =>
-          scrollViewRef.current.scrollToEnd({animated: true})
-        }
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        {messages?.length === 0 ? (
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingTop: 20,
-            }}>
-            <TouchableOpacity onPress={() => onRefresh()}>
-              <TitleText
-                text={'Refresh Again'}
-                textStyle={{paddingTop: 10, color: Colors.primaryDif}}
-              />
-            </TouchableOpacity>
-          </View>
-        ) : (
-          messages?.map((item: any, i) =>
+      {loading ? (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            flex: 1,
+          }}>
+          <ActivityIndicator size="large" />
+        </View>
+      ) : props.roomId === null ? (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            flex: 1,
+            paddingHorizontal: 20,
+          }}>
+          <TitleText
+            text={
+              'Sorry! we are unable to retribe message data. Appointment must be broken.'
+            }
+            textStyle={{textAlign: 'center', color: 'red', fontWeight: 'bold'}}
+          />
+        </View>
+      ) : (
+        <ScrollView
+          ref={scrollViewRef}
+          style={styles.scrollTop}
+          onContentSizeChange={() =>
+            scrollViewRef.current.scrollToEnd({animated: true})
+          }
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
+          {messages?.map((item: any, i: number) =>
             item.sender === user?.id ? (
               // Sender
               <View key={i} style={styles.senderContainer}>
@@ -156,7 +121,7 @@ const Messages = (props: {roomId: any; opk: any}) => {
                       styles.imageStyle,
                       {borderColor: colors.borderColor},
                     ]}>
-                    <TitleText text={userInfo?.firstName?.slice(0, 1)} />
+                    <TitleText text={user?.firstName?.slice(0, 1)} />
                   </View>
                 </View>
               </View>
@@ -171,14 +136,13 @@ const Messages = (props: {roomId: any; opk: any}) => {
                     ]}>
                     <TitleText
                       text={
-                        proposedServiceInfo?.providerId ===
-                        userInfo?.provider?.id
+                        proposedServiceInfo?.providerId === user?.provider?.id
                           ? changeTextLetter(
                               proposedServiceInfo?.userName,
-                            )?.slice(0, 1)
+                            )?.slice(0, 1)!
                           : changeTextLetter(
                               proposedServiceInfo?.providerName,
-                            )?.slice(0, 1)
+                            )?.slice(0, 1)!
                       }
                     />
                   </View>
@@ -228,13 +192,14 @@ const Messages = (props: {roomId: any; opk: any}) => {
                 </View>
               </View>
             ),
-          )
-        )}
-        <View style={{height: paddingHeight}} />
-      </ScrollView>
+          )}
+          <View style={{height: paddingHeight}} />
+        </ScrollView>
+      )}
+
       <SendMessage
         roomId={props.roomId}
-        setMessages={setMessages}
+        setMessages={props.setMessages}
         // socket={socket}
         user={user}
         opk={props.opk}
@@ -244,14 +209,3 @@ const Messages = (props: {roomId: any; opk: any}) => {
 };
 
 export default Messages;
-// isLoadingMsg ? (
-//           <View
-//             style={{
-//               justifyContent: 'center',
-//               alignItems: 'center',
-//               flex: 1,
-//               paddingTop: 100,
-//             }}>
-//             <ActivityIndicator size="large" />
-//           </View>
-//         ) :

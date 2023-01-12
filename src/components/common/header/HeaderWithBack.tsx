@@ -9,6 +9,7 @@ import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../text/HeaderText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Screen from '../Screen';
+import { BellIcon } from '../../../assets/svgs/SVG_LOGOS';
 
 const HeaderWithBack = (props: {
   navigation: {goBack: () => void; navigate: (arg0: string) => void};
@@ -58,7 +59,7 @@ const HeaderWithBack = (props: {
         {props.notification && (
           <>
             <View style={styles.headerContainer}>
-              {/* <TouchableOpacity
+              <TouchableOpacity
                 style={styles.bellContainer}
                 onPress={() => props.navigation.navigate('Notifications')}>
                 <BellIcon
@@ -67,7 +68,7 @@ const HeaderWithBack = (props: {
                   }
                 />
                 <View style={styles.bellView} />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
             {props.SecondIcon && (
               <View style={styles.secondContainer}>

@@ -1,11 +1,6 @@
-import {
-  StyleSheet,
-  Image,
-  View,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
-import React, {FC} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import {StyleSheet, View, TouchableOpacity, Platform} from 'react-native';
+import React, {FC, memo} from 'react';
 import Card from '../../../UI/Card';
 import HeaderText from '../../../common/text/HeaderText';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
@@ -15,10 +10,10 @@ import ShortText from '../../../common/text/ShortText';
 import TitleText from '../../../common/text/TitleText';
 import Text_Size from '../../../../constants/textScaling';
 import changeTextLetter from '../../../common/changeTextLetter';
-import {format} from 'date-fns';
+import {convertToLocalTZ} from '../../../common/formatDate';
 
 interface Props {
-  item:
+  apntItem:
     | {
         id: number;
         serviceName: string;
@@ -30,127 +25,207 @@ interface Props {
       }
     | any;
   buttonStyles?: string;
-  Icon: any;
   handlePress?: () => void;
   onScreen?: () => void;
 }
-const imageUrl =
-  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-const BookingCard: FC<Props> = ({
-  item,
-  buttonStyles,
-  handlePress,
-  onScreen,
-  Icon,
-}) => {
+const BookingCard: FC<Props> = ({apntItem, onScreen}) => {
+  const item = apntItem?.appointment;
   const {colors} = useTheme();
   const serviceTypeId = item?.providerService?.serviceTypeId;
   const proposalDate = item.appointmentProposal[0];
   const isRecurring = item.appointmentProposal[0]?.isRecurring;
+  const dropOffStart = item?.appointmentProposal?.[0]?.dropOffStartTime;
+  const dropOffEnd = item?.appointmentProposal?.[0]?.dropOffEndTime;
+  const pickUpStart = item?.appointmentProposal?.[0]?.pickUpStartTime;
+  const pickUpEnd = item?.appointmentProposal?.[0]?.pickUpEndTime;
+  const vistWalkStart = apntItem?.visitStartTimeString;
+  const visitWalkEnd = apntItem?.visitEndTimeString;
+  const timezone = item.providerTimeZone;
+  // const startDate = apntItem?.boardingType
+  //   ? proposalDate.proposalStartDate
+  //   : serviceTypeId === 4
+  //   ? isRecurring
+  //     ? proposalDate.recurringStartDate
+  //     : proposalDate?.proposalOtherDate[0]?.date
+  //   : apntItem.localDate;
+
+  const startDate =
+    serviceTypeId === 1 || serviceTypeId === 2
+      ? proposalDate.proposalStartDate
+      : serviceTypeId === 3 || serviceTypeId === 5
+      ? isRecurring
+        ? proposalDate.recurringStartDate
+        : proposalDate.proposalVisits[0]?.date
+      : serviceTypeId === 4
+      ? isRecurring
+        ? proposalDate.recurringStartDate
+        : proposalDate?.proposalOtherDate[0]?.date
+      : '';
   return (
-    <Card
-      style={{
-        ...styles.itemContainer,
-        backgroundColor: colors.backgroundColor,
-      }}>
-      <TouchableOpacity onPress={onScreen}>
-        <View style={styles.flexContainer}>
-          <View style={styles.topContainer}>
-            <View style={styles.imageContainer}>
-              <View style={styles.image}>
-                <Icon width={30} height={30} />
-              </View>
-            </View>
-            <View>
-              <HeaderText
-                text={item?.providerService?.serviceType?.name}
-                textStyle={styles.textHeader}
-              />
+    <TouchableOpacity onPress={onScreen}>
+      <Card
+        style={{
+          ...styles.itemContainer,
+          backgroundColor: colors.backgroundColor,
+          flexDirection: 'row',
+        }}>
+        <View
+          style={{
+            paddingHorizontal: 15,
+            paddingVertical: 20,
+            backgroundColor: Colors.primaryLight,
+            borderRadius: 35,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginRight: 20,
+            // flexWrap: 'wrap',
+          }}>
+          <TitleText
+            text={convertToLocalTZ(startDate, timezone, 'DD')}
+            textStyle={{
+              fontSize: Text_Size.Text_3,
+              fontWeight: 'bold',
+              color: '#f83600',
+              textAlign: 'center',
+            }}
+          />
+          <TitleText
+            text={convertToLocalTZ(startDate, timezone, 'MMM')}
+            textStyle={{
+              color: '#f83600',
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}
+          />
+        </View>
+        <View style={{flex: 1}}>
+          <HeaderText
+            text={changeTextLetter(
+              `${item?.user?.firstName} ${item?.user?.lastName}`,
+            )}
+            textStyle={styles.textHeader}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <View
+              style={{
+                backgroundColor: '#FAEFFE',
+                borderRadius: 25,
+                paddingHorizontal: 10,
+              }}>
               <ShortText
-                text={
-                  item?.providerService
-                    ? serviceTypeId === 1 || serviceTypeId === 2
-                      ? `Starting From:  ${format(
-                          new Date(proposalDate.proposalStartDate),
-                          'iii LLL d',
-                        )}`
-                      : serviceTypeId === 3 || serviceTypeId === 5
-                      ? isRecurring
-                        ? `Starting From:  ${format(
-                            new Date(proposalDate.recurringStartDate),
-                            'iii LLL d',
-                          )}`
-                        : `Starting From:  ${format(
-                            new Date(proposalDate?.proposalVisits[0]?.date),
-                            'iii LLL d',
-                          )}`
-                      : serviceTypeId === 4
-                      ? isRecurring
-                        ? `Starting From:  ${format(
-                            new Date(proposalDate.recurringStartDate),
-                            'iii LLL d',
-                          )}`
-                        : `Starting From:  ${format(
-                            new Date(proposalDate?.proposalOtherDate[0]?.date),
-                            'iii LLL d',
-                          )}`
-                      : ''
-                    : 'No Mesaegs fonnd'
-                }
+                text={item?.providerService?.serviceType?.name}
+                textStyle={{
+                  marginVertical: 2,
+                  fontWeight: '900',
+                  color: '#B17CD5',
+                }}
+              />
+            </View>
+            <View
+              style={{
+                marginHorizontal: 5,
+                backgroundColor: '#E7FAF8',
+                borderRadius: 25,
+                paddingHorizontal: 10,
+              }}>
+              <ShortText
+                text={changeTextLetter(item?.status.toLowerCase())}
+                textStyle={{
+                  color: '#57DCAB',
+                  fontWeight: '900',
+                }}
+              />
+            </View>
+          </View>
+          <ShortText
+            text={
+              item?.providerService
+                ? serviceTypeId === 1 || serviceTypeId === 2
+                  ? `🐶 Start Date:  ${convertToLocalTZ(
+                      proposalDate.proposalStartDate,
+                      timezone,
+                      'DD ddd MMM YYYY',
+                    )}`
+                  : serviceTypeId === 3 || serviceTypeId === 5
+                  ? isRecurring
+                    ? `Start Date:  ${convertToLocalTZ(
+                        proposalDate.recurringStartDate,
+                        timezone,
+                        'DD ddd MMM YYYY',
+                      )}`
+                    : `Start Date:  ${convertToLocalTZ(
+                        proposalDate.proposalVisits[0]?.date,
+                        timezone,
+                        'DD ddd MMM YYYY',
+                      )}`
+                  : serviceTypeId === 4
+                  ? isRecurring
+                    ? `Start Date:  ${convertToLocalTZ(
+                        proposalDate.recurringStartDate,
+                        timezone,
+                        'DD ddd MMM YYYY',
+                      )}`
+                    : `Start Date:  ${convertToLocalTZ(
+                        proposalDate?.proposalOtherDate[0]?.date,
+                        timezone,
+                        'DD ddd MMM YYYY',
+                      )}`
+                  : ''
+                : 'No Mesaegs fonnd'
+            }
+            textStyle={styles.textDescription}
+          />
+          {apntItem?.boardingType || serviceTypeId === 4 ? (
+            <>
+              <ShortText
+                text={`⏰ Pick-Up Time: ${
+                  pickUpStart?.replace('A', ' A')?.replace('P', ' P') +
+                  ' to ' +
+                  pickUpEnd?.replace('A', ' A')?.replace('P', ' P')
+                }`}
                 textStyle={styles.textDescription}
               />
-            </View>
-          </View>
-          <View style={styles.timeContainer}>
-            <ShortText
-              text={item?.status}
-              textStyle={styles.textTimeDescription}
-            />
-          </View>
+              <ShortText
+                text={`⏰ Drop-Off Time: ${
+                  dropOffStart?.replace('A', ' A')?.replace('P', ' P') +
+                  ' to ' +
+                  dropOffEnd?.replace('A', ' A')?.replace('P', ' P')
+                }`}
+                textStyle={styles.textDescription}
+              />
+            </>
+          ) : (
+            <>
+              <ShortText
+                text={`⏰ ${
+                  serviceTypeId === 5 ? 'Walk Start Time' : 'Visit Start Time'
+                } ${vistWalkStart?.replace('A', ' A')?.replace('P', ' P')}`}
+                textStyle={styles.textDescription}
+              />
+              <ShortText
+                text={`⏰ ${
+                  serviceTypeId === 5 ? 'Walk End Time' : 'Visit End Time'
+                } ${visitWalkEnd?.replace('A', ' A')?.replace('P', ' P')}`}
+                textStyle={styles.textDescription}
+              />
+            </>
+          )}
         </View>
-        <View style={[styles.topContainer, {paddingTop: 10}]}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{
-                uri: item?.user?.image ? item?.user?.image?.url : imageUrl,
-              }}
-              style={{...styles.image, borderColor: colors.borderColor}}
-              resizeMode="contain"
-            />
-          </View>
-          <View style={{width: '90%'}}>
-            <TitleText
-              text={changeTextLetter(
-                `${item?.user?.firstName} ${item?.user?.lastName}`,
-              )}
-              textStyle={styles.textHeader}
-            />
-            <ShortText
-              text={item?.appointmentProposal?.[0]?.appointmentPet
-                ?.map(pet => String(pet.pet.name)?.slice(0, 30))
-                .join(', ')}
-              textStyle={styles.textDescription}
-            />
-          </View>
-        </View>
-      </TouchableOpacity>
-    </Card>
+      </Card>
+    </TouchableOpacity>
   );
 };
 
-export default BookingCard;
+export default memo(BookingCard);
 
 const styles = StyleSheet.create({
-  image: {
-    borderRadius: 100,
-    width: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
-    height: SCREEN_WIDTH <= 380 ? 30 : SCREEN_WIDTH <= 600 ? 30 : 40,
-    marginRight: 10,
-    // borderWidth: 1,
-  },
   itemContainer: {
     padding: '3%',
-    borderRadius: 4,
+    borderRadius: 25,
     marginBottom:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '3%',
     shadowOpacity: 0.6,
@@ -158,44 +233,49 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     elevation: Platform.OS === 'android' ? 1 : 1,
   },
-  flexContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flex: 1,
-  },
-  imageContainer: {
-    marginRight: 10,
-  },
-  topContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  detailsContainer: {
-    flex: 1,
-  },
-  timeContainer: {
-    alignItems: 'center',
-  },
-  buttonStyles: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 100,
-    paddingVertical: '2%',
-    paddingHorizontal: '3%',
-  },
-  buttonContainer: {
-    alignItems: 'flex-end',
-    width: '100%',
-  },
+
   textDescription: {
     lineHeight: SCREEN_HEIGHT <= 800 ? SCREEN_HEIGHT * 0.02 : 20,
     fontSize: Text_Size.Text_8,
+    marginVertical: 2,
     // width: '80%',
   },
   textHeader: {
     marginTop: 0,
   },
-  textTimeDescription: {
-    color: Colors.success,
-  },
 });
+
+// <ShortText
+//   text={
+//     item?.providerService
+//       ? serviceTypeId === 1 || serviceTypeId === 2
+//         ? `🐶 Start Date:  ${format(
+//             new Date(proposalDate.proposalStartDate),
+//             'dd iii LLL yyyy',
+//           )}`
+//         : serviceTypeId === 3 || serviceTypeId === 5
+//         ? `🐶 Start Date:  ${format(new Date(startDate), 'dd iii LLL yyyy')}`
+//         : // ? isRecurring
+//         //   ? `🐶 Start Date:  ${format(
+//         //       new Date(proposalDate.recurringStartDate),
+//         //       'dd iii LLL yyyy',
+//         //     )}`
+//         //   : `🐶 Start Date:  ${format(
+//         //       new Date(proposalDate?.proposalVisits[0]?.date),
+//         //       'dd iii LLL yyyy',
+//         //     )}`
+//         serviceTypeId === 4
+//         ? isRecurring
+//           ? `🐶 Start Date:  ${format(
+//               new Date(proposalDate.recurringStartDate),
+//               'dd iii LLL yyyy',
+//             )}`
+//           : `🐶 Start Date:  ${format(
+//               new Date(proposalDate?.proposalOtherDate[0]?.date),
+//               'dd iii LLL yyyy',
+//             )}`
+//         : ''
+//       : 'No Mesaegs fonnd'
+//   }
+//   textStyle={styles.textDescription}
+// />;

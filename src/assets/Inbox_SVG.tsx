@@ -11,7 +11,7 @@ export const CameraIcon = (props: SvgProps) => (
     <G
       data-name="Icon feather-camera"
       fill="none"
-      stroke="#ffa557"
+      stroke="#F87315"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}>
@@ -37,7 +37,7 @@ export const SendIcon = (props: SvgProps) => (
     <Path
       data-name="Icon material-send"
       d="m.012 20.757 24.205-10.378L.012 0 0 8.072l17.3 2.306L0 12.685Z"
-      fill="#ffa557"
+      fill="#F87315"
     />
   </Svg>
 );

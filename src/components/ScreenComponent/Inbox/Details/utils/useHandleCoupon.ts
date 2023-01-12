@@ -11,16 +11,18 @@ export const useHandleCoupon = (
   setCouponData: {
     (
       value: SetStateAction<{
-        percentage: string;
+        couponType: string;
+        coupons: string,
         code: string;
-        withCouponSubTotal: string;
+        excludeSubTotal: string;
         withCouponTotal: string;
       }>,
     ): void;
     (arg0: {
-      percentage: any;
+      couponType: any;
       code: any;
-      withCouponSubTotal: string;
+      coupons: string,
+      excludeSubTotal: string;
       withCouponTotal: any;
     }): void;
   },
@@ -41,7 +43,8 @@ export const useHandleCoupon = (
   const getCouponDetails = async () => {
     const result = await getDetailsRequest(getCouponDetailsEndPoint);
     if (result?.ok) {
-      const excludeSubTotal =
+      if (result?.data?.data?.couponType === 'PERCENTAGE') {
+        const excludeSubTotal =
         (stableProposalPrcing?.subTotal * result?.data?.data?.percentage) / 100;
       const withCouponSubTotal =
         stableProposalPrcing?.subTotal - excludeSubTotal;
@@ -49,11 +52,27 @@ export const useHandleCoupon = (
         withCouponSubTotal +
         (stableProposalPrcing?.total - stableProposalPrcing?.subTotal);
       setCouponData({
-        percentage: result?.data?.data?.percentage,
+        couponType: result?.data?.data?.couponType,
+        coupons: result?.data?.data?.percentage,
         code: result?.data?.data?.code,
-        withCouponSubTotal: withCouponSubTotal.toFixed(2),
+        excludeSubTotal: excludeSubTotal.toFixed(2),
         withCouponTotal: withCouponTotal.toFixed(2),
       });
+        dispatch(getProviderProposal(proposedServiceInfo.appointmentOpk));
+      } else {
+        const withCouponSubTotal =
+          stableProposalPrcing?.subTotal - result?.data?.data?.amount;
+        const withCouponTotal =
+          withCouponSubTotal + (stableProposalPrcing?.total - stableProposalPrcing?.subTotal);
+        setCouponData({
+          couponType: result?.data?.data?.couponType,
+          coupons: result?.data?.data?.amount,
+          code: result?.data?.data?.code,
+          excludeSubTotal: result?.data?.data?.amount.toFixed(2),
+          withCouponTotal: withCouponTotal.toFixed(2),
+        });
+        dispatch(getProviderProposal(proposedServiceInfo.appointmentOpk));
+      }
     }
   };
 
@@ -61,25 +80,43 @@ export const useHandleCoupon = (
     if (proposedServiceInfo?.billing[0]?.couponId) {
       getCouponDetails();
     }
-  }, [proposedServiceInfo?.billing[0]?.couponId]);
+  }, []);
 
   // apply coupon code
   const handleApplyCoupon = async () => {
     const result = await request(getEndPoint);
     if (result.ok) {
-      const excludeSubTotal =
-        (result?.data?.data?.subtotal *
-          result?.data?.data?.coupon?.percentage) /
-        100;
-      const withCouponSubTotal = result?.data?.data?.subtotal - excludeSubTotal;
-      const withCouponTotal =
-        withCouponSubTotal + result?.data?.data?.serviceCharge;
-      setCouponData({
-        percentage: result?.data?.data?.coupon?.percentage,
-        code: result?.data?.data?.coupon?.code,
-        withCouponSubTotal: withCouponSubTotal.toFixed(2),
-        withCouponTotal: withCouponTotal.toFixed(2),
-      });
+      if (result?.data?.data?.coupon?.couponType === 'PERCENTAGE') {
+        const excludeSubTotal =
+          (result?.data?.data?.subtotal *
+            result?.data?.data?.coupon?.percentage) /
+          100;
+        const withCouponSubTotal =
+          result?.data?.data?.subtotal - excludeSubTotal;
+        const withCouponTotal =
+          withCouponSubTotal + result?.data?.data?.serviceCharge;
+        setCouponData({
+          couponType: result?.data?.data?.coupon?.couponType,
+          coupons: result?.data?.data?.coupon?.percentage,
+          code: result?.data?.data?.coupon?.code,
+          excludeSubTotal: excludeSubTotal.toFixed(2),
+          withCouponTotal: withCouponTotal.toFixed(2),
+        });
+        dispatch(getProviderProposal(proposedServiceInfo.appointmentOpk));
+      } else {
+        const withCouponSubTotal =
+          result?.data?.data?.subtotal - result?.data?.data?.coupon?.amount;
+        const withCouponTotal =
+          withCouponSubTotal + result?.data?.data?.serviceCharge;
+        setCouponData({
+          couponType: result?.data?.data?.coupon?.couponType,
+          coupons: result?.data?.data?.coupon?.amount,
+          code: result?.data?.data?.coupon?.code,
+          excludeSubTotal: result?.data?.data?.coupon?.amount.toFixed(2),
+          withCouponTotal: withCouponTotal.toFixed(2),
+        });
+        dispatch(getProviderProposal(proposedServiceInfo.appointmentOpk));
+      }
     } else {
       Alert.alert(result?.data?.message);
     }
@@ -91,9 +128,10 @@ export const useHandleCoupon = (
     if (result?.ok) {
       dispatch(getProviderProposal(proposedServiceInfo.appointmentOpk));
       setCouponData({
-        percentage: '',
+        couponType: '',
         code: '',
-        withCouponSubTotal: '',
+        coupons: '',
+        excludeSubTotal: '',
         withCouponTotal: '',
       });
     }

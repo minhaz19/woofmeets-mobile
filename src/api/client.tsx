@@ -13,7 +13,9 @@ apiClient.addAsyncRequestTransform(async request => {
     return;
   }
   request.headers['access-token'] = authToken;
-  request.headers.Authorization = 'Bearer ' + authToken;
+  if (!request.headers.Authorization) {
+    request.headers.Authorization = 'Bearer ' + authToken;
+  }
 });
 
 export const apiMsg = create({

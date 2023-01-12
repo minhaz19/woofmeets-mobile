@@ -39,6 +39,7 @@ export default {
   lightDark: '#242424',
   blue: 'blue',
   primaryDif: '#0071FF',
+  primaryDeep: '#F87315',
   primary: '#FFA557',
   primaryLight: '#FFEDD5',
   secondary: '#FEF1E8',
@@ -59,4 +60,5 @@ export default {
   none: 'transparent',
   yellow: '#FBC12CC2',
   iosBG: '#f1f1f1',
+  lightShade: '#E7EAF2',
 };
