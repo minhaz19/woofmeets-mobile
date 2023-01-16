@@ -45,7 +45,7 @@ import AppTouchableOpacity from '../../components/common/AppClickEvents/AppTouch
 import Text_Size from '../../constants/textScaling';
 import storage from '../../utils/helpers/auth/storage';
 import apiClient from '../../api/client';
-import { API_MSG } from '@env';
+import {API_MSG} from '@env';
 
 const SettingMain = (props: {
   navigation: {
@@ -249,15 +249,19 @@ const SettingMain = (props: {
     screenName: async () => {
       setLogoutState(true);
       const notificationEndPoint = '/v1/push-notifications';
-        const authToken = await storage.getToken();
-        const result = await apiClient.delete(`${API_MSG + notificationEndPoint}`, {}, {
+      const authToken = await storage.getToken();
+      const result = await apiClient.delete(
+        `${API_MSG + notificationEndPoint}`,
+        {},
+        {
           data: {registrationToken: fcmToken},
           headers: {
-            'Authorization': authToken,
+            Authorization: authToken,
           },
-        });
+        },
+      );
       if (result.ok) {
-      dispatch(logout());
+        dispatch(logout());
         methods._get('/auth/logout');
         setLogoutState(false);
         props.navigation.dispatch(
@@ -267,7 +271,10 @@ const SettingMain = (props: {
           }),
         );
       } else {
-        Alert.alert('WoofMeets', 'Something Went wrong!! Please try again later');
+        Alert.alert(
+          'WoofMeets',
+          'Something Went wrong!! Please try again later',
+        );
         setLogoutState(false);
       }
     },

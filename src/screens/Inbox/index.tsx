@@ -53,7 +53,6 @@ const Inbox = () => {
     ud?: any[],
     pd?: any[],
   ) => {
-    console.log('calling', userData, providerData);
     if (errorState ?? error) {
       return;
     }

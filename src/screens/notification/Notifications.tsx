@@ -2,19 +2,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, FlatList, Platform, Alert, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, FlatList, Platform} from 'react-native';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+// import Icon from 'react-native-vector-icons/MaterialIcons';
 import TitleText from '../../components/common/text/TitleText';
 import DescriptionText from '../../components/common/text/DescriptionText';
-import HeaderText from '../../components/common/text/HeaderText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 import { emptyNotificationsData, getNotifications } from '../../store/slices/notifications/notificationsSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { Text } from 'react-native-svg';
 import FetchMoreLoader from '../../components/common/Loaders/FetchMoreLoader';
-import BottomSpacing from '../../components/UI/BottomSpacing';
 
 const Notifications = () => {
   const dispatch = useAppDispatch();
