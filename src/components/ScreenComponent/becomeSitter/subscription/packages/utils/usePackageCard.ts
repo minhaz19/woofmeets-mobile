@@ -4,7 +4,7 @@ import {useState} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../../../../api/methods';
 // import {getCurrentplan} from '../../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
-import {useAppDispatch, useAppSelector} from '../../../../../../store/store';
+import { useAppSelector} from '../../../../../../store/store';
 import {useApi} from '../../../../../../utils/helpers/api/useApi';
 import {baseUrlV} from '../../../../../../utils/helpers/httpRequest';
 
@@ -17,7 +17,7 @@ export const usePackageCard = (props: any) => {
   const [ssLoading, setSSLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const sequence = props.item.sequence;
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const {loading: pLoading, request} = useApi(methods._idempt_post);
   // const {request: cardRequest} = useApi(methods._get);
   const {sitterData} = useAppSelector(state => state.initial);
