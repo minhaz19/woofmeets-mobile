@@ -68,7 +68,7 @@ const Stack = createStackNavigator();
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
   const dispatch = useAppDispatch();
   return (
-    <NavigationContainer linking={linking} >
+    <NavigationContainer linking={linking}>
       <Stack.Navigator
         screenOptions={{
           gestureEnabled: false,
@@ -451,6 +451,7 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           component={PaymentMethods}
           options={({navigation}) => ({
             title: 'Payment Cards',
+
             header: () => (
               <HeaderWithBack navigation={navigation} title="Cards" notification/>
             ),
@@ -597,8 +598,10 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="UpgradePlan"
           component={UpgradePlan}
-          options={() => ({
-            headerShown: false,
+          options={({navigation}) => ({
+            header: () => (
+              <HeaderWithBack navigation={navigation} title="Upgrade Plan" />
+            ),
           })}
         />
         <Stack.Screen

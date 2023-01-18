@@ -133,9 +133,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                   setShown(true);
                 }}
                 value={
-                  basicData?.dob
-                    ? format(new Date(basicData.dob), 'P')
-                    : new Date()
+                  basicData?.dob ? format(new Date(basicData.dob), 'P') : ''
                 }
               />
               <AppTouchableOpacity

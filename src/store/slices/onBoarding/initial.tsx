@@ -1,20 +1,21 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import React from 'react';
-import apiClient from '../../../api/client';
+// import apiClient from '../../../api/client';
+import methods from '../../../api/methods';
 import {ArrowRight} from '../../../assets/svgs/Services_SVG';
 import CreateProfileLanding from '../../../screens/becomeSitter/CreateProfileLanding';
 import Details from '../../../screens/becomeSitter/Details';
-import Gallery from '../../../screens/becomeSitter/Gallery/Gallery';
+// import Gallery from '../../../screens/becomeSitter/Gallery/Gallery';
 import HomeProfile from '../../../screens/becomeSitter/HomeProfile';
-import OnboardingMyPetScreen from '../../../screens/becomeSitter/MyPet';
+// import OnboardingMyPetScreen from '../../../screens/becomeSitter/MyPet';
 import SafetyQuiz from '../../../screens/becomeSitter/SafetyQuiz';
 import ServiceSelection from '../../../screens/becomeSitter/ServiceSelection';
 import Availability from '../../../screens/becomeSitter/ServiceSetUp/Availability/Availability';
 import CancellationPolicy from '../../../screens/becomeSitter/ServiceSetUp/CancellationPolicy/CancellationPolicy';
-import PetPreference from '../../../screens/becomeSitter/ServiceSetUp/PetPreference/PetPreference';
+// import PetPreference from '../../../screens/becomeSitter/ServiceSetUp/PetPreference/PetPreference';
 import Rates from '../../../screens/becomeSitter/ServiceSetUp/Rates';
-import YourHome from '../../../screens/becomeSitter/ServiceSetUp/YourHome/YourHome';
+// import YourHome from '../../../screens/becomeSitter/ServiceSetUp/YourHome/YourHome';
 import SubscriptionScreen from '../../../screens/becomeSitter/Subscription';
 import BasicInfo from '../../../screens/profile/BasicInfo';
 import ContactScreen from '../../../screens/profile/ContactScreen/ContactScreen';
@@ -22,7 +23,7 @@ import ContactScreen from '../../../screens/profile/ContactScreen/ContactScreen'
 export const getOnboardingProgress = createAsyncThunk(
   'progress/getOnboardingProgress',
   async () => {
-    const response: ApiResponse<any> = await apiClient.get(
+    const response: ApiResponse<any> = await methods._get(
       '/user-profile/onboarding-progress',
     );
     if (!response.ok) {

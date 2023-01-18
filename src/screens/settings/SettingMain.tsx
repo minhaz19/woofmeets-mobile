@@ -46,6 +46,7 @@ import Text_Size from '../../constants/textScaling';
 import storage from '../../utils/helpers/auth/storage';
 import apiClient from '../../api/client';
 import {API_MSG} from '@env';
+import {CancelToken} from 'apisauce';
 
 const SettingMain = (props: {
   navigation: {
@@ -56,9 +57,10 @@ const SettingMain = (props: {
   const {fcmToken} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   useEffect(() => {
+    const source = CancelToken.source();
     // dispatch(getOnboardingProgress());
     dispatch(getUserOnboardStatus());
-    dispatch(getCurrentplan());
+    dispatch(getCurrentplan(source));
   }, []);
   const currentPlan = useAppSelector(state => state.currentPlan);
   const {colors} = useTheme();
@@ -260,9 +262,9 @@ const SettingMain = (props: {
           },
         },
       );
-      if (result.ok) {
+      if (result) {
+        await methods._get('/auth/logout');
         dispatch(logout());
-        methods._get('/auth/logout');
         setLogoutState(false);
         props.navigation.dispatch(
           CommonActions.reset({
@@ -497,7 +499,13 @@ const SettingMain = (props: {
           <View
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
           />
-          {isLoggedIn && <SettingItem data={logOut} key={logOut.id} />}
+          {isLoggedIn && (
+            <SettingItem
+              data={logOut}
+              key={logOut.id}
+              logoutState={logoutState}
+            />
+          )}
         </View>
         <AppTouchableOpacity
           style={styles.tWrap}

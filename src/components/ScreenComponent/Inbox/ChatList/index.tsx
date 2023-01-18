@@ -96,11 +96,7 @@ const ChatList = ({
                           timezone,
                           'DD ddd MMM YYYY',
                         )}`
-                    : // : `Start Date:  ${formatDate(
-                    //     proposalDate.proposalVisits[0].date,
-                    //     'iii LLL d',
-                    //   )}`
-                    serviceTypeId === 4
+                    : serviceTypeId === 4
                     ? isRecurring
                       ? `Start Date:  ${convertToLocalTZ(
                           proposalDate.recurringStartDate,
@@ -116,6 +112,7 @@ const ChatList = ({
                   : 'No Mesaegs fonnd',
                 boardingTime: item?.providerService?.serviceType?.name,
                 status: item.status,
+                roomId: item.messageGroupId,
               }}
               statusColor={getStatusColor(item.status)!}
               handlePress={() =>

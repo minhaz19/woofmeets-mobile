@@ -18,49 +18,51 @@ import AppTouchableOpacity from '../../components/common/AppClickEvents/AppTouch
 import TitleText from '../../components/common/text/TitleText';
 import BottomHalfModal from '../../components/UI/modal/BottomHalfModal';
 import FilterAppointment from '../../components/ScreenComponent/Inbox/ChatList/component/FilterAppointment';
-import Text_Size from '../../constants/textScaling';
 import Icon from 'react-native-vector-icons/Entypo';
 import InboxLoader from './Loader/InboxLoader';
 import methods from '../../api/methods';
 import {useApi} from '../../utils/helpers/api/useApi';
 import {ApiResponse, CancelToken} from 'apisauce';
 import {API_URL} from '@env';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {BellIcon} from '../../assets/svgs/SVG_LOGOS';
+// import Ion from 'react-native-vector-icons/FontAwesome';
 const Inbox = () => {
   const [active, setActive] = useState('USER');
   const [openFilter, setOpenFilter] = useState(false);
   const navigation = useNavigation();
-
+  const route = useRoute<any>();
+  const back = route?.params?.back;
   const [status, setStatus] = useState({
     title: 'All',
     value: 'ALL',
   });
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
+  const [activeStatus, setActiveStatus] = useState('All');
   const [userData, setUserData] = useState<any[]>([]);
   const [providerData, setProviderData] = useState<any[]>([]);
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState('desc');
   const {request, loading} = useApi(methods._get);
   const [error, setError] = useState(false);
-
+  // const [unFocused, setUnFocused] = useState(false);
   const fetchDataa = async (
     userType: string,
     cancelToken?: any,
     pageCount?: number,
     errorState?: boolean,
-    ud?: any[],
-    pd?: any[],
+    statusState?: any,
   ) => {
     if (errorState ?? error) {
       return;
     }
-    const page_ = pageCount ? pageCount : page;
+    const page_ = pageCount ?? page;
+    const status_ = statusState ?? status.value;
     const url =
       userType === 'USER'
-        ? `${API_URL}/v3/appointment/inbox?status=${status.value}&page=${page_}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`
-        : `${API_URL}/v3/appointment/provider/inbox?status=${status.value}&page=${page_}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+        ? `${API_URL}/v3/appointment/inbox?status=${status_}&page=${page_}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+        : `${API_URL}/v3/appointment/provider/inbox?status=${status_}&page=${page_}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
     const response: ApiResponse<any> = await request(
       url,
       {},
@@ -69,34 +71,40 @@ const Inbox = () => {
     if (response.ok) {
       const newData: any = await response?.data?.data;
       if (userType === 'USER') {
-        setUserData(prevProps =>
-          ud ? [...newData] : [...prevProps, ...newData],
-        );
+        setUserData(prevProps => [...prevProps, ...newData]);
       } else {
-        setProviderData(prevProps =>
-          pd ? [...newData] : [...prevProps, ...newData],
-        );
+        setProviderData(prevProps => [...prevProps, ...newData]);
       }
     } else {
       setError(true);
       return;
     }
   };
-
   useEffect(() => {
-    const source = CancelToken.source(); // <-- 1st step
-    fetchDataa(active, source);
-    const unsubscribe = navigation.addListener('focus', () => {
+    if (back) {
+      const source = CancelToken.source(); // <-- 1st step
+
       setUserData([]);
       setProviderData([]);
       setError(false);
       setPage(1);
-      fetchDataa(active, source, 1, [], []);
-    });
+      fetchDataa(active, source, 1, false);
+      navigation.setParams({back: false});
+    }
+  }, [back, active, status]);
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     return () => {
+  //       setUnFocused(true);
+  //     };
+  //   }, [unFocused]),
+  // );
+  useEffect(() => {
+    const source = CancelToken.source(); // <-- 1st step
+    fetchDataa(active, source);
 
     return () => {
       source.cancel();
-      unsubscribe();
     };
   }, [active]);
 
@@ -129,25 +137,25 @@ const Inbox = () => {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-between',
+              justifyContent: 'flex-end',
               alignItems: 'center',
               marginHorizontal: 20,
             }}>
             {/* Filter Button */}
-            <TitleText
+            {/* <TitleText
               text={`${status.title} Appointment`}
               textStyle={{fontWeight: 'bold', fontSize: Text_Size.Text_1}}
-            />
+            /> */}
             <View
               style={{
+                // flex: 0,
                 flexDirection: 'row',
-
                 alignItems: 'center',
               }}>
               <AppTouchableOpacity
                 onPress={() => setOpenFilter(!openFilter)}
                 style={{
-                  padding: 10,
+                  paddingVertical: 8,
                   backgroundColor: Colors.lightShade,
                   borderRadius: 10,
                   paddingHorizontal: 20,
@@ -158,8 +166,16 @@ const Inbox = () => {
                 }}>
                 <TitleText
                   textStyle={{fontWeight: 'bold', marginRight: 10}}
-                  text={'Filter'}
+                  text={activeStatus}
                 />
+                {/* <Ion
+                  name="filter"
+                  size={
+                    SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
+                  }
+                  style={styles.iconStyle}
+                  color={Colors.primary}
+                /> */}
                 <Icon
                   name="chevron-down"
                   size={
@@ -206,6 +222,7 @@ const Inbox = () => {
               isModalVisible={openFilter}
               setIsModalVisible={setOpenFilter}>
               <FilterAppointment
+                setActiveStatus={setActiveStatus}
                 setProviderData={setProviderData}
                 setUserData={setUserData}
                 setOpenFilter={setOpenFilter}
@@ -266,6 +283,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.primary,
     paddingBottom: 5,
   },
+  iconStyle: {paddingRight: 5},
   text2: {
     fontWeight: '600',
     paddingBottom: '1%',

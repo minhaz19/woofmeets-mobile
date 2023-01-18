@@ -9,7 +9,7 @@ import Text_Size from '../../../constants/textScaling';
 import HeaderText from '../text/HeaderText';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import Screen from '../Screen';
-import { BellIcon } from '../../../assets/svgs/SVG_LOGOS';
+import {BellIcon} from '../../../assets/svgs/SVG_LOGOS';
 
 const HeaderWithBack = (props: {
   navigation: {goBack: () => void; navigate: (arg0: string) => void};

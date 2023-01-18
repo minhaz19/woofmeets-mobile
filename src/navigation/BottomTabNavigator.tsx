@@ -30,6 +30,7 @@ function BottomTabNavigator() {
   useEffect(() => {
     dispatch(getWhoAmI());
   }, []);
+  const {badge} = useAppSelector(state => state.badge);
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {
@@ -131,11 +132,14 @@ function BottomTabNavigator() {
             unmountOnBlur: true,
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
-                <Pets
-                  fill={focused ? Colors.primary : Colors.gray}
-                  height={SCREEN_WIDTH <= 380 ? 18 : 20}
-                  width={SCREEN_WIDTH <= 380 ? 18 : 20}
-                />
+                <View style={styles.badgeContainer}>
+                  <Pets
+                    fill={focused ? Colors.primary : Colors.gray}
+                    height={SCREEN_WIDTH <= 380 ? 18 : 20}
+                    width={SCREEN_WIDTH <= 380 ? 18 : 20}
+                  />
+                  {badge && <View style={styles.badge} />}
+                </View>
                 <BottomTabText
                   text="Inbox"
                   focused={focused}
@@ -190,9 +194,7 @@ function BottomTabNavigator() {
             },
             shadowOpacity: 0.39,
             shadowRadius: 8.3,
-
             elevation: 13,
-
             borderRadius: 50,
             justifyContent: 'center',
             alignItems: 'center',
@@ -231,11 +233,14 @@ function BottomTabNavigator() {
             headerShown: false,
             tabBarIcon: ({focused}) => (
               <View style={styles.bottomContainer}>
-                <InboxIcon
-                  stroke={focused ? Colors.primary : Colors.gray}
-                  height={SCREEN_WIDTH <= 380 ? 20 : 24}
-                  width={SCREEN_WIDTH <= 380 ? 20 : 26}
-                />
+                <View style={styles.badgeContainer}>
+                  <InboxIcon
+                    stroke={focused ? Colors.primary : Colors.gray}
+                    height={SCREEN_WIDTH <= 380 ? 20 : 24}
+                    width={SCREEN_WIDTH <= 380 ? 20 : 26}
+                  />
+                  {badge && <View style={styles.badge} />}
+                </View>
                 <BottomTabText
                   text="Inbox"
                   focused={focused}
@@ -306,6 +311,16 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingTop: 5,
   },
+  badge: {
+    width: 10,
+    height: 10,
+    borderRadius: 100,
+    backgroundColor: Colors.alert,
+    position: 'absolute',
+    top: -5,
+    right: -5,
+  },
+  badgeContainer: {position: 'relative'},
 });
 
 export default BottomTabNavigator;

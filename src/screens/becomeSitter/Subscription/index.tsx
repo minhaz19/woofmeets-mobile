@@ -33,8 +33,7 @@ const SubscriptionScreen = ({route, navigation}: Props) => {
     planLoading,
     currentPlan,
     ssLoading,
-    cardLoading,
-  } = useSubscription();
+  } = useSubscription(opk);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.backgroundColor}}>
       {(loading || planLoading) && <AppActivityIndicator visible={true} />}
@@ -93,7 +92,7 @@ const SubscriptionScreen = ({route, navigation}: Props) => {
                 titleStyle={btnStyles.titleStyle}
                 title="Choose Plan"
                 onSelect={handleSubmit}
-                loading={pLoading || ssLoading || cardLoading}
+                loading={pLoading || ssLoading}
               />
             </View>
           </>

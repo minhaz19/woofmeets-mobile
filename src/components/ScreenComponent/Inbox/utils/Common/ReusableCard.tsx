@@ -15,15 +15,17 @@ import Colors from '../../../../../constants/Colors';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../../constants/textScaling';
 import changeTextLetter from '../../../../common/changeTextLetter';
+import {useReusbaleCard} from './utils/useReusableCard';
 
 interface Props {
   item: {
     name: string;
-    image: string;
+    image: any;
     description: string;
     boardingTime: string;
     status: string;
     pickUpStartTime?: string;
+    roomId: string;
   };
   statusColor: string[];
   handlePress?: () => void;
@@ -31,8 +33,14 @@ interface Props {
 
 const img =
   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-const ReusableCard: FC<Props> = ({item, statusColor, handlePress}) => {
+const ReusableCard: FC<Props> = ({
+  item,
+  statusColor,
+  // read = true,
+  handlePress,
+}) => {
   const {colors} = useTheme();
+  const {unRead} = useReusbaleCard(item.roomId);
   return (
     <Card
       style={{
@@ -51,7 +59,25 @@ const ReusableCard: FC<Props> = ({item, statusColor, handlePress}) => {
       }}>
       <TouchableOpacity onPress={handlePress}>
         <View style={styles.flexContainer}>
-          <View style={{...styles.imageContainer, borderColor: statusColor[1]}}>
+          <View
+            style={{
+              ...styles.imageContainer,
+              borderColor: statusColor[1],
+              position: 'relative',
+            }}>
+            {unRead && (
+              <View
+                style={{
+                  backgroundColor: statusColor[1],
+                  width: 10,
+                  height: 10,
+                  borderRadius: 100,
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                }}
+              />
+            )}
             <Image
               source={{uri: item?.image?.url ? item?.image?.url : img}}
               style={styles.image}
@@ -59,14 +85,54 @@ const ReusableCard: FC<Props> = ({item, statusColor, handlePress}) => {
             />
           </View>
           <View style={styles.detailsContainer}>
-            <HeaderText text={item.name} textStyle={styles.textHeader} />
-            <DescriptionText
-              text={item.boardingTime}
-              textStyle={styles.textDescriptionOne}
+            <HeaderText
+              text={item.name}
+              textStyle={{
+                marginTop: 0,
+                fontWeight: unRead ? 'bold' : '400',
+              }}
             />
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <DescriptionText
+                text={item.boardingTime + ' - '}
+                textStyle={{
+                  fontSize: Text_Size.Text_9,
+                  marginVertical: 4,
+                  fontWeight: unRead ? 'bold' : '400',
+                }}
+              />
+              <View
+                style={[
+                  {
+                    // backgroundColor: statusColor[0],
+                    borderRadius: 50,
+                    width: 107,
+                  },
+                ]}>
+                <DescriptionText
+                  text={
+                    item.status === 'PAID' ||
+                    item.status === 'COMPLETED' ||
+                    item.status === 'CANCELLED'
+                      ? 'Paid'
+                      : 'Unpaid'
+                  }
+                  textStyle={{
+                    fontSize: Text_Size.Text_10,
+                    color: statusColor[1],
+                    paddingVertical: 2,
+                    fontWeight: 'bold',
+                    // textAlign: 'center',
+                  }}
+                />
+              </View>
+            </View>
             <DescriptionText
               text={item.description}
-              textStyle={styles.textDescription}
+              textStyle={{
+                fontSize: Text_Size.Text_9,
+                fontWeight: unRead ? 'bold' : '400',
+              }}
               numberOfLines={1}
               // ellipsizeMode="tail"
             />
@@ -92,6 +158,19 @@ const ReusableCard: FC<Props> = ({item, statusColor, handlePress}) => {
               />
             </View>
           </View>
+          {unRead && (
+            <View
+              style={{
+                backgroundColor: statusColor[1],
+                width: 10,
+                height: 10,
+                borderRadius: 100,
+                position: 'absolute',
+                top: '50%',
+                right: 4,
+              }}
+            />
+          )}
         </View>
       </TouchableOpacity>
     </Card>
@@ -132,7 +211,7 @@ const styles = StyleSheet.create({
     width: 60,
     borderRadius: 100,
     borderWidth: 2,
-    overflow: 'hidden',
+    // overflow: 'hidden',
     alignSelf: 'center',
   },
   detailsContainer: {
@@ -158,16 +237,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     width: '100%',
   },
-  textDescription: {
-    fontSize: Text_Size.Text_9,
-  },
-  textHeader: {
-    marginTop: 0,
-  },
-  textDescriptionOne: {
-    fontSize: Text_Size.Text_9,
-    marginVertical: 4,
-  },
+
   textTimeDescription: {
     color: Colors.gray,
     fontSize: Text_Size.Text_12,

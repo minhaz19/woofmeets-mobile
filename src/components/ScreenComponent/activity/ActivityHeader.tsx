@@ -43,7 +43,7 @@ import {getAppointmentCard} from '../../../store/slices/Appointment/AppointmentC
 // import {
 //   dateEquOrPassed,
 //   datePassed,
-//   isComming,
+//   isComing,
 //   isDateNotFound,
 //   isSameDate,
 // } from '../../common/Dates/datesFunc';
@@ -97,7 +97,7 @@ const ActivityHeader = (props: {
   const dateEquOrPassed = (date: any) => {
     return today >= new Date(date?.replace(/-/g, '/'));
   };
-  const isComming = (date: any) => {
+  const isComing = (date: any) => {
     return new Date(date?.replace(/-/g, '/')) > today;
   };
   const isDateNotFound = (allD: any) => {
@@ -228,7 +228,7 @@ const ActivityHeader = (props: {
         const findOtherDate = appointmentCard?.find(
           (d: any) =>
             !isSameDate(d?.localDate) &&
-            isComming(d?.localDate) &&
+            isComing(d?.localDate) &&
             d?.startTime === null,
         );
         setOtherDay(findOtherDate);
@@ -253,7 +253,7 @@ const ActivityHeader = (props: {
       if (
         allDates?.[0]?.startTime === null &&
         allDates?.[0]?.stopTime === null &&
-        isComming(allDates?.[0]?.localDate)
+        isComing(allDates?.[0]?.localDate)
       ) {
         setAppointmentStart('UPCOMING');
       } else if (
@@ -304,9 +304,8 @@ const ActivityHeader = (props: {
       }
     } else {
       if (
-        (currentDate?.startTime === null &&
-          isComming(currentDate?.localDate)) ||
-        (otherDay?.startTime === null && isComming(otherDay?.localDate))
+        (currentDate?.startTime === null && isComing(currentDate?.localDate)) ||
+        (otherDay?.startTime === null && isComing(otherDay?.localDate))
       ) {
         setAppointmentStart('UPCOMING');
       } else if (
@@ -466,7 +465,10 @@ const ActivityHeader = (props: {
                 if (props?.AppointmentTab) {
                   navigation.goBack();
                 } else {
-                  navigation.navigate('InboxNavigator');
+                  navigation.navigate('Inbox', {
+                    back: true,
+                    screen: 'InboxNavigator',
+                  });
                 }
               }}>
               <Ionicons
@@ -671,7 +673,7 @@ const ActivityHeader = (props: {
                             : appointmentStart === 'ENDED'
                             ? 'Appointment Ended'
                             : appointmentStart === 'UPCOMING'
-                            ? 'Comming Soon'
+                            ? 'Coming Soon'
                             : appointmentStart === 'NOAPPOINTMENT'
                             ? 'No Appointment'
                             : appointmentStart === 'INPROGRESS'

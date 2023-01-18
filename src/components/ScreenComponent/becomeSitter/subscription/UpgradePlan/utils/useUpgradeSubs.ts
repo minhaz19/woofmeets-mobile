@@ -42,9 +42,7 @@ export const useUpgradeSubscription = () => {
     sequence,
     loading,
     formattedPackageRate,
-
     handleSubmit,
-
     ssLoading,
   };
 };
