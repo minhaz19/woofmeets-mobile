@@ -1,23 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Modal} from 'react-native';
 import Lottie from 'lottie-react-native';
-import {useTheme} from '../../../constants/theme/hooks/useTheme';
+import Colors from '../../../constants/Colors';
+// import {useTheme} from '../../../constants/theme/hooks/useTheme';
+interface Props {
+  visible?: boolean;
+}
 
-const AppActivityIndicator = ({visible = false}) => {
-  const {colors} = useTheme();
-  if (!visible) {
+const AppActivityIndicator = ({visible = false}: Props) => {
+  const [status, setStatus] = useState(false);
+  useEffect(() => {
+    setStatus(visible);
+  }, [visible]);
+  // console.log('stat', status);
+  if (!status) {
     return null;
   }
+
   return (
     <Modal
       transparent={true}
-      animationType={'none'}
-      visible={visible}
-      style={styles.modal}
-      onRequestClose={() => {}}>
+      animationType={'fade'}
+      visible={status}
+      style={styles.modal}>
       <View style={styles.overlay}>
-        <View
-          style={[styles.overlay, {backgroundColor: colors.backgroundColor}]}>
+        <View style={[styles.overlay, {backgroundColor: Colors.background}]}>
           <Lottie
             autoPlay
             loop
@@ -31,7 +38,7 @@ const AppActivityIndicator = ({visible = false}) => {
 };
 
 const styles = StyleSheet.create({
-  modal: {zIndex: 1100},
+  modal: {flex: 1},
   overlay: {
     position: 'absolute',
     top: 0,
@@ -39,11 +46,9 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
 
-    flex: 1,
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    backgroundColor: '#rgba(0, 0, 0, 0.5)',
     zIndex: 9999,
   },
   loaderStyle: {width: '30%'},

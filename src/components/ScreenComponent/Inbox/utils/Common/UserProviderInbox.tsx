@@ -47,10 +47,12 @@ const UserProviderInbox = ({
           onPress={() => {
             setError(false);
             setPage(1);
-            if (item.id === 'USER') {
-              setUser([]);
-            } else {
-              setProvider([]);
+            if (active !== item.id) {
+              if (item.id === 'USER') {
+                setUser([]);
+              } else {
+                setProvider([]);
+              }
             }
             setActive(item.id);
           }}

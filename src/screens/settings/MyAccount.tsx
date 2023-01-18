@@ -22,10 +22,10 @@ import {getUserProfileInfo} from '../../store/slices/userProfile/userProfileActi
 import AppActivityIndicator from '../../components/common/Loaders/AppActivityIndicator';
 import storage from '../../utils/helpers/auth/storage';
 import ScreenRapperGrey from '../../components/common/ScreenRapperGrey';
-import { CommonActions } from '@react-navigation/native';
-import { logout } from '../../store/slices/auth/userSlice';
+import {CommonActions} from '@react-navigation/native';
+import {logout} from '../../store/slices/auth/userSlice';
 import methods from '../../api/methods';
-import { Delete } from '../../assets/svgs/SVG_LOGOS';
+import {Delete} from '../../assets/svgs/SVG_LOGOS';
 
 const MyAccount = (props: {
   navigation: {
@@ -38,28 +38,26 @@ const MyAccount = (props: {
   const [newData, setNewData] = useState<any>([]);
 
   const deleteAccountConfirmation = () => {
-    Alert.alert(
-      'Woofmeets',
-      'Are you sure you want to delete your account ?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        { text: 'OK', onPress: async () => {
+    Alert.alert('Woofmeets', 'Are you sure you want to delete your account ?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: async () => {
           const response = await methods._delete('/user');
-          response.ok &&
-          dispatch(logout());
+          response.ok && dispatch(logout());
           props.navigation.dispatch(
             CommonActions.reset({
               index: 1,
               routes: [{name: 'AuthNavigator'}],
             }),
           );
-        }},
-      ]
-    );
+        },
+      },
+    ]);
   };
 
   const supportData = [

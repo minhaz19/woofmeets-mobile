@@ -19,6 +19,7 @@
 		43B593166F964B9E8F1C915B /* OpenSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E12D905013724BA9B51E31CF /* OpenSans-Medium.ttf */; };
 		4E266A784E454EF098F47691 /* Muli-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73686EA64C3049239D8FD23A /* Muli-Bold.ttf */; };
 		6523C05E28AC1D2F00599D01 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523C05D28AC1D2F00599D01 /* File.swift */; };
+		6583D4D2297127AA0078D168 /* message.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6583D4D1297127AA0078D168 /* message.mp3 */; };
 		7699B88040F8A987B510C191 /* libPods-woofmeets-woofmeetsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-woofmeets-woofmeetsTests.a */; };
 		78E429EB206046D18AD0DDD2 /* Muli-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 913C65F0ACF247A698C501D4 /* Muli-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -63,6 +64,7 @@
 		5D33DEF2170143F8B066280C /* Muli-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Muli-ExtraLight.ttf"; path = "../src/assets/fonts/Muli-ExtraLight.ttf"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-woofmeets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-woofmeets.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6523C05D28AC1D2F00599D01 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		6583D4D1297127AA0078D168 /* message.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = message.mp3; sourceTree = "<group>"; };
 		65DF9ADE28AC16C70010FB8F /* woofmeets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = woofmeets.entitlements; path = woofmeets/woofmeets.entitlements; sourceTree = "<group>"; };
 		65DF9ADF28AC1A720010FB8F /* woofmeets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "woofmeets-Bridging-Header.h"; sourceTree = "<group>"; };
 		6F95E9B82D484481B4625965 /* Muli-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Muli-Light.ttf"; path = "../src/assets/fonts/Muli-Light.ttf"; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6583D4D1297127AA0078D168 /* message.mp3 */,
 				13B07FAE1A68108700A75B9A /* woofmeets */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* woofmeetsTests */,
@@ -303,6 +306,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				0FD670FC28DD64F100AAA2E4 /* Icon-App.png in Resources */,
+				6583D4D2297127AA0078D168 /* message.mp3 in Resources */,
 				43B593166F964B9E8F1C915B /* OpenSans-Medium.ttf in Resources */,
 				CD23AAF060544E929F9BE76A /* Muli-Black.ttf in Resources */,
 				4E266A784E454EF098F47691 /* Muli-Bold.ttf in Resources */,
@@ -576,7 +580,7 @@
 				CODE_SIGN_ENTITLEMENTS = woofmeets/woofmeets.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z88T9AD5MC;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z88T9AD5MC;
 				ENABLE_BITCODE = NO;
@@ -588,7 +592,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.1;
+				MARKETING_VERSION = 1.11.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -614,7 +618,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z88T9AD5MC;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z88T9AD5MC;
 				EXCLUDED_ARCHS = "";
@@ -625,7 +629,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.1;
+				MARKETING_VERSION = 1.11.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

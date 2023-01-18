@@ -13,6 +13,7 @@ import Lottie from 'lottie-react-native';
 import Colors from '../../../constants/Colors';
 import {useAppSelector} from '../../../store/store';
 import {formatDate} from '../../../components/common/formatDate';
+import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 
 const ShowAllReport = (props: {
   navigation: {navigate: (arg0: string, arg1?: any) => any};
@@ -34,7 +35,9 @@ const ShowAllReport = (props: {
   }, []);
   return (
     <>
-      {loading ? null : ( // <AppActivityIndicator visible={loading} />
+      {loading ? (
+        <AppActivityIndicator visible={loading} /> // <AppActivityIndicator visible={loading} />
+      ) : (
         <>
           {allReports?.length === 0 ? (
             <View style={styles.report}>

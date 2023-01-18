@@ -45,7 +45,8 @@ import AppTouchableOpacity from '../../components/common/AppClickEvents/AppTouch
 import Text_Size from '../../constants/textScaling';
 import storage from '../../utils/helpers/auth/storage';
 import apiClient from '../../api/client';
-import { API_MSG } from '@env';
+import {API_MSG} from '@env';
+import {CancelToken} from 'apisauce';
 
 const SettingMain = (props: {
   navigation: {
@@ -56,9 +57,10 @@ const SettingMain = (props: {
   const {fcmToken} = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   useEffect(() => {
+    const source = CancelToken.source();
     // dispatch(getOnboardingProgress());
     dispatch(getUserOnboardStatus());
-    dispatch(getCurrentplan());
+    dispatch(getCurrentplan(source));
   }, []);
   const currentPlan = useAppSelector(state => state.currentPlan);
   const {colors} = useTheme();
@@ -249,16 +251,20 @@ const SettingMain = (props: {
     screenName: async () => {
       setLogoutState(true);
       const notificationEndPoint = '/v1/push-notifications';
-        const authToken = await storage.getToken();
-        const result = await apiClient.delete(`${API_MSG + notificationEndPoint}`, {}, {
+      const authToken = await storage.getToken();
+      const result = await apiClient.delete(
+        `${API_MSG + notificationEndPoint}`,
+        {},
+        {
           data: {registrationToken: fcmToken},
           headers: {
-            'Authorization': authToken,
+            Authorization: authToken,
           },
-        });
-      if (result.ok) {
-      dispatch(logout());
-        methods._get('/auth/logout');
+        },
+      );
+      if (result) {
+        await methods._get('/auth/logout');
+        dispatch(logout());
         setLogoutState(false);
         props.navigation.dispatch(
           CommonActions.reset({
@@ -267,7 +273,10 @@ const SettingMain = (props: {
           }),
         );
       } else {
-        Alert.alert('WoofMeets', 'Something Went wrong!! Please try again later');
+        Alert.alert(
+          'WoofMeets',
+          'Something Went wrong!! Please try again later',
+        );
         setLogoutState(false);
       }
     },
@@ -490,7 +499,13 @@ const SettingMain = (props: {
           <View
             style={[styles.divider, {backgroundColor: colors.descriptionText}]}
           />
-          {isLoggedIn && <SettingItem data={logOut} key={logOut.id} />}
+          {isLoggedIn && (
+            <SettingItem
+              data={logOut}
+              key={logOut.id}
+              logoutState={logoutState}
+            />
+          )}
         </View>
         <AppTouchableOpacity
           style={styles.tWrap}

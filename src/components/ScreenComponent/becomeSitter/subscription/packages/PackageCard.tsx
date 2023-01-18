@@ -28,7 +28,7 @@ const PackageCard = (props: {
   sequence: any;
   navigation: any;
 }) => {
-  const {colors, isDarkMode} = useTheme();
+  const {colors} = useTheme();
   const {handleSubmit, isModalVisible, setIsModalVisible, pLoading, ssLoading} =
     usePackageCard(props);
   return (
@@ -41,7 +41,10 @@ const PackageCard = (props: {
           setIsModalVisible={() => {
             setIsModalVisible(!isModalVisible);
           }}
-          onBlur={() => null}>
+          onBlur={() => null}
+          handlePress={function (): void {
+            throw new Error('Function not implemented.');
+          }}>
           <Image
             source={require('../../../../../assets/image/subscription/subscription.png')}
             style={styles.imageStyle}
@@ -100,12 +103,12 @@ const PackageCard = (props: {
           }}>
           <View style={styles.textPortion}>
             <BigText text={props.item.title} textStyle={styles.biggerText} />
-            {props.item.title == 'Basic' && (
+            {/* {props.item.title == 'Basic' && (
               <BigText
                 text={'$35.00 (one-time)'}
                 textStyle={styles.biggerText1}
               />
-            )}
+            )} */}
             <TouchableOpacity
               style={styles.detailsWrap}
               onPress={() => setIsModalVisible(!isModalVisible)}>
