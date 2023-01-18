@@ -41,26 +41,30 @@ const ThreeDotsModal: FC<Props> = props => {
       id: 1,
       name: 'Generate Report',
       icon: <MaterialIcons name="report" size={24} color={Colors.primary} />,
+      hide:
+        (proposedServiceInfo?.status !== 'PAID' &&
+          user?.provider?.id === proposedServiceInfo?.providerId) ||
+        user?.id === proposedServiceInfo?.userId,
       screen: () => {
-        if (user?.id === proposedServiceInfo?.userId) {
-          Alert.alert(
-            'Report',
-            'Pet owner can not generate report for appointment',
-          );
-        } else if (
-          proposedServiceInfo?.status !== 'PAID' &&
-          user?.provider?.id === proposedServiceInfo?.providerId
-        ) {
-          Alert.alert(
-            'Report',
-            'You can only generate report once appointment is inprogress',
-          );
-        } else {
-          props.setIsThreeDotsModal(false);
-          navigation.navigate('ReportSlots', {
-            opk: props?.opk,
-          });
-        }
+        // if (user?.id === proposedServiceInfo?.userId) {
+        //   Alert.alert(
+        //     'Report',
+        //     'Pet owner can not generate report for appointment',
+        //   );
+        // } else if (
+        //   proposedServiceInfo?.status !== 'PAID' &&
+        //   user?.provider?.id === proposedServiceInfo?.providerId
+        // ) {
+        //   Alert.alert(
+        //     'Report',
+        //     'You can only generate report once appointment is inprogress',
+        //   );
+        // } else {
+        props.setIsThreeDotsModal(false);
+        navigation.navigate('ReportSlots', {
+          opk: props?.opk,
+        });
+        // }
       },
     },
     {
@@ -107,37 +111,38 @@ const ThreeDotsModal: FC<Props> = props => {
       id: 4,
       name: 'Cancel Appointment',
       icon: <MaterialIcons name="cancel" size={24} color={Colors.primary} />,
+      hide: proposedServiceInfo?.status === 'COMPLETED',
       screen: () => {
-        if (proposedServiceInfo?.status === 'COMPLETED') {
-          Alert.alert(
-            'Cancel Appointment',
-            'Opps! This appointment is already completed, can not be cancelled',
-          );
-        } else {
-          Alert.alert(
-            'Cancel Appointment',
-            'Are you sure you want to decline this appointment',
-            [
-              {
-                text: 'No',
-                onPress: () => {},
+        // if (proposedServiceInfo?.status === 'COMPLETED') {
+        //   Alert.alert(
+        //     'Cancel Appointment',
+        //     'Opps! This appointment is already completed, can not be cancelled',
+        //   );
+        // } else {
+        Alert.alert(
+          'Cancel Appointment',
+          'Are you sure you want to decline this appointment',
+          [
+            {
+              text: 'No',
+              onPress: () => {},
+            },
+            {
+              text: 'Yes',
+              onPress: async () => {
+                const r = await request(rejectEndpoint + props.opk);
+                if (r.ok) {
+                  await dispatch(getAppointmentStatus('PROPOSAL'));
+                  await dispatch(getProviderApnt('PROPOSAL'));
+                  navigation.navigate('InboxNavigator');
+                } else if (!r.ok) {
+                  Alert.alert(r.data.message);
+                }
               },
-              {
-                text: 'Yes',
-                onPress: async () => {
-                  const r = await request(rejectEndpoint + props.opk);
-                  if (r.ok) {
-                    dispatch(getAppointmentStatus('PROPOSAL'));
-                    dispatch(getProviderApnt('PROPOSAL'));
-                    navigation.navigate('InboxNavigator');
-                  } else if (!r.ok) {
-                    Alert.alert(r.data.message);
-                  }
-                },
-              },
-            ],
-          );
-        }
+            },
+          ],
+        );
+        // }
       },
     },
   ];
@@ -145,7 +150,7 @@ const ThreeDotsModal: FC<Props> = props => {
     <>
       <View>
         {modalData?.map(item => {
-          return (
+          return item.hide ? null : (
             <View key={item.id}>
               {(item.id === 1 || item.id === 3 || item.id === 4) &&
               (proposedServiceInfo.status === 'CANCELLED' ||
