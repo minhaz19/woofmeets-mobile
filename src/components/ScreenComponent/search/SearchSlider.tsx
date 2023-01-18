@@ -56,16 +56,16 @@ const SearchSlider = ({navigation}: Props) => {
       backgroundColor: '#FFF7DC',
       screen: () => navigation.navigate('ScreenSlider'),
     },
-    {
-      id: 4,
-      title: 'Check out local pet sitters',
-      description:
-        "We work resolutely to guarantee tails keep swaying and pet owners' minds are at ease.",
-      linkTitle: 'Check Now',
-      icon: <MenWithDogSvg width={150} height={150} />,
-      backgroundColor: '#E2EEFF',
-      screen: () => navigation.navigate('ScreenSlider'),
-    },
+    // {
+    //   id: 4,
+    //   title: 'Check out local pet sitters',
+    //   description:
+    //     "We work resolutely to guarantee tails keep swaying and pet owners' minds are at ease.",
+    //   linkTitle: 'Check Now',
+    //   icon: <MenWithDogSvg width={150} height={150} />,
+    //   backgroundColor: '#E2EEFF',
+    //   screen: () => navigation.navigate('ScreenSlider'),
+    // },
   ];
   return (
     <View style={styles.container}>
