@@ -12,7 +12,6 @@ const AppActivityIndicator = ({visible = false}: Props) => {
   useEffect(() => {
     setStatus(visible);
   }, [visible]);
-  // console.log('stat', status);
   if (!status) {
     return null;
   }

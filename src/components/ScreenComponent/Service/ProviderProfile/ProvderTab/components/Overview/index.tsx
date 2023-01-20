@@ -52,7 +52,7 @@ const Overview = () => {
       subInfo:
         overview?.skills.lenght === 0
           ? []
-          : overview.skills.map((item: any) => ({
+          : overview?.skills?.map((item: any) => ({
               info: item.skillType?.title,
             })),
     },

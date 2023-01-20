@@ -37,6 +37,7 @@ interface Props {
 const AllProvider = ({navigation}: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit] = useState(20);
+  const [isFetching, setIsFetching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const filter = useAppSelector((state: any) => state.filter.isOpen);
@@ -106,11 +107,13 @@ const AllProvider = ({navigation}: Props) => {
       </>
     );
   };
-
   return (
     <>
-      {(loadingProvider || loadingService) && (
-        <AppActivityIndicator visible={loadingProvider || loadingService} />
+      {(loadingProvider || isFetching || loadingService) && (
+        <AppActivityIndicator
+          visible={true}
+          // visible={loadingProvider || isFetching || loadingService}
+        />
       )}
       <ScreenRapperGrey>
         {loadingOneTime && <AllProviderLoader />}
@@ -126,12 +129,14 @@ const AllProvider = ({navigation}: Props) => {
                     <ProviderList
                       item={item}
                       onPress={async () => {
-                        await dispatch(
+                        setIsFetching(true);
+                        await (dispatch(
                           getProviderProfile(item?.provider?.user?.opk),
-                        );
-                        await dispatch(
+                        ),
+                        dispatch(
                           getProviderServices(item?.provider?.user?.opk),
-                        );
+                        ));
+                        setIsFetching(false);
                         navigation.navigate('ProviderProfile', {
                           providerOpk: item?.provider?.user?.opk,
                         });
