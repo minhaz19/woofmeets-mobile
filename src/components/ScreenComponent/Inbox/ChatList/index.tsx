@@ -76,7 +76,10 @@ const ChatList = ({
                     : userName.slice(0, 15) +
                         (userName.length > 15 ? '...' : ''),
                 )!,
-                image: item.user.image,
+                image:
+                  statusType === 'USER'
+                    ? item?.provider?.user?.image
+                    : item.user.image,
                 description: item?.providerService
                   ? serviceTypeId === 1 || serviceTypeId === 2
                     ? `Start Date:  ${convertToLocalTZ(
