@@ -107,7 +107,6 @@ const AllProvider = ({navigation}: Props) => {
       </>
     );
   };
-  console.log('check', loadingProvider, isFetching, loadingService);
   return (
     <>
       {(loadingProvider || isFetching || loadingService) && (
