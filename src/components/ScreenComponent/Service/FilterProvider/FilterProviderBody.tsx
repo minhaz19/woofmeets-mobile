@@ -82,7 +82,7 @@ const FilterProviderBody = ({
   // const {formattedAddress} = useAppSelector(
   //   (state: any) => state?.providerFilter,
   // );
-  const servicesData = serviceTypes.map((item: any) => {
+  const servicesData = serviceTypes?.map((item: any) => {
     return {label: item.name, value: item.slug, id: item.id};
   });
 

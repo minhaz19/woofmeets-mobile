@@ -18,6 +18,8 @@ import SendMessage from './SendMessage';
 import changeTextLetter from '../../../components/common/changeTextLetter';
 import {formatDistance, subDays} from 'date-fns';
 import {useAppSelector} from '../../../store/store';
+import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
+import Colors from '../../../constants/Colors';
 
 const Messages = (props: {
   roomId: any;
@@ -55,6 +57,45 @@ const Messages = (props: {
       keyboardDidShowListener.remove();
     };
   }, []);
+
+  function checkLink(str: any) {
+    let regex = new RegExp('roomType=(AUDIO|VIDEO)');
+    let match = str.match(regex);
+    let splittingMessage =
+      match?.length > 0 ? (
+        match[1] === 'AUDIO' ? (
+          <View style={styles.messageContainer}>
+            <TitleText text={`${str.split(' ')[0]} start a audio call.`} />
+            <AppTouchableOpacity>
+              <TitleText
+                textStyle={{
+                  textDecorationLine: 'underline',
+                  color: Colors.primaryDif,
+                }}
+                text={' Join here'}
+              />
+            </AppTouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.messageContainer}>
+            <TitleText text={`${str.split(' ')[0]} start a video call.`} />
+            <AppTouchableOpacity>
+              <TitleText
+                textStyle={{
+                  textDecorationLine: 'underline',
+                  color: Colors.primaryDif,
+                }}
+                text={' Join here'}
+              />
+            </AppTouchableOpacity>
+          </View>
+        )
+      ) : (
+        <TitleText text={str} />
+      );
+    return splittingMessage;
+  }
+
   return (
     <View style={{flex: 1}}>
       {loading ? (
@@ -153,7 +194,8 @@ const Messages = (props: {
                     {backgroundColor: colors.inputLightBg},
                   ]}>
                   {/* {item?.content && <HeaderText text={item?.content} />} */}
-                  <TitleText text={item.content} />
+                  {/* {<TitleText text={checkLink(item.content)} />} */}
+                  {checkLink(item.content)}
                   {item.attachmentType === 'image' && (
                     <Image
                       source={{uri: item.attachment}}
@@ -180,6 +222,7 @@ const Messages = (props: {
                       </TouchableOpacity>
                     </View>
                   )}
+
                   {
                     <ShortText
                       text={formatDistance(

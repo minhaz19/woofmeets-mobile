@@ -127,6 +127,11 @@ const styles = StyleSheet.create({
     borderWidth: 5,
   },
   sendIcon: {marginRight: 20},
+  messageContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

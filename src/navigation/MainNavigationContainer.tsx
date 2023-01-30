@@ -63,6 +63,7 @@ import linking from '../utils/helpers/DeepLinking';
 import {setReset} from '../store/slices/misc/trackingToggle';
 import SeePetReview from '../components/ScreenComponent/Inbox/Details/SeePetReview';
 import ScheduleAppointmentList from '../screens/provider/AppointmentScheduler/ScheduleAppointmentList';
+import Room from '../components/ScreenComponent/conference/Room';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -154,7 +155,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Profile" notification/>
+              <HeaderWithBack
+                navigation={navigation}
+                title="Profile"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -165,7 +170,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Basic Info" notification/>
+              <HeaderWithBack
+                navigation={navigation}
+                title="Basic Info"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -176,7 +185,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Details" notification/>
+              <HeaderWithBack
+                navigation={navigation}
+                title="Details"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -187,7 +200,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Profile" notification />
+              <HeaderWithBack
+                navigation={navigation}
+                title="Profile"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -453,7 +470,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             title: 'Payment Cards',
 
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Cards" notification/>
+              <HeaderWithBack
+                navigation={navigation}
+                title="Cards"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -655,7 +676,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Reports" notification/>
+              <HeaderWithBack
+                navigation={navigation}
+                title="Reports"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -666,7 +691,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Reports" notification/>
+              <HeaderWithBack
+                navigation={navigation}
+                title="Reports"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -677,7 +706,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Reports" notification/>
+              <HeaderWithBack
+                navigation={navigation}
+                title="Reports"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -688,7 +721,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           options={({navigation}) => ({
             title: '',
             header: () => (
-              <HeaderWithBack navigation={navigation} title="Show pet review" notification/>
+              <HeaderWithBack
+                navigation={navigation}
+                title="Show pet review"
+                notification
+              />
             ),
             backgroundColor: Colors.primary,
           })}
@@ -725,6 +762,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
             ),
             backgroundColor: Colors.primary,
           })}
+        />
+        <Stack.Screen
+          name="Room"
+          component={Room}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
