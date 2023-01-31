@@ -69,7 +69,7 @@ const ActivityScreen = (props: {
       const slug = `/v1/messages/group/${roomId}`;
       const result: any = await apiMsg.get(slug);
       if (result.ok) {
-        setMessages(result.data?.data?.reverse());
+        setMessages(result?.data?.data?.reverse());
         setMsgLoadng(false);
       }
       if (!result.ok) {

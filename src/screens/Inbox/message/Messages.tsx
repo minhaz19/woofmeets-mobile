@@ -171,9 +171,11 @@ const Messages = (props: {
                         {backgroundColor: colors.inputLightBg},
                       ]}>
                       {!item.attachment && <TitleText text={item.content} />}
-                      {item.attachmentType === 'image' && item.attachment && (
+                      {item.attachmentType === 'image' && (
                         <Image
-                          source={{uri: item.attachment}}
+                          source={{
+                            uri: item.attachment,
+                          }}
                           style={styles.image}
                         />
                       )}
@@ -246,8 +248,7 @@ const Messages = (props: {
                       ]}>
                       {/* {item?.content && <TitleText text={item?.content} />} */}
                       {/* {<TitleText text={checkLink(item.content)} />} */}
-                      {item?.content &&
-                        !['VIDEO', 'AUDIO'].includes(item.attachment) &&
+                      {!item.attachment  &&
                         checkLink(item.content)}
                       {['VIDEO', 'AUDIO'].includes(item.attachment) && (
                         <View style={styles.messageContainer}>
@@ -268,9 +269,9 @@ const Messages = (props: {
                           </AppTouchableOpacity>
                         </View>
                       )}
-                      {item.attachmentType === 'image' && item.attachment && (
+                      {item?.attachmentType === 'image' && (
                         <Image
-                          source={{uri: item.attachment}}
+                          source={{uri: item?.attachment}}
                           style={styles.image}
                         />
                       )}
