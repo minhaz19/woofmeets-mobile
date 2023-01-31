@@ -458,10 +458,8 @@ const ActivityHeader = (props: {
     }
   };
 
-  const {handleAudioCall, handleVideoCall, audioVideoLoading} = useAudioVideoCall(
-    props.opk,
-    user?.user,
-  );
+  const {handleAudioCall, handleVideoCall, audioVideoLoading} =
+    useAudioVideoCall(props.opk, user, proposedServiceInfo);
 
   return (
     <>
@@ -471,7 +469,7 @@ const ActivityHeader = (props: {
         <>
           <View style={[styles.container, {borderColor: colors.borderColor}]}>
             <View style={styles.containerInner}>
-              <View style={[styles.headerTitleContainer, {width: '80%'}]}>
+              <View style={[styles.headerTitleContainer]}>
                 <TouchableOpacity
                   style={styles.leftContainer}
                   onPress={() => {
@@ -555,7 +553,7 @@ const ActivityHeader = (props: {
                   </View>
                 </AppTouchableOpacity>
               </View>
-              <View style={[styles.headerTitleContainer, {width: '20%'}]}>
+              <View style={[styles.headerTitleContainer]}>
                 {user?.user?.provider?.backGroundCheck !== 'BASIC' && (
                   <>
                     <TouchableOpacity
@@ -1029,7 +1027,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   containerInner: {
-    width: '100%',
+    width: '75%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

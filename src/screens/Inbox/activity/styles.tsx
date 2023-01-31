@@ -128,8 +128,7 @@ const styles = StyleSheet.create({
   },
   sendIcon: {marginRight: 20},
   messageContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexWrap: 'wrap',
     justifyContent: 'center',
   },
 });
