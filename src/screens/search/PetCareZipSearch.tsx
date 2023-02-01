@@ -96,8 +96,6 @@ const PetCareZipSearch = (props: {
   const {user} = useAppSelector((state: any) => state.whoAmI);
   const {userOnboardStatus} = useAppSelector(state => state.stripe);
 
-
-  
   // updating the state
   useEffect(() => {
     if (pets) {
@@ -229,7 +227,7 @@ const PetCareZipSearch = (props: {
             lat: result?.data?.results[0]?.geometry?.location.lat,
             lng: result?.data?.results[0]?.geometry?.location.lng,
             page: 1,
-            limit: 10,
+            limit: 20,
           };
         } else {
           formattedData = {
@@ -239,7 +237,7 @@ const PetCareZipSearch = (props: {
             lat: result?.data?.results[0]?.geometry?.location.lat,
             lng: result?.data?.results[0]?.geometry?.location.lng,
             page: 1,
-            limit: 10,
+            limit: 20,
           };
         }
         dispatch(

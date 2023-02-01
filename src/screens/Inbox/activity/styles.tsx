@@ -127,6 +127,10 @@ const styles = StyleSheet.create({
     borderWidth: 5,
   },
   sendIcon: {marginRight: 20},
+  messageContainer: {
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

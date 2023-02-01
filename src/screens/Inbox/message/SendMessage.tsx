@@ -26,8 +26,7 @@ const SendMessage = ({roomId, setMessages, user, opk}) => {
         createdAt: new Date(),
       };
       setMessages(prevMess => [...prevMess, data]);
-      socket.emit('send-message', data, (error: any) => {
-      });
+      socket.emit('send-message', data, (error: any) => {});
       setContent({text: '', image: ''});
     }
   };

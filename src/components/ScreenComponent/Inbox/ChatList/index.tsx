@@ -76,7 +76,10 @@ const ChatList = ({
                     : userName.slice(0, 15) +
                         (userName.length > 15 ? '...' : ''),
                 )!,
-                image: item.user.image,
+                image:
+                  statusType === 'USER'
+                    ? item?.provider?.user?.image
+                    : item.user.image,
                 description: item?.providerService
                   ? serviceTypeId === 1 || serviceTypeId === 2
                     ? `Start Date:  ${convertToLocalTZ(
@@ -96,11 +99,7 @@ const ChatList = ({
                           timezone,
                           'DD ddd MMM YYYY',
                         )}`
-                    : // : `Start Date:  ${formatDate(
-                    //     proposalDate.proposalVisits[0].date,
-                    //     'iii LLL d',
-                    //   )}`
-                    serviceTypeId === 4
+                    : serviceTypeId === 4
                     ? isRecurring
                       ? `Start Date:  ${convertToLocalTZ(
                           proposalDate.recurringStartDate,
@@ -116,6 +115,7 @@ const ChatList = ({
                   : 'No Mesaegs fonnd',
                 boardingTime: item?.providerService?.serviceType?.name,
                 status: item.status,
+                roomId: item.messageGroupId,
               }}
               statusColor={getStatusColor(item.status)!}
               handlePress={() =>

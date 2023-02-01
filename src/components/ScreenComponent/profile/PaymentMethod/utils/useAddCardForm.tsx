@@ -9,7 +9,7 @@ import {useApi} from '../../../../../utils/helpers/api/useApi';
 
 const customerEndPoint = '/stripe-payment-method/customers';
 const endpoint = '/stripe-payment-method/add-card';
-const subscriptionEndpoint = `${baseUrlV}/v2/subscriptions/subscribe?`;
+const subscriptionEndpoint = `${baseUrlV}/v1/subscriptions/subscribe?`;
 import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
 import {baseUrlV} from '../../../../../utils/helpers/httpRequest';
 export const useAddCardForm = (
@@ -64,12 +64,13 @@ export const useAddCardForm = (
       const result = await request(endpoint, reqPayload);
       if (result.ok && sequence !== null && sequence !== undefined) {
         const cardId = result.data.data.id;
-        if (sequence === 1) {
-          navigation.navigate('BasicPayment', {
-            sequence: sequence,
-            cardId: cardId,
-          });
-        } else if (sequence === 2 || sequence === 3) {
+        // if (sequence === 1) {
+        //   navigation.navigate('BasicPayment', {
+        //     sequence: sequence,
+        //     cardId: cardId,
+        //   });
+        // } else
+        if (sequence === 2 || sequence === 3) {
           const subsRes = await idemRequest(
             `${subscriptionEndpoint}priceId=${sequence}&cardId=${cardId}`,
             {},
@@ -82,9 +83,10 @@ export const useAddCardForm = (
                 clientScreet,
               );
 
-              paymentIntent?.status === 'Succeeded' &&
-                (dispatch(getCurrentplan()),
-                navigation.navigate('SubscriptionScreen'));
+              if (paymentIntent?.status === 'Succeeded') {
+                await dispatch(getCurrentplan());
+                navigation.navigate('SubscriptionScreen');
+              }
               if (dsError !== undefined) {
                 Alert.alert(dsError.localizedMessage);
               }

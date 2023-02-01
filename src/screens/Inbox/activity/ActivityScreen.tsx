@@ -17,6 +17,9 @@ import Messages from '../message/Messages';
 import {getAppointmentCard} from '../../../store/slices/Appointment/AppointmentCard/getAppointmentCard';
 import {socket} from '../../../../App';
 import {apiMsg} from '../../../api/client';
+import {useApi} from '../../../utils/helpers/api/useApi';
+import methods from '../../../api/methods';
+import {API_MSG} from '@env';
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
   route: {
@@ -54,13 +57,19 @@ const ActivityScreen = (props: {
   const [msgLoading, setMsgLoadng] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [visitId, setVisitId] = useState(null);
+  const {request} = useApi(methods._get);
+  const readMessages = async () => {
+    await request(
+      `${API_MSG}/v1/messages/users/${user.id}/groups/${roomId}/read-messages`,
+    );
+  };
   const getPreviousMessages = async () => {
     if (roomId) {
       setMsgLoadng(true);
       const slug = `/v1/messages/group/${roomId}`;
       const result: any = await apiMsg.get(slug);
       if (result.ok) {
-        setMessages(result.data?.data?.reverse());
+        setMessages(result?.data?.data?.reverse());
         setMsgLoadng(false);
       }
       if (!result.ok) {
@@ -81,6 +90,7 @@ const ActivityScreen = (props: {
     dispatch(getAllPets());
     dispatch(getAppointmentCard(appointmentOpk));
     getPreviousMessages();
+    readMessages();
   }, []);
 
   useEffect(() => {

@@ -2,7 +2,6 @@
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getCards} from '../../../store/slices/payment/PaymentCards/getCardsAction';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import AllCards from '../../../components/ScreenComponent/profile/PaymentMethod/AllCards';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
@@ -12,6 +11,11 @@ import {getCurrentplan} from '../../../store/slices/payment/Subscriptions/Curren
 import {Alert} from 'react-native';
 import {confirmPayment} from '@stripe/stripe-react-native';
 import {baseUrlV} from '../../../utils/helpers/httpRequest';
+import {CancelToken} from 'apisauce';
+import LoaderLite from '../../../components/common/Loaders/LoaderLite';
+// import {Text} from 'react-native-svg';
+// import AnimatedLottieView from 'lottie-react-native';
+// import Colors from '../../../constants/Colors';
 const endpoint = '/stripe-payment-method/default-card-info';
 interface Props {
   navigation: any;
@@ -21,8 +25,9 @@ interface Props {
     };
   };
 }
-const subscriptionEndpoint = `${baseUrlV}/v2/subscriptions/subscribe?`;
+const subscriptionEndpoint = `${baseUrlV}/v1/subscriptions/subscribe?`;
 const PaymentMethods = ({route, navigation}: Props) => {
+  const [modL, setModL] = useState(false);
   const uuid = Math.random().toString(36).substring(2, 36);
   const dispatch = useAppDispatch();
   const {cards, loading} = useAppSelector(state => state.cards);
@@ -32,18 +37,19 @@ const PaymentMethods = ({route, navigation}: Props) => {
   const {proposedServiceInfo, billingId} = useAppSelector(
     state => state.proposal,
   );
-  const {request} = useApi(methods._get);
+  const {request, loading: getLoading} = useApi(methods._get);
   const {loading: idemLoading, request: idemRequest} = useApi(
     methods._idempt_post,
   );
   const {sequence} = route.params;
   const handlePayment = async () => {
-    if (sequence === 1) {
-      navigation.navigate('BasicPayment', {
-        sequence: sequence,
-        cardId: selectedCard !== null ? selectedCard : CardId,
-      });
-    } else if (sequence === 'Appointment') {
+    // if (sequence === 1) {
+    //   navigation.navigate('BasicPayment', {
+    //     sequence: sequence,
+    //     cardId: selectedCard !== null ? selectedCard : CardId,
+    //   });
+    // } else
+    if (sequence === 'Appointment') {
       setAppointmentLoading(true);
       const cardId = selectedCard !== null ? selectedCard : CardId;
       const result: any = await idemRequest(
@@ -77,6 +83,7 @@ const PaymentMethods = ({route, navigation}: Props) => {
       }
       setAppointmentLoading(false);
     } else {
+      const source = CancelToken.source();
       const selectCardId = selectedCard !== null ? selectedCard : CardId;
       const result = await idemRequest(
         `${subscriptionEndpoint}priceId=${sequence}&cardId=${selectCardId}`,
@@ -90,13 +97,13 @@ const PaymentMethods = ({route, navigation}: Props) => {
           const {paymentIntent, error: dsError}: any = await confirmPayment(
             clientScreet,
           );
-
-          paymentIntent?.status === 'Succeeded' &&
-            (dispatch(getCurrentplan()),
-            navigation.navigate('SubscriptionScreen'));
+          if (paymentIntent?.status === 'Succeeded') {
+            await dispatch(getCurrentplan(source));
+            navigation.navigate('SubscriptionScreen');
+          }
           dsError !== undefined && Alert.alert(dsError.localizedMessage);
         } else if (result.ok && result?.data.data.requiresAction === false) {
-          dispatch(getCurrentplan());
+          dispatch(getCurrentplan(source));
           navigation.navigate('SubscriptionScreen');
         }
       } else if (!result.ok && result.status === 400) {
@@ -109,31 +116,41 @@ const PaymentMethods = ({route, navigation}: Props) => {
       }
     }
   };
-  const callApi = async () => {
-    const result = await request(endpoint);
+  const callApi = async (source: any) => {
+    const result = await request(
+      endpoint,
+      {},
+      {
+        cancelToken: source.token,
+      },
+    );
     result.ok && setDefaultCard(result.data.data.id);
   };
   useEffect(() => {
-    callApi();
-    cards === null && dispatch(getCards());
+    const source = CancelToken.source();
+    callApi(source);
+    cards === null && dispatch(getCards(source));
+    return () => {
+      source.cancel();
+    };
   }, []);
-  return (
+  useEffect(() => {
+    setModL(loading || getLoading);
+  }, [loading, getLoading]);
+  return modL ? (
+    <LoaderLite />
+  ) : cards === undefined || cards === null ? (
+    <NoCards sequence={sequence} />
+  ) : (
     <>
-      {loading && <AppActivityIndicator visible={true} />}
-      {cards === undefined || cards === null ? (
-        <NoCards sequence={sequence} />
-      ) : (
-        <>
-          <AllCards
-            cards={cards}
-            CardId={CardId}
-            sequence={sequence}
-            onPress={handlePayment}
-            loading={idemLoading || appointmentLoading}
-            setSelectedCard={setSelectedCard}
-          />
-        </>
-      )}
+      <AllCards
+        cards={cards}
+        CardId={CardId}
+        sequence={sequence}
+        onPress={handlePayment}
+        loading={idemLoading || appointmentLoading}
+        setSelectedCard={setSelectedCard}
+      />
     </>
   );
 };

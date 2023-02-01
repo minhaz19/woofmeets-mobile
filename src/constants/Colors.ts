@@ -51,6 +51,7 @@ export default {
   alter: '#D5226C',
   placeholder: '#BCBEC0',
   failed: '#e46969',
+  washedRed: '#FF6600',
   alert: 'red',
   success: 'green',
   green: '#187d48',
@@ -60,5 +61,6 @@ export default {
   none: 'transparent',
   yellow: '#FBC12CC2',
   iosBG: '#f1f1f1',
+  OVERLAY: 'rgba(34, 34, 34, 0.3)',
   lightShade: '#E7EAF2',
 };

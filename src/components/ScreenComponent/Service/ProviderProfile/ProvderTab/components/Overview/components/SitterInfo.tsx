@@ -43,7 +43,7 @@ const SitterInfo = ({item}: Props) => {
         ) : null}
       </View>
       <View>
-        {item.subInfo.length === 0 ? (
+        {item?.subInfo?.length === 0 ? (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Entypo
               name="check"
@@ -61,7 +61,7 @@ const SitterInfo = ({item}: Props) => {
             />
           </View>
         ) : (
-          item.subInfo.map(inf => (
+          item?.subInfo?.map(inf => (
             <View key={Math.random()} style={styles.info}>
               {inf.info && (
                 <View style={{flexDirection: 'row'}}>

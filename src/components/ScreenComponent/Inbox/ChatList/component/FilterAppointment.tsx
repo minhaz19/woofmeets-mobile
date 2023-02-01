@@ -12,6 +12,7 @@ import BottomSpacing from '../../../../UI/BottomSpacing';
 import {CancelToken} from 'apisauce';
 interface Props {
   setOpenFilter: (arg: boolean) => void;
+  setActiveStatus: (arg: string) => void;
   status: {
     value: string;
     title: string;
@@ -87,8 +88,10 @@ const FilterAppointment = ({
   setError,
   setUserData,
   setProviderData,
+  setActiveStatus,
 }: Props) => {
   const searchFiler = async () => {
+    setActiveStatus(status.title);
     const source = CancelToken.source();
     setError(false);
     setPage(1);

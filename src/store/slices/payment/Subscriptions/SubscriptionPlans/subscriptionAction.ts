@@ -1,12 +1,12 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
-import apiClient from '../../../../../api/client';
+import methods from '../../../../../api/methods';
 export const getSubscription = createAsyncThunk(
   '/subscriptions/membership-plans',
   async () => {
     try {
-      const response: ApiResponse<any> = await apiClient.get(
+      const response: ApiResponse<any> = await methods._get(
         '/subscriptions/membership-plans',
       );
       if (!response.ok) {

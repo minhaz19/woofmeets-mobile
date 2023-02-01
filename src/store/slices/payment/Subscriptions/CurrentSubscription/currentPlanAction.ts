@@ -1,14 +1,21 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
-import apiClient from '../../../../../api/client';
+import methods from '../../../../../api/methods';
 import {baseUrlV} from '../../../../../utils/helpers/httpRequest';
+
 export const getCurrentplan = createAsyncThunk(
   '/subscriptions/my-current-subscription',
-  async () => {
+  async (source?: any) => {
     try {
-      const response: ApiResponse<any> = await apiClient.get(
-        `${baseUrlV}/v2/subscriptions/my-current-subscription`,
+      const response: ApiResponse<any> = await methods._get(
+        `${baseUrlV}/v1/subscriptions/my-current-subscription`,
+        {},
+        source
+          ? {
+              cancelToken: source.token,
+            }
+          : {},
       );
       if (!response.ok) {
         if (response.data) {

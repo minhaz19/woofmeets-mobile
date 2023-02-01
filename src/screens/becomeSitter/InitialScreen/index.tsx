@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {View, Image, ScrollView, Alert} from 'react-native';
+import {View, Image, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BigText from '../../../components/common/text/BigText';
@@ -16,7 +16,8 @@ import {styles} from './styles';
 import {getOnboardingProgress} from '../../../store/slices/onBoarding/initial';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {getCurrentplan} from '../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
-import { getSkillsData } from '../../../store/slices/profile/details';
+import {getSkillsData} from '../../../store/slices/profile/details';
+import {CancelToken} from 'apisauce';
 
 const SitterInitialScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -24,9 +25,14 @@ const SitterInitialScreen = (props: {
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
   useEffect(() => {
+    const source = CancelToken.source();
+
     dispatch(getOnboardingProgress());
-    dispatch(getCurrentplan());
+    dispatch(getCurrentplan(source));
     dispatch(getSkillsData());
+    return () => {
+      source.cancel();
+    };
   }, []);
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const currentPlan = useAppSelector(state => state.currentPlan);

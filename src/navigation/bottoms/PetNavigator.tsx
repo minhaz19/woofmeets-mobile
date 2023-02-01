@@ -15,7 +15,7 @@ const PetNavigator = () => {
         options={({navigation}) => ({
           title: '',
           header: () => (
-            <HeaderWithBack navigation={navigation} title="My Pet" />
+            <HeaderWithBack navigation={navigation} title="My Pet" notification/>
           ),
           backgroundColor: Colors.primary,
         })}

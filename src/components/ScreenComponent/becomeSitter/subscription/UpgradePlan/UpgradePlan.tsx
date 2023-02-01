@@ -10,7 +10,7 @@ import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../../constants/Colors';
 
 const UpgradePlan = () => {
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   const {formattedPackageRate, handleSubmit, onPressEvent, sequence} =
     useUpgradeSubscription();
   return (

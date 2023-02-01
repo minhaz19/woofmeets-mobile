@@ -29,6 +29,7 @@ import {getProviderServices} from '../../../store/slices/Appointment/ProviderSer
 
 interface Props {
   navigation: {
+    goBack(): void;
     navigate: (arg: string, arg1: {providerOpk: string}) => void;
   };
 }
@@ -36,9 +37,11 @@ interface Props {
 const AllProvider = ({navigation}: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit] = useState(20);
+  const [isFetching, setIsFetching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const filter = useAppSelector((state: any) => state.filter.isOpen);
-  const {loading: loadingProivder} = useAppSelector(
+  const {loading: loadingProvider} = useAppSelector(
     state => state.providerProfile,
   );
   const {loading: loadingService} = useAppSelector(
@@ -53,24 +56,26 @@ const AllProvider = ({navigation}: Props) => {
   } = useAppSelector((state: any) => state.allProvider);
   const dispatch = useAppDispatch();
   // const providers = allProvider !== null && allProvider;
+  let getApiData = formattedData;
 
   const loadMoreItem = () => {
     setCurrentPage(currentPage + 1);
   };
-  let getApiData = formattedData;
-
   const getMoreProviderData = async () => {
-    if (currentPage !== 1 && allProvider?.length >= limit) {
+    if (currentPage !== 1 && message?.meta?.total >= limit) {
       setIsLoading(true);
-      getApiData['page'] = currentPage;
-      await dispatch(getAllProvider(getApiData));
+      const newData = {...getApiData, page: currentPage};
+      await dispatch(getAllProvider(newData));
+      if (allProvider?.length >= message?.meta?.total) {
+        setHasMore(false);
+      }
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     getMoreProviderData();
   }, [currentPage]);
+
   const renderHeader = () => {
     return (
       <ShortText
@@ -78,7 +83,7 @@ const AllProvider = ({navigation}: Props) => {
           paddingVertical: Platform.OS === 'ios' ? 10 : 0,
           color: Colors.gray,
         }}
-        text={allProvider ? `${allProvider.length} Results` : '0 Result'}
+        text={allProvider ? `${allProvider?.length} Results` : '0 Result'}
       />
     );
   };
@@ -86,7 +91,7 @@ const AllProvider = ({navigation}: Props) => {
   const renderLoader = () => {
     return (
       <>
-        {isLoading ? (
+        {hasMore && isLoading ? (
           <>
             <View style={{marginVertical: 10, alignItems: 'center'}}>
               <ActivityIndicator size="large" color="#1f1f1f" />
@@ -102,11 +107,13 @@ const AllProvider = ({navigation}: Props) => {
       </>
     );
   };
-
   return (
     <>
-      {(loadingProivder || loadingService) && (
-        <AppActivityIndicator visible={loadingProivder || loadingService} />
+      {(loadingProvider || isFetching || loadingService) && (
+        <AppActivityIndicator
+          visible={true}
+          // visible={loadingProvider || isFetching || loadingService}
+        />
       )}
       <ScreenRapperGrey>
         {loadingOneTime && <AllProviderLoader />}
@@ -116,20 +123,22 @@ const AllProvider = ({navigation}: Props) => {
               <FlatList
                 showsVerticalScrollIndicator={false}
                 data={allProvider}
-                keyExtractor={(_, i) => i.toString()}
+                keyExtractor={(_, i) => String(i)}
                 renderItem={({item}) => {
                   return (
                     <ProviderList
                       item={item}
                       onPress={async () => {
-                        await dispatch(
-                          getProviderProfile(item.provider?.user?.opk),
-                        );
-                        await dispatch(
-                          getProviderServices(item.provider?.user?.opk),
-                        );
+                        setIsFetching(true);
+                        await (dispatch(
+                          getProviderProfile(item?.provider?.user?.opk),
+                        ),
+                        dispatch(
+                          getProviderServices(item?.provider?.user?.opk),
+                        ));
+                        setIsFetching(false);
                         navigation.navigate('ProviderProfile', {
-                          providerOpk: item.provider?.user?.opk,
+                          providerOpk: item?.provider?.user?.opk,
                         });
                       }}
                     />
@@ -137,8 +146,10 @@ const AllProvider = ({navigation}: Props) => {
                 }}
                 ListFooterComponent={renderLoader}
                 ListHeaderComponent={renderHeader}
-                onEndReached={loadMoreItem}
-                onEndReachedThreshold={0.2}
+                onEndReached={
+                  message?.meta?.total <= limit ? null : loadMoreItem
+                }
+                onEndReachedThreshold={0.1}
                 // refreshControl={
                 //   <RefreshControl
                 //     refreshing={isRefreshing}

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   StyleSheet,
@@ -15,6 +16,8 @@ import DescriptionText from '../../common/text/DescriptionText';
 import {NumberProp} from 'react-native-svg';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+
 const SettingItem = (props: {
   data: {
     icon?: any;
@@ -27,9 +30,10 @@ const SettingItem = (props: {
     id: any;
     color?: string;
     iconSetIcon?: any;
+    logoutState?: boolean;
   };
   descriptionStyle?: TextStyle;
-  logoutState?: boolean;
+  // logoutState?: boolean;
   key?: number;
 }) => {
   const {colors} = useTheme();
@@ -39,7 +43,7 @@ const SettingItem = (props: {
   return (
     <TouchableOpacity
       onPress={props.data.screenName}
-      disabled={props.logoutState}
+      disabled={props?.data?.logoutState}
       style={{
         backgroundColor: backgroundStyle.backgroundColor,
         borderBottomWidth: 1,
@@ -49,11 +53,13 @@ const SettingItem = (props: {
       <View style={styles.rootContainer}>
         <View style={styles.titleContainer}>
           {props.data.iconSetIcon && props.data.iconSetIcon}
-          {props.data.icon && <props.data.icon
-            height={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 24 : 28}
-            opacity={props.data.opacity}
-            color={'red'}
-          />}
+          {props.data.icon && (
+            <props.data.icon
+              height={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 24 : 28}
+              opacity={props.data.opacity}
+              color={'red'}
+            />
+          )}
           {props.data.vectorIcon && props.data.vectorIcon}
           <View
             style={[
@@ -78,6 +84,13 @@ const SettingItem = (props: {
             size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
             style={styles.iconStyle}
             color={Colors.subText}
+          />
+        )}
+        {props?.data?.logoutState && (
+          <FontAwesome5Icon
+            name="spinner"
+            size={16}
+            color={Colors.light.text}
           />
         )}
       </View>

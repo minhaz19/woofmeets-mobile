@@ -35,6 +35,21 @@ const InboxNavigator = () => {
           backgroundColor: Colors.primary,
         })}
       />
+       {/* <Stack1.Screen
+        name="Conference"
+        component={Conference}
+        options={({navigation}) => ({
+          title: '',
+          header: () => (
+            <HeaderWithBack
+              navigation={navigation}
+              title="Conference"
+              notification
+            />
+          ),
+          backgroundColor: Colors.primary,
+        })}
+      /> */}
       {/* <Stack1.Screen
         name="Appointment"
         component={Appointment}

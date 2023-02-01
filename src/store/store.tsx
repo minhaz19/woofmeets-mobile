@@ -59,6 +59,7 @@ import userAPNTListSlice from './slices/Appointment/Inbox/User/UserAPNTList/user
 import providerAPNTListSlice from './slices/Appointment/Inbox/Provider/ProviderAPNTList/providerAPNTListSlice';
 import APNTScheduleSlice from './slices/Appointment/Schedular/APNTScheduleSlice';
 import notificationsSlice from './slices/notifications/notificationsSlice';
+import unreadBadge from './slices/Appointment/Inbox/Misc/unreadBadge';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -110,6 +111,7 @@ const appReducer = combineReducers({
   userAppointment: userAPNTListSlice,
   providerAppointment: providerAPNTListSlice,
   scheduler: APNTScheduleSlice,
+  badge: unreadBadge,
   notification: notificationsSlice,
 });
 

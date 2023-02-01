@@ -19,10 +19,11 @@ import methods from '../../../../../api/methods';
 import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch} from '../../../../../store/store';
 import {getCurrentplan} from '../../../../../store/slices/payment/Subscriptions/CurrentSubscription/currentPlanAction';
-import {getSubscription} from '../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
+// import {getSubscription} from '../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
 import Ion from 'react-native-vector-icons/Ionicons';
 import AppButton from '../../../../common/AppButton';
 import AppTouchableOpacity from '../../../../common/AppClickEvents/AppTouchableOpacity';
+import {CancelToken} from 'apisauce';
 const endpoint = '/subscriptions/cancel-subscription?subscriptionId=';
 const Welcome = (props: any) => {
   const {colors} = useTheme();
@@ -33,6 +34,7 @@ const Welcome = (props: any) => {
   const navigation = useNavigation<any>();
   const dispatch = useAppDispatch();
   const handleSubmit = () => {
+    const source = CancelToken.source();
     // if (true) {
     // } else {
     Alert.alert(
@@ -52,11 +54,14 @@ const Welcome = (props: any) => {
             const result = await methods._delete(
               endpoint + props.currentPlan.subscriptionInfo.id,
             );
-            result.ok &&
-              (dispatch(getCurrentplan()),
-              dispatch(getSubscription()),
-              navigation.navigate('SubscriptionScreen'));
-            setLoading(false);
+            if (result.ok) {
+              await dispatch(getCurrentplan(source));
+              // await dispatch(getSubscription());
+              // await navigation.navigate('SubscriptionScreen');
+              setLoading(false);
+            } else {
+              setLoading(false);
+            }
           },
         },
       ],
@@ -68,11 +73,12 @@ const Welcome = (props: any) => {
       navigation.navigate('UpgradePlan');
     } else {
       Alert.alert(
+        'Upgrade Plan',
         `You are currently using ${
           props.item.membershipPlan.name
         } plan in order to ${
           props.subscriptionId === 3 ? 'switch' : 'upgrade'
-        } your plan you have to cancel your current plan!`,
+        } your plan you have to cancel your current plan for your settings > My Account > Current Plan!`,
       );
     }
   };
@@ -139,7 +145,10 @@ const Welcome = (props: any) => {
           setIsModalVisible={() => {
             setIsModalVisible(!isModalVisible);
           }}
-          onBlur={() => null}>
+          onBlur={() => null}
+          handlePress={function (): void {
+            throw new Error('Function not implemented.');
+          }}>
           <Image
             source={require('../../../../../assets/image/subscription/subscription.png')}
             style={styles.imageStyle}
@@ -175,14 +184,28 @@ const Welcome = (props: any) => {
             )}
             <View style={styles.footerContainer}>
               {opk === 'current_plan' ? (
-                <ButtonCom
-                  title="Cancel Plan"
-                  textAlignment={btnStyles.textAlignment}
-                  containerStyle={btnStyles.containerStyleFullWidth}
-                  titleStyle={btnStyles.titleStyle}
-                  onSelect={handleSubmit}
-                  loading={loading}
-                />
+                props.subscriptionId === 1 ? (
+                  <ButtonCom
+                    title="Go Home"
+                    textAlignment={btnStyles.textAlignment}
+                    containerStyle={btnStyles.containerStyleFullWidth}
+                    titleStyle={btnStyles.titleStyle}
+                    onSelect={() => {
+                      setIsModalVisible(false);
+                      navigation.navigate('BottomTabNavigator');
+                    }}
+                    loading={loading}
+                  />
+                ) : (
+                  <ButtonCom
+                    title="Cancel Plan"
+                    textAlignment={btnStyles.textAlignment}
+                    containerStyle={btnStyles.containerStyleFullWidth}
+                    titleStyle={btnStyles.titleStyle}
+                    onSelect={handleSubmit}
+                    loading={loading}
+                  />
+                )
               ) : (
                 <ButtonCom
                   title="Go Home"
@@ -282,7 +305,9 @@ const Welcome = (props: any) => {
                 textAlignment={btnStyles.textAlignment}
                 containerStyle={btnStyles.containerStyleFullWidth}
                 titleStyle={btnStyles.titleStyle}
-                onSelect={() => navigation.navigate('BottomTabNavigator')}
+                onSelect={() => {
+                  navigation.navigate('BottomTabNavigator');
+                }}
                 loading={loading}
               />
             ) : (
