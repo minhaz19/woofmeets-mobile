@@ -35,6 +35,7 @@ import {CountryPicker} from 'react-native-country-codes-picker';
 import BigText from '../../common/text/BigText';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {VerifyCode} from '../Auth/Common/OtpField';
+import ShortText from '../../common/text/ShortText';
 
 const contactInput = [
   {
@@ -98,7 +99,9 @@ const ContactInput = (props: {handleSubmit: any}) => {
         );
         if (!response.ok) {
           setPhoneNumberError(response.data?.messages?.phoneNumber);
-          Alert.alert(response.data?.messages?.phoneNumber);
+          Alert.alert(
+            response.data?.messages?.phoneNumber ?? response.data.message,
+          );
           throw new Error(response.data.message);
         }
         if (response.ok) {
@@ -263,7 +266,18 @@ const ContactInput = (props: {handleSubmit: any}) => {
             </View>
           }
           <View style={{paddingBottom: 10}}>
-            <HeaderText text="Emergency Contact" textStyle={styles.textStyle} />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 10,
+              }}>
+              <HeaderText
+                text="Emergency Contact"
+                textStyle={styles.textStyle}
+              />
+              <HeaderText textStyle={{marginLeft: 5}} text="( Optional )" />
+            </View>
             <DescriptionText
               text={
                 'Who can we contact, other than you, in case of an emergency?'

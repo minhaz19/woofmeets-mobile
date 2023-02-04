@@ -1,9 +1,13 @@
 import {ApiResponse} from 'apisauce';
 import methods from '../../../../../api/methods';
+import {setDayError} from '../../../../../store/slices/misc/openFilter';
 import {setBoardingSelection} from '../../../../../store/slices/onBoarding/initial';
-import {setAvailability} from '../../../../../store/slices/onBoarding/setUpService/availability/availabilitySlice';
+import {
+  setAvailability,
+  setTempId,
+} from '../../../../../store/slices/onBoarding/setUpService/availability/availabilitySlice';
 // import {getPetPreference} from '../../../../../store/slices/onBoarding/setUpService/petPreference/getPetPreference';
-import {useAppDispatch} from '../../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../../store/store';
 import {useApi} from '../../../../../utils/helpers/api/useApi';
 
 export const useAvailabilityUtils = (
@@ -12,10 +16,11 @@ export const useAvailabilityUtils = (
   route: any,
 ) => {
   const dispatch = useAppDispatch();
-  // const {petPreference} = useAppSelector((state: any) => state?.petPreference);
-  const postEndPoint = `/availability${id ? `/${id}` : ''}`;
+  const {tempId} = useAppSelector(state => state.availability);
+  const _id = id ?? tempId;
+  const postEndPoint = `/availability${_id ? `/${_id}` : ''}`;
   const {request: PService, loading: isLoading} = useApi(
-    id ? methods._put : methods._post,
+    _id ? methods._put : methods._post,
   );
   const handlePost = async (data: any) => {
     const putFormattedData = {
@@ -27,19 +32,33 @@ export const useAvailabilityUtils = (
       thu: data.thu,
       fri: data.fri,
       pottyBreak: data.pottyBreak,
-      fulltime: data.fulltime,
+      fulltime: false,
     };
-    const response: ApiResponse<any> = await PService(
-      postEndPoint,
-      id ? putFormattedData : data,
-    );
-    if (response?.data?.data) {
-      dispatch(setAvailability(response?.data?.data));
-      dispatch(setBoardingSelection({pass: 1}));
-      // petPreference === null && dispatch(getPetPreference());
-      if (route.name === 'AvailabilityScreen') {
-        navigation.goBack();
+    if (
+      data.sat ||
+      data.sun ||
+      data.mon ||
+      data.tue ||
+      data.wed ||
+      data.thu ||
+      data.fri
+    ) {
+      dispatch(setDayError(false));
+      const response: ApiResponse<any> = await PService(
+        postEndPoint,
+        _id ? putFormattedData : data,
+      );
+      dispatch(setTempId(response?.data.data.id));
+      if (response?.data?.data) {
+        dispatch(setAvailability(response?.data?.data));
+        dispatch(setBoardingSelection({pass: 1}));
+        // petPreference === null && dispatch(getPetPreference());
+        if (route.name === 'AvailabilityScreen') {
+          navigation.goBack();
+        }
       }
+    } else {
+      dispatch(setDayError(true));
     }
   };
   return {handlePost, isLoading};

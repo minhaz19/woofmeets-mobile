@@ -130,63 +130,42 @@ Props) => {
       };
       callApi(payloadData);
     }
+    return () => {};
   }, [trackingStatus, mapInfo]);
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.mapcontainer}>
-          <MapView
-            ref={mapRef}
-            style={styles.mapStyle}
-            initialRegion={{
-              latitude: mapInfo.latitude,
-              longitude: mapInfo.longitude,
-              latitudeDelta: LATITUDE_DELTA,
-              longitudeDelta: LONGITUDE_DELTA,
-            }}
-            loadingEnabled
-            zoomEnabled
-            zoomTapEnabled
-            showsUserLocation
-            followsUserLocation
-            showsCompass
-            userLocationPriority="high"
-            onUserLocationChange={e => null}
-            showsPointsOfInterest={true}
-          >
-            {/* <Polyline
-              coordinates={mapInfo.coordinates}
-              strokeColor="#bf8221"
-              strokeColors={[
-                '#bf8221',
-                '#ffe066',
-                '#ffe066',
-                '#ffe066',
-                '#ffe066',
-              ]}
-              strokeWidth={6}
-            /> */}
-            {/* <Marker
-              // ref={markerRef}
-              coordinate={{
-                latitude: mapInfo.latitude,
-                longitude: mapInfo.longitude,
-              }}
-            /> */}
-          </MapView>
-        </View>
-        <WatchMiles />
+    <View style={styles.container}>
+      <View style={styles.mapcontainer}>
+        <MapView
+          ref={mapRef}
+          style={styles.mapStyle}
+          initialRegion={{
+            latitude: mapInfo.latitude,
+            longitude: mapInfo.longitude,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }}
+          loadingEnabled
+          zoomEnabled
+          zoomTapEnabled
+          showsUserLocation
+          followsUserLocation
+          showsCompass
+          userLocationPriority="high"
+          onUserLocationChange={e => null}
+          showsPointsOfInterest={true}></MapView>
       </View>
-    </>
+      <WatchMiles />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: '100%',
-    flex: 1,
-    backgroundColor: 'white',
+    // height: '100%',
+    // width: '100%',
+    // flex: 1,
+    // backgroundColor: 'white',
+    flexGrow: 1,
   },
   mapcontainer: {
     width: '100%',

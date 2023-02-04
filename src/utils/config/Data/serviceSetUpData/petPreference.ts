@@ -1,15 +1,15 @@
 export const petType = {
-  title: 'What type of pets can you host in your home?',
+  title: 'What type of pets can you host in your home? (Optional)',
   subtitle: '( Check all that apply )',
   name: 'petType',
   id: 1,
   square: true,
   radio: false,
   options: [
-    {id: 36, type: 'Small dog ( 0-15 Ibs )', name: 'smallDog', value: null},
-    {id: 37, type: 'Medium dog ( 0-15 Ibs )', name: 'mediumDog', value: null},
-    {id: 38, type: 'Large dog ( 0-15 Ibs )', name: 'largeDog', value: null},
-    {id: 39, type: 'Giant dog ( 0-15 Ibs )', name: 'giantDog', value: null},
+    {id: 36, type: 'Small dog ( 0-15 Lbs )', name: 'smallDog', value: null},
+    {id: 37, type: 'Medium dog ( 16 - 40 Lbs )', name: 'mediumDog', value: null},
+    {id: 38, type: 'Large dog ( 41 - 100 Lbs )', name: 'largeDog', value: null},
+    {id: 39, type: 'Giant dog ( 100+ Lbs )', name: 'giantDog', value: null},
     {id: 40, type: 'Cat', name: 'cat', value: null},
   ],
 };

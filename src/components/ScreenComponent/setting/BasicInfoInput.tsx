@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {FlatList, Pressable, StyleSheet, View} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import {Pressable, StyleSheet, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
 import HeaderText from '../../common/text/HeaderText';
@@ -9,14 +10,10 @@ import BottomSpacing from '../../UI/BottomSpacing';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import {useFormContext, useWatch} from 'react-hook-form';
 import {countries} from '../../../utils/config/Data/AddPetData';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {useAppSelector} from '../../../store/store';
 import AppSelectField from '../../common/Form/AppSelectField';
-import {
-  basicInfoInput,
-  locationInput,
-} from '../../../utils/config/Data/basicInfoDatas';
+import {locationInput} from '../../../utils/config/Data/basicInfoDatas';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
-import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
 import DescriptionText from '../../common/text/DescriptionText';
 import AppDropDownSelect from '../../common/AppDropDownSelect';
 import {
@@ -33,6 +30,7 @@ import {format} from 'date-fns';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 import TitleText from '../../common/text/TitleText';
 import Text_Size from '../../../constants/textScaling';
+import ErrorMessage from '../../common/Form/ErrorMessage';
 
 interface Props {
   handleSubmit: (value: any) => void;
@@ -53,10 +51,8 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
   const {
     control,
     setValue,
-    getValues,
     formState: {errors},
   } = useFormContext();
-  const dispatch = useAppDispatch();
   const basicData = useWatch();
 
   // add google address
@@ -103,45 +99,21 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
           <View style={styles.nameContainer}>
             <HeaderText text="Basic Information" textStyle={styles.textStyle} />
           </View>
-
+          <TitleText textStyle={styles.label} text={'Date of Birth'} />
           <View>
-            <FlatList
-              data={basicInfoInput}
-              renderItem={({item}) => {
-                return (
-                  <>
-                    <AppFormField
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      keyboardType={'default'}
-                      placeholder={item.placeholder}
-                      textContentType={'none'}
-                      name={item.name}
-                      label={item.title}
-                      errors={errors}
-                      control={control}
-                    />
-                  </>
-                );
+            <AppInput
+              placeholder="DOB"
+              onPressIn={() => {
+                setShown(true);
               }}
-              keyExtractor={(item, index) => item.name + index.toString()}
+              value={basicData?.dob ? format(new Date(basicData.dob), 'P') : ''}
             />
-            <View>
-              <AppInput
-                placeholder="DOB"
-                onPressIn={() => {
-                  setShown(true);
-                }}
-                value={
-                  basicData?.dob ? format(new Date(basicData.dob), 'P') : ''
-                }
-              />
-              <AppTouchableOpacity
-                onPress={() => setShown(true)}
-                style={{position: 'absolute', right: 10, top: 10}}>
-                <AntDesign name="calendar" size={28} color={Colors.primary} />
-              </AppTouchableOpacity>
-            </View>
+            <AppTouchableOpacity
+              onPress={() => setShown(true)}
+              style={{position: 'absolute', right: 10, top: 10}}>
+              <AntDesign name="calendar" size={28} color={Colors.primary} />
+            </AppTouchableOpacity>
+            <ErrorMessage error={errors.dob?.message} />
           </View>
           <View style={styles.nameContainer}>
             <HeaderText text="Add your address" textStyle={styles.textStyle} />
@@ -174,21 +146,9 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
       </View>
     );
   }, [handleSubmit, loading]);
-  const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await dispatch(getUserProfileInfo());
-    setRefreshing(false);
-  };
-
-  useEffect(() => {
-    onRefresh();
-  }, []);
   return (
     <KeyboardAwareFlatList
-      refreshing={refreshing}
-      onRefresh={onRefresh}
       data={locationInput}
       horizontal={false}
       extraHeight={60}
@@ -220,19 +180,27 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
                   </Pressable>
                 </MiddleModal>
                 {item.name === 'addressLine1' ? (
-                  <GooglePredictLocation
-                    label={item.title}
-                    placeholder={item.placeholder}
-                    name={'addressLine1'}
-                    defaultValue={basicData.addressLine1}
-                    onChange={value => {
-                      setValue('addressLine1', value);
-                      setValue('latitude', null);
-                      setValue('longitude', null);
-                    }}
-                    onPlaceSelected={onPressAddress}
-                    errors={errors}
-                  />
+                  <>
+                    <GooglePredictLocation
+                      label={item.title}
+                      placeholder={item.placeholder}
+                      name={'addressLine1'}
+                      defaultValue={basicData.addressLine1}
+                      onChange={value => {
+                        setValue('addressLine1', value);
+                        // setValue('latitude', null);
+                        // setValue('longitude', null);
+                      }}
+                      onPlaceSelected={onPressAddress}
+                      errors={errors}
+                    />
+                    <DescriptionText
+                      textStyle={{paddingBottom: '2%'}}
+                      text={
+                        '*Please select your specific address for better owner reach.'
+                      }
+                    />
+                  </>
                 ) : item.name === 'state' ? (
                   <AppDropDownSelect
                     title={item.title}
@@ -324,5 +292,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     color: Colors.primaryDif,
+  },
+  label: {
+    fontSize: Text_Size.Text_1,
+    fontWeight: '600',
+    marginBottom: 10,
   },
 });

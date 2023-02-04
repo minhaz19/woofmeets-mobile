@@ -27,6 +27,7 @@ interface Props {
     pickUpStartTime?: string;
     roomId: string;
   };
+  pendingReview: boolean;
   statusColor: string[];
   handlePress?: () => void;
 }
@@ -38,6 +39,7 @@ const ReusableCard: FC<Props> = ({
   statusColor,
   // read = true,
   handlePress,
+  pendingReview,
 }) => {
   const {colors} = useTheme();
   const {unRead} = useReusbaleCard(item.roomId);
@@ -137,27 +139,51 @@ const ReusableCard: FC<Props> = ({
               // ellipsizeMode="tail"
             />
           </View>
-          <View style={styles.timeContainer}>
-            <View
-              style={[
-                {
-                  backgroundColor: statusColor[0],
-                  borderRadius: 50,
-                  width: 107,
-                },
-              ]}>
-              <DescriptionText
-                text={changeTextLetter(item.status.toLowerCase())!}
-                textStyle={{
-                  fontSize: Text_Size.Text_8,
-                  color: statusColor[1],
-                  paddingVertical: 2,
-                  fontWeight: '900',
-                  textAlign: 'center',
-                }}
-              />
+          {pendingReview ? (
+            <View style={styles.timeContainer}>
+              <View
+                style={[
+                  {
+                    backgroundColor: statusColor[0],
+                    borderRadius: 50,
+                    width: 107,
+                  },
+                ]}>
+                <DescriptionText
+                  text={'Review'}
+                  textStyle={{
+                    fontSize: Text_Size.Text_8,
+                    color: statusColor[1],
+                    paddingVertical: 4,
+                    fontWeight: '900',
+                    textAlign: 'center',
+                  }}
+                />
+              </View>
             </View>
-          </View>
+          ) : (
+            <View style={styles.timeContainer}>
+              <View
+                style={[
+                  {
+                    backgroundColor: statusColor[0],
+                    borderRadius: 50,
+                    width: 107,
+                  },
+                ]}>
+                <DescriptionText
+                  text={changeTextLetter(item.status.toLowerCase())!}
+                  textStyle={{
+                    fontSize: Text_Size.Text_8,
+                    color: statusColor[1],
+                    paddingVertical: 2,
+                    fontWeight: '900',
+                    textAlign: 'center',
+                  }}
+                />
+              </View>
+            </View>
+          )}
           {unRead && (
             <View
               style={{

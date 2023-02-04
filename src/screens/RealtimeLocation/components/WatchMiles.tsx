@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View} from 'react-native';
+import {Alert, Button, StyleSheet, Text, View} from 'react-native';
 import React, {memo, useEffect, useState} from 'react';
 import TitleText from '../../../components/common/text/TitleText';
 import ButtonCom from '../../../components/UI/ButtonCom';
@@ -19,30 +19,116 @@ import {Stopwatch} from 'react-native-stopwatch-timer';
 interface Props {}
 // let interval: any = null;
 const WatchMiles = ({}: Props) => {
-  const {trackingStatus, timee, reset} = useAppSelector(
-    state => state.trackingStatus,
-  );
-  const [time, setTime] = useState(timee);
+  const {trackingStatus, timee} = useAppSelector(state => state.trackingStatus);
+  // const {hours, minutes, seconds} = timee;
+  // const [time, setTime] = useState(timee);
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const [isTimerStart, setIsTimerStart] = useState(false);
-  const [resetStopwatch, setResetStopwatch] = useState(false);
+  // const [isTimerStart, setIsTimerStart] = useState(false);
+  // const [resetStopwatch, setResetStopwatch] = useState(false);
 
+  // useEffect(() => {
+  //   setResetStopwatch(reset);
+  // }, [reset]);
+  // useEffect(() => {
+  //   setIsTimerStart(trackingStatus);
+  // }, [trackingStatus]);
+
+  // const [time, setTime] = useState(0);
+  // const [isRunning, setIsRunning] = useState(false);
+
+  // useEffect(() => {
+  //   let interval = null;
+  //   if (isRunning) {
+  //     interval = setInterval(() => {
+  //       setTime(time => time + 1);
+  //     }, 1000);
+  //   } else if (!isRunning && time !== 0) {
+  //     clearInterval(interval);
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [isRunning, time]);
+
+  // const start = () => {
+  //   setIsRunning(true);
+  // };
+
+  // const stop = () => {
+  //   setIsRunning(false);
+  // };
+
+  // const reset = () => {
+  //   setIsRunning(false);
+  //   setTime(0);
+  // };
+  // const formatTime = time => {
+  //   let seconds = time % 60;
+  //   let minutes = Math.floor(time / 60) % 60;
+  //   let hours = Math.floor(time / 3600);
+  //   return `${hours < 10 ? `0${hours}` : hours}:${
+  //     minutes < 10 ? `0${minutes}` : minutes
+  //   }:${seconds < 10 ? `0${seconds}` : seconds}`;
+  // };
+
+  const [time, setTime] = useState({
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+  // const [running, setRunning] = useState(false);
+  const [intervalId, setIntervalId] = useState(null);
+
+  const startTimer = () => {
+    dispatch(setTrackingStatus(true));
+    let id = setInterval(() => {
+      setTime(prevTime => {
+        let {hours, minutes, seconds} = prevTime;
+        if (seconds < 59) {
+          seconds++;
+        } else if (minutes < 59) {
+          minutes++;
+          seconds = 0;
+        } else {
+          hours++;
+          minutes = 0;
+          seconds = 0;
+        }
+        return {hours, minutes, seconds};
+      });
+    }, 1000);
+    setIntervalId(id);
+  };
+
+  const stopTimer = () => {
+    clearInterval(intervalId);
+    dispatch(setTrackingStatus(false));
+  };
+
+  const resetTimer = () => {
+    clearInterval(intervalId);
+    dispatch(setTrackingStatus(false));
+    dispatch(setTimee({hours: 0, minutes: 0, seconds: 0}));
+  };
+  const formattedTime = timeValue => {
+    return timeValue < 10 ? `0${timeValue}` : timeValue;
+  };
   useEffect(() => {
-    setResetStopwatch(reset);
-  }, [reset]);
-  useEffect(() => {
-    setIsTimerStart(trackingStatus);
-  }, [trackingStatus]);
-
-
+    setTime(timee);
+  }, [timee]);
   return (
     <>
       <AppTouchableOpacity
         style={styles.leftContainer}
         onPress={() => {
-          dispatch(setTimee(time));
-          navigation.goBack();
+          if (trackingStatus) {
+            Alert.alert(
+              'Warning!',
+              'Please stop stopwatch timer before going back',
+            );
+          } else {
+            dispatch(setTimee(time));
+            navigation.goBack();
+          }
         }}>
         <Ionicons
           name="ios-chevron-back"
@@ -52,7 +138,7 @@ const WatchMiles = ({}: Props) => {
         />
         <TitleText text={'Back'} textStyle={styles.backText} />
       </AppTouchableOpacity>
-      <View style={{height: '100%'}}>
+      <View style={{width: '100%', height: '100%'}}>
         <View
           style={{
             padding: 10,
@@ -82,37 +168,50 @@ const WatchMiles = ({}: Props) => {
             justifyContent: 'space-between',
           }}>
           <View>
-            <TitleText textStyle={{fontWeight: 'bold'}} text="Dog Walk Time" />
-            <Stopwatch
-              start={isTimerStart}
-              reset={resetStopwatch}
-              startTime={timee}
-              options={options}
-              getMsecs={(t: any) => {
-                setTime(t);
-              }}
-            />
-            {/* <TitleText
-              textStyle={{fontSize: Text_Size.Text_1}}
-              text={`${('0' + Math.floor((time / 60000) % 60)).slice(-2)}:${(
-                '0' + Math.floor((time / 1000) % 60)
-              ).slice(-2)}:${('0' + ((time / 10) % 100)).slice(-2)}`}
-            /> */}
+            <TitleText textStyle={{fontWeight: 'bold'}} text="Pet Walk Time" />
+            <View>
+              <Text>
+                {`${formattedTime(time.hours)}:${formattedTime(
+                  time.minutes,
+                )}:${formattedTime(time.seconds)}`}
+              </Text>
+            </View>
           </View>
-
-          <View style={{width: '30%'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              marginLeft: 10,
+              // width: '100%',
+            }}>
             <ButtonCom
               title={trackingStatus ? 'Stop' : 'Start'}
               textAlignment={btnStyles.textAlignment}
               containerStyle={{
                 borderRadius: 8,
                 height: 45,
+                width: 110,
               }}
               titleStyle={btnStyles.titleStyle}
-              onSelect={() => {
-                dispatch(setTrackingStatus(!trackingStatus));
+              onSelect={
+                trackingStatus ? stopTimer : startTimer
+                // dispatch(setTrackingStatus(!trackingStatus));
                 // handleTimer();
+              }
+            />
+            <ButtonCom
+              title="Reset"
+              textAlignment={btnStyles.textAlignment}
+              disabled={trackingStatus}
+              containerStyle={{
+                borderRadius: 8,
+                height: 45,
+                width: 100,
               }}
+              titleStyle={btnStyles.titleStyle}
+              onSelect={resetTimer}
+              color={trackingStatus ? Colors.gray : undefined}
             />
           </View>
         </View>

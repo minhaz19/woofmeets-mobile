@@ -25,10 +25,11 @@ import {getProviderApnt} from '../../../../store/slices/Appointment/Inbox/Provid
 import {useNavigation} from '@react-navigation/native';
 import BottomSpacing from '../../../UI/BottomSpacing';
 import PetsReview from './PetsReview';
-import { baseUrlV } from '../../../../utils/helpers/httpRequest';
+import {baseUrlV} from '../../../../utils/helpers/httpRequest';
 
 interface Props {
   setIsReviewModal: (value: boolean) => void;
+  setHasModalShown: (value: boolean) => void;
   setModalVisible: (arg1: boolean) => void;
   appointmentId: string;
 }
@@ -37,6 +38,8 @@ const Review: FC<Props> = props => {
   const {colors} = useTheme();
   const [isRatings, setIsRatings] = useState(5);
   const [isEnjoyRating, setIsEnjoyRating] = useState(5);
+  const [woofmeetsRating, setWoofmeetsRating] = useState(5);
+  const [WoofmeetsText, setWoofmeetsText] = useState('');
   const [isText, setIsText] = useState('');
   const [enjoyText, setEnjoyText] = useState('');
   const [petsReview, setPetReview] = useState<any[]>([]);
@@ -44,17 +47,19 @@ const Review: FC<Props> = props => {
   const dispatch = useAppDispatch();
   const {user} = useAppSelector((state: any) => state.whoAmI);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   // handleRatings
+  const handleWoofmeetsRating = (value: number) => {
+    setWoofmeetsRating(value);
+  };
   const handleRatings = (value: number) => {
     setIsRatings(value);
   };
   const handleEnjoyRatings = (value: number) => {
     setIsEnjoyRating(value);
   };
-
   useEffect(() => {
-    proposedServiceInfo?.petsInfo?.map((item:any) => {
+    proposedServiceInfo?.petsInfo?.map((item: any) => {
       return setPetReview(petsetReview => [
         ...petsetReview,
         {
@@ -70,12 +75,14 @@ const Review: FC<Props> = props => {
   const {loading, request} = useApi(methods._post);
   const handleSubmit = async () => {
     let formattedData;
-    if (proposedServiceInfo.userId !== user?.provider?.userId) {
+    if (proposedServiceInfo?.userId !== user?.provider?.userId) {
       formattedData = {
         appointmentId: props.appointmentId,
         rating: isRatings,
         comment: isText,
         petsReview,
+        platformRating: woofmeetsRating,
+        platformComment: WoofmeetsText,
       };
     } else {
       formattedData = {
@@ -84,15 +91,20 @@ const Review: FC<Props> = props => {
         comment: isText,
         providerServiceRating: isEnjoyRating,
         providerServiceComment: enjoyText,
+        platformRating: woofmeetsRating,
+        platformComment: WoofmeetsText,
       };
     }
     const result = await request(endPoint, formattedData);
     if (result.ok) {
-      props.setIsReviewModal(false)
-      dispatch(getProviderApnt(proposedServiceInfo.appointmentOpk));
-      navigation.navigate('Inbox');
-    }
-    else {
+      props.setIsReviewModal(false);
+      dispatch(getProviderApnt(proposedServiceInfo?.appointmentOpk));
+      navigation.navigate('Inbox', {
+        back: true,
+        screen: 'InboxNavigator',
+      });
+      // navigation.navigate('Inbox');
+    } else {
       Alert.alert('something went wrong! please try again later');
     }
   };
@@ -106,8 +118,37 @@ const Review: FC<Props> = props => {
           keyboardShouldPersistTaps="handled">
           <View>
             <HeaderText
+              text={'Rate the Woofmeets Platform'}
+              textStyle={styles.header}
+            />
+            <AirbnbRating
+              showRating={false}
+              count={5}
+              defaultRating={woofmeetsRating}
+              size={50}
+              onFinishRating={value => handleWoofmeetsRating(value)}
+            />
+          </View>
+          <View
+            style={[
+              styles.container,
+              {
+                borderColor: Colors.border,
+              },
+            ]}>
+            <TextInput
+              placeholderTextColor={'gray'}
+              allowFontScaling={false}
+              style={[styles.text, {color: 'black'}]}
+              placeholder="Write your Comments"
+              multiline={true}
+              onChangeText={value => setWoofmeetsText(value)}
+            />
+          </View>
+          <View>
+            <HeaderText
               text={
-                proposedServiceInfo.userId === user?.provider?.userId
+                proposedServiceInfo?.userId === user?.provider?.userId
                   ? 'How do you want to rate the sitter?'
                   : 'How do you want to rate the owner?'
               }
@@ -137,9 +178,16 @@ const Review: FC<Props> = props => {
               onChangeText={value => setIsText(value)}
             />
           </View>
-          {proposedServiceInfo.userId !== user?.provider?.userId &&
-            proposedServiceInfo?.petsInfo.map((data: any, index: number) => <PetsReview pet={data} key={index} petsReview={petsReview} setPetReview={setPetReview}/>)}
-          {proposedServiceInfo.userId === user?.provider?.userId && (
+          {proposedServiceInfo?.userId !== user?.provider?.userId &&
+            proposedServiceInfo?.petsInfo.map((data: any, index: number) => (
+              <PetsReview
+                pet={data}
+                key={index}
+                petsReview={petsReview}
+                setPetReview={setPetReview}
+              />
+            ))}
+          {proposedServiceInfo?.userId === user?.provider?.userId && (
             <>
               <View>
                 <HeaderText
@@ -182,7 +230,14 @@ const Review: FC<Props> = props => {
           />
           <IOSButton
             containerStyle={styles.containerStyleSmall}
-            onSelect={() => props.setIsReviewModal(false)}
+            onSelect={() => {
+              props.setIsReviewModal(false);
+              // props.setHasModalShown(true);
+
+              navigation.setParams({
+                showReview: false,
+              });
+            }}
             textAlignment={{
               backgroundColor: colors.backgroundColor,
               borderColor: colors.borderColor,

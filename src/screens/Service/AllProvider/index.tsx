@@ -56,11 +56,11 @@ const AllProvider = ({navigation}: Props) => {
   } = useAppSelector((state: any) => state.allProvider);
   const dispatch = useAppDispatch();
   // const providers = allProvider !== null && allProvider;
+  let getApiData = formattedData;
 
   const loadMoreItem = () => {
     setCurrentPage(currentPage + 1);
   };
-  let getApiData = formattedData;
   const getMoreProviderData = async () => {
     if (currentPage !== 1 && message?.meta?.total >= limit) {
       setIsLoading(true);

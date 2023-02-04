@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import AppFormField from '../../../common/Form/AppFormField';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import Text_Size from '../../../../constants/textScaling';
@@ -12,53 +12,60 @@ import ServiceCheckbox from '../ServiceSetup/Common/ServiceCheckbox';
 import {skillsData} from '../../../../screens/becomeSitter/Details/utils/SkillsData';
 import DescriptionText from '../../../common/text/DescriptionText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import {useHandleMultipleActiveCheck} from '../../../../screens/becomeSitter/Details/utils/HandleCheck';
 import {useAppSelector} from '../../../../store/store';
+import ServicePetQuantity from '../ServiceSetup/Common/ServicePetQuantity';
+import PetType from '../ServiceSetup/SubPetPreference/PetType';
+import SubHome from './SubHome';
 
 const sitterDetailsInputValue = [
   {
-    title: 'Years of personal experience caring for pets',
+    title: 'Years of personal experience caring for pets*',
     name: 'yearsOfExperience',
     numberOfLines: 1,
   },
   {
-    title: 'Write an eye-catching headline',
+    title: 'Write an eye-catching headline*',
     name: 'headline',
     description:
       'Make your headline short, descriptive and genuine. Try to encapsulate in a single sentence why you’re the best pet-sitting candidate for the job. Your headline’s creativity will help it stand out.',
     numberOfLines: 1,
   },
+  // {
+  //   title: 'Write something about yours self',
+  //   description:
+  //     'What’s something special or unique about yourself that will impress pet owners? Here’s your opportunity to describe why animals mean so much to you.',
+  //   name: 'about',
+  //   numberOfLines: 12,
+  // },
   {
-    title: 'Write something about yours self',
-    description:
-      'What’s something special or unique about yourself that will impress pet owners? Here’s your opportunity to describe why animals mean so much to you.',
-    name: 'about',
-    numberOfLines: 12,
-  },
-  {
-    title: 'Pet care experience',
+    title: 'Pet care experience*',
     name: 'experienceDescription',
     description: `Tell us more about your experience in pet care.
 
 This is where you should talk about the practical application of pet care skills you’ve picked up throughout your life.`,
     numberOfLines: 12,
+    multiline: true,
   },
-  {
-    title: 'Schedule',
-    name: 'environmentDescription',
-    description: `How does pet care fit into your daily or weekly routine? \n\nExample: "I’m currently working part-time, so I’ll have plenty of time to play with your pups! I’m available for boarding on weekends and weekdays after 2pm"`,
-    numberOfLines: 10,
-  },
-  {
-    title: 'Safety , trust & environment',
-    name: 'scheduleDescription',
-    description:
-      'How do you care for pets in your home and/or your client’s home? This will vary depending on which services you offer. Try to be extremely detailed regarding safety features in your residence or wherever else you keep the pets that are in your care. These details make it easier for clients to feel that their pets will be safe with you.',
-    numberOfLines: 10,
-  },
+  //   {
+  //     title: 'Schedule',
+  //     name: 'environmentDescription',
+  //     description: `How does pet care fit into your daily or weekly routine? \n\nExample: "I’m currently working part-time, so I’ll have plenty of time to play with your pups! I’m available for boarding on weekends and weekdays after 2pm"`,
+  //     numberOfLines: 10,
+  //   },
+  //   {
+  //     title: 'Safety , trust & environment',
+  //     name: 'scheduleDescription',
+  //     description:
+  //       'How do you care for pets in your home and/or your client’s home? This will vary depending on which services you offer. Try to be extremely detailed regarding safety features in your residence or wherever else you keep the pets that are in your care. These details make it easier for clients to feel that their pets will be safe with you.',
+  //     numberOfLines: 10,
+  //   },
 ];
 
-const SitterDetailsInput = (props: {handleSubmit: any; isLoading: boolean}) => {
+const SitterDetailsInput = (props: {
+  handleSubmit: any;
+  isLoading: boolean;
+  attributes: any;
+}) => {
   const {
     control,
     setValue,
@@ -68,9 +75,22 @@ const SitterDetailsInput = (props: {handleSubmit: any; isLoading: boolean}) => {
   const data = getValues();
   const {colors} = useTheme();
   const skillsDetailsData = useAppSelector(state => state.details.skillsData);
-  const {newData, handleMultipleCheck} =
-    useHandleMultipleActiveCheck(skillsDetailsData);
-
+  const [newData, setNewData] = useState<any>(data.skills ? data.skills : []);
+  // check the select and deselect value
+  const handleMultipleCheck = (id: number) => {
+    const newArray = [...data.skills];
+    const tempData = newArray.includes(id);
+    if (tempData) {
+      const deleteId = newArray.filter(item => item !== id);
+      setNewData(deleteId);
+      setValue('skills', deleteId, {shouldValidate: false});
+    } else {
+      const addId = newArray;
+      addId.push(id);
+      setNewData(addId);
+      setValue('skills', addId, {shouldValidate: false});
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -92,7 +112,7 @@ const SitterDetailsInput = (props: {handleSubmit: any; isLoading: boolean}) => {
                   control={control}
                   errors={errors}
                   numberOfLines={item.numberOfLines}
-                  // multiline={true}
+                  multiline={item?.multiline}
                   // textInputBoxStyle={{
                   //   backgroundColor: colors.inputBackground,
                   //   width: '100%',
@@ -124,25 +144,56 @@ const SitterDetailsInput = (props: {handleSubmit: any; isLoading: boolean}) => {
             />
           )}
           <View style={styles.dayBoxContainer}>
-            {newData &&
-              newData?.map((item, index: React.Key | null | undefined) => (
-                <ServiceCheckbox
-                  title={item.title}
-                  key={index}
-                  square
-                  typeKey={item.id}
-                  active={data[item.slug]}
-                  onPress={() => {
-                    handleMultipleCheck(item.id);
-                    setValue(item.slug, item.active);
-                  }}
-                  name={item.slug}
-                  control={control}
-                />
-              ))}
+            {skillsDetailsData &&
+              skillsDetailsData?.map(
+                (
+                  item: {title: string; id: number; slug: string; active: any},
+                  index: React.Key | null | undefined,
+                ) => (
+                  <ServiceCheckbox
+                    title={item.title}
+                    key={index}
+                    square
+                    typeKey={item?.id}
+                    active={newData !== null && newData.includes(item?.id)}
+                    onPress={() => {
+                      handleMultipleCheck(item.id);
+                    }}
+                    name={item.slug}
+                    control={control}
+                  />
+                ),
+              )}
           </View>
           {/* <ErrorMessage error={errors[skillsData.name!]?.message} /> */}
         </View>
+        <View>
+          <View>
+            <HeaderText
+              textStyle={styles.subHeaderText}
+              text={'How many pets per day can host in your home? (Optional)'}
+            />
+            <ServicePetQuantity
+              name={'petPerDay'}
+              control={control}
+              errors={errors}
+              setValue={setValue}
+            />
+          </View>
+          <PetType
+            control={control}
+            errors={errors}
+            setValue={setValue}
+            data={data}
+          />
+        </View>
+        <SubHome
+          control={control}
+          errors={errors}
+          setValue={setValue}
+          attributes={props.attributes}
+          selectData={data}
+        />
         <View style={styles.footerContainer}>
           <SubmitButton
             title="Save"

@@ -29,7 +29,7 @@ import jwtDecode from 'jwt-decode';
 import authStorage from '../../../utils/helpers/auth/storage';
 import {useNavigation} from '@react-navigation/native';
 import ServiceReusableModal from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/Common/ServiceReusableModal';
-import { getWhoAmI } from '../../../store/slices/common/whoAmI/whoAmIAction';
+import {getWhoAmI} from '../../../store/slices/common/whoAmI/whoAmIAction';
 interface Props {
   item: any;
 }

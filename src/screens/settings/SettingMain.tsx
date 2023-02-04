@@ -577,7 +577,7 @@ const styles = StyleSheet.create({
     marginVertical:
       SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '3%' : '0%',
     borderWidth: 1,
-    borderColor: Colors.subText,
+    borderColor: Colors.border,
     padding: '2%',
   },
   boxTextContainer: {

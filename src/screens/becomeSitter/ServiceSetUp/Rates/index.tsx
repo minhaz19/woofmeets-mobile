@@ -21,6 +21,7 @@ const Rates = ({navigation, route}: Props) => {
   const {serviceSetup} = useAppSelector(
     (state: {serviceSetup: any}) => state?.serviceSetup,
   );
+
   const {itemId, name, image, description, serviceId, providerServicesId} =
     serviceSetup.routeData;
   const {colors} = useTheme();
@@ -51,6 +52,7 @@ const Rates = ({navigation, route}: Props) => {
   }, []);
 
   const data = useServiceRateInit(fieldValue, ratesMeta);
+
 
   return (
     <>

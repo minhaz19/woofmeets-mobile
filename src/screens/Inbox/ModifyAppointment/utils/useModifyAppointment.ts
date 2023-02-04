@@ -127,6 +127,8 @@ export const useModifyAppointment = (route: any) => {
         if (result.ok) {
           const payloadData: any = {
             sender: user?.id,
+
+            opk: result.data.data.appointment.opk,
             group: result.data.data.appointment.messageGroupId,
             content: boardingSittingFT,
             createdAt: new Date(),
@@ -272,6 +274,8 @@ export const useModifyAppointment = (route: any) => {
           const payloadData: any = {
             sender: user?.id,
             group: result.data.data.appointment.messageGroupId,
+
+            opk: result.data.data.appointment.opk,
             content: dropInVisitFT,
             createdAt: new Date(),
           };
@@ -346,6 +350,7 @@ export const useModifyAppointment = (route: any) => {
           const payloadData: any = {
             sender: user?.id,
             group: result.data.data.appointment.messageGroupId,
+            opk: result.data.data.appointment.opk,
             content: DoggyDayFT,
             createdAt: new Date(),
           };
