@@ -15,10 +15,7 @@ const SafetyQuizHeader = () => {
         textStyle={styles.titleText}
         text={'Safe stays lead to 5 star reviews'}
       />
-      <DescriptionText
-        textStyle={styles.descriptionText}
-        text={'Lorem ipsum description about the safety quick'}
-      />
+
       <ShortText
         textStyle={styles.shortText}
         text={

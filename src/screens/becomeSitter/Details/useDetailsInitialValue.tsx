@@ -1,56 +1,33 @@
 import {useAppSelector} from '../../../store/store';
 
-export const useDetailsInitalValue = () => {
-  const sitterInfo = useAppSelector(
-    state => state.details.sitterInfo?.providerDetails,
+export const useDetailsInitialValue = () => {
+  const {sitterInfo, petPreference, petPerDay, yourHome, skills} =
+    useAppSelector(state => state.details);
+  const home = yourHome !== null && yourHome;
+  const id = home?.HomeAttributes?.map(
+    (item: any) => item?.homeAttributeTypeId,
   );
-  const providerSkills = useAppSelector(
-    state => state.details.sitterInfo?.providerSkills,
-  );
-  const provider = useAppSelector(state => state.details.sitterInfo);
-  const detailsInitalValue = {
+  const skillTypeId = skills?.map((item: any) => item?.skillTypeId);
+  let ownerAtt = id && id.filter(num => num >= 1 && num <= 8);
+  let hostAtt = id && id.filter(num => num >= 9);
+  const detailsInitialValue = {
     headline: sitterInfo ? sitterInfo.headline : '',
     yearsOfExperience: sitterInfo ? sitterInfo.yearsOfExperience : 0,
     experienceDescription: sitterInfo ? sitterInfo.experienceDescription : '',
-    environmentDescription: sitterInfo ? sitterInfo.environmentDescription : '',
-    scheduleDescription: sitterInfo ? sitterInfo.scheduleDescription : '',
-    about: sitterInfo ? sitterInfo.about : '',
-    first_aid_cpr: providerSkills
-      ? providerSkills.find(
-          (item: {skillTypeId: number}) => item.skillTypeId === 3,
-        )
-        ? true
-        : false
-      : false,
-    oral_medication: providerSkills
-      ? providerSkills.find(
-          (item: {skillTypeId: number}) => item.skillTypeId === 1,
-        )
-        ? true
-        : false
-      : false,
-    injected_medication: providerSkills
-      ? providerSkills.find(
-          (item: {skillTypeId: number}) => item.skillTypeId === 5,
-        )
-        ? true
-        : false
-      : false,
-    daily_exercise: providerSkills
-      ? providerSkills.find(
-          (item: {skillTypeId: number}) => item.skillTypeId === 2,
-        )
-        ? true
-        : false
-      : false,
-    senior_pet_experience: providerSkills
-      ? providerSkills.find(
-          (item: {skillTypeId: number}) => item.skillTypeId === 4,
-        )
-        ? true
-        : false
-      : false,
-    skills: [],
+    // environmentDescription: sitterInfo ? sitterInfo.environmentDescription : '',
+    // scheduleDescription: sitterInfo ? sitterInfo.scheduleDescription : '',
+    // about: sitterInfo ? sitterInfo.about : '',
+    skills: skillTypeId ? skillTypeId : [],
+    smallDog: petPreference?.smallDog ? petPreference?.smallDog : false,
+    mediumDog: petPreference?.mediumDog ? petPreference?.mediumDog : false,
+    largeDog: petPreference?.largeDog ? petPreference?.largeDog : false,
+    giantDog: petPreference?.giantDog ? petPreference?.giantDog : false,
+    cat: petPreference?.cat ? petPreference?.cat : false,
+    petPerDay: petPerDay,
+    homeType: home?.homeType ? home?.homeType : '',
+    yardType: home?.yardType ? home?.yardType : '',
+    ownerAttributes: ownerAtt ? ownerAtt : [],
+    hostAttributes: hostAtt ? hostAtt : [],
   };
-  return detailsInitalValue;
+  return {detailsInitialValue};
 };

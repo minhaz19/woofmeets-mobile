@@ -29,7 +29,7 @@ const SitterInitialScreen = (props: {
 
     dispatch(getOnboardingProgress());
     dispatch(getCurrentplan(source));
-    dispatch(getSkillsData());
+    // dispatch(getSkillsData());
     return () => {
       source.cancel();
     };

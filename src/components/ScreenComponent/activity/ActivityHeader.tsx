@@ -78,7 +78,6 @@ const ActivityHeader = (props: {
   const [allDates, setAllDates] = useState<any>([]);
   const user = useAppSelector(state => state.whoAmI);
   const timezone = proposedServiceInfo?.providerTimeZone;
-  // const [socket, setSocket] = useState<any>(null);
   const today = new Date();
   function isSameDate(date: string) {
     if (
@@ -165,6 +164,7 @@ const ActivityHeader = (props: {
                 // dispatch(getProviderApnt('PAID'));
                 const payloadData: any = {
                   sender: user?.userId,
+                  opk: proposedServiceInfo?.appointmentOpk,
                   group: proposedServiceInfo?.messageGroupId,
                   content: `${proposedServiceInfo.userName} has successfully ended the appointment`,
                   createdAt: new Date(),
@@ -221,8 +221,10 @@ const ActivityHeader = (props: {
       setAllDates(appointmentCard);
       const findData = appointmentCard?.find(
         (d: any) =>
-          isSameDate(d?.localDate) &&
-          (d?.startTime === null || d?.stopTime === null),
+          (isSameDate(d?.localDate) &&
+            (d?.startTime === null || d?.stopTime === null)) ||
+          d?.startTime === null ||
+          d?.stopTime === null,
       );
       if (findData === undefined) {
         const findOtherDate = appointmentCard?.find(
@@ -237,11 +239,15 @@ const ActivityHeader = (props: {
       } else if (
         findData &&
         findData !== undefined &&
-        isSameDate(findData.localDate)
+        (isSameDate(findData.localDate) ||
+          datePassed(findData.localDate) ||
+          isComing(findData.localDate))
       ) {
         setCurrentDate(findData);
         setOtherDay({});
         props.setVisitId(findData.id);
+      } else {
+    
       }
     }
   }, [appointmentCard]);
@@ -257,13 +263,17 @@ const ActivityHeader = (props: {
       ) {
         setAppointmentStart('UPCOMING');
       } else if (
-        (allDates?.[0]?.startTime === null &&
-          isSameDate(allDates?.[0]?.localDate)) ||
-        (allDates?.[0]?.startTime === null &&
-          new Date(allDates?.[0]?.localDate) < today)
+        (currentDate?.startTime === null &&
+          isSameDate(currentDate?.localDate)) ||
+        (currentDate?.startTime === null &&
+          new Date(currentDate?.localDate) < today)
+        // (allDates?.[0]?.startTime === null &&
+        //   isSameDate(allDates?.[0]?.localDate)) ||
+        // (allDates?.[0]?.startTime === null &&
+        //   new Date(allDates?.[0]?.localDate) < today)
       ) {
         setAppointmentStart('START');
-        setCurrentDate(allDates?.[0]);
+        // setCurrentDate(allDates?.[0]);
       } else if (
         allDates?.[0]?.startTime !== null &&
         allDates?.[1]?.stopTime === null &&
@@ -310,13 +320,15 @@ const ActivityHeader = (props: {
         setAppointmentStart('UPCOMING');
       } else if (
         currentDate?.startTime === null &&
-        isSameDate(currentDate?.localDate)
+        (isSameDate(currentDate?.localDate) ||
+          datePassed(currentDate?.localDate))
       ) {
         setAppointmentStart('START');
       } else if (
         currentDate?.startTime !== null &&
         currentDate?.stopTime === null &&
-        isSameDate(currentDate?.localDate)
+        (isSameDate(currentDate?.localDate) ||
+          datePassed(currentDate?.localDate))
       ) {
         setAppointmentStart('STOP');
       } else if (isDateNotFound(allDates)) {
@@ -357,21 +369,22 @@ const ActivityHeader = (props: {
               startTime: new Date().toISOString(),
             });
             if (startRes.ok) {
+              setCurrentDate(startRes?.data?.data);
+              setAppointmentStart('STOP');
+              const payloadData: any = {
+                sender: user?.userId,
+                group: proposedServiceInfo?.messageGroupId,
+                opk: proposedServiceInfo?.appointmentOpk,
+                content: `${proposedServiceInfo.providerName} has started appointment for ${currentDate.localDate}`,
+                createdAt: new Date(),
+              };
+              socket.emit('send-message', payloadData);
               if (proposedServiceInfo.serviceTypeId === 5) {
                 navigation.navigate('ReportCardInitial', {
                   screen: 'InboxNavigator',
                   appointmentId: currentDate?.id,
                 });
               }
-              setCurrentDate(startRes?.data?.data);
-              const payloadData: any = {
-                sender: user?.userId,
-                group: proposedServiceInfo?.messageGroupId,
-                content: `${proposedServiceInfo.providerName} has started appointment`,
-                createdAt: new Date(),
-              };
-              socket.emit('send-message', payloadData);
-              setAppointmentStart('STOP');
             }
           },
         },
@@ -404,7 +417,8 @@ const ActivityHeader = (props: {
               const payloadData: any = {
                 sender: user?.userId,
                 group: proposedServiceInfo?.messageGroupId,
-                content: `${proposedServiceInfo.providerName} has completed appointment`,
+                opk: proposedServiceInfo?.appointmentOpk,
+                content: `${proposedServiceInfo.providerName} has completed appointment for ${currentDate.localDate}`,
                 createdAt: new Date(),
               };
               socket.emit('send-message', payloadData);
@@ -439,17 +453,26 @@ const ActivityHeader = (props: {
   };
   const handleStatus = () => {
     if (appointmentStart === 'UPCOMING') {
-      Alert.alert('You appointment is coming soon');
+      Alert.alert('Appointment Status!', 'You appointment is coming soon');
     } else if (appointmentStart === 'NOAPPOINTMENT') {
-      Alert.alert('You have no appointment on this particular day');
+      Alert.alert(
+        'Appointment Status!',
+        'You have no appointment on this particular day',
+      );
     } else if (appointmentStart === 'INPROGRESS') {
-      Alert.alert('Your appointment is in progress');
+      Alert.alert('Appointment Status!', 'Your appointment is in progress');
     } else if (appointmentStart === 'ENDED') {
-      Alert.alert('Your appointment date has already been passed.');
+      Alert.alert(
+        'Appointment Status!',
+        'Your appointment date has already been passed.',
+      );
     } else if (appointmentStart === 'PAST') {
-      Alert.alert('Your appointment has been passed.');
+      Alert.alert('Appointment Status!', 'Your appointment has been passed.');
     } else if (appointmentStart === 'COMPLETED') {
-      Alert.alert('Your appointment has completed.');
+      Alert.alert(
+        'Appointment Status!',
+        'Your have completed appointment for your side.',
+      );
     } else {
       Alert.alert('No sure about the status');
     }
@@ -667,7 +690,7 @@ const ActivityHeader = (props: {
                           loading || getLoading
                             ? 'loading...'
                             : appointmentStart === 'START'
-                            ? 'Start Appointment'
+                            ? `Start Appointment - ${currentDate.localDate}`
                             : appointmentStart === 'STOP'
                             ? 'Complete Appointment'
                             : appointmentStart === 'ENDED'

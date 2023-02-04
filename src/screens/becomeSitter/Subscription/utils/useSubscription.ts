@@ -108,36 +108,3 @@ export const useSubscription = (opk: string) => {
     // cardLoading,
   };
 };
-// if (sequence === 1) {
-//   setSSloading(true);
-//   const result: ApiResponse<any> = await methods._get(endpoint);
-
-//   const cardResponse = await cardRequest(defaultCardEndpoint);
-//   if (result.ok && cardResponse.ok) {
-//     if (
-//       result.data.data.needPayment === true &&
-//       cardResponse.status === 200
-//     ) {
-//       navigation.navigate('PaymentMethod', {
-//         sequence: sequence,
-//       });
-//       setSSloading(false);
-//     } else if (result.data.data.needPayment === false) {
-//       const cardId = cardResponse?.data?.data.id;
-//       const subscriptionResult = await request(
-//         `${subscriptionEndpoint}priceId=${sequence}&cardId=${cardId}`,
-//         {},
-//         uuid,
-//       );
-//       subscriptionResult.ok &&
-//         (await dispatch(getCurrentplan()),
-//         // @ts-ignore
-//         navigation.navigate('SubscriptionScreen'));
-//       setSSloading(false);
-//     }
-//   } else {
-//     // @ts-ignore
-//     navigation.navigate('PaymentMethod', {sequence: sequence});
-//     setSSloading(false);
-//   }
-// } else {}

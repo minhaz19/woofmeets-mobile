@@ -1,72 +1,145 @@
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import React, {useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {setBoardingScreen, setCurrentScreen, setProfileScreen} from '../../../../store/slices/onBoarding/initial';
-import {useAppDispatch} from '../../../../store/store';
+import {
+  setBoardingScreen,
+  setCurrentScreen,
+  setProfileScreen,
+} from '../../../../store/slices/onBoarding/initial';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';
-
 const LandingCard = (props: {
-  item: {inProgress: any; isCompleted: any; title: any; id: any};
+  item: {
+    inProgress: any;
+    isCompleted: any;
+    title: any;
+    id: any;
+  };
+  disable: boolean;
+  completed: boolean;
 }) => {
   const {inProgress, isCompleted, title, id} = props.item;
   const [loading, setLoading] = useState<boolean>(false);
+
+  const {sitterData} = useAppSelector(state => state.initial);
   const dispatch = useAppDispatch();
+  // const handleSubmit = async () => {
+
+  //   if (id !== 2 && !sitterData[id - 2].isCompleted) {
+  //     Alert.alert(
+  //       'Warning!',
+  //       `Please complete "${
+  //         'STEP-' +
+  //         sitterData[id - 3].id +
+  //         ' : ' +
+  //         sitterData[id - 2].title.toUpperCase()
+  //       }" first to move forward. Thanks!`,
+  //     );
+  //   } else if (id === 2 && !sitterData[0].isCompleted) {
+  //     Alert.alert(
+  //       'Warning!',
+  //       `Please complete "${
+  //         'STEP-' +
+  //         sitterData[id - 3].id +
+  //         ' : ' +
+  //         sitterData[id - 2].title.toUpperCase()
+  //       }" first to move forward. Thanks!`,
+  //     );
+  //   } else {
+  //     setLoading(true);
+  //     dispatch(setCurrentScreen({pass: id - 1}));
+  //     dispatch(setProfileScreen({pass: 0}));
+  //     dispatch(setBoardingScreen({pass: 0}));
+  //     setLoading(false);
+  //   }
+  // };
   const handleSubmit = async () => {
+    // if (!sitterData[id - 2].isCompleted) {
+    //   Alert.alert(
+    //     'Warning!',
+    //     `Please complete "${
+    //       'STEP-' +
+    //       sitterData[id - 3].id +
+    //       ' : ' +
+    //       sitterData[id - 2].title.toUpperCase()
+    //     }" first to move forward. Thanks!`,
+    //   );
+    // } else {
     setLoading(true);
     dispatch(setCurrentScreen({pass: id - 1}));
     dispatch(setProfileScreen({pass: 0}));
     dispatch(setBoardingScreen({pass: 0}));
     setLoading(false);
+    // }
   };
+  const id_ = id === 1 ? '*' : id - 1;
   return (
-    <TouchableOpacity style={{...styles.cardContainer}} onPress={handleSubmit}>
-      <View style={styles.leftContainer}>
-        {inProgress ? (
-          <View style={styles.middleContainer}>
-            <View
-              style={{
-                ...styles.numberViewContainer,
-                backgroundColor: Colors.primary,
-              }}>
-              <TitleText
-                text={id}
-                textStyle={{
-                  ...styles.numberStyle,
-                  color: Colors.light.background,
-                }}
-              />
-            </View>
+    <TouchableOpacity
+      style={{...styles.cardContainer}}
+      onPress={handleSubmit}
+      disabled={props?.disable}>
+      {inProgress ? (
+        <View style={styles.middleContainer}>
+          <View
+            style={{
+              ...styles.numberViewContainer,
+              backgroundColor: Colors.primary,
+            }}>
             <TitleText
-              text={title}
-              textStyle={{...styles.textStyle, color: Colors.primary}}
+              text={id_}
+              textStyle={{
+                ...styles.numberStyle,
+                fontSize: id_ === '*' ? Text_Size.Text_5 : Text_Size.Text_8,
+                color: Colors.light.background,
+              }}
             />
           </View>
-        ) : (
-          isCompleted && (
+          <TitleText
+            text={title}
+            textStyle={{...styles.textStyle, color: Colors.primary}}
+          />
+        </View>
+      ) : (
+        props?.completed &&
+        id !== 1 && (
+          <>
             <AntDesign
               name="checkcircle"
               size={22}
               color={Colors.primary}
               style={styles.iconStyle}
             />
-          )
-        )}
-      </View>
-
-      {!isCompleted && !inProgress && (
+            {/* <View
+              style={{
+                ...styles.numberViewContainer,
+                backgroundColor: Colors.light.subText,
+              }}>
+              <TitleText
+                text={id_}
+                textStyle={{
+                  ...styles.numberStyle,
+                  color: Colors.light.background,
+                }}
+              />
+            </View> */}
+          </>
+        )
+      )}
+      {!props?.completed && !inProgress && (
         <View style={styles.rightContainer}>
           <View
             style={{
               ...styles.numberViewContainer,
-              backgroundColor: isCompleted
-                ? Colors.primary
-                : Colors.light.subText,
+              backgroundColor: Colors.subText,
+              // backgroundColor: isCompleted
+              //   ? Colors.primary
+              //   : Colors.light.subText,
             }}>
             <TitleText
-              text={id}
+              text={id_}
               textStyle={{
                 ...styles.numberStyle,
                 color: Colors.light.background,
@@ -82,7 +155,6 @@ const LandingCard = (props: {
 const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: 'row',
-    // justifyContent: 'space-between',
   },
   textStyle: {
     fontWeight: '500',
@@ -97,7 +169,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
     height: SCREEN_WIDTH < 380 ? 20 : SCREEN_WIDTH < 600 ? 24 : 28,
-    width: 22,
+    width: SCREEN_WIDTH < 380 ? 20 : SCREEN_WIDTH < 600 ? 24 : 28,
     borderRadius: 100,
     flexDirection: 'row',
   },
@@ -111,13 +183,9 @@ const styles = StyleSheet.create({
   middleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  rightContainer: {
-    // alignItems: 'flex-end',
-    // alignSelf: 'flex-end',
-    // alignContent: 'flex-end',
-    justifyContent: 'flex-end',
-  },
+  rightContainer: {},
 });
 
 export default LandingCard;

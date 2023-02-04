@@ -2,27 +2,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, FlatList, Platform} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  FlatList,
+  Platform,
+} from 'react-native';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import TitleText from '../../components/common/text/TitleText';
 import DescriptionText from '../../components/common/text/DescriptionText';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
-import { emptyNotificationsData, getNotifications } from '../../store/slices/notifications/notificationsSlice';
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import {
+  emptyNotificationsData,
+  getNotifications,
+} from '../../store/slices/notifications/notificationsSlice';
+import {useAppDispatch, useAppSelector} from '../../store/store';
 import FetchMoreLoader from '../../components/common/Loaders/FetchMoreLoader';
 
 const Notifications = () => {
   const dispatch = useAppDispatch();
-  const {notificationsData, totalNotifications, footerLoading, loading} = useAppSelector((state: { notification: any; }) => state.notification);
+  const {notificationsData, totalNotifications, footerLoading, loading} =
+    useAppSelector((state: {notification: any}) => state.notification);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {colors} = useTheme();
 
-
   const loadMore = () => {
-    if (totalNotifications?.total % notificationsData?.length !== 0 ) {
+    if (totalNotifications?.total % notificationsData?.length !== 0) {
       setCurrentPage(prev => prev + 1);
     }
   };
@@ -37,8 +46,7 @@ const Notifications = () => {
 
   useEffect(() => {
     dispatch(emptyNotificationsData());
-  },[]);
-
+  }, []);
   return (
     <View
       style={[
@@ -91,10 +99,17 @@ const Notifications = () => {
           onEndReachedThreshold={0.02}
         />
       )}
-      {notificationsData.length === 0 && (!loading && <TitleText text={'You have no notifications right now'} textStyle={{color: Colors.gray, textAlign: 'center'}} />)}
-      {loading && <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <FetchMoreLoader width={Platform.OS === 'ios' ? '20%' : '25%'} />
-      </View>}
+      {notificationsData.length === 0 && !loading && (
+        <TitleText
+          text={'You have no notifications right now'}
+          textStyle={{color: Colors.gray, textAlign: 'center'}}
+        />
+      )}
+      {loading && (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <FetchMoreLoader width={Platform.OS === 'ios' ? '20%' : '25%'} />
+        </View>
+      )}
       <View style={{height: 40}} />
     </View>
   );

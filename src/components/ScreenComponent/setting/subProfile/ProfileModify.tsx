@@ -58,9 +58,9 @@ const ProfileModify = (props: {
     },
   ];
 
-  useEffect(() => {
-    dispatch(getSitterDetails());
-  }, [])
+  // useEffect(() => {
+  //   dispatch(getSitterDetails());
+  // }, [])
   return (
     <View
       style={[

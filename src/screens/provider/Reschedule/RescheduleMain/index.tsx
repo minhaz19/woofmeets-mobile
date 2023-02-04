@@ -35,7 +35,9 @@ const RescheduleMain = () => {
           ListFooterComponent={<BottomSpacing />}
         />
       </View>
-      <BottomHalfModal isModalVisible={modalVisible} setIsModalVisible={setModalVisible}>
+      <BottomHalfModal
+        isModalVisible={modalVisible}
+        setIsModalVisible={setModalVisible}>
         {viewDetails ? (
           <ServiceSelection
             setModalVisible={setModalVisible}

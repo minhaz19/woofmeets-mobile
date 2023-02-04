@@ -277,14 +277,14 @@ const PetCareZipSearch = (props: {
   const {colors} = useTheme();
   const backgroundStyle = {
     backgroundColor: colors.backgroundColor,
-    marginBottom: 20,
+    marginBottom: 0,
   };
   const RenderHeader = () => {
     return (
       <View>
         <View style={{paddingHorizontal: 20, paddingBottom: 20}}>
           {isLoggedIn && !user?.timezone ? (
-            <View style={[styles.boxContainerIn, backgroundStyle]}>
+            <View style={[styles.boxContainerIn, {marginBottom: 10}]}>
               <ShortText
                 text={
                   'Action Required! Please set your preferred time zone to continue.'
@@ -307,7 +307,7 @@ const PetCareZipSearch = (props: {
             user?.provider?.isApproved &&
             userOnboardStatus?.userStripeConnectAccount?.requirements?.errors
               ?.length !== 0 && (
-              <View style={[styles.boxContainerIn, backgroundStyle]}>
+              <View style={[styles.boxContainerIn]}>
                 <ShortText
                   text={'Action Required! Please set your payments and payout'}
                   textStyle={{color: Colors.red}}
@@ -471,8 +471,11 @@ const styles = StyleSheet.create({
     // paddingHorizontal: '10%'
   },
   boxContainerIn: {
-    padding: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     borderWidth: 1,
+    borderColor: Colors.border,
+    // backgroundColor: Colors.lightShade,
   },
   textHeader: {
     fontSize: Text_Size.Text_1,

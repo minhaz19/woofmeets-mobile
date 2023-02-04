@@ -1,6 +1,6 @@
 export const YourHomeData = [
   {
-    title: 'What type of home do you live in?',
+    title: 'What type of home do you live in? (Optional)',
     name: 'homeType',
     id: 1,
     radio: true,
@@ -12,7 +12,7 @@ export const YourHomeData = [
     ],
   },
   {
-    title: 'What type of yard do you have?',
+    title: 'What type of yard do you have? (Optional)',
     name: 'yardType',
     id:2,
     radio: true,
