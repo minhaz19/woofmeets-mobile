@@ -21,8 +21,8 @@ const signUpValidationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
   password: Yup.string()
     .required('No password provided.')
-    .min(6, 'Too short - should be min 6 character.')
-    .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
+    .min(6, 'Too short - should be min 6 character.'),
+  // .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   terms: Yup.boolean()
     .required('The terms and conditions must be accepted.')
     .oneOf([true], 'The terms and conditions must be accepted.'),
@@ -32,8 +32,8 @@ const setPasswordValidationSchema = Yup.object().shape({
   oldPassword: Yup.string().required().min(6).label('Old Password'),
   newPassword: Yup.string()
     .required('No password provided.')
-    .min(6, 'Too short - should be min 6 character.')
-    .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
+    .min(6, 'Too short - should be min 6 character.'),
+  // .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   confirmPassword: Yup.string()
     .label('confirm password')
     .required()
@@ -42,8 +42,8 @@ const setPasswordValidationSchema = Yup.object().shape({
 const forgotPasswordResetValidationSchema = Yup.object().shape({
   newPassword: Yup.string()
     .required('No password provided.')
-    .min(6, 'Too short - should be min 6 character.')
-    .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
+    .min(6, 'Too short - should be min 6 character.'),
+  // .matches(/[a-zA-Z]/, 'Provide letters and numbers.'),
   confirmPassword: Yup.string()
     .label('confirm password')
     .required()

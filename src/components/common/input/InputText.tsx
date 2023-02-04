@@ -1,4 +1,10 @@
-import {View, TextInput, StyleSheet, TextStyle, KeyboardTypeOptions} from 'react-native';
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  TextStyle,
+  KeyboardTypeOptions,
+} from 'react-native';
 import React from 'react';
 import Text_Size from '../../../constants/textScaling';
 import Colors from '../../../constants/Colors';
@@ -31,7 +37,12 @@ const InputText = (props: {
   const {colors} = useTheme();
   return (
     <View style={[styles.zipContainer, {...props.style}]}>
-      {props.title && <HeaderText text={props.title} />}
+      {props.title && (
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <HeaderText text={props.title} />
+          <HeaderText text={' *'} textStyle={{color: Colors.red}} />
+        </View>
+      )}
       {props.description && (
         <DescriptionText
           text={props.description}
@@ -43,7 +54,11 @@ const InputText = (props: {
         <View style={styles.iconView}>{props.leftIcon}</View>
         <TextInput
           allowFontScaling={false}
-          onChangeText={props.onChangeText ? props.onChangeText : pCode => props.setValue(pCode)}
+          onChangeText={
+            props.onChangeText
+              ? props.onChangeText
+              : pCode => props.setValue(pCode)
+          }
           style={[styles.text, {color: colors.headerText}]}
           placeholderTextColor={colors.placeholderTextColor}
           {...props}

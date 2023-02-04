@@ -1,7 +1,7 @@
 export const locationInput = [
   {
-    title: 'Address Line 1',
-    placeholder: 'Enter Address Line 1',
+    title: 'Address',
+    placeholder: 'Enter your address',
     name: 'addressLine1',
   },
   {

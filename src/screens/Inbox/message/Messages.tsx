@@ -142,7 +142,7 @@ const Messages = (props: {
               }}>
               <TitleText
                 text={
-                  'Sorry! we are unable to retribe message data. Appointment must be broken.'
+                  'Sorry! we are unable to retrieve message data. Appointment must be broken.'
                 }
                 textStyle={{
                   textAlign: 'center',
@@ -184,8 +184,8 @@ const Messages = (props: {
                           <TitleText
                             text={`${
                               user?.firstName + ' ' + user?.lastName
-                            } started a ${
-                              item?.attachment === 'AUDIO' ? 'audio' : 'video'
+                            } started ${
+                              item?.attachment === 'AUDIO' ? 'an audio' : 'a video'
                             } call.`}
                           />
                           <AppTouchableOpacity
@@ -253,8 +253,8 @@ const Messages = (props: {
                       {['VIDEO', 'AUDIO'].includes(item.attachment) && (
                         <View style={styles.messageContainer}>
                           <TitleText
-                            text={`${item.content.split(' ')[0]} started a ${
-                              item?.attachment === 'AUDIO' ? 'audio' : 'video'
+                            text={`${item.content.split(' ')[0]} started ${
+                              item?.attachment === 'AUDIO' ? 'an audio' : 'a video'
                             } call.`}
                           />
                           <AppTouchableOpacity

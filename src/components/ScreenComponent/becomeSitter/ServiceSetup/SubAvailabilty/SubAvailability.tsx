@@ -21,12 +21,14 @@ import Colors from '../../../../../constants/Colors';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
+import {useAppSelector} from '../../../../../store/store';
 
 interface Props {
   handlePost: (arg1: any) => void;
   loading: boolean;
 }
 const SubAvailability = ({handlePost, loading}: Props) => {
+  const {dayError} = useAppSelector(state => state.filter);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
     availabilitySelectDay.options,
@@ -58,7 +60,7 @@ const SubAvailability = ({handlePost, loading}: Props) => {
             <QuestionIcon fill={Colors.primary} />
           </TouchableOpacity>
         </View>
-        <View>
+        {/* <View>
           <HeaderText text={availabilityInput.title} />
           <View style={styles.fullTimeContainer}>
             {availabilityInput.options?.map((item, index) => {
@@ -80,7 +82,7 @@ const SubAvailability = ({handlePost, loading}: Props) => {
             })}
           </View>
           <ErrorMessage error={errors[availabilityInput.name!]?.message} />
-        </View>
+        </View> */}
         <View style={{marginTop: '3%'}}>
           <HeaderText
             text={availabilitySelectDay.title}
@@ -110,7 +112,7 @@ const SubAvailability = ({handlePost, loading}: Props) => {
                   onPress={() => {
                     handleMultipleCheck(item.id);
                     setValue(item.name, item.value, {
-                      shouldValidate: true,
+                      shouldValidate: false,
                     });
                   }}
                   name={item.name}
@@ -119,7 +121,8 @@ const SubAvailability = ({handlePost, loading}: Props) => {
               ),
             )}
           </View>
-          <ErrorMessage error={errors[availabilitySelectDay.name!]?.message} />
+
+          {dayError && <ErrorMessage error={'Day must be selected'} />}
         </View>
         <View style={styles.headerContainer}>
           <HeaderText text={availabilityHomeFullTimeInDay.title} />

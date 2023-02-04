@@ -14,7 +14,9 @@ export const useBasicInfo = (route: any) => {
   const {request, loading} = useApi(
     userInfo?.basicInfo === null ? methods._post : methods._update,
   );
-  const {request: locationRequest, loading: locationLoading} = useApi(methods._get);
+  const {request: locationRequest, loading: locationLoading} = useApi(
+    methods._get,
+  );
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: any) => {
@@ -72,17 +74,21 @@ export const useBasicInfo = (route: any) => {
         };
       }
     }
-    const result = await request(slug, formattedPayload);
-    if (result.ok) {
-      if (route?.name) {
-        navigation.goBack();
+    if (formattedPayload?.latitude && formattedPayload.longitude) {
+      const result = await request(slug, formattedPayload);
+      if (result.ok) {
+        if (route?.name) {
+          navigation.goBack();
+        }
+        dispatch(getUserProfileInfo());
+        dispatch(setProfileData({pass: 0}));
+      } else {
+        Alert.alert(result?.data?.message);
       }
-      dispatch(getUserProfileInfo());
-      dispatch(setProfileData({pass: 0}));
     } else {
-      Alert.alert(result?.data?.message);
+      Alert.alert('', 'Please select your specific address from dropdown');
     }
   };
 
-  return {loading, handleSubmit, locationLoading};
+  return {postUpdateLoading: loading, handleSubmit, locationLoading};
 };

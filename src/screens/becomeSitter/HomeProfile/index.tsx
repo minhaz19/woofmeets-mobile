@@ -20,10 +20,11 @@ import {
   DropInVisitIcon,
   HouseSittingIcon,
 } from '../../../assets/svgs/Services_SVG';
-import ButtonCom from '../../../components/UI/ButtonCom';
+// import ButtonCom from '../../../components/UI/ButtonCom';
 import {
   getOnboardingProgress,
   setSitterData,
+  setSelectedSetUpService,
 } from '../../../store/slices/onBoarding/initial';
 import {setServiceSetup} from '../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 import ServiceSetUp from '../ServiceSetUp';
@@ -95,7 +96,6 @@ const HomeProfile = () => {
   if (isBoardingSelected) {
     return <ServiceSetUp />;
   }
-
   return (
     <>
       {loading ? (
@@ -167,7 +167,12 @@ const HomeProfile = () => {
               (item: {
                 AvailableDay: any;
                 id: React.Key | null | undefined;
-                serviceType: {name: any; icon: string; description: any};
+                serviceType: {
+                  name: any;
+                  icon: string;
+                  description: any;
+                  slug: string;
+                };
                 serviceTypeId: React.Key | null | undefined;
                 providerServicesId: React.Key | null | undefined;
               }) => (
@@ -186,6 +191,10 @@ const HomeProfile = () => {
                       icon: 'chevron-right',
                       screen: () => {
                         dispatch(
+                          setSelectedSetUpService(item.serviceType.slug),
+                        );
+                        // dispatch(getOnboardingProgress(item.serviceType.slug));
+                        dispatch(
                           setServiceSetup({
                             routeData: {
                               itemId: item.id,
@@ -193,6 +202,7 @@ const HomeProfile = () => {
                               image: getIcon(item.serviceType.icon),
                               description: item.serviceType.description,
                               serviceId: item.serviceTypeId,
+                              serviceSlug: item.serviceType.slug,
                               providerServicesId: item.id,
                               service: item?.AvailableDay,
                             },

@@ -1,42 +1,43 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {ScrollView, StyleSheet, View} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
 import {getAvailability} from '../../../store/slices/onBoarding/setUpService/availability/getAvailability';
-import {getYourHome} from '../../../store/slices/onBoarding/setUpService/yourHome/getYourHome';
-import {getPetPreference} from '../../../store/slices/onBoarding/setUpService/petPreference/getPetPreference';
+import {setUpdateBoardingSelection} from '../../../store/slices/onBoarding/initial';
 
 const ServiceSetUp = () => {
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
-  const boardingSelection = useAppSelector(
-    (state: any) => state.initial.boardingSelection,
-  );
+  const {boardingSelection, individualServiceSublist, selectedService} =
+    useAppSelector((state: any) => state.initial);
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
+  // const [modBoardng, setModBoardng] = useState([]);
   const servicesData = serviceSetup ? serviceSetup.routeData : '';
-  const {service} = servicesData;
+  const {service, serviceSlug} = servicesData;
   const providerServiceId =
     service &&
     service.map((data: {providerServiceId: string}) => data.providerServiceId);
-  const {availability, loading: availabilityLoader} = useAppSelector(
-    (state: any) => state?.availability,
-  );
-  const {yourHome, loading: yourHomeLoader} = useAppSelector(
-    (state: any) => state?.yourHome,
-  );
-  const {petPreference, loading: petPreferenceLoader} = useAppSelector(
-    (state: any) => state?.petPreference,
-  );
 
   useEffect(() => {
     dispatch(getAvailability(providerServiceId[0]));
-    yourHome === null && dispatch(getYourHome());
-    petPreference === null && dispatch(getPetPreference());
-  }, [dispatch, petPreference, yourHome]);
+    // const newArray = [...boardingSelection];
+    // const newArray1 = [...boardingSelection];
+    // const a = newArray1?.map(v => {
+    //   return {
+    //     ...v,
+    //     isCompleted:
+    //       v.name === 'CANCELLATION_POLICY'
+    //         ? v?.isCompleted
+    //         : individualServiceSublist?.[serviceSlug]?.[v.name]?.complete,
+    //   };
+    // });
 
+    // a && dispatch(setUpdateBoardingSelection(a));
+    // a && setModBoardng(a);
+  }, [dispatch]);
   return (
     <>
       {/* {(availabilityLoader || yourHomeLoader || petPreferenceLoader) && (
@@ -50,9 +51,9 @@ const ServiceSetUp = () => {
         <ScrollView horizontal={true}>
           <View style={styles.innerContainer}>
             {/* completed */}
-            {boardingSelection.map(
+            {boardingSelection?.map(
               (item: any) =>
-                item.isCompleted && (
+                item?.isCompleted && (
                   <ProfileItemCard
                     key={item.id}
                     name={item.name}
@@ -66,9 +67,9 @@ const ServiceSetUp = () => {
                 ),
             )}
             {/* not completed */}
-            {boardingSelection.map(
+            {boardingSelection?.map(
               (item: any) =>
-                !item.isCompleted && (
+                !item?.isCompleted && (
                   <ProfileItemCard
                     key={item.id}
                     name={item.name}
@@ -83,7 +84,7 @@ const ServiceSetUp = () => {
             )}
           </View>
         </ScrollView>
-        {boardingSelection.map((item: any) => {
+        {boardingSelection?.map((item: any) => {
           if (item.inProgress) {
             return (
               <View key={item.id} style={{flex: 32}}>

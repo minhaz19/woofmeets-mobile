@@ -173,7 +173,8 @@ const GenerateReport = ({navigation, route}: Props) => {
             navigation.dispatch(
               StackActions.replace('ActivityScreen', {
                 appointmentOpk: proposedServiceInfo?.appointmentOpk,
-                screen: 'Inbox',
+                messageGroupId: proposedServiceInfo?.messageGroupId,
+                screen: 'InboxNavigator',
               }),
             );
           }
@@ -218,7 +219,8 @@ const GenerateReport = ({navigation, route}: Props) => {
               navigation.dispatch(
                 StackActions.replace('ActivityScreen', {
                   appointmentOpk: proposedServiceInfo?.appointmentOpk,
-                  screen: 'Inbox',
+                  messageGroupId: proposedServiceInfo?.messageGroupId,
+                  screen: 'InboxNavigator',
                 }),
               );
             }

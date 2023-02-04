@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {KeyboardAvoidingView, Platform} from 'react-native';
+import {KeyboardAvoidingView, Modal, Platform} from 'react-native';
 import {SafeAreaView, View} from 'react-native';
 import ActivityHeader from '../../../components/ScreenComponent/activity/ActivityHeader';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -20,6 +21,7 @@ import {apiMsg} from '../../../api/client';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import {API_MSG} from '@env';
+import storage from '../../../utils/helpers/auth/storage';
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
   route: {
@@ -27,6 +29,8 @@ const ActivityScreen = (props: {
       appointmentOpk: string;
       messageGroupId?: string;
       AppointmentTab?: boolean;
+      showReview?: boolean | false;
+      pendingReview?: boolean | undefined;
     };
   };
 }) => {
@@ -35,6 +39,8 @@ const ActivityScreen = (props: {
     appointmentOpk,
     messageGroupId: roomId,
     AppointmentTab,
+    showReview,
+    pendingReview,
   } = props?.route?.params;
   const {loading: petLoading} = useAppSelector(state => state.allPets);
   const {loading, proposal, proposedServiceInfo} = useAppSelector(
@@ -53,14 +59,21 @@ const ActivityScreen = (props: {
   const [isDetailsModal, setIsDetailsModal] = useState(false);
   const [isThreeDotsModal, setIsThreeDotsModal] = useState(false);
   const [isReviewModal, setIsReviewModal] = useState(false);
+  const [hasModalShown, setHasModalShown] = useState(false);
   const [messages, setMessages] = useState<any>([]);
   const [msgLoading, setMsgLoadng] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [visitId, setVisitId] = useState(null);
   const {request} = useApi(methods._get);
   const readMessages = async () => {
+    const authToken = await storage.getToken();
     await request(
       `${API_MSG}/v1/messages/users/${user.id}/groups/${roomId}/read-messages`,
+      {
+        headers: {
+          Authorization: authToken,
+        },
+      },
     );
   };
   const getPreviousMessages = async () => {
@@ -91,9 +104,7 @@ const ActivityScreen = (props: {
     dispatch(getAppointmentCard(appointmentOpk));
     getPreviousMessages();
     readMessages();
-  }, []);
-
-  useEffect(() => {
+    // setIsReviewModal(true);
     const trackMessages = (data: any) => {
       if (data?.group === roomId) {
         setMessages((prevMess: any) => [...prevMess, data]);
@@ -103,14 +114,43 @@ const ActivityScreen = (props: {
     return () => {
       socket.off('message', trackMessages);
     };
-  }, [roomId]);
-  return (
+  }, []);
+
+  // useEffect(() => {
+  //   const trackMessages = (data: any) => {
+  //     if (data?.group === roomId) {
+  //       setMessages((prevMess: any) => [...prevMess, data]);
+  //     }
+  //   };
+  //   socket.on('message', trackMessages);
+  //   return () => {
+  //     socket.off('message', trackMessages);
+  //   };
+  // }, [roomId]);
+  useEffect(() => {
+    if (showReview) {
+      setIsReviewModal(true);
+    } else if (
+      !pendingReview &&
+      !hasModalShown &&
+      reviewGiven?.length === 0 &&
+      proposedServiceInfo?.status === 'COMPLETED'
+    ) {
+      setIsReviewModal(true);
+      // setHasModalShown(true);
+    } else {
+      setIsReviewModal(false);
+      // setHasModalShown(true);
+    }
+    return () => {
+      setHasModalShown(false);
+    };
+  }, [showReview, proposedServiceInfo]);
+  // }, [showReview, proposedServiceInfo]);
+  return loading || petLoading || providerLoading ? (
+    <AppActivityIndicator visible={loading || petLoading || providerLoading} />
+  ) : (
     <>
-      {(loading || petLoading || providerLoading) && (
-        <AppActivityIndicator
-          visible={loading || petLoading || providerLoading}
-        />
-      )}
       <View
         style={{
           ...styles.rootContainer,
@@ -129,41 +169,7 @@ const ActivityScreen = (props: {
                 proposedServiceInfo={proposedServiceInfo}
                 AppointmentTab={AppointmentTab}
               />
-              <BottomHalfModal
-                isModalVisible={isDetailsModal}
-                setIsModalVisible={setIsDetailsModal}>
-                <Details
-                  setIsDetailsModal={setIsDetailsModal}
-                  setModalVisible={function (): void {
-                    throw new Error('Function not implemented.');
-                  }}
-                />
-              </BottomHalfModal>
-              <BottomHalfModal
-                isModalVisible={isThreeDotsModal}
-                setIsModalVisible={setIsThreeDotsModal}>
-                <ThreeDotsModal
-                  setIsThreeDotsModal={setIsThreeDotsModal}
-                  setIsReviewModal={setIsReviewModal}
-                  isReviewed={reviewGiven}
-                  appointmentId={visitId}
-                  opk={appointmentOpk}
-                  setModalVisible={function (): void {
-                    throw new Error('Function not implemented.');
-                  }}
-                />
-              </BottomHalfModal>
-              <BottomHalfModal
-                isModalVisible={isReviewModal}
-                setIsModalVisible={setIsReviewModal}>
-                <Review
-                  setIsReviewModal={setIsReviewModal}
-                  appointmentId={proposal?.appointment?.id}
-                  setModalVisible={function (): void {
-                    throw new Error('Function not implemented.');
-                  }}
-                />
-              </BottomHalfModal>
+
               <Messages
                 refreshing={refreshing}
                 onRefresh={onRefresh}
@@ -177,6 +183,62 @@ const ActivityScreen = (props: {
           </KeyboardAvoidingView>
         </SafeAreaView>
       </View>
+      <BottomHalfModal
+        isModalVisible={isDetailsModal}
+        setIsModalVisible={setIsDetailsModal}>
+        <Details
+          setIsDetailsModal={setIsDetailsModal}
+          setModalVisible={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </BottomHalfModal>
+      <BottomHalfModal
+        isModalVisible={isThreeDotsModal}
+        setIsModalVisible={setIsThreeDotsModal}>
+        <ThreeDotsModal
+          setIsThreeDotsModal={setIsThreeDotsModal}
+          setIsReviewModal={setIsReviewModal}
+          isReviewed={reviewGiven}
+          appointmentId={visitId}
+          opk={appointmentOpk}
+          setModalVisible={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </BottomHalfModal>
+      <Modal
+        animationType="slide"
+        presentationStyle="pageSheet"
+        // isModalVisible={isReviewModal}
+
+        visible={isReviewModal}>
+        <View
+          style={{
+            padding: 20,
+          }}>
+          <Review
+            setIsReviewModal={setIsReviewModal}
+            setHasModalShown={setHasModalShown}
+            appointmentId={proposal?.appointment?.id}
+            setModalVisible={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        </View>
+      </Modal>
+      {/* <BottomHalfModal
+        // isModalVisible={isReviewModal}
+        isModalVisible={isReviewModal}
+        setIsModalVisible={setIsReviewModal}>
+        <Review
+          setIsReviewModal={setIsReviewModal}
+          appointmentId={proposal?.appointment?.id}
+          setModalVisible={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </BottomHalfModal> */}
     </>
   );
 };

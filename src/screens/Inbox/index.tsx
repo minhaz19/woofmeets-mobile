@@ -61,7 +61,11 @@ const Inbox = () => {
     const status_ = statusState ?? status.value;
     const url =
       userType === 'USER'
-        ? `${API_URL}/v3/appointment/inbox?status=${status_}&page=${page_}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+        ? status_ === 'PENDING_REVIEW'
+          ? `/appointment/inbox/pending-review?page=${page_}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+          : `${API_URL}/v3/appointment/inbox?status=${status_}&page=${page_}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+        : status_ === 'PENDING_REVIEW'
+        ? `/appointment/inbox/pending-review/provider?page=${page_}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`
         : `${API_URL}/v3/appointment/provider/inbox?status=${status_}&page=${page_}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
     const response: ApiResponse<any> = await request(
       url,
@@ -80,6 +84,7 @@ const Inbox = () => {
       return;
     }
   };
+
   useEffect(() => {
     if (back) {
       const source = CancelToken.source(); // <-- 1st step
@@ -92,13 +97,7 @@ const Inbox = () => {
       navigation.setParams({back: false});
     }
   }, [back, active, status]);
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     return () => {
-  //       setUnFocused(true);
-  //     };
-  //   }, [unFocused]),
-  // );
+
   useEffect(() => {
     const source = CancelToken.source(); // <-- 1st step
     fetchDataa(active, source);
@@ -141,11 +140,6 @@ const Inbox = () => {
               alignItems: 'center',
               marginHorizontal: 20,
             }}>
-            {/* Filter Button */}
-            {/* <TitleText
-              text={`${status.title} Appointment`}
-              textStyle={{fontWeight: 'bold', fontSize: Text_Size.Text_1}}
-            /> */}
             <View
               style={{
                 // flex: 0,
@@ -168,14 +162,7 @@ const Inbox = () => {
                   textStyle={{fontWeight: 'bold', marginRight: 10}}
                   text={activeStatus}
                 />
-                {/* <Ion
-                  name="filter"
-                  size={
-                    SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
-                  }
-                  style={styles.iconStyle}
-                  color={Colors.primary}
-                /> */}
+
                 <Icon
                   name="chevron-down"
                   size={
@@ -214,6 +201,7 @@ const Inbox = () => {
               handleLoadMore={handleLoadMore}
               loading={loading}
               onRefresh={onRefresh}
+              pendingReview={status.value === 'PENDING_REVIEW' ? true : false}
             />
           </View>
           <View>

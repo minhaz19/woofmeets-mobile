@@ -1,11 +1,15 @@
 import {useState} from 'react';
 import {useFormContext} from 'react-hook-form';
+import {setDayError} from '../../../../../store/slices/misc/openFilter';
+import {useAppDispatch} from '../../../../../store/store';
 
 export const useHandleMultipleActiveCheck = (data: any) => {
+  const dispatch = useAppDispatch();
   const {getValues} = useFormContext();
   const {sat, sun, mon, tue, thu, wed, fri} = getValues();
   const [newData, setData] = useState(data);
   const handleMultipleCheck = (id: any) => {
+    dispatch(setDayError(false));
     const newArray = [...data];
     const index = newArray.findIndex(item => item.id === id);
     newArray[index].value =
@@ -31,4 +35,3 @@ export const useHandleMultipleActiveCheck = (data: any) => {
     newData,
   };
 };
-

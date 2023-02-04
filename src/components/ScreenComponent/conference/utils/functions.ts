@@ -75,9 +75,7 @@ export const usePeerTrackNodes = (
         hmsInstanceRef.current = null;
         navigation.navigate('InboxNavigator');
       }
-    } catch (error) {
-      console.log('Leave or Destroy Error: ', error);
-    }
+    } catch (error) {}
   };
   const getTrackSettings = () => {
     let audioSettings = new HMSAudioTrackSettings({
@@ -193,8 +191,6 @@ export const usePeerTrackNodes = (
   const onErrorListener = (error: {code: any; description: any}) => {
     setLoading(false);
     setJoinButtonLoading(false);
-
-    console.log(`${error?.code} ${error?.description}`);
   };
 
   const onPreviewSuccess = (
@@ -302,19 +298,12 @@ export const checkPermissions = async (permissions: any[]) => {
       (permission: {toString: () => any}) =>
         permission.toString() !== PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
     );
-
     const results = await requestMultiple(requiredPermissions);
-
     let allPermissionsGranted = true;
     for (let permission in requiredPermissions) {
       if (!(results[requiredPermissions[permission]] === RESULTS.GRANTED)) {
         allPermissionsGranted = false;
       }
-      console.log(
-        `${requiredPermissions[permission]} : ${
-          results[requiredPermissions[permission]]
-        }`,
-      );
     }
 
     // Bluetooth Connect Permission handling
@@ -327,14 +316,10 @@ export const checkPermissions = async (permissions: any[]) => {
       const bleConnectResult = await request(
         PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
       );
-      console.log(
-        `${PERMISSIONS.ANDROID.BLUETOOTH_CONNECT} : ${bleConnectResult}`,
-      );
     }
 
     return allPermissionsGranted;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };

@@ -16,7 +16,6 @@ export const useHandleMultipleActiveCheck = (data: any) => {
     });
   }
   const [newData, setData] = useState(newArray1);
-
   const handleMultipleCheck = (id: any) => {
     const newArray = [...newData];
     const index = newArray.findIndex(item => item.id === id);

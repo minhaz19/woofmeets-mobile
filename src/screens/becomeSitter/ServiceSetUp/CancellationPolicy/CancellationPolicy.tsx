@@ -1,4 +1,4 @@
-import {RefreshControl, StyleSheet} from 'react-native';
+import {Alert, RefreshControl, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import {useApi} from '../../../../utils/helpers/api/useApi';
@@ -22,6 +22,7 @@ interface Props {
   route: any;
 }
 const CancellationPolicy = ({navigation, route}: Props) => {
+  const {boardingSelection} = useAppSelector(state => state.initial);
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {policy, singleProviderPolicy, loading} = useAppSelector(
     (state: any) => state?.cancellationPolicy,
@@ -38,12 +39,43 @@ const CancellationPolicy = ({navigation, route}: Props) => {
 
   // post policy id
   const {request: postRequest, loading: postLoading} = useApi(methods._post);
+
   const handlePolicy = async (e: any) => {
+    // const text =
+    //   (!boardingSelection[0]?.isCompleted
+    //     ? boardingSelection[0]?.title.toUpperCase()
+    //     : '') +
+    //   (!boardingSelection[0]?.isCompleted ? ', ' : '') +
+    //   (!boardingSelection[1]?.isCompleted
+    //     ? boardingSelection[1]?.title.toUpperCase()
+    //     : '');
+    // if (
+    //   !boardingSelection[0].isCompleted ||
+    //   !boardingSelection[1].isCompleted
+    // ) {
+    //   Alert.alert(
+    //     'Warning!',
+    //     `Please complete "${text}" to move forward. Thanks!`,
+    //   );
+    // } else {
+    //   const postPoint = `/cancellation-policy/provider-policy/${e.policyId}`;
+    //   const result = await postRequest(postPoint);
+    //   if (result?.data?.data) {
+    //     dispatch(setBoardingSelection({pass: 2}));
+    //     dispatch(setSitterData({pass: 1}));
+
+    //     if (route.name === 'CancellationPolicyScreen') {
+    //       navigation.goBack();
+    //     }
+    //   }
+    // }
     const postPoint = `/cancellation-policy/provider-policy/${e.policyId}`;
     const result = await postRequest(postPoint);
     if (result?.data?.data) {
       dispatch(setBoardingSelection({pass: 2}));
+
       dispatch(setSitterData({pass: 1}));
+
       if (route.name === 'CancellationPolicyScreen') {
         navigation.goBack();
       }

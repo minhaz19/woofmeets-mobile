@@ -18,7 +18,7 @@ export const useYourHomeUtils = () => {
     setAttributes(result?.data?.data);
   };
   useEffect(() => {
-    handleGetResponse();
+    // handleGetResponse();
     handleGetAttributes();
   }, []);
   return {homeData, getLoading, attributes};

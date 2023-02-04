@@ -15,7 +15,6 @@ import TitleText from '../../common/text/TitleText';
 import Colors from '../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../constants/WindowSize';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Feather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
 import HeaderText from '../../common/text/HeaderText';
 import DescriptionText from '../../common/text/DescriptionText';
@@ -40,9 +39,7 @@ import {
   request as requestPermission,
 } from 'react-native-permissions';
 import {socket} from '../../../../App';
-import {useAudioVideoCall} from './utils/useAudioVideoCall';
 import {getAppointmentCard} from '../../../store/slices/Appointment/AppointmentCard/getAppointmentCard';
-import AppActivityIndicator from '../../common/Loaders/AppActivityIndicator';
 // import {
 //   dateEquOrPassed,
 //   datePassed,
@@ -81,7 +78,6 @@ const ActivityHeader = (props: {
   const [allDates, setAllDates] = useState<any>([]);
   const user = useAppSelector(state => state.whoAmI);
   const timezone = proposedServiceInfo?.providerTimeZone;
-  // const [socket, setSocket] = useState<any>(null);
   const today = new Date();
   function isSameDate(date: string) {
     if (
@@ -168,6 +164,7 @@ const ActivityHeader = (props: {
                 // dispatch(getProviderApnt('PAID'));
                 const payloadData: any = {
                   sender: user?.userId,
+                  opk: proposedServiceInfo?.appointmentOpk,
                   group: proposedServiceInfo?.messageGroupId,
                   content: `${proposedServiceInfo.userName} has successfully ended the appointment`,
                   createdAt: new Date(),
@@ -224,8 +221,10 @@ const ActivityHeader = (props: {
       setAllDates(appointmentCard);
       const findData = appointmentCard?.find(
         (d: any) =>
-          isSameDate(d?.localDate) &&
-          (d?.startTime === null || d?.stopTime === null),
+          (isSameDate(d?.localDate) &&
+            (d?.startTime === null || d?.stopTime === null)) ||
+          d?.startTime === null ||
+          d?.stopTime === null,
       );
       if (findData === undefined) {
         const findOtherDate = appointmentCard?.find(
@@ -240,11 +239,15 @@ const ActivityHeader = (props: {
       } else if (
         findData &&
         findData !== undefined &&
-        isSameDate(findData.localDate)
+        (isSameDate(findData.localDate) ||
+          datePassed(findData.localDate) ||
+          isComing(findData.localDate))
       ) {
         setCurrentDate(findData);
         setOtherDay({});
         props.setVisitId(findData.id);
+      } else {
+    
       }
     }
   }, [appointmentCard]);
@@ -260,13 +263,17 @@ const ActivityHeader = (props: {
       ) {
         setAppointmentStart('UPCOMING');
       } else if (
-        (allDates?.[0]?.startTime === null &&
-          isSameDate(allDates?.[0]?.localDate)) ||
-        (allDates?.[0]?.startTime === null &&
-          new Date(allDates?.[0]?.localDate) < today)
+        (currentDate?.startTime === null &&
+          isSameDate(currentDate?.localDate)) ||
+        (currentDate?.startTime === null &&
+          new Date(currentDate?.localDate) < today)
+        // (allDates?.[0]?.startTime === null &&
+        //   isSameDate(allDates?.[0]?.localDate)) ||
+        // (allDates?.[0]?.startTime === null &&
+        //   new Date(allDates?.[0]?.localDate) < today)
       ) {
         setAppointmentStart('START');
-        setCurrentDate(allDates?.[0]);
+        // setCurrentDate(allDates?.[0]);
       } else if (
         allDates?.[0]?.startTime !== null &&
         allDates?.[1]?.stopTime === null &&
@@ -313,13 +320,15 @@ const ActivityHeader = (props: {
         setAppointmentStart('UPCOMING');
       } else if (
         currentDate?.startTime === null &&
-        isSameDate(currentDate?.localDate)
+        (isSameDate(currentDate?.localDate) ||
+          datePassed(currentDate?.localDate))
       ) {
         setAppointmentStart('START');
       } else if (
         currentDate?.startTime !== null &&
         currentDate?.stopTime === null &&
-        isSameDate(currentDate?.localDate)
+        (isSameDate(currentDate?.localDate) ||
+          datePassed(currentDate?.localDate))
       ) {
         setAppointmentStart('STOP');
       } else if (isDateNotFound(allDates)) {
@@ -360,21 +369,22 @@ const ActivityHeader = (props: {
               startTime: new Date().toISOString(),
             });
             if (startRes.ok) {
+              setCurrentDate(startRes?.data?.data);
+              setAppointmentStart('STOP');
+              const payloadData: any = {
+                sender: user?.userId,
+                group: proposedServiceInfo?.messageGroupId,
+                opk: proposedServiceInfo?.appointmentOpk,
+                content: `${proposedServiceInfo.providerName} has started appointment for ${currentDate.localDate}`,
+                createdAt: new Date(),
+              };
+              socket.emit('send-message', payloadData);
               if (proposedServiceInfo.serviceTypeId === 5) {
                 navigation.navigate('ReportCardInitial', {
                   screen: 'InboxNavigator',
                   appointmentId: currentDate?.id,
                 });
               }
-              setCurrentDate(startRes?.data?.data);
-              const payloadData: any = {
-                sender: user?.userId,
-                group: proposedServiceInfo?.messageGroupId,
-                content: `${proposedServiceInfo.providerName} has started appointment`,
-                createdAt: new Date(),
-              };
-              socket.emit('send-message', payloadData);
-              setAppointmentStart('STOP');
             }
           },
         },
@@ -407,7 +417,8 @@ const ActivityHeader = (props: {
               const payloadData: any = {
                 sender: user?.userId,
                 group: proposedServiceInfo?.messageGroupId,
-                content: `${proposedServiceInfo.providerName} has completed appointment`,
+                opk: proposedServiceInfo?.appointmentOpk,
+                content: `${proposedServiceInfo.providerName} has completed appointment for ${currentDate.localDate}`,
                 createdAt: new Date(),
               };
               socket.emit('send-message', payloadData);
@@ -442,321 +453,314 @@ const ActivityHeader = (props: {
   };
   const handleStatus = () => {
     if (appointmentStart === 'UPCOMING') {
-      Alert.alert('You appointment is coming soon');
+      Alert.alert('Appointment Status!', 'You appointment is coming soon');
     } else if (appointmentStart === 'NOAPPOINTMENT') {
-      Alert.alert('You have no appointment on this particular day');
+      Alert.alert(
+        'Appointment Status!',
+        'You have no appointment on this particular day',
+      );
     } else if (appointmentStart === 'INPROGRESS') {
-      Alert.alert('Your appointment is in progress');
+      Alert.alert('Appointment Status!', 'Your appointment is in progress');
     } else if (appointmentStart === 'ENDED') {
-      Alert.alert('Your appointment date has already been passed.');
+      Alert.alert(
+        'Appointment Status!',
+        'Your appointment date has already been passed.',
+      );
     } else if (appointmentStart === 'PAST') {
-      Alert.alert('Your appointment has been passed.');
+      Alert.alert('Appointment Status!', 'Your appointment has been passed.');
     } else if (appointmentStart === 'COMPLETED') {
-      Alert.alert('Your appointment has completed.');
+      Alert.alert(
+        'Appointment Status!',
+        'Your have completed appointment for your side.',
+      );
     } else {
       Alert.alert('No sure about the status');
     }
   };
-
-  const {handleAudioCall, handleVideoCall, audioVideoLoading} =
-    useAudioVideoCall(props.opk, user, proposedServiceInfo);
-
   return (
     <>
-      {audioVideoLoading ? (
-        <AppActivityIndicator visible={true} />
-      ) : (
-        <>
-          <View style={[styles.container, {borderColor: colors.borderColor}]}>
-            <View style={styles.containerInner}>
-              <View style={[styles.headerTitleContainer]}>
+      <View style={[styles.container, {borderColor: colors.borderColor}]}>
+        <View style={styles.containerInner}>
+          <View style={styles.headerTitleContainer}>
+            <TouchableOpacity
+              style={styles.leftContainer}
+              onPress={() => {
+                if (props?.AppointmentTab) {
+                  navigation.goBack();
+                } else {
+                  navigation.navigate('Inbox', {
+                    back: true,
+                    screen: 'InboxNavigator',
+                  });
+                }
+              }}>
+              <Ionicons
+                name="ios-chevron-back"
+                size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+                style={styles.iconStyle}
+                color={Colors.primary}
+              />
+            </TouchableOpacity>
+            <AppTouchableOpacity
+              onPress={handleProfile}
+              style={styles.headerTitleContainer}>
+              <View style={styles.titleMargin}>
+                <HeaderText
+                  text={
+                    proposedServiceInfo?.providerId === user?.user?.provider?.id
+                      ? changeTextLetter(proposedServiceInfo?.userName)
+                      : changeTextLetter(proposedServiceInfo?.providerName)
+                  }
+                />
+                <DescriptionText
+                  text={
+                    proposedServiceInfo?.serviceTypeId === 1 ||
+                    proposedServiceInfo?.serviceTypeId === 2
+                      ? proposedServiceInfo?.serviceName +
+                        ' from:  ' +
+                        convertToLocalTZ(
+                          proposedServiceInfo.proposalStartDate,
+                          timezone,
+                          'DD ddd MMM YYYY',
+                        )
+                      : proposedServiceInfo?.serviceTypeId === 3 ||
+                        proposedServiceInfo?.serviceTypeId === 5
+                      ? proposedServiceInfo?.isRecurring
+                        ? proposedServiceInfo?.serviceName +
+                          ' from:  ' +
+                          convertToLocalTZ(
+                            proposedServiceInfo.recurringStartDate,
+                            timezone,
+                            'DD ddd MMM YYYY',
+                          )
+                        : proposedServiceInfo?.serviceName +
+                          ' from:  ' +
+                          convertToLocalTZ(
+                            proposedServiceInfo.proposalOtherDate[0].date,
+                            timezone,
+                            'DD ddd MMM YYYY',
+                          )
+                      : proposedServiceInfo?.serviceTypeId === 4
+                      ? proposedServiceInfo.isRecurring
+                        ? proposedServiceInfo?.serviceName +
+                          ' from:  ' +
+                          convertToLocalTZ(
+                            proposedServiceInfo.recurringStartDate,
+                            timezone,
+                            'DD ddd MMM YYYY',
+                          )
+                        : proposedServiceInfo?.serviceName +
+                          ' from:  ' +
+                          convertToLocalTZ(
+                            proposedServiceInfo.proposalOtherDate[0].date,
+                            timezone,
+                            'DD ddd MMM YYYY',
+                          )
+                      : ''
+                  }
+                />
+              </View>
+            </AppTouchableOpacity>
+          </View>
+          {proposedServiceInfo?.status === 'CANCELLED' ||
+          proposedServiceInfo?.status === 'REJECTED' ? null : (
+            <TouchableOpacity
+              style={styles.leftContainer}
+              onPress={() => props.setIsThreeDotsModal(true)}>
+              <Entypo
+                name="dots-three-vertical"
+                size={SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28}
+                color={Colors.primary}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={styles.innerTwo}>
+          <View style={styles.buttonContainer}>
+            {((proposedServiceInfo?.proposedBy === 'USER' &&
+              proposedServiceInfo?.status === 'ACCEPTED') ||
+              (proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+                (proposedServiceInfo?.status === 'ACCEPTED' ||
+                  proposedServiceInfo?.status === 'PROPOSAL'))) &&
+            proposedServiceInfo?.userId === user?.user?.id ? (
+              <>
                 <TouchableOpacity
-                  style={styles.leftContainer}
-                  onPress={() => {
-                    if (props?.AppointmentTab) {
-                      navigation.goBack();
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  onPress={async () => {
+                    if (
+                      proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+                      proposedServiceInfo?.status !== 'ACCEPTED'
+                    ) {
+                      const r = await request(
+                        acceptEndpoint + proposedServiceInfo.appointmentOpk,
+                      );
+                      if (r.ok) {
+                        await dispatch(
+                          getProviderProposal(
+                            proposedServiceInfo.appointmentOpk,
+                          ),
+                        );
+                        proposedServiceInfo?.billing[0]?.id &&
+                          (dispatch(
+                            setBillingId(proposedServiceInfo.billing[0].id),
+                          ),
+                          navigation.navigate('Checkout'));
+                      }
                     } else {
-                      navigation.navigate('Inbox', {
-                        back: true,
-                        screen: 'InboxNavigator',
-                      });
+                      dispatch(
+                        getProviderProposal(proposedServiceInfo.appointmentOpk),
+                      );
+                      dispatch(setBillingId(proposedServiceInfo.billing[0].id));
+                      navigation.navigate('Checkout');
                     }
                   }}>
-                  <Ionicons
-                    name="ios-chevron-back"
-                    size={
-                      SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
+                  <TitleText
+                    text={
+                      proposedServiceInfo?.proposedBy === 'PROVIDER' &&
+                      proposedServiceInfo?.status !== 'ACCEPTED'
+                        ? putLoading
+                          ? 'loading'
+                          : 'Accept'
+                        : proposedServiceInfo?.status === 'ACCEPTED'
+                        ? 'Pay Now'
+                        : 'Pay'
                     }
-                    style={styles.iconStyle}
-                    color={Colors.primary}
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
                   />
                 </TouchableOpacity>
-                <AppTouchableOpacity
-                  onPress={handleProfile}
-                  style={styles.headerTitleContainer}>
-                  <View style={styles.titleMargin}>
-                    <HeaderText
-                      text={
-                        proposedServiceInfo?.providerId ===
-                        user?.user?.provider?.id
-                          ? changeTextLetter(proposedServiceInfo?.userName)
-                          : changeTextLetter(proposedServiceInfo?.providerName)
-                      }
-                    />
-                    <DescriptionText
-                      text={
-                        proposedServiceInfo?.serviceTypeId === 1 ||
-                        proposedServiceInfo?.serviceTypeId === 2
-                          ? proposedServiceInfo?.serviceName +
-                            ' from:  ' +
-                            convertToLocalTZ(
-                              proposedServiceInfo.proposalStartDate,
-                              timezone,
-                              'DD ddd MMM YYYY',
-                            )
-                          : proposedServiceInfo?.serviceTypeId === 3 ||
-                            proposedServiceInfo?.serviceTypeId === 5
-                          ? proposedServiceInfo?.isRecurring
-                            ? proposedServiceInfo?.serviceName +
-                              ' from:  ' +
-                              convertToLocalTZ(
-                                proposedServiceInfo.recurringStartDate,
-                                timezone,
-                                'DD ddd MMM YYYY',
-                              )
-                            : proposedServiceInfo?.serviceName +
-                              ' from:  ' +
-                              convertToLocalTZ(
-                                proposedServiceInfo.proposalOtherDate[0].date,
-                                timezone,
-                                'DD ddd MMM YYYY',
-                              )
-                          : proposedServiceInfo?.serviceTypeId === 4
-                          ? proposedServiceInfo.isRecurring
-                            ? proposedServiceInfo?.serviceName +
-                              ' from:  ' +
-                              convertToLocalTZ(
-                                proposedServiceInfo.recurringStartDate,
-                                timezone,
-                                'DD ddd MMM YYYY',
-                              )
-                            : proposedServiceInfo?.serviceName +
-                              ' from:  ' +
-                              convertToLocalTZ(
-                                proposedServiceInfo.proposalOtherDate[0].date,
-                                timezone,
-                                'DD ddd MMM YYYY',
-                              )
-                          : ''
-                      }
-                    />
-                  </View>
-                </AppTouchableOpacity>
-              </View>
-              <View style={[styles.headerTitleContainer]}>
-                {user?.user?.provider?.backGroundCheck !== 'BASIC' && (
+                {(proposedServiceInfo?.status === 'PROPOSAL' ||
+                  proposedServiceInfo?.status === 'ACCEPTED') && (
+                  <View style={styles.divider} />
+                )}
+              </>
+            ) : proposedServiceInfo?.proposedBy === 'USER' &&
+              proposedServiceInfo?.status === 'PROPOSAL' &&
+              proposedServiceInfo?.providerId === user?.user?.provider?.id ? (
+              <>
+                <TouchableOpacity onPress={handleAccept}>
+                  <TitleText
+                    text={putLoading ? 'loading' : 'Accept'}
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
+                <View style={styles.divider} />
+              </>
+            ) : proposedServiceInfo?.status === 'ACCEPTED' ? (
+              <>
+                <TouchableOpacity
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  onPress={() => Alert.alert('Proposal Already Accepted!')}>
+                  <TitleText
+                    text="Accepted"
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
+                <View style={styles.divider} />
+              </>
+            ) : proposedServiceInfo?.status === 'PAID' ? (
+              <>
+                {proposedServiceInfo?.providerId ===
+                  user?.user?.provider?.id && (
                   <>
                     <TouchableOpacity
-                      style={[styles.leftContainer, {paddingRight: '8%'}]}
-                      onPress={handleAudioCall}>
-                      <Feather
-                        name="phone-call"
-                        size={
-                          SCREEN_WIDTH <= 380
-                            ? 18
-                            : SCREEN_WIDTH <= 600
-                            ? 24
-                            : 26
-                        }
-                        color={Colors.primary}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.leftContainer, {paddingRight: '6%'}]}
-                      onPress={handleVideoCall}>
-                      <Feather
-                        name="video"
-                        size={
-                          SCREEN_WIDTH <= 380
-                            ? 18
-                            : SCREEN_WIDTH <= 600
-                            ? 24
-                            : 26
-                        }
-                        color={Colors.primary}
-                      />
-                    </TouchableOpacity>
-                  </>
-                )}
-                {proposedServiceInfo?.status === 'CANCELLED' ||
-                proposedServiceInfo?.status === 'REJECTED' ? null : (
-                  <TouchableOpacity
-                    style={styles.leftContainer}
-                    onPress={() => props.setIsThreeDotsModal(true)}>
-                    <Entypo
-                      name="dots-three-vertical"
-                      size={
-                        SCREEN_WIDTH <= 380 ? 20 : SCREEN_WIDTH <= 600 ? 26 : 28
-                      }
-                      color={Colors.primary}
-                    />
-                  </TouchableOpacity>
-                  //
-                )}
-              </View>
-            </View>
-            <View style={styles.innerTwo}>
-              <View style={styles.buttonContainer}>
-                {((proposedServiceInfo?.proposedBy === 'USER' &&
-                  proposedServiceInfo?.status === 'ACCEPTED') ||
-                  (proposedServiceInfo?.proposedBy === 'PROVIDER' &&
-                    (proposedServiceInfo?.status === 'ACCEPTED' ||
-                      proposedServiceInfo?.status === 'PROPOSAL'))) &&
-                proposedServiceInfo?.userId === user?.user?.id ? (
-                  <>
-                    <TouchableOpacity
+                      disabled={false}
                       // style={{width: SCREEN_WIDTH / 5}}
-                      onPress={async () => {
-                        if (
-                          proposedServiceInfo?.proposedBy === 'PROVIDER' &&
-                          proposedServiceInfo?.status !== 'ACCEPTED'
-                        ) {
-                          const r = await request(
-                            acceptEndpoint + proposedServiceInfo.appointmentOpk,
-                          );
-                          if (r.ok) {
-                            await dispatch(
-                              getProviderProposal(
-                                proposedServiceInfo.appointmentOpk,
-                              ),
-                            );
-                            proposedServiceInfo?.billing[0]?.id &&
-                              (dispatch(
-                                setBillingId(proposedServiceInfo.billing[0].id),
-                              ),
-                              navigation.navigate('Checkout'));
-                          }
-                        } else {
-                          dispatch(
-                            getProviderProposal(
-                              proposedServiceInfo.appointmentOpk,
-                            ),
-                          );
-                          dispatch(
-                            setBillingId(proposedServiceInfo.billing[0].id),
-                          );
-                          navigation.navigate('Checkout');
-                        }
-                      }}>
+                      onPress={
+                        // handleStart
+                        appointmentStart === 'STOP'
+                          ? handleStop
+                          : appointmentStart === 'START'
+                          ? handleStart
+                          : handleStatus
+                      }>
                       <TitleText
                         text={
-                          proposedServiceInfo?.proposedBy === 'PROVIDER' &&
-                          proposedServiceInfo?.status !== 'ACCEPTED'
-                            ? putLoading
-                              ? 'loading'
-                              : 'Accept'
-                            : proposedServiceInfo?.status === 'ACCEPTED'
-                            ? 'Pay Now'
-                            : 'Pay'
+                          loading || getLoading
+                            ? 'loading...'
+                            : appointmentStart === 'START'
+                            ? `Start Appointment - ${currentDate.localDate}`
+                            : appointmentStart === 'STOP'
+                            ? 'Complete Appointment'
+                            : appointmentStart === 'ENDED'
+                            ? 'Appointment Ended'
+                            : appointmentStart === 'UPCOMING'
+                            ? 'Coming Soon'
+                            : appointmentStart === 'NOAPPOINTMENT'
+                            ? 'No Appointment'
+                            : appointmentStart === 'INPROGRESS'
+                            ? 'In Progress'
+                            : appointmentStart === 'PAST'
+                            ? 'Past Appointment'
+                            : appointmentStart === 'COMPLETED'
+                            ? 'Appointment Completed'
+                            : 'In Progress'
                         }
                         textStyle={{
                           ...styles.textStyle,
                           textAlign: 'center',
                           color: Colors.light.background,
+                          fontWeight: 'bold',
                         }}
                       />
                     </TouchableOpacity>
-                    {(proposedServiceInfo?.status === 'PROPOSAL' ||
-                      proposedServiceInfo?.status === 'ACCEPTED') && (
+                  </>
+                )}
+                {!proposedServiceInfo?.isRecurring &&
+                  proposedServiceInfo?.userId === user?.user?.id && (
+                    <>
+                      <TouchableOpacity
+                        // style={{width: SCREEN_WIDTH / 5}}
+                        onPress={() =>
+                          navigation.navigate('AppointmentSuccess')
+                        }>
+                        <TitleText
+                          text={`${
+                            proposedServiceInfo?.userId === user?.user?.id
+                              ? 'Paid'
+                              : 'Paid Successfully'
+                          }`}
+                          textStyle={{
+                            ...styles.textStyle,
+                            textAlign: 'center',
+                            color: Colors.light.background,
+                          }}
+                        />
+                      </TouchableOpacity>
                       <View style={styles.divider} />
-                    )}
-                  </>
-                ) : proposedServiceInfo?.proposedBy === 'USER' &&
-                  proposedServiceInfo?.status === 'PROPOSAL' &&
-                  proposedServiceInfo?.providerId ===
-                    user?.user?.provider?.id ? (
-                  <>
-                    <TouchableOpacity onPress={handleAccept}>
-                      <TitleText
-                        text={putLoading ? 'loading' : 'Accept'}
-                        textStyle={{
-                          ...styles.textStyle,
-                          textAlign: 'center',
-                          color: Colors.light.background,
-                        }}
-                      />
-                    </TouchableOpacity>
-                    <View style={styles.divider} />
-                  </>
-                ) : proposedServiceInfo?.status === 'ACCEPTED' ? (
-                  <>
-                    <TouchableOpacity
-                      // style={{width: SCREEN_WIDTH / 5}}
-                      onPress={() => Alert.alert('Proposal Already Accepted!')}>
-                      <TitleText
-                        text="Accepted"
-                        textStyle={{
-                          ...styles.textStyle,
-                          textAlign: 'center',
-                          color: Colors.light.background,
-                        }}
-                      />
-                    </TouchableOpacity>
-                    <View style={styles.divider} />
-                  </>
-                ) : proposedServiceInfo?.status === 'PAID' ? (
-                  <>
-                    {proposedServiceInfo?.providerId ===
-                      user?.user?.provider?.id && (
-                      <>
-                        <TouchableOpacity
-                          disabled={false}
-                          // style={{width: SCREEN_WIDTH / 5}}
-                          onPress={
-                            // handleStart
-                            appointmentStart === 'STOP'
-                              ? handleStop
-                              : appointmentStart === 'START'
-                              ? handleStart
-                              : handleStatus
-                          }>
-                          <TitleText
-                            text={
-                              loading || getLoading
-                                ? 'loading...'
-                                : appointmentStart === 'START'
-                                ? 'Start Appointment'
-                                : appointmentStart === 'STOP'
-                                ? 'Complete Appointment'
-                                : appointmentStart === 'ENDED'
-                                ? 'Appointment Ended'
-                                : appointmentStart === 'UPCOMING'
-                                ? 'Coming Soon'
-                                : appointmentStart === 'NOAPPOINTMENT'
-                                ? 'No Appointment'
-                                : appointmentStart === 'INPROGRESS'
-                                ? 'In Progress'
-                                : appointmentStart === 'PAST'
-                                ? 'Past Appointment'
-                                : appointmentStart === 'COMPLETED'
-                                ? 'Appointment Completed'
-                                : 'In Progress'
-                            }
-                            textStyle={{
-                              ...styles.textStyle,
-                              textAlign: 'center',
-                              color: Colors.light.background,
-                              fontWeight: 'bold',
-                            }}
-                          />
-                        </TouchableOpacity>
-                      </>
-                    )}
-                    {!proposedServiceInfo?.isRecurring &&
-                      proposedServiceInfo?.userId === user?.user?.id && (
+                      <TouchableOpacity
+                        // style={{width: SCREEN_WIDTH / 5}}
+                        disabled={putLoading}
+                        onPress={handleComplete}>
+                        <TitleText
+                          text={putLoading ? 'loading...' : 'Complete'}
+                          textStyle={{
+                            ...styles.textStyle,
+                            textAlign: 'center',
+                            color: Colors.light.background,
+                          }}
+                        />
+                      </TouchableOpacity>
+                    </>
+                  )}
+                {proposedServiceInfo?.userId === user?.user?.id &&
+                  proposedServiceInfo?.isRecurring && (
+                    <>
+                      {proposedServiceInfo?.isRecurring && (
                         <>
                           <TouchableOpacity
-                            // style={{width: SCREEN_WIDTH / 5}}
+                            // style={{width: '100%'}}
                             onPress={() =>
                               navigation.navigate('AppointmentSuccess')
                             }>
@@ -768,76 +772,20 @@ const ActivityHeader = (props: {
                               }`}
                               textStyle={{
                                 ...styles.textStyle,
-                                textAlign: 'center',
-                                color: Colors.light.background,
-                              }}
-                            />
-                          </TouchableOpacity>
-                          <View style={styles.divider} />
-                          <TouchableOpacity
-                            // style={{width: SCREEN_WIDTH / 5}}
-                            disabled={putLoading}
-                            onPress={handleComplete}>
-                            <TitleText
-                              text={putLoading ? 'loading...' : 'Complete'}
-                              textStyle={{
-                                ...styles.textStyle,
-                                textAlign: 'center',
-                                color: Colors.light.background,
-                              }}
-                            />
-                          </TouchableOpacity>
-                        </>
-                      )}
-                    {proposedServiceInfo?.userId === user?.user?.id &&
-                      proposedServiceInfo?.isRecurring && (
-                        <>
-                          {proposedServiceInfo?.isRecurring && (
-                            <>
-                              <TouchableOpacity
-                                // style={{width: '100%'}}
-                                onPress={() =>
-                                  navigation.navigate('AppointmentSuccess')
-                                }>
-                                <TitleText
-                                  text={`${
-                                    proposedServiceInfo?.userId ===
-                                    user?.user?.id
-                                      ? 'Paid'
-                                      : 'Paid Successfully'
-                                  }`}
-                                  textStyle={{
-                                    ...styles.textStyle,
 
-                                    textAlign: 'center',
-                                    width: '100%',
-                                    // backgroundColor: 'red',
-                                    color: Colors.light.background,
-                                  }}
-                                />
-                              </TouchableOpacity>
-                              <View style={styles.divider} />
-                              <TouchableOpacity
-                                // style={{width: SCREEN_WIDTH / 5}}
-                                onPress={handleRegenerate}>
-                                <TitleText
-                                  text="Regenerate"
-                                  textStyle={{
-                                    ...styles.textStyle,
-                                    textAlign: 'center',
-                                    color: Colors.light.background,
-                                  }}
-                                />
-                              </TouchableOpacity>
-                            </>
-                          )}
+                                textAlign: 'center',
+                                width: '100%',
+                                // backgroundColor: 'red',
+                                color: Colors.light.background,
+                              }}
+                            />
+                          </TouchableOpacity>
                           <View style={styles.divider} />
                           <TouchableOpacity
                             // style={{width: SCREEN_WIDTH / 5}}
-                            disabled={putLoading}
-                            onPress={handleComplete}>
+                            onPress={handleRegenerate}>
                             <TitleText
-                              text={putLoading ? 'loading..' : 'Complete'}
+                              text="Regenerate"
                               textStyle={{
                                 ...styles.textStyle,
                                 textAlign: 'center',
@@ -847,174 +795,188 @@ const ActivityHeader = (props: {
                           </TouchableOpacity>
                         </>
                       )}
-                  </>
-                ) : proposedServiceInfo?.status === 'COMPLETED' ? (
-                  <>
-                    <TouchableOpacity
-                      // style={{width: SCREEN_WIDTH / 5}}
-                      onPress={() => {}}>
-                      <TitleText
-                        text={'Completed'}
-                        textStyle={{
-                          ...styles.textStyle,
-                          textAlign: 'center',
-                          color: Colors.light.background,
-                        }}
-                      />
-                    </TouchableOpacity>
-                  </>
-                ) : proposedServiceInfo?.status === 'CANCELLED' ? (
-                  <>
-                    <TouchableOpacity
-                      // style={{width: SCREEN_WIDTH / 5}}
-                      disabled
-                      onPress={() => {}}>
-                      <TitleText
-                        text={'Appointment Cancelled'}
-                        textStyle={{
-                          ...styles.textStyle,
-                          textAlign: 'center',
-                          color: Colors.light.background,
-                        }}
-                      />
-                    </TouchableOpacity>
-                  </>
-                ) : proposedServiceInfo?.status === 'REJECTED' ? (
-                  <>
-                    <TouchableOpacity
-                      // style={{width: SCREEN_WIDTH / 5}}
-                      disabled
-                      onPress={() => {}}>
-                      <TitleText
-                        text={'Appointment Rejected'}
-                        textStyle={{
-                          ...styles.textStyle,
-                          textAlign: 'center',
-                          color: Colors.light.background,
-                        }}
-                      />
-                    </TouchableOpacity>
-                  </>
-                ) : null}
-                {proposedServiceInfo?.status === 'PROPOSAL' && (
-                  <>
-                    <TouchableOpacity
-                      // style={{width: SCREEN_WIDTH / 5}}
-                      onPress={() =>
-                        navigation.navigate('EditDetails', {
-                          appointmentOpk: props.opk,
-                        })
-                      }>
-                      <TitleText
-                        text="Modify"
-                        textStyle={{
-                          ...styles.textStyle,
-                          textAlign: 'center',
-                          color: Colors.light.background,
-                        }}
-                      />
-                    </TouchableOpacity>
-                    <View style={styles.divider} />
-                  </>
-                )}
-                {(proposedServiceInfo?.status === 'PROPOSAL' ||
-                  proposedServiceInfo?.status === 'ACCEPTED') && (
-                  <TouchableOpacity
-                    // style={{width: SCREEN_WIDTH / 5}}
-                    onPress={handleReject}>
-                    <TitleText
-                      text={
-                        user?.id === proposedServiceInfo?.userId
-                          ? 'Cancel'
-                          : 'Decline'
-                      }
-                      textStyle={{
-                        ...styles.textStyle,
-                        textAlign: 'center',
-                        color: Colors.light.background,
-                      }}
-                    />
-                  </TouchableOpacity>
-                )}
-              </View>
-              {proposedServiceInfo?.serviceTypeId === 5 &&
-              proposedServiceInfo?.providerId === user?.user?.provider?.id &&
-              proposedServiceInfo?.status === 'PAID' &&
-              appointmentStart === 'STOP' ? (
+                      <View style={styles.divider} />
+                      <TouchableOpacity
+                        // style={{width: SCREEN_WIDTH / 5}}
+                        disabled={putLoading}
+                        onPress={handleComplete}>
+                        <TitleText
+                          text={putLoading ? 'loading..' : 'Complete'}
+                          textStyle={{
+                            ...styles.textStyle,
+                            textAlign: 'center',
+                            color: Colors.light.background,
+                          }}
+                        />
+                      </TouchableOpacity>
+                    </>
+                  )}
+              </>
+            ) : proposedServiceInfo?.status === 'COMPLETED' ? (
+              <>
                 <TouchableOpacity
-                  onPress={() => {
-                    if (Platform.OS === 'ios') {
-                      const callback = (status: AppStateStatus) => {
-                        if (status === 'active') {
-                          requestPermission(
-                            PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY,
-                          )
-                            .then((result: any) => {
-                              if (result !== 'granted') {
-                                Alert.alert(
-                                  'Please enable App Tracking permission in "Settings > Woofmeets" to generate the report.',
-                                );
-                              } else {
-                                navigation.navigate('ReportCardInitial', {
-                                  screen: 'InboxNavigator',
-                                  appointmentId: currentDate?.id,
-                                  reportInfo: currentDate,
-                                });
-                              }
-                            })
-                            .catch((error: any) => console.log(error));
-                        }
-                      };
-                      callback(AppState.currentState); // initial call
-                      const listener = AppState.addEventListener(
-                        'change',
-                        callback,
-                      );
-                      return listener.remove;
-                    } else {
-                      navigation.navigate('ReportCardInitial', {
-                        screen: 'InboxNavigator',
-                        appointmentId: currentDate?.id,
-                        reportInfo: currentDate,
-                      });
-                    }
-                  }}
-                  style={[
-                    styles.detailsButtonStyle,
-                    {
-                      borderColor: colors.borderColor,
-                      backgroundColor: Colors.primaryDif,
-                    },
-                  ]}>
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  onPress={() => {}}>
                   <TitleText
-                    text="Report"
+                    text={'Completed'}
                     textStyle={{
-                      color: Colors.background,
-                      fontWeight: 'bold',
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
                     }}
                   />
                 </TouchableOpacity>
-              ) : (
+              </>
+            ) : proposedServiceInfo?.status === 'CANCELLED' ? (
+              <>
                 <TouchableOpacity
-                  onPress={() => props.setIsDetailsModal(true)}
-                  style={[
-                    styles.detailsButtonStyle,
-                    {borderColor: colors.borderColor},
-                  ]}>
-                  <TitleText text="Details" textStyle={styles.textStyle} />
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  disabled
+                  onPress={() => {}}>
+                  <TitleText
+                    text={'Appointment Cancelled'}
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
                 </TouchableOpacity>
-              )}
-            </View>
+              </>
+            ) : proposedServiceInfo?.status === 'REJECTED' ? (
+              <>
+                <TouchableOpacity
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  disabled
+                  onPress={() => {}}>
+                  <TitleText
+                    text={'Appointment Rejected'}
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
+              </>
+            ) : null}
+            {proposedServiceInfo?.status === 'PROPOSAL' && (
+              <>
+                <TouchableOpacity
+                  // style={{width: SCREEN_WIDTH / 5}}
+                  onPress={() =>
+                    navigation.navigate('EditDetails', {
+                      appointmentOpk: props.opk,
+                    })
+                  }>
+                  <TitleText
+                    text="Modify"
+                    textStyle={{
+                      ...styles.textStyle,
+                      textAlign: 'center',
+                      color: Colors.light.background,
+                    }}
+                  />
+                </TouchableOpacity>
+                <View style={styles.divider} />
+              </>
+            )}
+            {(proposedServiceInfo?.status === 'PROPOSAL' ||
+              proposedServiceInfo?.status === 'ACCEPTED') && (
+              <TouchableOpacity
+                // style={{width: SCREEN_WIDTH / 5}}
+                onPress={handleReject}>
+                <TitleText
+                  text={
+                    user?.id === proposedServiceInfo?.userId
+                      ? 'Cancel'
+                      : 'Decline'
+                  }
+                  textStyle={{
+                    ...styles.textStyle,
+                    textAlign: 'center',
+                    color: Colors.light.background,
+                  }}
+                />
+              </TouchableOpacity>
+            )}
           </View>
-          {/* Modals */}
-          {proposedServiceInfo?.isRecurring && (
-            <RecurringModal
-              regenerateModal={regenerateModal}
-              setRegenerateModal={setRegenerateModal}
-              proposedServiceInfo={proposedServiceInfo}
-            />
+          {proposedServiceInfo?.serviceTypeId === 5 &&
+          proposedServiceInfo?.providerId === user?.user?.provider?.id &&
+          proposedServiceInfo?.status === 'PAID' &&
+          appointmentStart === 'STOP' ? (
+            <TouchableOpacity
+              onPress={() => {
+                if (Platform.OS === 'ios') {
+                  const callback = (status: AppStateStatus) => {
+                    if (status === 'active') {
+                      requestPermission(
+                        PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY,
+                      )
+                        .then((result: any) => {
+                          if (result !== 'granted') {
+                            Alert.alert(
+                              'Please enable App Tracking permission in "Settings > Woofmeets" to generate the report.',
+                            );
+                          } else {
+                            navigation.navigate('ReportCardInitial', {
+                              screen: 'InboxNavigator',
+                              appointmentId: currentDate?.id,
+                              reportInfo: currentDate,
+                            });
+                          }
+                        })
+                        .catch((error: any) => console.log(error));
+                    }
+                  };
+                  callback(AppState.currentState); // initial call
+                  const listener = AppState.addEventListener(
+                    'change',
+                    callback,
+                  );
+                  return listener.remove;
+                } else {
+                  navigation.navigate('ReportCardInitial', {
+                    screen: 'InboxNavigator',
+                    appointmentId: currentDate?.id,
+                    reportInfo: currentDate,
+                  });
+                }
+              }}
+              style={[
+                styles.detailsButtonStyle,
+                {
+                  borderColor: colors.borderColor,
+                  backgroundColor: Colors.primaryDif,
+                },
+              ]}>
+              <TitleText
+                text="Report"
+                textStyle={{
+                  color: Colors.background,
+                  fontWeight: 'bold',
+                }}
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => props.setIsDetailsModal(true)}
+              style={[
+                styles.detailsButtonStyle,
+                {borderColor: colors.borderColor},
+              ]}>
+              <TitleText text="Details" textStyle={styles.textStyle} />
+            </TouchableOpacity>
           )}
-        </>
+        </View>
+      </View>
+      {/* Modals */}
+      {proposedServiceInfo?.isRecurring && (
+        <RecurringModal
+          regenerateModal={regenerateModal}
+          setRegenerateModal={setRegenerateModal}
+          proposedServiceInfo={proposedServiceInfo}
+        />
       )}
     </>
   );
@@ -1027,7 +989,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   containerInner: {
-    width: '75%',
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {ScrollView, StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import SafetyQuizHeader from './SafetyQuizHeader';
 import BottomSpacing from '../../UI/BottomSpacing';
 import SubmitButton from '../../common/Form/SubmitButton';
 import SafetyQuizCheckbox from './SafetyQuizCheckbox';
-interface Props {
-  handleSubmit: () => void;
-  loading: boolean;
-}
-const SafetyQuizBody = ({handleSubmit, loading}: Props) => {
+interface Props {}
+const SafetyQuizBody = ({}: Props) => {
   const {
     control,
     setValue,
@@ -22,18 +19,11 @@ const SafetyQuizBody = ({handleSubmit, loading}: Props) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <SafetyQuizHeader />
 
-        <View>
-          <SafetyQuizCheckbox
-            control={control}
-            setValue={setValue}
-            errors={errors}
-          />
-          <SubmitButton
-            title={'Save & Continue'}
-            onPress={handleSubmit}
-            loading={loading}
-          />
-        </View>
+        <SafetyQuizCheckbox
+          control={control}
+          setValue={setValue}
+          errors={errors}
+        />
 
         <BottomSpacing />
       </ScrollView>

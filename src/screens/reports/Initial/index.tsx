@@ -22,7 +22,11 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import storage from '../../../utils/helpers/auth/storage';
 // import TitleText from '../../../components/common/text/TitleText';
 // import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
-import {setReset, setTimee} from '../../../store/slices/misc/trackingToggle';
+import {
+  setReset,
+  setTimee,
+  setTrackingStatus,
+} from '../../../store/slices/misc/trackingToggle';
 const reportEndPoint = `${msgUrl}/v1/locations/visit/`;
 interface Props {
   navigation: any;
@@ -31,6 +35,7 @@ interface Props {
 const ReportCardInitial = ({navigation, route}: Props) => {
   const {appointmentId, reportInfo} = route?.params;
   const [trackLocation, setTrackLocation] = useState(false);
+  const {trackingStatus} = useAppSelector(state => state.trackingStatus);
   const [distance, setDistance] = useState(0);
   const [walkTime, setWalkTime] = useState('');
   const {request, loading} = useApi(methods._put);
@@ -38,15 +43,16 @@ const ReportCardInitial = ({navigation, route}: Props) => {
   const {user} = useAppSelector(state => state.whoAmI);
   const dispatch = useAppDispatch();
   const handleGenerate = async () => {
-    if (trackLocation) {
-      Alert.alert('Stop tracking to generate report');
+    if (trackingStatus) {
+      Alert.alert('Warning!','Stop tracking Stopwatch and then generate report');
     } else {
       const result = await request(reportEndPoint + appointmentId, {
         token: await token,
         user: user.id,
         visit: appointmentId,
       });
-      dispatch(setTimee(0));
+      dispatch(setTimee({hours: 0, minutes: 0, seconds: 0}));
+      dispatch(setTrackingStatus(false));
       dispatch(setReset(true));
       if (result.ok) {
         navigation.navigate('GenerateReport', {
@@ -62,9 +68,9 @@ const ReportCardInitial = ({navigation, route}: Props) => {
     }
   };
   return (
-    <>
+    <View style={{flex: 1}}>
       <ScrollView
-        style={{flex: 1, backgroundColor: Colors.background}}
+        style={{flexGrow: 1, backgroundColor: Colors.background}}
         showsVerticalScrollIndicator={false}>
         <View>
           <RealtimeLocation
@@ -90,7 +96,7 @@ const ReportCardInitial = ({navigation, route}: Props) => {
           onSelect={handleGenerate}
         />
       </View>
-    </>
+    </View>
   );
 };
 

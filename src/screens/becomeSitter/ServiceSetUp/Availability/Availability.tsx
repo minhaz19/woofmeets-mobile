@@ -21,18 +21,17 @@ const Availability = ({navigation, route}: Props) => {
   const {colors} = useTheme();
   const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {itemId, name, image, description, service} = serviceSetup.routeData;
-  const providerServiceId = service.map(
-    (data: {providerServiceId: any}) => data.providerServiceId,
-  );
-  const serviceId = service.map((data: {id: any}) => data.id);
-
+  // const providerServiceId = service.map(
+  //   (data: {providerServiceId: any}) => data.providerServiceId,
+  // );
+  // const serviceId = service.map((data: {id: any}) => data.id);
   const {availability, loading} = useAppSelector(
     (state: any) => state?.availability,
   );
 
   // hook for post/put
   const {handlePost, isLoading} = useAvailabilityUtils(
-    serviceId[0],
+    service?.[0]?.id,
     navigation,
     route,
   );
@@ -76,12 +75,11 @@ const Availability = ({navigation, route}: Props) => {
         />
         <AppForm
           initialValues={AvailabilityInitialValues(
-            providerServiceId[0],
+            // providerServiceId[0],
             availability,
             itemId,
           )}
-          validationSchema={availabilityValidation}
-          enableReset>
+          validationSchema={availabilityValidation} enableReset>
           <SubAvailability handlePost={handlePost} loading={isLoading} />
         </AppForm>
       </KeyboardAwareScrollView>

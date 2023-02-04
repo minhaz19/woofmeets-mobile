@@ -17,7 +17,6 @@ import {
   HouseSittingIcon,
 } from '../../../../assets/svgs/Services_SVG';
 import HeaderText from '../../../common/text/HeaderText';
-import DescriptionText from '../../../common/text/DescriptionText';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -41,6 +40,8 @@ import methods from '../../../../api/methods';
 import MiddleModal from '../../../UI/modal/MiddleModal';
 import TitleText from '../../../common/text/TitleText';
 import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpacity';
+import ShortText from '../../../common/text/ShortText';
+import Text_Size from '../../../../constants/textScaling';
 const activeEndpoint = '/provider-services/change-status/';
 const ServiceSetting = () => {
   // const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
@@ -87,9 +88,9 @@ const ServiceSetting = () => {
   const servicesProgress = progressData?.individualServiceSetupSublist;
   return (
     <>
-      {(userServicesLoading || loading) && (
+      {/* {(userServicesLoading || loading) && (
         <AppActivityIndicator visible={true} />
-      )}
+      )} */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -106,6 +107,23 @@ const ServiceSetting = () => {
           serviceData.map((item: any, index: number) => {
             return (
               <TouchableOpacity
+                style={[
+                  styles.container,
+                  {
+                    backgroundColor: item.isActive
+                      ? Colors.background
+                      : Colors.lightShade,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+
+                    elevation: 5,
+                  },
+                ]}
                 key={index}
                 onPress={() => {
                   dispatch(
@@ -126,16 +144,36 @@ const ServiceSetting = () => {
                 }}>
                 <View style={styles.flexContainer}>
                   <View style={styles.serviceContainer}>
-                    <View>{getIcon(item.serviceType.icon)}</View>
+                    <View style={{marginLeft: 10}}>
+                      {getIcon(item.serviceType.icon)}
+                    </View>
                     <View style={styles.textContainer}>
                       <HeaderText
                         text={item.serviceType.name}
                         textStyle={styles.titleStyle}
                       />
-                      <DescriptionText
-                        text={item.isActive ? 'Active' : 'Inactive'}
-                        textStyle={styles.shortText}
-                      />
+                      <View
+                        style={{
+                          backgroundColor: item.isActive
+                            ? '#E3FFF6'
+                            : '#FBE4D8',
+
+                          width: 80,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderRadius: 4,
+                          paddingVertical: 3,
+                          paddingHorizontal: 8,
+                        }}>
+                        <ShortText
+                          text={item.isActive ? 'Active' : 'Deactive'}
+                          textStyle={{
+                            fontWeight: '900',
+                            textAlign: 'center',
+                            color: item.isActive ? '#06CB8F' : '#FB341E',
+                          }}
+                        />
+                      </View>
                     </View>
                   </View>
                   <View
@@ -144,6 +182,8 @@ const ServiceSetting = () => {
                       justifyContent: 'center',
                     }}>
                     <SwitchView
+                      inactiveColor={'#06CB8F'}
+                      iosBgColor={'#E3FFF6'}
                       isActive={
                         item.id === selectedService && activeLoading
                           ? !item.isActive
@@ -167,6 +207,7 @@ const ServiceSetting = () => {
                           return;
                         } else {
                           Alert.alert(
+                            'Activation',
                             'Please complete the service first and pull to refresh!',
                           );
                         }
@@ -184,29 +225,25 @@ const ServiceSetting = () => {
                     />
                   </View>
                 </View>
-                <View
-                  style={[
-                    styles.divider,
-                    {backgroundColor: colors.descriptionText},
-                  ]}
-                />
               </TouchableOpacity>
             );
           })}
-        <View style={styles.submitContainer}>
-          <ButtonCom
-            title={'Add new service'}
-            // loading={postLoading}
-            textAlignment={btnStyles.textAlignment}
-            containerStyle={btnStyles.containerStyleFullWidth}
-            titleStyle={btnStyles.titleStyle}
-            onSelect={
-              user?.provider?.isApproved
-                ? () => navigation.navigate('ServiceSelection')
-                : () => setIsModalVisible(true)
-            }
-          />
-        </View>
+        {serviceData.length === 5 ? null : (
+          <View style={styles.submitContainer}>
+            <ButtonCom
+              title={'Add new service'}
+              // loading={postLoading}
+              textAlignment={btnStyles.textAlignment}
+              containerStyle={btnStyles.containerStyleFullWidth}
+              titleStyle={btnStyles.titleStyle}
+              onSelect={
+                user?.provider?.isApproved
+                  ? () => navigation.navigate('ServiceSelection')
+                  : () => setIsModalVisible(true)
+              }
+            />
+          </View>
+        )}
       </ScrollView>
       {isModalVisible && (
         <MiddleModal
@@ -253,6 +290,14 @@ const ServiceSetting = () => {
 export default ServiceSetting;
 
 const styles = StyleSheet.create({
+  container: {
+    borderWidth: 1,
+    marginVertical: 10,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    borderColor: Colors.border,
+  },
   rootContainer: {
     flex: 1,
     paddingHorizontal:
@@ -269,12 +314,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   textContainer: {
-    paddingLeft: 10,
+    paddingLeft: 20,
   },
   titleStyle: {
     paddingBottom: 6,
+    marginBottom: 5,
+    fontWeight: 'bold',
+    fontSize: Text_Size.Text_2,
   },
-  shortText: {color: Colors.gray},
   divider: {
     height: 1,
     opacity: 0.3,

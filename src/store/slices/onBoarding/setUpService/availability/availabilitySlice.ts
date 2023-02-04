@@ -3,6 +3,7 @@ import {getAvailability} from './getAvailability';
 
 const initialState: any = {
   availability: null,
+  tempId: null,
   error: null,
   loading: false,
 };
@@ -13,6 +14,9 @@ const availabilitySlice = createSlice({
   reducers: {
     setAvailability: (state, {payload}) => {
       state.availability = payload;
+    },
+    setTempId: (state, {payload}) => {
+      state.tempId = payload;
     },
   },
 
@@ -32,5 +36,5 @@ const availabilitySlice = createSlice({
       });
   },
 });
-export const {setAvailability} = availabilitySlice.actions;
+export const {setAvailability, setTempId} = availabilitySlice.actions;
 export default availabilitySlice.reducer;

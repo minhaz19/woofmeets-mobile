@@ -6,6 +6,7 @@ import DescriptionText from '../../../../common/text/DescriptionText';
 import ServiceCheckbox from '../Common/ServiceCheckbox';
 import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import {usePetPreferenceHandleCheck} from '../handleCheck/usePetPreferenceHandleCheck';
+import { SCREEN_WIDTH } from '../../../../../constants/WindowSize';
 
 interface Props {
   errors: any;
@@ -51,7 +52,8 @@ export default PetType;
 
 const styles = StyleSheet.create({
   subtitle: {
-    paddingBottom: '1%',
+    paddingBottom:
+      SCREEN_WIDTH <= 380 ? '3%' : SCREEN_WIDTH <= 600 ? '2%' : '1%',
     lineHeight: 20,
   },
   container: {

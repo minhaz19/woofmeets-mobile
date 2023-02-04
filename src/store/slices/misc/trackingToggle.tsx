@@ -2,7 +2,11 @@ import {createSlice} from '@reduxjs/toolkit';
 
 export const trackingToggle = createSlice({
   name: 'trackingStatus',
-  initialState: {trackingStatus: false, reset: false, timee: 0},
+  initialState: {
+    trackingStatus: false,
+    reset: false,
+    timee: {hours: 0, minutes: 0, seconds: 0},
+  },
   reducers: {
     setTrackingStatus: (state, action) => {
       state.trackingStatus = action.payload;
