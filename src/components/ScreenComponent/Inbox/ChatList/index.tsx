@@ -23,6 +23,7 @@ interface Props {
   data: any[];
   onRefresh: () => void;
   // refreshing: boolean;
+  pendingReview: boolean;
 }
 
 const ChatList = ({
@@ -31,6 +32,7 @@ const ChatList = ({
   data,
   statusType,
   onRefresh,
+  pendingReview,
 }: Props) => {
   const navigation = useNavigation<any>();
   const getStatusColor = (status: string) => {
@@ -118,10 +120,13 @@ const ChatList = ({
                 roomId: item.messageGroupId,
               }}
               statusColor={getStatusColor(item.status)!}
+              pendingReview={pendingReview}
               handlePress={() =>
                 navigation.navigate('ActivityScreen', {
                   appointmentOpk: item.opk,
                   messageGroupId: item.messageGroupId,
+                  showReview: pendingReview ? true : false,
+                  pendingReview: pendingReview ? true : false,
                 })
               }
             />

@@ -32,7 +32,6 @@ export const useAudioVideoCall = (
       const permissionsGranted = await checkPermissions([
         PERMISSIONS.ANDROID.CAMERA,
         PERMISSIONS.ANDROID.RECORD_AUDIO,
-        PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
       ]);
       if (permissionsGranted) {
         navigation.navigate('Room', {
@@ -55,7 +54,7 @@ export const useAudioVideoCall = (
         };
         socket.emit('send-message', payloadData);
       } else {
-        console.log('Permission Not Granted!');
+        // console.log('Permission Not Granted!');
       }
     }
   };

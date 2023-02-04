@@ -25,6 +25,7 @@ interface Props {
   title: any;
   icon?: any;
   loading?: boolean;
+  disabled?: boolean;
   color?: string;
 }
 const ButtonCom = ({
@@ -38,21 +39,18 @@ const ButtonCom = ({
   title,
   icon,
   loading = false,
+  disabled = false,
 }: Props) => {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
     <Card
       style={{
         ...styles.cardlist,
-        backgroundColor: color
-          ? color
-          : Colors.primary,
+        backgroundColor: color ? color : Colors.primary,
         ...containerStyle,
       }}>
       <View style={{...styles.progressContainer, ...progressStyle}} />
       <View style={{...styles.touchable}}>
-        <TouchableOpacity onPress={onSelect} disabled={loading}>
+        <TouchableOpacity onPress={onSelect} disabled={loading || disabled}>
           <View style={{...styles.card, ...textAlignment}}>
             {loading ? (
               <DotLoader />

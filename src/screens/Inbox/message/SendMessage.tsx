@@ -15,11 +15,13 @@ const SendMessage = ({roomId, setMessages, user, opk}) => {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [photo, setPhoto] = useState();
+
   const handleSubmit = () => {
     if (content?.text || content?.image) {
       const data = {
         sender: user?.id,
         group: roomId,
+        opk,
         // content: content?.text.replace(/<[^>]*>?/gm, ''),
         content: content?.text,
         image: content?.image,
@@ -44,6 +46,7 @@ const SendMessage = ({roomId, setMessages, user, opk}) => {
         sender: user?.id,
         group: roomId,
         attachmentType: 'image',
+        opk,
         content: '',
         attachment: result.data[0].url,
         createdAt: new Date(),

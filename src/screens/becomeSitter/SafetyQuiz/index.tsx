@@ -30,13 +30,12 @@ const SafetyQuiz = () => {
   const {loading: BtnLoading, request} = useApi(methods._post);
 
   const handleSubmit = async () => {
-    const result = await request(`/quiz/complete/${userId}`);
-
-    result.ok && dispatch(setSitterData({pass: 3}));
+    // const result = await request(`/quiz/complete/${userId}`);
+    // result.ok && dispatch(setSitterData({pass: 3}));
   };
   useEffect(() => {
     dispatch(getSafetyQuiz());
-    dispatch(getWhoAmI());
+    // dispatch(getWhoAmI());
 
     const status = sitterData?.find(
       (item: {name: string}) => item.name === 'safetyQuiz',
@@ -64,7 +63,7 @@ const SafetyQuiz = () => {
           <AppForm
             initialValues={useSafetyQuizInitValues()}
             validationSchema={safetyQuizValidationSchema}>
-            <SafetyQuizBody handleSubmit={handleSubmit} loading={BtnLoading} />
+            <SafetyQuizBody />
           </AppForm>
         </View>
       )}

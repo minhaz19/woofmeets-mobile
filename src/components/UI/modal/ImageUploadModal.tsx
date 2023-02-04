@@ -6,12 +6,15 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
 } from 'react-native';
 import React from 'react';
 import * as ImagePicker from 'react-native-image-picker';
 import mime from 'mime';
 import Text_Size from '../../../constants/textScaling';
 import TitleText from '../../common/text/TitleText';
+import {PERMISSIONS} from 'react-native-permissions';
+import {checkPermissions} from '../../ScreenComponent/conference/utils/functions';
 interface OptionType {
   maxWidth: number;
   maxHeight: number;
@@ -75,49 +78,56 @@ const ImageUploadModal = (props: {
   };
 
   const handleCaptureImage = async () => {
-    props.setIsImageLoading(true);
-    props.setIsModalVisible(false);
-    let options: OptionType = {
-      maxWidth: 1080,
-      maxHeight: 720,
-      title: 'Select Photo',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-      quality: 0.4,
-    };
-    ImagePicker.launchCamera(
-      // @ts-ignore
-      options,
-      (response: {
-        didCancel: any;
-        error: any;
-        errorCode: string;
-        assets: any[];
-      }) => {
-        if (response.didCancel) {
-          props.setIsImageLoading(false);
-        } else if (response.error) {
-          props.setIsImageLoading(false);
-        } else if (response.errorCode === 'camera_unavailable') {
-          props.setIsImageLoading(false);
-          let alrt = 'Camera not available on device';
-          return;
-        } else {
-          const response1 = response.assets[0];
-          let formData = new FormData();
-          props?.setPetImage && props?.setPetImage(response1.uri);
-          props.setIsImageLoading(false);
-          formData.append('file', {
-            uri: response1.uri,
-            type: mime.getType(response1.uri),
-            name: response1.fileName,
-          });
-          props?.uploadImage(formData);
-        }
-      },
-    );
+    const permissionsGranted = await checkPermissions([
+      PERMISSIONS.ANDROID.CAMERA,
+    ]);
+    if (permissionsGranted) {
+      props.setIsImageLoading(true);
+      props.setIsModalVisible(false);
+      let options: OptionType = {
+        maxWidth: 1080,
+        maxHeight: 720,
+        title: 'Select Photo',
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+        quality: 0.4,
+      };
+      ImagePicker.launchCamera(
+        // @ts-ignore
+        options,
+        (response: {
+          didCancel: any;
+          error: any;
+          errorCode: string;
+          assets: any[];
+        }) => {
+          if (response.didCancel) {
+            props.setIsImageLoading(false);
+          } else if (response.error) {
+            props.setIsImageLoading(false);
+          } else if (response.errorCode === 'camera_unavailable') {
+            props.setIsImageLoading(false);
+            let alrt = 'Camera not available on device';
+            return;
+          } else {
+            const response1 = response?.assets[0];
+            let formData = new FormData();
+            props?.setPetImage && props?.setPetImage(response1.uri);
+            props.setIsImageLoading(false);
+            formData.append('file', {
+              uri: response1.uri,
+              type: mime.getType(response1.uri),
+              name: response1.fileName,
+            });
+            props?.uploadImage(formData);
+          }
+        },
+      );
+    } else {
+      Alert.alert('Camera', 'Permission Not Granted!');
+    }
   };
 
   return (
@@ -148,7 +158,10 @@ const ImageUploadModal = (props: {
                   source={require('../../../assets/image-gallery.png')}
                   style={styles.iconView}
                 />
-                <TitleText text={'Choose from Gallery'} textStyle={styles.modalText} />
+                <TitleText
+                  text={'Choose from Gallery'}
+                  textStyle={styles.modalText}
+                />
               </TouchableOpacity>
             </View>
           </View>

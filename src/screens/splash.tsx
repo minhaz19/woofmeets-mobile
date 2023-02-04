@@ -41,7 +41,6 @@ const Splash = ({}) => {
       getTokenDecoded();
     }
   }, [isLoggedIn, user]);
-
   useEffect(() => {
     if (user !== null || isLoggedIn) {
       identifyLogRocketUser(user);

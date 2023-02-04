@@ -4,11 +4,8 @@ import {Controller} from 'react-hook-form';
 import HeaderText from '../../../../common/text/HeaderText';
 import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import {useAppDispatch, useAppSelector} from '../../../../../store/store';
-import {
-  decrement,
-  increment,
-} from '../../../../../store/slices/onBoarding/setUpService/petPreference/PetPreferenceSlice';
-import { MinusSvg, PlusSvg } from '../../../../../assets/svgs/SVG_LOGOS';
+import {MinusSvg, PlusSvg} from '../../../../../assets/svgs/SVG_LOGOS';
+import { decrement, increment } from '../../../../../store/slices/profile/details';
 
 interface Props {
   name: string;
@@ -19,7 +16,7 @@ interface Props {
 
 const ServicePetQuantity: FC<Props> = ({name, control, setValue, errors}) => {
   const dispatch = useAppDispatch();
-  const {petPerDay} = useAppSelector((state: any) => state?.petPreference);
+  const {petPerDay} = useAppSelector((state: any) => state.details);
   const handleIncrement = () => {
     dispatch(increment());
   };

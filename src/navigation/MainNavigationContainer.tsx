@@ -63,6 +63,7 @@ import linking from '../utils/helpers/DeepLinking';
 import {setReset} from '../store/slices/misc/trackingToggle';
 import SeePetReview from '../components/ScreenComponent/Inbox/Details/SeePetReview';
 import ScheduleAppointmentList from '../screens/provider/AppointmentScheduler/ScheduleAppointmentList';
+import CompleteOnboarding from '../screens/becomeSitter/CompleteOnboarding';
 import Room from '../components/ScreenComponent/conference/Room';
 const Stack = createStackNavigator();
 
@@ -451,6 +452,11 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
         <Stack.Screen
           name="SubscriptionScreen"
           component={SubscriptionScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="CompleteOnboarding"
+          component={CompleteOnboarding}
           options={{headerShown: false}}
         />
         <Stack.Screen

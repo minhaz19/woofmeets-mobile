@@ -61,6 +61,10 @@ const daycount = [
     title: 'Rejected',
     value: 'REJECTED',
   },
+  {
+    title: 'Pending Review',
+    value: 'PENDING_REVIEW',
+  },
 ];
 const sortByAr = [
   {
