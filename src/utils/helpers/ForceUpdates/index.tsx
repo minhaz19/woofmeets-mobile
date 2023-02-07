@@ -28,7 +28,7 @@ const ForceUpdates = () => {
           },
         ],
       );
-    } else if (response.ok && !response?.data?.data?.isUpdateAvailable) {
+    } else if (response.ok && response?.data?.data?.isUpdateAvailable) {
       Alert.alert(
         'Please Update',
         'You can update your app to the latest version.',
