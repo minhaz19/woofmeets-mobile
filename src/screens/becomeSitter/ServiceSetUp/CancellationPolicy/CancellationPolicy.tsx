@@ -1,4 +1,4 @@
-import {RefreshControl, StyleSheet} from 'react-native';
+import {Alert, RefreshControl, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import {useApi} from '../../../../utils/helpers/api/useApi';
