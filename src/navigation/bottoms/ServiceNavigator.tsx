@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Colors from '../../constants/Colors';
 import PetCareZipSearch from '../../screens/search/PetCareZipSearch';
 import AllProvider from '../../screens/Service/AllProvider';
@@ -17,12 +17,12 @@ const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
   const dispatch = useAppDispatch();
-  const [token, setToken] = useState<any>();
+  // const [token, setToken] = useState<any>();
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {
       const decode: any = await jwtDecode(tok);
-      setToken(decode);
+      // setToken(decode);
       return decode;
     }
   };

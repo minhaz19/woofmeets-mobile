@@ -1,4 +1,11 @@
-import {StyleSheet, Image, View} from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  View,
+  ScrollView,
+  RefreshControl,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
@@ -12,8 +19,9 @@ import TitleText from '../../../components/common/text/TitleText';
 import Lottie from 'lottie-react-native';
 import Colors from '../../../constants/Colors';
 import {useAppSelector} from '../../../store/store';
-import {formatDate} from '../../../components/common/formatDate';
-import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
+import moment from 'moment-timezone';
+import {CancelToken} from 'apisauce';
+import BottomSpacing from '../../../components/UI/BottomSpacing';
 
 const ShowAllReport = (props: {
   navigation: {navigate: (arg0: string, arg1?: any) => any};
@@ -22,92 +30,123 @@ const ShowAllReport = (props: {
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {colors} = useTheme();
   const appointmentOpk = props?.route?.params?.appointmentOpk;
+  const [loading, setLoading] = useState(true);
   const [allReports, setAllReports] = useState([]);
-  const {request, loading} = useApi(methods._get);
+  const {request} = useApi(methods._get);
   const endPoint = `/appointment/card/find-all/${appointmentOpk}`;
 
-  const getAllReport = async () => {
-    const result = await request(endPoint);
-    result.ok && setAllReports(result?.data?.data);
+  const getAllReport = async (source: any) => {
+    const result = await request(endPoint, {}, {cancelToken: source.token});
+
+    if (result.ok) {
+      setAllReports(result?.data?.data);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
   };
   useEffect(() => {
-    getAllReport();
+    const source = CancelToken.source(); // <-- 1st step
+    getAllReport(source);
+    return () => {
+      source.cancel();
+    };
   }, []);
-  return (
-    <>
-      {loading ? (
-        <AppActivityIndicator visible={loading} /> // <AppActivityIndicator visible={loading} />
-      ) : (
-        <>
-          {allReports?.length === 0 ? (
-            <View style={styles.report}>
-              <View>
-                <Lottie
-                  autoPlay
-                  loop
-                  source={require('../../../assets/report.json')}
-                  style={styles.loaderStyle}
-                />
+  const [refreshing, setRefreshing] = useState(false);
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    const source = CancelToken.source(); // <-- 1st step
+    await getAllReport(source);
+    setRefreshing(false);
+  };
+  return loading ? (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <ActivityIndicator size="large" color={Colors.primary} />
+    </View>
+  ) : (
+    <>
+      {allReports?.length === 0 ? (
+        <View style={styles.report}>
+          <View>
+            <Lottie
+              autoPlay
+              loop
+              source={require('../../../assets/report.json')}
+              style={styles.loaderStyle}
+            />
+
+            <View style={[styles.rootContainer]}>
+              <TitleText
+                textStyle={styles.title}
+                text={'No report found for the particular appointment'}
+              />
+            </View>
+          </View>
+        </View>
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          style={[styles.rootContainer]}>
+          {allReports?.map((item: any) => {
+            return (
+              <AppTouchableOpacity
+                key={item?.id}
+                onPress={() =>
+                  props.navigation.navigate('ReportCard', {
+                    id: item?.id,
+                    serviceTypeId: proposedServiceInfo?.serviceTypeId,
+                    appointmentId: item?.appointmentDateId,
+                  })
+                }>
                 <View
                   style={[
-                    styles.rootContainer,
-                    //   {backgroundColor: colors.backgroundColor},
+                    styles.container,
+                    {backgroundColor: colors.backgroundColor},
                   ]}>
-                  <TitleText
-                    textStyle={styles.title}
-                    text={'No report found for the particular appointment'}
-                  />
-                </View>
-              </View>
-            </View>
-          ) : (
-            <View
-              style={[
-                styles.rootContainer,
-                //   {backgroundColor: colors.backgroundColor},
-              ]}>
-              {allReports?.map((item: any) => {
-                return (
-                  <AppTouchableOpacity
-                    key={item?.id}
-                    onPress={() =>
-                      props.navigation.navigate('ReportCard', {
-                        id: item?.id,
-                        serviceTypeId: proposedServiceInfo?.serviceTypeId,
-                        appointmentId: item?.appointmentDateId,
-                      })
-                    }>
-                    <View
-                      style={[
-                        styles.container,
-                        {backgroundColor: colors.backgroundColor},
-                      ]}>
-                      <View style={styles.imageContainer}>
-                        <Image
-                          source={{uri: item?.images[0]}}
-                          style={styles.image}
-                        />
-                      </View>
-                      <View>
-                        <HeaderText
-                          text={proposedServiceInfo?.serviceName}
-                          textStyle={styles.header}
+                  <View>
+                    <HeaderText
+                      text={proposedServiceInfo?.serviceName}
+                      textStyle={styles.header}
+                    />
+                    {proposedServiceInfo?.serviceTypeId === 5 && (
+                      <>
+                        <DescriptionText
+                          text={`Distance Travelled: ${
+                            item?.distance === null ? 0 : item?.distance
+                          }mi / ${(item?.distance * 1.60934).toFixed(2)}km`}
+                          textStyle={{
+                            marginVertical: 4,
+                          }}
                         />
                         <DescriptionText
-                          text={
-                            'Generate Report at: ' +
-                            formatDate(item?.submitTime, 'iii LLL d hh:mm aa ')
-                          }
+                          text={`Time: ${
+                            item?.totalWalkTime === null
+                              ? '0'
+                              : item?.totalWalkTime
+                          }`}
                         />
-                      </View>
-                    </View>
-                  </AppTouchableOpacity>
-                );
-              })}
-            </View>
-          )}
-        </>
+                      </>
+                    )}
+
+                    <DescriptionText
+                      text={
+                        'Generate Date: ' +
+                        moment(item?.submitTime).format('MMMM Do YYYY')
+                      }
+                      textStyle={{
+                        marginVertical: 4,
+                      }}
+                    />
+                  </View>
+                </View>
+              </AppTouchableOpacity>
+            );
+          })}
+          <BottomSpacing />
+        </ScrollView>
       )}
     </>
   );
@@ -123,8 +162,10 @@ const styles = StyleSheet.create({
   },
   container: {
     marginVertical: 6,
-    padding: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
     flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: 5,
   },
   image: {
@@ -149,5 +190,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: Text_Size.Text_2,
+  },
+  imageContainer: {
+    width: 50,
+    height: 50,
   },
 });

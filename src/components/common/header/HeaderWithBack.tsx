@@ -19,6 +19,7 @@ const HeaderWithBack = (props: {
   SecondIcon?: any;
   onPress?: (arg: any) => void;
   onPressBack?: () => void;
+  alert?: () => void;
 }) => {
   const {colors} = useTheme();
   return (
@@ -28,8 +29,12 @@ const HeaderWithBack = (props: {
         <TouchableOpacity
           style={styles.leftContainer}
           onPress={() => {
-            props.navigation.goBack();
-            props.onPressBack && props.onPressBack();
+            if (props.alert) {
+              props.alert();
+            } else {
+              props.navigation.goBack();
+              props.onPressBack && props.onPressBack();
+            }
           }}>
           <Ion
             name="ios-chevron-back"
