@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {ScrollView, StyleSheet, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
 import {getAvailability} from '../../../store/slices/onBoarding/setUpService/availability/getAvailability';
-import {setUpdateBoardingSelection} from '../../../store/slices/onBoarding/initial';
 
 const ServiceSetUp = () => {
   const {colors} = useTheme();

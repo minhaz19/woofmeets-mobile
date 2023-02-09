@@ -23,6 +23,8 @@ import {useApi} from '../../../utils/helpers/api/useApi';
 import methods from '../../../api/methods';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {useAppSelector} from '../../../store/store';
+import {checkPermissions} from '../../../components/ScreenComponent/conference/utils/functions';
+import {PERMISSIONS} from 'react-native-permissions';
 
 const Messages = (props: {
   roomId: any;
@@ -68,14 +70,20 @@ const Messages = (props: {
       roomType: roomType,
     });
     if (result?.ok) {
-      navigation.navigate('Room', {
-        token: result?.data?.data,
-        roomType: roomType === 'VIDEO' ? 'VIDEO' : 'AUDIO',
-        userName: user?.firstName + ' ' + user?.lastName,
-        userId: user.id,
-        appointmentOpk: props.opk,
-        image: user?.image.url,
-      });
+      const permissionsGranted = await checkPermissions([
+        PERMISSIONS.ANDROID.CAMERA,
+        PERMISSIONS.ANDROID.RECORD_AUDIO,
+      ]);
+      if (permissionsGranted) {
+        navigation.navigate('Room', {
+          token: result?.data?.data,
+          roomType: roomType === 'VIDEO' ? 'VIDEO' : 'AUDIO',
+          userName: user?.firstName + ' ' + user?.lastName,
+          userId: user.id,
+          appointmentOpk: props.opk,
+          image: user?.image.url,
+        });
+      }
     }
   };
 
@@ -185,7 +193,9 @@ const Messages = (props: {
                             text={`${
                               user?.firstName + ' ' + user?.lastName
                             } started ${
-                              item?.attachment === 'AUDIO' ? 'an audio' : 'a video'
+                              item?.attachment === 'AUDIO'
+                                ? 'an audio'
+                                : 'a video'
                             } call.`}
                           />
                           <AppTouchableOpacity
@@ -248,13 +258,14 @@ const Messages = (props: {
                       ]}>
                       {/* {item?.content && <TitleText text={item?.content} />} */}
                       {/* {<TitleText text={checkLink(item.content)} />} */}
-                      {!item.attachment  &&
-                        checkLink(item.content)}
+                      {!item.attachment && checkLink(item.content)}
                       {['VIDEO', 'AUDIO'].includes(item.attachment) && (
                         <View style={styles.messageContainer}>
                           <TitleText
                             text={`${item.content.split(' ')[0]} started ${
-                              item?.attachment === 'AUDIO' ? 'an audio' : 'a video'
+                              item?.attachment === 'AUDIO'
+                                ? 'an audio'
+                                : 'a video'
                             } call.`}
                           />
                           <AppTouchableOpacity

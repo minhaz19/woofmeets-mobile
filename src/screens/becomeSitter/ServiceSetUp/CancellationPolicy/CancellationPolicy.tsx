@@ -1,4 +1,4 @@
-import {Alert, RefreshControl, StyleSheet} from 'react-native';
+import {RefreshControl, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ReusableHeader from '../../../../components/ScreenComponent/becomeSitter/ServiceSetup/ReusableHeader';
 import {useApi} from '../../../../utils/helpers/api/useApi';
@@ -14,7 +14,6 @@ import {
   getCancellationPolicy,
   getSingleCancellationPolicy,
 } from '../../../../store/slices/onBoarding/setUpService/cancellationPolicy/getCancellationPolicy';
-// import ScrollViewRapper from '../../../../components/common/ScrollViewRapper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 interface Props {
@@ -22,12 +21,9 @@ interface Props {
   route: any;
 }
 const CancellationPolicy = ({navigation, route}: Props) => {
-  const {boardingSelection} = useAppSelector(state => state.initial);
-  const {serviceSetup} = useAppSelector((state: any) => state?.serviceSetup);
   const {policy, singleProviderPolicy, loading} = useAppSelector(
     (state: any) => state?.cancellationPolicy,
   );
-  const {itemId, name, image, description} = serviceSetup.routeData;
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
   const [refreshing, setRefreshing] = useState(false);
@@ -112,12 +108,6 @@ const CancellationPolicy = ({navigation, route}: Props) => {
         extraScrollHeight={200}
         enableAutomaticScroll={true}
         enableOnAndroid={true}>
-        <ReusableHeader
-          itemId={itemId}
-          name={name}
-          image={image}
-          description={description}
-        />
         <SubCancellationPolicy
           handlePolicy={handlePolicy}
           postLoading={postLoading}

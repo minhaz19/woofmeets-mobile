@@ -7,8 +7,6 @@ import {FilterIcon} from '../../assets/svgs/SVG_LOGOS';
 import {setOpenFilter} from '../../store/slices/misc/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
 import RealtimeLocation from '../../screens/RealtimeLocation';
-import Header from '../../components/common/header/Header';
-import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 import {useAppDispatch} from '../../store/store';
 import authStorage from '../../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
