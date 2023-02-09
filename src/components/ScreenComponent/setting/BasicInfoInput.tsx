@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react-hooks/exhaustive-deps */
-import {Pressable, StyleSheet, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
 import HeaderText from '../../common/text/HeaderText';
@@ -13,7 +12,6 @@ import {countries} from '../../../utils/config/Data/AddPetData';
 import {useAppSelector} from '../../../store/store';
 import AppSelectField from '../../common/Form/AppSelectField';
 import {locationInput} from '../../../utils/config/Data/basicInfoDatas';
-import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import DescriptionText from '../../common/text/DescriptionText';
 import AppDropDownSelect from '../../common/AppDropDownSelect';
 import {
@@ -52,6 +50,7 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     control,
     setValue,
     formState: {errors},
+    setError,
   } = useFormContext();
   const basicData = useWatch();
 
@@ -84,175 +83,152 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
         shouldValidate: true,
       },
     );
+    setError('city', {type: 'custom', message: undefined});
+    setError('state', {type: 'custom', message: undefined});
+    setError('zipCode', {type: 'custom', message: undefined});
+    setError('countryId', {type: 'custom', message: undefined});
   };
 
-  const renderHeader = useCallback(() => {
-    return (
-      <>
-        <ProfileHeader
-          name="profileImage"
-          gLoading={gLoading}
-          url={image?.url}
-          userName={firstName ? firstName + ' ' + lastName : ''}
-        />
-        <View style={styles.headerContainer}>
-          <View style={styles.nameContainer}>
-            <HeaderText text="Basic Information" textStyle={styles.textStyle} />
-          </View>
-          <TitleText textStyle={styles.label} text={'Date of Birth'} />
-          <View>
-            <AppInput
-              placeholder="DOB"
-              onPressIn={() => {
-                setShown(true);
-              }}
-              value={basicData?.dob ? format(new Date(basicData.dob), 'P') : ''}
-            />
-            <AppTouchableOpacity
-              onPress={() => setShown(true)}
-              style={{position: 'absolute', right: 10, top: 10}}>
-              <AntDesign name="calendar" size={28} color={Colors.primary} />
-            </AppTouchableOpacity>
-            <ErrorMessage error={errors.dob?.message} />
-          </View>
-          <View style={styles.nameContainer}>
-            <HeaderText text="Add your address" textStyle={styles.textStyle} />
-            <DescriptionText
-              text={
-                'Your address is only shown to your client when their pet stays in your home'
-              }
-            />
-          </View>
+  return (
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <ProfileHeader
+        name="profileImage"
+        gLoading={gLoading}
+        url={image?.url}
+        userName={firstName ? firstName + ' ' + lastName : ''}
+        errors={errors}
+      />
+      <View style={styles.headerContainer}>
+        <View style={styles.nameContainer}>
+          <HeaderText text="Basic Information" textStyle={styles.textStyle} />
         </View>
-      </>
-    );
-  }, [
-    control,
-    errors,
-    firstName,
-    gLoading,
-    basicData?.dob,
-    image?.url,
-    lastName,
-  ]);
-
-  const renderFooter = useCallback(() => {
-    return (
+        <TitleText textStyle={styles.label} text={'Date of Birth'} />
+        <View>
+          <AppInput
+            placeholder="DOB"
+            onPressIn={() => {
+              setShown(true);
+            }}
+            value={basicData?.dob ? format(new Date(basicData.dob), 'P') : ''}
+          />
+          <AppTouchableOpacity
+            onPress={() => setShown(true)}
+            style={{position: 'absolute', right: 10, top: 10}}>
+            <AntDesign name="calendar" size={28} color={Colors.primary} />
+          </AppTouchableOpacity>
+          <ErrorMessage error={errors.dob?.message} />
+        </View>
+        <View style={styles.nameContainer}>
+          <HeaderText text="Add your address" textStyle={styles.textStyle} />
+          <DescriptionText
+            text={
+              'Your address is only shown to your client when their pet stays in your home'
+            }
+          />
+        </View>
+      </View>
+      {locationInput.map((item, index: number) => (
+        <View key={index.toString()}>
+          {!item.select && (
+            <View style={styles.inputContainer}>
+              <MiddleModal
+                onBlur={undefined}
+                setIsModalVisible={setShown}
+                isModalVisible={shown}
+                handlePress={() => {}}>
+                <DatePicker
+                  date={basicData?.dob ? new Date(basicData.dob) : new Date()}
+                  textColor="black"
+                  mode="date"
+                  onDateChange={d => {
+                    setValue('dob', d);
+                    setDate(new Date(d));
+                    setError('dob', {type: 'custom', message: undefined});
+                  }}
+                />
+                <Pressable onPress={() => setShown(false)}>
+                  <TitleText text={'Close'} textStyle={styles.close} />
+                </Pressable>
+              </MiddleModal>
+              {item.name === 'addressLine1' ? (
+                <>
+                  <GooglePredictLocation
+                    label={item.title}
+                    placeholder={item.placeholder}
+                    name={'addressLine1'}
+                    defaultValue={basicData.addressLine1}
+                    onChange={value => {
+                      setValue('addressLine1', value.split(',')[0]);
+                      setError('addressLine1', {
+                        type: 'custom',
+                        message: undefined,
+                      });
+                      setValue('latitude', null);
+                      setValue('longitude', null);
+                    }}
+                    onPlaceSelected={onPressAddress}
+                    errors={errors}
+                  />
+                  <DescriptionText
+                    textStyle={{paddingBottom: '2%'}}
+                    text={
+                      '*Please select your specific address for better owner reach.'
+                    }
+                  />
+                </>
+              ) : item.name === 'state' ? (
+                <AppDropDownSelect
+                  title={item.title}
+                  setValue={setValue}
+                  setError={setError}
+                  name={item.name}
+                  data={
+                    basicData.countryId === '1' ? americanStates : canadaStates
+                  }
+                  valueData={basicData.state}
+                  placeholder={item.placeholder}
+                  errors={errors}
+                />
+              ) : (
+                <AppFormField
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  keyboardType={'default'}
+                  placeholder={item.placeholder}
+                  textContentType={'none'}
+                  name={item.name}
+                  label={item.title}
+                  textInputStyle={styles.textInputStyle}
+                  control={control}
+                  errors={errors}
+                  // defaultValue={basicInfo?.[item.name]}
+                />
+              )}
+            </View>
+          )}
+          {item.select && (
+            <View style={styles.selectContainer}>
+              <AppSelectField
+                label={item.title}
+                name={'countryId'}
+                data={countries}
+                control={control}
+                defaultText={basicData.countryId}
+                placeholder={'Please select a country'}
+                country
+              />
+            </View>
+          )}
+        </View>
+      ))}
       <View style={styles.inputContainer}>
         <View style={styles.footerContainer}>
           <SubmitButton title="Save" onPress={handleSubmit} loading={loading} />
         </View>
         <BottomSpacing />
       </View>
-    );
-  }, [handleSubmit, loading]);
-
-  return (
-    <KeyboardAwareFlatList
-      data={locationInput}
-      horizontal={false}
-      extraHeight={60}
-      extraScrollHeight={120}
-      keyboardDismissMode="interactive"
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-      renderItem={({item}) => {
-        return (
-          <>
-            {!item.select && (
-              <View style={styles.inputContainer}>
-                <MiddleModal
-                  onBlur={undefined}
-                  setIsModalVisible={setShown}
-                  isModalVisible={shown}
-                  handlePress={() => {}}>
-                  <DatePicker
-                    date={basicData?.dob ? new Date(basicData.dob) : new Date()}
-                    textColor="black"
-                    mode="date"
-                    onDateChange={d => {
-                      setValue('dob', d);
-                      setDate(new Date(d));
-                    }}
-                  />
-                  <Pressable onPress={() => setShown(false)}>
-                    <TitleText text={'Close'} textStyle={styles.close} />
-                  </Pressable>
-                </MiddleModal>
-                {item.name === 'addressLine1' ? (
-                  <>
-                    <GooglePredictLocation
-                      label={item.title}
-                      placeholder={item.placeholder}
-                      name={'addressLine1'}
-                      defaultValue={basicData.addressLine1}
-                      onChange={value => {
-                        setValue('addressLine1', value);
-                        // setValue('latitude', null);
-                        // setValue('longitude', null);
-                      }}
-                      onPlaceSelected={onPressAddress}
-                      errors={errors}
-                    />
-                    <DescriptionText
-                      textStyle={{paddingBottom: '2%'}}
-                      text={
-                        '*Please select your specific address for better owner reach.'
-                      }
-                    />
-                  </>
-                ) : item.name === 'state' ? (
-                  <AppDropDownSelect
-                    title={item.title}
-                    setValue={setValue}
-                    name={item.name}
-                    data={
-                      basicData.countryId === '1'
-                        ? americanStates
-                        : canadaStates
-                    }
-                    valueData={basicData.state}
-                    placeholder={item.placeholder}
-                    errors={errors}
-                  />
-                ) : (
-                  <AppFormField
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType={'default'}
-                    placeholder={item.placeholder}
-                    textContentType={'none'}
-                    name={item.name}
-                    label={item.title}
-                    textInputStyle={styles.textInputStyle}
-                    control={control}
-                    errors={errors}
-                    // defaultValue={basicInfo?.[item.name]}
-                  />
-                )}
-              </View>
-            )}
-            {item.select && (
-              <View style={styles.selectContainer}>
-                <AppSelectField
-                  label={item.title}
-                  name={'countryId'}
-                  data={countries}
-                  control={control}
-                  defaultText={basicData.countryId}
-                  placeholder={'Please select a country'}
-                  country
-                />
-              </View>
-            )}
-          </>
-        );
-      }}
-      keyExtractor={(item, index) => item.name + index.toString()}
-      ListHeaderComponent={renderHeader}
-      ListFooterComponent={renderFooter}>
       <BottomSpacing />
-    </KeyboardAwareFlatList>
+    </ScrollView>
   );
 };
 

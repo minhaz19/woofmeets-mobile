@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 const basicInfoValidationSchema = Yup.object().shape({
-  profileImage: Yup.string(),
+  profileImage: Yup.string().required('Profile image is required'),
   addressLine1: Yup.string().required('Address is required'),
   addressLine2: Yup.string(),
   city: Yup.string().required('City is required'),
