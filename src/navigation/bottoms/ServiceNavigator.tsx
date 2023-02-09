@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Colors from '../../constants/Colors';
 import PetCareZipSearch from '../../screens/search/PetCareZipSearch';
 import AllProvider from '../../screens/Service/AllProvider';
@@ -7,8 +7,6 @@ import {FilterIcon} from '../../assets/svgs/SVG_LOGOS';
 import {setOpenFilter} from '../../store/slices/misc/openFilter';
 import {createStackNavigator} from '@react-navigation/stack';
 import RealtimeLocation from '../../screens/RealtimeLocation';
-import Header from '../../components/common/header/Header';
-import ProviderAvailablity from '../../screens/provider/ProviderAvailablity';
 import {useAppDispatch} from '../../store/store';
 import authStorage from '../../utils/helpers/auth/storage';
 import jwtDecode from 'jwt-decode';
@@ -19,12 +17,12 @@ const Stack1 = createStackNavigator();
 
 const ServiceNavigator = () => {
   const dispatch = useAppDispatch();
-  const [token, setToken] = useState<any>();
+  // const [token, setToken] = useState<any>();
   const getDecodedToken = async () => {
     const tok: any = await authStorage.getToken();
     if (tok) {
       const decode: any = await jwtDecode(tok);
-      setToken(decode);
+      // setToken(decode);
       return decode;
     }
   };

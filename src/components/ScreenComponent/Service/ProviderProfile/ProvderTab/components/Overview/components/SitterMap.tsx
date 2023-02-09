@@ -38,9 +38,7 @@ const SitterMap = () => {
               // description={'Meers wife home'}
             >
               <Image
-                source={{
-                  uri: 'https://toppng.com/uploads/preview/map-point-google-map-marker-gif-11562858751s4qufnxuml.png',
-                }}
+                source={require('../../../../../../../../assets/pin.png')}
                 style={{width: 46, height: 46}}
                 resizeMode="contain"
               />

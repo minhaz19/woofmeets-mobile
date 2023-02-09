@@ -86,7 +86,7 @@ export const useBasicInfo = (route: any) => {
         Alert.alert(result?.data?.message);
       }
     } else {
-      Alert.alert('', 'Please select your specific address from dropdown');
+      Alert.alert('Location', 'Please select your specific address from dropdown');
     }
   };
 

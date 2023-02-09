@@ -247,7 +247,6 @@ const ActivityHeader = (props: {
         setOtherDay({});
         props.setVisitId(findData.id);
       } else {
-    
       }
     }
   }, [appointmentCard]);
@@ -437,6 +436,7 @@ const ActivityHeader = (props: {
                 navigation.navigate('GenerateReport', {
                   screen: 'InboxNavigator',
                   reportInfo: stopRes.data.data,
+                  completeAppointment: true,
                 });
               } else if (result?.ok && result?.data?.data.cardFound) {
                 Alert.alert(

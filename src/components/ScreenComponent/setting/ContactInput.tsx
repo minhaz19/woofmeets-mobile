@@ -35,7 +35,7 @@ import {CountryPicker} from 'react-native-country-codes-picker';
 import BigText from '../../common/text/BigText';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {VerifyCode} from '../Auth/Common/OtpField';
-import ShortText from '../../common/text/ShortText';
+import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
 
 const contactInput = [
   {
@@ -58,6 +58,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
   const dispatch = useAppDispatch();
   const contact = useAppSelector(state => state.contact);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [isChangePhone, setIsChangePhone] = useState<boolean>(contact.phoneNumber ? false : true);
   const [textInput, setTextInput] = useState(
     contact.phoneNumber ? contact.phoneNumber : '',
   );
@@ -183,40 +184,55 @@ const ContactInput = (props: {handleSubmit: any}) => {
           </View>
           {
             <View>
-              <InputText
-                title={'Your Phone Number'}
-                placeholder={'Phone Number'}
-                description={
-                  "WoofMeet requires a verified phone number to keep your account safe and for important updates. We'll send a code via text message."
-                }
-                value={textInput}
-                setValue={setTextInput}
-                leftIcon={
-                  <TouchableOpacity
-                    onPress={() => setShow(true)}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    {/* <Text style={{width: 30, color: 'transparent', backgroundColor: 'green'}}>{flag}</Text> */}
-                    <BigText
-                      text={countryCode}
-                      textStyle={{color: Colors.primaryDif}}
+              {isChangePhone ? (
+                <InputText
+                  title={'Your Phone Number'}
+                  placeholder={'Phone Number'}
+                  description={
+                    "WoofMeet requires a verified phone number to keep your account safe and for important updates. We'll send a code via text message."
+                  }
+                  value={textInput}
+                  setTextInput={setTextInput}
+                  leftIcon={
+                    <TouchableOpacity
+                      onPress={() => setShow(true)}
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <BigText
+                        text={countryCode}
+                        textStyle={{color: Colors.primaryDif}}
+                      />
+                      <AntDesign
+                        name="caretdown"
+                        size={12}
+                        color={Colors.primaryDif}
+                        style={{paddingLeft: 5}}
+                      />
+                    </TouchableOpacity>
+                  }
+                  keyboardType="numeric"
+                  onChangeText={number => {
+                    mobilevalidate(number);
+                  }}
+                />
+              ) : (
+                <View style={styles.contactScreen}>
+                  <HeaderText text={contact?.phoneNumber} />
+                  <AppTouchableOpacity onPress={() => setIsChangePhone(true)}>
+                    <HeaderText
+                      text={'Change Phone Number'}
+                      textStyle={{
+                        textDecorationLine: 'underline',
+                        color: Colors.primaryDif,
+                      }}
                     />
-                    <AntDesign
-                      name="caretdown"
-                      size={12}
-                      color={Colors.primaryDif}
-                      style={{paddingLeft: 5}}
-                    />
-                  </TouchableOpacity>
-                }
-                keyboardType="numeric"
-                onChangeText={number => {
-                  mobilevalidate(number);
-                }}
-              />
+                  </AppTouchableOpacity>
+                </View>
+              )}
+
               <CountryPicker
                 withFlag
                 show={show}
@@ -255,13 +271,15 @@ const ContactInput = (props: {handleSubmit: any}) => {
               {isPhoneLoading ? (
                 <ActivityIndicator size="small" />
               ) : (
-                <IOSButton
-                  title={'Verify Phone Number'}
-                  textAlignment={btnStyles.textAlignment}
-                  containerStyle={btnStyles.containerStyleFullWidth}
-                  titleStyle={styles.titleStyle}
-                  onSelect={() => handleSubmit()}
-                />
+                isChangePhone && (
+                  <IOSButton
+                    title={'Verify Phone Number'}
+                    textAlignment={btnStyles.textAlignment}
+                    containerStyle={btnStyles.containerStyleFullWidth}
+                    titleStyle={styles.titleStyle}
+                    onSelect={() => handleSubmit()}
+                  />
+                )
               )}
             </View>
           }
@@ -284,35 +302,33 @@ const ContactInput = (props: {handleSubmit: any}) => {
               }
             />
           </View>
-
           {contactInput.map((item, index) => {
             return (
-              <View key={index}>
-                <AppFormField
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType={
-                    item?.name === 'emergencyPhone' ? 'phone-pad' : 'default'
-                  }
-                  placeholder={item.placeholder}
-                  textContentType={'none'}
-                  name={item.name}
-                  label={item.title}
-                  textInputStyle={styles.textInputStyle}
-                  control={control}
-                  errors={errors}
-                />
-              </View>
+              <AppFormField
+                key={index}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType={
+                  item?.name === 'emergencyPhone' ? 'phone-pad' : 'default'
+                }
+                placeholder={item.placeholder}
+                textContentType={'none'}
+                name={item.name}
+                label={item.title}
+                textInputStyle={styles.textInputStyle}
+                control={control}
+                errors={errors}
+              />
             );
           })}
         </View>
         <View style={styles.footerContainer}>
           <SubmitButton
             title="Save"
-            onPress={() => {
+            onPress={e => {
               if (otpVerificationStatus) {
                 setGlobalError('');
-                props.handleSubmit();
+                props.handleSubmit(e);
               } else {
                 setGlobalError('Please submit and verify phone number');
               }
@@ -365,5 +381,16 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     paddingLeft: 10,
+  },
+  successStyle: {
+    textAlign: 'center',
+    color: Colors.green,
+    paddingBottom: '5%',
+  },
+  contactScreen: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: '5%',
   },
 });

@@ -25,7 +25,7 @@ const InputText = (props: {
     | undefined;
   placeholder: string | undefined;
   value: string | undefined;
-  setValue: (arg0: string) => void;
+  setTextInput: (arg0: string) => void;
   icon?: any;
   leftIcon?: any;
   style?: TextStyle;
@@ -57,7 +57,9 @@ const InputText = (props: {
           onChangeText={
             props.onChangeText
               ? props.onChangeText
-              : pCode => props.setValue(pCode)
+              : pCode => {
+                  props.setTextInput(pCode);
+                }
           }
           style={[styles.text, {color: colors.headerText}]}
           placeholderTextColor={colors.placeholderTextColor}

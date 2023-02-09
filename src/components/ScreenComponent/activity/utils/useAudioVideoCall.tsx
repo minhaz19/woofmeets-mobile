@@ -54,7 +54,7 @@ export const useAudioVideoCall = (
         };
         socket.emit('send-message', payloadData);
       } else {
-        // console.log('Permission Not Granted!');
+       
       }
     }
   };

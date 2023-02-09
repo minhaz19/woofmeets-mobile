@@ -22,7 +22,6 @@ import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import AppActivityIndicator from '../../../common/Loaders/AppActivityIndicator';
 // import ServiceSetUp from '../../../../screens/becomeSitter/ServiceSetUp';
 import {setServiceSetup} from '../../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
 import ButtonCom from '../../../UI/ButtonCom';
@@ -47,10 +46,10 @@ const ServiceSetting = () => {
   // const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
-  const {userServices, userServicesLoading} = useAppSelector(
+  const {userServices} = useAppSelector(
     (state: any) => state.services,
   );
-  const {progressData, loading} = useAppSelector(state => state.initial);
+  const {progressData} = useAppSelector(state => state.initial);
   const {user} = useAppSelector((state: any) => state?.whoAmI);
   const navigation = useNavigation();
 
@@ -129,12 +128,12 @@ const ServiceSetting = () => {
                   dispatch(
                     setServiceSetup({
                       routeData: {
-                        itemId: item.id,
-                        name: item.serviceType.name,
-                        image: getIcon(item.serviceType.icon),
-                        description: item.serviceType.description,
-                        serviceId: item.serviceTypeId,
-                        providerServicesId: item.id,
+                        itemId: item?.id,
+                        name: item.serviceType?.name,
+                        image: getIcon(item?.serviceType?.icon),
+                        description: item?.serviceType?.description,
+                        serviceId: item?.serviceTypeId,
+                        providerServicesId: item?.id,
                         service: item?.AvailableDay,
                       },
                     }),

@@ -6,6 +6,8 @@ export const trackingToggle = createSlice({
     trackingStatus: false,
     reset: false,
     timee: {hours: 0, minutes: 0, seconds: 0},
+    distance: 0,
+    coordinates: [{latitude: 0, longitude: 0}],
   },
   reducers: {
     setTrackingStatus: (state, action) => {
@@ -17,8 +19,15 @@ export const trackingToggle = createSlice({
     setReset: (state, action) => {
       state.reset = action.payload;
     },
+    setDistance: (state, action) => {
+      state.distance = action.payload;
+    },
+    setCoordinates: (state, action) => {
+      state.coordinates = action.payload;
+    },
   },
 });
-export const {setTrackingStatus, setTimee, setReset} = trackingToggle.actions;
+export const {setTrackingStatus, setCoordinates, setTimee, setDistance, setReset} =
+  trackingToggle.actions;
 
 export default trackingToggle.reducer;

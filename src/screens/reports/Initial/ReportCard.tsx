@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, ScrollView, Image, Text} from 'react-native';
+import {StyleSheet, View, ScrollView, Image} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import StaticMap from '../map/NavigateMap';
 import HeaderText from '../../../components/common/text/HeaderText';
@@ -14,8 +14,9 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 
 import Text_Size from '../../../constants/textScaling';
 import {msgUrl} from '../../../utils/helpers/httpRequest';
-import {useAppSelector} from '../../../store/store';
+// import {useAppSelector} from '../../../store/store';
 import {formatDate} from '../../../components/common/formatDate';
+import storage from '../../../utils/helpers/auth/storage';
 
 interface Props {
   navigation: {
@@ -23,35 +24,41 @@ interface Props {
   };
   route: any;
 }
-const ReportCard = ({navigation, route}: Props) => {
+const ReportCard = ({route}: Props) => {
   const scrollRef = useRef<ScrollView | null>(null);
   const {colors} = useTheme();
   const {id, serviceTypeId, appointmentId} = route?.params;
-  const [singleReportData, setSingleReportData] = useState({});
+  const [singleReportData, setSingleReportData] = useState<any>({});
   const {request, loading} = useApi(methods._get);
   const {request: getMap, loading: mapLoading} = useApi(methods._get);
-  const [mapData, setMapData] = useState([]);
+  // const [mapData, setMapData] = useState([]);
 
   const handleSingleReport = async () => {
     const singleEndPoint = `/appointment/card/find/${id}`;
     const result = await request(singleEndPoint);
-
     if (result.ok) {
       setSingleReportData(result?.data?.data);
     }
   };
-  const callGet = async () => {
-    const response = await getMap(
-      msgUrl + `/v1/locations/visit/${appointmentId}`,
-    );
-    response.ok && setMapData(response?.data?.data);
-  };
-  useEffect(() => {
-    serviceTypeId === 5 && appointmentId !== null && callGet();
-  }, [appointmentId]);
+  // const callGet = async () => {
+  //   const authToken = await storage.getToken();
+  //   const response = await getMap(
+  //     msgUrl + `/v1/locations/visit/${appointmentId}`,
+  //     {
+  //       headers: {
+  //         Authorization: authToken,
+  //       },
+  //     },
+  //   );
+  //   response.ok && setMapData(response?.data?.data);
+  // };
+  // useEffect(() => {
+  //   serviceTypeId === 5 && appointmentId !== null && callGet();
+  // }, [appointmentId]);
   useEffect(() => {
     handleSingleReport();
   }, []);
+
   return (
     <>
       {(loading || mapLoading) && (
@@ -62,13 +69,17 @@ const ReportCard = ({navigation, route}: Props) => {
         style={[styles.container, {backgroundColor: Colors.iosBG}]}>
         {serviceTypeId === 5 && (
           <>
-            {(appointmentId !== null && mapData.length > 0) && (
+            {/* {appointmentId !== null && mapData.length > 0 && (
               <View style={{height: 300}}>
                 <StaticMap mapData={mapData} />
               </View>
-            )}
-            {/* <View
-              style={{padding: 15, backgroundColor: colors.backgroundColor}}>
+            )} */}
+            <View
+              style={{
+                padding: 15,
+                marginTop: 15,
+                backgroundColor: colors.backgroundColor,
+              }}>
               <View style={styles.flexContainer}>
                 <View>
                   <HeaderText
@@ -76,43 +87,34 @@ const ReportCard = ({navigation, route}: Props) => {
                     textStyle={{...styles.header, color: colors.lightText}}
                   />
                   <HeaderText
-                    text={'1.6mi/32mi'}
+                    text={`${
+                      singleReportData?.distance === null
+                        ? 0
+                        : singleReportData?.distance
+                    }mi / ${(singleReportData?.distance * 1.60934).toFixed(
+                      2,
+                    )}km`}
                     textStyle={{...styles.headerBold}}
                   />
                 </View>
                 <View style={styles.dateContainer}>
                   <View>
                     <HeaderText
-                      text={'May 13'}
+                      text={'Time'}
                       textStyle={{...styles.header, color: colors.lightText}}
                     />
                     <HeaderText
-                      text={'8.45 AM'}
-                      textStyle={{...styles.headerBold}}
-                    />
-                  </View>
-                  <View style={{paddingHorizontal: 8}}>
-                    <RightArrow height={20} width={24} />
-                  </View>
-                  <View>
-                    <HeaderText
-                      text={'May 13'}
-                      textStyle={{...styles.header, color: colors.lightText}}
-                    />
-                    <HeaderText
-                      text={'9.45 AM'}
+                      text={`Time: ${
+                        singleReportData?.totalWalkTime === null
+                          ? '0'
+                          : singleReportData?.totalWalkTime
+                      }`}
                       textStyle={{...styles.headerBold}}
                     />
                   </View>
                 </View>
               </View>
-              <DescriptionText
-            text={
-              'Filler text is text that shares some characteristics of a real written text, but is random or otherwise generated. It may be used to display a sample of fonts, generate text for testing, or to spoof an e-mail spam filter.'
-            }
-            textStyle={{color: colors.placeholderTextColor}}
-          />
-            </View> */}
+            </View>
           </>
         )}
 
@@ -167,7 +169,7 @@ const ReportCard = ({navigation, route}: Props) => {
             textStyle={{paddingBottom: 10}}
           />
 
-          <HeaderText text={'Additional Notes'} textStyle={styles.label} />
+          <HeaderText text={'Additional'} textStyle={styles.label} />
           <DescriptionText
             text={
               singleReportData?.additionalNotes
