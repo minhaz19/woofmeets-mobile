@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   GestureResponderEvent,
 } from 'react-native';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   CallSvg,
   FileTextSvg,
@@ -17,8 +17,9 @@ import {ProfileIcon} from '../../../../assets/svgs/Setting_SVG';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../../../constants/Colors';
-import { getSitterDetails } from '../../../../store/slices/profile/details';
-import { useAppDispatch } from '../../../../store/store';
+import {getSitterDetails} from '../../../../store/slices/profile/details';
+import {useAppDispatch} from '../../../../store/store';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const ProfileModify = (props: {
   navigation: {navigate: (arg0: string) => any};
@@ -29,32 +30,69 @@ const ProfileModify = (props: {
     {
       id: 1,
       name: 'Basic Info',
-      icon: <ProfileIcon height={20} width={20} />,
+      icon: (
+        <ProfileIcon
+          height={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+          width={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+        />
+      ),
       screen: () => props.navigation.navigate('SitterBasicInfo'),
     },
     {
       id: 2,
       name: 'Phone Number',
-      icon: <CallSvg height={20} width={20} />,
+      icon: (
+        <CallSvg
+          height={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+          width={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+        />
+      ),
       screen: () => props.navigation.navigate('PhoneNumberSitter'),
     },
     {
       id: 3,
       name: 'Details',
-      icon: <FileTextSvg height={20} width={20} />,
+      icon: (
+        <FileTextSvg
+          height={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+          width={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+        />
+      ),
       screen: () => props.navigation.navigate('SitterDetails'),
     },
     {
       id: 4,
       name: 'Gallery',
-      icon: <ImageStackSvg height={20} width={20} />,
+      icon: (
+        <ImageStackSvg
+          height={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+          width={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+        />
+      ),
       screen: () => props.navigation.navigate('GallerySitter'),
     },
     {
       id: 5,
       name: 'Your Pets',
-      icon: <PetSvg height={20} width={20} />,
+      icon: (
+        <PetSvg
+          height={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+          width={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+        />
+      ),
       screen: () => props.navigation.navigate('PetScreens'),
+    },
+    {
+      id: 6,
+      name: 'Cancellation Policy',
+      icon: (
+        <MaterialIcons
+          name="policy"
+          size={SCREEN_WIDTH <= 380 ? 22 : SCREEN_WIDTH <= 600 ? 24 : 28}
+          color={Colors.primary}
+        />
+      ),
+      screen: () => props.navigation.navigate('CancellationPolicyScreen'),
     },
   ];
 

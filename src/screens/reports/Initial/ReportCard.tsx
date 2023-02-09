@@ -167,7 +167,7 @@ const ReportCard = ({navigation, route}: Props) => {
             textStyle={{paddingBottom: 10}}
           />
 
-          <HeaderText text={'Additional Notes'} textStyle={styles.label} />
+          <HeaderText text={'Additional'} textStyle={styles.label} />
           <DescriptionText
             text={
               singleReportData?.additionalNotes

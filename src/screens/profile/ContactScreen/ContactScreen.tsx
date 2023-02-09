@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   StyleSheet,
@@ -48,6 +49,7 @@ const ContactScreen = ({route}) => {
   useEffect(() => {
     onRefresh();
   }, []);
+
 
   return (
     <KeyboardAwareScrollView
@@ -114,7 +116,7 @@ const ContactScreen = ({route}) => {
           </Text>
         </View>
       </View>
-      <BottomSpacing />
+      {/* <BottomSpacing /> */}
       <BottomSpacing />
     </KeyboardAwareScrollView>
   );

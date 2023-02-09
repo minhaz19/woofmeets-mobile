@@ -254,6 +254,11 @@ const ContactInput = (props: {handleSubmit: any}) => {
               )}
               {isPhoneLoading ? (
                 <ActivityIndicator size="small" />
+              ) : contact?.phoneNumber ? (
+                <HeaderText
+                  text="Phone number verified"
+                  textStyle={styles.successStyle}
+                />
               ) : (
                 <IOSButton
                   title={'Verify Phone Number'}
@@ -365,5 +370,10 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     paddingLeft: 10,
+  },
+  successStyle: {
+    textAlign: 'center',
+    color: Colors.green,
+    paddingBottom: '5%',
   },
 });

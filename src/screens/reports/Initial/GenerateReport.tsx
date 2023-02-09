@@ -279,6 +279,7 @@ const GenerateReport = ({navigation, route}: Props) => {
               setIsMedication(text);
             }}
             numberOfLines={12}
+            multiline={true}
           />
           <HeaderText textStyle={styles.label} text={'Additional Notes'} />
           <AppInput
@@ -287,6 +288,7 @@ const GenerateReport = ({navigation, route}: Props) => {
               setIsAdditionalNotes(text);
             }}
             numberOfLines={12}
+            multiline={true}
           />
         </View>
         <View
