@@ -13,16 +13,24 @@ import methods from '../../../../api/methods';
 import UploadingLoader from '../../../common/Loaders/UploadingLoader';
 import {useAppDispatch} from '../../../../store/store';
 import {getUserProfileInfo} from '../../../../store/slices/userProfile/userProfileAction';
+import ErrorMessage from '../../../common/Form/ErrorMessage';
 interface Props {
   name: string;
   gLoading?: boolean;
   url: string | null;
   userName?: string;
+  errors: any,
 }
 const slug = '/user-profile/upload-profile-picture';
 const img =
   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-const ProfileHeader = ({name, gLoading, url, userName}: Props) => {
+const ProfileHeader = ({
+  name,
+  gLoading,
+  url,
+  userName,
+  errors,
+}: Props) => {
   const {colors} = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
@@ -33,10 +41,10 @@ const ProfileHeader = ({name, gLoading, url, userName}: Props) => {
   const {request, loading} = useApi(methods._post);
 
   const handleUpload = async (e: any) => {
-    setValue(name, e._parts[0][1].uri);
     setImage(e._parts[0][1].uri);
     const result = await request(slug, e);
     if (result.ok) {
+      setValue(name, e._parts[0][1].uri);
       dispatch(getUserProfileInfo());
     }
   };
@@ -77,6 +85,9 @@ const ProfileHeader = ({name, gLoading, url, userName}: Props) => {
         <View style={styles.nameContainer}>
           <HeaderText text={userName ?? ''} />
         </View>
+        {errors && (
+          <ErrorMessage error={errors[name!]?.message} />
+        )}
       </View>
       <ImageUploadModal
         isModalVisible={isModalVisible}

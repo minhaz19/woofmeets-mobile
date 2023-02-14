@@ -32,7 +32,7 @@ const GenerateReport = ({navigation, route}: Props) => {
   // const walkTime = route?.params?.walkTime;
   // const distance = route?.params?.distance;
   const appointmentDateId = route?.params?.appointmentDateId;
-  const reportInfo = route?.params?.reportInfo;
+  const {reportInfo, walkTime, distance, completeAppointment} = route?.params;
 
   const [isMedication, setIsMedication] = useState('');
   const [isAdditionalNotes, setIsAdditionalNotes] = useState('');
@@ -152,8 +152,8 @@ const GenerateReport = ({navigation, route}: Props) => {
                   petsData: petsArray,
                   medication: isMedication,
                   additionalNotes: isAdditionalNotes,
-                  // totalWalkTime: walkTime,
-                  // distance: distance,
+                  totalWalkTime: walkTime,
+                  distance: distance,
                   distanceUnit: 'Miles',
                   // generateTime: new Date(reportStartTime).toISOString(),
                   submitTime: new Date().toISOString(),
@@ -165,11 +165,13 @@ const GenerateReport = ({navigation, route}: Props) => {
                   petsData: petsArray,
                   medication: isMedication,
                   // generateTime: reportInfo?.startTime,
+
                   submitTime: new Date().toISOString(),
                   additionalNotes: isAdditionalNotes,
                 };
           const result = await reportRequest(endPoint, formattedData);
           if (result?.ok) {
+            dispatch(setPhoto([]));
             navigation.dispatch(
               StackActions.replace('ActivityScreen', {
                 appointmentOpk: proposedServiceInfo?.appointmentOpk,
@@ -216,6 +218,7 @@ const GenerateReport = ({navigation, route}: Props) => {
                   };
             const result = await reportEmptyRequest(endPoint, formattedData);
             if (result?.ok) {
+              dispatch(setPhoto([]));
               navigation.dispatch(
                 StackActions.replace('ActivityScreen', {
                   appointmentOpk: proposedServiceInfo?.appointmentOpk,
@@ -235,17 +238,58 @@ const GenerateReport = ({navigation, route}: Props) => {
         showsVerticalScrollIndicator={false}
         style={[styles.container, {backgroundColor: Colors.iosBG}]}>
         <View>
-          <HeaderText
-            text={`Generate Report for: ${formatDate(
-              reportInfo?.localDate,
-              'LLL d yyyy',
-            )} ${
-              reportInfo?.visitStartTimeString !== null
-                ? reportInfo?.visitStartTimeString
-                : ''
-            } `}
-            textStyle={{paddingVertical: 10, marginHorizontal: 15}}
-          />
+          {reportInfo?.localDate && (
+            <HeaderText
+              text={`Generate Report for: ${formatDate(
+                reportInfo?.localDate,
+                'LLL d yyyy',
+              )} ${
+                reportInfo?.visitStartTimeString !== null
+                  ? reportInfo?.visitStartTimeString
+                  : ''
+              } `}
+              textStyle={{
+                paddingVertical: 10,
+                marginTop: 10,
+                marginHorizontal: 15,
+              }}
+            />
+          )}
+          {proposedServiceInfo?.serviceTypeId === 5 &&
+            completeAppointment !== true && (
+              <View
+                style={{
+                  backgroundColor: Colors.background,
+                  borderRadius: 5,
+                  marginHorizontal: 15,
+                  marginVertical: 10,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingVertical: 20,
+                  paddingHorizontal: 15,
+                }}>
+                <HeaderText
+                  text={`Time: ${walkTime}`}
+                  textStyle={{
+                    // paddingVertical: 10,
+                    // marginHorizontal: 15,
+                    fontWeight: 'bold',
+                  }}
+                />
+                <HeaderText
+                  text={`Travelled:  ${distance === null ? 0 : distance}mi / ${(
+                    distance * 1.60934
+                  ).toFixed(2)}km`}
+                  textStyle={{
+                    // paddingVertical: 10,
+                    // marginHorizontal: 15,
+                    fontWeight: 'bold',
+                  }}
+                />
+              </View>
+            )}
+
           <HeaderText
             text="Activities"
             textStyle={{paddingVertical: 10, marginHorizontal: 15}}
@@ -279,6 +323,7 @@ const GenerateReport = ({navigation, route}: Props) => {
               setIsMedication(text);
             }}
             numberOfLines={12}
+            multiline={true}
           />
           <HeaderText textStyle={styles.label} text={'Additional Notes'} />
           <AppInput
@@ -287,6 +332,7 @@ const GenerateReport = ({navigation, route}: Props) => {
               setIsAdditionalNotes(text);
             }}
             numberOfLines={12}
+            multiline={true}
           />
         </View>
         <View

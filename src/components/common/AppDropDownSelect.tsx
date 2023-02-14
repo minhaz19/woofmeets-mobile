@@ -19,6 +19,7 @@ interface Props {
   placeholder: string;
   errors: any;
   onChange?: () => void;
+  setError: any,
 }
 
 const AppDropDownSelect = ({
@@ -29,7 +30,7 @@ const AppDropDownSelect = ({
   valueData,
   placeholder,
   errors,
-  onChange,
+  setError,
 }: Props) => {
   const {state} = useWatch();
 
@@ -37,6 +38,7 @@ const AppDropDownSelect = ({
   const [selectedItem, setSelectedItem] = useState(valueData);
   const handleState = () => {
     setValue(name, selectedItem);
+    setError(name, {type: 'custom', message: undefined});
   };
   return (
     <View style={styles.container}>

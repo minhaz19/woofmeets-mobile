@@ -52,18 +52,18 @@ const SingleServiceLanding = (props: {
       ),
       screen: () => props.navigation.navigate('AvailabilityScreen'),
     },
-    {
-      id: 3,
-      name: 'Cancellation Policy',
-      icon: (
-        <MaterialIcons
-          name="policy"
-          size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
-          color={Colors.primary}
-        />
-      ),
-      screen: () => props.navigation.navigate('CancellationPolicyScreen'),
-    },
+    // {
+    //   id: 3,
+    //   name: 'Cancellation Policy',
+    //   icon: (
+    //     <MaterialIcons
+    //       name="policy"
+    //       size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 30 : 32}
+    //       color={Colors.primary}
+    //     />
+    //   ),
+    //   screen: () => props.navigation.navigate('CancellationPolicyScreen'),
+    // },
   ];
 
   useEffect(() => {

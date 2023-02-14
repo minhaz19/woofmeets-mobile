@@ -8940,13 +8940,6 @@ react-native-status-bar-height@^2.6.0:
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.6.0.tgz#b6afd25b6e3d533c43d0fcdcfd5cafd775592cea"
   integrity sha512-z3SGLF0mHT+OlJDq7B7h/jXPjWcdBT3V14Le5L2PjntjjWM3+EJzq2BcXDwV+v67KFNJic5pgA26cCmseYek6w==
 
-react-native-stopwatch-timer@^0.0.21:
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/react-native-stopwatch-timer/-/react-native-stopwatch-timer-0.0.21.tgz#52c39f603e36c538bed3466212b1bfb350ed452f"
-  integrity sha512-qFFsD85NkBT1nxo32HMGq3XAtQyMC09p9ZDIEuOED2BOxgs0UpWg/FSTA0MmEoIKMyXUwSE5VxEzBaGP3z1HFw==
-  dependencies:
-    prop-types "^15.7.2"
-
 react-native-story-component@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/react-native-story-component/-/react-native-story-component-0.5.0.tgz#3e48a712ddb12ff9bef4860653b45dce344c054a"

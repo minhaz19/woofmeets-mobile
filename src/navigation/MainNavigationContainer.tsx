@@ -65,6 +65,8 @@ import SeePetReview from '../components/ScreenComponent/Inbox/Details/SeePetRevi
 import ScheduleAppointmentList from '../screens/provider/AppointmentScheduler/ScheduleAppointmentList';
 import CompleteOnboarding from '../screens/becomeSitter/CompleteOnboarding';
 import Room from '../components/ScreenComponent/conference/Room';
+import {Alert} from 'react-native';
+import {setPhoto} from '../store/slices/reportCard/reportCardSlice';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -668,8 +670,25 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
                 navigation={navigation}
                 title="Reports"
                 notification
-                onPressBack={() => {
-                  dispatch(setReset(false));
+                alert={() => {
+                  Alert.alert(
+                    'Warning!',
+                    'Are you sure you want to go back without generating the report?',
+                    [
+                      {
+                        text: 'No',
+                        onPress: () => {},
+                      },
+                      {
+                        text: 'Yes',
+                        onPress: async () => {
+                          dispatch(setReset(false));
+                          dispatch(setPhoto([]));
+                          navigation.goBack();
+                        },
+                      },
+                    ],
+                  );
                 }}
               />
             ),

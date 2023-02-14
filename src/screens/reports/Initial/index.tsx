@@ -23,6 +23,8 @@ import storage from '../../../utils/helpers/auth/storage';
 // import TitleText from '../../../components/common/text/TitleText';
 // import AppTouchableOpacity from '../../../components/common/AppClickEvents/AppTouchableOpacity';
 import {
+  setCoordinates,
+  setDistance,
   setReset,
   setTimee,
   setTrackingStatus,
@@ -35,42 +37,66 @@ interface Props {
 const ReportCardInitial = ({navigation, route}: Props) => {
   const {appointmentId, reportInfo} = route?.params;
   const [trackLocation, setTrackLocation] = useState(false);
-  const {trackingStatus} = useAppSelector(state => state.trackingStatus);
-  const [distance, setDistance] = useState(0);
-  const [walkTime, setWalkTime] = useState('');
+  const {trackingStatus, timee} = useAppSelector(state => state.trackingStatus);
+  const {distance} = useAppSelector(state => state.trackingStatus);
+  // const [distance, setDistance] = useState(0);
+  // const [walkTime, setWalkTime] = useState('');
   const {request, loading} = useApi(methods._put);
   const token = storage.getToken();
   const {user} = useAppSelector(state => state.whoAmI);
   const dispatch = useAppDispatch();
   const handleGenerate = async () => {
     if (trackingStatus) {
-      Alert.alert('Warning!','Stop tracking Stopwatch and then generate report');
+      Alert.alert(
+        'Warning!',
+        'Stop tracking Stopwatch and then generate report',
+      );
     } else {
-      const result = await request(reportEndPoint + appointmentId, {
-        token: await token,
-        user: user.id,
-        visit: appointmentId,
-      });
-      dispatch(setTimee({hours: 0, minutes: 0, seconds: 0}));
-      dispatch(setTrackingStatus(false));
-      dispatch(setReset(true));
+      const authToken = await storage.getToken();
+      const result = await request(
+        reportEndPoint + appointmentId,
+        {
+          token: await token,
+          user: user.id,
+          visit: appointmentId,
+        },
+        {
+          headers: {
+            Authorization: authToken,
+          },
+        },
+      );
       if (result.ok) {
+        const formattedTime = (timeValue: any) => {
+          return timeValue < 10 ? `0${timeValue}` : timeValue;
+        };
         navigation.navigate('GenerateReport', {
           screen: 'InboxNavigator',
           reportInfo: reportInfo,
-          distance: distance,
-          walkTime: walkTime,
+          distance: distance?.toFixed(2),
+          walkTime: `${formattedTime(timee.hours)}:${formattedTime(
+            timee.minutes,
+          )}:${formattedTime(timee.seconds)}`,
           appointmentDateId: appointmentId,
         });
+
+        dispatch(setTimee({hours: 0, minutes: 0, seconds: 0}));
+        dispatch(setCoordinates([{latitude: 0, longitude: 0}]));
+        dispatch(setDistance(0));
+        dispatch(setTrackingStatus(false));
+        dispatch(setReset(true));
       } else {
-        Alert.alert('Please generate your walk again...');
+        Alert.alert('Error!', 'Please generate your walk again...');
       }
     }
   };
   return (
     <View style={{flex: 1}}>
       <ScrollView
-        style={{flexGrow: 1, backgroundColor: Colors.background}}
+        contentContainerStyle={{
+          flexGrow: 1,
+          backgroundColor: Colors.background,
+        }}
         showsVerticalScrollIndicator={false}>
         <View>
           <RealtimeLocation
@@ -79,23 +105,24 @@ const ReportCardInitial = ({navigation, route}: Props) => {
             setTrackLocation={setTrackLocation}
           />
         </View>
+        <BottomSpacing />
+
+        <View style={styles.buttonContainer}>
+          <ButtonCom
+            loading={loading}
+            title={'Generate Report'}
+            textAlignment={btnStyles.textAlignment}
+            containerStyle={{
+              ...btnStyles.containerStyleFullWidth,
+              borderRadius: 8,
+            }}
+            titleStyle={btnStyles.titleStyle}
+            onSelect={handleGenerate}
+          />
+        </View>
 
         <BottomSpacing />
       </ScrollView>
-
-      <View style={styles.buttonContainer}>
-        <ButtonCom
-          loading={loading}
-          title={'Generate Report'}
-          textAlignment={btnStyles.textAlignment}
-          containerStyle={{
-            ...btnStyles.containerStyleFullWidth,
-            borderRadius: 8,
-          }}
-          titleStyle={btnStyles.titleStyle}
-          onSelect={handleGenerate}
-        />
-      </View>
     </View>
   );
 };
@@ -127,20 +154,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: Text_Size.Text_8,
   },
-  buttonContainer: {position: 'absolute', right: 20, left: 20, bottom: 60},
-  leftContainer: {
-    position: 'absolute',
-    top: 50,
-    zIndex: 999,
-    left: '2%',
-    paddingTop: 4,
-    // paddingVertical: 20,
-    paddingBottom: 4,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.background,
-    borderRadius: 20,
-  },
+  buttonContainer: {marginHorizontal: 20},
+
   iconStyle: {paddingRight: 5, paddingLeft: 10},
   backText: {color: Colors.black, fontWeight: 'bold', paddingRight: 20},
 });

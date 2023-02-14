@@ -23,7 +23,6 @@ import {
 // import ButtonCom from '../../../components/UI/ButtonCom';
 import {
   getOnboardingProgress,
-  setSitterData,
   setSelectedSetUpService,
 } from '../../../store/slices/onBoarding/initial';
 import {setServiceSetup} from '../../../store/slices/onBoarding/setUpService/serviceSetup/serviceSetUpSlice';
@@ -32,24 +31,24 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 import ServiceReusableModal from '../../../components/ScreenComponent/becomeSitter/ServiceSetup/Common/ServiceReusableModal';
 
 const HomeProfile = () => {
-  const [, setLoading] = useState<boolean>(false);
+  // const [, setLoading] = useState<boolean>(false);
   const {colors} = useTheme();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [isServiceModalVisible, setIsServiceModalVisible] =
     useState<boolean>(false);
   const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
-  const boardingSelection = useAppSelector(
-    state => state.initial.boardingSelection,
-  );
+  // const boardingSelection = useAppSelector(
+  //   state => state.initial.boardingSelection,
+  // );
   const dispatch = useAppDispatch();
 
-  const onServicePostHandle = async () => {
-    setLoading(true);
-    if (boardingSelection[boardingSelection.length].isCompleted) {
-      dispatch(setSitterData({pass: 1}));
-    }
-    setLoading(false);
-  };
+  // const onServicePostHandle = async () => {
+  //   setLoading(true);
+  //   if (boardingSelection[boardingSelection.length].isCompleted) {
+  //     dispatch(setSitterData({pass: 1}));
+  //   }
+  //   setLoading(false);
+  // };
 
   const modalData = [
     {
@@ -197,13 +196,13 @@ const HomeProfile = () => {
                         dispatch(
                           setServiceSetup({
                             routeData: {
-                              itemId: item.id,
-                              name: item.serviceType.name,
-                              image: getIcon(item.serviceType.icon),
-                              description: item.serviceType.description,
-                              serviceId: item.serviceTypeId,
-                              serviceSlug: item.serviceType.slug,
-                              providerServicesId: item.id,
+                              itemId: item?.id,
+                              name: item?.serviceType?.name,
+                              image: getIcon(item?.serviceType?.icon),
+                              description: item?.serviceType?.description,
+                              serviceId: item?.serviceTypeId,
+                              serviceSlug: item?.serviceType?.slug,
+                              providerServicesId: item?.id,
                               service: item?.AvailableDay,
                             },
                           }),

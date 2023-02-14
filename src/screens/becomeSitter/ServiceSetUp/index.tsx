@@ -6,7 +6,6 @@ import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ProfileItemCard from '../../../components/ScreenComponent/becomeSitter/createProfile/profileItem';
 import {getAvailability} from '../../../store/slices/onBoarding/setUpService/availability/getAvailability';
-import {setUpdateBoardingSelection} from '../../../store/slices/onBoarding/initial';
 
 const ServiceSetUp = () => {
   const {colors} = useTheme();

@@ -20,7 +20,7 @@ const userSlice = createSlice({
       })
       .addCase(getUserProfileInfo.fulfilled, (state, {payload}) => {
         state.loading = false;
-        state.userInfo = payload.data;
+        state.userInfo = payload?.data;
       })
       .addCase(getUserProfileInfo.rejected, (state, {payload}) => {
         state.loading = false;

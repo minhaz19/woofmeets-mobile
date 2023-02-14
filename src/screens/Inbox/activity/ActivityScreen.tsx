@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {KeyboardAvoidingView, Modal, Platform} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  unstable_batchedUpdates,
+} from 'react-native';
 import {SafeAreaView, View} from 'react-native';
 import ActivityHeader from '../../../components/ScreenComponent/activity/ActivityHeader';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
@@ -65,6 +70,8 @@ const ActivityScreen = (props: {
   const [refreshing, setRefreshing] = useState(false);
   const [visitId, setVisitId] = useState(null);
   const {request} = useApi(methods._get);
+  const [limit, setLimit] = useState(1000);
+
   const readMessages = async () => {
     const authToken = await storage.getToken();
     await request(
@@ -77,33 +84,70 @@ const ActivityScreen = (props: {
     );
   };
   const getPreviousMessages = async () => {
+    setRefreshing(true);
+    // limit: number | undefined;
     if (roomId) {
       setMsgLoadng(true);
-      const slug = `/v1/messages/group/${roomId}`;
-      const result: any = await apiMsg.get(slug);
+      const authToken = await storage.getToken();
+      const slug = `/v1/messages/group/${roomId}?limit=${limit}`;
+      const result: any = await apiMsg.get(slug, {
+        headers: {
+          Authorization: authToken,
+        },
+      });
       if (result.ok) {
         setMessages(result?.data?.data?.reverse());
         setMsgLoadng(false);
+
+        // unstable_batchedUpdates(() => {
+        //   setMessages(result?.data?.data?.reverse());
+        //   setMsgLoadng(false);
+        // });
       }
       if (!result.ok) {
         setMsgLoadng(false);
       }
     }
+    setRefreshing(false);
   };
   const onRefresh = async () => {
     setRefreshing(true);
     getPreviousMessages();
     dispatch(getProviderProposal(appointmentOpk));
     dispatch(getAppointmentCard(appointmentOpk));
+    // try {
+    //   await Promise.all([
+    //     getPreviousMessages(),
+    //     dispatch(getProviderProposal(appointmentOpk)),
+    //     dispatch(getAppointmentCard(appointmentOpk)),
+    //   ]);
+    //   // dispatch(getProviderProposal(appointmentOpk));
+    //   // dispatch(getAppointmentCard(appointmentOpk));
+    // } catch (error) {
+    //   console.log('error', error);
+    // }
     setRefreshing(false);
   };
 
   useEffect(() => {
-    dispatch(getProviderProposal(appointmentOpk));
-    dispatch(getAllPets());
-    dispatch(getAppointmentCard(appointmentOpk));
-    getPreviousMessages();
-    readMessages();
+    const callAPi = async () => {
+      // try {
+      //   await Promise.all([
+      //     dispatch(getProviderProposal(appointmentOpk)),
+      //     dispatch(getAllPets()),
+      //     dispatch(getAppointmentCard(appointmentOpk)),
+      //     getPreviousMessages(),
+      //     readMessages(),
+      //   ]);
+      // } catch (error) {}
+      dispatch(getProviderProposal(appointmentOpk));
+      dispatch(getAllPets());
+      dispatch(getAppointmentCard(appointmentOpk));
+      getPreviousMessages();
+      readMessages();
+    };
+    callAPi();
+
     // setIsReviewModal(true);
     const trackMessages = (data: any) => {
       if (data?.group === roomId) {
@@ -116,17 +160,6 @@ const ActivityScreen = (props: {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const trackMessages = (data: any) => {
-  //     if (data?.group === roomId) {
-  //       setMessages((prevMess: any) => [...prevMess, data]);
-  //     }
-  //   };
-  //   socket.on('message', trackMessages);
-  //   return () => {
-  //     socket.off('message', trackMessages);
-  //   };
-  // }, [roomId]);
   useEffect(() => {
     if (showReview) {
       setIsReviewModal(true);
@@ -147,6 +180,11 @@ const ActivityScreen = (props: {
     };
   }, [showReview, proposedServiceInfo]);
   // }, [showReview, proposedServiceInfo]);
+  const handleEndReached = () => {
+    // setLimit(limit + 20);
+    // getPreviousMessages();
+  };
+
   return loading || petLoading || providerLoading ? (
     <AppActivityIndicator visible={loading || petLoading || providerLoading} />
   ) : (
@@ -178,6 +216,7 @@ const ActivityScreen = (props: {
                 loading={msgLoading}
                 roomId={roomId}
                 opk={appointmentOpk}
+                handleEndReached={handleEndReached}
               />
             </>
           </KeyboardAvoidingView>
@@ -227,18 +266,6 @@ const ActivityScreen = (props: {
           />
         </View>
       </Modal>
-      {/* <BottomHalfModal
-        // isModalVisible={isReviewModal}
-        isModalVisible={isReviewModal}
-        setIsModalVisible={setIsReviewModal}>
-        <Review
-          setIsReviewModal={setIsReviewModal}
-          appointmentId={proposal?.appointment?.id}
-          setModalVisible={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      </BottomHalfModal> */}
     </>
   );
 };

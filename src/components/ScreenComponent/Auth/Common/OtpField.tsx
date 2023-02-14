@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {SafeAreaView, Text, View, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView, Text, View} from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -10,9 +10,13 @@ import AppButton from '../../../common/AppButton';
 import SubmitButton from '../../../common/Form/SubmitButton';
 import {style} from './style';
 
-interface VerifyCodeProps {}
+interface VerifyCodeProps {
+  resendCode: any;
+  loading: boolean;
+  onPress: (arg1: any) => void;
+}
 const CELL_COUNT = 6;
-const RESEND_OTP_TIME_LIMIT = 90;
+// const RESEND_OTP_TIME_LIMIT = 90;
 
 export const VerifyCode: React.FC<VerifyCodeProps> = ({
   resendCode,
