@@ -33,7 +33,7 @@ const ImageContainer = ({provider, rounded}: Props) => {
         resizeMode="cover"
         style={[styles.image, {borderRadius: rounded ? 100 : 50}]}
       />
-      {provider?.backGroundCheck !== 'NONE' && (
+      {/* {provider?.backGroundCheck !== 'NONE' && (
         <View
           style={[
             styles.batchContainer,
@@ -47,7 +47,7 @@ const ImageContainer = ({provider, rounded}: Props) => {
             text="Verified"
           />
         </View>
-      )}
+      )} */}
     </View>
   );
 };
@@ -57,6 +57,9 @@ export default ImageContainer;
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH > 800 ? SCREEN_WIDTH / 10 : SCREEN_WIDTH / 6,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // backgroundColor: 'red',
   },
   image: {
     width: '100%',

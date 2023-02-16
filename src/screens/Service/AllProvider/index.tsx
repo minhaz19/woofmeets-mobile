@@ -107,6 +107,13 @@ const AllProvider = ({navigation}: Props) => {
       </>
     );
   };
+  // const sortedProvider = allProvider?.sort((provider1, provider2) => {
+  //   provider1?.distance?.distance - provider2?.distance?.distance;
+  // });
+  const sortedProvider = allProvider
+    ? [...allProvider].sort((a, b) => a.distance.distance - b.distance.distance)
+    : null;
+
   return (
     <>
       {(loadingProvider || isFetching || loadingService) && (
@@ -118,11 +125,11 @@ const AllProvider = ({navigation}: Props) => {
       <ScreenRapperGrey>
         {loadingOneTime && <AllProviderLoader />}
         <Screen style={styles.container}>
-          {allProvider ? (
+          {sortedProvider ? (
             <>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={allProvider}
+                data={sortedProvider}
                 keyExtractor={(_, i) => String(i)}
                 renderItem={({item}) => {
                   return (

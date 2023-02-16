@@ -42,11 +42,12 @@ const ProviderInfo = ({
     user?.basicInfo?.country?.name === 'USA'
       ? distance?.distance
       : distance?.distance * 1.60934;
+  const text = `${user.firstName} ${user.lastName}`;
   return (
     <View style={styles.container}>
       <HeaderText
         textStyle={styles.title}
-        text={`${user.firstName} ${user.lastName}`}
+        text={text.length > 20 ? text.slice(0, 20) + '...' : text}
       />
       {headline ? (
         <ShortText
@@ -103,11 +104,12 @@ export default ProviderInfo;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
-    width: '100%',
+    flex: 1,
+    // width: '100%',
   },
   title: {
     fontWeight: '600',
-    width: '60%',
+    // width: '60%',
   },
   shortInfo: {
     flexDirection: 'row',

@@ -70,7 +70,11 @@ const ActivityScreen = (props: {
   const [refreshing, setRefreshing] = useState(false);
   const [visitId, setVisitId] = useState(null);
   const {request} = useApi(methods._get);
-  const [limit, setLimit] = useState(1000);
+  const [limit] = useState(20);
+  const [page, setPage] = useState(1);
+  const [error, setError] = useState(false);
+
+  const [totalMessage, setTotalMessage] = useState(20);
 
   const readMessages = async () => {
     const authToken = await storage.getToken();
@@ -83,29 +87,34 @@ const ActivityScreen = (props: {
       },
     );
   };
-  const getPreviousMessages = async () => {
+  const getPreviousMessages = async (p?: number) => {
     setRefreshing(true);
     // limit: number | undefined;
+    const page_ = p ?? page;
     if (roomId) {
       setMsgLoadng(true);
       const authToken = await storage.getToken();
-      const slug = `/v1/messages/group/${roomId}?limit=${limit}`;
+      const slug = `/v1/messages/group/${roomId}?page=${page_}&limit=${limit}`;
       const result: any = await apiMsg.get(slug, {
         headers: {
           Authorization: authToken,
         },
       });
+
       if (result.ok) {
-        setMessages(result?.data?.data?.reverse());
+        // setMessages(result?.data?.data?.reverse());
+        // setMessages(result?.data?.data);
+        setMessages([...messages, ...result?.data?.data]);
+        setTotalMessage(result?.data?.meta?.total);
         setMsgLoadng(false);
 
         // unstable_batchedUpdates(() => {
         //   setMessages(result?.data?.data?.reverse());
         //   setMsgLoadng(false);
         // });
-      }
-      if (!result.ok) {
+      } else if (!result.ok) {
         setMsgLoadng(false);
+        setError(true);
       }
     }
     setRefreshing(false);
@@ -157,6 +166,7 @@ const ActivityScreen = (props: {
     socket.on('message', trackMessages);
     return () => {
       socket.off('message', trackMessages);
+      setError(false);
     };
   }, []);
 
@@ -181,8 +191,11 @@ const ActivityScreen = (props: {
   }, [showReview, proposedServiceInfo]);
   // }, [showReview, proposedServiceInfo]);
   const handleEndReached = () => {
-    // setLimit(limit + 20);
-    // getPreviousMessages();
+    if (totalMessage < 20 || error) {
+      return;
+    }
+    setPage(pa => pa + 1);
+    getPreviousMessages(page + 1);
   };
 
   return loading || petLoading || providerLoading ? (
