@@ -67,6 +67,7 @@ import CompleteOnboarding from '../screens/becomeSitter/CompleteOnboarding';
 import Room from '../components/ScreenComponent/conference/Room';
 import {Alert} from 'react-native';
 import {setPhoto} from '../store/slices/reportCard/reportCardSlice';
+import OnboardingWebView from '../screens/WebView/Onboarding';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -782,6 +783,22 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
               <HeaderWithBack
                 navigation={navigation}
                 title="Appointment List"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="OnboardingWebView"
+          component={OnboardingWebView}
+          options={({navigation}) => ({
+            title: '',
+
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Become a Sitter"
                 notification
               />
             ),

@@ -89,12 +89,16 @@ const ProviderInfo = ({
             />
           ) : null}
         </View>
-      ) : expYears ? (
+      ) : (
         <ShortText
-          text={expYears + ' years of experience'}
+          text={
+            expYears === null || expYears === undefined
+              ? 0 + ' years of experience'
+              : expYears + ' years of experience'
+          }
           textStyle={styles.shortText}
         />
-      ) : null}
+      )}
     </View>
   );
 };
@@ -105,7 +109,6 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
     flex: 1,
-    // width: '100%',
   },
   title: {
     fontWeight: '600',
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
   },
   availableTime: {
     paddingTop: 4,
-    maxWidth: '75%',
+    // maxWidth: '75%',
   },
   rating: {marginRight: 5},
   repeat: {

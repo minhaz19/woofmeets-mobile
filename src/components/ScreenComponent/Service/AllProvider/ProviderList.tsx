@@ -18,7 +18,7 @@ const ProviderList = ({item, onPress}: Props) => {
       style={{
         ...styles.container,
         backgroundColor: colors.backgroundColor,
-        // paddingHorizontal: 10,
+    
       }}>
       <TouchableOpacity onPress={onPress} style={styles.providerContainer}>
         <ImageContainer provider={item?.provider} />

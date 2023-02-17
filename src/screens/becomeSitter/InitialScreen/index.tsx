@@ -42,7 +42,8 @@ const SitterInitialScreen = (props: {
       if (currentPlan?.currentPlan?.subscriptionInfo?.status) {
         props.navigation.navigate('Profile');
       } else {
-        props.navigation.navigate('SitterLandingPage');
+        // props.navigation.navigate('SitterLandingPage');
+        props.navigation.navigate('OnboardingWebView');
       }
     } else {
       props.navigation.navigate('SignUp');

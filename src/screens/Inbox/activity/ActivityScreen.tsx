@@ -23,9 +23,9 @@ import Messages from '../message/Messages';
 import {getAppointmentCard} from '../../../store/slices/Appointment/AppointmentCard/getAppointmentCard';
 import {socket} from '../../../../App';
 import {apiMsg} from '../../../api/client';
-import {useApi} from '../../../utils/helpers/api/useApi';
-import methods from '../../../api/methods';
-import {API_MSG} from '@env';
+// import {useApi} from '../../../utils/helpers/api/useApi';
+// import methods from '../../../api/methods';
+// import {API_MSG} from '@env';
 import storage from '../../../utils/helpers/auth/storage';
 const ActivityScreen = (props: {
   navigation: {navigate: (arg0: string) => void};
@@ -69,7 +69,7 @@ const ActivityScreen = (props: {
   const [msgLoading, setMsgLoadng] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [visitId, setVisitId] = useState(null);
-  const {request} = useApi(methods._get);
+  // const {request} = useApi(methods._get);
   const [limit] = useState(20);
   const [page, setPage] = useState(1);
   const [error, setError] = useState(false);
@@ -78,8 +78,9 @@ const ActivityScreen = (props: {
 
   const readMessages = async () => {
     const authToken = await storage.getToken();
-    await request(
-      `${API_MSG}/v1/messages/users/${user.id}/groups/${roomId}/read-messages`,
+    await apiMsg.get(
+      `/v1/messages/users/${user.id}/groups/${roomId}/read-messages`,
+      {},
       {
         headers: {
           Authorization: authToken,
@@ -87,6 +88,7 @@ const ActivityScreen = (props: {
       },
     );
   };
+  // console.log('user', user);
   const getPreviousMessages = async (p?: number) => {
     setRefreshing(true);
     // limit: number | undefined;
@@ -95,12 +97,16 @@ const ActivityScreen = (props: {
       setMsgLoadng(true);
       const authToken = await storage.getToken();
       const slug = `/v1/messages/group/${roomId}?page=${page_}&limit=${limit}`;
-      const result: any = await apiMsg.get(slug, {
-        headers: {
-          Authorization: authToken,
-        },
-      });
 
+      const result: any = await apiMsg.get(
+        slug,
+        {},
+        {
+          headers: {
+            Authorization: authToken,
+          },
+        },
+      );
       if (result.ok) {
         // setMessages(result?.data?.data?.reverse());
         // setMessages(result?.data?.data);
