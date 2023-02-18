@@ -17,17 +17,19 @@ const ProviderProfileInfo = () => {
       }>
       <ProviderImageContainer image={profileInfo?.avatar?.url} />
       <View style={styles.infoContainer}>
-        <ProviderBio
-          name={`${profileInfo?.firstName + ' ' + profileInfo?.lastName}`}
-          rating={profileInfo?.rating ? profileInfo?.rating : 0}
-          distance={`${
-            profileInfo?.address !== null
-              ? profileInfo?.address?.state +
-                ', ' +
-                profileInfo?.address?.country.name
-              : ''
-          }`}
-        />
+        {profileInfo && (
+          <ProviderBio
+            name={`${profileInfo?.firstName + ' ' + profileInfo?.lastName}`}
+            rating={profileInfo?.rating ? profileInfo?.rating : 0}
+            distance={`${
+              profileInfo?.address !== null
+                ? profileInfo?.address?.state +
+                  ', ' +
+                  profileInfo?.address?.country.name
+                : ''
+            }`}
+          />
+        )}
       </View>
 
       {profileInfo?.badge?.length > 0 && (
