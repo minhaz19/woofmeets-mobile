@@ -88,7 +88,6 @@ const ActivityScreen = (props: {
       },
     );
   };
-  // console.log('user', user);
   const getPreviousMessages = async (p?: number) => {
     setRefreshing(true);
     // limit: number | undefined;

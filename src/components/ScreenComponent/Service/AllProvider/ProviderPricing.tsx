@@ -31,7 +31,7 @@ const ProviderPricing = ({pricing, provider}: Props) => {
 export default ProviderPricing;
 
 const styles = StyleSheet.create({
-  container: {justifyContent: 'center'},
-  title: {fontSize: Text_Size.Text_2, textAlign: 'center', fontWeight: '700'},
+  container: {},
+  title: {fontSize: Text_Size.Text_1, textAlign: 'right', fontWeight: '700'},
   subTitle: {color: Colors.gray},
 });
