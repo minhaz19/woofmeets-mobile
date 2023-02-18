@@ -10,7 +10,13 @@ interface Props {
   jCenter?: boolean;
   textStyle?: any;
 }
-const ShortIconTitle = ({Icon, textStyle, text, color, jCenter = false}: Props) => {
+const ShortIconTitle = ({
+  Icon,
+  textStyle,
+  text,
+  color,
+  jCenter = false,
+}: Props) => {
   return (
     <View
       style={[
@@ -18,10 +24,7 @@ const ShortIconTitle = ({Icon, textStyle, text, color, jCenter = false}: Props) 
         {justifyContent: jCenter ? 'center' : 'flex-start'},
       ]}>
       <Icon fill={Colors.primary} width={13} height={13} />
-      <ShortText
-        textStyle={{marginLeft: 3, ...textStyle}}
-        text={text}
-      />
+      <ShortText textStyle={{marginLeft: 3, ...textStyle}} text={text} />
     </View>
   );
 };

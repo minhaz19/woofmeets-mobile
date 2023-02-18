@@ -10,10 +10,11 @@ import {
 import Colors from '../../../../../../constants/Colors';
 import ShortText from '../../../../../common/text/ShortText';
 import changeTextLetter from '../../../../../common/changeTextLetter';
+import TitleText from '../../../../../common/text/TitleText';
 interface Props {
   name: string;
   nature?: string;
-  rating: number;
+  rating: any;
   distance: string;
   availablity?: string;
   repeatClient?: string;
@@ -39,7 +40,7 @@ const ProviderBio = ({
         </View>
         {/* <ShortIconTitle Icon={Star} text={rating} /> */}
         {distance !== '' ? (
-          <ShortIconTitle Icon={MapMarker} text={distance} jCenter={true} />
+          <ShortIconTitle Icon={MapMarker} text={distance} />
         ) : (
           <View />
         )}
@@ -60,6 +61,19 @@ const ProviderBio = ({
           </View>
         </View>
       )}
+      {rating && (
+        <View style={styles.repeatContainer}>
+          <AirbnbRating
+            count={5}
+            defaultRating={rating?.average}
+            size={20}
+            showRating={false}
+            isDisabled
+            // onFinishRating={this.ratingCompleted}
+          />
+          <TitleText text={` (${rating.totalCount})`} />
+        </View>
+      )}
     </View>
   );
 };
@@ -73,7 +87,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '600',
-    textAlign: 'center',
+    // textAlign: 'center',
     marginTop: 10,
   },
   shortInfo: {
@@ -93,5 +107,6 @@ const styles = StyleSheet.create({
   },
   repeatContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
 });

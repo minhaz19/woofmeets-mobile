@@ -4,20 +4,20 @@ import React from 'react';
 import {SCREEN_WIDTH} from '../../../../../../constants/WindowSize';
 import {DogFeet} from '../../../../../../assets/svgs/SVG_LOGOS';
 import Colors from '../../../../../../constants/Colors';
-import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
+// import {useTheme} from '../../../../../../constants/theme/hooks/useTheme';
 interface Props {
   image: string;
   rounded?: Boolean;
 }
 const ProviderImageContainer = ({image, rounded}: Props) => {
-  const {colors} = useTheme();
+  // const {colors} = useTheme()÷;
   return (
     <View
       style={[
         styles.container,
         {
           height: SCREEN_WIDTH > 800 ? SCREEN_WIDTH / 7 : SCREEN_WIDTH / 5,
-          borderColor: colors.borderColor,
+          // borderColor: Colors.border,
         },
       ]}>
       <Image
@@ -27,14 +27,14 @@ const ProviderImageContainer = ({image, rounded}: Props) => {
             : 'https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg',
         }}
         resizeMode="cover"
-        style={[styles.image, {borderRadius: rounded ? 100 : 50}]}
+        style={[styles.image, {borderRadius: rounded ? 100 : 10}]}
       />
 
-      <View style={styles.batchCon}>
+      {/* <View style={styles.batchCon}>
         <View style={styles.batchContainer}>
           <DogFeet fill={Colors.background} height={15} width={15} />
         </View>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-    borderWidth: 1,
+    // borderWidth: 1,
   },
   batchCon: {
     justifyContent: 'center',

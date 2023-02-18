@@ -580,7 +580,7 @@
 				CODE_SIGN_ENTITLEMENTS = woofmeets/woofmeets.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Z88T9AD5MC;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z88T9AD5MC;
 				ENABLE_BITCODE = NO;
@@ -592,6 +592,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.12.4;
 				MARKETING_VERSION = 1.12.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -618,7 +619,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Z88T9AD5MC;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z88T9AD5MC;
 				EXCLUDED_ARCHS = "";
@@ -629,6 +630,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.12.4;
 				MARKETING_VERSION = 1.12.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

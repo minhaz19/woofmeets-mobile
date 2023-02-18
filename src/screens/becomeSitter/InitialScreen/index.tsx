@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {View, Image, ScrollView} from 'react-native';
+import {View, Image, ScrollView, Linking} from 'react-native';
 import React, {useEffect} from 'react';
 import {useTheme} from '../../../constants/theme/hooks/useTheme';
 import BigText from '../../../components/common/text/BigText';
@@ -37,12 +37,16 @@ const SitterInitialScreen = (props: {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const currentPlan = useAppSelector(state => state.currentPlan);
 
-  const handlePress = () => {
+  const handlePress = async () => {
     if (isLoggedIn) {
       if (currentPlan?.currentPlan?.subscriptionInfo?.status) {
         props.navigation.navigate('Profile');
       } else {
-        props.navigation.navigate('SitterLandingPage');
+        // props.navigation.navigate('SitterLandingPage');
+        // props.navigation.navigate('OnboardingWebView');
+        const url = 'https://woofmeets.com/provider-profile/';
+        // const url = 'https://woofmeets.com/provider-profile/service-selector';
+        await Linking.openURL(url);
       }
     } else {
       props.navigation.navigate('SignUp');

@@ -6,6 +6,7 @@ const Card = (props: {
   style?: ViewStyle | null | undefined;
   containerStyle?: ViewStyle | null | undefined;
   basicStyle?: ViewStyle | null | undefined;
+
   children?:
     | boolean
     | React.ReactChild
@@ -24,6 +25,7 @@ const Card = (props: {
         ...props.style,
         ...props.containerStyle,
         ...props.basicStyle,
+        // borderRadius: props?.noborder ? 0 : 50,
       }}>
       {props.children}
     </View>

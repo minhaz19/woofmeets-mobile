@@ -9,6 +9,7 @@ import ButtonCom from '../../../components/UI/ButtonCom';
 import {btnStyles} from '../../../constants/theme/common/buttonStyles';
 import {useNavigation} from '@react-navigation/native';
 import {useAppSelector} from '../../../store/store';
+// import ProviderProfileInfo from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderHeader/components/ProviderProfileInfo';
 // import ProviderStory from '../../../components/ScreenComponent/Service/ProviderProfile/ProviderStoryStatus/ProviderStory';
 interface Props {
   route: any;
@@ -84,7 +85,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    marginTop: -20,
   },
   footerContainer: {
     marginTop: 20,

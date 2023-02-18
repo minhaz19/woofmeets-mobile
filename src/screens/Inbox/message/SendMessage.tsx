@@ -27,7 +27,7 @@ const SendMessage = ({roomId, setMessages, user, opk}) => {
         image: content?.image,
         createdAt: new Date(),
       };
-      setMessages(prevMess => [...prevMess, data]);
+      setMessages(prevMess => [data, ...prevMess]);
       socket.emit('send-message', data, (error: any) => {});
       setContent({text: '', image: ''});
     }
@@ -51,7 +51,7 @@ const SendMessage = ({roomId, setMessages, user, opk}) => {
         attachment: result.data[0].url,
         createdAt: new Date(),
       };
-      setMessages(prevMess => [...prevMess, data]);
+      setMessages(prevMess => [data, ...prevMess]);
       socket.emit('send-message', data);
     } catch (err) {}
   };
