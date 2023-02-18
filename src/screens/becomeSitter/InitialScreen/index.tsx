@@ -44,7 +44,8 @@ const SitterInitialScreen = (props: {
       } else {
         // props.navigation.navigate('SitterLandingPage');
         // props.navigation.navigate('OnboardingWebView');
-        const url = 'https://woofmeets.com/provider-profile/service-selector';
+        const url = 'https://woofmeets.com/provider-profile/';
+        // const url = 'https://woofmeets.com/provider-profile/service-selector';
         await Linking.openURL(url);
       }
     } else {

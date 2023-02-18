@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-    borderWidth: 1,
-    borderColor: Colors.border,
+    // borderWidth: 1,
+    // borderColor: Colors.border,
   },
 });
