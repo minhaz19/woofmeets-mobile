@@ -135,6 +135,7 @@ const ContactScreen = ({route}) => {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    paddingHorizontal: 20,
   },
   container: {
     flex: 1,
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
   },
   footerContainer: {
-    paddingHorizontal: '5%',
+    // paddingHorizontal: '5%',
   },
   imageContainer: {
     alignItems: 'center',
@@ -181,8 +182,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   details: {
-    fontSize: Text_Size.Text_8,
+    fontSize: 12,
     fontWeight: '400',
+    textAlign: 'justify',
     letterSpacing: 0.6,
   },
   textInfoContainer: {

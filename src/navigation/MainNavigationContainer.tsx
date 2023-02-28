@@ -68,6 +68,9 @@ import Room from '../components/ScreenComponent/conference/Room';
 import {Alert} from 'react-native';
 import {setPhoto} from '../store/slices/reportCard/reportCardSlice';
 import OnboardingWebView from '../screens/WebView/Onboarding';
+import NewServiceSelection from '../screens/becomeSitter/NewServiceSelection';
+import ServiceSetupFlow from '../screens/becomeSitter/NewServiceSelection/ServiceSetupFlow';
+import SingleServiceSetUp from '../components/ScreenComponent/becomeSitter/serviceSelection/SingleServiceSetUp';
 const Stack = createStackNavigator();
 
 const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
@@ -809,6 +812,67 @@ const MainNavigator = (props: {previousLoggedIn: Boolean}) => {
           name="Room"
           component={Room}
           options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="NewServiceSelection"
+          component={NewServiceSelection}
+          options={({navigation, route}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title={'Become A Sitter'}
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="ServiceSetupFlow"
+          component={ServiceSetupFlow}
+          options={({navigation, route}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                onPressBack={() => navigation.navigate('SitterInitialScreen')}
+                title={
+                  route?.params?.id === 1
+                    ? 'Service Setup'
+                    : route?.params?.id === 2
+                    ? 'Profile Setup'
+                    : route?.params?.id === 3
+                    ? 'Submit Profile'
+                    : 'Service Setup'
+                }
+                notification
+                navigation={{
+                  goBack() {
+                    return null;
+                  },
+                  navigate: () => {
+                    'SitterInitialScreen';
+                  },
+                }}
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
+        />
+        <Stack.Screen
+          name="SingleServiceSetUp"
+          component={SingleServiceSetUp}
+          options={({navigation}) => ({
+            title: '',
+            header: () => (
+              <HeaderWithBack
+                navigation={navigation}
+                title="Service Setup"
+                notification
+              />
+            ),
+            backgroundColor: Colors.primary,
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

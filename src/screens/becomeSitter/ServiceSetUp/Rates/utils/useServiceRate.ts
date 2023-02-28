@@ -109,11 +109,3 @@ export const useServiceRates = (
     ratesMeta,
   };
 };
-// payload.serviceRate.push({
-//   serviceId: providerServicesId,
-//   rateId:
-//     fieldValue === null || fieldValue === undefined
-//       ? element.postId
-//       : element.putId,
-//   amount: Number(e[element.name]),
-// });

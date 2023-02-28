@@ -1,6 +1,5 @@
 import {useMemo, useState} from 'react';
 import {useWatch} from 'react-hook-form';
-import {useAppSelector} from '../../../../../../store/store';
 function areEqual(arr1: any, arr2: any) {
   let N = arr1?.length;
   let M = arr2?.length;
@@ -35,14 +34,13 @@ function areEqual(arr1: any, arr2: any) {
 
   return true;
 }
-export const useSubRates = (rateFields: any, watch: any) => {
-  const [showAdditionalRates, setShowAdditionalRates] = useState(true);
+export const useSubRates = (fieldValue: any,rateFields: any, showToggle: boolean) => {
+  const [showAdditionalRates, setShowAdditionalRates] = useState(showToggle ? true : false);
   const [updateRates, setUpdateRates] = useState(false);
   const [rates, setRates] = useState([]);
-  const {fieldValue} = useAppSelector(state => state.fieldValue);
 
-  const b = useWatch();
-  const baseRateWatch = b.baserate;
+  const values = useWatch();
+  const baseRateWatch = values?.baserate;
 
   const handlePress = () => {
     setShowAdditionalRates(!showAdditionalRates);

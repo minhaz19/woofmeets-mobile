@@ -1,10 +1,8 @@
-// import {useAppSelector} from '../../../../../store/store';
-
 export const useServiceRateInit = (fieldValue: any, ratesMeta: any) => {
-  // const {fieldValue} = useAppSelector(state => state.fieldValue);
-  // const {ratesMeta} = useAppSelector(state => state.serviceRates);
   const baseRate =
     ratesMeta !== null && ratesMeta !== undefined ? ratesMeta['base-rate'] : 0;
+  const formateRatesMeta = ratesMeta !== null && ratesMeta;
+
   return {
     baserate:
       fieldValue && fieldValue.length > 0
@@ -15,65 +13,65 @@ export const useServiceRateInit = (fieldValue: any, ratesMeta: any) => {
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 3)
             ?.amount
-        : baseRate.length > 0
-        ? Number(baseRate) * Number(ratesMeta['holiday-rate'])
+        : typeof baseRate === 'number'
+        ? Number(baseRate) * Number(formateRatesMeta['holiday-rate'])
         : null,
     additionaldog:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 2)
             ?.amount
-        : baseRate.length > 0
-        ? Number(baseRate) * Number(ratesMeta['additional-dog'])
+        : typeof baseRate === 'number'
+        ? Number(baseRate) * Number(formateRatesMeta['additional-dog'])
         : null,
     puppyrate:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 5)
             ?.amount
-        : baseRate.length > 0
-        ? Number(baseRate) * Number(ratesMeta['puppy-rate'])
+        : typeof baseRate === 'number'
+        ? Number(baseRate) * Number(formateRatesMeta['puppy-rate'])
         : null,
     catcare:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 4)
             ?.amount
-        : baseRate.length > 0
-        ? Number(baseRate) * Number(ratesMeta['cat-care'])
+        : typeof baseRate === 'number'
+        ? Number(baseRate) * Number(formateRatesMeta['cat-care'])
         : null,
     additionalcat:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 6)
             ?.amount
-        : baseRate.length > 0
-        ? Number(baseRate) * Number(ratesMeta['additional-cat'])
+        : typeof baseRate === 'number'
+        ? Number(baseRate) * Number(formateRatesMeta['additional-cat'])
         : null,
     bathgroomingrate:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 8)
             ?.amount
-        : baseRate.length > 0
-        ? Number(baseRate) * Number(ratesMeta['bath-grooming-rate'])
+        : typeof baseRate === 'number'
+        ? Number(baseRate) * Number(formateRatesMeta['bath-grooming-rate'])
         : null,
     extendedCare:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 9)
             ?.amount
-        : baseRate.length > 0
-        ? Number(baseRate) * Number(ratesMeta['extended-Care'])
+        : typeof baseRate === 'number'
+        ? Number(baseRate) * Number(formateRatesMeta['extended-Care'])
         : null,
     extendedstayrate:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find((item: {modRatesId: number}) => item.modRatesId === 7)
             ?.amount
-        : baseRate.length > 0
-        ? Number(baseRate) * Number(ratesMeta['extended-stay-rate'])
+        : typeof baseRate === 'number'
+        ? Number(baseRate) * Number(formateRatesMeta['extended-stay-rate'])
         : null,
     sixtyminutes:
       fieldValue && fieldValue.length > 0
         ? fieldValue.find(
             (item: {modRatesId: number}) => item.modRatesId === 12,
           )?.amount
-        : baseRate.length > 0
-        ? Number(baseRate) * Number(ratesMeta['sixty-minutes'])
+        : typeof baseRate === 'number'
+        ? Number(baseRate) * Number(formateRatesMeta['sixty-minutes'])
         : null,
   };
 };

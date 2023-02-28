@@ -1,11 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
-import ShortText from '../../../common/text/ShortText';
-import {DogFeet} from '../../../../assets/svgs/SVG_LOGOS';
-import Colors from '../../../../constants/Colors';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import Text_Size from '../../../../constants/textScaling';
+import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
+import {replaceHostnameWithCDN} from '../../../../utils/helpers/imageOpt/replaceHostnameWithCDN';
 interface Props {
   provider: any;
   rounded?: Boolean;
@@ -31,7 +28,11 @@ const ImageContainer = ({provider, rounded}: Props) => {
         source={{
           uri:
             provider?.user.image !== null
-              ? provider?.user?.image?.url
+              ? replaceHostnameWithCDN(provider?.user?.image?.url, {
+                  height: 100,
+                  width: 100,
+                  quality: 60,
+                })
               : 'https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg',
         }}
         resizeMode="cover"

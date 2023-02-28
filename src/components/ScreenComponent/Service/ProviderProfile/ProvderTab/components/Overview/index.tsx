@@ -28,7 +28,7 @@ const Overview = () => {
             ? `${overview?.about?.slice(0, 300)}${
                 overview?.about?.length > 300 ? '...' : ''
               }`
-            : 'No about details found...',
+            : 'No about found...',
           longDescription: overview?.about,
         },
       ],

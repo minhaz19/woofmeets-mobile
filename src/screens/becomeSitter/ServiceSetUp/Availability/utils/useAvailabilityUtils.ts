@@ -1,6 +1,5 @@
 import {ApiResponse} from 'apisauce';
 import methods from '../../../../../api/methods';
-import {setDayError} from '../../../../../store/slices/misc/openFilter';
 import {setBoardingSelection} from '../../../../../store/slices/onBoarding/initial';
 import {
   setAvailability,
@@ -24,41 +23,27 @@ export const useAvailabilityUtils = (
   );
   const handlePost = async (data: any) => {
     const putFormattedData = {
-      sat: data.sat,
-      sun: data.sun,
-      mon: data.mon,
-      tue: data.tue,
-      wed: data.wed,
-      thu: data.thu,
-      fri: data.fri,
+      sat: data?.selectDay?.sat,
+      sun: data?.selectDay?.sun,
+      mon: data?.selectDay?.mon,
+      tue: data?.selectDay?.tue,
+      wed: data?.selectDay?.wed,
+      thu: data?.selectDay?.thu,
+      fri: data?.selectDay?.fri,
       pottyBreak: data.pottyBreak,
       fulltime: false,
     };
-    if (
-      data.sat ||
-      data.sun ||
-      data.mon ||
-      data.tue ||
-      data.wed ||
-      data.thu ||
-      data.fri
-    ) {
-      dispatch(setDayError(false));
-      const response: ApiResponse<any> = await PService(
-        postEndPoint,
-        _id ? putFormattedData : data,
-      );
-      dispatch(setTempId(response?.data.data.id));
-      if (response?.data?.data) {
-        dispatch(setAvailability(response?.data?.data));
-        dispatch(setBoardingSelection({pass: 1}));
-        // petPreference === null && dispatch(getPetPreference());
-        if (route.name === 'AvailabilityScreen') {
-          navigation.goBack();
-        }
+    const response: ApiResponse<any> = await PService(
+      postEndPoint,
+      _id ? putFormattedData : data,
+    );
+    dispatch(setTempId(response?.data.data.id));
+    if (response?.data?.data) {
+      dispatch(setAvailability(response?.data?.data));
+      dispatch(setBoardingSelection({pass: 1}));
+      if (route.name === 'AvailabilityScreen') {
+        navigation.goBack();
       }
-    } else {
-      dispatch(setDayError(true));
     }
   };
   return {handlePost, isLoading};

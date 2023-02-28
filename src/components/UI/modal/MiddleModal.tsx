@@ -33,14 +33,16 @@ const MiddleModal = (props: {
   return (
     <TouchableWithoutFeedback
       onBlur={props.onBlur}
-      onPress={() => props.setIsModalVisible(false)}>
+      onPress={() => props?.setIsModalVisible(false)}>
       <Modal
         animationType="fade"
         transparent={true}
-        visible={props.isModalVisible}>
+        visible={props?.isModalVisible}>
         <TouchableWithoutFeedback
           disabled={props.notOutsidePress ? true : false}
-          onPress={() => props.setIsModalVisible(false)}>
+          onPress={() =>
+            props?.setIsModalVisible && props?.setIsModalVisible(false)
+          }>
           <View style={styles.centeredView}>
             <View
               style={[
@@ -57,7 +59,7 @@ const MiddleModal = (props: {
                   <IOSButton
                     containerStyle={styles.containerStyle}
                     onSelect={() => {
-                      props.setIsModalVisible(false);
+                      props?.setIsModalVisible(false);
                       props.handlePress && props.handlePress();
                     }}
                     textAlignment={styles.textAlignment}
@@ -67,7 +69,7 @@ const MiddleModal = (props: {
                   <IOSButton
                     containerStyle={styles.containerStyle}
                     onSelect={() => {
-                      props.setIsModalVisible(false);
+                      props?.setIsModalVisible(false);
                       props.handlePress && props.handlePress();
                     }}
                     textAlignment={styles.textAlignment}

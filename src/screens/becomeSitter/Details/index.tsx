@@ -34,7 +34,6 @@ const SitterDetails = ({route, navigation}) => {
   const {sitterInfo, attributes, attributesLoading, skillsLoading, loading} =
     useAppSelector(state => state.details);
 
-
   // hooks for get the data
   useDetailsUtils();
 

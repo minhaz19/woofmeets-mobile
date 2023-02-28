@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import DescriptionText from '../../../../common/text/DescriptionText';
@@ -6,34 +6,27 @@ import Colors from '../../../../../constants/Colors';
 import ServiceForm from '../Common/ServiceForm';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import Text_Size from '../../../../../constants/textScaling';
-import SubmitButton from '../../../../common/Form/SubmitButton';
-import BottomSpacing from '../../../../UI/BottomSpacing';
 import AppCheckboxField from '../../../../common/Form/AppCheckboxField';
 import {useFormContext} from 'react-hook-form';
 import {useSubRates} from './ulils/useSubRates';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
 import TitleText from '../../../../common/text/TitleText';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import HeaderText from '../../../../common/text/HeaderText';
 interface Props {
-  handleRates: (arg: any) => void;
   rateFields: any;
-  loading: boolean;
   fieldValue: any;
   ratesMeta: any;
+  showToggle?: boolean;
 }
 
-const SubRates = ({
-  handleRates,
-  rateFields,
-
-  loading,
-}: Props) => {
+const SubRates = ({rateFields, fieldValue, showToggle}: Props) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {
     formState: {errors},
     control,
     setValue,
-    watch,
   } = useFormContext();
   const {
     baseRateWatch,
@@ -42,7 +35,7 @@ const SubRates = ({
     showAdditionalRates,
     updateRates,
     setUpdateRates,
-  } = useSubRates(rateFields, watch);
+  } = useSubRates(fieldValue, rateFields, showToggle);
   return (
     <View>
       <ServiceReusableModal
@@ -96,8 +89,6 @@ const SubRates = ({
                       name={item.slug.replace('-', '')}
                       percentage={item.percentage}
                       label={item.name}
-                      handlePress={handlePress}
-                      showAdditionalRates={showAdditionalRates}
                       checkPress={() => {
                         setUpdateRates(!updateRates);
                       }}
@@ -124,9 +115,38 @@ const SubRates = ({
                       textStyle={styles.shortText}
                       text={'Turn off and adjust your rate manully'}
                     />
+
+                    <Pressable
+                      onPress={() => handlePress()}
+                      style={styles.iconStyle}>
+                      <MaterialCommunityIcons
+                        name={'chevron-right'}
+                        size={
+                          SCREEN_WIDTH <= 380
+                            ? 24
+                            : SCREEN_WIDTH <= 600
+                            ? 28
+                            : 28
+                        }
+                        color={Colors.primary}
+                        style={{
+                          transform: [
+                            {rotate: showAdditionalRates ? '-90deg' : '90deg'},
+                          ],
+                        }}
+                      />
+                      <HeaderText
+                        text={
+                          showAdditionalRates
+                            ? 'Hide Additional rates '
+                            : 'Show Additional rates'
+                        }
+                        textStyle={styles.titleStyle}
+                      />
+                    </Pressable>
                   </>
                 )}
-                {item.slug !== 'base-rate' && (
+                {item.slug !== 'base-rate' && showAdditionalRates && (
                   <ServiceForm
                     key={index}
                     autoCapitalize="none"
@@ -135,9 +155,7 @@ const SubRates = ({
                     textContentType={'none'}
                     name={item.slug.replace('-', '').replace('-', '')}
                     label={item.name}
-                    handlePress={handlePress}
                     percentage={item.percentage}
-                    showAdditionalRates={showAdditionalRates}
                     editable={updateRates}
                     control={control}
                     errors={errors}
@@ -155,32 +173,7 @@ const SubRates = ({
             );
           },
         )}
-
-        <View>
-          {!showAdditionalRates && (
-            <DescriptionText
-              text={'How are additional rates used ?'}
-              textStyle={styles.linkText}
-            />
-          )}
-          {!showAdditionalRates && (
-            <TouchableOpacity onPress={handlePress}>
-              <DescriptionText
-                text="Hide additional rates"
-                textStyle={{color: Colors.primary}}
-              />
-            </TouchableOpacity>
-          )}
-        </View>
       </View>
-      <View style={styles.submitContainer}>
-        <SubmitButton
-          title="Save & continue"
-          onPress={handleRates}
-          loading={loading}
-        />
-      </View>
-      <BottomSpacing />
     </View>
   );
 };
@@ -189,8 +182,7 @@ export default SubRates;
 
 const styles = StyleSheet.create({
   headerContainer: {
-    marginVertical:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+    marginTop: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   headerText: {
     lineHeight: 20,
@@ -219,7 +211,6 @@ const styles = StyleSheet.create({
   },
   shortText: {
     color: Colors.gray,
-    marginVertical: '2%',
   },
   flexContainer: {
     flexDirection: 'row',
@@ -245,5 +236,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'justify',
     color: Colors.primaryDif,
+  },
+  iconStyle: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  titleStyle: {
+    color: Colors.primary,
+    // fontWeight: 'bold',
+    // fontSize: Text_Size.Text_1,
   },
 });

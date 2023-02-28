@@ -32,7 +32,7 @@ const HeaderWithBack = (props: {
             if (props.alert) {
               props.alert();
             } else {
-              props.navigation.goBack();
+              props.navigation && props.navigation.goBack();
               props.onPressBack && props.onPressBack();
             }
           }}>

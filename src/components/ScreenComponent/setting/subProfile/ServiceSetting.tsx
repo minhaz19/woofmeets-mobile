@@ -7,19 +7,12 @@ import {
   ScrollView,
   RefreshControl,
   Alert,
+  Pressable,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {
-  BoardingIcon,
-  DoggyDayCareIcon,
-  DogWalkingIcon,
-  DropInVisitIcon,
-  HouseSittingIcon,
-} from '../../../../assets/svgs/Services_SVG';
 import HeaderText from '../../../common/text/HeaderText';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 // import ServiceSetUp from '../../../../screens/becomeSitter/ServiceSetUp';
@@ -42,13 +35,15 @@ import AppTouchableOpacity from '../../../common/AppClickEvents/AppTouchableOpac
 import ShortText from '../../../common/text/ShortText';
 import Text_Size from '../../../../constants/textScaling';
 const activeEndpoint = '/provider-services/change-status/';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {getNewOnboarding} from '../../../../store/slices/onBoarding/newOnboardingApi/newOnboardingAction';
+
 const ServiceSetting = () => {
   // const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
-  const {userServices} = useAppSelector(
-    (state: any) => state.services,
-  );
+  const {userServices} = useAppSelector((state: any) => state.services);
   const {progressData} = useAppSelector(state => state.initial);
   const {user} = useAppSelector((state: any) => state?.whoAmI);
   const navigation = useNavigation();
@@ -59,15 +54,45 @@ const ServiceSetting = () => {
   const getIcon = (icon: string) => {
     switch (icon) {
       case 'sitter-home':
-        return <BoardingIcon width={34} height={36} />;
+        return (
+          <FontAwesome5Icon
+            name="briefcase"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+            color={Colors.primary}
+          />
+        );
       case 'sitter-traveling':
-        return <HouseSittingIcon width={34} height={36} />;
+        return (
+          <FontAwesome5Icon
+            name="home"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+            color={Colors.primary}
+          />
+        );
       case 'homevists':
-        return <DropInVisitIcon width={34} height={36} />;
-      case 'walking':
-        return <DogWalkingIcon width={34} height={36} />;
+        return (
+          <FontAwesome5Icon
+            name="house-user"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+            color={Colors.primary}
+          />
+        );
       case 'daycare':
-        return <DoggyDayCareIcon width={34} height={36} />;
+        return (
+          <MaterialCommunityIcons
+            name="dog-service"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+            color={Colors.primary}
+          />
+        );
+      case 'walking':
+        return (
+          <FontAwesome5Icon
+            name="paw"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+            color={Colors.primary}
+          />
+        );
     }
   };
 
@@ -105,7 +130,7 @@ const ServiceSetting = () => {
         {serviceData &&
           serviceData.map((item: any, index: number) => {
             return (
-              <TouchableOpacity
+              <Pressable
                 style={[
                   styles.container,
                   {
@@ -125,21 +150,23 @@ const ServiceSetting = () => {
                 ]}
                 key={index}
                 onPress={() => {
-                  dispatch(
-                    setServiceSetup({
-                      routeData: {
-                        itemId: item?.id,
-                        name: item.serviceType?.name,
-                        image: getIcon(item?.serviceType?.icon),
-                        description: item?.serviceType?.description,
-                        serviceId: item?.serviceTypeId,
-                        providerServicesId: item?.id,
-                        service: item?.AvailableDay,
-                      },
-                    }),
-                  );
+                  // dispatch(
+                  //   setServiceSetup({
+                  //     routeData: {
+                  //       itemId: item?.id,
+                  //       name: item.serviceType?.name,
+                  //       image: getIcon(item?.serviceType?.icon),
+                  //       description: item?.serviceType?.description,
+                  //       serviceId: item?.serviceTypeId,
+                  //       providerServicesId: item?.id,
+                  //       service: item?.AvailableDay,
+                  //     },
+                  //   }),
+                  // );
                   dispatch(setCurrentScreen({pass: 1}));
-                  navigation.navigate('SingleServiceLanding');
+                  dispatch(getNewOnboarding(item?.id));
+                  dispatch(setServiceSetup(item));
+                  navigation.navigate('SingleServiceSetUp', {goBack: true});
                 }}>
                 <View style={styles.flexContainer}>
                   <View style={styles.serviceContainer}>
@@ -224,7 +251,7 @@ const ServiceSetting = () => {
                     />
                   </View>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             );
           })}
         {serviceData.length === 5 ? null : (

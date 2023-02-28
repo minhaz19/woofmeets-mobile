@@ -31,17 +31,19 @@ import Text_Size from '../../../constants/textScaling';
 import ErrorMessage from '../../common/Form/ErrorMessage';
 
 interface Props {
-  handleSubmit: (value: any) => void;
-  loading: boolean;
+  handleSubmit?: (value: any) => void;
+  loading?: boolean;
+  profileSetup?: true;
 }
 
-const BasicInfoInput = ({handleSubmit, loading}: Props) => {
+const BasicInfoInput = ({handleSubmit, loading, profileSetup}: Props) => {
   // const [countryId, setCountryId] = useState('1');
-  const [date, setDate] = useState(new Date());
+  const [, setDate] = useState(new Date());
   const [shown, setShown] = useState(false);
   const {loading: gLoading, userInfo} = useAppSelector(
     state => state?.userProfile,
   );
+  const {profileImage} = useAppSelector(state => state.newOnboarding);
   const image = userInfo?.image;
   const firstName = userInfo?.firstName;
   const lastName = userInfo?.lastName;
@@ -88,13 +90,12 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
     setError('zipCode', {type: 'custom', message: undefined});
     setError('countryId', {type: 'custom', message: undefined});
   };
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <ProfileHeader
         name="profileImage"
         gLoading={gLoading}
-        url={image?.url}
+        url={profileImage ?? image?.url}
         userName={firstName ? firstName + ' ' + lastName : ''}
         errors={errors}
       />
@@ -221,13 +222,19 @@ const BasicInfoInput = ({handleSubmit, loading}: Props) => {
           )}
         </View>
       ))}
-      <View style={styles.inputContainer}>
-        <View style={styles.footerContainer}>
-          <SubmitButton title="Save" onPress={handleSubmit} loading={loading} />
+      {profileSetup ? null : (
+        <View style={styles.inputContainer}>
+          <View style={styles.footerContainer}>
+            <SubmitButton
+              title="Save"
+              onPress={handleSubmit}
+              loading={loading}
+            />
+          </View>
+          <BottomSpacing />
+          <BottomSpacing />
         </View>
-        <BottomSpacing />
-      </View>
-      <BottomSpacing />
+      )}
     </ScrollView>
   );
 };
@@ -240,17 +247,23 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   headerContainer: {
-    marginHorizontal: '5%',
-    width: '90%',
+    // marginHorizontal: '5%',
+    // width: '90%',
   },
-  inputContainer: {marginHorizontal: '5%', width: '90%'},
+  inputContainer: {
+    // marginHorizontal: '5%',
+    // width: '90%',
+  },
   flatList: {
     flexWrap: 'wrap',
     flex: 1,
     marginTop: 5,
     justifyContent: 'space-between',
   },
-  selectContainer: {width: '90%', marginHorizontal: '5%'},
+  selectContainer: {
+    // width: '90%',
+    // marginHorizontal: '5%',
+  },
   textInputStyle: {},
   nameContainer: {
     paddingVertical: SCREEN_WIDTH <= 800 ? '5%' : '3%',

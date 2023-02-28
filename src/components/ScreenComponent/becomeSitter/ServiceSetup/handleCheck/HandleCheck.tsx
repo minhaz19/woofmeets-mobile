@@ -1,37 +1,48 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {setDayError} from '../../../../../store/slices/misc/openFilter';
-import {useAppDispatch} from '../../../../../store/store';
 
-export const useHandleMultipleActiveCheck = (data: any) => {
-  const dispatch = useAppDispatch();
-  const {getValues} = useFormContext();
-  const {sat, sun, mon, tue, thu, wed, fri} = getValues();
-  const [newData, setData] = useState(data);
-  const handleMultipleCheck = (id: any) => {
-    dispatch(setDayError(false));
-    const newArray = [...data];
-    const index = newArray.findIndex(item => item.id === id);
-    newArray[index].value =
-      index === 0
-        ? !sat
-        : index === 1
-        ? !sun
-        : index === 2
-        ? !mon
-        : index === 3
-        ? !tue
-        : index === 4
-        ? !wed
-        : index === 5
-        ? !thu
-        : index === 6
-        ? !fri
-        : null;
-    setData(newArray);
+export const useHandleMultipleActiveCheck = () => {
+  const {getValues, setValue} = useFormContext();
+  const defaultValues = getValues();
+
+  // * handle available days
+  const [availableDays, setAvailableDays] = useState(defaultValues?.selectDay);
+  const [selectedDays, setSelectedDays] = useState<any>([]);
+
+  useEffect(() => {
+    if (defaultValues?.selectDay) {
+      setSelectedDays([
+        ...Object.keys(defaultValues?.selectDay).filter(k => {
+          return defaultValues?.selectDay[k];
+        }),
+      ]);
+    }
+  }, []);
+
+  const onSetAvailableDays = (dayName: string | number) => {
+    setAvailableDays({
+      ...availableDays,
+      [dayName]: !availableDays[dayName],
+    });
+    setValue(
+      'selectDay',
+      {
+        ...availableDays,
+        [dayName]: !availableDays[dayName],
+      },
+      {shouldValidate: true},
+    );
+    if (selectedDays.includes(dayName)) {
+      setSelectedDays([...selectedDays.filter(day => day !== dayName)]);
+    } else {
+      setSelectedDays([...selectedDays, dayName]);
+    }
   };
   return {
-    handleMultipleCheck,
-    newData,
+    availability: {
+      availableDaysOptions: ['sat', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri'],
+      availableDays,
+      onSetAvailableDays,
+    },
   };
 };

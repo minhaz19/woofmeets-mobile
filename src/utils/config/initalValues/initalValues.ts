@@ -109,6 +109,31 @@ const appointmentInit = {
   selectDate: [],
   isRecivedPhotos: false,
 };
+const profileSetupInit = {
+  profileImage: '',
+  dob: '',
+  addressLine1: '',
+  addressLine2: '',
+  street: '',
+  city: '',
+  state: '',
+  zipCode: '',
+  countryId: '',
+  latitude: 0,
+  longitude: 0,
+
+  emergencyContactName: '',
+  emergencyPhone: '',
+  // name: '',
+  // email: '',
+  // phone: '',
+  numberVerified: false,
+
+  headline: '',
+  yearsOfExperience: '0',
+  experienceDescription: '',
+  skills: [],
+};
 export {
   loginValue,
   signupValue,
@@ -122,4 +147,5 @@ export {
   backgroundCheckInit,
   planCheckoutInit,
   appointmentInit,
+  profileSetupInit,
 };

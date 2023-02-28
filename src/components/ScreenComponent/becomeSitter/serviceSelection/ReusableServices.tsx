@@ -6,13 +6,8 @@ import HeaderText from '../../../common/text/HeaderText';
 import DescriptionText from '../../../common/text/DescriptionText';
 import Colors from '../../../../constants/Colors';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
-import {
-  BoardingIcon,
-  DoggyDayCareIcon,
-  DogWalkingIcon,
-  DropInVisitIcon,
-  HouseSittingIcon,
-} from '../../../../assets/svgs/Services_SVG';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
   data: any;
@@ -23,18 +18,48 @@ interface Props {
 
 const ReusableServices: FC<Props> = props => {
   const {colors} = useTheme();
-  const getIcon = (iconId: number) => {
+  const getIcon = (iconId: number, selected: boolean) => {
     switch (iconId) {
       case 1:
-        return <BoardingIcon width={34} height={36} />;
+        return (
+          <FontAwesome5Icon
+            name="briefcase"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+            color={selected ? 'white' : Colors.primary}
+          />
+        );
       case 2:
-        return <HouseSittingIcon width={34} height={36} />;
+        return (
+          <FontAwesome5Icon
+            name="home"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+            color={selected ? 'white' : Colors.primary}
+          />
+        );
       case 3:
-        return <DropInVisitIcon width={34} height={36} />;
+        return (
+          <FontAwesome5Icon
+            name="house-user"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+            color={selected ? 'white' : Colors.primary}
+          />
+        );
       case 4:
-        return <DoggyDayCareIcon width={34} height={36} />;
+        return (
+          <MaterialCommunityIcons
+            name="dog-service"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+            color={selected ? 'white' : Colors.primary}
+          />
+        );
       case 5:
-        return <DogWalkingIcon width={34} height={36} />;
+        return (
+          <FontAwesome5Icon
+            name="paw"
+            size={SCREEN_WIDTH <= 380 ? 24 : SCREEN_WIDTH <= 600 ? 28 : 32}
+            color={selected ? 'white' : Colors.primary}
+          />
+        );
     }
   };
   return (
@@ -43,28 +68,47 @@ const ReusableServices: FC<Props> = props => {
         style={[
           styles.container,
           {
-            backgroundColor: colors.backgroundColor,
-            borderWidth: props.sequence === props.data.sequence ? 3 : 1,
+            backgroundColor:
+              props.sequence === props.data.sequence
+                ? Colors.primary
+                : colors.backgroundColor,
+            borderWidth: props.sequence === props.data.sequence ? 2 : 2,
             borderColor:
               props.sequence === props.data.sequence
                 ? Colors.primary
                 : colors.borderColor,
+            height: 'auto',
           },
         ]}>
         <View style={styles.boxContainer}>
           <View style={styles.imageContainer}>
-            {getIcon(props.data.sequence)}
+            {getIcon(
+              props.data.sequence,
+              props.sequence === props.data.sequence,
+            )}
           </View>
           <View style={styles.textContainer}>
-            <HeaderText text={props.data.name} />
+            <HeaderText
+              text={props.data.name}
+              textStyle={{
+                color:
+                  props.sequence === props.data.sequence
+                    ? 'white'
+                    : colors.headerText,
+                fontWeight:
+                  props.sequence === props.data.sequence ? '800' : '500',
+              }}
+            />
             <DescriptionText
               text={props.data.description}
-              textStyle={styles.description}
+              textStyle={{
+                ...styles.description,
+                color:
+                  props.sequence === props.data.sequence
+                    ? 'white'
+                    : colors.descriptionText,
+              }}
             />
-            {/* <DescriptionText
-              text={props.data.price}
-              textStyle={styles.description}
-            /> */}
           </View>
         </View>
         {props.sequence === props.data.sequence && (
@@ -85,7 +129,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 5,
     paddingVertical: 10,
-    minHeight: 180,
+    minHeight: 160,
     // height: 200,
     alignItems: 'center',
     justifyContent: 'center',
