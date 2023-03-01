@@ -32,6 +32,6 @@ export default ProviderPricing;
 
 const styles = StyleSheet.create({
   container: {},
-  title: {fontSize: Text_Size.Text_2, fontWeight: '700'},
+  title: {fontSize: Text_Size.Text_1, textAlign: 'right', fontWeight: '700'},
   subTitle: {color: Colors.gray},
 });

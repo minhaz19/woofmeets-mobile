@@ -13,11 +13,8 @@ export const openFilter = createSlice({
     setOpenSettings: (state, action) => {
       state.isSettingVisible = action.payload;
     },
-    setDayError : (state, action) => {
-      state.dayError = action.payload;
-    },
   },
 });
-export const {setOpenFilter, setOpenSettings, setDayError} = openFilter.actions;
+export const {setOpenFilter, setOpenSettings} = openFilter.actions;
 
 export default openFilter.reducer;

@@ -8,8 +8,6 @@ const ProviderHeader = () => {
   return (
     <View style={styles.container}>
       <ProviderProfileInfo />
-      {/* <VerifiedSitter />
-      <ProviderProfileFeature /> */}
     </View>
   );
 };
@@ -18,6 +16,6 @@ export default ProviderHeader;
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
 });

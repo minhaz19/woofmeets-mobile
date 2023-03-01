@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   ActivityIndicator,
   Alert,
@@ -29,7 +30,7 @@ import {phoneNumberReg} from '../../../constants/regex';
 import {useAppSelector, useAppDispatch} from '../../../store/store';
 import {getContactInfo} from '../../../store/slices/profile/contact';
 import MiddleModal from '../../UI/modal/MiddleModal';
-import {QuestionIcon} from '../../../assets/svgs/SVG_LOGOS';
+import {Cross, QuestionIcon} from '../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../becomeSitter/ServiceSetup/Common/ServiceReusableModal';
 import {CountryPicker} from 'react-native-country-codes-picker';
 import BigText from '../../common/text/BigText';
@@ -50,15 +51,19 @@ const contactInput = [
   },
 ];
 
-const ContactInput = (props: {handleSubmit: any}) => {
+const ContactInput = (props: {handleSubmit?: any; profileSetup?: boolean}) => {
   const {
     control,
+    setValue,
+    setError,
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
   const contact = useAppSelector(state => state.contact);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [isChangePhone, setIsChangePhone] = useState<boolean>(contact.phoneNumber ? false : true);
+  const [isChangePhone, setIsChangePhone] = useState<boolean>(
+    contact.phoneNumber ? false : true,
+  );
   const [textInput, setTextInput] = useState(
     contact.phoneNumber ? contact.phoneNumber : '',
   );
@@ -73,7 +78,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+1');
   const [flag, setFlag] = useState();
-
+  // const {setValue} = useFormContext();
   const mobilevalidate = (text: any) => {
     const reg = phoneNumberReg;
     if (reg.test(text) === false) {
@@ -127,9 +132,12 @@ const ContactInput = (props: {handleSubmit: any}) => {
     if (result.ok) {
       setOtpVerificationStatus(true);
       dispatch(getContactInfo());
+      props?.profileSetup && setValue('numberVerified', true);
       setIsModalVisible(!isModalVisible);
+      setIsChangePhone(false);
     } else if (!result.ok) {
       Alert.alert(result.data.message);
+      props?.profileSetup && setValue('numberVerified', false);
     }
   };
 
@@ -138,20 +146,25 @@ const ContactInput = (props: {handleSubmit: any}) => {
       if (contact.phoneNumber?.slice(0, 2) == '+1') {
         setTextInput(contact.phoneNumber?.slice(2));
         setCountryCode(contact.phoneNumber?.slice(0, 2));
+        setValue('numberVerified', true);
       } else {
         setTextInput(contact.phoneNumber?.slice(4));
         setCountryCode(contact.phoneNumber?.slice(0, 4));
       }
     }
     setOtpVerificationStatus(contact.phoneNumber);
-  }, [contact.phoneNumber]);
+  }, [contact.phoneNumber, setValue]);
 
   return (
     <View style={styles.container}>
       <MiddleModal
         isModalVisible={isModalVisible}
-        setIsModalVisible={() => {
-          setIsModalVisible(!isModalVisible);
+        // setIsModalVisible={() => {
+        //   setIsModalVisible(!isModalVisible);
+        // }}
+        onBlur={undefined}
+        handlePress={function (): void {
+          throw new Error('Function not implemented.');
         }}>
         <TitleText
           text="OTP has sent successfully, Please verify the OTP"
@@ -161,6 +174,7 @@ const ContactInput = (props: {handleSubmit: any}) => {
           resendCode={handleSubmit}
           onPress={sendOtp}
           loading={loading}
+          handleClose={() => setIsModalVisible(false)}
         />
       </MiddleModal>
       <View style={styles.inputContainer}>
@@ -182,107 +196,122 @@ const ContactInput = (props: {handleSubmit: any}) => {
               <QuestionIcon fill={Colors.primary} />
             </TouchableOpacity>
           </View>
-          {
-            <View>
-              {isChangePhone ? (
-                <InputText
-                  title={'Your Phone Number'}
-                  placeholder={'Phone Number'}
-                  description={
-                    "WoofMeet requires a verified phone number to keep your account safe and for important updates. We'll send a code via text message."
-                  }
-                  value={textInput}
-                  setTextInput={setTextInput}
-                  leftIcon={
-                    <TouchableOpacity
-                      onPress={() => setShow(true)}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                      <BigText
-                        text={countryCode}
-                        textStyle={{color: Colors.primaryDif}}
-                      />
-                      <AntDesign
-                        name="caretdown"
-                        size={12}
-                        color={Colors.primaryDif}
-                        style={{paddingLeft: 5}}
-                      />
-                    </TouchableOpacity>
-                  }
-                  keyboardType="numeric"
-                  onChangeText={number => {
-                    mobilevalidate(number);
-                  }}
-                />
-              ) : (
-                <View style={styles.contactScreen}>
-                  <HeaderText text={contact?.phoneNumber} />
-                  <AppTouchableOpacity onPress={() => setIsChangePhone(true)}>
-                    <HeaderText
-                      text={'Change Phone Number'}
-                      textStyle={{
-                        textDecorationLine: 'underline',
-                        color: Colors.primaryDif,
-                      }}
-                    />
-                  </AppTouchableOpacity>
-                </View>
-              )}
 
-              <CountryPicker
-                withFlag
-                show={show}
-                // when picker button press you will get the country object with dial code
-                pickerButtonOnPress={item => {
-                  setCountryCode(item.dial_code);
-                  setFlag(item.flag);
-                  setShow(false);
-                }}
-                style={{
-                  modal: {
-                    height: '50%',
-                  },
-                  backdrop: {},
-                  countryName: {
-                    color: 'black',
-                  },
-                  searchMessageText: {
-                    color: 'black',
-                  },
-                  textInput: {
-                    color: 'black',
-                  },
-                  dialCode: {
-                    color: 'black',
-                  },
+          <View>
+            {isChangePhone ? (
+              <InputText
+                title={'Your Phone Number'}
+                placeholder={'Phone Number'}
+                description={
+                  "WoofMeet requires a verified phone number to keep your account safe and for important updates. We'll send a code via text message."
+                }
+                value={textInput}
+                setTextInput={setTextInput}
+                leftIcon={
+                  <TouchableOpacity
+                    onPress={() => setShow(true)}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <BigText
+                      text={countryCode}
+                      textStyle={{color: Colors.primaryDif}}
+                    />
+                    <AntDesign
+                      name="caretdown"
+                      size={12}
+                      color={Colors.primaryDif}
+                      style={{paddingLeft: 5}}
+                    />
+                  </TouchableOpacity>
+                }
+                keyboardType="numeric"
+                onChangeText={number => {
+                  mobilevalidate(number);
                 }}
               />
-              <TitleText text={globalError} textStyle={{color: Colors.alert}} />
-              {phoneNumberError && (
-                <DescriptionText
-                  text={phoneNumberError}
-                  textStyle={styles.errorText}
-                />
-              )}
-              {isPhoneLoading ? (
-                <ActivityIndicator size="small" />
-              ) : (
-                isChangePhone && (
-                  <IOSButton
-                    title={'Verify Phone Number'}
-                    textAlignment={btnStyles.textAlignment}
-                    containerStyle={btnStyles.containerStyleFullWidth}
-                    titleStyle={styles.titleStyle}
-                    onSelect={() => handleSubmit()}
+            ) : (
+              <View style={styles.contactScreen}>
+                <HeaderText text={contact?.phoneNumber} />
+                <AppTouchableOpacity onPress={() => setIsChangePhone(true)}>
+                  <HeaderText
+                    text={'Change Phone Number'}
+                    textStyle={{
+                      textDecorationLine: 'underline',
+                      color: Colors.primaryDif,
+                    }}
                   />
-                )
-              )}
-            </View>
-          }
+                </AppTouchableOpacity>
+              </View>
+            )}
+            {/* {show && (
+              <View
+                style={{
+                  zIndex: 99999,
+                  backgroundColor: Colors.background,
+                  padding: 10,
+                  position: 'absolute',
+
+                  // right: 20,
+                  // top: 20,
+                }}>
+                <Cross width={30} height={30} />
+              </View>
+            )} */}
+            <CountryPicker
+              withFlag
+              show={show}
+              // when picker button press you will get the country object with dial code
+              pickerButtonOnPress={item => {
+                setCountryCode(item.dial_code);
+                setFlag(item.flag);
+                setShow(false);
+              }}
+              style={{
+                modal: {
+                  height: '50%',
+                  zIndex: 99,
+                  // backgroundColor: 'red',
+                },
+                backdrop: {zIndex: -1},
+                countryName: {
+                  color: 'black',
+                },
+                searchMessageText: {
+                  color: 'black',
+                },
+                textInput: {
+                  color: 'black',
+                },
+                dialCode: {
+                  color: 'black',
+                },
+              }}
+            />
+            <TitleText text={globalError} textStyle={{color: Colors.alert}} />
+            {(phoneNumberError || errors?.numberVerified) && (
+              <DescriptionText
+                text={phoneNumberError ?? errors?.numberVerified?.message}
+                textStyle={styles.errorText}
+              />
+            )}
+            {isPhoneLoading ? (
+              <ActivityIndicator size="small" />
+            ) : (
+              isChangePhone && (
+                <IOSButton
+                  title={'Verify Phone Number'}
+                  textAlignment={btnStyles.textAlignment}
+                  containerStyle={btnStyles.containerStyleFullWidth}
+                  titleStyle={styles.titleStyle}
+                  onSelect={() => handleSubmit()}
+                />
+              )
+            )}
+          </View>
+
           <View style={{paddingBottom: 10}}>
             <View
               style={{
@@ -322,20 +351,22 @@ const ContactInput = (props: {handleSubmit: any}) => {
             );
           })}
         </View>
-        <View style={styles.footerContainer}>
-          <SubmitButton
-            title="Save"
-            onPress={e => {
-              if (otpVerificationStatus) {
-                setGlobalError('');
-                props.handleSubmit(e);
-              } else {
-                setGlobalError('Please submit and verify phone number');
-              }
-            }}
-            loading={contact.loading}
-          />
-        </View>
+        {props?.profileSetup ? null : (
+          <View style={styles.footerContainer}>
+            <SubmitButton
+              title="Save"
+              onPress={e => {
+                if (otpVerificationStatus) {
+                  setGlobalError('');
+                  props.handleSubmit(e);
+                } else {
+                  setGlobalError('Please submit and verify phone number');
+                }
+              }}
+              loading={contact.loading}
+            />
+          </View>
+        )}
       </View>
     </View>
   );
@@ -350,7 +381,9 @@ const styles = StyleSheet.create({
   container1: {
     flex: 1,
   },
-  inputContainer: {marginHorizontal: 20},
+  inputContainer: {
+    // marginHorizontal: 20
+  },
   textInputStyle: {},
   nameContainer: {
     paddingVertical: '5%',

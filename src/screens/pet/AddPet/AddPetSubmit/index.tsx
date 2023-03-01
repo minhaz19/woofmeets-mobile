@@ -2,7 +2,6 @@ import {Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import Screen from '../../../../components/common/Screen';
 import {addPetSubmitValidationSchema} from '../../../../utils/config/ValidationSchema/validationSchema';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import Colors from '../../../../constants/Colors';
 import AppForm from '../../../../components/common/Form/AppForm';
 import {RouteProp} from '@react-navigation/native';
@@ -20,7 +19,6 @@ interface Props {
   >;
 }
 const AddPetSubmit = ({route, navigation}: Props) => {
-  const {isDarkMode} = useTheme();
   const {opk, data, onBoarding} = route.params;
   const {Ploading, handleSubmit} = useAddPetUtils(
     navigation,

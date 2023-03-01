@@ -10,6 +10,7 @@ import AppForm from '../../../components/common/Form/AppForm';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AppActivityIndicator from '../../../components/common/Loaders/AppActivityIndicator';
 import {getUserProfileInfo} from '../../../store/slices/userProfile/userProfileAction';
+import {CancelToken} from 'apisauce';
 
 const BasicInfo = ({route}) => {
   const {colors} = useTheme();
@@ -19,7 +20,11 @@ const BasicInfo = ({route}) => {
   const basicInitialValue = useBasicInitalState();
   const {loading} = useAppSelector(state => state.userProfile);
   useEffect(() => {
+    const source = CancelToken.source();
     dispatch(getUserProfileInfo());
+    return () => {
+      source.cancel();
+    };
   }, []);
   return (
     <>
@@ -50,7 +55,7 @@ const BasicInfo = ({route}) => {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 0,
+    paddingHorizontal: SCREEN_WIDTH > 800 ? '10%' : 20,
   },
   container: {flex: 1},
 });

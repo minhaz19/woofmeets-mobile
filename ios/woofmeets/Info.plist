@@ -67,6 +67,7 @@
 		<string>fb-messenger-share-api</string>
 		<string>tel</string>
 		<string>telprompt</string>
+		<string>about</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -136,5 +137,6 @@
 <string>Please allow access to Microphone to enable video conferencing</string>
 <key>NSLocalNetworkUsageDescription</key>
 <string>Please allow access to network usage to enable video conferencing</string>
+
 </dict>
 </plist>

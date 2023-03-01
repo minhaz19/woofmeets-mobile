@@ -19,18 +19,13 @@ interface Props {
   gLoading?: boolean;
   url: string | null;
   userName?: string;
-  errors: any,
+  errors: any;
 }
-const slug = '/user-profile/upload-profile-picture';
+// const slug = '/user-profile/upload-profile-picture';
+const slug = '/onboarding/upload-profile-picture';
 const img =
   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-const ProfileHeader = ({
-  name,
-  gLoading,
-  url,
-  userName,
-  errors,
-}: Props) => {
+const ProfileHeader = ({name, gLoading, url, userName, errors}: Props) => {
   const {colors} = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
@@ -44,7 +39,7 @@ const ProfileHeader = ({
     setImage(e._parts[0][1].uri);
     const result = await request(slug, e);
     if (result.ok) {
-      setValue(name, e._parts[0][1].uri);
+      setValue(name, e._parts[0][1].uri, {shouldValidate: true});
       dispatch(getUserProfileInfo());
     }
   };
@@ -85,9 +80,7 @@ const ProfileHeader = ({
         <View style={styles.nameContainer}>
           <HeaderText text={userName ?? ''} />
         </View>
-        {errors && (
-          <ErrorMessage error={errors[name!]?.message} />
-        )}
+        {errors && <ErrorMessage error={errors[name!]?.message} />}
       </View>
       <ImageUploadModal
         isModalVisible={isModalVisible}
@@ -103,7 +96,7 @@ const styles = StyleSheet.create({
   topContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    // padding: 20,
     paddingBottom: 0,
   },
   imageContainer: {

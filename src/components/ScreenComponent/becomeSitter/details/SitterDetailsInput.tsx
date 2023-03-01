@@ -13,9 +13,7 @@ import {skillsData} from '../../../../screens/becomeSitter/Details/utils/SkillsD
 import DescriptionText from '../../../common/text/DescriptionText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {useAppSelector} from '../../../../store/store';
-import ServicePetQuantity from '../ServiceSetup/Common/ServicePetQuantity';
-import PetType from '../ServiceSetup/SubPetPreference/PetType';
-import SubHome from './SubHome';
+import ErrorMessage from '../../../common/Form/ErrorMessage';
 
 const sitterDetailsInputValue = [
   {
@@ -62,9 +60,10 @@ This is where you should talk about the practical application of pet care skills
 ];
 
 const SitterDetailsInput = (props: {
-  handleSubmit: any;
-  isLoading: boolean;
-  attributes: any;
+  handleSubmit?: any;
+  isLoading?: boolean;
+  attributes?: any;
+  profileSetup?: boolean;
 }) => {
   const {
     control,
@@ -83,12 +82,12 @@ const SitterDetailsInput = (props: {
     if (tempData) {
       const deleteId = newArray.filter(item => item !== id);
       setNewData(deleteId);
-      setValue('skills', deleteId, {shouldValidate: false});
+      setValue('skills', deleteId, {shouldValidate: true});
     } else {
       const addId = newArray;
       addId.push(id);
       setNewData(addId);
-      setValue('skills', addId, {shouldValidate: false});
+      setValue('skills', addId, {shouldValidate: true});
     }
   };
   return (
@@ -165,42 +164,17 @@ const SitterDetailsInput = (props: {
                 ),
               )}
           </View>
-          {/* <ErrorMessage error={errors[skillsData.name!]?.message} /> */}
+          <ErrorMessage error={errors[skillsData.name!]?.message} />
         </View>
-        <View>
-          <View>
-            <HeaderText
-              textStyle={styles.subHeaderText}
-              text={'How many pets per day can host in your home? (Optional)'}
-            />
-            <ServicePetQuantity
-              name={'petPerDay'}
-              control={control}
-              errors={errors}
-              setValue={setValue}
+        {props?.profileSetup ? null : (
+          <View style={styles.footerContainer}>
+            <SubmitButton
+              title="Save"
+              onPress={props.handleSubmit}
+              loading={props.isLoading}
             />
           </View>
-          <PetType
-            control={control}
-            errors={errors}
-            setValue={setValue}
-            data={data}
-          />
-        </View>
-        <SubHome
-          control={control}
-          errors={errors}
-          setValue={setValue}
-          attributes={props.attributes}
-          selectData={data}
-        />
-        <View style={styles.footerContainer}>
-          <SubmitButton
-            title="Save"
-            onPress={props.handleSubmit}
-            loading={props.isLoading}
-          />
-        </View>
+        )}
       </View>
     </View>
   );

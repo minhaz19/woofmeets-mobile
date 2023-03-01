@@ -53,12 +53,11 @@ const ServiceSelection = () => {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     dispatch(getServiceTypes());
-    if (oldUser) {
-      dispatch(setSitterData({pass: 0}));
-    }
+    // if (oldUser) {
+    //   dispatch(setSitterData({pass: 0}));
+    // }
     setRefreshing(false);
   }, [dispatch]);
-
   useEffect(() => {
     onRefresh();
   }, []);
@@ -71,20 +70,9 @@ const ServiceSelection = () => {
 
   const navigation = useNavigation();
 
-  const [token, setToken] = useState<any>();
-  const getDecodedToken = async () => {
-    const tok: any = await authStorage.getToken();
-    if (tok) {
-      const decode: any = await jwtDecode(tok);
-      setToken(decode);
-      return decode;
-    }
-  };
-
   useEffect(() => {
-    getDecodedToken();
     dispatch(getWhoAmI());
-  }, []);
+  }, [dispatch]);
 
   const onPressEvent = (id: number) => {
     setSequence(id);

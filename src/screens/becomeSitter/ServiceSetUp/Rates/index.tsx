@@ -13,6 +13,9 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {getServiceRateFields} from '../../../../store/slices/onBoarding/setUpService/rates/Field/serviceRateFieldAction';
 import {getRateFieldValue} from '../../../../store/slices/onBoarding/setUpService/rates/FieldValue/rateFieldValueAction';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import SubmitButton from '../../../../components/common/Form/SubmitButton';
+import BottomSpacing from '../../../../components/UI/BottomSpacing';
+import {CancelToken} from 'apisauce';
 interface Props {
   navigation: any;
   route: any;
@@ -37,9 +40,14 @@ const Rates = ({navigation, route}: Props) => {
     ratesMeta,
   } = useServiceRates(serviceSetup, navigation, route);
   useEffect(() => {
+    const source = CancelToken.source();
     dispatch(getServiceRateFields(serviceId));
     dispatch(getRateFieldValue(providerServicesId));
+    return () => {
+      source.cancel();
+    };
   }, [providerServicesId, serviceId]);
+
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await dispatch(getServiceRateFields(serviceId));
@@ -47,53 +55,54 @@ const Rates = ({navigation, route}: Props) => {
     setRefreshing(false);
   }, []);
 
-  useEffect(() => {
-    onRefresh();
-  }, []);
-
   const data = useServiceRateInit(fieldValue, ratesMeta);
-
 
   return (
     <>
-      {(loading || fLoading || refreshing) && (
+      {loading || fLoading || refreshing ? (
         <AppActivityIndicator visible={true} />
-      )}
-      <KeyboardAwareScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        style={[
-          styles.rootContainer,
-          {
-            backgroundColor: colors.backgroundColor,
-          },
-        ]}
-        extraHeight={100}
-        extraScrollHeight={200}
-        enableAutomaticScroll={true}
-        enableOnAndroid={true}>
-        <ReusableHeader
-          itemId={itemId}
-          name={name}
-          image={image}
-          description={description}
-        />
-        <AppForm
-          initialValues={data}
-          validationSchema={BoardingSettingsSchema}
-          enableReset>
-          <SubRates
-            handleRates={handleRates}
-            rateFields={serviceRateFields}
-            fieldValue={fieldValue}
-            loading={btnLoading}
-            ratesMeta={ratesMeta}
+      ) : (
+        <KeyboardAwareScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          style={[
+            styles.rootContainer,
+            {
+              backgroundColor: colors.backgroundColor,
+            },
+          ]}
+          extraHeight={100}
+          extraScrollHeight={200}
+          enableAutomaticScroll={true}
+          enableOnAndroid={true}>
+          <ReusableHeader
+            itemId={itemId}
+            name={name}
+            image={image}
+            description={description}
           />
-        </AppForm>
-      </KeyboardAwareScrollView>
+          <AppForm
+            initialValues={data}
+            validationSchema={BoardingSettingsSchema}
+            enableReset>
+            <SubRates
+              rateFields={serviceRateFields}
+              fieldValue={fieldValue}
+              ratesMeta={ratesMeta}
+              showToggle={true}
+            />
+            <SubmitButton
+              title={'Save & Continue'}
+              onPress={handleRates}
+              loading={btnLoading}
+            />
+          </AppForm>
+          <BottomSpacing />
+        </KeyboardAwareScrollView>
+      )}
     </>
   );
 };

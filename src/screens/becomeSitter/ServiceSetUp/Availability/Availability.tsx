@@ -13,6 +13,7 @@ import AppActivityIndicator from '../../../../components/common/Loaders/AppActiv
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {getAvailability} from '../../../../store/slices/onBoarding/setUpService/availability/getAvailability';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
+import SubmitButton from '../../../../components/common/Form/SubmitButton';
 interface Props {
   navigation: any;
   route: any;
@@ -50,39 +51,48 @@ const Availability = ({navigation, route}: Props) => {
 
   return (
     <>
-      {(loading || refreshing) && <AppActivityIndicator visible={true} />}
-      <KeyboardAwareScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        style={[
-          styles.rootContainer,
-          {
-            backgroundColor: colors.backgroundColor,
-          },
-        ]}
-        extraHeight={100}
-        extraScrollHeight={200}
-        enableAutomaticScroll={true}
-        enableOnAndroid={true}>
-        <ReusableHeader
-          itemId={itemId}
-          name={name}
-          image={image}
-          description={description}
-        />
-        <AppForm
-          initialValues={AvailabilityInitialValues(
-            // providerServiceId[0],
-            availability,
-            itemId,
-          )}
-          validationSchema={availabilityValidation} enableReset>
-          <SubAvailability handlePost={handlePost} loading={isLoading} />
-        </AppForm>
-      </KeyboardAwareScrollView>
+      {loading || refreshing ? (
+        <AppActivityIndicator visible={true} />
+      ) : (
+        <KeyboardAwareScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          style={[
+            styles.rootContainer,
+            {
+              backgroundColor: colors.backgroundColor,
+            },
+          ]}
+          extraHeight={100}
+          extraScrollHeight={200}
+          enableAutomaticScroll={true}
+          enableOnAndroid={true}>
+          <ReusableHeader
+            itemId={itemId}
+            name={name}
+            image={image}
+            description={description}
+          />
+          <AppForm
+            initialValues={AvailabilityInitialValues(
+              // providerServiceId[0],
+              availability,
+              itemId,
+            )}
+            validationSchema={availabilityValidation}
+            enableReset>
+            <SubAvailability />
+            <SubmitButton
+              title={'Save'}
+              onPress={handlePost}
+              loading={isLoading}
+            />
+          </AppForm>
+        </KeyboardAwareScrollView>
+      )}
     </>
   );
 };

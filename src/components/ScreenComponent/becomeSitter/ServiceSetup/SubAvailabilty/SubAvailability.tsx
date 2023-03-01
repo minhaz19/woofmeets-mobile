@@ -1,10 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Pressable} from 'react-native';
 import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
 import HeaderText from '../../../../common/text/HeaderText';
 import {
-  availabilityInput,
   availabilityHomeFullTimeInDay,
   availabilitySelectDay,
 } from '../../../../../screens/becomeSitter/ServiceSetUp/Availability/utils/AvailabilityData';
@@ -13,33 +12,24 @@ import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import {useFormContext} from 'react-hook-form';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
-
-import SubmitButton from '../../../../common/Form/SubmitButton';
-import BottomSpacing from '../../../../UI/BottomSpacing';
 import {useHandleMultipleActiveCheck} from '../handleCheck/HandleCheck';
 import Colors from '../../../../../constants/Colors';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
-import {useAppSelector} from '../../../../../store/store';
 
-interface Props {
-  handlePost: (arg1: any) => void;
-  loading: boolean;
-}
-const SubAvailability = ({handlePost, loading}: Props) => {
-  const {dayError} = useAppSelector(state => state.filter);
+
+const SubAvailability = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const {newData, handleMultipleCheck} = useHandleMultipleActiveCheck(
-    availabilitySelectDay.options,
-  );
   const {
     control,
     setValue,
-    getValues,
     formState: {errors},
   } = useFormContext();
-  const data = getValues();
+  const {
+    availability: {availableDaysOptions, availableDays, onSetAvailableDays},
+  } = useHandleMultipleActiveCheck();
+
   const {colors} = useTheme();
   return (
     <View>
@@ -51,7 +41,11 @@ const SubAvailability = ({handlePost, loading}: Props) => {
           'Letting your potential clients know about your availability is a crucial part of setting up your profile that you should not overlook. Allowing pet owners who are browsing the Woofmeets site a chance to see your weekly schedule is the first step toward seeing whether you’re going to be compatible with them. Be sure to immediately update the availability on your profile for each day if you ever want to make any changes.'
         }
       />
-      <View style={styles.headerContainer}>
+      <View
+        style={{
+          paddingTop:
+            SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '3%',
+        }}>
         <View style={styles.flexContainer}>
           <BigText text={'Availability'} textStyle={styles.headerText} />
           <TouchableOpacity
@@ -60,30 +54,7 @@ const SubAvailability = ({handlePost, loading}: Props) => {
             <QuestionIcon fill={Colors.primary} />
           </TouchableOpacity>
         </View>
-        {/* <View>
-          <HeaderText text={availabilityInput.title} />
-          <View style={styles.fullTimeContainer}>
-            {availabilityInput.options?.map((item, index) => {
-              return (
-                <ServiceCheckbox
-                  title={item.type}
-                  key={index}
-                  radio
-                  typeKey={item.checked}
-                  onPress={() => {
-                    setValue(availabilityInput.name, item.checked, {
-                      shouldValidate: true,
-                    });
-                  }}
-                  name={availabilityInput.name}
-                  control={control}
-                />
-              );
-            })}
-          </View>
-          <ErrorMessage error={errors[availabilityInput.name!]?.message} />
-        </View> */}
-        <View style={{marginTop: '3%'}}>
+        <View>
           <HeaderText
             text={availabilitySelectDay.title}
             textStyle={styles.subHeaderText}
@@ -98,63 +69,63 @@ const SubAvailability = ({handlePost, loading}: Props) => {
             />
           )}
           <View style={styles.dayBoxContainer}>
-            {newData?.map(
-              (
-                item: {type: string; id: number; value: boolean; name: string},
-                index: React.Key | null | undefined,
-              ) => (
-                <ServiceCheckbox
-                  title={item.type}
-                  key={index}
-                  square
-                  typeKey={item.id}
-                  active={data[item.name]}
+            <View style={styles.container}>
+              {availableDaysOptions?.map(day => (
+                <Pressable
                   onPress={() => {
-                    handleMultipleCheck(item.id);
-                    setValue(item.name, item.value, {
-                      shouldValidate: false,
-                    });
+                    onSetAvailableDays(day);
                   }}
-                  name={item.name}
-                  control={control}
-                />
-              ),
-            )}
+                  style={[
+                    styles.box,
+                    {
+                      borderWidth: 1,
+                      borderColor: availableDays[day]
+                        ? Colors.primaryDeep
+                        : 'gray',
+                      backgroundColor: availableDays[day]
+                        ? Colors.washedPrimary
+                        : 'white',
+                    },
+                  ]}
+                  key={day}>
+                  <HeaderText
+                    textStyle={{
+                      ...styles.text,
+                      color: availableDays[day] ? Colors.primaryDeep : 'black',
+                    }}
+                    text={day?.charAt(0).toUpperCase() + day.slice(1)}
+                  />
+                </Pressable>
+              ))}
+            </View>
           </View>
-
-          {dayError && <ErrorMessage error={'Day must be selected'} />}
+          <ErrorMessage error={errors[availabilitySelectDay.name!]?.message} />
         </View>
         <View style={styles.headerContainer}>
           <HeaderText text={availabilityHomeFullTimeInDay.title} />
-          {availabilityHomeFullTimeInDay.options?.map((item, index) => {
-            return (
-              <ServiceCheckbox
-                title={item.type}
-                key={index}
-                radio
-                typeKey={item.type}
-                onPress={() => {
-                  setValue(availabilityHomeFullTimeInDay.name, item.type, {
-                    shouldValidate: true,
-                  });
-                }}
-                name={availabilityHomeFullTimeInDay.name}
-                control={control}
-              />
-            );
-          })}
+          <View style={styles.pottyStyle}>
+            {availabilityHomeFullTimeInDay.options?.map((item, index) => {
+              return (
+                <ServiceCheckbox
+                  title={item.type}
+                  key={index}
+                  radio
+                  typeKey={item.type}
+                  onPress={() => {
+                    setValue(availabilityHomeFullTimeInDay.name, item.type, {
+                      shouldValidate: true,
+                    });
+                  }}
+                  name={availabilityHomeFullTimeInDay.name}
+                  control={control}
+                />
+              );
+            })}
+          </View>
         </View>
         <ErrorMessage
           error={errors[availabilityHomeFullTimeInDay.name!]?.message}
         />
-        <View style={styles.submitContainer}>
-          <SubmitButton
-            title={'Save & Continue'}
-            onPress={handlePost}
-            loading={loading}
-          />
-        </View>
-        <BottomSpacing />
       </View>
     </View>
   );
@@ -203,5 +174,25 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  box: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+    margin: 4,
+    paddingVertical: 4,
+  },
+  text: {
+    paddingHorizontal: 8,
+  },
+  pottyStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
 });

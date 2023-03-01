@@ -1,12 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
   View,
-  ScrollView,
+  // ScrollView,
   Image,
   TouchableOpacity,
   Keyboard,
-  RefreshControl,
-  ActivityIndicator,
+  // RefreshControl,
+  // ActivityIndicator,
+  FlatList,
+  Platform,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import styles from '../activity/styles';
@@ -25,6 +27,8 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 import {useAppSelector} from '../../../store/store';
 import {checkPermissions} from '../../../components/ScreenComponent/conference/utils/functions';
 import {PERMISSIONS} from 'react-native-permissions';
+import BottomSpacing from '../../../components/UI/BottomSpacing';
+import FetchMoreLoader from '../../../components/common/Loaders/FetchMoreLoader';
 
 const Messages = (props: {
   roomId: any;
@@ -37,7 +41,7 @@ const Messages = (props: {
   handleEndReached: () => void;
 }) => {
   const endPoint = 'conference/join-room';
-  const {messages, loading, onRefresh, refreshing} = props;
+  const {messages, loading, onRefresh, refreshing, handleEndReached} = props;
   const {colors} = useTheme();
   const user = useAppSelector((state: any) => state.whoAmI.user);
   const {proposedServiceInfo} = useAppSelector(state => state.proposal);
@@ -135,140 +139,139 @@ const Messages = (props: {
     return splittingMessage;
   }
 
-  // const renderMessage = ({item}: any) => {
+  const renderMessage = ({item}: any) => {
+    return (
+      <>
+        {item.sender === user?.id ? (
+          <View style={styles.senderContainer}>
+            <View
+              style={[styles.sender, {backgroundColor: colors.inputLightBg}]}>
+              {!item.attachment && <TitleText text={item.content} />}
+              {item.attachmentType === 'image' && (
+                <Image
+                  source={{
+                    uri: item.attachment,
+                  }}
+                  style={styles.image}
+                />
+              )}
+              {['VIDEO', 'AUDIO'].includes(item.attachment) && (
+                <View style={styles.messageContainer}>
+                  <TitleText
+                    text={`${user?.firstName + ' ' + user?.lastName} started ${
+                      item?.attachment === 'AUDIO' ? 'an audio' : 'a video'
+                    } call.`}
+                  />
+                  <AppTouchableOpacity
+                    onPress={() => handleJoinRoom(item.attachment)}>
+                    <TitleText
+                      textStyle={{
+                        textDecorationLine: 'underline',
+                        color: Colors.primaryDif,
+                      }}
+                      text={' Click here to join'}
+                    />
+                  </AppTouchableOpacity>
+                </View>
+              )}
+              <ShortText
+                text={formatDistance(
+                  subDays(new Date(item?.createdAt), 0),
+                  new Date(),
+                  {addSuffix: true},
+                )}
+              />
+            </View>
+            <View style={styles.userIconView}>
+              <View
+                style={[styles.imageStyle, {borderColor: colors.borderColor}]}>
+                <TitleText text={user?.firstName?.slice(0, 1)} />
+              </View>
+            </View>
+          </View>
+        ) : (
+          // Receiver
+          <View style={styles.receiverContainer}>
+            <View style={styles.userIconViewReceiver}>
+              <View
+                style={[styles.imageStyle, {borderColor: colors.borderColor}]}>
+                <TitleText
+                  text={
+                    proposedServiceInfo?.providerId === user?.provider?.id
+                      ? changeTextLetter(proposedServiceInfo?.userName)?.slice(
+                          0,
+                          1,
+                        )!
+                      : changeTextLetter(
+                          proposedServiceInfo?.providerName,
+                        )?.slice(0, 1)!
+                  }
+                />
+              </View>
+            </View>
+            <View
+              style={[styles.receiver, {backgroundColor: colors.inputLightBg}]}>
+              {/* {item?.content && <TitleText text={item?.content} />} */}
+              {/* {<TitleText text={checkLink(item.content)} />} */}
+              {!item.attachment && checkLink(item.content)}
+              {['VIDEO', 'AUDIO'].includes(item.attachment) && (
+                <View style={styles.messageContainer}>
+                  <TitleText
+                    text={`${item.content.split(' ')[0]} started ${
+                      item?.attachment === 'AUDIO' ? 'an audio' : 'a video'
+                    } call.`}
+                  />
+                  <AppTouchableOpacity
+                    onPress={() => handleJoinRoom(item.attachment)}>
+                    <TitleText
+                      textStyle={{
+                        textDecorationLine: 'underline',
+                        color: Colors.primaryDif,
+                      }}
+                      text={' Click here to join'}
+                    />
+                  </AppTouchableOpacity>
+                </View>
+              )}
+              {item?.attachmentType === 'image' && (
+                <Image source={{uri: item?.attachment}} style={styles.image} />
+              )}
+              {item?.details && (
+                <View>
+                  <View style={styles.detailsImage}>
+                    <Image
+                      source={{uri: item.attachment}}
+                      style={[
+                        styles.imageStyle,
+                        {borderColor: colors.borderColor},
+                      ]}
+                    />
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Checkout')}>
+                    <TitleText
+                      text="VIEW DETAILS"
+                      textStyle={styles.textDetailsStyle}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
 
-  //   return (
-  //     <>
-  //       {item.sender === user?.id ? (
-  //         <View style={styles.senderContainer}>
-  //           <View
-  //             style={[styles.sender, {backgroundColor: colors.inputLightBg}]}>
-  //             {!item.attachment && <TitleText text={item.content} />}
-  //             {item.attachmentType === 'image' && (
-  //               <Image
-  //                 source={{
-  //                   uri: item.attachment,
-  //                 }}
-  //                 style={styles.image}
-  //               />
-  //             )}
-  //             {['VIDEO', 'AUDIO'].includes(item.attachment) && (
-  //               <View style={styles.messageContainer}>
-  //                 <TitleText
-  //                   text={`${user?.firstName + ' ' + user?.lastName} started ${
-  //                     item?.attachment === 'AUDIO' ? 'an audio' : 'a video'
-  //                   } call.`}
-  //                 />
-  //                 <AppTouchableOpacity
-  //                   onPress={() => handleJoinRoom(item.attachment)}>
-  //                   <TitleText
-  //                     textStyle={{
-  //                       textDecorationLine: 'underline',
-  //                       color: Colors.primaryDif,
-  //                     }}
-  //                     text={' Click here to join'}
-  //                   />
-  //                 </AppTouchableOpacity>
-  //               </View>
-  //             )}
-  //             <ShortText
-  //               text={formatDistance(
-  //                 subDays(new Date(item?.createdAt), 0),
-  //                 new Date(),
-  //                 {addSuffix: true},
-  //               )}
-  //             />
-  //           </View>
-  //           <View style={styles.userIconView}>
-  //             <View
-  //               style={[styles.imageStyle, {borderColor: colors.borderColor}]}>
-  //               <TitleText text={user?.firstName?.slice(0, 1)} />
-  //             </View>
-  //           </View>
-  //         </View>
-  //       ) : (
-  //         // Receiver
-  //         <View style={styles.receiverContainer}>
-  //           <View style={styles.userIconViewReceiver}>
-  //             <View
-  //               style={[styles.imageStyle, {borderColor: colors.borderColor}]}>
-  //               <TitleText
-  //                 text={
-  //                   proposedServiceInfo?.providerId === user?.provider?.id
-  //                     ? changeTextLetter(proposedServiceInfo?.userName)?.slice(
-  //                         0,
-  //                         1,
-  //                       )!
-  //                     : changeTextLetter(
-  //                         proposedServiceInfo?.providerName,
-  //                       )?.slice(0, 1)!
-  //                 }
-  //               />
-  //             </View>
-  //           </View>
-  //           <View
-  //             style={[styles.receiver, {backgroundColor: colors.inputLightBg}]}>
-  //             {/* {item?.content && <TitleText text={item?.content} />} */}
-  //             {/* {<TitleText text={checkLink(item.content)} />} */}
-  //             {!item.attachment && checkLink(item.content)}
-  //             {['VIDEO', 'AUDIO'].includes(item.attachment) && (
-  //               <View style={styles.messageContainer}>
-  //                 <TitleText
-  //                   text={`${item.content.split(' ')[0]} started ${
-  //                     item?.attachment === 'AUDIO' ? 'an audio' : 'a video'
-  //                   } call.`}
-  //                 />
-  //                 <AppTouchableOpacity
-  //                   onPress={() => handleJoinRoom(item.attachment)}>
-  //                   <TitleText
-  //                     textStyle={{
-  //                       textDecorationLine: 'underline',
-  //                       color: Colors.primaryDif,
-  //                     }}
-  //                     text={' Click here to join'}
-  //                   />
-  //                 </AppTouchableOpacity>
-  //               </View>
-  //             )}
-  //             {item?.attachmentType === 'image' && (
-  //               <Image source={{uri: item?.attachment}} style={styles.image} />
-  //             )}
-  //             {item?.details && (
-  //               <View>
-  //                 <View style={styles.detailsImage}>
-  //                   <Image
-  //                     source={{uri: item.attachment}}
-  //                     style={[
-  //                       styles.imageStyle,
-  //                       {borderColor: colors.borderColor},
-  //                     ]}
-  //                   />
-  //                 </View>
-  //                 <TouchableOpacity
-  //                   onPress={() => navigation.navigate('Checkout')}>
-  //                   <TitleText
-  //                     text="VIEW DETAILS"
-  //                     textStyle={styles.textDetailsStyle}
-  //                   />
-  //                 </TouchableOpacity>
-  //               </View>
-  //             )}
-
-  //             {
-  //               <ShortText
-  //                 text={formatDistance(
-  //                   subDays(new Date(item?.createdAt), 0),
-  //                   new Date(),
-  //                   {addSuffix: true},
-  //                 )}
-  //               />
-  //             }
-  //           </View>
-  //         </View>
-  //       )}
-  //     </>
-  //   );
-  // };
+              {
+                <ShortText
+                  text={formatDistance(
+                    subDays(new Date(item?.createdAt), 0),
+                    new Date(),
+                    {addSuffix: true},
+                  )}
+                />
+              }
+            </View>
+          </View>
+        )}
+      </>
+    );
+  };
 
   return (
     <>
@@ -276,16 +279,26 @@ const Messages = (props: {
         <AppActivityIndicator visible={true} />
       ) : (
         <View style={{flex: 1}}>
-          {loading ? (
+          {false ? (
             <View
               style={{
+                marginTop: 50,
+                width: '100%',
                 justifyContent: 'center',
                 alignItems: 'center',
                 flex: 1,
               }}>
-              <ActivityIndicator size="large" />
+              <FetchMoreLoader width={Platform.OS === 'ios' ? '20%' : '25%'} />
             </View>
-          ) : props.roomId === null ? (
+          ) : // <View
+          //   style={{
+          //     justifyContent: 'center',
+          //     alignItems: 'center',
+          //     flex: 1,
+          //   }}>
+          //   <ActivityIndicator size="large" />
+          // </View>
+          props.roomId === null ? (
             <View
               style={{
                 justifyContent: 'center',
@@ -306,197 +319,51 @@ const Messages = (props: {
             </View>
           ) : (
             <>
-              <ScrollView
-                ref={scrollViewRef}
-                style={styles.scrollTop}
-                onContentSizeChange={() =>
-                  scrollViewRef.current.scrollToEnd({animated: true})
-                }
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }>
-                {messages?.map((item: any, i: number) =>
-                  item.sender === user?.id ? (
-                    // Sender
-                    <View key={i} style={styles.senderContainer}>
-                      <View
-                        style={[
-                          styles.sender,
-                          {backgroundColor: colors.inputLightBg},
-                        ]}>
-                        {!item.attachment && <TitleText text={item.content} />}
-                        {item.attachmentType === 'image' && (
-                          <Image
-                            source={{
-                              uri: item.attachment,
-                            }}
-                            style={styles.image}
-                          />
-                        )}
-                        {['VIDEO', 'AUDIO'].includes(item.attachment) && (
-                          <View style={styles.messageContainer}>
-                            <TitleText
-                              text={`${
-                                user?.firstName + ' ' + user?.lastName
-                              } started ${
-                                item?.attachment === 'AUDIO'
-                                  ? 'an audio'
-                                  : 'a video'
-                              } call.`}
-                            />
-                            <AppTouchableOpacity
-                              onPress={() => handleJoinRoom(item.attachment)}>
-                              <TitleText
-                                textStyle={{
-                                  textDecorationLine: 'underline',
-                                  color: Colors.primaryDif,
-                                }}
-                                text={' Click here to join'}
-                              />
-                            </AppTouchableOpacity>
-                          </View>
-                        )}
-                        <ShortText
-                          text={formatDistance(
-                            subDays(new Date(item?.createdAt), 0),
-                            new Date(),
-                            {addSuffix: true},
-                          )}
-                        />
-                      </View>
-                      <View style={styles.userIconView}>
-                        <View
-                          style={[
-                            styles.imageStyle,
-                            {borderColor: colors.borderColor},
-                          ]}>
-                          <TitleText text={user?.firstName?.slice(0, 1)} />
-                        </View>
-                      </View>
-                    </View>
-                  ) : (
-                    // Receiver
-                    <View key={i} style={styles.receiverContainer}>
-                      <View style={styles.userIconViewReceiver}>
-                        <View
-                          style={[
-                            styles.imageStyle,
-                            {borderColor: colors.borderColor},
-                          ]}>
-                          <TitleText
-                            text={
-                              proposedServiceInfo?.providerId ===
-                              user?.provider?.id
-                                ? changeTextLetter(
-                                    proposedServiceInfo?.userName,
-                                  )?.slice(0, 1)!
-                                : changeTextLetter(
-                                    proposedServiceInfo?.providerName,
-                                  )?.slice(0, 1)!
-                            }
-                          />
-                        </View>
-                      </View>
-                      <View
-                        style={[
-                          styles.receiver,
-                          {backgroundColor: colors.inputLightBg},
-                        ]}>
-                        {/* {item?.content && <TitleText text={item?.content} />} */}
-                        {/* {<TitleText text={checkLink(item.content)} />} */}
-                        {!item.attachment && checkLink(item.content)}
-                        {['VIDEO', 'AUDIO'].includes(item.attachment) && (
-                          <View style={styles.messageContainer}>
-                            <TitleText
-                              text={`${item.content.split(' ')[0]} started ${
-                                item?.attachment === 'AUDIO'
-                                  ? 'an audio'
-                                  : 'a video'
-                              } call.`}
-                            />
-                            <AppTouchableOpacity
-                              onPress={() => handleJoinRoom(item.attachment)}>
-                              <TitleText
-                                textStyle={{
-                                  textDecorationLine: 'underline',
-                                  color: Colors.primaryDif,
-                                }}
-                                text={' Click here to join'}
-                              />
-                            </AppTouchableOpacity>
-                          </View>
-                        )}
-                        {item?.attachmentType === 'image' && (
-                          <Image
-                            source={{uri: item?.attachment}}
-                            style={styles.image}
-                          />
-                        )}
-                        {item?.details && (
-                          <View>
-                            <View style={styles.detailsImage}>
-                              <Image
-                                source={{uri: item.attachment}}
-                                style={[
-                                  styles.imageStyle,
-                                  {borderColor: colors.borderColor},
-                                ]}
-                              />
-                            </View>
-                            <TouchableOpacity
-                              onPress={() => navigation.navigate('Checkout')}>
-                              <TitleText
-                                text="VIEW DETAILS"
-                                textStyle={styles.textDetailsStyle}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        )}
-
-                        {
-                          <ShortText
-                            text={formatDistance(
-                              subDays(new Date(item?.createdAt), 0),
-                              new Date(),
-                              {addSuffix: true},
-                            )}
-                          />
-                        }
-                      </View>
-                    </View>
-                  ),
-                )}
-                <View style={{height: paddingHeight}} />
-              </ScrollView>
-
-              {/* <FlatList
+              <FlatList
                 ref={scrollViewRef}
                 style={styles.scrollTop}
                 // onContentSizeChange={() =>
                 //   scrollViewRef.current.scrollToEnd({animated: true})
                 // }
+                // refreshControl={
+                //   <RefreshControl
+                //     refreshing={refreshing}
+                //     onRefresh={onRefresh}
+                //   />
+                // }
                 inverted
-                refreshControl={
-                  <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                  />
-                }
                 data={messages}
+                keyExtractor={(item, index) =>
+                  String(item._id + Math.random() + index)
+                }
                 renderItem={renderMessage}
-                keyExtractor={item => item._id}
                 // onEndReached={messages?.lenght < 18 ? handleEndReached : null}
-                onEndReached={handleEndReached}
-                // onMomentumScrollBegin={handleScroll}
-                onEndReachedThreshold={0.5}
-                initialNumToRender={20}
-                ListFooterComponent={() => (
-                  <View style={{height: paddingHeight}} />
-                )}
-              /> */}
+                onEndReached={messages?.length < 20 ? null : handleEndReached}
+                onEndReachedThreshold={0.2}
+                ListFooterComponent={
+                  loading ? (
+                    <View
+                      style={{
+                        marginTop: 20,
+                        width: '100%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flex: 1,
+                      }}>
+                      <FetchMoreLoader
+                        width={Platform.OS === 'ios' ? '20%' : '25%'}
+                      />
+                    </View>
+                  ) : (
+                    <>
+                      <BottomSpacing />
+                    </>
+                  )
+                }
+                // ListFooterComponent={() => (
+                //   <View style={{height: paddingHeight}} />
+                // )}
+              />
             </>
           )}
 
@@ -514,3 +381,137 @@ const Messages = (props: {
 };
 
 export default Messages;
+// <ScrollView
+// ref={scrollViewRef}
+// style={styles.scrollTop}
+// onContentSizeChange={() =>
+//   scrollViewRef.current.scrollToEnd({animated: true})
+// }
+// refreshControl={
+//   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+// }>
+// {messages?.map((item: any, i: number) =>
+//   item.sender === user?.id ? (
+//     // Sender
+//     <View key={i} style={styles.senderContainer}>
+//       <View style={[styles.sender, {backgroundColor: colors.inputLightBg}]}>
+//         {!item.attachment && <TitleText text={item.content} />}
+//         {item.attachmentType === 'image' && (
+//           <Image
+//             source={{
+//               uri: item.attachment,
+//             }}
+//             style={styles.image}
+//           />
+//         )}
+//         {['VIDEO', 'AUDIO'].includes(item.attachment) && (
+//           <View style={styles.messageContainer}>
+//             <TitleText
+//               text={`${user?.firstName + ' ' + user?.lastName} started ${
+//                 item?.attachment === 'AUDIO' ? 'an audio' : 'a video'
+//               } call.`}
+//             />
+//             <AppTouchableOpacity
+//               onPress={() => handleJoinRoom(item.attachment)}>
+//               <TitleText
+//                 textStyle={{
+//                   textDecorationLine: 'underline',
+//                   color: Colors.primaryDif,
+//                 }}
+//                 text={' Click here to join'}
+//               />
+//             </AppTouchableOpacity>
+//           </View>
+//         )}
+//         <ShortText
+//           text={formatDistance(
+//             subDays(new Date(item?.createdAt), 0),
+//             new Date(),
+//             {addSuffix: true},
+//           )}
+//         />
+//       </View>
+//       <View style={styles.userIconView}>
+//         <View style={[styles.imageStyle, {borderColor: colors.borderColor}]}>
+//           <TitleText text={user?.firstName?.slice(0, 1)} />
+//         </View>
+//       </View>
+//     </View>
+//   ) : (
+// Receiver
+//     <View key={i} style={styles.receiverContainer}>
+//       <View style={styles.userIconViewReceiver}>
+//         <View style={[styles.imageStyle, {borderColor: colors.borderColor}]}>
+//           <TitleText
+//             text={
+//               proposedServiceInfo?.providerId === user?.provider?.id
+//                 ? changeTextLetter(proposedServiceInfo?.userName)?.slice(
+//                     0,
+//                     1,
+//                   )!
+//                 : changeTextLetter(proposedServiceInfo?.providerName)?.slice(
+//                     0,
+//                     1,
+//                   )!
+//             }
+//           />
+//         </View>
+//       </View>
+//       <View style={[styles.receiver, {backgroundColor: colors.inputLightBg}]}>
+//         {/* {item?.content && <TitleText text={item?.content} />} */}
+//         {/* {<TitleText text={checkLink(item.content)} />} */}
+//         {!item.attachment && checkLink(item.content)}
+//         {['VIDEO', 'AUDIO'].includes(item.attachment) && (
+//           <View style={styles.messageContainer}>
+//             <TitleText
+//               text={`${item.content.split(' ')[0]} started ${
+//                 item?.attachment === 'AUDIO' ? 'an audio' : 'a video'
+//               } call.`}
+//             />
+//             <AppTouchableOpacity
+//               onPress={() => handleJoinRoom(item.attachment)}>
+//               <TitleText
+//                 textStyle={{
+//                   textDecorationLine: 'underline',
+//                   color: Colors.primaryDif,
+//                 }}
+//                 text={' Click here to join'}
+//               />
+//             </AppTouchableOpacity>
+//           </View>
+//         )}
+//         {item?.attachmentType === 'image' && (
+//           <Image source={{uri: item?.attachment}} style={styles.image} />
+//         )}
+//         {item?.details && (
+//           <View>
+//             <View style={styles.detailsImage}>
+//               <Image
+//                 source={{uri: item.attachment}}
+//                 style={[styles.imageStyle, {borderColor: colors.borderColor}]}
+//               />
+//             </View>
+//             <TouchableOpacity onPress={() => navigation.navigate('Checkout')}>
+//               <TitleText
+//                 text="VIEW DETAILS"
+//                 textStyle={styles.textDetailsStyle}
+//               />
+//             </TouchableOpacity>
+//           </View>
+//         )}
+
+//         {
+//           <ShortText
+//             text={formatDistance(
+//               subDays(new Date(item?.createdAt), 0),
+//               new Date(),
+//               {addSuffix: true},
+//             )}
+//           />
+//         }
+//       </View>
+//     </View>
+//   ),
+// )}
+// <View style={{height: paddingHeight}} />
+// </ScrollView>

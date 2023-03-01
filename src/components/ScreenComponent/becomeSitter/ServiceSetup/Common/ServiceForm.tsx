@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View, ViewStyle} from 'react-native';
+import {StyleSheet, View, ViewStyle} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Controller} from 'react-hook-form';
 import TitleText from '../../../../common/text/TitleText';
@@ -29,10 +29,8 @@ interface Props {
   shortText?: string;
   checkbox?: string;
   additionalRates?: string;
-  handlePress?: () => void;
   checkPress?: () => void;
   editable?: boolean;
-  showAdditionalRates?: boolean;
   control: any;
   errors: any;
   dValue?: any;
@@ -58,10 +56,6 @@ const ServiceForm = ({
   subTitle,
   textInputStyle,
   auth,
-
-  additionalRates,
-  handlePress,
-  showAdditionalRates,
   editable,
   control,
   errors,
@@ -94,7 +88,7 @@ const ServiceForm = ({
           {icon && <InfoSvg width={16} height={16} style={styles.svg} />}
         </AppTouchableOpacity>
 
-        {subTitle && showAdditionalRates && (
+        {subTitle && (
           <DescriptionText textStyle={styles.subTitle} text={subTitle} />
         )}
         <Controller
@@ -126,14 +120,6 @@ const ServiceForm = ({
           name={name}
         />
         <ErrorMessage error={errors[name]?.message} auth={auth} />
-        {additionalRates && showAdditionalRates && (
-          <TouchableOpacity onPress={handlePress}>
-            <DescriptionText
-              text={additionalRates}
-              textStyle={{color: Colors.primary}}
-            />
-          </TouchableOpacity>
-        )}
       </View>
       <ServiceReusableModal
         modalVisible={isVisible}

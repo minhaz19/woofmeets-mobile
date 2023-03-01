@@ -11,40 +11,18 @@ import methods from '../../../api/methods';
 import {API_URL} from '@env';
 import CompletionModal from '../../../components/ScreenComponent/becomeSitter/CompleteOnboarding/CompletionModal';
 import {useNavigation} from '@react-navigation/native';
-const url = `${API_URL}/v2/user-profile/submit-onboarding-process`;
+
+const url = `${API_URL}/v3/user-profile/submit-onboarding-process`;
 const CompleteOnboarding = () => {
-  const {sitterData, boardingSelection, profileData} = useAppSelector(
-    state => state.initial,
+  const {availability, basicInfo} = useAppSelector(
+    state => state.newOnboarding,
   );
   const {request, loading} = useApi(methods._post);
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
-  const text =
-    // (!sitterData[0]?.isCompleted ? sitterData[0]?.title.toUpperCase() : '') +
-    // (!sitterData[0]?.isCompleted ? ', ' : '') +
-    (!boardingSelection[0].isCompleted ||
-    !boardingSelection[1].isCompleted ||
-    !boardingSelection[2].isCompleted
-      ? sitterData[1]?.title.toUpperCase() + ', '
-      : '') +
-    (!profileData[0].isCompleted ||
-    !profileData[1].isCompleted ||
-    !profileData[2].isCompleted
-      ? sitterData[2]?.title.toUpperCase() + ', '
-      : '') +
-    (!sitterData[3]?.isCompleted
-      ? sitterData[3]?.title.toUpperCase() + ' '
-      : '');
+
   const handleSubmit = async () => {
-    if (
-      boardingSelection[0].isCompleted &&
-      boardingSelection[1].isCompleted &&
-      boardingSelection[2].isCompleted &&
-      profileData[0].isCompleted &&
-      profileData[1].isCompleted &&
-      profileData[2].isCompleted &&
-      sitterData[3].isCompleted
-    ) {
+    if (availability?.id && basicInfo?.latitude) {
       Alert.alert(
         'Profile Submission',
         'Are you sure you want to submit your profile',
@@ -70,7 +48,11 @@ const CompleteOnboarding = () => {
     } else {
       Alert.alert(
         'Warning!',
-        `Please complete "${text}" step to move forward. Thanks!`,
+        `Please complete${availability?.id ? '' : ' "Service Setup"'} ${
+          !availability?.id && !basicInfo?.latitude ? 'and' : ''
+        } ${
+          basicInfo?.latitude ? '' : '"Profile Setup"'
+        } step to move forward. Thanks!`,
       );
     }
   };
@@ -108,17 +90,15 @@ export default CompleteOnboarding;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   animation: {
     width: '80%',
     marginTop: 10,
   },
   textContainer: {
-    margin: 20,
-    // backgroundColor: Colors.lightShade,
-    padding: 10,
+    paddingVertical: 10,
     borderRadius: 4,
     marginBottom: 40,
   },
