@@ -100,6 +100,42 @@ const SubRates = ({rateFields, fieldValue, showToggle}: Props) => {
                       icon={false}
                       helpText={item.helpText}
                     />
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                      <HeaderText text="Additional Rates" textStyle={styles.titleStyle}/>
+                      <Pressable
+                        onPress={() => handlePress()}
+                        style={styles.iconStyle}>
+                        <MaterialCommunityIcons
+                          name={'chevron-right'}
+                          size={
+                            SCREEN_WIDTH <= 380
+                              ? 24
+                              : SCREEN_WIDTH <= 600
+                              ? 28
+                              : 28
+                          }
+                          color={Colors.primary}
+                          style={{
+                            transform: [
+                              {
+                                rotate: showAdditionalRates
+                                  ? '-90deg'
+                                  : '90deg',
+                              },
+                            ],
+                          }}
+                        />
+                        <HeaderText
+                          text={
+                            showAdditionalRates
+                              ? 'Hide Additional rates '
+                              : 'Show Additional rates'
+                          }
+                          textStyle={styles.titleStyle}
+                        />
+                      </Pressable>
+                    </View>
+
                     <AppCheckboxField
                       title={'Update my additional rates based on my base rate'}
                       square
@@ -111,39 +147,6 @@ const SubRates = ({rateFields, fieldValue, showToggle}: Props) => {
                       errors={errors}
                       control={control}
                     />
-                    <DescriptionText
-                      textStyle={styles.shortText}
-                      text={'Turn off and adjust your rate manully'}
-                    />
-
-                    <Pressable
-                      onPress={() => handlePress()}
-                      style={styles.iconStyle}>
-                      <MaterialCommunityIcons
-                        name={'chevron-right'}
-                        size={
-                          SCREEN_WIDTH <= 380
-                            ? 24
-                            : SCREEN_WIDTH <= 600
-                            ? 28
-                            : 28
-                        }
-                        color={Colors.primary}
-                        style={{
-                          transform: [
-                            {rotate: showAdditionalRates ? '-90deg' : '90deg'},
-                          ],
-                        }}
-                      />
-                      <HeaderText
-                        text={
-                          showAdditionalRates
-                            ? 'Hide Additional rates '
-                            : 'Show Additional rates'
-                        }
-                        textStyle={styles.titleStyle}
-                      />
-                    </Pressable>
                   </>
                 )}
                 {item.slug !== 'base-rate' && showAdditionalRates && (

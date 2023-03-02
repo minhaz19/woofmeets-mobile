@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {RefreshControl, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useAppSelector} from '../../../../store/store';
@@ -18,12 +19,12 @@ import NewSubPerPreference from '../ServiceSetup/NewSubPetPreference';
 import NewSubYourHome from '../ServiceSetup/NewSubYourHome';
 
 interface Props {
-  route: {
+  route?: {
     params: {
-      goBack?: boolean;
+      goBack: boolean;
     };
   };
-  navigation: {
+  navigation?: {
     goBack: () => void;
   };
 }

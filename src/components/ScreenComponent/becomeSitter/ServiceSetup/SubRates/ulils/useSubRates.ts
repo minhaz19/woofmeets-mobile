@@ -34,7 +34,7 @@ function areEqual(arr1: any, arr2: any) {
 
   return true;
 }
-export const useSubRates = (fieldValue: any,rateFields: any, showToggle: boolean) => {
+export const useSubRates = (fieldValue: any,rateFields: any, showToggle: boolean | undefined) => {
   const [showAdditionalRates, setShowAdditionalRates] = useState(showToggle ? true : false);
   const [updateRates, setUpdateRates] = useState(false);
   const [rates, setRates] = useState([]);

@@ -12,8 +12,16 @@ import {useProfileSetupInit} from './utils/useProfileSetupInit';
 import BottomSpacing from '../../../../../components/UI/BottomSpacing';
 
 const ProfileSetup = () => {
-  const {onRefresh, refreshing, handleSubmit, putLoading, postLoading, onboardingLoading, locationLoading} =
-    useProfileSetup();
+  const {
+    onRefresh,
+    refreshing,
+    handleSubmit,
+    putLoading,
+    postLoading,
+    onboardingLoading,
+    locationLoading,
+  } = useProfileSetup();
+
   const initialValue = useProfileSetupInit();
   return (
     <>

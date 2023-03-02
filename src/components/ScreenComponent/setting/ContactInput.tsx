@@ -55,7 +55,6 @@ const ContactInput = (props: {handleSubmit?: any; profileSetup?: boolean}) => {
   const {
     control,
     setValue,
-    setError,
     formState: {errors},
   } = useFormContext();
   const dispatch = useAppDispatch();
@@ -312,7 +311,7 @@ const ContactInput = (props: {handleSubmit?: any; profileSetup?: boolean}) => {
             )}
           </View>
 
-          <View style={{paddingBottom: 10}}>
+          {/* <View style={{paddingBottom: 10}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -349,7 +348,7 @@ const ContactInput = (props: {handleSubmit?: any; profileSetup?: boolean}) => {
                 errors={errors}
               />
             );
-          })}
+          })} */}
         </View>
         {props?.profileSetup ? null : (
           <View style={styles.footerContainer}>

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AppFormField from '../../common/Form/AppFormField';
 import SubmitButton from '../../common/Form/SubmitButton';
 import HeaderText from '../../common/text/HeaderText';
