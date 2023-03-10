@@ -10,6 +10,7 @@ import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import {useFormContext} from 'react-hook-form';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
+import Divider from '../../../../UI/Divider';
 
 interface props {
   policy: any;
@@ -22,7 +23,7 @@ const NewSubCancellationPolicy = ({policy}: props) => {
     formState: {errors},
   } = useFormContext();
   return (
-    <View style={{paddingTop: 10}}>
+    <View>
       <ServiceReusableModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
@@ -63,6 +64,7 @@ const NewSubCancellationPolicy = ({policy}: props) => {
         </View>
         <ErrorMessage error={errors['cancellationPolicy']?.message} />
       </View>
+      <Divider />
     </View>
   );
 };
@@ -72,6 +74,7 @@ export default NewSubCancellationPolicy;
 const styles = StyleSheet.create({
   headerText: {
     lineHeight: 20,
+    fontWeight: 'bold',
   },
   subtitle: {
     paddingBottom: '1%',

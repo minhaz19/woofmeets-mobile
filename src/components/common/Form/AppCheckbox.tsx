@@ -18,6 +18,7 @@ interface Props {
   onBlur?: () => void;
   Comp?: React.ElementType;
   small?: boolean;
+  // inputRef?: any,
 }
 const AppCheckbox = ({
   onPress,
@@ -28,11 +29,13 @@ const AppCheckbox = ({
   active,
   Comp,
   small,
+  // inputRef,
 }: Props) => {
   return (
     <Pressable
       onPress={onPress}
       onBlur={onBlur}
+      // ref={inputRef}
       style={[
         styles.checkInfoContainer,
         {alignItems: small ? 'flex-start' : 'center'},

@@ -276,18 +276,7 @@ const appointmentModifyValidationSchema = Yup.object().shape({
   markedStyle: Yup.object(),
 });
 const profileSetupValidationSchema = Yup.object().shape({
-  numberVerified: Yup.boolean()
-    .oneOf([true], 'Please verify phone number')
-    .required('Please verify phone number'),
   profileImage: Yup.string().nullable().required('Please upload your image'),
-  addressLine1: Yup.string().required('Address is required'),
-  addressLine2: Yup.string(),
-  city: Yup.string().required('City is required'),
-  state: Yup.string().required('State is required'),
-  street: Yup.string(),
-  zipCode: Yup.string().required('Zip code is required'),
-  countryId: Yup.string().required('Country name is required'),
-  // name: Yup.string().required('Name is required'),
   dob: Yup.date()
     .typeError('Please enter a valid date')
     .max(
@@ -295,17 +284,29 @@ const profileSetupValidationSchema = Yup.object().shape({
       'You must be at least 18 years old',
     )
     .required('Date of Birth is required'),
+  addressLine1: Yup.string().required('Address is required'),
+  addressLine2: Yup.string(),
+  city: Yup.string().required('City is required'),
+  state: Yup.string().required('State is required'),
+  street: Yup.string(),
+  zipCode: Yup.string().required('Zip code is required'),
+  countryId: Yup.string().required('Country name is required'),
+  numberVerified: Yup.boolean()
+    .oneOf([true], 'Please verify phone number')
+    .required('Please verify phone number'),
   emergencyContactName: Yup.string().nullable(),
   emergencyPhone: Yup.string().nullable(),
-
-  headline: Yup.string().required('This field is required'),
+  headline: Yup.string().required('This field is required').max(70, 'Must be less than 70 characters'),
   yearsOfExperience: Yup.number()
     .min(0, 'Please enter a positive number')
+    .test('len', 'Max 2 digits', val => val.toString().length <= 2)
     .required('Please input a number')
     .typeError('Years of experience must be number')
     .nullable(),
 
-  experienceDescription: Yup.string().required('This field is required'),
+  experienceDescription: Yup.string()
+    .required('This field is required')
+    .min(400, 'At least 400 characters or more'),
 
   skills: Yup.array().min(1, 'Please select skills'),
 });

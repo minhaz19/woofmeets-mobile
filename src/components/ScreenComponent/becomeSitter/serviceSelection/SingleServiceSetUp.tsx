@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import {RefreshControl, StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useRef} from 'react';
 import {useAppSelector} from '../../../../store/store';
 import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -18,18 +19,19 @@ import NewSubPerPreference from '../ServiceSetup/NewSubPetPreference';
 import NewSubYourHome from '../ServiceSetup/NewSubYourHome';
 
 interface Props {
-  route: {
+  route?: {
     params: {
-      goBack?: boolean;
+      goBack: boolean;
     };
   };
-  navigation: {
+  navigation?: {
     goBack: () => void;
   };
 }
 
 const SingleServiceSetUp = ({route, navigation}: Props) => {
   const {colors} = useTheme();
+  const scrollViewRef = useRef<any>();
   const {serviceSetup} = useAppSelector(state => state.serviceSetup);
 
   // service setup hooks
@@ -49,6 +51,16 @@ const SingleServiceSetUp = ({route, navigation}: Props) => {
     onboardingLoading,
   } = useServiceSetupHooks(serviceSetup, route, navigation);
   const data = useServiceSetupInitialValue(fieldValue, ratesMeta);
+
+  // const handleError = (errors: {}) => {
+  //   console.log(errors);
+  //   const firstErrorField = Object.keys(errors)[0];
+  //   const errorFieldRef = firstErrorField ? firstErrorField.current : null;
+  //   if (errorFieldRef) {
+  //     const scrollY = errorFieldRef.measure((x: any, y: any) => y);
+  //     scrollViewRef.current.scrollToPosition({y: scrollY, animated: true});
+  //   }
+  // };
 
   return (
     <>
@@ -72,6 +84,7 @@ const SingleServiceSetUp = ({route, navigation}: Props) => {
           ]}
           extraHeight={100}
           extraScrollHeight={200}
+          ref={scrollViewRef}
           enableAutomaticScroll={true}
           enableOnAndroid={true}>
           <View style={{paddingHorizontal: 20}}>
@@ -97,10 +110,11 @@ const SingleServiceSetUp = ({route, navigation}: Props) => {
               {serviceSetup?.serviceType?.slug === 'boarding' && (
                 <NewSubYourHome attributes={attributes} />
               )}
-              <View style={{paddingTop: 20}}>
+              <View>
                 <SubmitButton
                   title={'Save & Continue'}
                   onPress={handleOnBoard}
+                  // onError={handleError}
                   loading={btnLoading}
                 />
               </View>

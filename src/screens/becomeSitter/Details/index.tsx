@@ -78,31 +78,33 @@ const SitterDetails = ({route, navigation}) => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }>
           <View style={styles.nameContainer}>
-            <HeaderText
-              text="Create Your Profile"
-              textStyle={styles.textStyle}
-            />
-            <TitleText
-              text="Details about your pet-care experience"
-              textStyle={styles.titleTextStyle}
-            />
-            <DescriptionText
-              text="Let pet owners know about your personal qualities and overall love of animals"
-              textStyle={{...styles.details, color: colors.descriptionText}}
-            />
-            <DescriptionText text="Quick tips:" textStyle={styles.details} />
-            <BulletPoints
-              textStyle={{color: colors.descriptionText}}
-              text={
-                'We recommend keeping personal identifiers—like your last name or workplace—out of your profile.'
-              }
-            />
-            <BulletPoints
-              textStyle={{color: colors.descriptionText}}
-              text={
-                'This is a chance to let your potential clients know how much animals mean to you and why you’re the ideal candidate to care for their pets. Be honest about your background with animals, and don’t embellish any of your experiences caring for them.'
-              }
-            />
+            <View style={{paddingBottom: 20}}>
+              <HeaderText
+                text="Create Your Profile"
+                textStyle={styles.textStyle}
+              />
+              <TitleText
+                text="Details about your pet-care experience"
+                textStyle={styles.titleTextStyle}
+              />
+              <DescriptionText
+                text="Let pet owners know about your personal qualities and overall love of animals"
+                textStyle={{...styles.details, color: colors.descriptionText}}
+              />
+              <DescriptionText text="Quick tips:" textStyle={styles.details} />
+              <BulletPoints
+                textStyle={{color: colors.descriptionText}}
+                text={
+                  'We recommend keeping personal identifiers—like your last name or workplace—out of your profile.'
+                }
+              />
+              <BulletPoints
+                textStyle={{color: colors.descriptionText}}
+                text={
+                  'This is a chance to let your potential clients know how much animals mean to you and why you’re the ideal candidate to care for their pets. Be honest about your background with animals, and don’t embellish any of your experiences caring for them.'
+                }
+              />
+            </View>
             <AppForm
               initialValues={detailsInitialValue}
               validationSchema={sitterDetailsValidationSchema}>

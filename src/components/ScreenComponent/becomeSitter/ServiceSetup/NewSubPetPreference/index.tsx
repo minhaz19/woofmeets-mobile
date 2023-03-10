@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useFormContext} from 'react-hook-form';
@@ -9,6 +10,7 @@ import ErrorMessage from '../../../../common/Form/ErrorMessage';
 import {SCREEN_WIDTH} from '../../../../../constants/WindowSize';
 import {petType} from '../../../../../utils/config/Data/serviceSetUpData/petPreference';
 import AppFormField from '../../../../common/Form/AppFormField';
+import BigText from '../../../../common/text/BigText';
 
 const NewSubPerPreference = () => {
   const {
@@ -19,7 +21,15 @@ const NewSubPerPreference = () => {
     preferences: {preferenceOptions, preference, onSetPreference},
   } = usePetPreferenceHandle();
   return (
-    <View style={{paddingTop: 10}}>
+    <View>
+      <BigText
+        text={'Your Preferences (Optional)'}
+        textStyle={{
+          lineHeight: 20,
+          fontWeight: 'bold',
+          paddingBottom: 15,
+        }}
+      />
       <AppFormField
         autoCapitalize="none"
         autoCorrect={false}

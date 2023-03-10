@@ -7,8 +7,9 @@ interface Props {
   onPress?: any;
   loading?: boolean;
   color?: string;
+  onError?: any,
 }
-const SubmitButton = ({title, onPress, color, loading}: Props) => {
+const SubmitButton = ({title, onPress, color, loading, onError}: Props) => {
   const {handleSubmit} = useFormContext();
   return (
     <ButtonCom
@@ -17,7 +18,7 @@ const SubmitButton = ({title, onPress, color, loading}: Props) => {
       textAlignment={btnStyles.textAlignment}
       containerStyle={btnStyles.containerStyleFullWidth}
       titleStyle={btnStyles.titleStyle}
-      onSelect={handleSubmit(onPress)}
+      onSelect={handleSubmit(onPress, onError)}
       color={color}
     />
   );

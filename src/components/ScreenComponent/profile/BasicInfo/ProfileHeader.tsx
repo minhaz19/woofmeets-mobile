@@ -14,6 +14,11 @@ import UploadingLoader from '../../../common/Loaders/UploadingLoader';
 import {useAppDispatch} from '../../../../store/store';
 import {getUserProfileInfo} from '../../../../store/slices/userProfile/userProfileAction';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
+import DescriptionText from '../../../common/text/DescriptionText';
+import Divider from '../../../UI/Divider';
+import {replaceHostnameWithCDN} from '../../../../utils/helpers/imageOpt/replaceHostnameWithCDN';
+import {getNewOnboarding} from '../../../../store/slices/onBoarding/newOnboardingApi/newOnboardingAction';
+import {setProfileImage} from '../../../../store/slices/onBoarding/newOnboardingApi/newOnboardingSlice';
 interface Props {
   name: string;
   gLoading?: boolean;
@@ -41,47 +46,51 @@ const ProfileHeader = ({name, gLoading, url, userName, errors}: Props) => {
     if (result.ok) {
       setValue(name, e._parts[0][1].uri, {shouldValidate: true});
       dispatch(getUserProfileInfo());
+      dispatch(setProfileImage(result?.data?.data?.image?.url));
     }
   };
   return (
     <>
       <View style={styles.topContainer}>
-        <View
-          style={[
-            styles.imageContainer,
-            {borderColor: colors.descriptionText},
-          ]}>
-          <TouchableOpacity onPress={() => setIsModalVisible(true)}>
-            <View style={styles.imageStyle}>
-              {gLoading || loading ? (
-                <UploadingLoader />
-              ) : (
-                <Image
-                  source={{
-                    uri: url ? url : img,
-                  }}
-                  style={styles.image}
-                />
-              )}
-            </View>
-            <View
-              style={[
-                styles.addContainer,
-                {borderColor: colors.backgroundColor},
-              ]}>
-              <Ionicons
-                name="md-add"
-                size={SCREEN_WIDTH <= 380 ? 16 : SCREEN_WIDTH <= 600 ? 18 : 20}
-                color={Colors.light.background}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.nameContainer}>
-          <HeaderText text={userName ?? ''} />
-        </View>
-        {errors && <ErrorMessage error={errors[name!]?.message} />}
+        <HeaderText
+          text={'Profile Picture'}
+          textStyle={{fontWeight: 'bold', paddingBottom: 10}}
+        />
+        <DescriptionText text="Add a profile photo to show pet parents who you are!" />
       </View>
+      <View
+        style={[styles.imageContainer, {borderColor: colors.descriptionText}]}>
+        <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+          <View style={styles.imageStyle}>
+            {gLoading || loading ? (
+              <UploadingLoader />
+            ) : (
+              <Image
+                source={{
+                  uri: url ? url : img,
+                }}
+                style={styles.image}
+              />
+            )}
+          </View>
+          <View
+            style={[
+              styles.addContainer,
+              {borderColor: colors.backgroundColor},
+            ]}>
+            <Ionicons
+              name="md-add"
+              size={SCREEN_WIDTH <= 380 ? 16 : SCREEN_WIDTH <= 600 ? 18 : 20}
+              color={Colors.light.background}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+      {/* <View style={styles.nameContainer}>
+        <HeaderText text={userName ?? ''} />
+      </View> */}
+      {errors && <ErrorMessage error={errors[name!]?.message} />}
+      <Divider />
       <ImageUploadModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
@@ -94,10 +103,7 @@ const ProfileHeader = ({name, gLoading, url, userName, errors}: Props) => {
 };
 const styles = StyleSheet.create({
   topContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    // padding: 20,
-    paddingBottom: 0,
+    paddingBottom: 20,
   },
   imageContainer: {
     alignItems: 'center',
@@ -111,8 +117,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   imageStyle: {
-    height: SCREEN_WIDTH <= 380 ? 70 : SCREEN_WIDTH <= 600 ? 90 : 100,
-    width: SCREEN_WIDTH <= 380 ? 70 : SCREEN_WIDTH <= 600 ? 90 : 100,
+    height: SCREEN_WIDTH <= 380 ? 80 : SCREEN_WIDTH <= 600 ? 100 : 100,
+    width: SCREEN_WIDTH <= 380 ? 80 : SCREEN_WIDTH <= 600 ? 100 : 100,
     borderRadius: 50,
     overflow: 'hidden',
   },

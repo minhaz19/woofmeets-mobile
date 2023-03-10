@@ -7,25 +7,23 @@ import Text_Size from '../../../../constants/textScaling';
 import HeaderText from '../../../common/text/HeaderText';
 import {useFormContext} from 'react-hook-form';
 import Colors from '../../../../constants/Colors';
-import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import ServiceCheckbox from '../ServiceSetup/Common/ServiceCheckbox';
 import {skillsData} from '../../../../screens/becomeSitter/Details/utils/SkillsData';
-import DescriptionText from '../../../common/text/DescriptionText';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import {useAppSelector} from '../../../../store/store';
 import ErrorMessage from '../../../common/Form/ErrorMessage';
 
 const sitterDetailsInputValue = [
   {
-    title: 'Years of personal experience caring for pets*',
+    title: 'Years of personal experience caring for pets',
     name: 'yearsOfExperience',
     numberOfLines: 1,
   },
   {
-    title: 'Write an eye-catching headline*',
+    title: 'Write an eye-catching headline',
     name: 'headline',
-    description:
-      'Make your headline short, descriptive and genuine. Try to encapsulate in a single sentence why you’re the best pet-sitting candidate for the job. Your headline’s creativity will help it stand out.',
+    // description:
+    //   'Make your headline short, descriptive and genuine. Try to encapsulate in a single sentence why you’re the best pet-sitting candidate for the job. Your headline’s creativity will help it stand out.',
     numberOfLines: 1,
   },
   // {
@@ -36,11 +34,11 @@ const sitterDetailsInputValue = [
   //   numberOfLines: 12,
   // },
   {
-    title: 'Pet care experience*',
+    title: 'Pet care experience',
     name: 'experienceDescription',
-    description: `Tell us more about your experience in pet care.
+    //     description: `Tell us more about your experience in pet care.
 
-This is where you should talk about the practical application of pet care skills you’ve picked up throughout your life.`,
+    // This is where you should talk about the practical application of pet care skills you’ve picked up throughout your life.`,
     numberOfLines: 12,
     multiline: true,
   },
@@ -72,7 +70,6 @@ const SitterDetailsInput = (props: {
     formState: {errors},
   } = useFormContext();
   const data = getValues();
-  const {colors} = useTheme();
   const skillsDetailsData = useAppSelector(state => state.details.skillsData);
   const [newData, setNewData] = useState<any>(data.skills ? data.skills : []);
   // check the select and deselect value
@@ -92,90 +89,88 @@ const SitterDetailsInput = (props: {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <View>
-          {sitterDetailsInputValue.map((item, index) => {
-            return (
-              <View key={index}>
-                <AppFormField
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType={
-                    item.name === 'yearsOfExperience' ? 'number-pad' : 'default'
-                  }
-                  textContentType={'none'}
-                  name={item.name}
-                  subTitle={item.description}
-                  label={item.title}
-                  textInputStyle={styles.textInputStyle}
-                  control={control}
-                  errors={errors}
-                  numberOfLines={item.numberOfLines}
-                  multiline={item?.multiline}
-                  // textInputBoxStyle={{
-                  //   backgroundColor: colors.inputBackground,
-                  //   width: '100%',
-                  //   borderRadius: 2,
-                  //   paddingHorizontal: 8,
-                  // }}
-                  // inputBoxContainerStyle={{
-                  //   borderRadius: 2,
-                  //   paddingHorizontal: 0,
-                  //   borderWidth: 0,
-                  // }}
-                />
-              </View>
-            );
-          })}
-        </View>
-        <View style={{marginTop: '3%'}}>
-          <HeaderText
-            text={skillsData.title}
-            textStyle={styles.subHeaderText}
-          />
-          {skillsData.subtitle && (
-            <DescriptionText
-              text={skillsData.subtitle}
-              textStyle={{
-                ...styles.subHeaderText,
-                color: colors.descriptionText,
-              }}
-            />
-          )}
-          <View style={styles.dayBoxContainer}>
-            {skillsDetailsData &&
-              skillsDetailsData?.map(
-                (
-                  item: {title: string; id: number; slug: string; active: any},
-                  index: React.Key | null | undefined,
-                ) => (
-                  <ServiceCheckbox
-                    title={item.title}
-                    key={index}
-                    square
-                    typeKey={item?.id}
-                    active={newData !== null && newData.includes(item?.id)}
-                    onPress={() => {
-                      handleMultipleCheck(item.id);
-                    }}
-                    name={item.slug}
-                    control={control}
-                  />
-                ),
-              )}
-          </View>
-          <ErrorMessage error={errors[skillsData.name!]?.message} />
-        </View>
-        {props?.profileSetup ? null : (
-          <View style={styles.footerContainer}>
-            <SubmitButton
-              title="Save"
-              onPress={props.handleSubmit}
-              loading={props.isLoading}
-            />
-          </View>
-        )}
+      <HeaderText
+        text="Pet Care Experience"
+        textStyle={{...styles.textStyle, paddingBottom: 10}}
+      />
+      <View>
+        {sitterDetailsInputValue.map((item, index) => {
+          return (
+            <View key={index}>
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType={
+                  item.name === 'yearsOfExperience' ? 'number-pad' : 'default'
+                }
+                textContentType={'none'}
+                name={item.name}
+                label={item.title}
+                textInputStyle={styles.textInputStyle}
+                control={control}
+                errors={errors}
+                numberOfLines={item.numberOfLines}
+                multiline={item?.multiline}
+                // textInputBoxStyle={{
+                //   backgroundColor: colors.inputBackground,
+                //   width: '100%',
+                //   borderRadius: 2,
+                //   paddingHorizontal: 8,
+                // }}
+                // inputBoxContainerStyle={{
+                //   borderRadius: 2,
+                //   paddingHorizontal: 0,
+                //   borderWidth: 0,
+                // }}
+              />
+            </View>
+          );
+        })}
       </View>
+      <View style={{marginTop: '3%'}}>
+        <HeaderText text={skillsData.title} textStyle={styles.subHeaderText} />
+        {/* {skillsData.subtitle && (
+          <DescriptionText
+            text={skillsData.subtitle}
+            textStyle={{
+              ...styles.subHeaderText,
+              color: colors.descriptionText,
+            }}
+          />
+        )} */}
+        <View style={styles.dayBoxContainer}>
+          {skillsDetailsData &&
+            skillsDetailsData?.map(
+              (
+                item: {title: string; id: number; slug: string; active: any},
+                index: React.Key | null | undefined,
+              ) => (
+                <ServiceCheckbox
+                  title={item.title}
+                  key={index}
+                  square
+                  typeKey={item?.id}
+                  active={newData !== null && newData.includes(item?.id)}
+                  onPress={() => {
+                    handleMultipleCheck(item.id);
+                  }}
+                  name={item.slug}
+                  control={control}
+                />
+              ),
+            )}
+        </View>
+        <ErrorMessage error={errors[skillsData.name!]?.message} />
+      </View>
+      {props?.profileSetup ? null : (
+        <View style={styles.footerContainer}>
+          <SubmitButton
+            title="Save"
+            onPress={props.handleSubmit}
+            loading={props.isLoading}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -184,9 +179,8 @@ export default SitterDetailsInput;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '5%',
+    // marginTop: '5%',
   },
-  inputContainer: {marginHorizontal: 0},
   textInputStyle: {},
   nameContainer: {
     paddingVertical: '5%',
