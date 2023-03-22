@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import BigText from '../../../../common/text/BigText';
@@ -14,6 +15,7 @@ import ServiceReusableModal from '../Common/ServiceReusableModal';
 import TitleText from '../../../../common/text/TitleText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import HeaderText from '../../../../common/text/HeaderText';
+import Divider from '../../../../UI/Divider';
 interface Props {
   rateFields: any;
   fieldValue: any;
@@ -100,8 +102,19 @@ const SubRates = ({rateFields, fieldValue, showToggle}: Props) => {
                       icon={false}
                       helpText={item.helpText}
                     />
-                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                      <HeaderText text="Additional Rates" textStyle={styles.titleStyle}/>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}>
+                      <HeaderText
+                        text="Additional Rates"
+                        textStyle={{
+                          fontWeight: 'bold',
+                          fontSize: Text_Size.Text_0,
+                        }}
+                      />
                       <Pressable
                         onPress={() => handlePress()}
                         style={styles.iconStyle}>
@@ -177,6 +190,7 @@ const SubRates = ({rateFields, fieldValue, showToggle}: Props) => {
           },
         )}
       </View>
+      <Divider />
     </View>
   );
 };
@@ -248,6 +262,6 @@ const styles = StyleSheet.create({
   titleStyle: {
     color: Colors.primary,
     // fontWeight: 'bold',
-    // fontSize: Text_Size.Text_1,
+    fontSize: Text_Size.Text_0,
   },
 });

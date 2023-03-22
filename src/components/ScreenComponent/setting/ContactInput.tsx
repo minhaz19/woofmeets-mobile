@@ -37,6 +37,7 @@ import BigText from '../../common/text/BigText';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {VerifyCode} from '../Auth/Common/OtpField';
 import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity';
+import Divider from '../../UI/Divider';
 
 const contactInput = [
   {
@@ -367,6 +368,7 @@ const ContactInput = (props: {handleSubmit?: any; profileSetup?: boolean}) => {
           </View>
         )}
       </View>
+      <Divider />
     </View>
   );
 };
@@ -375,7 +377,7 @@ export default ContactInput;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '5%',
+    // marginTop: '5%',
   },
   container1: {
     flex: 1,
@@ -385,7 +387,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {},
   nameContainer: {
-    paddingVertical: '5%',
+    paddingBottom: '5%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

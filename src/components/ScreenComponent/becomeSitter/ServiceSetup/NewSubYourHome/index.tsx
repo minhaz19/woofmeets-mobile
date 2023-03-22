@@ -9,6 +9,7 @@ import HeaderText from '../../../../common/text/HeaderText';
 import ServiceCheckbox from '../Common/ServiceCheckbox';
 import DescriptionText from '../../../../common/text/DescriptionText';
 import ErrorMessage from '../../../../common/Form/ErrorMessage';
+import Divider from '../../../../UI/Divider';
 
 interface Props {
   attributes: any;
@@ -159,6 +160,7 @@ const NewSubYourHome = ({attributes}: Props) => {
           {/* <ErrorMessage error={errors['homeAttributes']?.message} /> */}
         </View>
       )}
+      <Divider />
     </View>
   );
 };

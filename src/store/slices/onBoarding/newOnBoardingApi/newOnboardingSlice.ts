@@ -21,7 +21,11 @@ const initialState: any = {
 const newOnboardingSlice = createSlice({
   name: 'newOnboarding',
   initialState,
-  reducers: {},
+  reducers: {
+    setProfileImage: (state, action) => {
+      state.profileImage = action.payload;
+    },
+  },
 
   extraReducers(builder) {
     builder
@@ -64,4 +68,5 @@ const newOnboardingSlice = createSlice({
       });
   },
 });
+export const {setProfileImage} = newOnboardingSlice?.actions;
 export default newOnboardingSlice.reducer;

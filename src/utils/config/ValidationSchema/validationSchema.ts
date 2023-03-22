@@ -296,14 +296,17 @@ const profileSetupValidationSchema = Yup.object().shape({
     .required('Please verify phone number'),
   emergencyContactName: Yup.string().nullable(),
   emergencyPhone: Yup.string().nullable(),
-  headline: Yup.string().required('This field is required'),
+  headline: Yup.string().required('This field is required').max(70, 'Must be less than 70 characters'),
   yearsOfExperience: Yup.number()
     .min(0, 'Please enter a positive number')
+    .test('len', 'Max 2 digits', val => val.toString().length <= 2)
     .required('Please input a number')
     .typeError('Years of experience must be number')
     .nullable(),
 
-  experienceDescription: Yup.string().required('This field is required'),
+  experienceDescription: Yup.string()
+    .required('This field is required')
+    .min(400, 'At least 400 characters or more'),
 
   skills: Yup.array().min(1, 'Please select skills'),
 });

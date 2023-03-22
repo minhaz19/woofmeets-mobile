@@ -1,11 +1,18 @@
 import {useAppSelector} from '../../../../../../store/store';
+import {replaceHostnameWithCDN} from '../../../../../../utils/helpers/imageOpt/replaceHostnameWithCDN';
 
 export const useProfileSetupInit = () => {
   const {basicInfo, skills, emergencyContact, providerDetails, profileImage} =
     useAppSelector(state => state.newOnboarding);
   const modSkills = skills?.map((item: any) => item?.skillTypeId);
   return {
-    profileImage: profileImage ? profileImage : '',
+    profileImage: profileImage
+      ? replaceHostnameWithCDN(profileImage, {
+          height: 20,
+          width: 20,
+          quality: 2,
+        })
+      : '',
     dob: basicInfo?.dob ? basicInfo?.dob : '',
     addressLine1: basicInfo?.addressLine1 ? basicInfo?.addressLine1 : '',
     addressLine2: basicInfo?.addressLine2 ? basicInfo?.addressLine2 : '',

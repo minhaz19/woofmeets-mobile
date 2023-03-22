@@ -17,7 +17,8 @@ import Colors from '../../../../../constants/Colors';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
 import ServiceReusableModal from '../Common/ServiceReusableModal';
 import {useTheme} from '../../../../../constants/theme/hooks/useTheme';
-
+import Divider from '../../../../UI/Divider';
+import Text_Size from '../../../../../constants/textScaling';
 
 const SubAvailability = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -41,11 +42,7 @@ const SubAvailability = () => {
           'Letting your potential clients know about your availability is a crucial part of setting up your profile that you should not overlook. Allowing pet owners who are browsing the Woofmeets site a chance to see your weekly schedule is the first step toward seeing whether you’re going to be compatible with them. Be sure to immediately update the availability on your profile for each day if you ever want to make any changes.'
         }
       />
-      <View
-        style={{
-          paddingTop:
-            SCREEN_WIDTH <= 380 ? '6%' : SCREEN_WIDTH <= 600 ? '5%' : '3%',
-        }}>
+      <View>
         <View style={styles.flexContainer}>
           <BigText text={'Availability'} textStyle={styles.headerText} />
           <TouchableOpacity
@@ -88,7 +85,7 @@ const SubAvailability = () => {
                     },
                   ]}
                   key={day}>
-                  <HeaderText
+                  <DescriptionText
                     textStyle={{
                       ...styles.text,
                       color: availableDays[day] ? Colors.primaryDeep : 'black',
@@ -127,6 +124,7 @@ const SubAvailability = () => {
           error={errors[availabilityHomeFullTimeInDay.name!]?.message}
         />
       </View>
+      <Divider />
     </View>
   );
 };
@@ -135,14 +133,14 @@ export default SubAvailability;
 
 const styles = StyleSheet.create({
   headerContainer: {
-    marginVertical:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
+    marginTop: SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   headerText: {
     lineHeight: 20,
+    fontWeight: 'bold',
   },
   subHeaderText: {
-    paddingBottom:
+    paddingVertical:
       SCREEN_WIDTH <= 380 ? '3%' : SCREEN_WIDTH <= 600 ? '2%' : '1%',
     lineHeight: 20,
   },
@@ -165,8 +163,6 @@ const styles = StyleSheet.create({
   flexContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom:
-      SCREEN_WIDTH <= 380 ? '5%' : SCREEN_WIDTH <= 600 ? '4%' : '2%',
   },
   iconContainer: {
     paddingLeft: 10,
@@ -186,9 +182,12 @@ const styles = StyleSheet.create({
     width: 80,
     margin: 4,
     paddingVertical: 4,
+    borderRadius: 5,
   },
   text: {
     paddingHorizontal: 8,
+    fontSize: Text_Size.Text_0,
+    fontWeight: '500',
   },
   pottyStyle: {
     flexDirection: 'row',

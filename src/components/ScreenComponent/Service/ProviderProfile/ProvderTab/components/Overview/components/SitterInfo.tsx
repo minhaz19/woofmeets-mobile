@@ -4,7 +4,6 @@ import React, {ReactElement} from 'react';
 import TitleText from '../../../../../../../common/text/TitleText';
 import Colors from '../../../../../../../../constants/Colors';
 import {SvgProps} from 'react-native-svg';
-import {useTheme} from '../../../../../../../../constants/theme/hooks/useTheme';
 import Text_Size from '../../../../../../../../constants/textScaling';
 import DescriptionText from '../../../../../../../common/text/DescriptionText';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -22,7 +21,6 @@ interface Props {
   };
 }
 const SitterInfo = ({item}: Props) => {
-  const {isDarkMode} = useTheme();
   const navigation = useNavigation();
   return (
     <View>

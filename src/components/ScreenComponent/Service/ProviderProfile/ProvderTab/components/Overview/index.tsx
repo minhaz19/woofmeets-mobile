@@ -15,9 +15,6 @@ const Overview = () => {
   const {overview, profileInfo} = useAppSelector(
     state => state.providerProfile,
   );
-
-  // const aboutOver =
-  //   overview?.about?.slice(0, 25) + overview?.about?.length > 25 ? '...' : '';
   const providerDatas = [
     {
       title: 'About',
@@ -28,8 +25,12 @@ const Overview = () => {
             ? `${overview?.about?.slice(0, 300)}${
                 overview?.about?.length > 300 ? '...' : ''
               }`
+            : profileInfo?.providerDetails?.experienceDescription
+            ? `${profileInfo?.providerDetails?.experienceDescription?.slice(0, 300)}${
+              profileInfo?.providerDetails?.experienceDescription?.length > 300 ? '...' : ''
+            }`
             : 'No about found...',
-          longDescription: overview?.about,
+          longDescription: overview?.about ? overview?.about : profileInfo?.providerDetails?.experienceDescription,
         },
       ],
     },

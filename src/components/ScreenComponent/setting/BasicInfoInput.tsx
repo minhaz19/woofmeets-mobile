@@ -29,6 +29,7 @@ import AppTouchableOpacity from '../../common/AppClickEvents/AppTouchableOpacity
 import TitleText from '../../common/text/TitleText';
 import Text_Size from '../../../constants/textScaling';
 import ErrorMessage from '../../common/Form/ErrorMessage';
+import Divider from '../../UI/Divider';
 
 interface Props {
   handleSubmit?: (value: any) => void;
@@ -58,8 +59,8 @@ const BasicInfoInput = ({handleSubmit, loading, profileSetup}: Props) => {
 
   // add google address
   const onPressAddress = (details: any) => {
-    const lat = details?.geometry.location.lat;
-    const lng = details?.geometry.location.lng;
+    const lat = details?.geometry?.location.lat;
+    const lng = details?.geometry?.location.lng;
     const zipCode = details?.address_components.find((addressComponent: any) =>
       addressComponent.types.includes('postal_code'),
     )?.short_name;
@@ -100,10 +101,11 @@ const BasicInfoInput = ({handleSubmit, loading, profileSetup}: Props) => {
         errors={errors}
       />
       <View style={styles.headerContainer}>
-        <View style={styles.nameContainer}>
-          <HeaderText text="Basic Information" textStyle={styles.textStyle} />
-        </View>
-        <TitleText textStyle={styles.label} text={'Date of Birth'} />
+        <TitleText textStyle={styles.label} text={'Age Verification'} />
+        <DescriptionText
+          text="We won't share or display this on your profile"
+          textStyle={{marginBottom: 10}}
+        />
         <View>
           <AppInput
             placeholder="DOB"
@@ -119,8 +121,12 @@ const BasicInfoInput = ({handleSubmit, loading, profileSetup}: Props) => {
           </AppTouchableOpacity>
           <ErrorMessage error={errors.dob?.message} />
         </View>
+        <Divider />
         <View style={styles.nameContainer}>
-          <HeaderText text="Add your address" textStyle={styles.textStyle} />
+          <HeaderText
+            text="Add your address"
+            textStyle={{...styles.textStyle, marginBottom: 10}}
+          />
           <DescriptionText
             text={
               'Your address is only shown to your client when their pet stays in your home'
@@ -235,6 +241,7 @@ const BasicInfoInput = ({handleSubmit, loading, profileSetup}: Props) => {
           <BottomSpacing />
         </View>
       )}
+      <Divider />
     </ScrollView>
   );
 };
@@ -266,7 +273,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {},
   nameContainer: {
-    paddingVertical: SCREEN_WIDTH <= 800 ? '5%' : '3%',
+    paddingBottom: SCREEN_WIDTH <= 800 ? '5%' : '3%',
     justifyContent: 'space-between',
   },
   textStyle: {
@@ -275,7 +282,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     paddingVertical: '6%',
-    marginBottom: '6%',
+    // marginBottom: '6%',
   },
   close: {
     fontWeight: 'bold',
@@ -284,7 +291,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: Text_Size.Text_1,
-    fontWeight: '600',
+    fontWeight: '700',
     marginBottom: 10,
   },
 });
