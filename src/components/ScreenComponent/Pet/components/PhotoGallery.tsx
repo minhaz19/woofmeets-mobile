@@ -53,7 +53,6 @@ const PhotoGallery = ({
   };
 
   const uploadImage = (e: any) => {
-    // onChangeImage(e);
     onChangeImage(e._parts[0][1].uri);
   };
 
@@ -113,7 +112,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 120,
     height: 120,
-    // marginTop: 20,
     borderRadius: 10,
     overflow: 'hidden',
     borderWidth: 1,
@@ -126,7 +124,6 @@ const styles = StyleSheet.create({
     height: 120,
     borderWidth: 1,
     borderStyle: 'dashed',
-    // marginTop: 20,
     borderRadius: 10,
     borderColor: 'gray',
   },

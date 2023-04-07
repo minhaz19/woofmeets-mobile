@@ -51,6 +51,7 @@ import ErrorMessage from '../../components/common/Form/ErrorMessage';
 import ButtonCom from '../../components/UI/ButtonCom';
 import {btnStyles} from '../../constants/theme/common/buttonStyles';
 import BottomSpacing from '../../components/UI/BottomSpacing';
+import { CancelToken } from 'apisauce';
 
 const petData = [
   {
@@ -109,14 +110,18 @@ const PetCareZipSearch = (props: {
   const onRefresh = () => {
     setRefreshing(true);
     dispatch(getWhoAmI());
-    dispatch(getServiceTypes());
     dispatch(getAllPets());
     dispatch(getUserOnboardStatus());
+    dispatch(getServiceTypes());
     setRefreshing(false);
   };
 
   useEffect(() => {
+    const source = CancelToken.source();
     onRefresh();
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   // select service Data

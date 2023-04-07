@@ -158,7 +158,6 @@ const AllServiceSetup = ({userServices}: props) => {
                     name: item?.serviceType?.name,
                     image: getIcon(item?.serviceType?.icon),
                     description: `${item?.serviceType?.description}`,
-                    // time: '3 mins',
                     icon: 'chevron-right',
                     screen: () => {
                       dispatch(setServiceSetup(item));

@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   Modal,
   Platform,
-  unstable_batchedUpdates,
 } from 'react-native';
 import {SafeAreaView, View} from 'react-native';
 import ActivityHeader from '../../../components/ScreenComponent/activity/ActivityHeader';
@@ -165,7 +164,7 @@ const ActivityScreen = (props: {
     // setIsReviewModal(true);
     const trackMessages = (data: any) => {
       if (data?.group === roomId) {
-        setMessages((prevMess: any) => [...prevMess, data]);
+        setMessages((prevMess: any) => [data, ...prevMess]);
       }
     };
     socket.on('message', trackMessages);

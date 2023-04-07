@@ -38,11 +38,6 @@ export default CompletionModal;
 
 const styles = StyleSheet.create({
   container: {
-    // position: 'absolute',
-    // top: 0,
-    // right: 0,
-    // left: 0,
-    // bottom: 0,
     width: '100%',
     height: '100%',
     backgroundColor: 'rgba(52, 52, 52, 0.7)',
@@ -54,13 +49,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   body: {
-    // marginVertical: 10,
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    // hight,
   },
   title: {
     fontWeight: 'bold',
@@ -69,10 +62,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   short: {
-    // width: '80%',
-    // alignSelf: 'center',
     fontWeight: 'bold',
-    // fontSize: Text_Size.Text_2,
     color: Colors.primaryDeep,
     textAlign: 'center',
     paddingVertical: 10,

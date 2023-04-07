@@ -5,7 +5,6 @@ import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
 import {useTimeMultiSlotPicker} from './utils/useTimeMultiSlotPicker';
 
-// let Dates: any = [];
 const TimeMultiSlotPicker = ({
   isRecurring,
   singleItem,
@@ -15,7 +14,6 @@ const TimeMultiSlotPicker = ({
   const {handleMultipleCheck, times, Dates, Days} = useTimeMultiSlotPicker(
     singleItem,
     visits,
-    // isRecurring,
   );
   return (
     <View style={styles.container}>
@@ -29,7 +27,6 @@ const TimeMultiSlotPicker = ({
           return (
             <Pressable
               disabled={item.disable}
-              // disabled={checkDisabledTime(item, times[index - 1])}
               onPress={() => {
                 if (isRecurring) {
                   const matchDate = Days.findIndex(
@@ -77,9 +74,6 @@ const TimeMultiSlotPicker = ({
                     handleMultipleCheck(item.id);
                   } else {
                     const found = Dates[matchDate];
-                    // const found = Dates.filter(
-                    //   (obj: any) => obj.date === singleItem.date,
-                    // );
                     const matchIndex = found.visits.findIndex(
                       (it: {visits: string}) => it === item.slot,
                     );

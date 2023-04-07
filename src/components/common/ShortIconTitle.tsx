@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    // marginRight: 5,
   },
 });
 export default ShortIconTitle;

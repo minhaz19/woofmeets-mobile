@@ -156,7 +156,7 @@ const AllProvider = ({navigation}: Props) => {
                 onEndReached={
                   message?.meta?.total <= limit ? null : loadMoreItem
                 }
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={0.2}
                 // refreshControl={
                 //   <RefreshControl
                 //     refreshing={isRefreshing}

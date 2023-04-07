@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Modal} from 'react-native';
 import Lottie from 'lottie-react-native';
 import Colors from '../../../constants/Colors';
-// import {useTheme} from '../../../constants/theme/hooks/useTheme';
 interface Props {
   visible?: boolean;
 }

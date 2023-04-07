@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    // width: '90%',
     fontFamily: 'Muli',
     flex: 1,
   },

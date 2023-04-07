@@ -198,7 +198,6 @@ export default Room;
 
 const styles = StyleSheet.create({
   iconBottomWrapper: {
-    // height: 200,
     width: '100%',
     paddingVertical: 4,
     backgroundColor: Colors.OVERLAY,

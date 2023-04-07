@@ -1,10 +1,7 @@
 import {useMemo, useState} from 'react';
 import {useWatch} from 'react-hook-form';
-// import {useAppSelector} from '../../../../../store/store';
 
-// let modData: any = [];
 export const useDayTimeSlot = () => {
-  // const {proposedServiceInfo} = useAppSelector(state => state.proposal);
   const {
     selectedDays,
     isRecurring,
@@ -41,7 +38,6 @@ export const useDayTimeSlot = () => {
       setDatas(recurring);
     } else if (!isRecurring) {
       const multi = multiDate?.map((item: any) => ({
-        // id: index + 1,
         date: item,
         visits:
           specificModDates &&

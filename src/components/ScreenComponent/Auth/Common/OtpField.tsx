@@ -18,7 +18,6 @@ interface VerifyCodeProps {
   handleClose: () => void;
 }
 const CELL_COUNT = 6;
-// const RESEND_OTP_TIME_LIMIT = 90;
 
 export const VerifyCode: React.FC<VerifyCodeProps> = ({
   resendCode,
@@ -57,11 +56,6 @@ export const VerifyCode: React.FC<VerifyCodeProps> = ({
       />
 
       <View style={{paddingTop: 20}}>
-        {/* <SubmitButton
-          title={'Continue'}
-          onPress={() => onPress({code: value})}
-          loading={loading}
-        /> */}
         <ButtonCom
           title={'Continue'}
           onSelect={() => onPress({code: value})}

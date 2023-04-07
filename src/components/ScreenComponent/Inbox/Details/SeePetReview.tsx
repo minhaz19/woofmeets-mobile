@@ -9,6 +9,7 @@ import {useTheme} from '../../../../constants/theme/hooks/useTheme';
 import {AirbnbRating} from 'react-native-ratings';
 import {DogFeet} from '../../../../assets/svgs/SVG_LOGOS';
 import Lottie from 'lottie-react-native';
+import {CancelToken} from 'apisauce';
 
 const SeePetReview = (props: {
   navigation: {navigate: (arg0: string, arg1?: any) => any};
@@ -28,21 +29,27 @@ const SeePetReview = (props: {
   };
 
   useEffect(() => {
+    const source = CancelToken.source();
     getPetReview();
+    return () => {
+      source.cancel();
+    };
   }, []);
   return (
     <>
-      {loading && <View style={styles.overlay}>
-        <View
-          style={[styles.overlay, {backgroundColor: colors.backgroundColor}]}>
-          <Lottie
-            autoPlay
-            loop
-            source={require('../../../../assets/NewPetLoader.json')}
-            style={styles.loaderStyle}
-          />
+      {loading && (
+        <View style={styles.overlay}>
+          <View
+            style={[styles.overlay, {backgroundColor: colors.backgroundColor}]}>
+            <Lottie
+              autoPlay
+              loop
+              source={require('../../../../assets/NewPetLoader.json')}
+              style={styles.loaderStyle}
+            />
+          </View>
         </View>
-      </View>}
+      )}
       <ScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
@@ -55,7 +62,7 @@ const SeePetReview = (props: {
                 style={styles.image}
               />
             ) : (
-                <DogFeet height={70} width={70} />
+              <DogFeet height={70} width={70} />
             )}
           </View>
           <View style={styles.detailsContainer}>
@@ -67,7 +74,9 @@ const SeePetReview = (props: {
               <AirbnbRating
                 showRating={false}
                 count={5}
-                defaultRating={petReview?.rating?.average ? petReview?.rating?.average : 0}
+                defaultRating={
+                  petReview?.rating?.average ? petReview?.rating?.average : 0
+                }
                 size={15}
                 isDisabled
               />

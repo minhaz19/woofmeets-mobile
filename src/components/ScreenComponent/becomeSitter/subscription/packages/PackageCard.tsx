@@ -152,7 +152,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.subText,
     marginBottom: 10,
     backgroundColor: 'red',
-    // marginRight: 10,
     borderRadius: 5,
     padding: 10,
     paddingVertical: 20,

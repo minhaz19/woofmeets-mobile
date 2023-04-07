@@ -29,7 +29,7 @@ import AppActivityIndicator from '../../../components/common/Loaders/AppActivity
 import {setProfileData} from '../../../store/slices/onBoarding/initial';
 import {useAppDispatch} from '../../../store/store';
 import apiClient from '../../../api/client';
-import {ApiResponse} from 'apisauce';
+import {ApiResponse, CancelToken} from 'apisauce';
 import { useNavigation } from '@react-navigation/native';
 
 const Gallery = () => {
@@ -56,7 +56,11 @@ const Gallery = () => {
   // Get all image
   const endPoint = '/gallery/photo/get-all';
   useEffect(() => {
+    const source = CancelToken.source();
     getImage();
+    return () => {
+      source.cancel();
+    };
   }, []);
   const getImage = async () => {
     setGetLoading(true);

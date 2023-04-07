@@ -92,7 +92,6 @@ const BasicPayment = ({route, navigation}: Props) => {
       setIdemLoading(false);
       Alert.alert(result?.data?.message);
     }
-    // setIdemLoading(false);
   };
   const {colors} = useTheme();
   return (

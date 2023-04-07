@@ -83,9 +83,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
   },
-  radioContainer: {
-    // marginRight: 10,
-  },
+  radioContainer: {},
   header: {
     fontSize: Text_Size.Text_1,
     fontWeight: 'bold',

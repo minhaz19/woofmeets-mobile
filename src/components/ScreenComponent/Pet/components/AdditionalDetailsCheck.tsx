@@ -80,7 +80,5 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
-  radioContainer: {
-    // marginRight: 10,
-  },
+  radioContainer: {},
 });

@@ -38,6 +38,7 @@ const activeEndpoint = '/provider-services/change-status/';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {getNewOnboarding} from '../../../../store/slices/onBoarding/newOnboardingApi/newOnboardingAction';
+import { CancelToken } from 'apisauce';
 
 const ServiceSetting = () => {
   // const [isBoardingSelected, setIsBoardingSelected] = useState<boolean>(false);
@@ -107,7 +108,11 @@ const ServiceSetting = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    const source = CancelToken.source();
     onRefresh();
+    return () => {
+      source.cancel();
+    };
   }, []);
   const servicesProgress = progressData?.individualServiceSetupSublist;
   return (

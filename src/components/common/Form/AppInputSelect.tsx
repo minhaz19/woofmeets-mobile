@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
   icon: {
     padding: 5,
     paddingLeft: 10,
-    // backgroundColor: 'red',
   },
   text: {
     width: '90%',

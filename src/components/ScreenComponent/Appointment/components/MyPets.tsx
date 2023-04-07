@@ -20,7 +20,6 @@ interface Props {
 }
 const MyPets = ({appointmentType, setValue, watch}: Props) => {
   const {pets: allPets} = useAppSelector(state => state.allPets);
-  // const {setValue, watch} = useFormContext();
   const [newData, setDatas] = useState<any>([]);
   const handleMultipleCheck = (id: number) => {
     const newArray = [...newData];

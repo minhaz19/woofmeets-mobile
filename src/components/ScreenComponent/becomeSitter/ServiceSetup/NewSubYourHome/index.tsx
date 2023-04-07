@@ -16,7 +16,6 @@ interface Props {
 }
 
 const NewSubYourHome = ({attributes}: Props) => {
-  //   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const {
     control,
     setValue,

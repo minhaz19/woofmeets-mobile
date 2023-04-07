@@ -22,39 +22,14 @@ const sitterDetailsInputValue = [
   {
     title: 'Write an eye-catching headline',
     name: 'headline',
-    // description:
-    //   'Make your headline short, descriptive and genuine. Try to encapsulate in a single sentence why you’re the best pet-sitting candidate for the job. Your headline’s creativity will help it stand out.',
     numberOfLines: 1,
   },
-  // {
-  //   title: 'Write something about yours self',
-  //   description:
-  //     'What’s something special or unique about yourself that will impress pet owners? Here’s your opportunity to describe why animals mean so much to you.',
-  //   name: 'about',
-  //   numberOfLines: 12,
-  // },
   {
     title: 'Pet care experience',
     name: 'experienceDescription',
-    //     description: `Tell us more about your experience in pet care.
-
-    // This is where you should talk about the practical application of pet care skills you’ve picked up throughout your life.`,
     numberOfLines: 12,
     multiline: true,
   },
-  //   {
-  //     title: 'Schedule',
-  //     name: 'environmentDescription',
-  //     description: `How does pet care fit into your daily or weekly routine? \n\nExample: "I’m currently working part-time, so I’ll have plenty of time to play with your pups! I’m available for boarding on weekends and weekdays after 2pm"`,
-  //     numberOfLines: 10,
-  //   },
-  //   {
-  //     title: 'Safety , trust & environment',
-  //     name: 'scheduleDescription',
-  //     description:
-  //       'How do you care for pets in your home and/or your client’s home? This will vary depending on which services you offer. Try to be extremely detailed regarding safety features in your residence or wherever else you keep the pets that are in your care. These details make it easier for clients to feel that their pets will be safe with you.',
-  //     numberOfLines: 10,
-  //   },
 ];
 
 const SitterDetailsInput = (props: {
@@ -111,17 +86,6 @@ const SitterDetailsInput = (props: {
                 errors={errors}
                 numberOfLines={item.numberOfLines}
                 multiline={item?.multiline}
-                // textInputBoxStyle={{
-                //   backgroundColor: colors.inputBackground,
-                //   width: '100%',
-                //   borderRadius: 2,
-                //   paddingHorizontal: 8,
-                // }}
-                // inputBoxContainerStyle={{
-                //   borderRadius: 2,
-                //   paddingHorizontal: 0,
-                //   borderWidth: 0,
-                // }}
               />
             </View>
           );
@@ -129,15 +93,6 @@ const SitterDetailsInput = (props: {
       </View>
       <View style={{marginTop: '3%'}}>
         <HeaderText text={skillsData.title} textStyle={styles.subHeaderText} />
-        {/* {skillsData.subtitle && (
-          <DescriptionText
-            text={skillsData.subtitle}
-            textStyle={{
-              ...styles.subHeaderText,
-              color: colors.descriptionText,
-            }}
-          />
-        )} */}
         <View style={styles.dayBoxContainer}>
           {skillsDetailsData &&
             skillsDetailsData?.map(
@@ -178,9 +133,7 @@ const SitterDetailsInput = (props: {
 export default SitterDetailsInput;
 
 const styles = StyleSheet.create({
-  container: {
-    // marginTop: '5%',
-  },
+  container: {},
   textInputStyle: {},
   nameContainer: {
     paddingVertical: '5%',

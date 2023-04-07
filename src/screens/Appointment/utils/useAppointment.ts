@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {StackActions, useNavigation} from '@react-navigation/native';
+import { CancelToken } from 'apisauce';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import methods from '../../../api/methods';
@@ -348,7 +349,11 @@ export const useAppointment = (providerOpk: string) => {
     setRefreshing(false);
   };
   useEffect(() => {
+    const source = CancelToken.source();
     onRefresh();
+    return () => {
+      source.cancel();
+    };
   }, []);
   return {
     handleSubmit,

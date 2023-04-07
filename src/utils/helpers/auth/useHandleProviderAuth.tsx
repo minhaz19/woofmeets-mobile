@@ -65,10 +65,11 @@ export const useHandleProviderAuth = () => {
     try {
       const result = await LoginManager.logInWithPermissions([
         'public_profile',
+        'email',
       ]);
       if (result) {
         if (result.isCancelled) {
-          // Alert.alert('Login Cancelled ' + JSON.stringify(result));
+          Alert.alert('Login Cancelled ' + JSON.stringify(result));
         } else {
           try {
             const currentProfile = await Profile.getCurrentProfile();

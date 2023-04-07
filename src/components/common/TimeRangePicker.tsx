@@ -5,7 +5,6 @@ import {Picker} from '@react-native-picker/picker';
 import TitleText from './text/TitleText';
 import Text_Size from '../../constants/textScaling';
 import Colors from '../../constants/Colors';
-// import {useFormContext} from 'react-hook-form';
 import {useTheme} from '../../constants/theme/hooks/useTheme';
 interface Props {
   visible: boolean;

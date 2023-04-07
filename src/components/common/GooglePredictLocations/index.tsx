@@ -12,16 +12,15 @@ import Colors from '../../../constants/Colors';
 import ErrorMessage from '../Form/ErrorMessage';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {baseUrlV} from '../../../utils/helpers/httpRequest';
+import { CancelToken } from 'apisauce';
 
 const usePlaceAutoComplete = () => {
   const [placeInputValue, setPlaceInputValue] = useState('');
   const [showPredictionDropDown, setShowPredictionDropDown] = useState(false);
   const [predictPlaces, setPredictPlaces] = useState([]);
-  // const [coordinate, setCoordinate] = useState(null);
   const [addressDetails, setAddressDetails] = useState(null);
 
   const onSelectPlaceId = (place: any) => {
-    // handleLatLng(place);
     handleAddress(place?.description);
     setPlaceInputValue(place?.description);
     setShowPredictionDropDown(false);
@@ -65,7 +64,6 @@ const usePlaceAutoComplete = () => {
     isLoading: isLoading,
     showPredictionDropDown,
     onSelectPlaceId,
-    // coords: coordinate,
     setShowPredictionDropDown,
     addressDetails,
     handleAddress,
@@ -106,17 +104,25 @@ const GooglePredictLocation = ({
   } = usePlaceAutoComplete();
 
   useEffect(() => {
+    const source = CancelToken.source();
     if (addressDetails) {
       onPlaceSelected(addressDetails);
     }
+    return () => {
+      source.cancel();
+    };
   }, [addressDetails]);
 
   useEffect(() => {
+    const source = CancelToken.source();
     if (defaultValue) {
       setPlaceInputValue(defaultValue);
     } else {
       setPlaceInputValue(null);
     }
+    return () => {
+      source.cancel();
+    };
   }, [defaultValue]);
   return (
     <View>
@@ -141,33 +147,29 @@ const GooglePredictLocation = ({
           ) : null
         }
       />
-      {showPredictionDropDown && predictedPlaces && predictedPlaces.length > 0 && (
-        // <Modal
-        //   visible={showPredictionDropDown}
-        //   transparent
-        //   animationType="slide">
-        <AppTouchableOpacity
-          style={styles.overlay}
-          onPress={() => setShowPredictionDropDown(false)}>
-          <View style={styles.dropdown}>
-            {predictedPlaces?.map((place: any) => (
-              <AppTouchableOpacity
-                key={place.place_id}
-                onPress={() => {
-                  onSelectPlaceId(place);
-                  onChange && onChange(place.description);
-                  // setShowPredictionDropDown(false);
-                }}>
-                <TitleText
-                  text={place.description}
-                  textStyle={styles.description}
-                />
-              </AppTouchableOpacity>
-            ))}
-          </View>
-        </AppTouchableOpacity>
-        // </Modal>
-      )}
+      {showPredictionDropDown &&
+        predictedPlaces &&
+        predictedPlaces.length > 0 && (
+          <AppTouchableOpacity
+            style={styles.overlay}
+            onPress={() => setShowPredictionDropDown(false)}>
+            <View style={styles.dropdown}>
+              {predictedPlaces?.map((place: any) => (
+                <AppTouchableOpacity
+                  key={place.place_id}
+                  onPress={() => {
+                    onSelectPlaceId(place);
+                    onChange && onChange(place.description);
+                  }}>
+                  <TitleText
+                    text={place.description}
+                    textStyle={styles.description}
+                  />
+                </AppTouchableOpacity>
+              ))}
+            </View>
+          </AppTouchableOpacity>
+        )}
       {errors && <ErrorMessage error={errors[name!]?.message} />}
     </View>
   );
@@ -186,7 +188,6 @@ const styles = StyleSheet.create({
     maxHeight: '70%',
   },
   dropdown: {
-    // position: 'absolute',
     backgroundColor: Colors.light.background,
     width: '100%',
     shadowColor: Colors.darkShadow,

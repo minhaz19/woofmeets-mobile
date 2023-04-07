@@ -3,7 +3,6 @@ import Colors from '../../../../constants/Colors';
 
 export const style = StyleSheet.create({
   root: {
-    // flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },

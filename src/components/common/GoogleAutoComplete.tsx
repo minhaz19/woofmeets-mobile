@@ -18,17 +18,13 @@ const GoogleAutoComplete = ({
   onPressAddress,
   label,
   placeholder,
-}: // value,
+}:
 Props) => {
   const {colors} = useTheme();
   return (
     <View>
       {label && <TitleText textStyle={styles.label} text={label} />}
       <GooglePlacesAutocomplete
-        // ref={ref => {
-        //   ref?.setAddressText(value);
-        // }}
-        // listViewDisplayed={false}
         placeholder={placeholder}
         textInputProps={{
           placeholderTextColor: Colors.light.subText,
@@ -57,7 +53,6 @@ Props) => {
           },
           textInput: {
             backgroundColor: Colors.light.background,
-            // height: 42,
             borderRadius: 1,
             paddingVertical: 5,
             paddingHorizontal: 10,
@@ -83,8 +78,6 @@ Props) => {
           row: {
             backgroundColor: Colors.light.background,
             padding: 13,
-            // height: 44,
-
             flexDirection: 'row',
           },
         }}

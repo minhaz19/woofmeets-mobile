@@ -66,7 +66,6 @@ const AppDropDownSelect = ({
           <FontAwesome name="search" size={12} color={colors.descriptionText} />
         }
         defaultOption={{key: state, value: state}}
-        // defaultOption={{key: valueData, value: valueData}}
       />
       <ErrorMessage error={errors[name]?.message} />
     </View>

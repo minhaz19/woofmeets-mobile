@@ -19,6 +19,7 @@ export const useImagePicker = (name: string) => {
   const imageUris = value;
   const imageInfo = getValues('imageInfo');
   const opk = getValues('petOpk');
+
   // add image
   const handleAdd = async (uri: string) => {
     setValue(name, [...imageUris, uri]);
@@ -40,6 +41,7 @@ export const useImagePicker = (name: string) => {
     const selectedItem = imageInfo?.filter((item: any) => item.url === uri);
     await methods._delete(`${deleteEndPoint + opk + '/' + selectedItem[0].id}`);
   };
+
   // sumbit image to backend
   const handlePress = (uri: string) => {
     const selectedItem =

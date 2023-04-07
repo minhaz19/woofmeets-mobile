@@ -33,7 +33,6 @@ const BottomSheetCalendar = ({
   watch,
 }: Props) => {
   const [visible, setVisible] = useState(false);
-  // const {profileInfo} = useAppSelector(state => state.providerProfile);
   const {isDarkMode, colors} = useTheme();
   const {multiDate} = watch();
   const handlePress = (data: any) => {
@@ -45,20 +44,7 @@ const BottomSheetCalendar = ({
         var dayName = dayss[d.getDay()];
         return {date: date.toDateString(), day: dayName};
       });
-      // const dayName = Intl.DateTimeFormat('en-US', {
-      //   timeZone: providerTimeZone,
-      //   weekday: 'long',
-      // }).format(data.dateString);
-      // const dayName = new Date(data.dateString).toLocaleString('en-us', {
-      //   weekday: 'long',
-      //   // timeZone: profileInfo.timezone,
-      // });
-      // const dayName = format(new Date(data.dateString), 'eeee', {
-      //   timeZone: profileInfo.timezone,
-      // });
-
       setValue('recurringStartDate', data.dateString);
-      // setValue('selectedDays', [dayName]);
       setValue('repeatDate', next6Days);
     }
   };
@@ -85,8 +71,7 @@ const BottomSheetCalendar = ({
                       ? multiDate?.join(' ')
                       : 'Tap to add dates'
                     : isRecurring && initalData !== ''
-                    ? // : startDate !== '' && isRecurring === true
-                      initalData
+                    ? initalData
                     : 'Tap to add dates'
                 }
                 textStyle={{}}
@@ -138,11 +123,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-    // borderColor: Colors.border,
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    // marginBottom: 10,
   },
   titleText: {
     fontWeight: 'bold',

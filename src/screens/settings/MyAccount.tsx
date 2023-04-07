@@ -61,22 +61,22 @@ const MyAccount = (props: {
   };
 
   const supportData = [
-    {
-      id: 1,
-      title: 'Basic Info',
-      icon: ProfileIcon,
-      screenName: () => props.navigation.navigate('SitterBasicInfo'),
-      details: 'Name, Age, Photo, Address, Country',
-      opacity: 1,
-    },
-    {
-      id: 2,
-      title: 'Contact',
-      icon: CallIcon,
-      screenName: () => props.navigation.navigate('PhoneNumberSitter'),
-      details: 'Number, Email, Location',
-      opacity: 1,
-    },
+    // {
+    //   id: 1,
+    //   title: 'Basic Info',
+    //   icon: ProfileIcon,
+    //   screenName: () => props.navigation.navigate('SitterBasicInfo'),
+    //   details: 'Name, Age, Photo, Address, Country',
+    //   opacity: 1,
+    // },
+    // {
+    //   id: 2,
+    //   title: 'Contact',
+    //   icon: CallIcon,
+    //   screenName: () => props.navigation.navigate('PhoneNumberSitter'),
+    //   details: 'Number, Email, Location',
+    //   opacity: 1,
+    // },
     {
       id: 3,
       title: 'Change Password',

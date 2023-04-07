@@ -25,7 +25,6 @@ const DoggyDayCare = ({appointmentType, watch, setValue}: Props) => {
   const [visible, setVisible] = useState(false);
   const [dropVisible, setDropVisible] = useState(false);
   const [pickVisible, setPickVisible] = useState(false);
-  // const {setValue} = useFormContext();
 
   const {
     multiDate,
