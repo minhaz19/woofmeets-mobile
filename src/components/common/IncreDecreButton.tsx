@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.primary,
     width: 100,
-    // flex: 1,
 
     justifyContent: 'space-between',
     borderRadius: 50,
@@ -64,7 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 4,
-    // paddingHorizontal: 10,
   },
   text: {fontSize: Text_Size.Text_0},
   minus: {

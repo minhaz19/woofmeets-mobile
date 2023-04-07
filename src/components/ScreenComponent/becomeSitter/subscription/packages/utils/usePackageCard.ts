@@ -28,7 +28,6 @@ export const usePackageCard = (props: any) => {
       sitterData[3].isCompleted
     ) {
       if (sequence === 1) {
-        // const source = CancelToken.source();
         const cardId = null;
         const subscriptionResult = await request(
           `${subscriptionEndpoint}priceId=${sequence}&cardId=${cardId}`,

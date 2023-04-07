@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import {useNavigation} from '@react-navigation/native';
+import {CancelToken} from 'apisauce';
 import {useEffect, useState} from 'react';
 import {getSubscription} from '../../../../../../store/slices/payment/Subscriptions/SubscriptionPlans/subscriptionAction';
 import {useAppDispatch, useAppSelector} from '../../../../../../store/store';
@@ -35,7 +36,11 @@ export const useUpgradeSubscription = () => {
     setSSloading(false);
   };
   useEffect(() => {
+    const source = CancelToken.source();
     plans === null && dispatch(getSubscription());
+    return () => {
+      source.cancel();
+    };
   }, []);
   return {
     onPressEvent,

@@ -21,6 +21,7 @@ import {getSitterDetails} from '../../../../../store/slices/profile/details';
 import {useAppDispatch} from '../../../../../store/store';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {CancelToken} from 'apisauce';
 
 const SingleServiceLanding = (props: {
   navigation: {navigate: (arg0: string) => any};
@@ -67,7 +68,11 @@ const SingleServiceLanding = (props: {
   ];
 
   useEffect(() => {
+    const source = CancelToken.source();
     dispatch(getSitterDetails());
+    return () => {
+      source.cancel();
+    };
   }, []);
   return (
     <View

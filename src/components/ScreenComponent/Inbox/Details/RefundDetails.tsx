@@ -13,6 +13,7 @@ import {useAppDispatch} from '../../../../store/store';
 // import {getProviderServices} from '../../../../store/slices/Appointment/ProviderServices/getProviderServices';
 import RefundPricing from './RefundPricing';
 import {getProviderProposal} from '../../../../store/slices/Appointment/Proposal/getProviderProposal';
+import {CancelToken} from 'apisauce';
 
 interface Props {
   setIsPayment?: (value: boolean) => void;
@@ -26,7 +27,11 @@ const RefundDetails: FC<Props> = props => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    const source = CancelToken.source();
     dispatch(getProviderProposal(props.modalOpk));
+    return () => {
+      source.cancel();
+    };
   }, [props.modalOpk]);
   return (
     <>

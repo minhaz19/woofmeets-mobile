@@ -11,7 +11,11 @@ const onboardingPutEndPoint = '/onboarding';
 const getCancellationPolicyEndPoint = '/cancellation-policy';
 const getAttributesEndpoint = '/provider-home/attributue-title-types';
 
-export const useServiceSetupHooks = (serviceSetup: any, route: { params: any; }, navigation: { goBack: any; }) => {
+export const useServiceSetupHooks = (
+  serviceSetup: any,
+  route: {params: any},
+  navigation: {goBack: any},
+) => {
   const [serviceRateFields, setServiceRateFields] = useState([]);
   const [ratesMeta, setRatesMeta] = useState(null);
   const [policy, setPolicy] = useState([]);

@@ -40,7 +40,6 @@ const ServiceCheckbox = ({
               active={active ? true : typeKey === value ? true : false}
               onPress={onPress}
               onBlur={onBlur}
-              // inputRef={ref}
             />
           );
         }}

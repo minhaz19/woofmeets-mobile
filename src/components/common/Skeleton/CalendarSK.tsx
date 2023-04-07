@@ -45,7 +45,6 @@ const CalendarSK = () => {
         />
       </ContentLoader>
     </View>
-    // </ScrollView>
   );
 };
 

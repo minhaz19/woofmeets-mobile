@@ -26,7 +26,6 @@ const AppForm = ({
     formState: {isDirty},
   } = methods;
   useEffect(() => {
-    // enableReset &&
     enableReset &&
       isDirty === false &&
       reset(initialValues, {

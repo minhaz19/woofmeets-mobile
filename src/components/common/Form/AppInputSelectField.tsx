@@ -48,7 +48,6 @@ const AppInputSelectField = ({
           autoCapitalize={autoCapitalize}
           autoCorrect={autoCorrect}
           placeholder={placeholder}
-          // onChangeText={(text: string) => setFieldValue(name, text)}
           onBlur={onBlur}
           value={value}
           textInputStyle={textInputStyle}

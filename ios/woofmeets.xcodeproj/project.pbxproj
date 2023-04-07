@@ -580,8 +580,8 @@
 				CODE_SIGN_ENTITLEMENTS = woofmeets/woofmeets.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = NNYV6RV9P6;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = Z88T9AD5MC;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
@@ -617,8 +617,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = NNYV6RV9P6;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = Z88T9AD5MC;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				INFOPLIST_FILE = woofmeets/Info.plist;

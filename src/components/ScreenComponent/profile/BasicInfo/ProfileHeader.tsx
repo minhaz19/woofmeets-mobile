@@ -86,9 +86,6 @@ const ProfileHeader = ({name, gLoading, url, userName, errors}: Props) => {
           </View>
         </TouchableOpacity>
       </View>
-      {/* <View style={styles.nameContainer}>
-        <HeaderText text={userName ?? ''} />
-      </View> */}
       {errors && <ErrorMessage error={errors[name!]?.message} />}
       <Divider />
       <ImageUploadModal

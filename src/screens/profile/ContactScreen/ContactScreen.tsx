@@ -54,7 +54,7 @@ const ContactScreen = ({route}) => {
   return (
     <>
       {contact.getLoading ? (
-        <AppActivityIndicator visible={contact.getLoading} />
+        <AppActivityIndicator visible={true} />
       ) : (
         <KeyboardAwareScrollView
           showsHorizontalScrollIndicator={false}

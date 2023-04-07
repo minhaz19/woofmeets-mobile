@@ -10,14 +10,8 @@ const AddPetHeader = () => {
     <View style={styles.container}>
       <HeaderText textStyle={styles.headerText} text="Create Your Profile" />
       <TitleText textStyle={styles.titleText} text="Your Pets" />
-      <DescriptionText
-        // textStyle={styles.shortText}
-        text="Share more about your pets"
-      />
-      <DescriptionText
-        // textStyle={styles.shortText}
-        text="Show pet parents you'll love their pets like they do by uploading welcoming and professional photos of yourself. The more photos the better! We recommend five to ten. Here's some guidelines for appropriate photos."
-      />
+      <DescriptionText text="Share more about your pets" />
+      <DescriptionText text="Show pet parents you'll love their pets like they do by uploading welcoming and professional photos of yourself. The more photos the better! We recommend five to ten. Here's some guidelines for appropriate photos." />
     </View>
   );
 };

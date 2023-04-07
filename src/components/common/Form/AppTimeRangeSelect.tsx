@@ -25,7 +25,7 @@ const AppTimeRangeSelect = ({
   setTime,
   time,
 }: Props) => {
-  const {isDarkMode, colors} = useTheme();
+  const {colors} = useTheme();
   const [isFocus, setIsFocus] = useState(false);
   const renderItem = useCallback(
     (item: any) => {
@@ -65,14 +65,12 @@ const AppTimeRangeSelect = ({
         onBlur={() => setIsFocus(false)}
         disable={disable}
         renderItem={renderItem}
-        // onChange={(item) => setTime({ ...time, startTime: item.value })}
         onChange={item => {
           placeholder === 'From'
             ? setTime({...time, startTime: item.label})
             : setTime({...time, endTime: item.label});
           setIsFocus(false);
         }}
-        // onChange={onChange}
       />
     </View>
   );
@@ -118,7 +116,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor: 'red',
   },
   selectedStyle: {
     backgroundColor: Colors.primary,

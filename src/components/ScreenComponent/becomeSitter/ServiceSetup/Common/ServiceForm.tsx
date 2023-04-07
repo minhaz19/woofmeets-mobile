@@ -70,7 +70,6 @@ const ServiceForm = ({
   useEffect(() => {
     name !== 'baserate' &&
       updateRates === false &&
-      // checked === false &&
       setValue &&
       setValue(name, convertedValue, {
         shouldValidate: errors[name] ? true : false,

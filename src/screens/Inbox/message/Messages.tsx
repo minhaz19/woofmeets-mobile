@@ -333,9 +333,7 @@ const Messages = (props: {
                 // }
                 inverted
                 data={messages}
-                keyExtractor={(item, index) =>
-                  String(item._id + Math.random() + index)
-                }
+                keyExtractor={(item, index) => String(Math.random() + index)}
                 renderItem={renderMessage}
                 // onEndReached={messages?.lenght < 18 ? handleEndReached : null}
                 onEndReached={messages?.length < 20 ? null : handleEndReached}

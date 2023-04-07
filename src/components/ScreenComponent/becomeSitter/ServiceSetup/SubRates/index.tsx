@@ -179,7 +179,6 @@ const SubRates = ({rateFields, fieldValue, showToggle}: Props) => {
                     convertedValue={item.convertedValue}
                     setValue={setValue}
                     updateRates={updateRates}
-                    // checked={checked}
                     unit={item.rateUnitLabel}
                     icon={true}
                     helpText={item.helpText}
@@ -261,7 +260,6 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     color: Colors.primary,
-    // fontWeight: 'bold',
     fontSize: Text_Size.Text_0,
   },
 });

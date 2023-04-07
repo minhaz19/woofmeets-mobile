@@ -99,7 +99,6 @@ const ServicePicker = ({name, setValue}: Props) => {
                 setSelectedService(item);
                 setValue(name, item.id);
                 setValue('serviceTypeId', item.serviceTypeId);
-                // setServiceId(item.serviceTypeId);
                 setVisible(false);
               }}>
               <View>
@@ -154,15 +153,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     marginBottom: 10,
     borderWidth: 1,
-
-    // shadowOpacity: 0.08,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 20,
-    // },
-    // shadowRadius: 10,
-    // // Shadow for Android
-    // elevation: 5,
   },
   titleText: {
     fontWeight: 'bold',
@@ -178,8 +168,6 @@ const styles = StyleSheet.create({
   iconContainer: {
     padding: 10,
     borderWidth: 1,
-    // borderColor: ,
-    // backgroundColor: Colors.border,
     borderRadius: 6,
   },
 

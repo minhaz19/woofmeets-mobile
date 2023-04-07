@@ -45,8 +45,6 @@ export const PreviewModal = ({
   const {top, bottom, left, right} = useSafeAreaInsets();
   const [previewVideoTrack, setPreviewVideoTrack] = useState<HMSTrack>();
 
-  // const [isAudioMute, setIsAudioMute] = useState<boolean>();
-  // const [isVideoMute, setIsVideoMute] = useState<boolean>();
   const [previewPeer, setPreviewPeer] = useState<HMSLocalPeer>();
 
   const HmsView = hmsInstance?.HmsView;
@@ -124,7 +122,6 @@ export const PreviewModal = ({
             scaleType={HMSVideoViewMode.ASPECT_FILL}
             style={styles.hmsView}
             trackId={previewVideoTrack?.trackId}
-            // mirror={mirrorCamera}
           />
         )}
       </View>

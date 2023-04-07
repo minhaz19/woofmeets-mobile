@@ -19,6 +19,7 @@ import BottomTabText from '../components/common/text/BottomTabText';
 import {useAppDispatch, useAppSelector} from '../store/store';
 import {getWhoAmI} from '../store/slices/common/whoAmI/whoAmIAction';
 import InboxNavigator from './bottoms/InboxNavigator';
+import { CancelToken } from 'apisauce';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +29,11 @@ function BottomTabNavigator() {
   const {user} = useAppSelector((state: any) => state.whoAmI);
 
   useEffect(() => {
+    const source = CancelToken.source();
     dispatch(getWhoAmI());
+    return () => {
+      source.cancel();
+    };
   }, []);
   const {badge} = useAppSelector(state => state.badge);
   const getDecodedToken = async () => {

@@ -57,26 +57,24 @@ export const serviceSetupValidationSchema = Yup.object().shape({
   cancellationPolicy: Yup.string()
     .required('Cancellation policy must be selected')
     .nullable(),
-  preference: Yup.object()
-    .shape({
-      smallDog: Yup.boolean(),
-      mediumDog: Yup.boolean(),
-      largeDog: Yup.boolean(),
-      giantDog: Yup.boolean(),
-      cat: Yup.boolean(),
-    }),
-    // .test(
-    //   'at-least-one-pet-selected',
-    //   'At least one pet must be selected',
-    //   value => {
-    //     return Object.values(value).some(preference => preference === true);
-    //   },
-    // ),
+  preference: Yup.object().shape({
+    smallDog: Yup.boolean(),
+    mediumDog: Yup.boolean(),
+    largeDog: Yup.boolean(),
+    giantDog: Yup.boolean(),
+    cat: Yup.boolean(),
+  }),
+  // .test(
+  //   'at-least-one-pet-selected',
+  //   'At least one pet must be selected',
+  //   value => {
+  //     return Object.values(value).some(preference => preference === true);
+  //   },
+  // ),
   petPerDay: Yup.number()
     .nullable(true)
     .positive()
     .min(0, 'Pet per day must be a positive number or zero')
-    // .required('Pet per day is required')
     .typeError('A Number is Required'),
   homeType: Yup.string(),
   yardType: Yup.string(),

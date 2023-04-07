@@ -22,6 +22,8 @@ import {getUserOnboardStatus} from '../store/slices/connect/stripe';
 import {identifyLogRocketUser} from '../utils/helpers/logRocket/identifyUser';
 import {socket} from '../../App';
 import storage from '../utils/helpers/auth/storage';
+import {CancelToken} from 'apisauce';
+
 const Splash = ({}) => {
   const [isPreviousUser, setIsPreviousUser] = useState(false);
   const {isNotificationPressed} = useAppSelector(state => state.auth);
@@ -156,12 +158,15 @@ const Splash = ({}) => {
   };
 
   useEffect(() => {
+    const source = CancelToken.source();
     signInHandler();
     dispatch(getWhoAmI());
     dispatch(getUserOnboardStatus());
     dispatch(getServiceTypes());
-    dispatch(getUserOnboardStatus());
     dispatch(getAllPets());
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   const RenderIcon = () => {

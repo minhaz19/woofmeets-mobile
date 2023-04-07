@@ -3,7 +3,7 @@ import {ApiResponse} from 'apisauce';
 import {Alert} from 'react-native';
 import apiClient from '../../../api/client';
 import authStorage from '../../../utils/helpers/auth/storage';
-import { baseUrlV } from '../../../utils/helpers/httpRequest';
+import {baseUrlV} from '../../../utils/helpers/httpRequest';
 export const userLogin = createAsyncThunk(
   'auth/login',
   async ({email, password}: any, {rejectWithValue}) => {
@@ -45,13 +45,16 @@ export const registerUser = createAsyncThunk(
     {rejectWithValue},
   ) => {
     try {
-      const response: ApiResponse<any> = await apiClient.post(`${baseUrlV}/v2/auth/signup`, {
-        firstName,
-        lastName,
-        zipcode,
-        email,
-        password,
-      });
+      const response: ApiResponse<any> = await apiClient.post(
+        `${baseUrlV}/v2/auth/signup`,
+        {
+          firstName,
+          lastName,
+          zipcode,
+          email,
+          password,
+        },
+      );
       if (!response.ok) {
         if (response.data.message) {
           Alert.alert(response.data.message);
@@ -87,6 +90,8 @@ export const providerAuth = createAsyncThunk(
       if (!response.ok) {
         if (response.data.message) {
           Alert.alert(response.data.message);
+        } else if (response.data.messages.email) {
+          Alert.alert("Can't login with facebook! try another way");
         } else if (response.problem === 'TIMEOUT_ERROR') {
           Alert.alert('Response Timeout! Please try again');
         } else {
@@ -108,7 +113,6 @@ export const providerAuth = createAsyncThunk(
     }
   },
 );
-
 
 export const appleAuthLogin = createAsyncThunk(
   'auth/appleAuthLogin',

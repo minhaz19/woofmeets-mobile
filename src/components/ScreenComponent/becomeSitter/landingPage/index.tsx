@@ -1,4 +1,4 @@
-import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import TitleText from '../../../common/text/TitleText';
 import Colors from '../../../../constants/Colors';
@@ -8,7 +8,7 @@ import {
   setCurrentScreen,
   setProfileScreen,
 } from '../../../../store/slices/onBoarding/initial';
-import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {useAppDispatch} from '../../../../store/store';
 import {SCREEN_WIDTH} from '../../../../constants/WindowSize';
 import Text_Size from '../../../../constants/textScaling';
 const LandingCard = (props: {
@@ -21,59 +21,16 @@ const LandingCard = (props: {
   disable: boolean;
   completed: boolean;
 }) => {
-  const {inProgress, isCompleted, title, id} = props.item;
+  const {inProgress, title, id} = props.item;
   const [loading, setLoading] = useState<boolean>(false);
 
-  const {sitterData} = useAppSelector(state => state.initial);
   const dispatch = useAppDispatch();
-  // const handleSubmit = async () => {
-
-  //   if (id !== 2 && !sitterData[id - 2].isCompleted) {
-  //     Alert.alert(
-  //       'Warning!',
-  //       `Please complete "${
-  //         'STEP-' +
-  //         sitterData[id - 3].id +
-  //         ' : ' +
-  //         sitterData[id - 2].title.toUpperCase()
-  //       }" first to move forward. Thanks!`,
-  //     );
-  //   } else if (id === 2 && !sitterData[0].isCompleted) {
-  //     Alert.alert(
-  //       'Warning!',
-  //       `Please complete "${
-  //         'STEP-' +
-  //         sitterData[id - 3].id +
-  //         ' : ' +
-  //         sitterData[id - 2].title.toUpperCase()
-  //       }" first to move forward. Thanks!`,
-  //     );
-  //   } else {
-  //     setLoading(true);
-  //     dispatch(setCurrentScreen({pass: id - 1}));
-  //     dispatch(setProfileScreen({pass: 0}));
-  //     dispatch(setBoardingScreen({pass: 0}));
-  //     setLoading(false);
-  //   }
-  // };
   const handleSubmit = async () => {
-    // if (!sitterData[id - 2].isCompleted) {
-    //   Alert.alert(
-    //     'Warning!',
-    //     `Please complete "${
-    //       'STEP-' +
-    //       sitterData[id - 3].id +
-    //       ' : ' +
-    //       sitterData[id - 2].title.toUpperCase()
-    //     }" first to move forward. Thanks!`,
-    //   );
-    // } else {
     setLoading(true);
     dispatch(setCurrentScreen({pass: id - 1}));
     dispatch(setProfileScreen({pass: 0}));
     dispatch(setBoardingScreen({pass: 0}));
     setLoading(false);
-    // }
   };
   const id_ = id === 1 ? '*' : id - 1;
   return (
@@ -112,19 +69,6 @@ const LandingCard = (props: {
               color={Colors.primary}
               style={styles.iconStyle}
             />
-            {/* <View
-              style={{
-                ...styles.numberViewContainer,
-                backgroundColor: Colors.light.subText,
-              }}>
-              <TitleText
-                text={id_}
-                textStyle={{
-                  ...styles.numberStyle,
-                  color: Colors.light.background,
-                }}
-              />
-            </View> */}
           </>
         )
       )}
@@ -134,9 +78,6 @@ const LandingCard = (props: {
             style={{
               ...styles.numberViewContainer,
               backgroundColor: Colors.subText,
-              // backgroundColor: isCompleted
-              //   ? Colors.primary
-              //   : Colors.light.subText,
             }}>
             <TitleText
               text={id_}

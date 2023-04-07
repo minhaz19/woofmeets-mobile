@@ -16,7 +16,6 @@ const QuestionModals = ({}: Props) => {
   const [faq2, setFaq2] = useState(false);
   const [faq3, setFaq3] = useState(false);
   const [faq4, setFaq4] = useState(false);
-  // const [basicQuestionModal, setBasicQuestionModal] = useState(false);
   return (
     <View>
       <BigText text="Choose A Subscription" textStyle={styles.textStyle} />

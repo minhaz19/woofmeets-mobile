@@ -8,8 +8,6 @@ import ServicePetQuantity from '../Common/ServicePetQuantity';
 import BottomSpacing from '../../../../UI/BottomSpacing';
 import PetType from './PetType';
 import {useForm} from 'react-hook-form';
-// import {yupResolver} from '@hookform/resolvers/yup';
-// import {petPreferenceSchema} from '../../../../../screens/becomeSitter/ServiceSetUp/PetPreference/utils/useServiceSetUpInitialState';
 import ButtonCom from '../../../../UI/ButtonCom';
 import {btnStyles} from '../../../../../constants/theme/common/buttonStyles';
 import {QuestionIcon} from '../../../../../assets/svgs/SVG_LOGOS';
@@ -36,7 +34,6 @@ const SubPetPreference = ({
     reset,
     formState: {errors},
   } = useForm({
-    // resolver: yupResolver(petPreferenceSchema),
     mode: 'onChange',
     defaultValues: {
       smallDog: false,

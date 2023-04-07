@@ -183,8 +183,6 @@ const styles = StyleSheet.create({
     paddingLeft: '5%',
   },
   scrollview: {
-    // flex: 1,
-    // height: '100%',
     justifyContent: 'space-between',
   },
   taskContainer: {
@@ -243,10 +241,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   buttonContainer: {
-    // position: 'absolute',
-    // bottom: 0,
-    // right: 0,
-    // left: 0,
     backgroundColor: Colors.primary,
     paddingVertical: 8,
     borderRadius: 100,

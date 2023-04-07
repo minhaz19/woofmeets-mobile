@@ -79,9 +79,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  textContainer: {
-    // width: '70%',
-  },
+  textContainer: {},
   iconStyle: {paddingRight: 0},
 });
 
