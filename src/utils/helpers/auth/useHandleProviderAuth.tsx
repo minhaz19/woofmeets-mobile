@@ -28,7 +28,6 @@ export const useHandleProviderAuth = () => {
       offlineAccess: true,
       iosClientId:
         '313710503954-3n02f9k6848u5f2lkoaefm5ii33pfivu.apps.googleusercontent.com',
-      accountName: 'Woofmeets',
     });
   }, []);
   const google = async () => {
