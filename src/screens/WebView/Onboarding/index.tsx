@@ -36,10 +36,7 @@ const OnboardingWebView = (props: any) => {
         onError={handleLoadError}
         onHttpError={syntheticEvent => {
           const {nativeEvent} = syntheticEvent;
-          console.warn(
-            'WebView received error status code: ',
-            nativeEvent.statusCode,
-          );
+
         }}
         // onNavigationStateChange={navState => {
         //   // Keep track of going back navigation within component

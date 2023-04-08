@@ -66,7 +66,6 @@ const RealtimeLocation = ({appointmentId}: Props) => {
           return false;
         }
       } catch (err: any) {
-        console.warn(err.message);
         return false;
       }
     }

@@ -49,14 +49,7 @@ const Messages = (props: {
   const scrollViewRef = useRef<any>();
   const navigation = useNavigation<any>();
 
-  // const handleScroll = event => {
-  //   const {contentOffset} = event.nativeEvent;
-  //   // console.log('con', contentOffset);
-  //   if (contentOffset.y <= 0) {
-  //     // console.log('mon', contentOffset);
-  //     // handleEndReached();
-  //   }
-  // };
+
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
