@@ -581,6 +581,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Z88T9AD5MC;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
@@ -592,6 +593,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.12.5;
+				MARKETING_VERSION = 1.12.4;
+				MARKETING_VERSION = 1.12.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -618,6 +621,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Z88T9AD5MC;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
@@ -628,6 +632,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.12.5;
+				MARKETING_VERSION = 1.12.4;
+				MARKETING_VERSION = 1.12.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
