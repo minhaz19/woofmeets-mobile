@@ -49,7 +49,6 @@ const useGetLiveLocation = () => {
             // setLocationStatus('Permission Denied');
           }
         } catch (err) {
-          console.warn(err);
         }
       }
     };
