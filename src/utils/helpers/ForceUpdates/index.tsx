@@ -9,7 +9,6 @@ import {ApiResponse} from 'apisauce';
 
 const ForceUpdates = () => {
   let currentVersion = VersionCheck.getCurrentVersion(); // Automatically choose profer provider using `Platform.select` by device platform.
-  console.log('currentversion -----', currentVersion);
   const checkIfUpdateIsNeeded = async () => {
     const response: ApiResponse<any> = await methods._get(
       `user-application-version/compare?platform=${Platform.OS.toUpperCase()}&version=${currentVersion}`,

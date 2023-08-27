@@ -56,7 +56,7 @@ export const showForegroundNotifications = async (message: any) => {
           sound: true,
           banner: true,
           list: true,
-        },
+        }, 
       },
     });
 };
